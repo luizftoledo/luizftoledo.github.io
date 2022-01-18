@@ -1,2 +1,2 @@
 # luizftoledo.github.io
- My personal portfolio
+ My personal portfolio, created using HTML/CSS/Bulms
