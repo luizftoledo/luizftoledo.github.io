@@ -8,7 +8,7 @@ The data source can be found [here](https://dadosabertos.camara.leg.br/swagger/a
 
 Read the story [here](https://luizftoledo.github.io/congress-expenses-with-food/).
 
-Data analysis using Pandas.
+Data analysis using Python/Pandas.
 Charts made with Flourish and Datawrapper.
 
 ## Disclaimer ##
