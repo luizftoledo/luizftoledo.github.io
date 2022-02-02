@@ -1,4 +1,4 @@
-# Brazilian congresspeople and their banquets #
+# Brazil's Chamber of Deputies and their banquets #
 
 Brazilian congresspeople are famous for spending money on [fancy food](https://www.metropoles.com/brasil/politica-brasil/sem-limite-de-gastos-congresso-reembolsa-despesas-de-parlamentares-com-ostras-e-camarao-trufado). The Congress [states](https://www2.camara.leg.br/comunicacao/assessoria-de-imprensa/guia-para-jornalistas/cota-parlamentar) that they can only use their money to pay for their own meals, but this analysis shows that some of them  pay even thousands of reais for dozens of meals in the same receipt.
 
