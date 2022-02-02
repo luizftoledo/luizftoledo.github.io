@@ -6,5 +6,7 @@ Let's check how expensive those lunchs and banquets were since they took office 
 
 The data source can be found [here](https://dadosabertos.camara.leg.br/swagger/api.html#staticfile).
 
+Read the story [here](https://luizftoledo.github.io/congress-expenses-with-food/)
+
 ## Disclaimer ##
 This is a data assignment for a master of science in data Journalism class at Columbia University.
