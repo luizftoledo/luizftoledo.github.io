@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>How happy and cheerful can Iron Maiden songs be?
+        </title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .full-size-image {
+                background: url('eddie.jpeg');
+                background-size: cover;
+                background-position-y: bottom;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="full-size-image" id="congress_story">
+            <div class="text-container">
+                
+            </div>
+        </div>
+        <p>Art: Derek Riggs/Pinterest</p>
+
+        <div class="text-container">
+            <h1> How happy and cheerful can Iron Maiden songs be?</h1>
+            <div align="justify">
+                <br>
+                <br>
+            <p> Metalheads are known for angry and loud songs. </p>
+            <br>
+            <p>It's just a stereotype, of course, as the gender can range 
+                from very soft songs such as ballads like 
+                Fade to Black (Metallica) to the extreme speed and 
+                harsh vocals like those in Dead by Dawn (Deicide). 
+                <p>But what can we say about the average metal band?</p>
+<br>
+                <p>Well, I didn't find a way to collect every metal band 
+                in the world and create a database.
+                 I'm studying data journalism, but I'm still 
+                 just a journalist who knows…a little bit of data. A
+                 nd likes metal.</p>
+                <br>
+                <p>So I decided to analyze the most famous metal band ever 
+                    and ask this stupid, but interesting question 
+                    (at least for me): how happy and cheerful can an 
+                    Iron Maiden concert be? How happy are their songs, 
+                    in general? Will they follow the stereotype 
+                    of the gender they kind of lead?</p>
+                <br>
+                <p>More than that. Could you dance in an Iron Maiden concert?
+                (and I'm not talking about the mega funk version of 'The Trooper')</p>
+                <br>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/goXLotVYhyA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <br>
+                
+                <p> This project will try to answer that by using Spotify API, 
+                    based on the valence and other variables. 
+                    According to Spotify documentation, 
+                    valence is a "measure from 0.0 to 1.0 describing the musical 
+                    positiveness conveyed by a track. Tracks with high valence 
+                    sound more positive (e.g. happy, cheerful, euphoric), while 
+                    tracks with low valence sound more negative (e.g. sad, depressed, angry)."</p>
+
+                <br>
+                
+            <p>I have removed duplicates and kept the most popular 
+                for each song. My final list has 189 tracks, which includes 
+                intros and some extra stuff. </p>
+                <br>
+               <p> Be aware: this is not exact science.
+                    It's just a simple data analysis for the Master 
+                    Science in Data Journalism at Columbia Journalism
+                     School. It's not intended to offend anyone. 
+                     I'm actually a huge fan of the band and 
+                     play in a metal band of my own. :)</p>
+                <br>
+                <h2>Fear of the…happiness?</h2>
+                
+                <p>Well, in order to offer happy songs in a concert, 
+                    a band must have written happy songs. 
+                    How does Spotify classify Iron Maiden's 
+                    discography based on happiness?</p>
+
+                    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css" rel="stylesheet"/>
+                    <img alt="Here is a description of the chart" src='valence_histogram.png'>
+                
+               <p>Not much. This is how the discography is distributed. 
+                   The mean valence for all the songs is 0.36 out of 1. 
+                   Iron Maiden is not happy, at least
+                    not on average (whatever that means…)</p>
+                <p>It doesn't mean that the band can't produce songs 
+                that would make Eddie smile. Ironically, the happiest
+                 Iron Maiden song is Wratchild. 
+                 
+                 <br>
+                 <br>
+                 
+                 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1SpuDZ7y1W4vaCzHeLvsf7?utm_source=generator" width="250" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+                 <br>
+                 <br>
+
+                 <p>It tells the story about a young man who is 
+                 searching for his unknown father. Does it look sad? 
+                 Well, listen to the chorus and then compare it to other songs. </p>
+                
+                <p><i>'Cause I'm a wrathchild</p>
+           <p>Well I'm a wrathchild</p>
+               <p> Yeah, I'm a wrathchild</p>
+                <p>I'm coming to get you ooh, yeah, yeah'</p></i>
+                
+                
+                
+            <p>On the bottom there's an intro track, 
+                Churchill's Speech, and Lord of Light, 
+                from A Matter of Life and Death album.<p>
+                
+                <p>At this point, it is important to mention that 
+                    lyrics are not considered in Spotify's measure 
+                    of valence. At least not according to the documentation.</p>
+                
+                
+                    <iframe title="Happiness level: Iron Maiden ups and downs top 10" aria-label="Dot Plot" id="datawrapper-chart-hYkxt" src="https://datawrapper.dwcdn.net/hYkxt/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="451"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+                    </script>
+                
+                <p>Now let's take a look at how a full concert
+                     would look in terms of happiness. 
+                     We based our chart on an "average setlist" 
+                     containing the most common song sequence for 
+                     their shows in 2019.</p>
+                
+                
+                <iframe title="Iron Maiden's &quot;average&quot; setlist and happiness levels" aria-label="Range Plot" id="datawrapper-chart-Y0BmU" src="https://datawrapper.dwcdn.net/Y0BmU/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="388"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+                </script>
+                
+                
+                
+                <h2> The question is: can you actually dance Maiden songs?</h2>
+
+                <p>There's one particular song that would go great at a party,
+                     but not for shows. 'The Apparition' seems to be very 
+                     suitable to dance, though you probably will never 
+                     see them performing it live as they never played 
+                     it during a concert. Some fans even argue that this 
+                     is "easily their worst song".</p>
+
+                     <iframe title="If you wanna dance Maiden, The Apparition is your choice" aria-label="Range Plot" id="datawrapper-chart-E5WSq" src="https://datawrapper.dwcdn.net/E5WSq/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="679"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+                     </script>
+                
+                
+                
+                <p>So why are there so many sad songs? 
+                    Do people enjoy it? For now, let's just compare 
+                    it with popularity.</p>
+
+                    <iframe title="Happiness x popularity in Iron Maiden songs" aria-label="Scatter Plot" id="datawrapper-chart-sF38P" src="https://datawrapper.dwcdn.net/sF38P/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="400"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+                    </script>
+                
+                
+           <p>Maybe we should just ask Bruce Dickinson. Other factors might explain
+                how popular a song is, but happiness is 
+                definitely not one of them. Most popular songs 
+                like The Trooper and Fear of the Dark go to 
+                opposite places in the chart and there is no 
+                strong correlation between these two variables.
+                
+                <br>>
+                
+                <p>But there's one thing we can say for sure. 
+                    The band definitely transmits a lot 
+                    of energy in their songs. 
+                    Most tracks are on the top of Spotify's "energy" bar 
+                    (meaning "fast, loud and noisy") equal or higher 
+                    than 0.8, in a scale that goes from 0 to 1. </p>
+
+                    <img alt="Here is a description of the chart" src='energy_histogram.png'>
+
+                
+                <br>
+                
+                <p>One last thought: it seems that the band's 
+                    songs are getting sadder as the years go by. 
+                    Nothing beats the positive energy of the 80s 
+                    and early 90s.</p>
+                <br>
+                
+                    <iframe title="Iron Maiden songs are getting less happy through the years" aria-label="Scatter Plot" id="datawrapper-chart-4GYhb" src="https://datawrapper.dwcdn.net/4GYhb/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="800"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+                    </script>
+                
+    
+                 
+                <p>Now it's your turn: play with the data!</p>
+                <iframe title="Iron Maiden: Spotify data for each track" aria-label="Table" id="datawrapper-chart-7kjDs" src="https://datawrapper.dwcdn.net/7kjDs/1/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="756"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+                </script>
+                
+</div>
+    </body>
+</html>
