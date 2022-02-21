@@ -4,3 +4,4 @@ Spotify API has the answer for this question. I have used it to measure how happ
 
 You can [read](https://github.com/luizftoledo/luizftoledo.github.io/blob/main/iron-maiden-happiness/docs/data_analysis_maiden.ipynb) the full code here. Happiness was measured by the song "valence", which is a value from 0 to 1 that considers how positive a song is, according to Spotify. Only studio albums were considered. Live albums and single were removed from the analysis.</p>
            
+[Read](https://luizftoledo.github.io/iron-maiden-happiness/) the project here.
