@@ -2,86 +2,6 @@
 <html lang="en">
   <head>
 
-	<!--
-SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
-
-	-->
-	<script type="text/javascript">
-		(function() {
-			// only want one resizer on the page
-			if (document.documentElement.className.indexOf("g-resizer-v3-init") > -1) return;
-			document.documentElement.className += " g-resizer-v3-init";
-			// require IE9+
-			if (!("querySelector" in document)) return;
-			function resizer() {
-				var elements = Array.prototype.slice.call(document.querySelectorAll(".g-artboard[data-min-width]")),
-					widthById = {};
-				elements.forEach(function(el) {
-					var parent = el.parentNode,
-						width = widthById[parent.id] || parent.getBoundingClientRect().width,
-						minwidth = el.getAttribute("data-min-width"),
-						maxwidth = el.getAttribute("data-max-width");
-					widthById[parent.id] = width;
-	
-					if (+minwidth <= width && (+maxwidth >= width || maxwidth === null)) {
-						el.style.display = "block";
-					} else {
-						el.style.display = "none";
-					}
-				});
-				try {
-					if (window.parent && window.parent.$) {
-						window.parent.$("body").trigger("resizedcontent", [window]);
-					}
-					if (window.require) {
-						require(['foundation/main'], function() {
-							require(['shared/interactive/instances/app-communicator'], function(AppCommunicator) {
-								AppCommunicator.triggerResize();
-							});
-						});
-					}
-				} catch(e) { console.log(e); }
-			}
-	
-			document.addEventListener('DOMContentLoaded', resizer);
-			// feel free to replace throttle with _.throttle, if available
-			window.addEventListener('resize', throttle(resizer, 200));        
-	
-			function throttle(func, wait) {
-				// from underscore.js
-				var _now = Date.now || function() { return new Date().getTime(); },
-					context, args, result, timeout = null, previous = 0;
-				var later = function() {
-					previous = _now();
-					timeout = null;
-					result = func.apply(context, args);
-					if (!timeout) context = args = null;
-				};
-				return function() {
-					var now = _now(), remaining = wait - (now - previous);
-					context = this;
-					args = arguments;
-					if (remaining <= 0 || remaining > wait) {
-						if (timeout) {
-							clearTimeout(timeout);
-							timeout = null;
-						}
-						previous = now;
-						result = func.apply(context, args);
-						if (!timeout) context = args = null;
-					} else if (!timeout && options.trailing !== false) {
-						timeout = setTimeout(later, remaining);
-					}
-					return result;
-				};
-			}
-	
-		   
-		})();
-	</script>
-
-<!-- end of the script that makes graphics responsive 
--->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-134857343-1"></script>
@@ -105,8 +25,90 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
     <!-- google fonts: Roboto Condensed(super-font) and Lora(sub-font) -->
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700" rel="stylesheet"> 
+
+
+<!-- RESIZER SCRIPT-->
+
+<script type="text/javascript">
+    (function() {
+        // only want one resizer on the page
+        if (document.documentElement.className.indexOf("g-resizer-v3-init") > -1) return;
+        document.documentElement.className += " g-resizer-v3-init";
+        // require IE9+
+        if (!("querySelector" in document)) return;
+        function resizer() {
+            var elements = Array.prototype.slice.call(document.querySelectorAll(".g-artboard[data-min-width]")),
+                widthById = {};
+            elements.forEach(function(el) {
+                var parent = el.parentNode,
+                    width = widthById[parent.id] || parent.getBoundingClientRect().width,
+                    minwidth = el.getAttribute("data-min-width"),
+                    maxwidth = el.getAttribute("data-max-width");
+                widthById[parent.id] = width;
+
+                if (+minwidth <= width && (+maxwidth >= width || maxwidth === null)) {
+                    el.style.display = "block";
+                } else {
+                    el.style.display = "none";
+                }
+            });
+            try {
+                if (window.parent && window.parent.$) {
+                    window.parent.$("body").trigger("resizedcontent", [window]);
+                }
+                if (window.require) {
+                    require(['foundation/main'], function() {
+                        require(['shared/interactive/instances/app-communicator'], function(AppCommunicator) {
+                            AppCommunicator.triggerResize();
+                        });
+                    });
+                }
+            } catch(e) { console.log(e); }
+        }
+
+        document.addEventListener('DOMContentLoaded', resizer);
+        // feel free to replace throttle with _.throttle, if available
+        window.addEventListener('resize', throttle(resizer, 200));        
+
+        function throttle(func, wait) {
+            // from underscore.js
+            var _now = Date.now || function() { return new Date().getTime(); },
+                context, args, result, timeout = null, previous = 0;
+            var later = function() {
+                previous = _now();
+                timeout = null;
+                result = func.apply(context, args);
+                if (!timeout) context = args = null;
+            };
+            return function() {
+                var now = _now(), remaining = wait - (now - previous);
+                context = this;
+                args = arguments;
+                if (remaining <= 0 || remaining > wait) {
+                    if (timeout) {
+                        clearTimeout(timeout);
+                        timeout = null;
+                    }
+                    previous = now;
+                    result = func.apply(context, args);
+                    if (!timeout) context = args = null;
+                } else if (!timeout && options.trailing !== false) {
+                    timeout = setTimeout(later, remaining);
+                }
+                return result;
+            };
+        }
+
+       
+    })();
+</script>
+
+
+<!-- END OF RESIZER SCRIPT-->
+
+
   
-    <title>US is exporting more pistols than ever to Brazil; some of it ended up with violent gangs
+    <title>US is exporting more pistols than ever to Brazil: legally and ilegally
     </title>
   </head>
     
@@ -119,7 +121,7 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
                     <p class="kicker super-font">ILLICIT TRADE</p>
                 
                 
-                    <h1 class="headline super-font">US is exporting more pistols than ever to Brazil; some of it ended up with violent gangs
+                    <h1 class="headline super-font"> US is exporting more pistols than ever to Brazil: legally and ilegally
                     </h1>
                 
                 
@@ -144,7 +146,8 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
 
 
 <!-- FIRST CHART - WEAPON IMPORTS  -->
-<!-- Generated by ai2html v0.106.0 - 2022-03-06 23:35 -->
+
+<!-- Generated by ai2html v0.106.0 - 2022-03-09 17:02 -->
 <!-- ai file: weapons_year_desktop_and_mobile.ai -->
 <style media="screen,print">
 	#g-weapons_year_desktop_and_mobile-box ,
@@ -395,7 +398,8 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
 
 </div>
 
-<!-- End ai2html - 2022-03-06 23:35 -->
+<!-- End ai2html - 2022-03-09 17:02 -->
+
 
 
 	
@@ -404,40 +408,44 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
 
 
 
-                            <p>New data obtained through multiple FOIA requests to Brazilian authorities (Federal Police, Armed Forces, Federal Revenue) shows that part of those weapons are ending up in the hands of Brazilian gangs and then seized by the authorities.
+                            <p>A similar trend can be seen on the illegal trade market as well. New data about weapons seizd by 
+								Brazilian authorities obtained 
+								through multiple FOIA requests to Brazilian authorities shows a concentration that US weapons
+								 are ending up in the hands of gangs more than any other country. 
                             </p>
 
 
 <!-- chart 2 - seizure per country  -->
-<!-- Generated by ai2html v0.106.0 - 2022-03-05 22:51 -->
-<!-- ai file: seizure_per_country.svg -->
+
+<!-- Generated by ai2html v0.106.0 - 2022-03-09 16:59 -->
+<!-- ai file: seizure_per_country.ai -->
 <style media="screen,print">
-	#g-seizure_per_country_svg-box ,
-	#g-seizure_per_country_svg-box .g-artboard {
+	#g-seizure_per_country-box ,
+	#g-seizure_per_country-box .g-artboard {
 		margin:0 auto;
 	}
-	#g-seizure_per_country_svg-box p {
+	#g-seizure_per_country-box p {
 		margin:0;
 	}
-	#g-seizure_per_country_svg-box .g-aiAbs {
+	#g-seizure_per_country-box .g-aiAbs {
 		position:absolute;
 	}
-	#g-seizure_per_country_svg-box .g-aiImg {
+	#g-seizure_per_country-box .g-aiImg {
 		position:absolute;
 		top:0;
 		display:block;
 		width:100% !important;
 	}
-	#g-seizure_per_country_svg-box .g-aiSymbol {
+	#g-seizure_per_country-box .g-aiSymbol {
 		position: absolute;
 		box-sizing: border-box;
 	}
-	#g-seizure_per_country_svg-box .g-aiPointText p { white-space: nowrap; }
-	#g-seizure_per_country_svg-Artboard_1 {
+	#g-seizure_per_country-box .g-aiPointText p { white-space: nowrap; }
+	#g-seizure_per_country-Artboard_1 {
 		position:relative;
 		overflow:hidden;
 	}
-	#g-seizure_per_country_svg-Artboard_1 p {
+	#g-seizure_per_country-Artboard_1 p {
 		font-family:arial,helvetica,sans-serif;
 		line-height:14px;
 		height:auto;
@@ -453,28 +461,32 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
 		font-style:normal;
 		position:static;
 	}
-	#g-seizure_per_country_svg-Artboard_1 .g-pstyle0 {
+	#g-seizure_per_country-Artboard_1 .g-pstyle0 {
 		font-weight:bold;
 		line-height:17px;
 		height:17px;
 		font-size:14px;
 	}
-	#g-seizure_per_country_svg-Artboard_1 .g-pstyle1 {
+	#g-seizure_per_country-Artboard_1 .g-pstyle1 {
 		height:14px;
 	}
-	#g-seizure_per_country_svg-Artboard_1 .g-pstyle2 {
+	#g-seizure_per_country-Artboard_1 .g-pstyle2 {
+		height:14px;
+		text-align:center;
+	}
+	#g-seizure_per_country-Artboard_1 .g-pstyle3 {
 		height:14px;
 		color:rgb(77,77,77);
 	}
 
 </style>
 
-<div id="g-seizure_per_country_svg-box" class="ai2html">
+<div id="g-seizure_per_country-box" class="ai2html">
 
 	<!-- Artboard: Artboard_1 -->
-	<div id="g-seizure_per_country_svg-Artboard_1" class="g-artboard" style="max-width: 451px;max-height: 480px" data-aspect-ratio="0.939" data-min-width="0">
+	<div id="g-seizure_per_country-Artboard_1" class="g-artboard" style="max-width: 451px;max-height: 480px" data-aspect-ratio="0.939" data-min-width="0">
 <div style="padding: 0 0 106.5284% 0;"></div>
-		<img id="g-seizure_per_country_svg-Artboard_1-img" class="g-aiImg" alt="" src="seizure_per_country_svg-Artboard_1.png"/>
+		<img id="g-seizure_per_country-Artboard_1-img" class="g-aiImg" alt="" src="seizure_per_country-Artboard_1.png"/>
 		<div id="g-ai0-1" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:7.1893%;margin-top:-18.5px;left:20.7201%;width:308px;">
 			<p class="g-pstyle0">USA and Austria are the countries of origin</p>
 			<p class="g-pstyle0"> for most of the seized weapons in Brazil</p>
@@ -491,83 +503,412 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
 		<div id="g-ai0-5" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:29.9926%;margin-top:-8.1px;left:13.3822%;width:58px;">
 			<p class="g-pstyle1">Turkey</p>
 		</div>
-		<div id="g-ai0-6" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:33.1147%;margin-top:-8.1px;left:10.9161%;width:73px;">
+		<div id="g-ai0-6" class="g-ai2html-settings g-aiAbs g-aiPointText" style="top:35.2793%;margin-top:-22.5px;left:80.6366%;margin-left:-90.5px;width:181px;">
+			<p class="g-pstyle2">Experts say US manufactured</p>
+			<p class="g-pstyle2">glocks are often labeled </p>
+			<p class="g-pstyle2">as Austrian</p>
+		</div>
+		<div id="g-ai0-7" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:33.1147%;margin-top:-8.1px;left:10.9161%;width:73px;">
 			<p class="g-pstyle1">Argentina</p>
 		</div>
-		<div id="g-ai0-7" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:36.0287%;margin-top:-8.1px;left:5.6078%;width:106px;">
+		<div id="g-ai0-8" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:36.0287%;margin-top:-8.1px;left:5.6078%;width:106px;">
 			<p class="g-pstyle1">Czech Republic</p>
 		</div>
-		<div id="g-ai0-8" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:39.1508%;margin-top:-8.1px;left:15.6944%;width:44px;">
+		<div id="g-ai0-9" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:39.1508%;margin-top:-8.1px;left:15.6944%;width:44px;">
 			<p class="g-pstyle1">Italy</p>
 		</div>
-		<div id="g-ai0-9" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:42.0647%;margin-top:-8.1px;left:11.2489%;width:71px;">
+		<div id="g-ai0-10" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:42.0647%;margin-top:-8.1px;left:11.2489%;width:71px;">
 			<p class="g-pstyle1">Germany</p>
 		</div>
-		<div id="g-ai0-10" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:45.1869%;margin-top:-8.1px;left:14.5016%;width:51px;">
+		<div id="g-ai0-11" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:45.1869%;margin-top:-8.1px;left:14.5016%;width:51px;">
 			<p class="g-pstyle1">Israel</p>
 		</div>
-		<div id="g-ai0-11" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:48.1008%;margin-top:-8.1px;left:12.9829%;width:61px;">
+		<div id="g-ai0-12" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:48.1008%;margin-top:-8.1px;left:12.9829%;width:61px;">
 			<p class="g-pstyle1">Croatia</p>
 		</div>
-		<div id="g-ai0-12" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:51.223%;margin-top:-8.1px;left:12.2236%;width:65px;">
+		<div id="g-ai0-13" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:51.223%;margin-top:-8.1px;left:12.2236%;width:65px;">
 			<p class="g-pstyle1">Belgium</p>
 		</div>
-		<div id="g-ai0-13" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:54.1369%;margin-top:-8.1px;left:13.3087%;width:59px;">
-			<p class="g-pstyle2">Russia</p>
+		<div id="g-ai0-14" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:54.1369%;margin-top:-8.1px;left:13.3087%;width:59px;">
+			<p class="g-pstyle3">Russia</p>
 		</div>
-		<div id="g-ai0-14" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:57.259%;margin-top:-8.1px;left:14.2825%;width:53px;">
+		<div id="g-ai0-15" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:57.259%;margin-top:-8.1px;left:14.2825%;width:53px;">
 			<p class="g-pstyle1">Spain</p>
 		</div>
-		<div id="g-ai0-15" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:60.173%;margin-top:-8.1px;left:13.0924%;width:60px;">
+		<div id="g-ai0-16" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:60.173%;margin-top:-8.1px;left:13.0924%;width:60px;">
 			<p class="g-pstyle1">Mexico</p>
 		</div>
-		<div id="g-ai0-16" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:63.2951%;margin-top:-8.1px;left:13.6327%;width:57px;">
+		<div id="g-ai0-17" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:63.2951%;margin-top:-8.1px;left:13.6327%;width:57px;">
 			<p class="g-pstyle1">Serbia</p>
 		</div>
-		<div id="g-ai0-17" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:66.2091%;margin-top:-8.1px;left:14.1748%;width:53px;">
+		<div id="g-ai0-18" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:66.2091%;margin-top:-8.1px;left:14.1748%;width:53px;">
 			<p class="g-pstyle1">China</p>
 		</div>
-		<div id="g-ai0-18" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:69.3312%;margin-top:-8.1px;left:9.836%;width:80px;">
+		<div id="g-ai0-19" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:69.3312%;margin-top:-8.1px;left:9.836%;width:80px;">
 			<p class="g-pstyle1">Philippines</p>
 		</div>
-		<div id="g-ai0-19" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:72.2452%;margin-top:-8.1px;left:11.4642%;width:70px;">
+		<div id="g-ai0-20" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:72.2452%;margin-top:-8.1px;left:11.4642%;width:70px;">
 			<p class="g-pstyle1">Romania</p>
 		</div>
-		<div id="g-ai0-20" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:75.3673%;margin-top:-8.1px;left:8.8594%;width:86px;">
+		<div id="g-ai0-21" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:75.3673%;margin-top:-8.1px;left:8.8594%;width:86px;">
 			<p class="g-pstyle1">Montenegro</p>
 		</div>
-		<div id="g-ai0-21" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:78.4895%;margin-top:-8.1px;left:11.8977%;width:67px;">
+		<div id="g-ai0-22" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:78.4895%;margin-top:-8.1px;left:11.8977%;width:67px;">
 			<p class="g-pstyle1">Hungary</p>
 		</div>
-		<div id="g-ai0-22" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:81.4034%;margin-top:-8.1px;left:13.5251%;width:57px;">
+		<div id="g-ai0-23" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:81.4034%;margin-top:-8.1px;left:13.5251%;width:57px;">
 			<p class="g-pstyle1">Bolivia</p>
 		</div>
-		<div id="g-ai0-23" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:85.15%;margin-top:-8.1px;left:24.6831%;width:29px;">
-			<p class="g-pstyle2">0</p>
+		<div id="g-ai0-24" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:85.15%;margin-top:-8.1px;left:24.6831%;width:29px;">
+			<p class="g-pstyle3">0</p>
 		</div>
-		<div id="g-ai0-24" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:85.15%;margin-top:-8.1px;left:46.157%;width:42px;">
-			<p class="g-pstyle2">400</p>
+		<div id="g-ai0-25" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:85.15%;margin-top:-8.1px;left:46.157%;width:42px;">
+			<p class="g-pstyle3">400</p>
 		</div>
-		<div id="g-ai0-25" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:85.15%;margin-top:-8.1px;left:68.716%;width:42px;">
-			<p class="g-pstyle2">800</p>
+		<div id="g-ai0-26" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:85.15%;margin-top:-8.1px;left:68.716%;width:42px;">
+			<p class="g-pstyle3">800</p>
 		</div>
-		<div id="g-ai0-26" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:85.15%;margin-top:-8.1px;left:90.7324%;width:49px;">
-			<p class="g-pstyle2">1200</p>
+		<div id="g-ai0-27" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:85.15%;margin-top:-8.1px;left:90.7324%;width:49px;">
+			<p class="g-pstyle3">1200</p>
 		</div>
-		<div id="g-ai0-27" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:93.8919%;margin-top:-8.1px;left:17.8114%;width:273px;">
+		<div id="g-ai0-28" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:93.8919%;margin-top:-8.1px;left:17.8114%;width:273px;">
 			<p class="g-pstyle1">Source: Brazilian Federal Police / FOIA request</p>
 		</div>
 	</div>
 
 </div>
 
-<!-- End ai2html - 2022-03-05 22:51 -->
+<!-- End ai2html - 2022-03-09 16:59 -->
 
 
 
+<p> These are the most common seized weapon types and brands,
+	according to the data sent by the authorities.
+</p>
+
+	
+<!-- Script to make them stay in the same column-->
+
+<style>
+	.row-container {
+		 display: flex;
+		 flex-direction: row;
+		 flex-wrap: wrap;
+		 width: 100%;
+		 gap: 2em;
+	}
+
+	.column-container {
+		 display: flex;
+		 flex-direction: column;
+		 flex-basis: 100%;
+		 flex: 1;
+	}
+
+	@media (max-width: 768px) {
+		 .row-container {
+			  flex-direction: column;
+		 }
+	}
+
+</style>
+
+<!-- same column script end -->
 
 
+<!--Chart do seized weapons (esquerda, preto)-->
 
+	<!-- Generated by ai2html v0.106.0 - 2022-03-09 17:05 -->
+	<!-- ai file: common_weapon_types.svg -->
+	<style media="screen,print">
+		#g-common_weapon_types_svg-box ,
+		#g-common_weapon_types_svg-box .g-artboard {
+			margin:0 auto;
+		}
+		#g-common_weapon_types_svg-box p {
+			margin:0;
+		}
+		#g-common_weapon_types_svg-box .g-aiAbs {
+			position:absolute;
+		}
+		#g-common_weapon_types_svg-box .g-aiImg {
+			position:absolute;
+			top:0;
+			display:block;
+			width:100% !important;
+		}
+		#g-common_weapon_types_svg-box .g-aiSymbol {
+			position: absolute;
+			box-sizing: border-box;
+		}
+		#g-common_weapon_types_svg-box .g-aiPointText p { white-space: nowrap; }
+		#g-common_weapon_types_svg-Artboard_1 {
+			position:relative;
+			overflow:hidden;
+		}
+		#g-common_weapon_types_svg-Artboard_1 p {
+			font-family:arial,helvetica,sans-serif;
+			line-height:17px;
+			height:auto;
+			opacity:1;
+			letter-spacing:0em;
+			font-size:14px;
+			text-align:left;
+			color:rgb(0,0,0);
+			text-transform:none;
+			padding-bottom:0;
+			padding-top:0;
+			mix-blend-mode:normal;
+			font-style:normal;
+			position:static;
+		}
+		#g-common_weapon_types_svg-Artboard_1 .g-pstyle0 {
+			font-weight:bold;
+			line-height:23px;
+			height:23px;
+			font-size:19px;
+		}
+		#g-common_weapon_types_svg-Artboard_1 .g-pstyle1 {
+			height:17px;
+			text-align:center;
+		}
+		#g-common_weapon_types_svg-Artboard_1 .g-pstyle2 {
+			line-height:13px;
+			height:13px;
+			font-size:11px;
+			color:rgb(77,77,77);
+		}
+		#g-common_weapon_types_svg-Artboard_1 .g-pstyle3 {
+			height:17px;
+		}
+	
+	</style>
+	
+	<div id="g-common_weapon_types_svg-box" class="ai2html">
+	
+		<!-- Artboard: Artboard_1 -->
+		<div id="g-common_weapon_types_svg-Artboard_1" class="g-artboard" style="max-width: 531px;max-height: 461px" data-aspect-ratio="1.152" data-min-width="0">
+	<div style="padding: 0 0 86.8319% 0;"></div>
+			<img id="g-common_weapon_types_svg-Artboard_1-img" class="g-aiImg" alt="" src="common_weapon_types_svg-Artboard_1.png"/>
+			<div id="g-ai0-1" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:3.6545%;margin-top:-13.8px;left:13.7765%;width:416px;">
+				<p class="g-pstyle0">Most common weapon seized by the police</p>
+			</div>
+			<div id="g-ai0-2" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:10.5528%;margin-top:-18.7px;left:50.8615%;margin-left:-196px;width:392px;">
+				<p class="g-pstyle1">Data is from 2013 to 2018 and considers</p>
+				<p class="g-pstyle1"> only weapons seized by the Federal police, not the states</p>
+			</div>
+			<div id="g-ai0-3" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:21.7415%;margin-top:-7.2px;left:16.2933%;width:48px;">
+				<p class="g-pstyle2">Pistol</p>
+			</div>
+			<div id="g-ai0-4" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:28.771%;margin-top:-18.7px;left:84.3873%;margin-left:-78px;width:156px;">
+				<p class="g-pstyle1">7 out of 10 weapons </p>
+				<p class="g-pstyle1">are pistols</p>
+			</div>
+			<div id="g-ai0-5" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:27.3805%;margin-top:-7.2px;left:13.2815%;width:64px;">
+				<p class="g-pstyle2">Revolver</p>
+			</div>
+			<div id="g-ai0-6" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:33.0195%;margin-top:-7.2px;left:17.1777%;width:43px;">
+				<p class="g-pstyle2">Rifle</p>
+			</div>
+			<div id="g-ai0-7" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:38.6584%;margin-top:-7.2px;left:13.581%;width:61px;">
+				<p class="g-pstyle2">Shotgun</p>
+			</div>
+			<div id="g-ai0-8" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:44.2974%;margin-top:-7.2px;left:14.1946%;width:59px;">
+				<p class="g-pstyle2">Carbine</p>
+			</div>
+			<div id="g-ai0-9" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:50.1533%;margin-top:-7.2px;left:9.7715%;width:82px;">
+				<p class="g-pstyle2">Machine gun</p>
+			</div>
+			<div id="g-ai0-10" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:55.7923%;margin-top:-7.2px;left:1.8138%;width:125px;">
+				<p class="g-pstyle2">Not classified weapon</p>
+			</div>
+			<div id="g-ai0-11" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:62.0819%;margin-top:-7.2px;left:14.7491%;width:56px;">
+				<p class="g-pstyle2">Musket</p>
+			</div>
+			<div id="g-ai0-12" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:67.9377%;margin-top:-7.2px;left:10.8776%;width:77px;">
+				<p class="g-pstyle2">Hand made</p>
+			</div>
+			<div id="g-ai0-13" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:73.5767%;margin-top:-7.2px;left:12.8691%;width:66px;">
+				<p class="g-pstyle2">Garrucha</p>
+			</div>
+			<div id="g-ai0-14" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:89.4092%;margin-top:-7.2px;left:22.2833%;width:28px;">
+				<p class="g-pstyle2">0</p>
+			</div>
+			<div id="g-ai0-15" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:89.4092%;margin-top:-7.2px;left:43.7908%;width:35px;">
+				<p class="g-pstyle2">1K</p>
+			</div>
+			<div id="g-ai0-16" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:89.4092%;margin-top:-7.2px;left:66.9573%;width:35px;">
+				<p class="g-pstyle2">2K</p>
+			</div>
+			<div id="g-ai0-17" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:89.4092%;margin-top:-7.2px;left:90.1237%;width:35px;">
+				<p class="g-pstyle2">3K</p>
+			</div>
+			<div id="g-ai0-18" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:95.4322%;margin-top:-10px;left:27.2545%;width:273px;">
+				<p class="g-pstyle3">Source: Brazilian Federal Police / FOIA</p>
+			</div>
+		</div>
+	
+	</div>
+	</div>
+	
+	<!-- End ai2html - 2022-03-09 17:05 -->
+	
+<!--Fim do Chart do seized weapons  -->
+	
+
+	<!-- começo do common brands / direita / vermelho -->	
+<!-- Generated by ai2html v0.106.0 - 2022-03-09 17:16 -->
+<!-- ai file: fabricante.svg -->
+<style media="screen,print">
+	#g-fabricante_svg-box ,
+	#g-fabricante_svg-box .g-artboard {
+		margin:0 auto;
+	}
+	#g-fabricante_svg-box p {
+		margin:0;
+	}
+	#g-fabricante_svg-box .g-aiAbs {
+		position:absolute;
+	}
+	#g-fabricante_svg-box .g-aiImg {
+		position:absolute;
+		top:0;
+		display:block;
+		width:100% !important;
+	}
+	#g-fabricante_svg-box .g-aiSymbol {
+		position: absolute;
+		box-sizing: border-box;
+	}
+	#g-fabricante_svg-box .g-aiPointText p { white-space: nowrap; }
+	#g-fabricante_svg-Artboard_1 {
+		position:relative;
+		overflow:hidden;
+	}
+	#g-fabricante_svg-Artboard_1 p {
+		font-family:arial,helvetica,sans-serif;
+		line-height:13px;
+		height:auto;
+		opacity:1;
+		letter-spacing:0em;
+		font-size:11px;
+		text-align:left;
+		color:rgb(0,0,0);
+		text-transform:none;
+		padding-bottom:0;
+		padding-top:0;
+		mix-blend-mode:normal;
+		font-style:normal;
+		position:static;
+	}
+	#g-fabricante_svg-Artboard_1 .g-pstyle0 {
+		font-weight:bold;
+		line-height:20px;
+		height:20px;
+		font-size:17px;
+		text-align:center;
+	}
+	#g-fabricante_svg-Artboard_1 .g-pstyle1 {
+		height:13px;
+		text-align:center;
+	}
+	#g-fabricante_svg-Artboard_1 .g-pstyle2 {
+		line-height:11px;
+		height:11px;
+		font-size:9px;
+		color:rgb(77,77,77);
+	}
+
+</style>
+
+<div id="g-fabricante_svg-box" class="ai2html">
+
+	<!-- Artboard: Artboard_1 -->
+	<div id="g-fabricante_svg-Artboard_1" class="g-artboard" style="max-width: 480px;max-height: 425px" data-aspect-ratio="1.128" data-min-width="0">
+<div style="padding: 0 0 88.6169% 0;"></div>
+		<img id="g-fabricante_svg-Artboard_1-img" class="g-aiImg" alt="" src="fabricante_svg-Artboard_1.png"/>
+		<div id="g-ai0-1" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:5.4523%;margin-top:-22.2px;left:50.0129%;margin-left:-122px;width:244px;">
+			<p class="g-pstyle0">Glock is the most common </p>
+			<p class="g-pstyle0">weapon seized in Brazil</p>
+		</div>
+		<div id="g-ai0-2" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:14.2246%;margin-top:-7.5px;left:50.0389%;margin-left:-180.5px;width:361px;">
+			<p class="g-pstyle1">Data is from 2013 to 2021 and considers only Federal Police seizures</p>
+		</div>
+		<div id="g-ai0-3" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:22.6172%;margin-top:-6.2px;left:15.9125%;width:44px;">
+			<p class="g-pstyle2">Glock</p>
+		</div>
+		<div id="g-ai0-4" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:26.8489%;margin-top:-6.2px;left:15.8096%;width:45px;">
+			<p class="g-pstyle2">Bersa</p>
+		</div>
+		<div id="g-ai0-5" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:29.4117%;margin-top:-14.1px;left:82.4417%;margin-left:-66.5px;width:133px;">
+			<p class="g-pstyle1">One out of four seized </p>
+			<p class="g-pstyle1">weapons is a Glock</p>
+		</div>
+		<div id="g-ai0-6" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:30.8455%;margin-top:-6.2px;left:7.0816%;width:87px;">
+			<p class="g-pstyle2">Smith & Wesson</p>
+		</div>
+		<div id="g-ai0-7" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:35.0772%;margin-top:-6.2px;left:15.9116%;width:44px;">
+			<p class="g-pstyle2">Canik</p>
+		</div>
+		<div id="g-ai0-8" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:39.0738%;margin-top:-6.2px;left:17.3386%;width:38px;">
+			<p class="g-pstyle2">Colt</p>
+		</div>
+		<div id="g-ai0-9" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:43.3055%;margin-top:-6.2px;left:14.688%;width:50px;">
+			<p class="g-pstyle2">Beretta</p>
+		</div>
+		<div id="g-ai0-10" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:47.3021%;margin-top:-6.2px;left:18.3582%;width:33px;">
+			<p class="g-pstyle2">Cz</p>
+		</div>
+		<div id="g-ai0-11" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:51.5338%;margin-top:-6.2px;left:15.1991%;width:48px;">
+			<p class="g-pstyle2">Girsan</p>
+		</div>
+		<div id="g-ai0-12" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:55.5304%;margin-top:-6.2px;left:15.6055%;width:46px;">
+			<p class="g-pstyle2">Ruger</p>
+		</div>
+		<div id="g-ai0-13" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:59.7621%;margin-top:-6.2px;left:11.4295%;width:66px;">
+			<p class="g-pstyle2">Winchester</p>
+		</div>
+		<div id="g-ai0-14" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:63.7587%;margin-top:-6.2px;left:3.9932%;width:102px;">
+			<p class="g-pstyle2">Hk (Heckler & Koch)</p>
+		</div>
+		<div id="g-ai0-15" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:67.9904%;margin-top:-6.2px;left:18.052%;width:34px;">
+			<p class="g-pstyle2">HS</p>
+		</div>
+		<div id="g-ai0-16" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:71.987%;margin-top:-6.2px;left:12.4464%;width:61px;">
+			<p class="g-pstyle2">Sig-Sauer</p>
+		</div>
+		<div id="g-ai0-17" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:76.2187%;margin-top:-6.2px;left:12.9558%;width:59px;">
+			<p class="g-pstyle2">Browning</p>
+		</div>
+		<div id="g-ai0-18" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:80.2153%;margin-top:-6.2px;left:7.4513%;width:85px;">
+			<p class="g-pstyle2">Unknown</p>
+		</div>
+		<div id="g-ai0-19" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:84.9172%;margin-top:-6.2px;left:24.5021%;width:27px;">
+			<p class="g-pstyle2">0</p>
+		</div>
+		<div id="g-ai0-20" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:84.9172%;margin-top:-6.2px;left:37.6918%;width:37px;">
+			<p class="g-pstyle2">250</p>
+		</div>
+		<div id="g-ai0-21" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:84.9172%;margin-top:-6.2px;left:51.9011%;width:37px;">
+			<p class="g-pstyle2">500</p>
+		</div>
+		<div id="g-ai0-22" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:84.9172%;margin-top:-6.2px;left:66.1105%;width:37px;">
+			<p class="g-pstyle2">750</p>
+		</div>
+		<div id="g-ai0-23" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:84.9172%;margin-top:-6.2px;left:79.8099%;width:42px;">
+			<p class="g-pstyle2">1000</p>
+		</div>
+		<div id="g-ai0-24" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:93.2163%;margin-top:-7.5px;left:49.9601%;margin-left:-126px;width:252px;">
+			<p class="g-pstyle1">Source: Brazilian Federal Police / FOIA request</p>
+		</div>
+	</div>
+
+</div>
+
+<!-- End ai2html - 2022-03-09 17:16 -->
+
+
+	<!-- fim do common brands -->
 
                             <p>Most weapons were seized by the Federal Police in the state of Paraná, 
                                 where criminal gang activity is high, 
@@ -576,7 +917,10 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
 
 
 <!-- chart 3 - paraguay map -->
-<!-- Generated by ai2html v0.106.0 - 2022-03-07 16:01 -->
+
+<!-- Generated by ai2html v0.106.0 - 2022-03-09 17:01 -->
+
+<!-- Generated by ai2html v0.106.0 - 2022-03-09 17:01 -->
 <!-- ai file: map_seize_new_file.ai -->
 <style media="screen,print">
 	#g-map_seize_new_file-box ,
@@ -600,55 +944,13 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
 		box-sizing: border-box;
 	}
 	#g-map_seize_new_file-box .g-aiPointText p { white-space: nowrap; }
-	#g-map_seize_new_file-Desktop {
+	#g-map_seize_new_file-iphonex {
 		position:relative;
 		overflow:hidden;
 	}
-	#g-map_seize_new_file-Desktop p {
+	#g-map_seize_new_file-iphonex p {
 		font-family:arial,helvetica,sans-serif;
-		line-height:13px;
-		height:auto;
-		opacity:1;
-		letter-spacing:0em;
-		font-size:11px;
-		text-align:left;
-		color:rgb(0,0,0);
-		text-transform:none;
-		padding-bottom:0;
-		padding-top:0;
-		mix-blend-mode:normal;
-		font-style:normal;
-		position:static;
-	}
-	#g-map_seize_new_file-Desktop .g-pstyle0 {
-		font-weight:bold;
-		line-height:25px;
-		height:25px;
-		font-size:21px;
-		text-align:center;
-	}
-	#g-map_seize_new_file-Desktop .g-pstyle1 {
-		height:13px;
-		text-align:center;
-	}
-	#g-map_seize_new_file-Desktop .g-pstyle2 {
-		font-weight:bold;
-		height:13px;
-		text-align:center;
-	}
-	#g-map_seize_new_file-Desktop .g-pstyle3 {
-		line-height:19px;
-		height:19px;
-		font-size:16px;
-		text-align:center;
-	}
-	#g-map_seize_new_file-Mobile {
-		position:relative;
-		overflow:hidden;
-	}
-	#g-map_seize_new_file-Mobile p {
-		font-family:arial,helvetica,sans-serif;
-		line-height:9px;
+		line-height:8px;
 		height:auto;
 		opacity:1;
 		letter-spacing:0em;
@@ -662,26 +964,68 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
 		font-style:normal;
 		position:static;
 	}
-	#g-map_seize_new_file-Mobile .g-pstyle0 {
+	#g-map_seize_new_file-iphonex .g-pstyle0 {
 		font-weight:bold;
+		line-height:29px;
+		height:29px;
+		font-size:24px;
+		text-align:center;
+	}
+	#g-map_seize_new_file-iphonex .g-pstyle1 {
+		height:8px;
+		text-align:center;
+	}
+	#g-map_seize_new_file-iphonex .g-pstyle2 {
+		font-weight:bold;
+		height:8px;
+		text-align:center;
+	}
+	#g-map_seize_new_file-iphonex .g-pstyle3 {
+		line-height:12px;
+		height:12px;
+		font-size:10px;
+		text-align:center;
+	}
+	#g-map_seize_new_file-web {
+		position:relative;
+		overflow:hidden;
+	}
+	#g-map_seize_new_file-web p {
+		font-family:arial,helvetica,sans-serif;
+		line-height:13px;
+		height:auto;
+		opacity:1;
+		letter-spacing:0em;
+		font-size:11px;
+		text-align:left;
+		color:rgb(0,0,0);
+		text-transform:none;
+		padding-bottom:0;
+		padding-top:0;
+		mix-blend-mode:normal;
+		font-style:normal;
+		position:static;
+	}
+	#g-map_seize_new_file-web .g-pstyle0 {
+		font-weight:bold;
+		line-height:29px;
+		height:29px;
+		font-size:24px;
+		text-align:center;
+	}
+	#g-map_seize_new_file-web .g-pstyle1 {
+		height:13px;
+		text-align:center;
+	}
+	#g-map_seize_new_file-web .g-pstyle2 {
+		font-weight:bold;
+		height:13px;
+		text-align:center;
+	}
+	#g-map_seize_new_file-web .g-pstyle3 {
 		line-height:19px;
 		height:19px;
-		font-size:16px;
-		text-align:center;
-	}
-	#g-map_seize_new_file-Mobile .g-pstyle1 {
-		height:9px;
-		text-align:center;
-	}
-	#g-map_seize_new_file-Mobile .g-pstyle2 {
-		font-weight:bold;
-		height:9px;
-		text-align:center;
-	}
-	#g-map_seize_new_file-Mobile .g-pstyle3 {
-		line-height:13px;
-		height:13px;
-		font-size:11px;
+		font-size:15px;
 		text-align:center;
 	}
 
@@ -689,46 +1033,48 @@ SCRIPT TO MAKE MY GRAPHICS RESPONSIVE
 
 <div id="g-map_seize_new_file-box" class="ai2html">
 
-	<!-- Artboard: Desktop -->
-	<div id="g-map_seize_new_file-Desktop" class="g-artboard" style="width:700px; height:871px;" data-aspect-ratio="0.804" data-min-width="700">
-<div style=""></div>
-		<img id="g-map_seize_new_file-Desktop-img" class="g-aiImg" alt="" src="map_seize_new_file-Desktop.png"/>
-		<div id="g-ai0-1" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:6.3101%;margin-top:-15px;left:49.9986%;margin-left:-273px;width:546px;">
-			<p class="g-pstyle0">Paraná leads in weapon seized by the Federal Police</p>
+	<!-- Artboard: iphonex -->
+	<div id="g-map_seize_new_file-iphonex" class="g-artboard" style="max-width: 400px;max-height: 582px" data-aspect-ratio="0.687" data-min-width="0" data-max-width="699">
+<div style="padding: 0 0 145.5% 0;"></div>
+		<img id="g-map_seize_new_file-iphonex-img" class="g-aiImg" alt="" src="map_seize_new_file-iphonex.png"/>
+		<div id="g-ai0-1" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:7.753%;margin-top:-32.1px;left:49.2502%;margin-left:-181.5px;width:363px;">
+			<p class="g-pstyle0">Paraná leads in weapon seized </p>
+			<p class="g-pstyle0">by the Federal Police</p>
 		</div>
-		<div id="g-ai0-2" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:75.526%;margin-top:-200px;left:76.5873%;margin-left:-107px;width:214px;">
+		<div id="g-ai0-2" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:78.0826%;margin-top:-17.4px;left:81.0181%;margin-left:-71px;width:142px;">
 			<p class="g-pstyle1">Foz de Iguaçu city (state of Paraná),</p>
 			<p class="g-pstyle1"> on the border with Paraguay, </p>
 			<p class="g-pstyle1">makes the state have </p>
-			<p class="g-pstyle1">the highest number of guns seizures</p>
+			<p class="g-pstyle2">the highest number of guns seizures</p>
 		</div>
-		<div id="g-ai0-3" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:95.6329%;margin-top:-11px;left:51.8645%;margin-left:-178.5px;width:357px;">
+		<div id="g-ai0-3" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:97.0747%;margin-top:-7px;left:53.9978%;margin-left:-115px;width:230px;">
 			<p class="g-pstyle3">Source: Brazilian Federal Police / FOIA request</p>
 		</div>
 	</div>
 
-	<!-- Artboard: Mobile -->
-	<div id="g-map_seize_new_file-Mobile" class="g-artboard" style="max-width: 350px;max-height: 582px" data-aspect-ratio="0.601" data-min-width="0" data-max-width="699">
-<div style="padding: 0 0 166.2857% 0;"></div>
-		<img id="g-map_seize_new_file-Mobile-img" class="g-aiImg" alt="" src="map_seize_new_file-Mobile.png"/>
-		<div id="g-ai1-1" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:20.4425%;margin-top:-21px;left:51.6475%;margin-left:-95.5px;width:191px;">
-			<p class="g-pstyle0">Paraná leads in weapon </p>
-			<p class="g-pstyle0">seized by the Federal Police</p>
+	<!-- Artboard: web -->
+	<div id="g-map_seize_new_file-web" class="g-artboard" style="width:700px; height:818px;" data-aspect-ratio="0.856" data-min-width="700">
+<div style=""></div>
+		<img id="g-map_seize_new_file-web-img" class="g-aiImg" alt="" src="map_seize_new_file-web.png"/>
+		<div id="g-ai1-1" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:6.0284%;margin-top:-17.3px;left:50.7832%;margin-left:-310.5px;width:621px;">
+			<p class="g-pstyle0">Paraná leads in weapon seized by the Federal Police</p>
 		</div>
-		<div id="g-ai1-2" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:59.9067%;margin-top:-18.7px;left:76.3397%;margin-left:-63.5px;width:127px;">
+		<div id="g-ai1-2" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:76.0346%;margin-top:-180px;left:74.0307%;margin-left:-104px;width:208px;">
 			<p class="g-pstyle1">Foz de Iguaçu city (state of Paraná),</p>
 			<p class="g-pstyle1"> on the border with Paraguay, </p>
 			<p class="g-pstyle1">makes the state have </p>
-			<p class="g-pstyle1">the highest number of guns seizures</p>
+			<p class="g-pstyle2">the highest number of guns seizures</p>
 		</div>
-		<div id="g-ai1-3" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:73.6104%;margin-top:-7.4px;left:50.1429%;margin-left:-111px;width:222px;">
+		<div id="g-ai1-3" class="g-Layer_1 g-aiAbs g-aiPointText" style="top:96.4739%;margin-top:-11.2px;left:50.5089%;margin-left:-173px;width:346px;">
 			<p class="g-pstyle3">Source: Brazilian Federal Police / FOIA request</p>
 		</div>
 	</div>
 
 </div>
 
-<!-- End ai2html - 2022-03-07 16:01 -->
+<!-- End ai2html - 2022-03-09 17:01 -->
+
+
 
 
 
