@@ -174,3 +174,19 @@ sub-font
     margin-bottom: 2rem;
     font-weight: 400;
 }
+
+.row-container {
+    display: flex;
+    gap: 2em;
+}
+
+.column-container {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .row-container {
+        flex-direction: column;
+    }
+}
+
