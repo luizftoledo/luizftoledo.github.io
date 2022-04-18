@@ -9051,11 +9051,11 @@
       
       /* Scrollytelling code goes under here */
 
-d3.select("#97_money_bags").classed('hidden', false)
+	  d3.selectAll("[data-name='97_money_bags']").classed('hidden', false)
 
 d3.select("#step-one").on('stepin', function(e) {
 	console.log("Got to step one") 
-	d3.select("#97_money_bags").classed('hidden', true)
+	d3.selectAll("[data-name='97_money_bags']").classed('hidden', true)
 
 })
 
