@@ -40,76 +40,148 @@
   width: 50%;
 }
 
-      #scrolly {
-        position: relative;
-        padding: 1rem;
-      }
-
-      .scrolly-overlay {
-        position: relative;
-        padding: 0;
-        max-width: 35rem;
-        margin: 0 auto;
-      }
-
-      .sticky-thing {
-        position: -webkit-sticky;
-        position: sticky;
-        left: 0;
-        width: 100%;
-        margin: 0;
-        z-index: 0;
-        top: 0;
-        height: 100vh;
-        /* Center everything inside */
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .step {
-        margin: 0 auto 2rem auto;
-        margin-bottom: 25rem;
-        background-color: #eee;
-        background-color: #fff;
-        color: black;
-      }
-
-      .step p {
-        text-align: center;
-        padding: 1rem;
-        font-size: 1.25rem;
-      }
-
-      .hidden { visibility: hidden; }
-
-      /* When it's less than 700 pixels wide, do normal scrollytelling */
-      @media only screen and (min-width: 700px) {
-        #scrolly.side-by-side {
-          display: flex;
+/* These are the styles for ai2html */
+        
+#g-1-_foia_timeline-desktop, #g-1-_foia_timeline-mobile {
+            display: none;
         }
 
-        #scrolly.side-by-side > div {
-          flex-basis: 0;
-          flex-grow: 1;
-          flex-shrink: 1;
-          padding: 0.75em;
+        @media (max-width: 490px) {
+            #g-1-_foia_timeline-mobile {
+                display: block;
+            }
         }
 
-        #scrolly.side-by-side .scrolly-overlay {
-          margin-top: 70vh;
-          order: 0;
-          /* Change these to adjust sizing options */
-          min-width: 15rem;
-          max-width: 20rem;
+        @media (min-width: 490px) and (max-width: 620px) {
+            #g-1-_foia_timeline-mobile {
+                display: block;
+            }
         }
 
-        #scrolly.side-by-side .sticky-thing {
-          order: 1;
-          flex-grow: 2;
+        @media (min-width: 620px)  {
+            #g-1-_foia_timeline-desktop {
+                display: block;
+            }
         }
-      }
+     
+
+
+		#g-2---granted-requests-desktop, #g-2---granted-requests-mobile {
+            display: none;
+        }
+
+        @media (max-width: 490px) {
+            #g-2---granted-requests-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 490px) and (max-width: 620px) {
+            #g-2---granted-requests-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 620px)  {
+            #g-2---granted-requests-desktop {
+                display: block;
+            }
+        }
+
+
+
+		#g-3---pct-of-not-granted-by-year-desktop, #g-3---pct-of-not-granted-by-year-mobile {
+            display: none;
+        }
+
+        @media (max-width: 490px) {
+            #g-3---pct-of-not-granted-by-year-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 490px) and (max-width: 620px) {
+            #g-3---pct-of-not-granted-by-year-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 620px)  {
+            #g-3---pct-of-not-granted-by-year-desktop {
+                display: block;
+            }
+        }
+
+		
+
+#g-4---not-foia-requests-in-2020-desktop, #g-4---not-foia-requests-in-2020-mobile {
+            display: none;
+        }
+
+        @media (max-width: 490px) {
+            #g-4---not-foia-requests-in-2020-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 490px) and (max-width: 620px) {
+            #g-4---not-foia-requests-in-2020-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 620px)  {
+            #g-4---not-foia-requests-in-2020-desktop {
+                display: block;
+            }
+        }
+
+
+
+		#g-6---federal-agencies-desktop, #g-6---federal-agencies-mobile {
+            display: none;
+        }
+
+        @media (max-width: 490px) {
+            #g-6---federal-agencies-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 490px) and (max-width: 620px) {
+            #g-6---federal-agencies-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 620px)  {
+            #g-6---federal-agencies-desktop {
+                display: block;
+            }
+        }
+
+
+		#g-7---pior-bolsonaro-desktop, #g-7---pior-bolsonaro-mobile {
+            display: none;
+        }
+
+        @media (max-width: 490px) {
+            #g-7---pior-bolsonaro-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 490px) and (max-width: 620px) {
+            #g-7---pior-bolsonaro-mobile {
+                display: block;
+            }
+        }
+
+        @media (min-width: 620px)  {
+            #g-7---pior-bolsonaro-desktop {
+                display: block;
+            }
+        }
     </style>
 	<script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/scrollama/3.0.4/scrollama.min.js"></script>
