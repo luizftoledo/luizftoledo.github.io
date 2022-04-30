@@ -26,6 +26,8 @@
 
   <body>
 
+    
+
 
     <br>
     <div style="text-align: center">
@@ -40,47 +42,243 @@
           <p class='title'>Data and investigative journalism</p>
 
 
-          I am Luiz Fernando Toledo, a journalist using investigative 
-          and data techniques to bring powerful stories to life.
+          <p class='subtitle'>I am Luiz Fernando Toledo, a journalist using investigative 
+          and data techniques to bring powerful stories to life
           <p>
       
 
 
-<br>
-          </p><a href="https://twitter.com/toledoluizf"><i class="fab fa-twitter-square fa-2x"></i></a>
-           <a href="https://github.com/luizftoledo"><i class="fab fa-github-square fa-2x"></a></i>
-           <a href="https://www.linkedin.com/in/luizftoledo1/"><i class="fab fa-linkedin fa-2x"> </i></a>
-           <a href="mailto:toledo.luiz@columbia.edu"><i class="fas fa-envelope fa-2x"></i></a>
-          </p>
         
-          <img src="clo.jpeg" alt="A network graph" style="width:70%;height:70%;">
-          <p><i class="arrow down"></i></p>
-        </div>
-        </p>
-      </div>
-<br>
-
-    </section>
-    <div class=container style="text-align: center">
-      <p class="title">Here's what I do</p>
+            <a href="https://twitter.com/toledoluizf"><i class="fab fa-twitter-square fa-2x"></i></a>
+            <a href="https://github.com/luizftoledo"><i class="fab fa-github-square fa-2x"></a></i>
+            <a href="https://www.linkedin.com/in/luizftoledo1/"><i class="fab fa-linkedin fa-2x"> </i></a>
+            <a href="mailto:toledo.luiz@columbia.edu"><i class="fas fa-envelope fa-2x"></i></a>
+  
       <br>
-      </div>
-
+    
       
-      <div class=container style="text-align: center">
-        <p>I am currently pursuing 
-        a master's degree in <a href="https://journalism.columbia.edu/ms-data-journalism">
-          <strong>data journalism at Columbia University</strong> <i class="fas fa-university"></i>
-        </a>
-        after being awarded a <a
-          href="https://www.terra.com.br/noticias/educacao/jornalista-do-estado-ganha-bolsa-de-estudo-nos-eua,2f977bb5cef4e4da5489e73fa0bd91f56278avzb.html">full
-          scholarship</a> due to professional achievements in my home country, Brazil.
+
+        <img src="clo.jpeg" alt="A network graph" style="width:70%;height:70%;">
+        <p><i class="arrow down"></i></p>
+      </div>
+      </p>
+    </div>
+    <div class="mouse_scroll">
+          
+      <div class="mouse">
+        <div class="wheel"></div>
+      </div>
+      <div>
+        <span class="m_scroll_arrows unu"></span>
+        <span class="m_scroll_arrows doi"></span>
+        <span class="m_scroll_arrows trei"></span>
+      </div>
+    </div>
+
+
+        <div class=container style="text-align: center">
+          <p>I am currently pursuing 
+          a master's degree in <a href="https://journalism.columbia.edu/ms-data-journalism">
+            <strong>data journalism at Columbia University</strong> <i class="fas fa-university"></i>
+          </a>
+          after being awarded a <a
+            href="https://www.terra.com.br/noticias/educacao/jornalista-do-estado-ganha-bolsa-de-estudo-nos-eua,2f977bb5cef4e4da5489e73fa0bd91f56278avzb.html">full
+            scholarship</a>.
+
+            <br>
+            <br>
+            <p style="text-align:center;"> <a class="button is-warning is-medium"
+              href="https://drive.google.com/file/d/1HhGwXwzF6lF_jVhUh-qrVzaTuVjIkwR0/view?usp=sharing">Read my full resume</a></p>
+              <br>
            
-        <br>
-      <br>
-      <p style="text-align:center;"> <a class="button is-warning is-small"
-        href="https://drive.google.com/file/d/1HhGwXwzF6lF_jVhUh-qrVzaTuVjIkwR0/view?usp=sharing">Read my full resume</a></p>
-        <br>
+
+        <style>
+
+          *, *:before, *:after {
+            -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+           }
+          
+          
+          .mouse_scroll {
+            display: block;
+            margin: 0 auto;
+            width: 24px;
+            height: 100px;
+            margin-top: 1px;
+          }
+          
+          
+          .m_scroll_arrows
+          {
+            display: block;
+            width: 5px;
+            height: 5px;
+            -ms-transform: rotate(45deg); /* IE 9 */
+            -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+            transform: rotate(45deg);
+             
+            border-right: 2px solid black;
+            border-bottom: 2px solid black;
+            margin: 0 0 3px 4px;
+            
+            width: 16px;
+            height: 16px;
+          }
+          
+          
+          .unu
+          {
+            margin-top: 1px;
+          }
+          
+          .unu, .doi, .trei
+          {
+              -webkit-animation: mouse-scroll 1s infinite;
+              -moz-animation: mouse-scroll 1s infinite;
+              animation: mouse-scroll 1s infinite;
+            
+          }
+          
+          .unu
+          {
+            -webkit-animation-delay: .1s;
+            -moz-animation-delay: .1s;
+            -webkit-animation-direction: alternate;
+            
+            animation-direction: alternate;
+            animation-delay: alternate;
+          }
+          
+          .doi
+          {
+            -webkit-animation-delay: .2s;
+            -moz-animation-delay: .2s;
+            -webkit-animation-direction: alternate;
+            
+            animation-delay: .2s;
+            animation-direction: alternate;
+            
+            margin-top: -6px;
+          }
+          
+          .trei
+          {
+            -webkit-animation-delay: .3s;
+            -moz-animation-delay: .3s;
+            -webkit-animation-direction: alternate;
+            
+            animation-delay: .3s;
+            animation-direction: alternate;
+            
+            
+            margin-top: -6px;
+          }
+          
+          .mouse {
+            height: 42px;
+            width: 24px;
+            border-radius: 14px;
+            transform: none;
+            border: 2px solid black;
+            top: 170px;
+          }
+          
+          .wheel {
+            height: 5px;
+            width: 2px;
+            display: block;
+            margin: 5px auto;
+            background: black;
+            position: relative;
+            
+            height: 4px;
+            width: 4px;
+            border: 2px solid rgb(211, 179, 179);
+            -webkit-border-radius: 8px;
+                    border-radius: 8px;
+          }
+          
+          .wheel {
+            -webkit-animation: mouse-wheel 0.6s linear infinite;
+            -moz-animation: mouse-wheel 0.6s linear infinite;
+            animation: mouse-wheel 0.6s linear infinite;
+          }
+          
+          @-webkit-keyframes mouse-wheel{
+             0% {
+              opacity: 1;
+              -webkit-transform: translateY(0);
+              -ms-transform: translateY(0);
+              transform: translateY(0);
+            }
+          
+            100% {
+              opacity: 0;
+              -webkit-transform: translateY(6px);
+              -ms-transform: translateY(6px);
+              transform: translateY(6px);
+            }
+          }
+          @-moz-keyframes mouse-wheel {
+            0% { top: 1px; }
+            25% { top: 2px; }
+            50% { top: 3px;}
+            75% { top: 2px;}
+            100% { top: 1px;}
+          }
+          @-o-keyframes mouse-wheel {
+          
+             0% { top: 1px; }
+            25% { top: 2px; }
+            50% { top: 3px;}
+            75% { top: 2px;}
+            100% { top: 1px;}
+          }
+          @keyframes mouse-wheel {
+          
+             0% { top: 1px; }
+            25% { top: 2px; }
+            50% { top: 3px;}
+            75% { top: 2px;}
+            100% { top: 1px;}
+          }
+          
+          @-webkit-keyframes mouse-scroll {
+          
+            0%   { opacity: 0;}
+            50%  { opacity: .5;}
+            100% { opacity: 1;}
+          }
+          @-moz-keyframes mouse-scroll {
+          
+            0%   { opacity: 0; }
+            50%  { opacity: .5; }
+            100% { opacity: 1; }
+          }
+          @-o-keyframes mouse-scroll {
+          
+            0%   { opacity: 0; }
+            50%  { opacity: .5; }
+            100% { opacity: 1; }
+          }
+          @keyframes mouse-scroll {
+          
+            0%   { opacity: 0; }
+            50%  { opacity: .5; }
+            100% { opacity: 1; }
+          }
+          
+          </style>
+         
+          
+         <section class="section">
+
+          <div class=container style="text-align: center">
+            
+            <p class="title">Here's what I can do</p>
+            <br>
+            </div>
+        
         <p>I can report both in Portuguese and English, 
           cover breaking news at a fast pace,
         do research on <a
