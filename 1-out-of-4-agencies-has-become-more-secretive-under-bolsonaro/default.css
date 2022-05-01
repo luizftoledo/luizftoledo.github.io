@@ -1,8 +1,15 @@
 
 
 body {
-    padding-top:60px;
+    padding-top:auto;
     margin: auto;
+
+}
+
+.background-color {
+    background-color: black;
+    color:yellow;;
+    font-size: 18px
 }
 
 .fake-table > div, ul.spread {
@@ -108,14 +115,7 @@ sub-font
 
 }
 
-.kicker {
-    font-size: 1.5rem;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-    margin-top: 1rem;
-    font-weight: 300;
-    text-transform: uppercase;
-}
+
 
 .credit  {
     font-size: 1.2rem;
