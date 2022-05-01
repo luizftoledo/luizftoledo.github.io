@@ -6,11 +6,21 @@ body {
 
 }
 
+
+
 .background-color {
     background-color: black;
-    color:yellow;;
+    color:white;
     font-size: 18px
 }
+
+.arts {
+    
+    color:white;
+    font-size:20px;
+}
+
+
 
 .fake-table > div, ul.spread {
     display: flex;
