@@ -5,6 +5,13 @@ body {
     margin: auto;
 }
 
+.background-color {
+    background-color: white;
+    color: black;
+    font-size: 18px
+}
+
+
 .fake-table > div, ul.spread {
     display: flex;
     justify-content: space-between;
