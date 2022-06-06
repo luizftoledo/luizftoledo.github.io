@@ -3,10 +3,10 @@ var map = new mapboxgl.Map({
   container: "map",
   style:  "mapbox://styles/luizftoledo/cl3ugxvw8004z14nyyg2hihuv",
   
-  zoom: 6.5,
+  zoom: 1,
   maxZoom: 9,
   minZoom: 3,
-  center: [-85.5, 37.7],
+  center: [-95.5, 37.7],
 });
 
 map.on("load", function () {
@@ -16,11 +16,11 @@ map.on("load", function () {
           type: "line",
           source: {
             type: "geojson",
-            data: "data/statesElections.geojson",
+            data: "data/counties.geojson",
           },
           paint: {
             "line-color": "#ffffff",
-            "line-width": 0.7,
+            "line-width": 0.5,
           },
         },
         "waterway-label" // Here's where we tell Mapbox where to slot this new layer
@@ -31,17 +31,17 @@ map.on("load", function () {
       type: "fill",
       source: {
         type: "geojson",
-        data: "data/statesElections.geojson",
+        data: "data/counties.geojson",
       },
       maxzoom: 6,
       paint: {
         "fill-color": [
           "match",
-          ["get", "Winner"],
-          "Donald J Trump",
-          "#cf635d",
-          "Joseph R Biden Jr",
-          "#6193c7",
+          ["get", "poverty?"],
+          "yes",
+          "#ff7276",
+          "no",
+          "#d3d3d3",
           "Other",
           "#91b66e",
           "#ffffff",
@@ -118,27 +118,18 @@ map.on("load", function () {
 });
 
 map.on("click", "us_states_elections", function (e) {
-  var stateName = e.features[0].properties.State;
-  var winner = e.features[0].properties.Winner;
-  var wnrPerc = e.features[0].properties.WnrPerc;
-  var totalVotes = e.features[0].properties.Total;
-  wnrPerc = (wnrPerc * 100).toFixed(0);
-  totalVotes = totalVotes.toLocaleString();
-  stateName = stateName.toUpperCase();
+  var stateName = e.features[0].properties.state;
+  var countyName = e.features[0].properties.county_name;
   new mapboxgl.Popup()
     .setLngLat(e.lngLat)
     .setHTML(
       "<h4>" +
         stateName +
         "</h4>" +
-        "<h2>" +
-        winner +
-        "</h2>" +
-        "<p>" +
-        wnrPerc +
-        "% - (" +
-        totalVotes +
-        " votes)</p>"
+        "<h3>" +
+        countyName +
+        "</h3>" +
+        "<p>" 
     )
     .addTo(map);
 });
@@ -152,15 +143,9 @@ map.on("mouseleave", "us_states_elections", function () {
 });
 
 map.on("click", "us_counties_elections", function (e) {
-  var stateName = e.features[0].properties.State;
-  var countyName = e.features[0].properties.County;
-  var winner = e.features[0].properties.Winner;
-  var wnrPerc = e.features[0].properties.WnrPerc;
-  var totalVotes = e.features[0].properties.Total;
-  wnrPerc = (wnrPerc * 100).toFixed(0);
-  totalVotes = totalVotes.toLocaleString();
-  stateName = stateName.toUpperCase();
-  countyName = countyName.toUpperCase();
+  var stateName = e.features[0].properties.state;
+  var countyName = e.features[0].properties.county_name;
+  
   new mapboxgl.Popup()
     .setLngLat(e.lngLat)
     .setHTML(
@@ -168,15 +153,7 @@ map.on("click", "us_counties_elections", function (e) {
         countyName +
         " - " +
         stateName +
-        "</h4>" +
-        "<h2>" +
-        winner +
-        "</h2>" +
-        "<p>" +
-        wnrPerc +
-        "% - (" +
-        totalVotes +
-        " votes)</p>"
+        "</h4>" 
     )
     .addTo(map);
 });
