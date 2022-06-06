@@ -3,10 +3,10 @@ var map = new mapboxgl.Map({
   container: "map",
   style:  "mapbox://styles/luizftoledo/cl3ugxvw8004z14nyyg2hihuv",
   
-  zoom: 6.5,
+  zoom: 0,
   maxZoom: 9,
   minZoom: 3,
-  center: [-85.5, 37.7],
+  center: [-95.5, 40.7],
 });
 
 map.on("load", function () {

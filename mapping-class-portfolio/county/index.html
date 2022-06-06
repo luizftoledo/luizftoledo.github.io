@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>2020 Election Results Map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="styles.css">
+
+      <!-- google fonts: Roboto Condensed(super-font) and Lora(sub-font) -->
+      <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700" rel="stylesheet"> 
+
+      <!-- RESIZER SCRIPT-->
+
+<script type="text/javascript">
+    (function() {
+        // only want one resizer on the page
+        if (document.documentElement.className.indexOf("g-resizer-v3-init") > -1) return;
+        document.documentElement.className += " g-resizer-v3-init";
+        // require IE9+
+        if (!("querySelector" in document)) return;
+        function resizer() {
+            var elements = Array.prototype.slice.call(document.querySelectorAll(".g-artboard[data-min-width]")),
+                widthById = {};
+            elements.forEach(function(el) {
+                var parent = el.parentNode,
+                    width = widthById[parent.id] || parent.getBoundingClientRect().width,
+                    minwidth = el.getAttribute("data-min-width"),
+                    maxwidth = el.getAttribute("data-max-width");
+                widthById[parent.id] = width;
+
+                if (+minwidth <= width && (+maxwidth >= width || maxwidth === null)) {
+                    el.style.display = "block";
+                } else {
+                    el.style.display = "none";
+                }
+            });
+            try {
+                if (window.parent && window.parent.$) {
+                    window.parent.$("body").trigger("resizedcontent", [window]);
+                }
+                if (window.require) {
+                    require(['foundation/main'], function() {
+                        require(['shared/interactive/instances/app-communicator'], function(AppCommunicator) {
+                            AppCommunicator.triggerResize();
+                        });
+                    });
+                }
+            } catch(e) { console.log(e); }
+        }
+
+        document.addEventListener('DOMContentLoaded', resizer);
+        // feel free to replace throttle with _.throttle, if available
+        window.addEventListener('resize', throttle(resizer, 200));        
+
+        function throttle(func, wait) {
+            // from underscore.js
+            var _now = Date.now || function() { return new Date().getTime(); },
+                context, args, result, timeout = null, previous = 0;
+            var later = function() {
+                previous = _now();
+                timeout = null;
+                result = func.apply(context, args);
+                if (!timeout) context = args = null;
+            };
+            return function() {
+                var now = _now(), remaining = wait - (now - previous);
+                context = this;
+                args = arguments;
+                if (remaining <= 0 || remaining > wait) {
+                    if (timeout) {
+                        clearTimeout(timeout);
+                        timeout = null;
+                    }
+                    previous = now;
+                    result = func.apply(context, args);
+                    if (!timeout) context = args = null;
+                } else if (!timeout && options.trailing !== false) {
+                    timeout = setTimeout(later, remaining);
+                }
+                return result;
+            };
+        }
+
+       
+    })();
+</script>
+
+
+<!-- END OF RESIZER SCRIPT-->
+</head>
+
+<body>
+
+    <body class="light-theme">
+        <div class="container"><!-- start of the main container-->
+            <div class="row justify-content-center"><!-- headline and intro -->
+                <div class="col-lg-10 ">
+                    <p><a href="https://luizftoledo.github.io/">&#8592; back to portfolio</a></p>
+                    
+                        <p class="kicker super-font">CLOROPLETH MAP</p>
+                    
+                    
+                        <h1 class="headline super-font"> US 2020 elections results
+                        </h1>
+                    
+                    
+                        <p class="credit super-font"> By Luiz Fernando Toledo</p>
+                    
+                        
+                        <div class="sub-font body-text">
+                            <p>Two maps created for the Points Unknown mapping course at Columbia Journalism School. 
+                                This is a recreation of the style used by the New York Times 
+                                in their <a href="https://www.nytimes.com/interactive/2019/11/05/us/elections/results-kentucky-governor-general-election.html">election results maps.</a>
+                            </p>
+<hr>
+    
+                            <h2>Cloropleth map
+                            </h2>
+    <div id='map'></div>
+    <script type='text/javascript' src="map.js"></script>
+
+    <h2>Graduated Point Interactive Map
+    </h2>
+    <div id='map2'></div>
+    <script type='text/javascript' src="map2.js"></script>
+<hr>
+<h2>Data sources</h2>
+<p>
+    US Counties. Download from <a href="https://www2.census.gov/geo/tiger/GENZ2020/shp/cb_2020_us_county_5m.zip">U.S. Census Bureau - Cartographic Boundary Files.</a>
+</p>
+    <p>US States. Download from <a href="https://www2.census.gov/geo/tiger/GENZ2020/shp/cb_2020_us_state_5m.zip">U.S. Census Bureau - Cartographic Boundary Files.</a>
+    </p>
+    <p>US Presidential Election Results at the County Level. Download from <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ">MIT Election Data + Science Lab</a></p>
+</p>
+</body>
+
+</html>
