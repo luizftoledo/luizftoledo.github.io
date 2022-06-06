@@ -4,7 +4,7 @@ var map2 = new mapboxgl.Map({
   style: "mapbox://styles/luizftoledo/cl3ugxvw8004z14nyyg2hihuv",
   zoom: 0,
   maxZoom: 9,
-  minZoom: 3.5,
+  minZoom: 3.2,
   center: [-99, 38],
   maxBounds: [
     [-180, 15],
