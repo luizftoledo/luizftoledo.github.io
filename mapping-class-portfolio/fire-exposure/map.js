@@ -70,19 +70,18 @@ map.on('mouseleave', 'states_fill', function () {
 
     // text for legend
     const layers = [
-      '< 10',
-      '< 50',
-      ' < 500',
-      ' < 5000',
-      ' > 10000'
+      '0-20%',
+      '20-40%',
+      '40-50%',
+      '> 50%'
       ];
 
       const colors = [
         '#FF8A8A',
         '#FF5C5C',
         '#FF2E2E',
-        '#FF0000',
-        '#750000'
+        '#FF0000'
+        
       ];
   
   // create legend
