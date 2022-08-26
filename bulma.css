@@ -6,3 +6,14 @@
     background-image: linear-gradient(to right, #8CDFD6 100%, transparent 100%);
     background-repeat: no-repeat;
 }
+
+a:hover {
+    color: black;
+    background-position: 0% 100%;
+    background-size: 100% 10%;
+    transition: background-size 0.4s ease, color 0.4s ease;
+    background-image: linear-gradient(to right, #0000EE 100%, transparent 100%);
+    background-repeat: no-repeat;
+  }
+
+ 
