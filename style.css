@@ -66,3 +66,11 @@ img {
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
   }
+
+  .highlighted {
+    background-position: 0% 100%;
+    background-size: 100% 44%;
+    transition: background-size 0.4s ease, color 0.4s ease;
+    background-image: linear-gradient(to right, #8CDFD6 100%, transparent 100%);
+    background-repeat: no-repeat;
+}

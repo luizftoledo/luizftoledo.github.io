@@ -43,7 +43,15 @@
 
 
 span {
-  background-color: #ADD8E6;
+  
+  background-position: 0% 100%;
+  background-size: 100% 33%;
+  transition: background-size 0.4s ease, color 0.4s ease;
+  background-image: linear-gradient(to right, #8CDFD6 100%, transparent 100%);
+  background-repeat: no-repeat;
+}
+
+
 }
          
         </style>
@@ -75,7 +83,7 @@ span {
 
      <br>
    
-     <p style="text-align:center; font-size:21px">a journalist using <span>investigative and data techniques</span> to bring impactful stories to life.</p>
+     <p style="text-align:center; font-size:21px">a journalist using <span class="highlighted">investigative and data techniques</span> to bring impactful stories to life.</p>
     <br>
 
     <p style="text-align:center; font-size:21px"> I hold two master's degrees - one in <span>Data Journalism</span>, at <a href="https://journalism.columbia.edu/ms-data-journalism">Columbia University Graduate School of Journalism (New York), </a> 
