@@ -28,38 +28,54 @@
   
 
   <style>
-    .fancy-divider {
-      height: 4px;
-      width: 100%;
-      position: relative;
-      overflow: hidden;
-      margin: 20px 0;
-      border: none;
-    }
-    
-    .fancy-divider::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to right, #f0f0f0, #ccc, #f0f0f0);
-      animation: fancy-divider-animation 2s infinite linear;
-      transform-origin: left;
-    }
-    
-    @keyframes fancy-divider-animation {
-      0% {
-        transform: scaleX(0);
-      }
-      50% {
-        transform: scaleX(1);
-      }
-      100% {
-        transform: scaleX(0);
-      }
-    }
+    .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.fancy-divider-container {
+  display: inline-block;
+  width: fit-content;
+}
+
+.fancy-divider {
+  height: 2px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin: 20px 0;
+  border: none;
+}
+
+.fancy-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgb(159, 221, 214), rgb(204, 204, 204), rgb(159, 221, 214));
+  animation: fancy-divider-animation 2s infinite linear;
+  transform-origin: left;
+}
+
+@keyframes fancy-divider-animation {
+  0% {
+    transform: scaleX(0);
+  }
+  50% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
 
     #progress-bar {
       width: 0;
@@ -76,7 +92,7 @@
     
     </style>
     
-    <div class="fancy-divider"></div>
+    
     
     
 
@@ -288,9 +304,10 @@
             <div class=container style="text-align: center">
 
           <a id="experience"> </a>
-         <div class="fancy-divider"></div>
+       
 
           <p class="title">Experience</p>
+          <div class="fancy-divider"></div>
           
           <div class=container style="text-align: center">
             
