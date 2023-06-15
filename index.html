@@ -26,10 +26,66 @@
   <script src="https://kit.fontawesome.com/0ccc624f70.js" crossorigin="anonymous"></script>
   
   
-</head>
+
+  <style>
+    .fancy-divider {
+      height: 4px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      margin: 20px 0;
+      border: none;
+    }
+    
+    .fancy-divider::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, #f0f0f0, #ccc, #f0f0f0);
+      animation: fancy-divider-animation 2s infinite linear;
+      transform-origin: left;
+    }
+    
+    @keyframes fancy-divider-animation {
+      0% {
+        transform: scaleX(0);
+      }
+      50% {
+        transform: scaleX(1);
+      }
+      100% {
+        transform: scaleX(0);
+      }
+    }
+
+    #progress-bar {
+      width: 0;
+      height: 3px;
+      background-color: #337ab7;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      transition: width 0.3s ease;}
+
+
+
+    
+    </style>
+    
+    <div class="fancy-divider"></div>
+    
+    
+
 <div class=container>
 
+
+
   <body>
+    <div id="progress-bar"></div>
 
     
 
@@ -232,12 +288,13 @@
             <div class=container style="text-align: center">
 
           <a id="experience"> </a>
-          <hr>
+         <div class="fancy-divider"></div>
+
           <p class="title">Experience</p>
           
           <div class=container style="text-align: center">
             
-            <hr>
+
             
 
             </div>
@@ -308,9 +365,9 @@ to save over US$ 1 million in public funds</a>,
 
       <div class=container style="text-align: center">
        
-        <hr>
+        <div class="fancy-divider"></div>
+
         <a id="investigative"></a> <p class="title">Investigative reporting</p>
-        <hr>
         <br>
         </div>
 
@@ -707,9 +764,10 @@ to save over US$ 1 million in public funds</a>,
           <a id="data"></a> 
           <div class=container style="text-align: center">
             
-            <hr>
+            <div class="fancy-divider"></div>
+
           <p class="title">Data journalism, visualization and mapping</p>
-            <hr>
+          
             <br>
             </div>
     
@@ -940,9 +998,10 @@ to save over US$ 1 million in public funds</a>,
           
 
           <div class=container style="text-align: center">
-            <hr>
+            <div class="fancy-divider"></div>
+
           <p class="title">Data journalism skills</p>
-          <hr>
+        
           <p style="font-size:20px"><strong>Design/Data visualization:</strong> Adobe Illustrator, Plotnine (ggplot for Python), Datawrapper, Flourish, d3/JavaScript</p>
           <p style="font-size:20px"><strong>Data analysis:</strong> Python, Excel, Google Spreadsheet, PostgreSQL</p>
           <p style="font-size:20px"><strong>Web scraping:</strong> Python (BeautifoulSoup, Selenium), APIs</p>
@@ -956,39 +1015,124 @@ to save over US$ 1 million in public funds</a>,
           <div class=container style="text-align: center">
             <a id="teaching"></a>
             <div class=div-1>
-              <hr>
+              <div class="fancy-divider"></div>
+
              
                 <p class="title">Teaching, workshops</p>
-<hr>
 
 
-<p> I have taught more than <strong>2,000 students and professionals</strong> about public records, Brazil's Freedom of Information Act (Lei de Acesso à Informação), investigative journalism, education coverage and other journalism-related topics. 
 
-<p><strong>2022</strong> </p>
-<p>Temporary professor at the Master in Data Journalism (<a href="https://www.insper.edu.br/pos-graduacao/master-em-jornalismo-de-dados-automacao-e-data-storytelling/#:~:text=O%20Master%20%C3%A9%20voltado%20a,demandadas%20pelo%20mercado%20de%20trabalho">Insper</a>)- Introduction to Spreadsheets and Data (3 months) </p>
-<p>8-hour program about public records for the Brazilian alternative media (<a href="https://baraodeitarare.org.br/site/curso-sobre-lei-de-acesso-a-informacao-ocorre-em-agosto-faca-a-sua-inscricao">Barão de Itararé)</a></p>
-<p><strong>2021</strong> </p>
-<p>LAI nas Redações: a public records program taught in 10 Brazilian newsrooms (including Globo, Estadão, Folha with almost 2,000 subscriptions) - Partnership between <a href="https://www.abraji.org.br/noticias/abraji-e-fiquem-sabendo-treinam-jornalistas-sobre-uso-da-lai-em-reportagens">
-Abraji and Fiquem Sabendo</a></p>
-<p>3-hour workshop about how to get public records and data for lawyers, activists and journalists. <a href="https://poatem.com.br/luiz-fernando-toledo-da-agencia-fiquem-sabendo-ministra-oficina-virtual-sobre-a-lei-de-acesso-a-informacao/">Instituto Ling</a></p>
 
-<p><strong>2020</strong> </p>
-<p>How to cover public education (online program - two classes (1 hour) <a href="https://jeduca.org.br/noticia/jeduca-realiza-curso-online-sobre-jornalismo-de-educacao"> - Jeduca (Brazil's Education Writers Association)</a></p>
-<p><strong>2018</strong></p> 
-<p>How to cover public education - in-person lectures in 15 Brazilian public and private universites <a href="https://jeduca.org.br/arquivos/jeduca-relatorio-de-atividades-2018.pdf"> - Jeduca (Brazil's Education Writers Association)</a></p>
 
-<p><strong>Every year/ongoing</p></strong>
-<p><strong>Since 2016</strong> Curso Estado de Jornalismo (Focas Estadão): Public records and investigative journalism workshop</p>
-<p><strong>Since 2021</strong> Trainee (Folha de São Paulo) Public records and investigative journalism workshop</p>
-<p><strong>Since 2017</strong> Brazilian Association for Investigative Journalism (Abraji) conferences</p>
+
+
+
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h2.title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+  }
+  
+  .grid-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .grid-item h3 {
+    margin-top: 0;
+  }
+  
+  .grid-item p {
+    margin: 0;
+  }
+  
+  a {
+    color: #337ab7;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  .highlight {
+    background-color: #f5f5f5;
+  }
+  </style>
+  
+  <div class="container">
+  
+    <div class="grid">
+      <div class="grid-item">
+        <h3>Every year/ongoing</h3>
+        <p><strong>Since 2016</strong> Curso Estado de Jornalismo (Focas Estadão): Public records and investigative journalism workshop</p>
+        <p><strong>Since 2021</strong> Trainee (Folha de São Paulo): Public records and investigative journalism workshop</p>
+        <p><strong>Since 2017</strong> Brazilian Association for Investigative Journalism (Abraji) conferences</p>
+      </div>
+  
+      <div class="grid-item">
+        <h3>2023</h3>
+        <p class="highlight">How to cover public education (online program - two classes, 1 hour each) <a href="https://jeduca.org.br/noticia/jeduca-realiza-curso-online-sobre-jornalismo-de-educacao">- Jeduca (Brazil's Education Writers Association)</a></p>
+      </div>
+  
+      <div class="grid-item">
+        <h3>2022</h3>
+        <p class="highlight">Temporary professor at the Master in Data Journalism (<a href="https://www.insper.edu.br/pos-graduacao/master-em-jornalismo-de-dados-automacao-e-data-storytelling/#:~:text=O%20Master%20%C3%A9%20voltado%20a,demandadas%20pelo%20mercado%20de%20trabalho">Insper</a>) - Introduction to Spreadsheets and Data (3 months)</p>
+        <p>8-hour program about public records for the Brazilian alternative media (<a href="https://baraodeitarare.org.br/site/curso-sobre-lei-de-acesso-a-informacao-ocorre-em-agosto-faca-a-sua-inscricao">Barão de Itararé)</a></p>
+      </div>
+  
+      <div class="grid-item">
+        <h3>2021</h3>
+        <p class="highlight">LAI nas Redações: a public records program taught in 10 Brazilian newsrooms (including Globo, Estadão, Folha with almost 2,000 subscriptions) - Partnership between <a href="https://www.abraji.org.br/noticias/abraji-e-fiquem-sabendo-treinam-jornalistas-sobre-uso-da-lai-em-reportagens">Abraji and Fiquem Sabendo</a></p>
+        <p>3-hour workshop about how to get public records and data for lawyers, activists, and journalists. <a href="https://poatem.com.br/luiz-fernando-toledo-da-agencia-fiquem-sabendo-ministra-oficina-virtual-sobre-a-lei-de-acesso-a-informacao/">Instituto Ling</a></p>
+      </div>
+  
+      <div class="grid-item">
+        <h3>2018</h3>
+        <p>How to cover public education - in-person lectures in 15 Brazilian public and private universities <a href="https://jeduca.org.br/arquivos/jeduca-relatorio-de-atividades-2018.pdf">- Jeduca (Brazil's Education Writers Association)</a></p>
+      </div>
+    </div>
+  </div>
+  
+
+
+
+
 
 
 <br>
 
-<hr>
+<div class="fancy-divider"></div>
+
              
                 <p class="title">Interviews</p>
-<hr>
+
 
 <p>Due to my professional efforts to
 improve public transparency in Brazil, I've been interviewed by several TV, podcasts, radio and online news shows - you can see some of those below. </p>
@@ -1067,11 +1211,11 @@ improve public transparency in Brazil, I've been interviewed by several TV, podc
             <div class=container style="text-align: center">
               <a id="awards"</a>
               <div class=div-1>
-                <hr>
+                <div class="fancy-divider"></div>
+
               
                 <p class="title">Awards, honorable mentions</p>
-<hr>
-
+<br>
 
 <p><a href="https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/cffc/noticias/cffc-elege-os-agraciados-ao-premio-transparencia-e-fiscalizacao-publica-2022"> Prêmio Transparência e Fiscalização Pública 2022/Câmara dos Deputados (with Fiquem Sabendo)</a></p>
 
@@ -1107,9 +1251,10 @@ improve public transparency in Brazil, I've been interviewed by several TV, podc
 <p><a href="https://www2.jornalcruzeiro.com.br/materia/396837/sujou-o-tenis-eu-lavo-deixou-bagunca-eu-arrumo"> Premio ASI/Schaeffler (Categoria Estudante) 2011 - A história da mulher que adotou seis crianças (internship)</a></p>
 <br>
 </div>
-<hr>
+<div class="fancy-divider"></div>
+
 <p class="title">Scholarships, fellowships, grants</p>
-<hr>
+
 
 <p><a href="https://www.muckrock.com/news/archives/2023/may/11/second-cohort-of-gateway-grantees-launch-projects-to-help-organizations-worldwide-better-carry-out-their-role-as-watchdog/">Gateway Grant (2023)</a></p>
 
@@ -1148,5 +1293,14 @@ improve public transparency in Brazil, I've been interviewed by several TV, podc
     </p>
   </div>
 </footer>
+
+<script>
+  window.addEventListener('scroll', function() {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+  });
+</script>
 
 </html>
