@@ -293,6 +293,41 @@ li {
     aspect-ratio: 560 / 315;
 }
 
+a {
+    color: #92140C;
+}
+
+.awards > .paragraph > a, .grants > .paragraph > a {
+    color: #272635;
+}
+
+footer {
+    border-top: 2px solid #92140C;
+    margin: 36px 0;
+}
+
+.footer {
+    margin: 0 auto;
+    padding: 12px 0 0 0;
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    width: fit-content;
+}
+
+.footer-paragraph {
+    color: var(--black, #272635);
+    font-family: Noto Serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
+    margin: 0;
+    text-align: center;
+    position: relative;
+}
+.footer-icon {
+    display: inline;
+}
 
 @media screen and (max-width: 1145px) {
     .story-content > .botao-icon {
@@ -347,5 +382,13 @@ li {
 
     .story-container:nth-child(odd) {
         flex-direction: column-reverse;
+    }
+
+    .interview-wrapper {
+        display: block;
+    }
+
+    .interview-container {
+        margin-bottom: 16px;
     }
 }
