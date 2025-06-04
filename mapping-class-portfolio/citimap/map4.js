@@ -56,14 +56,14 @@ map4.addLayer(
 
 // Create the popup
 map4.on('click', 'citibike_points', function (e) {
-var cityName = e.features[0].properties.start_station_name;
+var cityName = e.features[0].properties.end_station_name;
 var tripcount = e.features[0].properties.total_trips;
 new mapboxgl.Popup()
   .setLngLat(e.lngLat)
-  .setHTML('<p>' + tripcount + ' bike trips started at ' + cityName + '</p>' 
-  
+  .setHTML('<p>' + tripcount + ' bike trips ended at ' + cityName + '</p>'
+
       )
-  .addTo(map);
+  .addTo(map4);
 });
 map4.on('mouseenter', 'citibike_points', function () {
 map4.getCanvas().style.cursor = 'pointer';
