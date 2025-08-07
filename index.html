@@ -302,29 +302,36 @@
       });
     }
 
-    // Popup show once per session
+    // Popup show once per session (resilient to storage errors)
     const popup = document.getElementById('curso-popup');
     const closePopup = document.getElementById('closePopup');
     const key = 'cursoPopupDismissed';
-    try {
-      const dismissed = sessionStorage.getItem(key);
-      if (!dismissed && popup) {
-        popup.classList.add('show');
-      }
-      if (closePopup) {
-        closePopup.addEventListener('click', () => {
-          popup.classList.remove('show');
-          sessionStorage.setItem(key, '1');
-        });
-      }
-      popup?.addEventListener('click', (e) => {
-        if (e.target === popup) {
-          popup.classList.remove('show');
-          sessionStorage.setItem(key, '1');
-        }
+
+    const safeGet = (k) => {
+      try { return window.sessionStorage.getItem(k); } catch { return null; }
+    };
+    const safeSet = (k, v) => {
+      try { window.sessionStorage.setItem(k, v); } catch { /* ignore */ }
+    };
+
+    const dismissed = safeGet(key);
+    if (!dismissed && popup) {
+      popup.classList.add('show');
+    }
+
+    const hidePopup = () => {
+      if (!popup) return;
+      popup.classList.remove('show');
+      safeSet(key, '1');
+    };
+
+    if (closePopup) {
+      closePopup.addEventListener('click', hidePopup);
+    }
+    if (popup) {
+      popup.addEventListener('click', (e) => {
+        if (e.target === popup) hidePopup();
       });
-    } catch (e) {
-      // ignore storage errors
     }
   </script>
 </body>

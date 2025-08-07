@@ -733,6 +733,13 @@ nav .nav-links a:hover {
   display: flex;
 }
 
+/* ensure the close button looks like a text button on light bg */
+#closePopup.icon-btn {
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+}
+
 /* Dark theme */
 html[data-theme='dark'] {
   --text-color: #e5e7eb;
