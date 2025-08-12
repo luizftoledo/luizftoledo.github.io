@@ -313,14 +313,7 @@ nav .nav-links a:hover {
   color: #ffffff;
 }
 
-/* inoreader embeds */
-.inoreader-embed {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-}
+ 
 
 /* interviews section */
 .interviews {
