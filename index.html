@@ -40,17 +40,7 @@
     </div>
   </nav>
 
-  <!-- Popup sobre o curso de jornalismo investigativo -->
-  <div id="curso-popup" class="popup" role="dialog" aria-modal="true" aria-labelledby="cursoTitle">
-    <div class="popup-content">
-      <h2 id="cursoTitle">Jornalismo investigativo: das planilhas às ruas</h2>
-      <p>De 28 de agosto a 9 de setembro de 2025, participe de um curso online com <strong>Ju&nbsp;Faddul</strong> e <strong>Luiz&nbsp;Fernando&nbsp;Toledo</strong>. Serão quatro encontros sobre transparência (LAI), como vender pautas, como financiar investigações e como fazer boas entrevistas nas ruas.</p>
-      <a href="https://www.sympla.com.br/evento-online/jornalismo-investigativo-das-planilhas-as-ruas/3051244" target="_blank" rel="noopener noreferrer" class="btn-popup">Saiba mais e inscreva‑se</a>
-      <p style="margin-top: 1rem;">
-        <button id="closePopup" class="icon-btn" style="width:auto;height:auto;padding:.5rem 1rem;border-radius:.5rem;">Fechar</button>
-      </p>
-    </div>
-  </div>
+  
 
   <section class="hero section">
     <div class="container">
@@ -304,37 +294,7 @@
       });
     }
 
-    // Popup show once per session (resilient to storage errors)
-    const popup = document.getElementById('curso-popup');
-    const closePopup = document.getElementById('closePopup');
-    const key = 'cursoPopupDismissed';
-
-    const safeGet = (k) => {
-      try { return window.sessionStorage.getItem(k); } catch { return null; }
-    };
-    const safeSet = (k, v) => {
-      try { window.sessionStorage.setItem(k, v); } catch { /* ignore */ }
-    };
-
-    const dismissed = safeGet(key);
-    if (!dismissed && popup) {
-      popup.classList.add('show');
-    }
-
-    const hidePopup = () => {
-      if (!popup) return;
-      popup.classList.remove('show');
-      safeSet(key, '1');
-    };
-
-    if (closePopup) {
-      closePopup.addEventListener('click', hidePopup);
-    }
-    if (popup) {
-      popup.addEventListener('click', (e) => {
-        if (e.target === popup) hidePopup();
-      });
-    }
+    
   </script>
 </body>
 </html>
