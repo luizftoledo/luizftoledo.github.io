@@ -14,6 +14,7 @@
   <script async src="https://www.instagram.com/embed.js"></script>
 </head>
 <body>
+  <div class="progress-bar" id="progressBar"></div>
   <nav>
     <div class="container nav-inner">
       <div class="brand"><a href="#">Luiz Fernando Toledo</a></div>
@@ -289,7 +290,43 @@
       });
     }
 
-    
+    // Reading progress bar
+    const progressBar = document.getElementById('progressBar');
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const p = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      if (progressBar) progressBar.style.width = p + '%';
+    };
+    window.addEventListener('scroll', updateProgress);
+    window.addEventListener('load', updateProgress);
+
+    // Back to top button
+    const backBtn = document.createElement('button');
+    backBtn.className = 'back-to-top';
+    backBtn.innerHTML = '↑';
+    backBtn.title = 'Back to top';
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.body.appendChild(backBtn);
+    const toggleBackBtn = () => {
+      if (window.scrollY > 400) backBtn.classList.add('show'); else backBtn.classList.remove('show');
+    };
+    window.addEventListener('scroll', toggleBackBtn);
+    window.addEventListener('load', toggleBackBtn);
+
+    // Anchor links copy for section titles
+    document.querySelectorAll('.section h2').forEach(h => {
+      const id = h.parentElement?.id || h.textContent?.toLowerCase().replace(/\s+/g,'-');
+      if (!h.parentElement?.id && id) h.parentElement?.setAttribute('id', id);
+      h.style.cursor = 'pointer';
+      h.addEventListener('click', () => {
+        const url = location.origin + location.pathname + '#' + (h.parentElement?.id || id || '');
+        navigator.clipboard.writeText(url).then(() => {
+          h.title = 'Link copied';
+          setTimeout(() => (h.title = ''), 1200);
+        });
+      });
+    });
   </script>
 </body>
 </html>

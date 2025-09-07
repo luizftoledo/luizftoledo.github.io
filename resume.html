@@ -13,6 +13,7 @@
   </script>
 </head>
 <body>
+  <div class="progress-bar" id="progressBar"></div>
   <nav>
     <div class="container nav-inner">
       <div class="brand"><a href="index.html">Luiz Fernando Toledo</a></div>
@@ -155,4 +156,33 @@
   <script defer>
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
-    if (
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+    }
+    // Reading progress bar
+    const progressBar = document.getElementById('progressBar');
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const p = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      if (progressBar) progressBar.style.width = p + '%';
+    };
+    window.addEventListener('scroll', updateProgress);
+    window.addEventListener('load', updateProgress);
+    // Back to top button
+    const backBtn = document.createElement('button');
+    backBtn.className = 'back-to-top';
+    backBtn.innerHTML = '↑';
+    backBtn.title = 'Back to top';
+    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    document.body.appendChild(backBtn);
+    const toggleBackBtn = () => {
+      if (window.scrollY > 400) backBtn.classList.add('show'); else backBtn.classList.remove('show');
+    };
+    window.addEventListener('scroll', toggleBackBtn);
+    window.addEventListener('load', toggleBackBtn);
+  </script>
+</body>
+</html>
