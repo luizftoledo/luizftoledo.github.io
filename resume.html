@@ -6,14 +6,10 @@
   <title>Luiz Fernando Toledo – Resume</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.uber.css">
+  <link rel="stylesheet" href="style.future.css">
   <script defer>
-    (function() {
-      const stored = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const theme = stored || (prefersDark ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', theme);
-    })();
+    // Force dark mode sitewide
+    document.documentElement.setAttribute('data-theme', 'dark');
   </script>
 </head>
 <body>
@@ -23,14 +19,12 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html#investigative">Reporting</a></li>
         <li><a href="index.html#interviews">Interviews</a></li>
+        <li><a href="index.html#short-videos">Videos</a></li>
         <li><a href="index.html#awards">Awards</a></li>
         <li><a href="resume.html">Resume</a></li>
         <li><a href="https://datafixers.org" target="_blank" rel="noopener noreferrer">Data Journalism</a></li>
       </ul>
       <div class="nav-actions">
-        <button class="icon-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
-          <i class="fas fa-moon"></i>
-        </button>
         <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" title="Menu">
           <i class="fas fa-bars"></i>
         </button>
@@ -161,21 +155,4 @@
   <script defer>
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
-    if (menuToggle && navLinks) {
-      menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-      });
-    }
-
-    const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'light';
-        const next = current === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-      });
-    }
-  </script>
-</body>
-</html>
+    if (
