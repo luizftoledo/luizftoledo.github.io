@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luiz Fernando Toledo - Uber Style Preview</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.uber.css">
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <div class="brand"><a href="#">Luiz Fernando Toledo</a></div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#investigative">Reporting</a></li>
+        <li><a href="#interviews">Interviews</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="https://datafixers.org" target="_blank" rel="noopener noreferrer">Data Journalism</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" title="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero section">
+    <div class="container">
+      <div>
+        <h1>I am Luiz Fernando Toledo</h1>
+        <p>Brazilian journalist, researcher and instructor based in London. Investigations, data and training focused on Brazil and the Amazon.</p>
+        <a href="resume.html" class="btn">See resume</a>
+      </div>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/HEwY0WKeKjc?rel=0" title="Presentation video" allowfullscreen></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="impact section">
+    <div class="container" style="display:flex;flex-wrap:wrap;justify-content:center;gap:24px;">
+      <div class="card">
+        <h3>Reporting Impact</h3>
+        <p>Stories I wrote exposed misuse of public funds, uncovered bid fraud that saved R$ 15 million, and enabled shutdowns of companies in illegal activities.</p>
+      </div>
+      <div class="card">
+        <h3>Training</h3>
+        <p>Fellowships at Reuters Institute and Oxford-related programs. Course material adopted by several newsrooms.</p>
+      </div>
+      <div class="card">
+        <h3>Research</h3>
+        <p>Masters in Data Journalism (Columbia) and Public Administration (FGV‑EAESP). Research used by government to improve transparency.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="investigative" class="investigative section">
+    <div class="container">
+      <h2 class="section-title">Investigative Reporting</h2>
+      <div class="featured-article">
+        <img src="https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/661b/live/6ed2a4a0-748b-11f0-bc88-1f933688d83a.jpg.webp" alt="Giant Amazon fish turned into luxury handbags – but who profits?" loading="lazy">
+        <div class="featured-content">
+          <div class="tags">
+            <span class="tag">BBC News Brasil</span>
+          </div>
+          <h3>Giant Amazon fish turned into luxury handbags – but who profits?</h3>
+          <p>The thick, patterned skin of the once-at-risk pirarucu fish is in demand for high-end fashion, but the fishermen want more money.</p>
+          <div class="links">
+            <a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o.amp" target="_blank" rel="noopener noreferrer">Read the story</a>
+          </div>
+        </div>
+      </div>
+      <div class="cards">
+        <div class="card-article">
+          <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/hugo-motta.jpg" alt="Secret Budget Amendment Linked to Slave Labor" loading="lazy">
+          <div class="card-content">
+            <div class="tags"><span class="tag">BBC News Brasil</span></div>
+            <h3>Secret Budget Amendment Linked to Slave Labor</h3>
+            <p>Investigation reveals budget amendment linked to slave‑like labor conditions.</p>
+            <div class="links"><a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank" rel="noopener noreferrer">Read</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="interviews" class="interviews section">
+    <div class="container">
+      <h2 class="section-title">Interviews</h2>
+      <div class="interview-list">
+        <div class="interview-card">
+          <h3>Bellingcat's Stage Talks</h3>
+          <p>How public records and data help investigate environmental crimes in Brazil.</p>
+          <iframe loading="lazy" src="https://open.spotify.com/embed/episode/4qtV3XWFUwFtan4jThFKX1" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer section">
+    <div class="container">
+      <h2>Get in touch</h2>
+      <div class="socials">
+        <a href="mailto:lft29@cam.ac.uk"><i class="fas fa-envelope"></i></a>
+        <a href="https://twitter.com/toledoluizf" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+        <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script defer>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
+

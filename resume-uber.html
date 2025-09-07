@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luiz Fernando Toledo – Resume (Uber Style)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.uber.css">
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <div class="brand"><a href="index-uber-full.html">Luiz Fernando Toledo</a></div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index-uber-full.html#investigative">Reporting</a></li>
+        <li><a href="index-uber-full.html#interviews">Interviews</a></li>
+        <li><a href="index-uber-full.html#awards">Awards</a></li>
+        <li><a href="resume-uber.html">Resume</a></li>
+        <li><a href="https://datafixers.org" target="_blank" rel="noopener noreferrer">Data Journalism</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" title="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="resume-page">
+    <div class="resume-container">
+      <div class="resume-section">
+        <h2>Reporting experience</h2>
+        <div class="resume-item">
+          <p class="date"><em>September 2024 – Present</em></p>
+          <p><strong>BBC World Service (BBC News Brasil) | Reporter</strong></p>
+          <p>Based in London, UK. Data journalism, investigations, breaking news. Selected among 500+ candidates.</p>
+        </div>
+        <div class="resume-item">
+          <p class="date"><em>August 2022 – Present</em></p>
+          <p><strong>Founder | Datafixers.org</strong></p>
+          <p>Data‑driven journalism project to help journalists and researchers find stories in public records. Awarded a US$ 100,000 grant from the Brown Institute; best data project in Brazil (2023) by Open Knowledge Foundation.</p>
+        </div>
+        <div class="resume-item">
+          <p class="date"><em>January 2019 – March 2024</em></p>
+          <p><strong>Brazilian Association of Investigative Journalism (Abraji)</strong></p>
+          <p>Responsible for national surveys, workshops and projects related to Access to Information Law.</p>
+        </div>
+      </div>
+
+      <div class="resume-section">
+        <h2>Teaching/Research experience</h2>
+        <div class="resume-item">
+          <p class="date"><em>July 2024 – Present</em></p>
+          <p><strong>Research‑assistant | University of Cambridge (POLIS)</strong></p>
+          <p>Desk‑based research and data analysis for the Prison Consensus Project.</p>
+        </div>
+        <div class="resume-item">
+          <p class="date"><em>July 2022 – September 2023</em></p>
+          <p><strong>Professor (part‑time) | Insper</strong></p>
+          <p>Taught a master’s program class about public records and spreadsheets.</p>
+        </div>
+      </div>
+
+      <div class="resume-section">
+        <h2>Education</h2>
+        <div class="resume-item">
+          <p class="date"><em>2021 – 2022</em></p>
+          <p><strong>Columbia University (full scholarship)</strong></p>
+          <p>Master of Science in Data Journalism (New York/USA).</p>
+        </div>
+        <div class="resume-item">
+          <p class="date"><em>2019 – 2021</em></p>
+          <p><strong>FGV‑EAESP (full scholarship)</strong></p>
+          <p>Master of Science in Public Administration (São Paulo/BR).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <h2>Get in touch</h2>
+    <p>Interested in collaboration, have a story tip, or want to discuss investigative journalism? I'd love to hear from you.</p>
+    <div class="socials">
+      <a href="mailto:lft29@cam.ac.uk"><i class="fas fa-envelope"></i></a>
+      <a href="https://twitter.com/toledoluizf" target="_blank"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com/in/luizftoledo1" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </footer>
+
+  <script defer>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+    }
+  </script>
+</body>
+</html>
+
