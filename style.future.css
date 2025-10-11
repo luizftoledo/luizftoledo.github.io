@@ -136,6 +136,11 @@ html[data-theme='light'] {
   nav .nav-links { position: fixed; top: 60px; left: 20px; right: 20px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; display: none; flex-direction: column; gap: 8px; }
   nav .nav-links.open { display: flex; }
   .menu-toggle { display: inline-flex; }
+  
+  /* featured article mobile - card layout */
+  .featured-article { grid-template-columns: 1fr; }
+  .featured-article img { height: 260px; width: 100%; }
+  .featured-article h3 { font-size: 20px; }
 }
 
 /* resume page styles */
