@@ -7,142 +7,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.future.css">
-  <style>
-    /* Scrollytelling specific styles */
-    .scrollytelling-section {
-      position: relative;
-      padding: 100px 0;
-    }
-
-    .scrolly-container {
-      position: relative;
-      width: 100%;
-    }
-
-    .sticky-content {
-      position: sticky;
-      top: 15vh;
-      height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 60vh;
-    }
-    
-    .sticky-content:first-child {
-      margin-bottom: 60vh;
-    }
-    
-    .sticky-content:last-child {
-      margin-bottom: 0;
-    }
-
-    .scrolly-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-      padding: 48px;
-      max-width: 800px;
-      width: 90%;
-      opacity: 0;
-      transform: translateY(40px) scale(0.95);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .scrolly-card img {
-      width: 100%;
-      max-width: 600px;
-      height: auto;
-      margin: 32px auto 0;
-      display: block;
-      opacity: 0.3;
-      border-radius: 8px;
-    }
-
-    .scrolly-card.active {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .scrolly-card.exiting {
-      opacity: 0;
-      transform: translateY(-40px) scale(0.95);
-    }
-
-    .scrolly-card h3 {
-      font-size: 32px;
-      font-weight: 900;
-      color: var(--accent);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .scrolly-card h3 i {
-      font-size: 36px;
-    }
-
-    .scrolly-card p {
-      color: var(--muted);
-      font-size: 18px;
-      line-height: 1.8;
-    }
-
-    .progress-indicator {
-      position: fixed;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      z-index: 5;
-    }
-
-    .progress-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(124,255,240,0.2);
-      border: 2px solid rgba(124,255,240,0.4);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .progress-dot.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      box-shadow: 0 0 20px rgba(124,255,240,0.6);
-      transform: scale(1.3);
-    }
-
-    @media (max-width: 768px) {
-      .scrolly-card {
-        padding: 32px 24px;
-      }
-      
-      .scrolly-card h3 {
-        font-size: 24px;
-      }
-      
-      .scrolly-card h3 i {
-        font-size: 28px;
-      }
-      
-      .scrolly-card p {
-        font-size: 16px;
-      }
-      
-      .progress-indicator {
-        right: 20px;
-      }
-    }
-  </style>
   <script defer>
     // Force dark mode sitewide
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -186,45 +50,23 @@
   </section>
 
 
-  <section id="scrollytelling" class="scrollytelling-section">
-    <div class="progress-indicator">
-      <div class="progress-dot" data-index="0"></div>
-      <div class="progress-dot" data-index="1"></div>
-      <div class="progress-dot" data-index="2"></div>
-      <div class="progress-dot" data-index="3"></div>
-    </div>
-
-    <div class="scrolly-container">
-      <div class="sticky-content">
-        <div class="scrolly-card" data-card="0">
-          <h3><i class="fas fa-newspaper"></i> Reporting Impact</h3>
-          <p>Stories I wrote <a href="https://news.fiquemsabendo.com.br/p/exclusivo-acessamos-as-notas-fiscais" target="_blank" class="highlight">exposed</a> a former president's misuse of public funds, <a href="http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/" target="_blank" class="highlight">uncovered</a> a bid fraud that saved R$ 15&nbsp;million from a city's budget and <a href="https://www.cnnbrasil.com.br/nacional/apos-reportagem-da-cnn-empresa-de-taxi-aereo-e-primeira-a-ser-cassada-no-pais/" target="_blank" class="highlight">enabled</a> the shutdown of companies involved in illegal activities.</p>
-          <img src="reporting.png" alt="Reporting Impact" loading="lazy">
-        </div>
+  <section class="impact section">
+    <div class="container" style="display:flex;flex-wrap:wrap;justify-content:center;gap:2rem;">
+      <div class="card">
+        <h3>Reporting Impact</h3>
+        <p>Stories I wrote <a href="https://news.fiquemsabendo.com.br/p/exclusivo-acessamos-as-notas-fiscais" target="_blank" class="highlight">exposed</a> a former president's misuse of public funds, <a href="http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/" target="_blank" class="highlight">uncovered</a> a bid fraud that saved R$ 15&nbsp;million from a city's budget and <a href="https://www.cnnbrasil.com.br/nacional/apos-reportagem-da-cnn-empresa-de-taxi-aereo-e-primeira-a-ser-cassada-no-pais/" target="_blank" class="highlight">enabled</a> the shutdown of companies involved in illegal activities.</p>
       </div>
-
-      <div class="sticky-content">
-        <div class="scrolly-card" data-card="1">
-          <h3><i class="fas fa-chalkboard-teacher"></i> Training</h3>
-          <p>Attended a fellowship at the Reuters Institute for the Study of Journalism and created a popular journalism course that has been used by several news organizations.</p>
-          <img src="training.png" alt="Training" loading="lazy">
-        </div>
+      <div class="card">
+        <h3>Training</h3>
+        <p>Attended a fellowship at the Reuters Institute for the Study of Journalism and created a popular journalism course that has been used by several news organizations.</p>
       </div>
-
-      <div class="sticky-content">
-        <div class="scrolly-card" data-card="2">
-          <h3><i class="fas fa-graduation-cap"></i> Research</h3>
-          <p>Masters degrees in Data Journalism (Columbia) and Public Administration (FGV‑EAESP). Research-assistant at POLIS‑Cambridge (2024–2026). Former research fellow at Oxford (2021), Columbia (2022–2023) and NED (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en" target="_blank" rel="noopener noreferrer" class="highlight">My research was used by the government</a> to improve transparency policies.</p>
-          <img src="research.png" alt="Research" loading="lazy">
-        </div>
+      <div class="card">
+        <h3>Research</h3>
+        <p>Masters degrees in Data Journalism (Columbia) and Public Administration (FGV‑EAESP). Research-assistant at POLIS‑Cambridge (2024–2026). Former research fellow at Oxford (2021), Columbia (2022–2023) and NED (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en" target="_blank" rel="noopener noreferrer" class="highlight">My research was used by the government</a> to improve transparency policies.</p>
       </div>
-
-      <div class="sticky-content">
-        <div class="scrolly-card" data-card="3">
-          <h3><i class="fas fa-code"></i> Civil Tech</h3>
-          <p>I have developed interactive dashboards and <span class="highlight">chatbots</span> to support journalists during my <span class="highlight">fellowship</span> at the National Endowment for Democracy (NED).</p>
-          <img src="civil tech.png" alt="Civil Tech" loading="lazy">
-        </div>
+      <div class="card">
+        <h3>Civil Tech</h3>
+        <p>I have developed interactive dashboards and <span class="highlight">chatbots</span> to support journalists during my <span class="highlight">fellowship</span> at the National Endowment for Democracy (NED).</p>
       </div>
     </div>
   </section>
@@ -503,78 +345,6 @@
         });
       });
     });
-
-    // Scrollytelling logic
-    const cards = document.querySelectorAll('.scrolly-card');
-    const stickyContents = document.querySelectorAll('.sticky-content');
-    const progressDots = document.querySelectorAll('.progress-dot');
-    let currentCard = -1;
-
-    function updateScrollytelling() {
-      const scrollPos = window.scrollY + window.innerHeight / 2;
-      const scrollySection = document.getElementById('scrollytelling');
-      
-      if (!scrollySection) return;
-      
-      const sectionTop = scrollySection.offsetTop;
-      const sectionBottom = sectionTop + scrollySection.offsetHeight;
-
-      stickyContents.forEach((content, index) => {
-        const contentTop = content.offsetTop;
-        const contentBottom = contentTop + content.offsetHeight + (content.style.marginBottom ? parseInt(content.style.marginBottom) : 0);
-
-        if (scrollPos >= contentTop && scrollPos < contentBottom) {
-          if (currentCard !== index) {
-            // Deactivate all cards
-            cards.forEach(card => {
-              card.classList.remove('active');
-              card.classList.add('exiting');
-            });
-
-            // Activate current card
-            setTimeout(() => {
-              cards.forEach(card => card.classList.remove('exiting'));
-              if (cards[index]) {
-                cards[index].classList.add('active');
-              }
-            }, 100);
-
-            // Update progress dots
-            progressDots.forEach(dot => dot.classList.remove('active'));
-            if (progressDots[index]) {
-              progressDots[index].classList.add('active');
-            }
-
-            currentCard = index;
-          }
-        }
-      });
-      
-      // Hide all cards if we're outside the section
-      if (scrollPos < sectionTop || scrollPos > sectionBottom) {
-        cards.forEach(card => {
-          card.classList.remove('active');
-        });
-        progressDots.forEach(dot => dot.classList.remove('active'));
-        currentCard = -1;
-      }
-    }
-
-    // Progress dot click handlers
-    progressDots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
-        const content = stickyContents[index];
-        if (content) {
-          const targetScroll = content.offsetTop - window.innerHeight / 3;
-          window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-        }
-      });
-    });
-
-    window.addEventListener('scroll', updateScrollytelling);
-    window.addEventListener('load', updateScrollytelling);
-    // Trigger on page load
-    setTimeout(updateScrollytelling, 100);
   </script>
 </body>
 </html>
