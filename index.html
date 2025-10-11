@@ -26,11 +26,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 60vh;
+      margin-bottom: 120vh;
     }
     
     .sticky-content:first-child {
-      margin-bottom: 60vh;
+      margin-bottom: 120vh;
     }
     
     .sticky-content:last-child {
@@ -519,44 +519,50 @@
       const sectionTop = scrollySection.offsetTop;
       const sectionBottom = sectionTop + scrollySection.offsetHeight;
 
-      stickyContents.forEach((content, index) => {
-        const contentTop = content.offsetTop;
-        const contentBottom = contentTop + content.offsetHeight + (content.style.marginBottom ? parseInt(content.style.marginBottom) : 0);
-
-        if (scrollPos >= contentTop && scrollPos < contentBottom) {
-          if (currentCard !== index) {
-            // Deactivate all cards
-            cards.forEach(card => {
-              card.classList.remove('active');
-              card.classList.add('exiting');
-            });
-
-            // Activate current card
-            setTimeout(() => {
-              cards.forEach(card => card.classList.remove('exiting'));
-              if (cards[index]) {
-                cards[index].classList.add('active');
-              }
-            }, 100);
-
-            // Update progress dots
-            progressDots.forEach(dot => dot.classList.remove('active'));
-            if (progressDots[index]) {
-              progressDots[index].classList.add('active');
-            }
-
-            currentCard = index;
-          }
-        }
-      });
-      
-      // Hide all cards if we're outside the section
+      // Check if we're outside the section
       if (scrollPos < sectionTop || scrollPos > sectionBottom) {
         cards.forEach(card => {
           card.classList.remove('active');
         });
         progressDots.forEach(dot => dot.classList.remove('active'));
         currentCard = -1;
+        return;
+      }
+
+      // Find which card should be active
+      let activeIndex = -1;
+      stickyContents.forEach((content, index) => {
+        const contentTop = content.offsetTop;
+        const contentBottom = contentTop + content.offsetHeight + 120 * window.innerHeight / 100; // 120vh margin
+
+        if (scrollPos >= contentTop && scrollPos < contentBottom) {
+          activeIndex = index;
+        }
+      });
+
+      // Update cards if active index changed
+      if (activeIndex !== -1 && currentCard !== activeIndex) {
+        // Deactivate all cards
+        cards.forEach(card => {
+          card.classList.remove('active');
+          card.classList.add('exiting');
+        });
+
+        // Activate current card
+        setTimeout(() => {
+          cards.forEach(card => card.classList.remove('exiting'));
+          if (cards[activeIndex]) {
+            cards[activeIndex].classList.add('active');
+          }
+        }, 100);
+
+        // Update progress dots
+        progressDots.forEach(dot => dot.classList.remove('active'));
+        if (progressDots[activeIndex]) {
+          progressDots[activeIndex].classList.add('active');
+        }
+
+        currentCard = activeIndex;
       }
     }
 
