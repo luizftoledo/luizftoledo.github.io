@@ -142,6 +142,33 @@
         right: 20px;
       }
     }
+    
+    /* Video reporting section */
+    .short-videos .featured-video {
+      max-width: 1100px;
+      margin: 0 auto 24px;
+    }
+    .short-videos .featured-video iframe {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      border: 0;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    }
+    .short-videos .embed-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+    /* Make Instagram iframes responsive and smaller */
+    .short-videos .embed-grid .instagram-media,
+    .short-videos .embed-grid iframe {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+    }
   </style>
   <script defer>
     // Force dark mode sitewide
