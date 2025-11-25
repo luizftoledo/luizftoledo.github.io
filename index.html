@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.future.css">
+  <link rel="stylesheet" href="style.future.css?v=3">
   <style>
     /* Scrollytelling specific styles */
     .scrollytelling-section {
@@ -28,11 +28,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 120vh;
+      margin-bottom: 180vh;
     }
 
     .sticky-content:first-child {
-      margin-bottom: 120vh;
+      margin-bottom: 180vh;
     }
 
     .sticky-content:last-child {
@@ -61,7 +61,7 @@
       height: auto;
       margin: 32px auto 0;
       display: block;
-      opacity: 0.3;
+      opacity: 1;
       border-radius: 8px;
     }
 
@@ -121,6 +121,75 @@
       border-color: var(--accent);
       box-shadow: 0 0 20px rgba(124, 255, 240, 0.6);
       transform: scale(1.3);
+    }
+
+    .scroll-hint-icon {
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.7;
+    }
+
+    .mouse-icon {
+      width: 20px;
+      height: 32px;
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .wheel {
+      width: 2px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 2px;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scroll-wheel 2s infinite;
+    }
+
+    .scroll-hint-icon i {
+      color: var(--accent);
+      font-size: 14px;
+      animation: bounce 2s infinite;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes scroll-wheel {
+      0% {
+        top: 6px;
+        opacity: 1;
+        height: 6px;
+      }
+
+      100% {
+        top: 18px;
+        opacity: 0;
+        height: 2px;
+      }
+    }
+
+    @keyframes bounce {
+
+      0%,
+      20%,
+      50%,
+      80%,
+      100% {
+        transform: translateY(0);
+      }
+
+      40% {
+        transform: translateY(4px);
+      }
+
+      60% {
+        transform: translateY(2px);
+      }
     }
 
     @media (max-width: 768px) {
@@ -216,25 +285,167 @@
           readers in Brazil and abroad.</p>
       </div>
       <div class="hero-media">
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/r5Ihpa2DQIg?rel=0&autoplay=1&mute=1" title="Presentation video"
-            allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-        <div class="video-container" style="margin-top: 24px;">
-          <iframe src="https://www.youtube.com/embed/SkX6MKU9gAQ?start=22" title="Video reporting"
-            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="video-carousel">
+          <div class="carousel-track-container">
+            <ul class="carousel-track">
+              <li class="carousel-slide current-slide">
+                <div class="video-container">
+                  <iframe class="carousel-video"
+                    src="https://www.youtube.com/embed/r5Ihpa2DQIg?enablejsapi=1&rel=0&mute=1&autoplay=1"
+                    title="Presentation video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+              </li>
+              <li class="carousel-slide">
+                <div class="video-container">
+                  <iframe class="carousel-video"
+                    src="https://www.youtube.com/embed/SkX6MKU9gAQ?enablejsapi=1&start=22&mute=1"
+                    title="Video reporting" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+              </li>
+              <li class="carousel-slide">
+                <div class="video-container">
+                  <iframe class="carousel-video" src="https://www.youtube.com/embed/65AnDszCevA?enablejsapi=1&mute=1"
+                    title="Third video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <button class="carousel-button carousel-button--left is-hidden">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="carousel-button carousel-button--right">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <div class="carousel-nav">
+            <button class="carousel-indicator current-slide"></button>
+            <button class="carousel-indicator"></button>
+            <button class="carousel-indicator"></button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <script>
+    // Carousel Logic
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const nextButton = document.querySelector('.carousel-button--right');
+    const prevButton = document.querySelector('.carousel-button--left');
+    const dotsNav = document.querySelector('.carousel-nav');
+    const dots = Array.from(dotsNav.children);
+
+    const slideWidth = slides[0].getBoundingClientRect().width;
+
+    // Arrange the slides next to one another
+    const setSlidePosition = (slide, index) => {
+      slide.style.left = slideWidth * index + 'px';
+    };
+    slides.forEach(setSlidePosition);
+
+    const moveToSlide = (track, currentSlide, targetSlide) => {
+      track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+      currentSlide.classList.remove('current-slide');
+      targetSlide.classList.add('current-slide');
+
+      // Manage video playback
+      manageVideoPlayback(currentSlide, targetSlide);
+    }
+
+    const updateDots = (currentDot, targetDot) => {
+      currentDot.classList.remove('current-slide');
+      targetDot.classList.add('current-slide');
+    }
+
+    const hideShowArrows = (slides, prevButton, nextButton, targetIndex) => {
+      if (targetIndex === 0) {
+        prevButton.classList.add('is-hidden');
+        nextButton.classList.remove('is-hidden');
+      } else if (targetIndex === slides.length - 1) {
+        prevButton.classList.remove('is-hidden');
+        nextButton.classList.add('is-hidden');
+      } else {
+        prevButton.classList.remove('is-hidden');
+        nextButton.classList.remove('is-hidden');
+      }
+    }
+
+    // Function to control YouTube videos via postMessage
+    const manageVideoPlayback = (fromSlide, toSlide) => {
+      // Pause the video we are leaving
+      const fromIframe = fromSlide.querySelector('iframe');
+      if (fromIframe) {
+        fromIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      }
+
+      // Play the video we are entering
+      const toIframe = toSlide.querySelector('iframe');
+      if (toIframe) {
+        toIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      }
+    }
+
+    prevButton.addEventListener('click', e => {
+      const currentSlide = track.querySelector('.current-slide');
+      const prevSlide = currentSlide.previousElementSibling;
+      const currentDot = dotsNav.querySelector('.current-slide');
+      const prevDot = currentDot.previousElementSibling;
+      const prevIndex = slides.findIndex(slide => slide === prevSlide);
+
+      moveToSlide(track, currentSlide, prevSlide);
+      updateDots(currentDot, prevDot);
+      hideShowArrows(slides, prevButton, nextButton, prevIndex);
+    });
+
+    nextButton.addEventListener('click', e => {
+      const currentSlide = track.querySelector('.current-slide');
+      const nextSlide = currentSlide.nextElementSibling;
+      const currentDot = dotsNav.querySelector('.current-slide');
+      const nextDot = currentDot.nextElementSibling;
+      const nextIndex = slides.findIndex(slide => slide === nextSlide);
+
+      moveToSlide(track, currentSlide, nextSlide);
+      updateDots(currentDot, nextDot);
+      hideShowArrows(slides, prevButton, nextButton, nextIndex);
+    });
+
+    dotsNav.addEventListener('click', e => {
+      const targetDot = e.target.closest('button');
+
+      if (!targetDot) return;
+
+      const currentSlide = track.querySelector('.current-slide');
+      const currentDot = dotsNav.querySelector('.current-slide');
+      const targetIndex = dots.findIndex(dot => dot === targetDot);
+      const targetSlide = slides[targetIndex];
+
+      moveToSlide(track, currentSlide, targetSlide);
+      updateDots(currentDot, targetDot);
+      hideShowArrows(slides, prevButton, nextButton, targetIndex);
+    });
+
+    // Recalculate slide positions on resize
+    window.addEventListener('resize', () => {
+      const newSlideWidth = slides[0].getBoundingClientRect().width;
+      slides.forEach((slide, index) => {
+        slide.style.left = newSlideWidth * index + 'px';
+      });
+      const currentSlide = track.querySelector('.current-slide');
+      // Re-center current slide
+      const targetIndex = slides.findIndex(slide => slide === currentSlide);
+      track.style.transform = 'translateX(-' + (newSlideWidth * targetIndex) + 'px)';
+    });
+  </script>
+
 
   <section id="scrollytelling" class="scrollytelling-section">
     <div class="progress-indicator">
-      <div class="progress-dot" data-index="0"></div>
-      <div class="progress-dot" data-index="1"></div>
-      <div class="progress-dot" data-index="2"></div>
-      <div class="progress-dot" data-index="3"></div>
+      <div class="scroll-hint-icon" title="Scroll to explore">
+        <div class="mouse-icon">
+          <div class="wheel"></div>
+        </div>
+        <i class="fas fa-chevron-down"></i>
+      </div>
     </div>
 
     <div class="scrolly-container">
@@ -256,9 +467,14 @@
       <div class="sticky-content">
         <div class="scrolly-card" data-card="1">
           <h3><i class="fas fa-chalkboard-teacher"></i> Training</h3>
-          <p>Attended a fellowship at the Reuters Institute for the Study of Journalism and created a popular journalism
-            course that has been used by several news organizations.</p>
-          <img src="training.png" alt="Training" loading="lazy">
+          <p>Attended world-class conferences as instructor in Brazil, USA, UK, Portugal, Malaysia, Sweden and others.
+            Trained over 2,000 journalists through online and in-person workshops.</p>
+          <figure style="margin: 0; text-align: center;">
+            <img src="gijc2025.png" alt="Training" loading="lazy"
+              style="max-width: 350px; height: 220px; object-fit: cover; object-position: top; margin-top: 16px; width: 100%;">
+            <figcaption style="color: var(--muted); font-size: 0.8rem; margin-top: 8px; font-style: italic;">Global
+              Investigative Journalism Conference panel, 2025</figcaption>
+          </figure>
         </div>
       </div>
 
@@ -270,7 +486,7 @@
             (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en"
               target="_blank" rel="noopener noreferrer" class="highlight">My research was used by the government</a> to
             improve transparency policies.</p>
-          <img src="research.png" alt="Research" loading="lazy">
+          <img src="research.png" alt="Research" loading="lazy" style="max-width: 350px;">
         </div>
       </div>
 
@@ -279,7 +495,8 @@
           <h3><i class="fas fa-code"></i> Civil Tech</h3>
           <p>I have developed interactive dashboards and <span class="highlight">chatbots</span> to support journalists
             during my <span class="highlight">fellowship</span> at the National Endowment for Democracy (NED).</p>
-          <img src="civil tech.png" alt="Civil Tech" loading="lazy">
+          <img src="civil tech.png" alt="Civil Tech" loading="lazy"
+            style="max-width: 350px; height: 220px; object-fit: cover; object-position: top; width: 100%;">
         </div>
       </div>
     </div>
@@ -693,7 +910,7 @@
       let activeIndex = -1;
       stickyContents.forEach((content, index) => {
         const contentTop = content.offsetTop;
-        const contentBottom = contentTop + content.offsetHeight + 120 * window.innerHeight / 100; // 120vh margin
+        const contentBottom = contentTop + content.offsetHeight + 180 * window.innerHeight / 100; // 180vh margin
 
         if (scrollPos >= contentTop && scrollPos < contentBottom) {
           activeIndex = index;
