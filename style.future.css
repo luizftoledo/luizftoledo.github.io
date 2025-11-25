@@ -678,7 +678,6 @@ html[data-theme='light'] {
 /* Carousel Styles */
 .video-carousel {
   position: relative;
-  height: 100%;
   width: 100%;
   margin: 0 auto;
   /* Add a subtle border/glow to frame the content */
@@ -688,7 +687,6 @@ html[data-theme='light'] {
 
 .carousel-track-container {
   overflow: hidden;
-  height: 100%;
   position: relative;
   border-radius: var(--radius);
   aspect-ratio: 16 / 9;
