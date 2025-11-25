@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Luiz Fernando Toledo - Data &amp; Investigative Journalist</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.future.css">
   <style>
@@ -28,11 +30,11 @@
       justify-content: center;
       margin-bottom: 120vh;
     }
-    
+
     .sticky-content:first-child {
       margin-bottom: 120vh;
     }
-    
+
     .sticky-content:last-child {
       margin-bottom: 0;
     }
@@ -42,7 +44,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
       padding: 48px;
       max-width: 800px;
       width: 90%;
@@ -52,7 +54,7 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .scrolly-card img {
       width: 100%;
       max-width: 600px;
@@ -108,8 +110,8 @@
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background: rgba(124,255,240,0.2);
-      border: 2px solid rgba(124,255,240,0.4);
+      background: rgba(124, 255, 240, 0.2);
+      border: 2px solid rgba(124, 255, 240, 0.4);
       transition: all 0.3s ease;
       cursor: pointer;
     }
@@ -117,7 +119,7 @@
     .progress-dot.active {
       background: var(--accent);
       border-color: var(--accent);
-      box-shadow: 0 0 20px rgba(124,255,240,0.6);
+      box-shadow: 0 0 20px rgba(124, 255, 240, 0.6);
       transform: scale(1.3);
     }
 
@@ -125,43 +127,46 @@
       .scrolly-card {
         padding: 32px 24px;
       }
-      
+
       .scrolly-card h3 {
         font-size: 24px;
       }
-      
+
       .scrolly-card h3 i {
         font-size: 28px;
       }
-      
+
       .scrolly-card p {
         font-size: 16px;
       }
-      
+
       .progress-indicator {
         right: 20px;
       }
     }
-    
+
     /* Video reporting section */
     .short-videos .featured-video {
       max-width: 1100px;
       margin: 0 auto 24px;
     }
+
     .short-videos .featured-video iframe {
       width: 100%;
       aspect-ratio: 16 / 9;
       height: auto;
       border: 0;
       border-radius: 8px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     }
+
     .short-videos .embed-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
       align-items: start;
     }
+
     /* Make Instagram iframes responsive and smaller */
     .short-videos .embed-grid .instagram-media,
     .short-videos .embed-grid iframe {
@@ -176,6 +181,7 @@
   </script>
   <script async src="https://www.instagram.com/embed.js"></script>
 </head>
+
 <body>
   <div class="progress-bar" id="progressBar"></div>
   <nav>
@@ -197,17 +203,27 @@
     </div>
   </nav>
 
-  
+
 
   <section class="hero section">
     <div class="container">
       <div class="hero-text">
         <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
-        <p>Brazilian journalist, researcher and instructor based in London, with a proven track record of producing and managing impactful projects related to Brazil.</p>
-        <p>My reporting has been translated into <a href="https://www.bbc.com/zhongwen/articles/cx20nxkkqk0o/simp" target="_blank" rel="noopener noreferrer" class="highlight">various languages</a>, reaching thousands of readers in Brazil and abroad.</p>
+        <p>Brazilian journalist, researcher and instructor based in London, with a proven track record of producing and
+          managing impactful projects related to Brazil.</p>
+        <p>My reporting has been translated into <a href="https://www.bbc.com/zhongwen/articles/cx20nxkkqk0o/simp"
+            target="_blank" rel="noopener noreferrer" class="highlight">various languages</a>, reaching thousands of
+          readers in Brazil and abroad.</p>
       </div>
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/r5Ihpa2DQIg?rel=0&autoplay=1&mute=1" title="Presentation video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <div class="hero-media">
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/r5Ihpa2DQIg?rel=0&autoplay=1&mute=1" title="Presentation video"
+            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="video-container" style="margin-top: 24px;">
+          <iframe src="https://www.youtube.com/embed/SkX6MKU9gAQ?start=22" title="Video reporting"
+            allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </section>
@@ -225,7 +241,14 @@
       <div class="sticky-content">
         <div class="scrolly-card" data-card="0">
           <h3><i class="fas fa-newspaper"></i> Reporting Impact</h3>
-          <p>Stories I wrote <a href="https://news.fiquemsabendo.com.br/p/exclusivo-acessamos-as-notas-fiscais" target="_blank" class="highlight">exposed</a> a former president's misuse of public funds, <a href="http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/" target="_blank" class="highlight">uncovered</a> a bid fraud that saved R$ 15&nbsp;million from a city's budget and <a href="https://www.cnnbrasil.com.br/nacional/apos-reportagem-da-cnn-empresa-de-taxi-aereo-e-primeira-a-ser-cassada-no-pais/" target="_blank" class="highlight">enabled</a> the shutdown of companies involved in illegal activities.</p>
+          <p>Stories I wrote <a href="https://news.fiquemsabendo.com.br/p/exclusivo-acessamos-as-notas-fiscais"
+              target="_blank" class="highlight">exposed</a> a former president's misuse of public funds, <a
+              href="http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/"
+              target="_blank" class="highlight">uncovered</a> a bid fraud that saved R$ 15&nbsp;million from a city's
+            budget and <a
+              href="https://www.cnnbrasil.com.br/nacional/apos-reportagem-da-cnn-empresa-de-taxi-aereo-e-primeira-a-ser-cassada-no-pais/"
+              target="_blank" class="highlight">enabled</a> the shutdown of companies involved in illegal activities.
+          </p>
           <img src="reporting.png" alt="Reporting Impact" loading="lazy">
         </div>
       </div>
@@ -233,7 +256,8 @@
       <div class="sticky-content">
         <div class="scrolly-card" data-card="1">
           <h3><i class="fas fa-chalkboard-teacher"></i> Training</h3>
-          <p>Attended a fellowship at the Reuters Institute for the Study of Journalism and created a popular journalism course that has been used by several news organizations.</p>
+          <p>Attended a fellowship at the Reuters Institute for the Study of Journalism and created a popular journalism
+            course that has been used by several news organizations.</p>
           <img src="training.png" alt="Training" loading="lazy">
         </div>
       </div>
@@ -241,7 +265,11 @@
       <div class="sticky-content">
         <div class="scrolly-card" data-card="2">
           <h3><i class="fas fa-graduation-cap"></i> Research</h3>
-          <p>Masters degrees in Data Journalism (Columbia) and Public Administration (FGV‑EAESP). Research-assistant at POLIS‑Cambridge (2024–2026). Former research fellow at Oxford (2021), Columbia (2022–2023) and NED (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en" target="_blank" rel="noopener noreferrer" class="highlight">My research was used by the government</a> to improve transparency policies.</p>
+          <p>Masters degrees in Data Journalism (Columbia) and Public Administration (FGV‑EAESP). Research-assistant at
+            POLIS‑Cambridge (2024–2026). Former research fellow at Oxford (2021), Columbia (2022–2023) and NED
+            (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en"
+              target="_blank" rel="noopener noreferrer" class="highlight">My research was used by the government</a> to
+            improve transparency policies.</p>
           <img src="research.png" alt="Research" loading="lazy">
         </div>
       </div>
@@ -249,7 +277,8 @@
       <div class="sticky-content">
         <div class="scrolly-card" data-card="3">
           <h3><i class="fas fa-code"></i> Civil Tech</h3>
-          <p>I have developed interactive dashboards and <span class="highlight">chatbots</span> to support journalists during my <span class="highlight">fellowship</span> at the National Endowment for Democracy (NED).</p>
+          <p>I have developed interactive dashboards and <span class="highlight">chatbots</span> to support journalists
+            during my <span class="highlight">fellowship</span> at the National Endowment for Democracy (NED).</p>
           <img src="civil tech.png" alt="Civil Tech" loading="lazy">
         </div>
       </div>
@@ -260,113 +289,141 @@
     <div class="container">
       <h2 class="section-title">Investigative Reporting</h2>
       <div class="featured-article">
-        <img src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=800&q=80" alt="How fake bottle caps and seals fuel Brazil's counterfeit alcohol market" loading="lazy">
+        <img src="https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=800&q=80"
+          alt="How fake bottle caps and seals fuel Brazil's counterfeit alcohol market" loading="lazy">
         <div class="featured-content">
           <div class="tags">
             <span class="tag">BBC News Brasil</span>
           </div>
           <h3>How fake bottle caps and seals fuel Brazil's counterfeit alcohol market</h3>
-          <p>This investigation dismantled a network of over 10,000 people selling bottle parts for beverage counterfeiting and triggered a police investigation.</p>
+          <p>This investigation dismantled a network of over 10,000 people selling bottle parts for beverage
+            counterfeiting and triggered a police investigation.</p>
           <div class="links">
-            <a href="https://www.bbc.com/portuguese/articles/ce84kg923ero" target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
+            <a href="https://www.bbc.com/portuguese/articles/ce84kg923ero" target="_blank"
+              rel="noopener noreferrer">Read the story (Portuguese)</a>
           </div>
         </div>
       </div>
       <div class="cards">
-      <div class="card-article">
-        <img src="https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/661b/live/6ed2a4a0-748b-11f0-bc88-1f933688d83a.jpg.webp" alt="Giant Amazon fish turned into luxury handbags – but who profits?" loading="lazy">
-        <div class="card-content">
-          <div class="tags">
-            <span class="tag">BBC News Brasil</span>
+        <div class="card-article">
+          <img
+            src="https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/661b/live/6ed2a4a0-748b-11f0-bc88-1f933688d83a.jpg.webp"
+            alt="Giant Amazon fish turned into luxury handbags – but who profits?" loading="lazy">
+          <div class="card-content">
+            <div class="tags">
+              <span class="tag">BBC News Brasil</span>
+            </div>
+            <h3>Giant Amazon fish turned into luxury handbags – but who profits?</h3>
+            <p>The thick, patterned skin of the once-at-risk pirarucu fish is in demand for high-end fashion, but the
+              fishermen want more money.</p>
+            <div class="links">
+              <a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o.amp" target="_blank"
+                rel="noopener noreferrer">Read the story</a>
+            </div>
           </div>
-          <h3>Giant Amazon fish turned into luxury handbags – but who profits?</h3>
-          <p>The thick, patterned skin of the once-at-risk pirarucu fish is in demand for high-end fashion, but the fishermen want more money.</p>
-          <div class="links">
-            <a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o.amp" target="_blank" rel="noopener noreferrer">Read the story</a>
+        </div>
+        <div class="card-article">
+          <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/hugo-motta.jpg"
+            alt="Secret Budget Amendment Linked to Slave Labor" loading="lazy">
+          <div class="card-content">
+            <div class="tags">
+              <span class="tag">BBC News Brasil</span>
+            </div>
+            <h3>Secret Budget Amendment Linked to Slave Labor</h3>
+            <p>Investigation reveals how a budget amendment supported by Chamber President&nbsp;Hugo&nbsp;Motta funded
+              construction using stones produced by workers in slave‑like conditions.</p>
+            <div class="links">
+              <a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank"
+                rel="noopener noreferrer">Read the story (Portuguese)</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-article">
+          <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/irish-slaughterhouse.jpg"
+            alt="Brazilians Face Abuse in Irish Meat Industry" loading="lazy">
+          <div class="card-content">
+            <div class="tags">
+              <span class="tag">BBC News Brasil</span>
+            </div>
+            <h3>Brazilians Face Abuse in Irish Meat Industry</h3>
+            <p>Exclusive investigation exposes precarious working conditions and abuse faced by Brazilian workers in
+              Ireland’s meat processing industry.</p>
+            <div class="links">
+              <a href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank"
+                rel="noopener noreferrer">Read the story (Portuguese)</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-article">
+          <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/indigenous-artifacts.jpg"
+            alt="Indigenous objects containing animal parts are freely sold online" loading="lazy">
+          <div class="card-content">
+            <div class="tags">
+              <span class="tag">UOL</span>
+            </div>
+            <h3>Failed enforcement: indigenous objects containing animal parts are freely sold online</h3>
+            <p>A 2‑month investigation into animal feather smuggling and how companies benefit from exploiting
+              indigenous communities in Brazil.</p>
+            <div class="links">
+              <a href="https://tab.uol.com.br/noticias/redacao/2024/07/31/venda-ilegal-de-artefatos-indigenas-cresce-com-baixa-fiscalizacao-nas-redes.htm"
+                target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-article">
+          <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/deforestation-maps.png"
+            alt="Tracking deforestation agents that not even the government knew about" loading="lazy">
+          <div class="card-content">
+            <div class="tags">
+              <span class="tag">Revista Piauí</span>
+            </div>
+            <h3>Tracking deforestation agents that not even the government knew about</h3>
+            <p>This journalistic investigation utilized spatial data to find several individuals involved in
+              deforestation in the Amazon region, previously unknown to the Brazilian authorities. Our project made the
+              government fine the people involved in R$&nbsp;1.5&nbsp;million (around US$&nbsp;300,000).</p>
+            <div class="links">
+              <a href="https://piaui.folha.uol.com.br/desmatamento-amazonia-embargos-icmbio/" target="_blank"
+                rel="noopener noreferrer">Read the story (Portuguese)</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-article">
+          <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/brazilian-timber.jpg"
+            alt="Political Backing Fuels Land Grabbing in Brazil's Distrito Federal" loading="lazy">
+          <div class="card-content">
+            <div class="tags">
+              <span class="tag">Revista Piauí</span>
+            </div>
+            <h3>Political Backing Fuels Land Grabbing in Brazil's Distrito&nbsp;Federal</h3>
+            <p>In the Distrito Federal, Brazil, a significant issue of land grabbing in conservation areas is emerging,
+              intensified by political support. These activities are particularly rampant in the Colônia
+              Agrícola&nbsp;26&nbsp;de&nbsp;Setembro, a settlement approximately 26&nbsp;km from the Palácio do
+              Planalto, housing around 35,000 residents.</p>
+            <div class="links">
+              <a href="https://piaui.folha.uol.com.br/distrito-federal-grileiros-car-brasilia/" target="_blank"
+                rel="noopener noreferrer">Read the story (Portuguese)</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-article">
+          <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/pau-brasil-logs.png"
+            alt="A world heritage site under attack in Brazil" loading="lazy">
+          <div class="card-content">
+            <div class="tags">
+              <span class="tag">Revista Piauí</span>
+              <span class="tag">OCCRP</span>
+            </div>
+            <h3>A world heritage site under attack in Brazil</h3>
+            <p>Brazilwood is being driven to extinction by an industry not often associated with organized crime:
+              classical music. Tests on a sample of the confiscated wood show it was logged in a protected forest.</p>
+            <div class="links">
+              <a href="https://piaui.folha.uol.com.br/um-parque-no-coracao-do-contrabando-de-pau-brasil/"
+                target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="card-article">
-        <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/hugo-motta.jpg" alt="Secret Budget Amendment Linked to Slave Labor" loading="lazy">
-        <div class="card-content">
-          <div class="tags">
-            <span class="tag">BBC News Brasil</span>
-          </div>
-          <h3>Secret Budget Amendment Linked to Slave Labor</h3>
-          <p>Investigation reveals how a budget amendment supported by Chamber President&nbsp;Hugo&nbsp;Motta funded construction using stones produced by workers in slave‑like conditions.</p>
-          <div class="links">
-            <a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
-          </div>
-        </div>
-      </div>
-      <div class="card-article">
-        <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/irish-slaughterhouse.jpg" alt="Brazilians Face Abuse in Irish Meat Industry" loading="lazy">
-        <div class="card-content">
-          <div class="tags">
-            <span class="tag">BBC News Brasil</span>
-          </div>
-          <h3>Brazilians Face Abuse in Irish Meat Industry</h3>
-          <p>Exclusive investigation exposes precarious working conditions and abuse faced by Brazilian workers in Ireland’s meat processing industry.</p>
-          <div class="links">
-            <a href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
-          </div>
-        </div>
-      </div>
-      <div class="card-article">
-        <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/indigenous-artifacts.jpg" alt="Indigenous objects containing animal parts are freely sold online" loading="lazy">
-        <div class="card-content">
-          <div class="tags">
-            <span class="tag">UOL</span>
-          </div>
-          <h3>Failed enforcement: indigenous objects containing animal parts are freely sold online</h3>
-          <p>A 2‑month investigation into animal feather smuggling and how companies benefit from exploiting indigenous communities in Brazil.</p>
-          <div class="links">
-            <a href="https://tab.uol.com.br/noticias/redacao/2024/07/31/venda-ilegal-de-artefatos-indigenas-cresce-com-baixa-fiscalizacao-nas-redes.htm" target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
-          </div>
-        </div>
-      </div>
-      <div class="card-article">
-        <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/deforestation-maps.png" alt="Tracking deforestation agents that not even the government knew about" loading="lazy">
-        <div class="card-content">
-          <div class="tags">
-            <span class="tag">Revista Piauí</span>
-          </div>
-          <h3>Tracking deforestation agents that not even the government knew about</h3>
-          <p>This journalistic investigation utilized spatial data to find several individuals involved in deforestation in the Amazon region, previously unknown to the Brazilian authorities. Our project made the government fine the people involved in R$&nbsp;1.5&nbsp;million (around US$&nbsp;300,000).</p>
-          <div class="links">
-            <a href="https://piaui.folha.uol.com.br/desmatamento-amazonia-embargos-icmbio/" target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
-          </div>
-        </div>
-      </div>
-      <div class="card-article">
-        <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/brazilian-timber.jpg" alt="Political Backing Fuels Land Grabbing in Brazil's Distrito Federal" loading="lazy">
-        <div class="card-content">
-          <div class="tags">
-            <span class="tag">Revista Piauí</span>
-          </div>
-          <h3>Political Backing Fuels Land Grabbing in Brazil's Distrito&nbsp;Federal</h3>
-          <p>In the Distrito Federal, Brazil, a significant issue of land grabbing in conservation areas is emerging, intensified by political support. These activities are particularly rampant in the Colônia Agrícola&nbsp;26&nbsp;de&nbsp;Setembro, a settlement approximately 26&nbsp;km from the Palácio do Planalto, housing around 35,000 residents.</p>
-          <div class="links">
-            <a href="https://piaui.folha.uol.com.br/distrito-federal-grileiros-car-brasilia/" target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
-          </div>
-        </div>
-      </div>
-      <div class="card-article">
-        <img src="https://raw.githubusercontent.com/luizftoledo/luizftoledo.github.io/main/pau-brasil-logs.png" alt="A world heritage site under attack in Brazil" loading="lazy">
-        <div class="card-content">
-          <div class="tags">
-            <span class="tag">Revista Piauí</span>
-            <span class="tag">OCCRP</span>
-          </div>
-          <h3>A world heritage site under attack in Brazil</h3>
-          <p>Brazilwood is being driven to extinction by an industry not often associated with organized crime: classical music. Tests on a sample of the confiscated wood show it was logged in a protected forest.</p>
-          <div class="links">
-            <a href="https://piaui.folha.uol.com.br/um-parque-no-coracao-do-contrabando-de-pau-brasil/" target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
-          </div>
-        </div>
-      </div>
-      </div>
-      
+
     </div>
   </section>
 
@@ -374,16 +431,24 @@
     <div class="container">
       <h2 class="section-title">Video reporting</h2>
       <div class="featured-video">
-        <iframe loading="lazy" src="https://www.youtube.com/embed/HEwY0WKeKjc?rel=0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe loading="lazy" src="https://www.youtube.com/embed/HEwY0WKeKjc?rel=0" allow="autoplay; encrypted-media"
+          allowfullscreen></iframe>
       </div>
       <div class="embed-grid">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPfEs-4lTI3/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DOgpYz4lKwY/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPKauEVD71z/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DMq7vPfC4Os/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DJUu11hILPM/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DKuiChEMt8W/" data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DNCAw5SIF1J/" data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPfEs-4lTI3/"
+          data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DOgpYz4lKwY/"
+          data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPKauEVD71z/"
+          data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DMq7vPfC4Os/"
+          data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DJUu11hILPM/"
+          data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DKuiChEMt8W/"
+          data-instgrm-version="14"></blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DNCAw5SIF1J/"
+          data-instgrm-version="14"></blockquote>
       </div>
     </div>
   </section>
@@ -392,36 +457,39 @@
     <div class="container">
       <h2 class="section-title">Interviews</h2>
       <div class="interview-list">
-      <div class="interview-card">
-        <h3>Bellingcat's Stage Talks</h3>
-        <p>I was interviewed by Bellingcat to discuss how to use public records and data to investigate environmental crimes in Brazil. Held in English.</p>
-        <iframe loading="lazy" src="https://open.spotify.com/embed/episode/4qtV3XWFUwFtan4jThFKX1" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      </div>
-      <div class="interview-card">
-        <h3>Global Investigative Journalism Conference (GIJC)</h3>
-        <p>Panel discussion on investigating environmental crimes at GIJC 2023 in Gothenburg, Sweden.</p>
-        <iframe loading="lazy" src="https://www.youtube.com/embed/urDaCInPdvY?start=19" allowfullscreen></iframe>
-      </div>
-      <div class="interview-card">
-        <h3>SBT News</h3>
-        <p>Discussion about transparency and investigative journalism in Brazil.</p>
-        <iframe loading="lazy" src="https://www.youtube.com/embed/rqvT39YIsP0?start=149" allowfullscreen></iframe>
-      </div>
-      <div class="interview-card">
-        <h3>TV Globo/G1 Podcast (O Assunto)</h3>
-        <p>Podcast discussion about corporate expenses investigation.</p>
-        <iframe loading="lazy" src="https://open.spotify.com/embed/episode/1UsnrR0DjRKHyd1fPlVtmn" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      </div>
-      <div class="interview-card">
-        <h3>FIL Lisbon Conference</h3>
-        <p>Presentation about DataFixers.org at the Lisbon International Fair.</p>
-        <iframe loading="lazy" src="https://www.youtube.com/embed/dw5q9ZXMaWE?start=26" allowfullscreen></iframe>
-      </div>
-      <div class="interview-card">
-        <h3>CNN Brasil</h3>
-        <p>Interview about air charter investigation and transparency in government spending.</p>
-        <iframe loading="lazy" src="https://www.youtube.com/embed/PP8bv7osKMo?start=35" allowfullscreen></iframe>
-      </div>
+        <div class="interview-card">
+          <h3>Bellingcat's Stage Talks</h3>
+          <p>I was interviewed by Bellingcat to discuss how to use public records and data to investigate environmental
+            crimes in Brazil. Held in English.</p>
+          <iframe loading="lazy" src="https://open.spotify.com/embed/episode/4qtV3XWFUwFtan4jThFKX1"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="interview-card">
+          <h3>Global Investigative Journalism Conference (GIJC)</h3>
+          <p>Panel discussion on investigating environmental crimes at GIJC 2023 in Gothenburg, Sweden.</p>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/urDaCInPdvY?start=19" allowfullscreen></iframe>
+        </div>
+        <div class="interview-card">
+          <h3>SBT News</h3>
+          <p>Discussion about transparency and investigative journalism in Brazil.</p>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/rqvT39YIsP0?start=149" allowfullscreen></iframe>
+        </div>
+        <div class="interview-card">
+          <h3>TV Globo/G1 Podcast (O Assunto)</h3>
+          <p>Podcast discussion about corporate expenses investigation.</p>
+          <iframe loading="lazy" src="https://open.spotify.com/embed/episode/1UsnrR0DjRKHyd1fPlVtmn"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="interview-card">
+          <h3>FIL Lisbon Conference</h3>
+          <p>Presentation about DataFixers.org at the Lisbon International Fair.</p>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/dw5q9ZXMaWE?start=26" allowfullscreen></iframe>
+        </div>
+        <div class="interview-card">
+          <h3>CNN Brasil</h3>
+          <p>Interview about air charter investigation and transparency in government spending.</p>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/PP8bv7osKMo?start=35" allowfullscreen></iframe>
+        </div>
       </div>
     </div>
   </section>
@@ -430,31 +498,82 @@
     <div class="container">
       <h2 class="section-title">Awards and Honorable Mentions</h2>
       <ul class="award-list">
-      <li><span class="award-year">2024</span><span class="award-status winner">Winner</span><span class="award-title">Prêmio Gabo 2024 – coverage with InfoAmazonia and Datafixers.org</span><span class="award-source">Fundación Gabo</span></li>
-      <li class="shortlist"><span class="award-year">2024</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards</span><span class="award-source">Sigma Awards</span></li>
-      <li><span class="award-year">2023</span><span class="award-status winner">Winner</span><span class="award-title">Prêmio Claudio Weber Abramo – Categoria Dados Abertos</span><span class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
-      <li><span class="award-year">2023</span><span class="award-status winner">Winner</span><span class="award-title">Prêmio Claudio Weber Abramo – Categoria Investigação</span><span class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
-      <li class="shortlist"><span class="award-year">2023</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Premio Roche 2023</span><span class="award-source">Premio Roche</span></li>
-      <li><span class="award-year">2022</span><span class="award-status winner">Winner</span><span class="award-title">Prêmio Transparência e Fiscalização Pública – Câmara dos Deputados (with Fiquem Sabendo)</span><span class="award-source">Câmara dos Deputados</span></li>
-      <li class="shortlist"><span class="award-year">2022</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2022 – Má alimentação à Brasileira</span><span class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
-      <li class="shortlist"><span class="award-year">2022</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Open Lux</span><span class="award-source">Sigma Awards</span></li>
-      <li class="shortlist"><span class="award-year">2022</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Personal portfolio</span><span class="award-source">Sigma Awards</span></li>
-      <li class="shortlist"><span class="award-year">2022</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Revealing the Brazilian military pension</span><span class="award-source">Sigma Awards</span></li>
-      <li class="shortlist"><span class="award-year">2021</span><span class="award-status shortlist">Shortlist</span><span class="award-title">IREE 2021</span><span class="award-source">IREE</span></li>
-      <li class="shortlist"><span class="award-year">2021</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Shedding light on government pension</span><span class="award-source">Sigma Awards</span></li>
-      <li class="shortlist"><span class="award-year">2021</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Chloroquine and the Brazilian Army</span><span class="award-source">Sigma Awards</span></li>
-      <li><span class="award-year">2021</span><span class="award-status winner">Winner</span><span class="award-title">Jornalismo Mosca 2021 – Solteiragate</span><span class="award-source">Jornalismo Mosca</span></li>
-      <li class="shortlist"><span class="award-year">2021</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2021 – Solteiragate</span><span class="award-source">Transparência Brasil</span></li>
-      <li class="shortlist"><span class="award-year">2019</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2019 – Personal portfolio</span><span class="award-source">Sigma Awards</span></li>
-      <li><span class="award-year">2019</span><span class="award-status winner">Winner</span><span class="award-title">Prêmio Claudio Weber Abramo 2019 – Newsletter Don’t “LAI” to me</span><span class="award-source">Transparência Brasil</span></li>
-      <li><span class="award-year">2018</span><span class="award-status winner">Winner</span><span class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Reportagem, 2nd place) – A rede bolsonarista de desinformação</span><span class="award-source">Estado de São Paulo</span></li>
-      <li class="shortlist"><span class="award-year">2018</span><span class="award-status shortlist">Shortlist</span><span class="award-title">Premio ANPR 2018 – Fraude em cotas raciais</span><span class="award-source">ANPR</span></li>
-      <li><span class="award-year">2018</span><span class="award-status winner">Winner</span><span class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Serviço) – Estadão Verifica</span><span class="award-source">Estado de São Paulo</span></li>
-      <li><span class="award-year">2017</span><span class="award-status winner">Winner</span><span class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 2nd place) – Fraude em transparência em SP</span><span class="award-source">Estado de São Paulo</span></li>
-      <li><span class="award-year">2017</span><span class="award-status winner">Winner</span><span class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 3rd place) – Internações psiquiátricas (série)</span><span class="award-source">Estado de São Paulo</span></li>
-      <li><span class="award-year">2017</span><span class="award-status winner">Winner</span><span class="award-title">Premio ANPR 2017 – Denunciando uma rede de pornografia infantil</span><span class="award-source">ANPR</span></li>
-      <li><span class="award-year">2016</span><span class="award-status winner">Winner</span><span class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span><span class="award-source">Instituto Ayrton Senna</span></li>
-      <li><span class="award-year">2011</span><span class="award-status winner">Winner</span><span class="award-title">Premio ASU/Schaeffer 2011 – A história da mulher que adotou seis crianças</span><span class="award-source">ASU/Schaeffer</span></li>
+        <li><span class="award-year">2024</span><span class="award-status winner">Winner</span><span
+            class="award-title">Prêmio Gabo 2024 – coverage with InfoAmazonia and Datafixers.org</span><span
+            class="award-source">Fundación Gabo</span></li>
+        <li class="shortlist"><span class="award-year">2024</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards</span><span
+            class="award-source">Sigma Awards</span></li>
+        <li><span class="award-year">2023</span><span class="award-status winner">Winner</span><span
+            class="award-title">Prêmio Claudio Weber Abramo – Categoria Dados Abertos</span><span
+            class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
+        <li><span class="award-year">2023</span><span class="award-status winner">Winner</span><span
+            class="award-title">Prêmio Claudio Weber Abramo – Categoria Investigação</span><span
+            class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
+        <li class="shortlist"><span class="award-year">2023</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Premio Roche 2023</span><span
+            class="award-source">Premio Roche</span></li>
+        <li><span class="award-year">2022</span><span class="award-status winner">Winner</span><span
+            class="award-title">Prêmio Transparência e Fiscalização Pública – Câmara dos Deputados (with Fiquem
+            Sabendo)</span><span class="award-source">Câmara dos Deputados</span></li>
+        <li class="shortlist"><span class="award-year">2022</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2022 –
+            Má alimentação à Brasileira</span><span class="award-source">Escola de Dados/Open Knowledge Brasil</span>
+        </li>
+        <li class="shortlist"><span class="award-year">2022</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Open
+            Lux</span><span class="award-source">Sigma Awards</span></li>
+        <li class="shortlist"><span class="award-year">2022</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Personal
+            portfolio</span><span class="award-source">Sigma Awards</span></li>
+        <li class="shortlist"><span class="award-year">2022</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Revealing the
+            Brazilian military pension</span><span class="award-source">Sigma Awards</span></li>
+        <li class="shortlist"><span class="award-year">2021</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">IREE 2021</span><span
+            class="award-source">IREE</span></li>
+        <li class="shortlist"><span class="award-year">2021</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Shedding light
+            on government pension</span><span class="award-source">Sigma Awards</span></li>
+        <li class="shortlist"><span class="award-year">2021</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Chloroquine and
+            the Brazilian Army</span><span class="award-source">Sigma Awards</span></li>
+        <li><span class="award-year">2021</span><span class="award-status winner">Winner</span><span
+            class="award-title">Jornalismo Mosca 2021 – Solteiragate</span><span class="award-source">Jornalismo
+            Mosca</span></li>
+        <li class="shortlist"><span class="award-year">2021</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2021 –
+            Solteiragate</span><span class="award-source">Transparência Brasil</span></li>
+        <li class="shortlist"><span class="award-year">2019</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2019 – Personal
+            portfolio</span><span class="award-source">Sigma Awards</span></li>
+        <li><span class="award-year">2019</span><span class="award-status winner">Winner</span><span
+            class="award-title">Prêmio Claudio Weber Abramo 2019 – Newsletter Don’t “LAI” to me</span><span
+            class="award-source">Transparência Brasil</span></li>
+        <li><span class="award-year">2018</span><span class="award-status winner">Winner</span><span
+            class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Reportagem, 2nd place) – A rede bolsonarista
+            de desinformação</span><span class="award-source">Estado de São Paulo</span></li>
+        <li class="shortlist"><span class="award-year">2018</span><span
+            class="award-status shortlist">Shortlist</span><span class="award-title">Premio ANPR 2018 – Fraude em cotas
+            raciais</span><span class="award-source">ANPR</span></li>
+        <li><span class="award-year">2018</span><span class="award-status winner">Winner</span><span
+            class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Serviço) – Estadão Verifica</span><span
+            class="award-source">Estado de São Paulo</span></li>
+        <li><span class="award-year">2017</span><span class="award-status winner">Winner</span><span
+            class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 2nd place) – Fraude em
+            transparência em SP</span><span class="award-source">Estado de São Paulo</span></li>
+        <li><span class="award-year">2017</span><span class="award-status winner">Winner</span><span
+            class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 3rd place) – Internações
+            psiquiátricas (série)</span><span class="award-source">Estado de São Paulo</span></li>
+        <li><span class="award-year">2017</span><span class="award-status winner">Winner</span><span
+            class="award-title">Premio ANPR 2017 – Denunciando uma rede de pornografia infantil</span><span
+            class="award-source">ANPR</span></li>
+        <li><span class="award-year">2016</span><span class="award-status winner">Winner</span><span
+            class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span><span
+            class="award-source">Instituto Ayrton Senna</span></li>
+        <li><span class="award-year">2011</span><span class="award-status winner">Winner</span><span
+            class="award-title">Premio ASU/Schaeffer 2011 – A história da mulher que adotou seis crianças</span><span
+            class="award-source">ASU/Schaeffer</span></li>
       </ul>
     </div>
   </section>
@@ -463,14 +582,22 @@
     <div class="container">
       <h2 class="section-title">Scholarships, Fellowships and Grants</h2>
       <ul class="grant-list">
-      <li><span class="grant-year">2024</span><span class="grant-title">Together for Conservation (EJN, 2024)</span><span class="grant-source">Earth Journalism Network</span></li>
-      <li><span class="grant-year">2023–2024</span><span class="grant-title">National Endowment for Democracy (NED) – Reagan‑Fascell fellowship (2023–2024)</span><span class="grant-source">NED</span></li>
-      <li><span class="grant-year">2022</span><span class="grant-title">Person of the Year 2022 – Brazilian American Chamber of Commerce</span><span class="grant-source">Brazilian American Chamber of Commerce</span></li>
-      <li><span class="grant-year">2021–2022</span><span class="grant-title">Columbia Journalism School (US$ 91,500 in tuition) 2021/2022</span><span class="grant-source">Columbia University</span></li>
-      <li><span class="grant-year">2020</span><span class="grant-title">ICFJ Latin America Grantee 2020 – FOIA – Brazil and US project</span><span class="grant-source">ICFJ</span></li>
-      <li><span class="grant-year">2019</span><span class="grant-title">EAESP‑FGV – Full scholarship for a master of science in Public Administration (2019)</span><span class="grant-source">FGV</span></li>
-      <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$ 60,000 scholarship (2019) – Jornalista de Visão</span><span class="grant-source">Instituto Ling</span></li>
-      <li><span class="grant-year">2018</span><span class="grant-title">ICFJ Emerging Leaders Program / fellow 2018</span><span class="grant-source">ICFJ</span></li>
+        <li><span class="grant-year">2024</span><span class="grant-title">Together for Conservation (EJN,
+            2024)</span><span class="grant-source">Earth Journalism Network</span></li>
+        <li><span class="grant-year">2023–2024</span><span class="grant-title">National Endowment for Democracy (NED) –
+            Reagan‑Fascell fellowship (2023–2024)</span><span class="grant-source">NED</span></li>
+        <li><span class="grant-year">2022</span><span class="grant-title">Person of the Year 2022 – Brazilian American
+            Chamber of Commerce</span><span class="grant-source">Brazilian American Chamber of Commerce</span></li>
+        <li><span class="grant-year">2021–2022</span><span class="grant-title">Columbia Journalism School (US$ 91,500 in
+            tuition) 2021/2022</span><span class="grant-source">Columbia University</span></li>
+        <li><span class="grant-year">2020</span><span class="grant-title">ICFJ Latin America Grantee 2020 – FOIA –
+            Brazil and US project</span><span class="grant-source">ICFJ</span></li>
+        <li><span class="grant-year">2019</span><span class="grant-title">EAESP‑FGV – Full scholarship for a master of
+            science in Public Administration (2019)</span><span class="grant-source">FGV</span></li>
+        <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$
+            60,000 scholarship (2019) – Jornalista de Visão</span><span class="grant-source">Instituto Ling</span></li>
+        <li><span class="grant-year">2018</span><span class="grant-title">ICFJ Emerging Leaders Program / fellow
+            2018</span><span class="grant-source">ICFJ</span></li>
       </ul>
     </div>
   </section>
@@ -478,11 +605,14 @@
   <footer class="footer section">
     <div class="container">
       <h2>Get in touch</h2>
-      <p>Interested in collaboration, have a story tip, or want to discuss investigative journalism? I'd love to hear from you.</p>
+      <p>Interested in collaboration, have a story tip, or want to discuss investigative journalism? I'd love to hear
+        from you.</p>
       <div class="socials">
         <a href="mailto:lft29@cam.ac.uk"><i class="fas fa-envelope"></i></a>
-        <a href="https://twitter.com/toledoluizf" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
-        <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://twitter.com/toledoluizf" target="_blank" rel="noopener noreferrer"><i
+            class="fab fa-twitter"></i></a>
+        <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i
+            class="fab fa-linkedin-in"></i></a>
       </div>
     </div>
   </footer>
@@ -522,7 +652,7 @@
 
     // Anchor links copy for section titles
     document.querySelectorAll('.section h2').forEach(h => {
-      const id = h.parentElement?.id || h.textContent?.toLowerCase().replace(/\s+/g,'-');
+      const id = h.parentElement?.id || h.textContent?.toLowerCase().replace(/\s+/g, '-');
       if (!h.parentElement?.id && id) h.parentElement?.setAttribute('id', id);
       h.style.cursor = 'pointer';
       h.addEventListener('click', () => {
@@ -543,9 +673,9 @@
     function updateScrollytelling() {
       const scrollPos = window.scrollY + window.innerHeight / 2;
       const scrollySection = document.getElementById('scrollytelling');
-      
+
       if (!scrollySection) return;
-      
+
       const sectionTop = scrollySection.offsetTop;
       const sectionBottom = sectionTop + scrollySection.offsetHeight;
 
@@ -613,4 +743,5 @@
     setTimeout(updateScrollytelling, 100);
   </script>
 </body>
+
 </html>
