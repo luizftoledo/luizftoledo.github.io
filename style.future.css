@@ -250,8 +250,11 @@ a.highlight {
 }
 
 .card-article img {
-  height: 260px;
-  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
+  object-fit: contain;
+  background: #000;
 }
 
 .card-article .card-content {
@@ -914,6 +917,7 @@ html[data-theme='light'] {
     padding: 1.5rem;
   }
 }
+
 /* Logo Styles */
 .brand .logo {
   text-decoration: none;
@@ -943,9 +947,20 @@ html[data-theme='light'] {
 }
 
 @keyframes pulse {
-  0% { opacity: 0.5; text-shadow: 0 0 0 var(--accent); }
-  50% { opacity: 1; text-shadow: 0 0 10px var(--accent); }
-  100% { opacity: 0.5; text-shadow: 0 0 0 var(--accent); }
+  0% {
+    opacity: 0.5;
+    text-shadow: 0 0 0 var(--accent);
+  }
+
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 10px var(--accent);
+  }
+
+  100% {
+    opacity: 0.5;
+    text-shadow: 0 0 0 var(--accent);
+  }
 }
 
 /* Noir CSS Filters for Investigative Cards */
@@ -953,7 +968,8 @@ html[data-theme='light'] {
 .investigative .featured-article {
   position: relative;
   overflow: hidden;
-  isolation: isolate; /* Create new stacking context */
+  isolation: isolate;
+  /* Create new stacking context */
 }
 
 /* Image Filter Base */
@@ -961,7 +977,8 @@ html[data-theme='light'] {
 .investigative .featured-article img {
   filter: grayscale(100%) contrast(120%) brightness(80%) sepia(30%) hue-rotate(240deg);
   transition: filter 0.4s ease, transform 0.4s ease;
-  mix-blend-mode: luminosity; /* Blends with background color */
+  mix-blend-mode: luminosity;
+  /* Blends with background color */
 }
 
 /* Purple Overlay using ::after */
@@ -972,7 +989,8 @@ html[data-theme='light'] {
   top: 0;
   left: 0;
   width: 100%;
-  height: 240px; /* Match standard card image height */
+  height: 240px;
+  /* Match standard card image height */
   background: linear-gradient(135deg, rgba(76, 29, 149, 0.4) 0%, rgba(124, 58, 237, 0.2) 100%);
   pointer-events: none;
   z-index: 1;
@@ -982,20 +1000,25 @@ html[data-theme='light'] {
 
 /* Featured article height adjustment for overlay */
 .investigative .featured-article::after {
-  height: 100%; /* Cover full featured image area if it's different */
-  max-height: 400px; /* Cap it */
+  height: 100%;
+  /* Cover full featured image area if it's different */
+  max-height: 400px;
+  /* Cap it */
 }
 
 /* Hover Effects */
 .investigative .card-article:hover img,
 .investigative .featured-article:hover img {
-  filter: grayscale(0%) contrast(110%) brightness(100%); /* Restore color slightly on hover */
-  transform: scale(1.05); /* Zoom effect */
+  filter: grayscale(0%) contrast(110%) brightness(100%);
+  /* Restore color slightly on hover */
+  transform: scale(1.05);
+  /* Zoom effect */
 }
 
 .investigative .card-article:hover::after,
 .investigative .featured-article:hover::after {
-  opacity: 0; /* Remove overlay on hover to reveal true photo */
+  opacity: 0;
+  /* Remove overlay on hover to reveal true photo */
 }
 
 /* Ensure content stays on top */
@@ -1003,5 +1026,6 @@ html[data-theme='light'] {
 .investigative .featured-content {
   position: relative;
   z-index: 2;
-  background: var(--bg-card); /* Ensure text is readable */
+  background: var(--bg-card);
+  /* Ensure text is readable */
 }
