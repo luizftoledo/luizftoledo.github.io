@@ -407,9 +407,95 @@ a.highlight {
   }
 }
 
-@media (min-width: 1024px) {
-  .short-videos .embed-grid {
-    grid-template-columns: repeat(3, 1fr);
+/* Reels Carousel */
+.reels-carousel-container {
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin: 24px 0;
+}
+
+.reels-carousel {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  /* Space for scrollbar if visible/touch */
+  scroll-behavior: smooth;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.reels-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.reels-carousel {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.reels-carousel .instagram-media {
+  flex: 0 0 320px;
+  /* Fixed width for reels usually works best */
+  scroll-snap-align: center;
+  margin: 0 !important;
+  max-width: 320px !important;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.reels-btn {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  position: absolute;
+}
+
+.reels-btn:hover {
+  transform: scale(1.1);
+}
+
+.reels-btn-left {
+  left: -20px;
+}
+
+.reels-btn-right {
+  right: -20px;
+}
+
+@media (max-width: 768px) {
+  .reels-btn {
+    display: none;
+    /* Hide buttons on mobile, rely on touch scroll */
+  }
+
+  .reels-carousel-container {
+    margin: 24px -20px;
+    /* Full bleed on mobile */
+    padding: 0 20px;
+  }
+
+  .reels-carousel .instagram-media {
+    flex: 0 0 280px;
+    /* Slightly smaller on mobile if needed, or keep 300 */
+    max-width: 280px !important;
   }
 }
 

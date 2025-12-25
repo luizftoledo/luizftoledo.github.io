@@ -464,22 +464,45 @@
       <h3 class="subsection-title" style="margin: 40px 0 24px; font-size: 1.5rem; color: var(--accent);">Short-form
         video reporting for social media</h3>
 
-      <div class="embed-grid instagram-grid">
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPfEs-4lTI3/"
-          data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DOgpYz4lKwY/"
-          data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPKauEVD71z/"
-          data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DMq7vPfC4Os/"
-          data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DJUu11hILPM/"
-          data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DKuiChEMt8W/"
-          data-instgrm-version="14"></blockquote>
-        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DNCAw5SIF1J/"
-          data-instgrm-version="14"></blockquote>
+      <div class="reels-carousel-container">
+        <button class="reels-btn reels-btn-left" aria-label="Scroll left"><i class="fas fa-chevron-left"></i></button>
+        <div class="reels-carousel">
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPfEs-4lTI3/"
+            data-instgrm-version="14"></blockquote>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DOgpYz4lKwY/"
+            data-instgrm-version="14"></blockquote>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPKauEVD71z/"
+            data-instgrm-version="14"></blockquote>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DMq7vPfC4Os/"
+            data-instgrm-version="14"></blockquote>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DJUu11hILPM/"
+            data-instgrm-version="14"></blockquote>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DKuiChEMt8W/"
+            data-instgrm-version="14"></blockquote>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DNCAw5SIF1J/"
+            data-instgrm-version="14"></blockquote>
+        </div>
+        <button class="reels-btn reels-btn-right" aria-label="Scroll right"><i
+            class="fas fa-chevron-right"></i></button>
       </div>
+
+      <script>
+        // Simple script for the functional buttons
+        document.addEventListener('DOMContentLoaded', () => {
+          const container = document.querySelector('.reels-carousel');
+          const leftBtn = document.querySelector('.reels-btn-left');
+          const rightBtn = document.querySelector('.reels-btn-right');
+
+          if (container && leftBtn && rightBtn) {
+            leftBtn.addEventListener('click', () => {
+              container.scrollBy({ left: -320, behavior: 'smooth' });
+            });
+            rightBtn.addEventListener('click', () => {
+              container.scrollBy({ left: 320, behavior: 'smooth' });
+            });
+          }
+        });
+      </script>
     </div>
   </section>
 
