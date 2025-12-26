@@ -4,50 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Luiz Fernando Toledo - Data &amp; Investigative Journalist</title>
+
+  <!-- SEO & Open Graph -->
+  <title>Luiz Fernando Toledo - Data & Investigative Journalist</title>
+  <meta name="description"
+    content="Portfolio of Luiz Fernando Toledo, a Data & Investigative Journalist, researcher, and instructor. Award-winning reporting on environmental crimes, public spending, and transparency.">
+  <meta property="og:title" content="Luiz Fernando Toledo - Data & Investigative Journalist">
+  <meta property="og:description"
+    content="Award-winning Brazilian journalist based in London. Expert in data journalism, environmental investigations, and transparency.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://luizftoledo.github.io/">
+  <meta property="og:image" content="https://luizftoledo.github.io/epstein_brazil_victims.webp">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.future.css?v=4">
-  <style>
-    /* Video reporting section */
-    .short-videos .featured-video {
-      max-width: 1100px;
-      margin: 0 auto 24px;
-    }
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.future.css?v=5">
 
-    .short-videos .featured-video iframe {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      height: auto;
-      border: 0;
-      border-radius: 8px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-    }
+  <link rel="icon" type="image/png" href="favicon.png">
 
-    .short-videos .embed-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 16px;
-      align-items: start;
-    }
-
-    /* Make Instagram iframes responsive */
-    .short-videos .embed-grid .instagram-media {
-      min-width: 320px !important;
-      width: 100% !important;
-      margin: 0 auto !important;
-    }
-
-    .short-videos .embed-grid iframe {
-      width: 100%;
-      max-width: 100%;
-      aspect-ratio: 16 / 9;
-      height: auto;
-      border: 0;
-      border-radius: 8px;
-    }
-  </style>
   <script defer>
     // Force dark mode sitewide
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -79,8 +54,6 @@
       </div>
     </div>
   </nav>
-
-
 
   <section class="hero section">
     <div class="container">
@@ -141,146 +114,28 @@
     </div>
   </section>
 
-  <script>
-    // Carousel Logic
-    const track = document.querySelector('.carousel-track');
-    const slides = Array.from(track.children);
-    const nextButton = document.querySelector('.carousel-button--right');
-    const prevButton = document.querySelector('.carousel-button--left');
-    const dotsNav = document.querySelector('.carousel-nav');
-    const dots = Array.from(dotsNav.children);
-
-    const slideWidth = slides[0].getBoundingClientRect().width;
-
-    // Arrange the slides next to one another
-    const setSlidePosition = (slide, index) => {
-      slide.style.left = slideWidth * index + 'px';
-    };
-    slides.forEach(setSlidePosition);
-
-    const moveToSlide = (track, currentSlide, targetSlide) => {
-      track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
-      currentSlide.classList.remove('current-slide');
-      targetSlide.classList.add('current-slide');
-
-      // Manage video playback
-      manageVideoPlayback(currentSlide, targetSlide);
-    }
-
-    const updateDots = (currentDot, targetDot) => {
-      currentDot.classList.remove('current-slide');
-      targetDot.classList.add('current-slide');
-    }
-
-    const hideShowArrows = (slides, prevButton, nextButton, targetIndex) => {
-      if (targetIndex === 0) {
-        prevButton.classList.add('is-hidden');
-        nextButton.classList.remove('is-hidden');
-      } else if (targetIndex === slides.length - 1) {
-        prevButton.classList.remove('is-hidden');
-        nextButton.classList.add('is-hidden');
-      } else {
-        prevButton.classList.remove('is-hidden');
-        nextButton.classList.remove('is-hidden');
-      }
-    }
-
-    // Function to control YouTube videos via postMessage
-    const manageVideoPlayback = (fromSlide, toSlide) => {
-      // Pause the video we are leaving
-      const fromIframe = fromSlide.querySelector('iframe');
-      if (fromIframe) {
-        fromIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-      }
-
-      // Play the video we are entering
-      const toIframe = toSlide.querySelector('iframe');
-      if (toIframe) {
-        toIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-      }
-    }
-
-    prevButton.addEventListener('click', e => {
-      const currentSlide = track.querySelector('.current-slide');
-      const prevSlide = currentSlide.previousElementSibling;
-      const currentDot = dotsNav.querySelector('.current-slide');
-      const prevDot = currentDot.previousElementSibling;
-      const prevIndex = slides.findIndex(slide => slide === prevSlide);
-
-      moveToSlide(track, currentSlide, prevSlide);
-      updateDots(currentDot, prevDot);
-      hideShowArrows(slides, prevButton, nextButton, prevIndex);
-    });
-
-    nextButton.addEventListener('click', e => {
-      const currentSlide = track.querySelector('.current-slide');
-      const nextSlide = currentSlide.nextElementSibling;
-      const currentDot = dotsNav.querySelector('.current-slide');
-      const nextDot = currentDot.nextElementSibling;
-      const nextIndex = slides.findIndex(slide => slide === nextSlide);
-
-      moveToSlide(track, currentSlide, nextSlide);
-      updateDots(currentDot, nextDot);
-      hideShowArrows(slides, prevButton, nextButton, nextIndex);
-    });
-
-    dotsNav.addEventListener('click', e => {
-      const targetDot = e.target.closest('button');
-
-      if (!targetDot) return;
-
-      const currentSlide = track.querySelector('.current-slide');
-      const currentDot = dotsNav.querySelector('.current-slide');
-      const targetIndex = dots.findIndex(dot => dot === targetDot);
-      const targetSlide = slides[targetIndex];
-
-      moveToSlide(track, currentSlide, targetSlide);
-      updateDots(currentDot, targetDot);
-      hideShowArrows(slides, prevButton, nextButton, targetIndex);
-    });
-
-    // Recalculate slide positions on resize
-    window.addEventListener('resize', () => {
-      const newSlideWidth = slides[0].getBoundingClientRect().width;
-      slides.forEach((slide, index) => {
-        slide.style.left = newSlideWidth * index + 'px';
-      });
-      const currentSlide = track.querySelector('.current-slide');
-      // Re-center current slide
-      const targetIndex = slides.findIndex(slide => slide === currentSlide);
-      track.style.transform = 'translateX(-' + (newSlideWidth * targetIndex) + 'px)';
-    });
-  </script>
-
-
   <section id="impact-grid" class="section">
     <div class="container">
       <div class="impact-grid">
         <div class="impact-card">
           <h3><i class="fas fa-newspaper"></i> Reporting Impact</h3>
           <p>Stories I wrote <a href="https://news.fiquemsabendo.com.br/p/exclusivo-acessamos-as-notas-fiscais"
-              target="_blank" class="highlight">exposed</a> a former president's misuse of public funds, <a
+              target="_blank" rel="noopener noreferrer" class="highlight">exposed</a> a former president's misuse of
+            public funds, <a
               href="http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/"
-              target="_blank" class="highlight">uncovered</a> a bid fraud that saved R$ 15&nbsp;million from a city's
+              target="_blank" rel="noopener noreferrer" class="highlight">uncovered</a> a bid fraud that saved R$
+            15&nbsp;million from a city's
             budget and <a
               href="https://www.cnnbrasil.com.br/nacional/apos-reportagem-da-cnn-empresa-de-taxi-aereo-e-primeira-a-ser-cassada-no-pais/"
-              target="_blank" class="highlight">enabled</a> the shutdown of companies involved in illegal activities.
+              target="_blank" rel="noopener noreferrer" class="highlight">enabled</a> the shutdown of companies involved
+            in illegal activities.
           </p>
-          <!-- <img src="reporting.png" alt="Reporting Impact" loading="lazy"> -->
         </div>
 
         <div class="impact-card">
           <h3><i class="fas fa-chalkboard-teacher"></i> Training</h3>
           <p>Attended world-class conferences as instructor in Brazil, USA, UK, Portugal, Malaysia, Sweden and others.
             Trained over 2,000 journalists through online and in-person workshops.</p>
-          <!--
-          <figure style="margin: 0; text-align: center;">
-            <img src="gijc2025.png" alt="Training" loading="lazy"
-              style="max-width: 350px; height: 220px; object-fit: cover; object-position: top; margin-top: 16px; width: 100%;">
-            <figcaption style="color: var(--muted); font-size: 0.8rem; margin-top: 8px; font-style: italic;">Global
-              Investigative Journalism Conference panel, 2025</figcaption>
-          </figure>
-          -->
         </div>
 
         <div class="impact-card">
@@ -290,17 +145,12 @@
             (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en"
               target="_blank" rel="noopener noreferrer" class="highlight">My research was used by the government</a> to
             improve transparency policies.</p>
-          <!-- <img src="research.png" alt="Research" loading="lazy" style="max-width: 350px;"> -->
         </div>
 
         <div class="impact-card">
           <h3><i class="fas fa-code"></i> Civil Tech</h3>
           <p>I have developed interactive dashboards and <span class="highlight">chatbots</span> to support journalists
             during my <span class="highlight">fellowship</span> at the National Endowment for Democracy (NED).</p>
-          <!--
-          <img src="civil tech.png" alt="Civil Tech" loading="lazy"
-            style="max-width: 350px; height: 220px; object-fit: cover; object-position: top; width: 100%;">
-          -->
         </div>
       </div>
     </div>
@@ -310,7 +160,7 @@
     <div class="container">
       <h2 class="section-title">Investigative Reporting</h2>
       <div class="featured-article">
-        <img src="epstein_brazil_victims.png" alt="Jeffrey Epstein's link to Brazil revealed in new documents"
+        <img src="epstein_brazil_victims.webp" alt="Jeffrey Epstein's link to Brazil revealed in new documents"
           loading="lazy">
         <div class="featured-content">
           <div class="tags">
@@ -329,7 +179,7 @@
       </div>
       <div class="cards">
         <div class="card-article">
-          <img src="fake_alcohol_social_media.png"
+          <img src="fake_alcohol_social_media.webp"
             alt="How fake bottle caps and seals fuel Brazil's counterfeit alcohol market" loading="lazy">
           <div class="card-content">
             <div class="tags">
@@ -345,7 +195,7 @@
           </div>
         </div>
         <div class="card-article">
-          <img src="amazon_fish_trade.png" alt="Giant Amazon fish turned into luxury handbags – but who profits?"
+          <img src="amazon_fish_trade.webp" alt="Giant Amazon fish turned into luxury handbags – but who profits?"
             loading="lazy">
           <div class="card-content">
             <div class="tags">
@@ -361,7 +211,7 @@
           </div>
         </div>
         <div class="card-article">
-          <img src="slave_labor_public_funds.png" alt="Secret Budget Amendment Linked to Slave Labor" loading="lazy">
+          <img src="slave_labor_public_funds.webp" alt="Secret Budget Amendment Linked to Slave Labor" loading="lazy">
           <div class="card-content">
             <div class="tags">
               <span class="tag">BBC News Brasil</span>
@@ -376,7 +226,7 @@
           </div>
         </div>
         <div class="card-article">
-          <img src="meat_industry_abuse.png" alt="Brazilians Face Abuse in Irish Meat Industry" loading="lazy">
+          <img src="meat_industry_abuse.webp" alt="Brazilians Face Abuse in Irish Meat Industry" loading="lazy">
           <div class="card-content">
             <div class="tags">
               <span class="tag">BBC News Brasil</span>
@@ -391,7 +241,7 @@
           </div>
         </div>
         <div class="card-article">
-          <img src="illegal_artifacts.png" alt="Indigenous objects containing animal parts are freely sold online"
+          <img src="illegal_artifacts.webp" alt="Indigenous objects containing animal parts are freely sold online"
             loading="lazy">
           <div class="card-content">
             <div class="tags">
@@ -408,7 +258,7 @@
         </div>
 
         <div class="card-article">
-          <img src="land_grabbing.png" alt="Political Backing Fuels Land Grabbing in Brazil's Distrito Federal"
+          <img src="land_grabbing.webp" alt="Political Backing Fuels Land Grabbing in Brazil's Distrito Federal"
             loading="lazy">
           <div class="card-content">
             <div class="tags">
@@ -426,7 +276,7 @@
           </div>
         </div>
         <div class="card-article">
-          <img src="timber_illegal_trade_music.png" alt="A world heritage site under attack in Brazil" loading="lazy">
+          <img src="timber_illegal_trade_music.webp" alt="A world heritage site under attack in Brazil" loading="lazy">
           <div class="card-content">
             <div class="tags">
               <span class="tag">Revista Piauí</span>
@@ -485,24 +335,6 @@
         <button class="reels-btn reels-btn-right" aria-label="Scroll right"><i
             class="fas fa-chevron-right"></i></button>
       </div>
-
-      <script>
-        // Simple script for the functional buttons
-        document.addEventListener('DOMContentLoaded', () => {
-          const container = document.querySelector('.reels-carousel');
-          const leftBtn = document.querySelector('.reels-btn-left');
-          const rightBtn = document.querySelector('.reels-btn-right');
-
-          if (container && leftBtn && rightBtn) {
-            leftBtn.addEventListener('click', () => {
-              container.scrollBy({ left: -320, behavior: 'smooth' });
-            });
-            rightBtn.addEventListener('click', () => {
-              container.scrollBy({ left: 320, behavior: 'smooth' });
-            });
-          }
-        });
-      </script>
     </div>
   </section>
 
@@ -550,7 +382,7 @@
   <section id="awards" class="awards section">
     <div class="container">
       <h2 class="section-title">Awards and Honorable Mentions</h2>
-      <ul class="award-list">
+      <ul class="award-list collapsed">
         <li><span class="award-year">2024</span><span class="award-status winner">Winner</span><span
             class="award-title">Prêmio Gabo 2024 – coverage with InfoAmazonia and Datafixers.org</span><span
             class="award-source">Fundación Gabo</span></li>
@@ -628,6 +460,9 @@
             class="award-title">Premio ASU/Schaeffer 2011 – A história da mulher que adotou seis crianças</span><span
             class="award-source">ASU/Schaeffer</span></li>
       </ul>
+      <button class="show-more-btn"
+        onclick="document.querySelector('.award-list').classList.toggle('collapsed'); this.textContent = this.textContent === 'Show More' ? 'Show Less' : 'Show More';">Show
+        More</button>
     </div>
   </section>
 
@@ -669,57 +504,8 @@
       </div>
     </div>
   </footer>
-  <script defer>
-    // Mobile menu
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-    if (menuToggle && navLinks) {
-      menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-      });
-    }
 
-    // Reading progress bar
-    const progressBar = document.getElementById('progressBar');
-    const updateProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.body.scrollHeight - window.innerHeight;
-      const p = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      if (progressBar) progressBar.style.width = p + '%';
-    };
-    window.addEventListener('scroll', updateProgress);
-    window.addEventListener('load', updateProgress);
-
-    // Back to top button
-    const backBtn = document.createElement('button');
-    backBtn.className = 'back-to-top';
-    backBtn.innerHTML = '↑';
-    backBtn.title = 'Back to top';
-    backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    document.body.appendChild(backBtn);
-    const toggleBackBtn = () => {
-      if (window.scrollY > 400) backBtn.classList.add('show'); else backBtn.classList.remove('show');
-    };
-    window.addEventListener('scroll', toggleBackBtn);
-    window.addEventListener('load', toggleBackBtn);
-
-    // Anchor links copy for section titles
-    document.querySelectorAll('.section h2').forEach(h => {
-      const id = h.parentElement?.id || h.textContent?.toLowerCase().replace(/\s+/g, '-');
-      if (!h.parentElement?.id && id) h.parentElement?.setAttribute('id', id);
-      h.style.cursor = 'pointer';
-      h.addEventListener('click', () => {
-        const url = location.origin + location.pathname + '#' + (h.parentElement?.id || id || '');
-        navigator.clipboard.writeText(url).then(() => {
-          h.title = 'Link copied';
-          setTimeout(() => (h.title = ''), 1200);
-        });
-      });
-    });
-
-    // Scrollytelling logic removed
-
-  </script>
+  <script src="scripts/main.js"></script>
   <!-- Interactive Background -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   <script src="scripts/background.js"></script>
