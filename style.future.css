@@ -330,6 +330,8 @@ a.highlight {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  justify-content: center;
+  /* Center content vertically */
 }
 
 .featured-article h3 {
