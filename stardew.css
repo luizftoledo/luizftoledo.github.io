@@ -529,156 +529,161 @@ nav .nav-links a:hover {
         max-width: 1000px;
         margin: 0 auto;
     }
+}
 
-    @media (min-width: 640px) {
-        .short-videos .embed-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
+@media (min-width: 640px) {
+    .short-videos .embed-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
+}
 
-    @media (min-width: 1024px) {
-        .short-videos .embed-grid {
-            grid-template-columns: repeat(3, 1fr);
-        }
+@media (min-width: 1024px) {
+    .short-videos .embed-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
+}
 
-    /* Ensure iframes fill the grid cells */
-    .short-videos .reels-carousel iframe,
-    .short-videos .reels-carousel .instagram-media {
-        width: 100% !important;
-        max-width: 320px !important;
-        aspect-ratio: 9 / 16;
-        /* Reels are portrait */
-        height: auto;
-        border: 6px solid var(--sd-wood-dark) !important;
-        border-radius: 8px !important;
-        background: #000;
-    }
+/* Ensure iframes fill the grid cells */
+.short-videos .reels-carousel iframe,
+.short-videos .reels-carousel .instagram-media {
+    width: 100% !important;
+    max-width: 320px !important;
+    aspect-ratio: 9 / 16;
+    /* Reels are portrait */
+    height: auto;
+    border: 6px solid var(--sd-wood-dark) !important;
+    border-radius: 8px !important;
+    background: #000;
+}
 
-    /* Specific fix for the YouTube grid (Landscape) */
-    .short-videos .youtube-grid iframe {
-        width: 100% !important;
-        max-width: 100% !important;
-        aspect-ratio: 16 / 9;
-        /* YouTube is landscape */
-        height: auto;
-        border: 6px solid var(--sd-wood-dark) !important;
-        border-radius: 8px !important;
-    }
+/* Specific fix for the YouTube grid (Landscape) */
+.short-videos .youtube-grid iframe {
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 16 / 9;
+    /* YouTube is landscape */
+    height: auto;
+    border: 6px solid var(--sd-wood-dark) !important;
+    border-radius: 8px !important;
+}
 
-    /* Featured Video adjustment */
-    .featured-video {
-        max-width: 100%;
-        margin: 0 auto 2rem;
-    }
+/* Featured Video adjustment */
+.featured-video {
+    max-width: 100%;
+    margin: 0 auto 2rem;
+}
 
-    .featured-video iframe {
-        aspect-ratio: 16 / 9;
-        /* Main video is landscape */
-        width: 100%;
-        height: 100%;
-    }
+.featured-video iframe {
+    aspect-ratio: 16 / 9;
+    /* Main video is landscape */
+    width: 100%;
+    height: 100%;
+}
 
-    /* Interviews Grid */
-    .interview-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
-    }
+/* Interviews Grid */
+.interview-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
 
-    .interview-card iframe {
-        width: 100%;
-        height: 200px;
-        /* Reduced fixed height */
-        border: 4px solid var(--sd-wood-dark);
-        box-sizing: border-box;
-    }
+.interview-card iframe {
+    width: 100%;
+    height: 200px;
+    /* Reduced fixed height */
+    border: 4px solid var(--sd-wood-dark);
+    box-sizing: border-box;
+}
 
-    /* Awards & Grants Lists */
-    .award-list,
-    .grant-list {
-        list-style: none;
-        max-width: 900px;
-        margin: 0 auto;
-    }
+/* Awards & Grants Lists */
+.award-list,
+.grant-list {
+    list-style: none;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0;
+}
 
-    .award-list li,
-    .grant-list li {
-        display: flex;
-        /* Flex layout to prevent text squashing */
-        flex-wrap: wrap;
-        /* Allow wrapping on small screens */
-        align-items: baseline;
-        gap: 10px;
-        margin-bottom: 12px;
-    }
+.award-list li,
+.grant-list li {
+    display: flex;
+    /* Flex layout to prevent text squashing */
+    flex-wrap: wrap;
+    /* Allow wrapping on small screens */
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+}
 
-    .award-year,
-    .grant-year,
-    .award-status {
-        flex-shrink: 0;
-        white-space: nowrap;
-    }
+.award-year,
+.grant-year,
+.award-status {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
 
-    .award-title,
-    .grant-title {
-        font-weight: bold;
-        color: var(--sd-text-color);
-    }
+.award-title,
+.grant-title {
+    font-weight: bold;
+    color: var(--sd-text-color);
+}
 
-    .award-source,
-    .grant-source {
-        display: block;
-        width: 100%;
-        font-size: 18px;
-        color: #6a4a3a;
-        margin-top: 4px;
-    }
+.award-source,
+.grant-source {
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    color: #6a4a3a;
+    margin-top: 4px;
+}
 
-    /* Footer */
-    .footer {
-        background-color: var(--sd-wood-dark) !important;
-        text-align: center;
-        color: #ffdda1;
-        padding: 3rem 0;
-        margin-top: 4rem;
-        border-top: 8px solid #3d2008;
-    }
+/* Footer */
+.footer {
+    background-color: var(--sd-wood-dark) !important;
+    text-align: center;
+    color: #ffdda1;
+    padding: 3rem 0;
+    margin-top: 4rem;
+    border-top: 8px solid #3d2008;
+}
 
-    .socials {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        margin: 1rem 0;
-    }
+.socials {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
 
-    .socials a {
-        background: var(--sd-panel-bg);
-        color: var(--sd-wood-dark);
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        border: 2px solid var(--sd-wood-dark);
-    }
+.socials a {
+    background: var(--sd-panel-bg);
+    color: var(--sd-wood-dark);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 2px solid var(--sd-wood-dark);
+    text-decoration: none;
+    /* Ensure no underline */
+}
 
-    /* --- 8. ANIMATIONS --- */
-    .section-title img,
-    .impact-card img,
-    .hero-text img {
-        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
+/* --- 8. ANIMATIONS --- */
+.section-title img,
+.impact-card img,
+.hero-text img {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-    .section-title:hover img,
-    .impact-card:hover img {
-        transform: scale(1.2) rotate(5deg);
-    }
+.section-title:hover img,
+.impact-card:hover img {
+    transform: scale(1.2) rotate(5deg);
+}
 
-    /* Hiding original icons replaced by images */
-    .impact-card i,
-    .section-title i {
-        display: none;
-    }
+
+/* Hiding original icons replaced by images */
+.impact-card i,
+.section-title i {
+    display: none;
+}
