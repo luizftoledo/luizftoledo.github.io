@@ -59,7 +59,7 @@
     <div class="container">
       <div class="hero-text">
         <div style="text-align: center; margin-bottom: 1rem;">
-          <img src="images/stardew/stardew_avatar_journalist_1767209961988.png" alt="Luiz Pixel Art"
+          <img src="images/stardew/stardew_avatar_final_v2.jpg" alt="Luiz Pixel Art"
             style="width: 128px; display: inline-block; image-rendering: pixelated;">
         </div>
         <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
@@ -564,9 +564,79 @@
 </body>
 
 <!-- Return to Reality Button -->
-<a href="index.html"
-  style="position: fixed; bottom: 20px; right: 20px; background: var(--sd-accent-color); color: #fff; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-family: 'Vt323', monospace; font-size: 20px; border: 3px solid #1a4216; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); z-index: 10000; display: flex; align-items: center; gap: 8px;">
-  <i class="fas fa-bus"></i> Back to Reality
-</a>
+<div
+  style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 10000; align-items: flex-end;">
+
+  <!-- Music Toggle Button -->
+  <button id="musicToggle"
+    style="background: var(--sd-accent-color); color: #fff; padding: 10px 15px; border-radius: 8px; font-family: 'Vt323', monospace; font-size: 20px; border: 3px solid #1a4216; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 50px;">
+    <i class="fas fa-volume-mute" id="musicIcon"></i>
+  </button>
+
+  <a href="index.html"
+    style="background: var(--sd-accent-color); color: #fff; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-family: 'Vt323', monospace; font-size: 20px; border: 3px solid #1a4216; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px;">
+    <i class="fas fa-bus"></i> Back to Reality
+  </a>
+</div>
+
+<!-- Hidden YouTube Player -->
+<div id="player" style="display: none;"></div>
+
+<script>
+  // YouTube IFrame Player API
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  var isPlaying = false;
+  var musicToggle = document.getElementById('musicToggle');
+  var musicIcon = document.getElementById('musicIcon');
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '1',
+      width: '1',
+      videoId: 'nLuNcAJ4dXk',
+      playerVars: {
+        'autoplay': 1,
+        'loop': 1,
+        'playlist': 'nLuNcAJ4dXk',
+        'controls': 0,
+        'showinfo': 0
+      },
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    // Attempt autoplay
+    event.target.playVideo();
+    // Some browsers block this unless muted, but user wants music.
+    // We update UI based on success.
+  }
+
+  function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+      isPlaying = true;
+      musicIcon.className = 'fas fa-volume-up';
+    } else {
+      isPlaying = false;
+      musicIcon.className = 'fas fa-volume-mute';
+    }
+  }
+
+  musicToggle.addEventListener('click', function () {
+    if (isPlaying) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+  });
+</script>
 
 </html>
