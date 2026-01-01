@@ -1,0 +1,502 @@
+/* Persona 5 Theme */
+:root {
+    --p5-red: #d9232e;
+    --p5-black: #000000;
+    --p5-white: #f5f5f5;
+    --p5-gray: #2d2d2d;
+    --p5-accent: #ffea00;
+    --font-heading: 'Anton', sans-serif;
+    --font-body: 'Roboto Condensed', sans-serif;
+    --skew-angle: -3deg;
+}
+
+body {
+    background-color: var(--p5-red);
+    background-image:
+        radial-gradient(var(--p5-black) 15%, transparent 16%),
+        radial-gradient(var(--p5-black) 15%, transparent 16%);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    color: var(--p5-black);
+    font-family: var(--font-body);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    transform: skew(var(--skew-angle));
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+h1 {
+    font-size: 3.5rem;
+    color: var(--p5-white);
+    background: var(--p5-black);
+    display: inline-block;
+    padding: 5px 15px;
+    border: 3px solid var(--p5-white);
+    box-shadow: 5px 5px 0 var(--p5-gray);
+    margin-bottom: 0.5rem;
+}
+
+h2.section-title {
+    font-size: 2.5rem;
+    color: var(--p5-white);
+    background: var(--p5-black);
+    display: inline-block;
+    padding: 10px 30px;
+    transform: skew(var(--skew-angle)) rotate(-1deg);
+    border-left: 10px solid var(--p5-white);
+    margin-bottom: 2rem;
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+}
+
+.highlight {
+    background: var(--p5-black);
+    color: var(--p5-red);
+    padding: 0 5px;
+    font-weight: bold;
+}
+
+/* Layout */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.section {
+    padding: 60px 0;
+    position: relative;
+    overflow: visible;
+    /* Fix content clipping */
+}
+
+/* Navigation - Specificity Boost */
+nav {
+    background: var(--p5-black) !important;
+    padding: 1rem 0;
+    border-bottom: 3px solid var(--p5-red);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Ensure links are white, not blue */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li a {
+    color: var(--p5-white) !important;
+    text-decoration: none !important;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    transition: all 0.3s;
+    background: transparent;
+    border: 2px solid transparent;
+    /* Placeholder for hover */
+}
+
+.nav-links li a:hover {
+    background: var(--p5-white) !important;
+    color: var(--p5-black) !important;
+    transform: skew(var(--skew-angle));
+    box-shadow: 3px 3px 0 var(--p5-red);
+    border-color: var(--p5-black);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--p5-white);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Mobile Nav */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--p5-black);
+        padding: 20px;
+        border-bottom: 3px solid var(--p5-red);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+
+/* Hero Section */
+.hero {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Removed SVG background to reduce noise if needed, keeping simple gradient */
+}
+
+.hero p {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    background: var(--p5-white);
+    padding: 15px;
+    border: 3px solid var(--p5-black);
+    transform: skew(var(--skew-angle));
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5);
+    margin-top: 1rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--p5-black);
+    /* Ensure text color */
+}
+
+/* Impact Grid */
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.impact-card {
+    background: var(--p5-white);
+    border: 4px solid var(--p5-black);
+    padding: 20px;
+    transition: transform 0.2s;
+    transform: skew(var(--skew-angle));
+    box-shadow: 8px 8px 0 var(--p5-black);
+    color: var(--p5-black);
+    /* Ensure text color */
+}
+
+.impact-card:hover {
+    transform: skew(var(--skew-angle)) translate(-5px, -5px);
+    box-shadow: 12px 12px 0 var(--p5-red);
+}
+
+.impact-card h3 {
+    font-size: 1.8rem;
+    border-bottom: 3px solid var(--p5-red);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--p5-black);
+    /* Ensure heading color */
+}
+
+.icon-p5 {
+    color: var(--p5-red);
+    filter: drop-shadow(2px 2px 0 var(--p5-black));
+}
+
+/* Articles */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.card-article {
+    background: var(--p5-black);
+    color: var(--p5-white);
+    border: 2px solid var(--p5-white);
+    transform: skew(var(--skew-angle));
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-article:hover {
+    transform: skew(var(--skew-angle)) scale(1.02);
+    border-color: var(--p5-accent);
+}
+
+.card-article img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.2);
+    transition: filter 0.3s;
+    border-bottom: 2px solid var(--p5-white);
+}
+
+.card-article:hover img {
+    filter: grayscale(0%) contrast(1.1);
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-article h3 {
+    color: var(--p5-white);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 0 var(--p5-red);
+}
+
+.tag {
+    background: var(--p5-red);
+    color: var(--p5-white);
+    padding: 2px 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: 5px;
+    border: 1px solid var(--p5-white);
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.card-article a {
+    color: var(--p5-accent);
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--p5-accent);
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.impact-card a {
+    color: var(--p5-red);
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Awards List */
+.award-list {
+    list-style: none;
+    padding: 0;
+}
+
+.award-list li {
+    background: var(--p5-white);
+    margin-bottom: 10px;
+    padding: 15px;
+    border-left: 10px solid var(--p5-black);
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+    transform: skew(var(--skew-angle));
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    color: var(--p5-black);
+}
+
+.award-year {
+    background: var(--p5-black);
+    color: var(--p5-white);
+    padding: 2px 8px;
+    font-weight: bold;
+}
+
+.award-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    flex: 1;
+}
+
+.award-status.winner {
+    color: #ceaa00;
+    text-shadow: 1px 1px 0 #000;
+}
+
+/* Buttons */
+.p5-btn,
+.show-more-btn {
+    background: var(--p5-black);
+    color: var(--p5-white);
+    border: none;
+    padding: 10px 20px;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transform: skew(var(--skew-angle));
+    clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.p5-btn:hover,
+.show-more-btn:hover {
+    background: var(--p5-red);
+    padding-left: 30px;
+    /* shift effect */
+}
+
+/* Featured Article */
+.featured-article {
+    background: var(--p5-black);
+    color: var(--p5-white);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+    border: 4px solid var(--p5-white);
+    box-shadow: 10px 10px 0 var(--p5-red);
+    transform: skew(var(--skew-angle));
+}
+
+.featured-article img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: cover;
+    border-bottom: 4px solid var(--p5-white);
+    filter: grayscale(100%);
+}
+
+.featured-article:hover img {
+    filter: grayscale(0%);
+}
+
+.featured-content {
+    padding: 30px;
+}
+
+.featured-content h3 {
+    font-size: 2.5rem;
+    color: var(--p5-white);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    background: var(--p5-red);
+    display: inline;
+    padding: 5px;
+    box-shadow: 5px 5px 0 var(--p5-black);
+}
+
+.featured-content a {
+    color: var(--p5-accent);
+}
+
+/* Footer */
+.footer {
+    background: var(--p5-black);
+    color: var(--p5-white);
+    margin-top: 50px;
+    padding: 50px 0;
+    border-top: 10px solid var(--p5-white);
+}
+
+.socials a {
+    color: var(--p5-white);
+    font-size: 2rem;
+    margin: 0 15px;
+    transition: color 0.3s;
+}
+
+.socials a:hover {
+    color: var(--p5-red);
+}
+
+/* Utilities */
+.collapsed li:nth-child(n+6) {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .featured-article {
+        flex-direction: row;
+    }
+
+    .featured-article img {
+        width: 50%;
+        border-bottom: none;
+        border-right: 4px solid var(--p5-white);
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--p5-black);
+        padding: 20px;
+        border-bottom: 3px solid var(--p5-red);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+}
+
+/* Instagram Reels Carousel */
+.reels-carousel-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.reels-carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 20px 5px;
+    /* Add veritcal padding for shadows */
+    scroll-behavior: smooth;
+    width: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: var(--p5-red) var(--p5-black);
+}
+
+.reels-carousel iframe,
+.reels-carousel .instagram-media {
+    width: 320px !important;
+    min-width: 320px !important;
+    aspect-ratio: 9 / 16;
+    height: auto !important;
+    border: 4px solid var(--p5-black) !important;
+    box-shadow: 5px 5px 0 var(--p5-red) !important;
+    background: var(--p5-white);
+    transform: skew(-2deg);
+    margin: 5px !important;
+}
