@@ -21,6 +21,46 @@
   <link href="https://fonts.googleapis.com/css2?family=Vt323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="stardew.css">
 
+  <script>
+    // Junimo & Confetti Logic
+    const junimoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const junimos = document.querySelector('.junimo-parade');
+        if (entry.isIntersecting && junimos && !junimos.classList.contains('visible')) {
+          // Trigger Confetti
+          createConfetti();
+
+          // Show Junimos after short delay
+          setTimeout(() => {
+            junimos.classList.add('visible');
+          }, 500);
+        }
+      });
+    }, { threshold: 0.1 }); // Trigger when 10% of footer is visible
+
+    const footer = document.querySelector('footer');
+    if (footer) junimoObserver.observe(footer);
+
+    function createConfetti() {
+      const colors = ['#ff0', '#f00', '#0f0', '#00f', '#f0f', '#0ff'];
+      for (let i = 0; i < 50; i++) {
+        const conf = document.createElement('div');
+        conf.classList.add('confetti');
+        conf.style.left = Math.random() * 100 + 'vw';
+        conf.style.top = Math.random() * -20 + 'vh'; // Start above viewport
+        conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        conf.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        // Random shape
+        if (Math.random() > 0.5) conf.style.borderRadius = '50%';
+
+        document.body.appendChild(conf);
+
+        // Cleanup
+        setTimeout(() => conf.remove(), 4000);
+      }
+    }
+  </script>
+
   <style>
     /* Junimo Parade Animation */
     @keyframes junimoWalk {
@@ -41,6 +81,13 @@
       height: 60px;
       z-index: 999;
       pointer-events: none;
+      opacity: 0;
+      /* Hidden by default */
+      transition: opacity 1s;
+    }
+
+    .junimo-parade.visible {
+      opacity: 1;
     }
 
     .junimo-sprite {
@@ -50,9 +97,33 @@
       width: 120px;
       height: auto;
       image-rendering: pixelated;
-      animation: junimoWalk 20s linear infinite;
       transform: translateX(-150px);
-      /* Start off-screen */
+    }
+
+    .junimo-parade.visible .junimo-sprite {
+      animation: junimoWalk 20s linear infinite;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #f0f;
+      animation: confetti-fall 3s linear forwards;
+      z-index: 1000;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
     }
   </style>
 
