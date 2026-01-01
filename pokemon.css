@@ -421,3 +421,51 @@ body {
         opacity: 0;
     }
 }
+
+@media (max-width: 600px) {
+
+    /* Layout adjustments for mobile */
+    .game-container {
+        height: 100vh;
+        aspect-ratio: unset;
+    }
+
+    .enemy-sprite {
+        top: 20%;
+        right: 5%;
+        transform: scale(0.8);
+    }
+
+    .enemy-status-box {
+        top: 60px;
+        /* Moved down */
+        left: 10px;
+        transform: scale(0.8);
+        transform-origin: top left;
+        background: rgba(255, 255, 255, 0.9);
+        z-index: 10;
+    }
+
+    .player-sprite {
+        bottom: 15%;
+        left: -10%;
+        transform: scale(0.9);
+    }
+
+    .player-status-box {
+        bottom: 170px;
+        /* Moved up significantly */
+        right: 10px;
+        transform: scale(0.8);
+        transform-origin: bottom right;
+        background: rgba(255, 255, 255, 0.9);
+        z-index: 10;
+    }
+
+    .dialog-box {
+        bottom: 5px;
+        width: 96%;
+        left: 2%;
+        height: 80px;
+    }
+}

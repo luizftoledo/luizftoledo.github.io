@@ -21,6 +21,7 @@
   <!-- Press Start 2P for authentic 8-bit feel -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="pokemon_site.css">
+  <link rel="stylesheet" href="pokemon.css"> <!-- Added Game CSS -->
 
   <link rel="icon" type="image/png" href="favicon.png">
 
@@ -114,6 +115,88 @@
     }
   </style>
   <div class="progress-bar" id="progressBar"></div>
+
+  <!-- EMBEDDED POKEMON BATTLE GAME -->
+  <section id="pokemon-battle-embed"
+    style="width: 100%; display: flex; justify-content: center; background: #202020; padding-bottom: 20px;">
+    <div class="game-container" id="gameContainer">
+      <div class="scene">
+        <!-- Background -->
+        <div class="battle-bg"></div>
+
+        <!-- Enemy Side -->
+        <div class="enemy-base"></div>
+        <div class="enemy-sprite">
+          <img src="images/pokemon/monster_record_v2.png" alt="Government Record Monster" id="enemyImg">
+        </div>
+        <div class="enemy-status-box">
+          <div class="status-name">GOV. RECORD</div>
+          <div class="status-level">Lv.50</div>
+          <div class="hp-bar-container">
+            <div class="hp-label">HP</div>
+            <div class="hp-bar-bg">
+              <div class="hp-bar-fill" id="enemyHpBar"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Player Side -->
+        <div class="player-base"></div>
+        <div class="player-sprite">
+          <img src="images/pokemon/trainer_back_v2.png" alt="Trainer Back" id="playerImg">
+        </div>
+        <div class="player-status-box">
+          <div class="status-name">JOURNALIST</div>
+          <div class="status-level">Lv.99</div>
+          <div class="hp-bar-container">
+            <div class="hp-label">HP</div>
+            <div class="hp-bar-bg">
+              <div class="hp-bar-fill" style="width: 100%;"></div>
+            </div>
+          </div>
+          <div class="hp-numbers">2000/2000</div>
+        </div>
+
+        <!-- Effects -->
+        <div class="flash-overlay" id="flashOverlay"></div>
+        <div class="foia-projectile" id="foiaProjectile">
+          <img src="images/pokemon/foia_paper.png" alt="FOIA Request">
+        </div>
+
+        <!-- UI / Text Box -->
+        <div class="dialog-box" id="dialogBox">
+          <div class="dialog-text" id="dialogText"></div>
+          <div class="continue-arrow" id="continueArrow">▼</div>
+        </div>
+
+        <!-- Battle Menu -->
+        <div class="battle-menu" id="battleMenu" style="display: none;">
+          <div class="menu-options">
+            <div class="menu-row">
+              <div class="menu-option" data-action="fight">FOIA REQUEST</div>
+              <div class="menu-option" data-action="bag">BAG</div>
+            </div>
+            <div class="menu-row">
+              <div class="menu-option" data-action="pokemon">PKMN</div>
+              <div class="menu-option" data-action="run">RUN</div>
+            </div>
+          </div>
+          <div class="menu-prompt">What will<br>JOURNALIST do?</div>
+        </div>
+
+        <!-- Start Overlay (Mobile Fix) -->
+        <div id="startOverlay"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; text-align: center;">
+          <h1 style="font-size: 20px; margin-bottom: 20px; color: #f8db38; text-shadow: 2px 2px #3890f8;">POKEMON
+            BATTLE<br>(Portfolio Edition)</h1>
+          <button id="startGameBtn"
+            style="background: #f85838; color: #fff; border: 4px solid #fff; padding: 15px 30px; font-family: 'Press Start 2P'; font-size: 16px; cursor: pointer; box-shadow: 0 4px 0 #b04028;">CLICK
+            TO START</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <nav>
     <div class="container nav-inner">
       <div class="brand">
@@ -653,6 +736,7 @@
   </div>
 
   <script src="scripts/main.js"></script>
+  <script src="pokemon.js"></script> <!-- Added Game Logic -->
   <!-- Interactive Background Removed for Pokemon Theme -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script> -->
   <!-- <script src="scripts/background.js"></script> -->
