@@ -83,23 +83,41 @@
       animation: floatItem 3s ease-in-out infinite;
     }
 
+    /* New Rare Candy Surprise */
+    .poke-surprise-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 30px;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .poke-surprise-container.visible {
+      opacity: 1;
+    }
+
+    .poke-use-btn {
+      background: #3890f8;
+      color: #fff;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      padding: 8px 16px;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 0 #204080;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .poke-use-btn:active {
+      box-shadow: 0 2px 0 #204080;
+      transform: translateY(2px);
+    }
+
     .poke-msg-box {
       display: none;
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 90%;
-      max-width: 600px;
-      background: #fff;
-      border: 4px solid #202020;
-      border-radius: 4px;
-      padding: 15px;
-      font-family: 'Press Start 2P', cursive;
-      font-size: 12px;
-      color: #202020;
-      z-index: 10001;
-      box-shadow: 0 0 0 4px #fff, 0 0 0 8px #202020;
+      /* Removed old box style */
     }
 
     @keyframes floatItem {
@@ -722,18 +740,18 @@
         <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i
             class="fab fa-linkedin-in"></i></a>
       </div>
-    </div>
-    <!-- Rare Candy (Hidden Item) -->
-    <div class="poke-item-container" id="rareCandyItem" title="???">
-      <img src="images/pokemon/rare_candy.png" alt="Rare Candy" class="poke-item-sprite">
-    </div>
+      <!-- Rare Candy (Hidden Item) -->
+      <div class="poke-surprise-container" id="pokeSurprise">
+        <img src="images/pokemon/rare_candy.png" alt="Rare Candy"
+          style="width: 48px; height: 48px; image-rendering: pixelated;" class="poke-item-sprite">
+        <div style="font-family: 'Press Start 2P'; font-size: 10px; color: #202020;" id="candyText">You found a RARE
+          CANDY!</div>
+        <button class="poke-use-btn" id="useCandyBtn">USE</button>
+      </div>
     </div>
   </footer>
 
-  <div class="poke-msg-box" id="itemMsgBox">
-    <div id="itemText">You found a RARE CANDY!</div>
-    <div style="text-align: right; margin-top: 10px; color: #f85838;">▼</div>
-  </div>
+  <!-- Removed old poke-msg-box div -->
 
   <script src="scripts/main.js"></script>
   <script src="pokemon.js"></script> <!-- Added Game Logic -->
@@ -815,35 +833,27 @@
         });
       }
 
-      // Rare Candy Logic
-      const candy = document.getElementById('rareCandyItem');
-      const msgBox = document.getElementById('itemMsgBox');
+      // Rare Candy Logic (Updated)
+      const useBtn = document.getElementById('useCandyBtn');
+      const candyText = document.getElementById('candyText');
+      const surpriseContainer = document.getElementById('pokeSurprise');
 
-      if (candy && msgBox) {
-        candy.addEventListener('click', () => {
-          candy.style.display = 'none'; // Picked up
-          msgBox.style.display = 'block';
+      if (useBtn && candyText) {
+        useBtn.addEventListener('click', () => {
+          // Level Up logic
+          candyText.innerHTML = "Level Up!<br>99 &rarr; 100<br><br>Thanks for visiting!";
+          candyText.style.lineHeight = "1.8";
+          candyText.style.textAlign = "center";
+          useBtn.style.display = 'none'; // Hide button after use
 
-          // Play sound if possible? 
-          // For now just text
-
-          // Hide after click
-          msgBox.addEventListener('click', () => {
-            msgBox.style.display = 'none';
-          });
-
-          // Auto hide
-          setTimeout(() => {
-            msgBox.style.display = 'none';
-          }, 5000);
+          // Play sound if available (optional)
         });
 
         // Scroll Trigger
         const candyObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
-            const candyContainer = document.querySelector('.poke-item-container');
-            if (entry.isIntersecting && candyContainer) {
-              candyContainer.classList.add('visible');
+            if (entry.isIntersecting && surpriseContainer) {
+              surpriseContainer.classList.add('visible');
             }
           });
         }, { threshold: 0.1 });
