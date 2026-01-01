@@ -493,24 +493,17 @@
     </div>
     </div>
 
-    <!-- Treasure Chest Surprise -->
-    <div class="p5-chest-container">
-      <img src="images/persona/treasure_chest.png" alt="Treasure Chest" class="p5-chest" id="treasureChest">
+
+    <!-- Simplified Surprise -->
+    <div class="p5-surprise-container" id="p5Surprise">
+      <img src="images/persona/treasure_chest.png" alt="Treasure Chest" class="p5-surprise-img" id="surpriseImg">
+      <div class="p5-surprise-title" id="surpriseTitle">TREASURE CHEST!</div>
+      <div class="p5-surprise-subtitle" id="surpriseSubtitle">OPEN IT</div>
     </div>
     </div>
   </footer>
 
-  <div class="p5-reward-modal" id="rewardModal">
-    <div class="p5-reward-content">
-      <div class="p5-reward-title">Treasure Obtained!</div>
-      <img src="images/persona/calling_card.png" alt="Calling Card" class="p5-reward-img">
-      <p style="color: #fff; font-family: 'Anton', sans-serif; font-size: 1.2rem; margin-bottom: 20px;">
-        You found a Calling Card!<br>
-        "We will take your heart!"
-      </p>
-      <button class="p5-close-btn" id="closeRewardBtn">I accept</button>
-    </div>
-  </div>
+
 
   <!-- Music Toggle Button -->
   <div
@@ -597,45 +590,29 @@
       });
     }
 
-    // Treasure Chest Logic
-    const chest = document.getElementById('treasureChest');
-    const rewardModal = document.getElementById('rewardModal');
-    const closeRewardBtn = document.getElementById('closeRewardBtn');
+    // Treasure Chest Logic (Simplified)
+    const surpriseBox = document.getElementById('p5Surprise');
+    const surpriseImg = document.getElementById('surpriseImg');
+    const surpriseTitle = document.getElementById('surpriseTitle');
+    const surpriseSubtitle = document.getElementById('surpriseSubtitle');
 
-    if (chest && rewardModal) {
-      chest.addEventListener('click', () => {
-        // Shake animation
-        chest.classList.add('shake');
+    let isOpened = false;
 
-        // Wait for shake
-        setTimeout(() => {
-          chest.classList.remove('shake');
-          rewardModal.style.display = 'flex';
-        }, 500);
-      });
+    if (surpriseBox) {
+      surpriseBox.addEventListener('click', () => {
+        if (!isOpened) {
+          // Change to Calling Card
+          surpriseImg.src = 'images/persona/calling_card.png';
+          surpriseTitle.innerText = "TAKE YOUR HEART";
+          surpriseSubtitle.innerText = "Thanks for visiting!";
 
-      closeRewardBtn.addEventListener('click', () => {
-        rewardModal.style.display = 'none';
-      });
+          // Add shake effect
+          surpriseImg.classList.add('shake');
+          setTimeout(() => surpriseImg.classList.remove('shake'), 500);
 
-      rewardModal.addEventListener('click', (e) => {
-        if (e.target === rewardModal) {
-          rewardModal.style.display = 'none';
+          isOpened = true;
         }
       });
-
-      // Scroll Trigger - LOW THRESHOLD to ensure visibility
-      const chestObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          const chestCont = document.querySelector('.p5-chest-container');
-          if (entry.isIntersecting && chestCont) {
-            chestCont.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.1 });
-
-      const footer = document.querySelector('footer');
-      if (footer) chestObserver.observe(footer);
     }
   </script>
 
