@@ -491,7 +491,26 @@
             class="fab fa-linkedin-in"></i></a>
       </div>
     </div>
+    </div>
+
+    <!-- Treasure Chest Surprise -->
+    <div class="p5-chest-container">
+      <img src="images/persona/treasure_chest.png" alt="Treasure Chest" class="p5-chest" id="treasureChest">
+    </div>
+    </div>
   </footer>
+
+  <div class="p5-reward-modal" id="rewardModal">
+    <div class="p5-reward-content">
+      <div class="p5-reward-title">Treasure Obtained!</div>
+      <img src="images/persona/calling_card.png" alt="Calling Card" class="p5-reward-img">
+      <p style="color: #fff; font-family: 'Anton', sans-serif; font-size: 1.2rem; margin-bottom: 20px;">
+        You found a Calling Card!<br>
+        "We will take your heart!"
+      </p>
+      <button class="p5-close-btn" id="closeRewardBtn">I accept</button>
+    </div>
+  </div>
 
   <!-- Music Toggle Button -->
   <div
@@ -576,6 +595,47 @@
       rightBtn.addEventListener('click', () => {
         reelsCarousel.scrollBy({ left: 320, behavior: 'smooth' });
       });
+    }
+
+    // Treasure Chest Logic
+    const chest = document.getElementById('treasureChest');
+    const rewardModal = document.getElementById('rewardModal');
+    const closeRewardBtn = document.getElementById('closeRewardBtn');
+
+    if (chest && rewardModal) {
+      chest.addEventListener('click', () => {
+        // Shake animation
+        chest.classList.add('shake');
+
+        // Wait for shake
+        setTimeout(() => {
+          chest.classList.remove('shake');
+          rewardModal.style.display = 'flex';
+        }, 500);
+      });
+
+      closeRewardBtn.addEventListener('click', () => {
+        rewardModal.style.display = 'none';
+      });
+
+      rewardModal.addEventListener('click', (e) => {
+        if (e.target === rewardModal) {
+          rewardModal.style.display = 'none';
+        }
+      });
+
+      // Scroll Trigger - LOW THRESHOLD to ensure visibility
+      const chestObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const chestCont = document.querySelector('.p5-chest-container');
+          if (entry.isIntersecting && chestCont) {
+            chestCont.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      const footer = document.querySelector('footer');
+      if (footer) chestObserver.observe(footer);
     }
   </script>
 
