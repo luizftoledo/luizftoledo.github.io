@@ -522,9 +522,13 @@
         if (konamiIndex === konamiCode.length) {
           // Success!
           konamiIndex = 0;
-          // Optional: Play a sound or visual cue
-          alert("A wild secret appeared!");
-          window.location.href = 'pokemon.html';
+          // Trigger the secret modal sequence
+          if (typeof triggerPokemonSecret === 'function') {
+            triggerPokemonSecret();
+          } else {
+            // Fallback if script hasn't loaded (unlikely)
+            window.location.href = 'pokemon.html';
+          }
         }
       } else {
         konamiIndex = 0; // Reset
@@ -780,14 +784,21 @@
       }
 
       // POKEMON HEART GOLD SECRET LOGIC
-      const pokeTrigger = document.getElementById('pokeSecretTrigger');
+      // POKEMON HEART GOLD SECRET LOGIC
       const pokeModal = document.getElementById('pokemonSecretModal');
       const pokeMsgElement = document.getElementById('pokemonMessage');
       const pokeArrow = document.getElementById('pokemonArrow');
 
-      if (pokeTrigger && pokeModal) {
+      // Define globally available trigger function
+      window.triggerPokemonSecret = function () {
+        if (!pokeModal || !pokeMsgElement) return;
+
         const message = "A wild SECRET appeared! ...Wait, this isn't a normal website. The truth is hidden in the tall grass. Getting ready for battle...";
         let charIndex = 0;
+
+        pokeModal.style.display = 'flex';
+        pokeMsgElement.innerHTML = "";
+        pokeArrow.style.display = 'none';
 
         function typeWriter() {
           if (charIndex < message.length) {
@@ -798,31 +809,22 @@
             pokeArrow.style.display = 'block';
             // Auto redirect after reading time
             setTimeout(() => {
-              // Flash screen effect?
+              // Flash screen effect
               document.body.style.transition = "filter 0.5s";
               document.body.style.filter = "brightness(0)";
 
-              // Show loading text just before fade or during?
-              // Let's show it when arrow appears actually? No, when they click or just before fade.
-              // Let's make it visible just before fade.
               const pkl = document.getElementById('pokemonLoading');
               if (pkl) pkl.style.display = 'block';
 
               setTimeout(() => {
                 window.location.href = 'pokemon.html';
-              }, 2000); // bit more time
+              }, 2000);
             }, 2500);
           }
         }
-
-        pokeTrigger.addEventListener('click', (e) => {
-          e.preventDefault();
-          pokeModal.style.display = 'flex';
-          pokeMsgElement.innerHTML = "";
-          charIndex = 0;
-          typeWriter();
-        });
-      }
+        typeWriter();
+      };
+      // Removed click trigger dependency since icon is gone
     });
   </script>
 </body>
