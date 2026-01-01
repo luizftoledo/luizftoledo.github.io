@@ -32,6 +32,30 @@
 </head>
 
 <body>
+  <style>
+    body {
+      background-image: url('images/pokemon/pokemon_bg_town.png');
+      background-repeat: repeat;
+      background-size: 512px;
+      image-rendering: pixelated;
+    }
+
+    .container {
+      background: rgba(248, 248, 248, 0.9);
+      border: 4px solid #202020;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    nav .container {
+      margin-top: 0;
+      border: none;
+      box-shadow: none;
+    }
+  </style>
   <div class="progress-bar" id="progressBar"></div>
   <nav>
     <div class="container nav-inner">
@@ -558,126 +582,26 @@
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script> -->
   <!-- <script src="scripts/background.js"></script> -->
 
-  <!-- Easter Egg Modal -->
-  <div id="secretModal"
-    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
-    <div
-      style="background: #fff; padding: 2rem; border-radius: 8px; max-width: 400px; text-align: center; font-family: 'Inter', sans-serif;">
-      <h3 style="color: #333; margin-bottom: 1.5rem;">Where is this chicken from?</h3>
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-        <button class="quiz-option" data-answer="wrong"
-          style="padding: 10px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">1)
-          Final Fantasy</button>
-        <button class="quiz-option" data-answer="wrong"
-          style="padding: 10px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">2)
-          Children of Mana</button>
-        <button class="quiz-option" data-answer="correct"
-          style="padding: 10px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">3)
-          Stardew Valley</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- Success Modal (Stardew Style) -->
-  <div id="successModal"
-    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10001; justify-content: center; align-items: center;">
-    <div
-      style="background: #ffe6a8; border: 4px solid #6d3910; padding: 20px; max-width: 500px; font-family: 'Courier New', monospace; box-shadow: 0 0 0 4px #ffae68, 0 0 20px rgba(0,0,0,0.5); position: relative;">
-      <!-- Pixel corners would be nice, but simple border is safer for inline -->
-      <h2 style="color: #5c3510; text-transform: uppercase; text-align: center; margin-bottom: 10px; font-size: 24px;">
-        Secret Unlocked!</h2>
-      <p style="color: #5c3510; font-size: 18px; line-height: 1.5;">You've discovered my secret farm...</p>
-      <p style="color: #5c3510; font-size: 18px; text-align: right; margin-top: 10px;">- Luiz</p>
-    </div>
-  </div>
-
-  <!-- Persona 5 Secret Modal -->
-  <div id="personaSecretModal"
-    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 20000; justify-content: center; align-items: center; font-family: 'Anton', sans-serif;">
-    <div
-      style="background: #000; color: #f5f5f5; border: 4px solid #f5f5f5; padding: 30px; max-width: 600px; transform: skew(-3deg); box-shadow: 10px 10px 0 #d9232e; position: relative;">
-      <h2
-        style="font-size: 2.5rem; color: #d9232e; margin-bottom: 20px; text-transform: uppercase; background: #000; display: inline-block; border: 2px solid #f5f5f5; padding: 5px 15px; transform: skew(-2deg);">
-        Phantom Thieves
-      </h2>
-      <p style="font-size: 1.5rem; margin-bottom: 30px; font-family: 'Roboto Condensed', sans-serif;">
-        You have successfully infiltrated the palace. A secret version of this site has been unlocked. Proceed?
-      </p>
-      <div style="display: flex; gap: 20px; justify-content: flex-end;">
-        <button id="personaConfirmBtn"
-          style="background: #d9232e; color: #fff; border: none; padding: 10px 30px; font-size: 1.2rem; font-family: 'Anton', sans-serif; text-transform: uppercase; cursor: pointer; transform: skew(-5deg); box-shadow: 3px 3px 0 #fff; transition: all 0.2s;">
-          Take Your Heart
-        </button>
-        <button id="personaCancelBtn"
-          style="background: #2d2d2d; color: #fff; border: none; padding: 10px 20px; font-size: 1.2rem; font-family: 'Anton', sans-serif; text-transform: uppercase; cursor: pointer; transform: skew(-5deg); transition: all 0.2s;">
-          Retreat
-        </button>
-      </div>
-    </div>
-  </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Existing Easter Egg Logic (Stardew)
-      const trigger = document.getElementById('easterEggTrigger');
-      const modal = document.getElementById('secretModal');
-      const successModal = document.getElementById('successModal');
-      const options = document.querySelectorAll('.quiz-option');
-
-      if (trigger && modal) {
-        trigger.addEventListener('click', (e) => {
-          e.preventDefault();
-          modal.style.display = 'flex';
-        });
-
-        modal.addEventListener('click', (e) => {
-          if (e.target === modal) modal.style.display = 'none';
-        });
-
-        options.forEach(opt => {
-          opt.addEventListener('click', () => {
-            const isCorrect = opt.getAttribute('data-answer') === 'correct';
-            if (isCorrect) {
-              modal.style.display = 'none';
-              successModal.style.display = 'flex';
-              setTimeout(() => {
-                window.location.href = 'stardew.html';
-              }, 2500);
-            } else {
-              modal.style.display = 'none';
-            }
-          });
-        });
-      }
-
-      // New Persona 5 Secret Logic
-      const personaTrigger = document.getElementById('secretAwardLi');
-      const personaModal = document.getElementById('personaSecretModal');
-      const personaConfirm = document.getElementById('personaConfirmBtn');
-      const personaCancel = document.getElementById('personaCancelBtn');
-
-      if (personaTrigger && personaModal) {
-        personaTrigger.addEventListener('click', (e) => {
-          // Play a sound or just show logic? For now just visual
-          personaModal.style.display = 'flex';
-        });
-
-        personaConfirm.addEventListener('click', () => {
-          // Redirect to persona.html with the secret flag
-          window.location.href = 'persona.html?secret=true';
-        });
-
-        personaCancel.addEventListener('click', () => {
-          personaModal.style.display = 'none';
-        });
-
-        // Close on outside click for Persona modal too
-        personaModal.addEventListener('click', (e) => {
-          if (e.target === personaModal) personaModal.style.display = 'none';
-        });
-      }
-    });
+    // Only keeping necessary logic
   </script>
+  <!-- Return to Reality Button -->
+  <div
+    style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 10000; align-items: flex-end;">
+    <!-- Music Toggle Button -->
+    <button id="musicToggle"
+      style="background: #f85838; color: #fff; padding: 10px 15px; border-radius: 4px; font-family: 'Press Start 2P', cursive; font-size: 12px; border: 4px solid #202020; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;">
+      <i class="fas fa-volume-up" id="musicIcon"></i>
+    </button>
+
+    <a href="index.html"
+      style="background: #3890f8; color: #fff; padding: 10px 15px; border-radius: 4px; text-decoration: none; font-family: 'Press Start 2P', cursive; font-size: 12px; border: 4px solid #202020; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px; height: 40px;">
+      <i class="fas fa-sign-out-alt"></i> ESCAPE
+    </a>
+  </div>
+
   <!-- Portfolio Music -->
   <audio id="portfolioMusic" src="pkblu.mp3" loop></audio>
 
@@ -685,14 +609,40 @@
     // Music Autoplay Logic
     document.addEventListener('DOMContentLoaded', () => {
       const audio = document.getElementById('portfolioMusic');
+      const musicToggle = document.getElementById('musicToggle');
+      const musicIcon = document.getElementById('musicIcon');
+      let isPlaying = false;
+
       if (audio) {
-        audio.volume = 0.4; // Slightly lower for reading
-        // Try playing immediately
-        audio.play().catch(e => {
+        audio.volume = 0.4;
+
+        // Toggle Button
+        if (musicToggle) {
+          musicToggle.addEventListener('click', () => {
+            if (isPlaying) {
+              audio.pause();
+              isPlaying = false;
+              musicIcon.className = 'fas fa-volume-mute';
+            } else {
+              audio.play();
+              isPlaying = true;
+              musicIcon.className = 'fas fa-volume-up';
+            }
+          });
+        }
+
+        audio.play().then(() => {
+          isPlaying = true;
+        }).catch(e => {
           console.log("Autoplay blocked:", e);
-          // Fallback: Play on first interaction
+          musicIcon.className = 'fas fa-volume-mute';
+          // Fallhack
           document.addEventListener('click', () => {
-            audio.play();
+            if (!isPlaying) {
+              audio.play();
+              isPlaying = true;
+              musicIcon.className = 'fas fa-volume-up';
+            }
           }, { once: true });
         });
       }
