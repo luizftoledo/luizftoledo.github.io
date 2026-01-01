@@ -135,7 +135,25 @@
     </div>
 
     <!-- Audio Control (Youtube) -->
-    <script src="scripts/pokemon.js"></script>
-</body>
+    <audio id="battleMusic" src="pkost_music.mp3" loop></audio>
 
-</html>
+    <script src="scripts/pokemon.js"></script>
+    <script>
+        // Music Autoplay Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('battleMusic');
+            if (audio) {
+                audio.volume = 0.5; // Set reasonable volume
+                // Try playing immediately
+                audio.play().catch(e => {
+                    console.log("Autoplay blocked:", e);
+                    // Fallback: Play on first interaction
+                    document.addEventListener('click', () => {
+                        audio.play();
+                    }, { once: true });
+                });
+            }
+        });
+</body >
+
+</html >
