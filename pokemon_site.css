@@ -29,7 +29,6 @@ body {
     font-size: 10px;
     /* Base size 10px for readability in pixel font */
     line-height: 1.8;
-    cursor: crosshair;
     /* Fallback for 8-bit feel */
 }
 
@@ -46,7 +45,7 @@ a {
     text-decoration: none;
     border-bottom: 2px solid var(--color-text);
     transition: background 0.1s;
-    cursor: crosshair;
+    transition: background 0.1s;
 }
 
 a:hover {
