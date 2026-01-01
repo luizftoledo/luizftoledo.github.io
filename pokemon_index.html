@@ -683,6 +683,26 @@
       }
     });
   </script>
+  <!-- Portfolio Music -->
+  <audio id="portfolioMusic" src="pkblu.mp3" loop></audio>
+
+  <script>
+    // Music Autoplay Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const audio = document.getElementById('portfolioMusic');
+      if (audio) {
+        audio.volume = 0.4; // Slightly lower for reading
+        // Try playing immediately
+        audio.play().catch(e => {
+          console.log("Autoplay blocked:", e);
+          // Fallback: Play on first interaction
+          document.addEventListener('click', () => {
+            audio.play();
+          }, { once: true });
+        });
+      }
+    });
+  </script>
 </body>
 
 </html>
