@@ -23,23 +23,26 @@
 
   <script>
     // Junimo & Confetti Logic
-    const junimoObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const junimos = document.querySelector('.junimo-parade');
-        if (entry.isIntersecting && junimos && !junimos.classList.contains('visible')) {
-          // Trigger Confetti
-          createConfetti();
+    // Junimo & Confetti Logic
+    document.addEventListener("DOMContentLoaded", () => {
+      const junimoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const junimos = document.querySelector('.junimo-parade');
+          if (entry.isIntersecting && junimos && !junimos.classList.contains('visible')) {
+            // Trigger Confetti
+            createConfetti();
 
-          // Show Junimos after short delay
-          setTimeout(() => {
-            junimos.classList.add('visible');
-          }, 500);
-        }
-      });
-    }, { threshold: 0.1 }); // Trigger when 10% of footer is visible
+            // Show Junimos after short delay
+            setTimeout(() => {
+              junimos.classList.add('visible');
+            }, 500);
+          }
+        });
+      }, { threshold: 0.1 }); // Trigger when 10% of footer is visible
 
-    const footer = document.querySelector('footer');
-    if (footer) junimoObserver.observe(footer);
+      const footer = document.querySelector('footer');
+      if (footer) junimoObserver.observe(footer);
+    });
 
     function createConfetti() {
       const colors = ['#ff0', '#f00', '#0f0', '#00f', '#f0f', '#0ff'];
