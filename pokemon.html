@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle - Luiz Fernando Toledo</title>
+    <link rel="stylesheet" href="pokemon.css">
+    <link rel="icon" type="image/png" href="images/pokemon/foia_paper.png">
+    <!-- Press Start 2P for authentic 8-bit feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-container">
+        <div class="scene">
+            <!-- Background -->
+            <div class="battle-bg"></div>
+
+
+
+            <!-- Enemy Side -->
+            <div class="enemy-base"></div>
+            <div class="enemy-sprite">
+                <img src="images/pokemon/monster_record_v2.png" alt="Government Record Monster" id="enemyImg">
+            </div>
+            <div class="enemy-status-box">
+                <div class="status-name">GOV. RECORD</div>
+                <div class="status-level">Lv.50</div>
+                <div class="hp-bar-container">
+                    <div class="hp-label">HP</div>
+                    <div class="hp-bar-bg">
+                        <div class="hp-bar-fill" id="enemyHpBar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player Side -->
+            <div class="player-base"></div>
+            <div class="player-sprite">
+                <img src="images/pokemon/trainer_back_v2.png" alt="Trainer Back" id="playerImg">
+            </div>
+            <div class="player-status-box">
+                <div class="status-name">JOURNALIST</div>
+                <div class="status-level">Lv.99</div>
+                <div class="hp-bar-container">
+                    <div class="hp-label">HP</div>
+                    <div class="hp-bar-bg">
+                        <div class="hp-bar-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                <div class="hp-numbers">2000/2000</div>
+            </div>
+
+            <!-- Effects -->
+            <div class="flash-overlay" id="flashOverlay"></div>
+            <div class="foia-projectile" id="foiaProjectile">
+                <img src="images/pokemon/foia_paper.png" alt="FOIA Request">
+            </div>
+
+            <!-- UI / Text Box -->
+            <div class="dialog-box" id="dialogBox">
+                <div class="dialog-text" id="dialogText"></div>
+                <div class="continue-arrow" id="continueArrow">▼</div>
+            </div>
+
+            <!-- Battle Menu -->
+            <div class="battle-menu" id="battleMenu" style="display: none;">
+                <div class="menu-options">
+                    <div class="menu-row">
+                        <div class="menu-option" data-action="fight">FOIA REQUEST</div>
+                        <div class="menu-option" data-action="bag">BAG</div>
+                    </div>
+                    <div class="menu-row">
+                        <div class="menu-option" data-action="pokemon">PKMN</div>
+                        <div class="menu-option" data-action="run">RUN</div>
+                    </div>
+                </div>
+                <div class="menu-prompt">What will<br>JOURNALIST do?</div>
+            </div>
+        </div>
+
+        <!-- Post-Battle Portfolio Layer -->
+        <div id="portfolioLayer"
+            style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8f8f8; overflow-y: auto; z-index: 100;">
+            <!-- Walking Protagonist Overlay -->
+            <div id="walkingSprite"
+                style="position: fixed; bottom: 20px; right: 20px; width: 64px; height: 64px; z-index: 200;"></div>
+
+            <div class="portfolio-content"
+                style="padding: 40px; font-family: 'Press Start 2P', cursive; color: #202020;">
+                <h1
+                    style="text-align: center; margin-bottom: 40px; font-size: 24px; border-bottom: 4px solid #202020; padding-bottom: 20px;">
+                    LUIZ'S PC</h1>
+
+                <div class="poke-card"
+                    style="background: #fff; border: 4px solid #202020; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 4px 4px 0 #ccc;">
+                    <h2 style="font-size: 16px; margin-bottom: 15px;">> TRAINER INFO</h2>
+                    <p style="font-size: 12px; line-height: 2;">
+                        NAME: LUIZ<br>
+                        CLASS: DATA JOURNALIST<br>
+                        BADGES: 8 (AWARDS)<br>
+                        PLAY TIME: 999:59
+                    </p>
+                </div>
+
+                <div class="poke-card"
+                    style="background: #fff; border: 4px solid #202020; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 4px 4px 0 #ccc;">
+                    <h2 style="font-size: 16px; margin-bottom: 15px;">> ALL PROJECTS</h2>
+                    <p style="font-size: 10px; color: #666; margin-bottom: 10px;">(Scroll to see more)</p>
+                    <!-- Replicating some project data here -->
+                    <div style="border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                        <p style="color: #d82020;">[!] EPSTEIN FILES</p>
+                        <p style="font-size: 10px; margin-top: 5px;">Investigative reporting on international crime
+                            rings.</p>
+                    </div>
+                    <div style="border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                        <p style="color: #2080d8;">[!] AMAZON FISH</p>
+                        <p style="font-size: 10px; margin-top: 5px;">Tracking environmental crimes in the rainforest.
+                        </p>
+                    </div>
+                    <div style="border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                        <p style="color: #20d860;">[!] FAKE ALCOHOL</p>
+                        <p style="font-size: 10px; margin-top: 5px;">Dismantling counterfeit networks in Brazil.</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <button onclick="window.location.href='index.html'"
+                        style="font-family: 'Press Start 2P'; padding: 15px; background: #fff; border: 4px solid #202020; cursor: pointer;">SAVE
+                        & QUIT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Control (Youtube) -->
+    <script src="scripts/pokemon.js"></script>
+</body>
+
+</html>

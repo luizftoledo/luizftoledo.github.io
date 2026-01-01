@@ -1,0 +1,423 @@
+:root {
+    --font-pixel: 'Press Start 2P', cursive;
+    --color-bg-grey: #f8f8f8;
+    --color-ui-border: #484848;
+    --color-ui-bg: #fff;
+    --color-hp-green: #38e070;
+    --color-hp-yellow: #f8e038;
+    --color-hp-red: #f85838;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #202020;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: var(--font-pixel);
+    overflow: hidden;
+}
+
+.game-container {
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 4/3;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    image-rendering: pixelated;
+}
+
+.scene {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    opacity: 0;
+    /* Starts hidden for fade in */
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.battle-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Background covers upper part mostly */
+    background-image: url('images/pokemon/battle_bg.png');
+    background-size: cover;
+    background-position: center bottom;
+    z-index: 1;
+}
+
+/* Bases */
+.enemy-base,
+.player-base {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    transform: scaleY(0.4);
+    z-index: 2;
+}
+
+.enemy-base {
+    width: 250px;
+    height: 100px;
+    top: 35%;
+    right: 15%;
+    background: #d0e8c8;
+    /* Light grass color */
+    border: 4px solid #88a870;
+}
+
+.player-base {
+    width: 300px;
+    height: 120px;
+    bottom: 15%;
+    left: -5%;
+    background: #d0e8c8;
+    border: 4px solid #88a870;
+    transform: skew(-20deg) scaleY(0.5);
+    /* Fake perspective */
+}
+
+/* Sprites */
+.enemy-sprite {
+    position: absolute;
+    top: 15%;
+    right: 15%;
+    width: 200px;
+    height: 200px;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.enemy-sprite img {
+    width: 100%;
+    height: auto;
+    animation: floatEnemy 3s ease-in-out infinite;
+}
+
+@keyframes floatEnemy {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.player-sprite {
+    position: absolute;
+    bottom: 18%;
+    /* Moved up slightly to sit on base */
+    left: 0%;
+    /* Moved left to align with base */
+    width: 250px;
+    height: 250px;
+    z-index: 4;
+    transform: translateX(-300px);
+    /* Start off-screen */
+    animation: slideInPlayer 1.5s ease-out 0.5s forwards;
+}
+
+@keyframes slideInPlayer {
+    to {
+        transform: translateX(0);
+    }
+}
+
+.player-sprite img {
+    width: 100%;
+    height: auto;
+    transform: scaleX(-1);
+    /* Flip to face right */
+}
+
+/* UI Boxes */
+.enemy-status-box {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    width: 320px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 4px solid #484848;
+    border-radius: 10px 0 10px 0;
+    /* Angled corners */
+    padding: 10px;
+    z-index: 5;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.player-status-box {
+    position: absolute;
+    bottom: 35%;
+    right: 5%;
+    width: 340px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 4px solid #484848;
+    border-radius: 10px 0 10px 0;
+    padding: 10px;
+    z-index: 5;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.status-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.status-level {
+    font-size: 14px;
+    float: right;
+}
+
+.hp-bar-container {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    background: #505050;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+.hp-label {
+    color: #f8b800;
+    font-size: 10px;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.hp-bar-bg {
+    flex-grow: 1;
+    height: 12px;
+    background: #505050;
+    border-radius: 5px;
+    position: relative;
+}
+
+.hp-bar-fill {
+    height: 100%;
+    background: var(--color-hp-green);
+    border-radius: 5px;
+    transition: width 1.5s linear, background 0.3s;
+    /* Linear usually looks better for HP drain */
+}
+
+.hp-numbers {
+    text-align: right;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Dialog & Menu */
+.dialog-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    /* Standard height */
+    background: #282828;
+    /* Dark grey base */
+    border: 4px solid #fff;
+    border-radius: 8px;
+    /* Rounded look */
+    box-shadow: 0 0 0 4px #707070 inset;
+    /* Inner border simulation */
+    padding: 20px;
+    z-index: 10;
+    color: #fff;
+    font-size: 20px;
+    line-height: 1.6;
+    text-shadow: 2px 2px 0 #000;
+    box-sizing: border-box;
+}
+
+.battle-menu {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    /* Authentic width */
+    height: 30%;
+    background: #fff;
+    border: 4px solid #686868;
+    /* Frame color */
+    border-radius: 8px 0 0 0;
+    z-index: 11;
+    display: flex;
+    color: #000;
+    box-shadow: -4px -4px 0 #d8d8d8 inset;
+}
+
+.menu-options {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+}
+
+.menu-row {
+    flex: 1;
+    display: flex;
+}
+
+.menu-option {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
+    border: 2px solid transparent;
+    margin: 2px;
+    border-radius: 4px;
+}
+
+.menu-option:hover {
+    background: #e8e8e8;
+    border: 2px solid #f85838;
+    /* Highlight color */
+}
+
+/* FOIA Alignment */
+.menu-option[data-action="fight"] {
+    font-size: 12px;
+    /* Smaller font to fit */
+    word-spacing: -2px;
+    font-weight: bold;
+}
+
+.menu-prompt {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    font-size: 14px;
+    background: #383838;
+    color: #fff;
+    border-left: 4px solid #686868;
+}
+
+/* Animations Elements */
+.foia-projectile {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    z-index: 15;
+    display: none;
+    /* Hidden until thrown */
+}
+
+.foia-projectile img {
+    width: 100%;
+}
+
+.flash-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* Animation Classes */
+.throw-animation {
+    animation: throwCurve 1s forwards cubic-bezier(0.1, 0.7, 1.0, 0.1);
+}
+
+@keyframes throwCurve {
+    0% {
+        bottom: 25%;
+        left: 20%;
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+
+    50% {
+        bottom: 60%;
+        left: 50%;
+        transform: scale(1.5) rotate(180deg);
+    }
+
+    100% {
+        bottom: 45%;
+        left: 80%;
+        transform: scale(0.5) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.shake-enemy {
+    animation: shake 0.5s ease-in-out 3;
+    filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(3);
+    /* Red flash */
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    75% {
+        transform: translateX(10px);
+    }
+}
+
+.shrink-capture {
+    animation: shrinkIntoBall 1s forwards;
+}
+
+@keyframes shrinkIntoBall {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(0.1);
+        filter: brightness(10);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}

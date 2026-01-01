@@ -458,8 +458,12 @@
             class="award-title">Premio ANPR 2017 – Denunciando uma rede de pornografia infantil</span><span
             class="award-source">ANPR</span></li>
         <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span><span
-            class="award-source">Instituto Ayrton Senna</span></li>
+            class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span>
+          <img id="pokeSecretTrigger" src="pokeball_secret.png" alt="PokeSecret"
+            style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px; cursor: pointer; border-radius: 50%; z-index: 10;"
+            title="???">
+          <span class="award-source">Instituto Ayrton Senna</span>
+        </li>
         <li id="secretAwardLi" style="cursor: pointer; transition: all 0.2s;"><span class="award-year">2011</span><span
             class="award-status winner">🏆 Winner</span><span class="award-title">Premio ASU/Schaeffer 2011 – A história
             da mulher que adotou seis crianças</span><span class="award-source">ASU/Schaeffer</span></li>
@@ -483,6 +487,29 @@
         secretLi.style.boxShadow = 'none';
       });
     }
+
+    // Pokemon Heart Gold Secret Trigger (Konami Code)
+    const konamiCode = [
+      "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+      "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+      "b", "a"
+    ];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === konamiCode[konamiIndex] || e.key === konamiCode[konamiIndex].toLowerCase()) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+          // Success!
+          konamiIndex = 0;
+          // Optional: Play a sound or visual cue
+          alert("A wild secret appeared!");
+          window.location.href = 'pokemon.html';
+        }
+      } else {
+        konamiIndex = 0; // Reset
+      }
+    });
   </script>
 
   <section class="grants section">
@@ -502,7 +529,12 @@
         <li><span class="grant-year">2019</span><span class="grant-title">EAESP‑FGV – Full scholarship for a master of
             science in Public Administration (2019)</span><span class="grant-source">FGV</span></li>
         <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$
-            60,000 scholarship (2019) – Jornalista de Visão</span><span class="grant-source">Instituto Ling</span></li>
+            60,000 scholarship (2019) – Jornalista de Visão</span>
+          <img id="pokeSecretTrigger" src="pokeball_secret.png" alt="O"
+            style="width: 16px; height: 16px; margin-left: 5px; cursor: pointer; opacity: 0.1; transition: opacity 0.3s; vertical-align: middle;"
+            onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.1">
+          <span class="grant-source">Instituto Ling</span>
+        </li>
         <li><span class="grant-year">2018</span><span class="grant-title">ICFJ Emerging Leaders Program / fellow
             2018</span><span class="grant-source">ICFJ</span></li>
       </ul>
@@ -592,6 +624,46 @@
     </div>
   </div>
 
+
+  <!-- Pokemon Secret Modal -->
+  <div id="pokemonSecretModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 30000; justify-content: center; align-items: flex-end; padding-bottom: 50px; font-family: 'Press Start 2P', cursive;">
+    <div class="pokemon-textbox"
+      style="background: #fff; border: 4px solid #333; border-radius: 4px; padding: 20px; width: 90%; max-width: 800px; min-height: 150px; position: relative; box-shadow: 6px 6px 0 rgba(0,0,0,0.5);">
+      <!-- Decorative border corners if possible, simpler for now -->
+      <p id="pokemonMessage" style="font-size: 14px; line-height: 1.8; color: #333; margin: 0;"></p>
+      <div id="pokemonArrow"
+        style="display: none; position: absolute; bottom: 15px; right: 15px; width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 12px solid #d32f2f; animation: bounce 1s infinite;">
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(5px);
+      }
+    }
+
+    .pokemon-message-cursor::after {
+      content: "|";
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       // Existing Easter Egg Logic (Stardew)
@@ -650,6 +722,44 @@
         // Close on outside click for Persona modal too
         personaModal.addEventListener('click', (e) => {
           if (e.target === personaModal) personaModal.style.display = 'none';
+        });
+      }
+
+      // POKEMON HEART GOLD SECRET LOGIC
+      const pokeTrigger = document.getElementById('pokeSecretTrigger');
+      const pokeModal = document.getElementById('pokemonSecretModal');
+      const pokeMsgElement = document.getElementById('pokemonMessage');
+      const pokeArrow = document.getElementById('pokemonArrow');
+
+      if (pokeTrigger && pokeModal) {
+        const message = "A wild SECRET appeared! ...Wait, this isn't a normal website. The truth is hidden in the tall grass. Getting ready for battle...";
+        let charIndex = 0;
+
+        function typeWriter() {
+          if (charIndex < message.length) {
+            pokeMsgElement.innerHTML += message.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, 40);
+          } else {
+            pokeArrow.style.display = 'block';
+            // Auto redirect after reading time
+            setTimeout(() => {
+              // Flash screen effect?
+              document.body.style.transition = "filter 0.5s";
+              document.body.style.filter = "brightness(0)";
+              setTimeout(() => {
+                window.location.href = 'pokemon.html';
+              }, 1000);
+            }, 2500);
+          }
+        }
+
+        pokeTrigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          pokeModal.style.display = 'flex';
+          pokeMsgElement.innerHTML = "";
+          charIndex = 0;
+          typeWriter();
         });
       }
     });

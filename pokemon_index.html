@@ -18,32 +18,15 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer">
-  <link href="https://fonts.googleapis.com/css2?family=Vt323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="chrono.css">
-
-  // ... (inside script for music)
-  videoId: 'cFK8fhTsViU',
-  playerVars: {
-  'autoplay': 1,
-  'loop': 1,
-  'playlist': 'cFK8fhTsViU',
-
-  // ... (image updates)
-  // journalist.png
-  // gato.png (Training)
-  // nu_book.png (Research)
-  // robo_head.png (Civil Tech)
-  // future_console.png (Videos)
-  // pendant.png (Awards)
-  // scroll.png (Reporting)
-  // epoch.png (Contact)
-
+  <!-- Press Start 2P for authentic 8-bit feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pokemon_site.css">
 
   <link rel="icon" type="image/png" href="favicon.png">
 
   <script defer>
     // Force dark mode sitewide
-    document.documentElement.setAttribute(ata - theme', 'dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
   </script>
   <script async src="https://www.instagram.com/embed.js"></script>
 </head>
@@ -76,10 +59,6 @@
   <section class="hero section">
     <div class="container">
       <div class="hero-text">
-        <div style="text-align: center; margin-bottom: 1rem;">
-          <img src="images/chrono/journalist.png" alt="Chrono Journalist"
-            style="width: 128px; display: inline-block; image-rendering: pixelated;">
-        </div>
         <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
         <p>Brazilian journalist, researcher and instructor based in London, with a proven track record of producing and
           managing impactful projects related to Brazil.</p>
@@ -140,11 +119,7 @@
     <div class="container">
       <div class="impact-grid">
         <div class="impact-card">
-          <h3>
-            <img src="images/chrono/scroll.png" alt="Reporting"
-              style="width: 32px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-            Reporting Impact
-          </h3>
+          <h3><i class="fas fa-newspaper"></i> Reporting Impact</h3>
           <p>Stories I wrote <a href="https://news.fiquemsabendo.com.br/p/exclusivo-acessamos-as-notas-fiscais"
               target="_blank" rel="noopener noreferrer" class="highlight">exposed</a> a former president's misuse of
             public funds, <a
@@ -159,21 +134,13 @@
         </div>
 
         <div class="impact-card">
-          <h3>
-            <img src="images/chrono/gato.png" alt="Training"
-              style="width: 32px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-            Training
-          </h3>
+          <h3><i class="fas fa-chalkboard-teacher"></i> Training</h3>
           <p>Attended world-class conferences as instructor in Brazil, USA, UK, Portugal, Malaysia, Sweden and others.
             Trained over 2,000 journalists through online and in-person workshops.</p>
         </div>
 
         <div class="impact-card">
-          <h3>
-            <img src="images/chrono/nu_book.png" alt="Research"
-              style="width: 32px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-            Research
-          </h3>
+          <h3><i class="fas fa-graduation-cap"></i> Research</h3>
           <p>Masters degrees in Data Journalism (Columbia) and Public Administration (FGV‑EAESP). Research-assistant at
             POLIS‑Cambridge (2024–2026). Former research fellow at Oxford (2021), Columbia (2022–2023) and NED
             (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en"
@@ -182,11 +149,7 @@
         </div>
 
         <div class="impact-card">
-          <h3>
-            <img src="images/chrono/robo_head.png" alt="Civil Tech"
-              style="width: 32px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-            Civil Tech
-          </h3>
+          <h3><i class="fas fa-code"></i> Civil Tech</h3>
           <p>Over the past three years, I have experimented with applying generative AI tools to journalism, including
             data, text, and image analysis, fact-checking, and robust investigations. In 2025, I developed a <a
               href="https://datafixers.org/l-ai-notebook.html" target="_blank" rel="noopener noreferrer"
@@ -199,11 +162,7 @@
 
   <section id="investigative" class="investigative section">
     <div class="container">
-      <h2 class="section-title">
-        <img src="images/chrono/scroll.png" alt=""
-          style="width: 64px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Investigative Reporting
-      </h2>
+      <h2 class="section-title">Investigative Reporting</h2>
       <div class="featured-article">
         <img src="epstein_brazil_victims.png" alt="Jeffrey Epstein's link to Brazil revealed in new documents"
           loading="lazy">
@@ -344,21 +303,22 @@
 
   <section id="short-videos" class="short-videos section">
     <div class="container">
-      <h2 class="section-title">
-        <img src="images/chrono/future_console.png" alt=""
-          style="width: 48px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Video reporting
-      </h2>
-      <div class="featured-video" style="padding: 10px; background: #5c3510; border-radius: 8px;">
-        <iframe loading="lazy" src="https://www.youtube.com/embed/HEwY0WKeKjc?rel=0" allow="autoplay; encrypted-media"
-          allowfullscreen></iframe>
-
+      <h2 class="section-title">Video reporting</h2>
+      <div class="featured-video">
+        <div class="video-container">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/HEwY0WKeKjc?rel=0" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+        </div>
       </div>
       <div class="embed-grid youtube-grid">
-        <iframe loading="lazy" src="https://www.youtube.com/embed/RhHz-bizvs0" allow="autoplay; encrypted-media"
-          allowfullscreen></iframe>
-        <iframe loading="lazy" src="https://www.youtube.com/embed/SkX6MKU9gAQ" allow="autoplay; encrypted-media"
-          allowfullscreen></iframe>
+        <div class="video-container">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/RhHz-bizvs0" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+        </div>
+        <div class="video-container">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/SkX6MKU9gAQ" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+        </div>
       </div>
 
       <h3 class="subsection-title" style="margin: 40px 0 24px; font-size: 1.5rem; color: var(--accent);">Short-form
@@ -390,11 +350,7 @@
 
   <section id="interviews" class="interviews section">
     <div class="container">
-      <h2 class="section-title">
-        <img src="images/chrono/scroll.png" alt=""
-          style="width: 48px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Interviews
-      </h2>
+      <h2 class="section-title">Interviews</h2>
       <div class="interview-list">
         <div class="interview-card">
           <h3>Bellingcat's Stage Talks</h3>
@@ -435,11 +391,7 @@
 
   <section id="awards" class="awards section">
     <div class="container">
-      <h2 class="section-title">
-        <img src="images/chrono/pendant.png" alt=""
-          style="width: 48px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Awards and Honorable Mentions
-      </h2>
+      <h2 class="section-title">Awards and Honorable Mentions</h2>
       <ul class="award-list collapsed">
         <li><span class="award-year">2024</span><span class="award-status winner">🏆 Winner</span><span
             class="award-title">Prêmio Gabo 2024 – coverage with InfoAmazonia and Datafixers.org</span><span
@@ -514,9 +466,9 @@
         <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
             class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span><span
             class="award-source">Instituto Ayrton Senna</span></li>
-        <li><span class="award-year">2011</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Premio ASU/Schaeffer 2011 – A história da mulher que adotou seis crianças</span><span
-            class="award-source">ASU/Schaeffer</span></li>
+        <li id="secretAwardLi" style="cursor: pointer; transition: all 0.2s;"><span class="award-year">2011</span><span
+            class="award-status winner">🏆 Winner</span><span class="award-title">Premio ASU/Schaeffer 2011 – A história
+            da mulher que adotou seis crianças</span><span class="award-source">ASU/Schaeffer</span></li>
       </ul>
       <button class="show-more-btn"
         onclick="document.querySelector('.award-list').classList.toggle('collapsed'); this.textContent = this.textContent === 'Show More' ? 'Show Less' : 'Show More';">Show
@@ -524,13 +476,47 @@
     </div>
   </section>
 
+  <script>
+    // Add hover effect via JS since we can't easily add CSS to style tag
+    const secretLi = document.getElementById('secretAwardLi');
+    if (secretLi) {
+      secretLi.addEventListener('mouseenter', () => {
+        secretLi.style.transform = 'scale(1.02)';
+        secretLi.style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
+      });
+      secretLi.addEventListener('mouseleave', () => {
+        secretLi.style.transform = 'scale(1)';
+        secretLi.style.boxShadow = 'none';
+      });
+    }
+
+    // Pokemon Heart Gold Secret Trigger (Konami Code)
+    const konamiCode = [
+      "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+      "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+      "b", "a"
+    ];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === konamiCode[konamiIndex] || e.key === konamiCode[konamiIndex].toLowerCase()) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+          // Success!
+          konamiIndex = 0;
+          // Optional: Play a sound or visual cue
+          alert("A wild secret appeared!");
+          window.location.href = 'pokemon.html';
+        }
+      } else {
+        konamiIndex = 0; // Reset
+      }
+    });
+  </script>
+
   <section class="grants section">
     <div class="container">
-      <h2 class="section-title">
-        <img src="images/chrono/nu_book.png" alt=""
-          style="width: 48px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Scholarships, Fellowships and Grants
-      </h2>
+      <h2 class="section-title">Scholarships, Fellowships and Grants</h2>
       <ul class="grant-list">
         <li><span class="grant-year">2024</span><span class="grant-title">Together for Conservation (EJN,
             2024)</span><span class="grant-source">Earth Journalism Network</span></li>
@@ -554,107 +540,149 @@
 
   <footer class="footer section">
     <div class="container">
-      <h2>
-        Get in touch
-      </h2>
-      <div
-        style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-        <img src="images/chrono/epoch.png" alt=""
-          style="width: 48px; height: auto; image-rendering: pixelated; flex-shrink: 0;">
-        <p style="text-align: left; margin: 0;">Interested in collaboration, have a story tip, or want to discuss
-          investigative journalism? I'd love to hear
-          from you.</p>
-      </div>
+      <h2>Get in touch</h2>
+      <p>Interested in collaboration, have a story tip, or want to discuss investigative journalism? I'd love to hear
+        from you.</p>
       <div class="socials">
         <a href="mailto:lft29@cam.ac.uk"><i class="fas fa-envelope"></i></a>
         <a href="https://twitter.com/toledoluizf" target="_blank" rel="noopener noreferrer"><i
             class="fab fa-twitter"></i></a>
         <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i
             class="fab fa-linkedin-in"></i></a>
+        <!-- Easter Egg Trigger: Matches .socials a style exactly -->
+        <a href="#" id="easterEggTrigger">
+          <img src="images/stardew/chicken.png" alt="?"
+            style="width: 28px; height: 28px; opacity: 1; image-rendering: pixelated;">
+        </a>
       </div>
     </div>
   </footer>
 
   <script src="scripts/main.js"></script>
-  <!-- Interactive Background -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
-  <script src="scripts/chrono_background.js"></script>
-</body>
+  <!-- Interactive Background Removed for Pokemon Theme -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script> -->
+  <!-- <script src="scripts/background.js"></script> -->
 
-<!-- Return to Reality Button -->
-<div
-  style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 10000; align-items: flex-end;">
+  <!-- Easter Egg Modal -->
+  <div id="secretModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
+    <div
+      style="background: #fff; padding: 2rem; border-radius: 8px; max-width: 400px; text-align: center; font-family: 'Inter', sans-serif;">
+      <h3 style="color: #333; margin-bottom: 1.5rem;">Where is this chicken from?</h3>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button class="quiz-option" data-answer="wrong"
+          style="padding: 10px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">1)
+          Final Fantasy</button>
+        <button class="quiz-option" data-answer="wrong"
+          style="padding: 10px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">2)
+          Children of Mana</button>
+        <button class="quiz-option" data-answer="correct"
+          style="padding: 10px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">3)
+          Stardew Valley</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- Music Toggle Button -->
-  <button id="musicToggle"
-    style="background: var(--ct-panel-bg); color: #fff; padding: 10px 15px; border-radius: 8px; font-family: 'Vt323', monospace; font-size: 20px; border: 3px solid var(--ct-panel-border); box-shadow: 4px 4px 0 rgba(0,0,0,0.5); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 50px;">
-    <i class="fas fa-volume-mute" id="musicIcon"></i>
-  </button>
+  <!-- Success Modal (Stardew Style) -->
+  <div id="successModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10001; justify-content: center; align-items: center;">
+    <div
+      style="background: #ffe6a8; border: 4px solid #6d3910; padding: 20px; max-width: 500px; font-family: 'Courier New', monospace; box-shadow: 0 0 0 4px #ffae68, 0 0 20px rgba(0,0,0,0.5); position: relative;">
+      <!-- Pixel corners would be nice, but simple border is safer for inline -->
+      <h2 style="color: #5c3510; text-transform: uppercase; text-align: center; margin-bottom: 10px; font-size: 24px;">
+        Secret Unlocked!</h2>
+      <p style="color: #5c3510; font-size: 18px; line-height: 1.5;">You've discovered my secret farm...</p>
+      <p style="color: #5c3510; font-size: 18px; text-align: right; margin-top: 10px;">- Luiz</p>
+    </div>
+  </div>
 
-  <a href="index.html"
-    style="background: var(--ct-panel-bg); color: #fff; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-family: 'Vt323', monospace; font-size: 20px; border: 3px solid var(--ct-panel-border); box-shadow: 4px 4px 0 rgba(0,0,0,0.5); display: flex; align-items: center; gap: 8px;">
-    <i class="fas fa-bus"></i> Return to 2025 AD
-  </a>
-</div>
+  <!-- Persona 5 Secret Modal -->
+  <div id="personaSecretModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 20000; justify-content: center; align-items: center; font-family: 'Anton', sans-serif;">
+    <div
+      style="background: #000; color: #f5f5f5; border: 4px solid #f5f5f5; padding: 30px; max-width: 600px; transform: skew(-3deg); box-shadow: 10px 10px 0 #d9232e; position: relative;">
+      <h2
+        style="font-size: 2.5rem; color: #d9232e; margin-bottom: 20px; text-transform: uppercase; background: #000; display: inline-block; border: 2px solid #f5f5f5; padding: 5px 15px; transform: skew(-2deg);">
+        Phantom Thieves
+      </h2>
+      <p style="font-size: 1.5rem; margin-bottom: 30px; font-family: 'Roboto Condensed', sans-serif;">
+        You have successfully infiltrated the palace. A secret version of this site has been unlocked. Proceed?
+      </p>
+      <div style="display: flex; gap: 20px; justify-content: flex-end;">
+        <button id="personaConfirmBtn"
+          style="background: #d9232e; color: #fff; border: none; padding: 10px 30px; font-size: 1.2rem; font-family: 'Anton', sans-serif; text-transform: uppercase; cursor: pointer; transform: skew(-5deg); box-shadow: 3px 3px 0 #fff; transition: all 0.2s;">
+          Take Your Heart
+        </button>
+        <button id="personaCancelBtn"
+          style="background: #2d2d2d; color: #fff; border: none; padding: 10px 20px; font-size: 1.2rem; font-family: 'Anton', sans-serif; text-transform: uppercase; cursor: pointer; transform: skew(-5deg); transition: all 0.2s;">
+          Retreat
+        </button>
+      </div>
+    </div>
+  </div>
 
-<!-- Hidden YouTube Player -->
-<div id="player" style="display: none;"></div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Existing Easter Egg Logic (Stardew)
+      const trigger = document.getElementById('easterEggTrigger');
+      const modal = document.getElementById('secretModal');
+      const successModal = document.getElementById('successModal');
+      const options = document.querySelectorAll('.quiz-option');
 
-<script>
-  // YouTube IFrame Player API
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      if (trigger && modal) {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          modal.style.display = 'flex';
+        });
 
-  var player;
-  var isPlaying = false;
-  var musicToggle = document.getElementById('musicToggle');
-  var musicIcon = document.getElementById('musicIcon');
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.style.display = 'none';
+        });
 
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '1',
-      width: '1',
-      videoId: 'cFK8fhTsViU',
-      playerVars: {
-        'autoplay': 1,
-        'loop': 1,
-        'playlist': 'cFK8fhTsViU',
-        'controls': 0,
-        'showinfo': 0
-      },
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
+        options.forEach(opt => {
+          opt.addEventListener('click', () => {
+            const isCorrect = opt.getAttribute('data-answer') === 'correct';
+            if (isCorrect) {
+              modal.style.display = 'none';
+              successModal.style.display = 'flex';
+              setTimeout(() => {
+                window.location.href = 'stardew.html';
+              }, 2500);
+            } else {
+              modal.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      // New Persona 5 Secret Logic
+      const personaTrigger = document.getElementById('secretAwardLi');
+      const personaModal = document.getElementById('personaSecretModal');
+      const personaConfirm = document.getElementById('personaConfirmBtn');
+      const personaCancel = document.getElementById('personaCancelBtn');
+
+      if (personaTrigger && personaModal) {
+        personaTrigger.addEventListener('click', (e) => {
+          // Play a sound or just show logic? For now just visual
+          personaModal.style.display = 'flex';
+        });
+
+        personaConfirm.addEventListener('click', () => {
+          // Redirect to persona.html with the secret flag
+          window.location.href = 'persona.html?secret=true';
+        });
+
+        personaCancel.addEventListener('click', () => {
+          personaModal.style.display = 'none';
+        });
+
+        // Close on outside click for Persona modal too
+        personaModal.addEventListener('click', (e) => {
+          if (e.target === personaModal) personaModal.style.display = 'none';
+        });
       }
     });
-  }
-
-  function onPlayerReady(event) {
-    // Attempt autoplay
-    event.target.playVideo();
-    // Some browsers block this unless muted, but user wants music.
-    // We update UI based on success.
-  }
-
-  function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-      isPlaying = true;
-      musicIcon.className = 'fas fa-volume-up';
-    } else {
-      isPlaying = false;
-      musicIcon.className = 'fas fa-volume-mute';
-    }
-  }
-
-  musicToggle.addEventListener('click', function () {
-    if (isPlaying) {
-      player.pauseVideo();
-    } else {
-      player.playVideo();
-    }
-  });
-</script>
+  </script>
+</body>
 
 </html>

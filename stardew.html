@@ -59,7 +59,7 @@
     <div class="container">
       <div class="hero-text">
         <div style="text-align: center; margin-bottom: 1rem;">
-          <img src="images/stardew/stardew_avatar_final_v2.jpg" alt="Luiz Pixel Art"
+          <img src="images/stardew/stardew_avatar_final_hat.png" alt="Luiz Pixel Art"
             style="width: 128px; display: inline-block; image-rendering: pixelated;">
         </div>
         <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
@@ -501,7 +501,7 @@
             class="award-source">ASU/Schaeffer</span></li>
       </ul>
       <button class="show-more-btn"
-        onclick="document.querySelector('.award-list').classList.toggle('collapsed'); this.textContent = this.textContent === 'Show More' ? 'Show Less' : 'Show More';">Show
+        onclick="const list = document.querySelector('.award-list'); list.classList.toggle('collapsed'); this.textContent = list.classList.contains('collapsed') ? 'Show More' : 'Show Less';">Show
         More</button>
     </div>
   </section>
@@ -575,7 +575,7 @@
 
   <a href="index.html"
     style="background: var(--sd-accent-color); color: #fff; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-family: 'Vt323', monospace; font-size: 20px; border: 3px solid #1a4216; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px;">
-    <i class="fas fa-bus"></i> Back to Reality
+    <i class="fas fa-bus"></i> Back to reality
   </a>
 </div>
 
