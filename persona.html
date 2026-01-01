@@ -504,76 +504,64 @@
     </a>
   </div>
 
-  <div id="player" style="display: none;"></div>
+  <audio id="personaAudio" src="persona_5_life_will_change.mp3" loop></audio>
 
   <script>
-    // YouTube IFrame Player API
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    const audio = document.getElementById('personaAudio');
+    const musicToggle = document.getElementById('musicToggle');
+    const musicIcon = document.getElementById('musicIcon');
+    let isPlaying = false;
 
-    var player;
-    var isPlaying = false;
-    var musicToggle = document.getElementById('musicToggle');
-    var musicIcon = document.getElementById('musicIcon');
+    // Try to play automatically
+    window.addEventListener('load', () => {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isPlaying = true;
+          musicIcon.className = 'fas fa-pause';
+        }).catch(error => {
+          console.log("Autoplay blocked, waiting for user interaction");
+          isPlaying = false;
+          musicIcon.className = 'fas fa-play';
+        });
+      }
+    });
 
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '1',
-        width: '1',
-        videoId: 'K5M0Nl7yE6c', // Beneath the Mask
-        playerVars: {
-          'autoplay': 1,
-          'loop': 1,
-          'playlist': 'K5M0Nl7yE6c',
-          'controls': 0,
-          'showinfo': 0
-        },
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
-
-    function onPlayerReady(event) {
-      event.target.playVideo();
-      event.target.unMute(); // Try unmuted
-    }
-
-    // Fallback: If browser blocks autoplay, any click on the page will start it
-    document.addEventListener('click', function () {
-      if (player && player.getPlayerState() !== 1) {
-        player.playVideo();
+    // Fallback: Click anywhere to start if not playing
+    document.addEventListener('click', () => {
+      if (!isPlaying) {
+        audio.play().then(() => {
+          isPlaying = true;
+          musicIcon.className = 'fas fa-pause';
+        }).catch(e => console.error("Audio play failed:", e));
       }
     }, { once: true });
 
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING) {
-        isPlaying = true;
-        musicIcon.className = 'fas fa-pause';
-      } else {
-        isPlaying = false;
-        musicIcon.className = 'fas fa-play';
-      }
+    // Toggle Button Logic
+    if (musicToggle) {
+      musicToggle.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent document click from interfering
+        if (isPlaying) {
+          audio.pause();
+          isPlaying = false;
+          musicIcon.className = 'fas fa-play';
+        } else {
+          audio.play();
+          isPlaying = true;
+          musicIcon.className = 'fas fa-pause';
+        }
+      });
     }
-
-    musicToggle.addEventListener('click', function () {
-      if (isPlaying) {
-        player.pauseVideo();
-      } else {
-        player.playVideo();
-      }
-    });
 
     // Toggle Menu for Mobile
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
 
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
 
     // Reels Carousel Navigation
     const reelsCarousel = document.querySelector('.reels-carousel');
