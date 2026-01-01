@@ -21,6 +21,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Vt323&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="stardew.css">
 
+  <style>
+    /* Junimo Parade Animation */
+    @keyframes junimoWalk {
+      0% {
+        transform: translateX(-100px);
+      }
+
+      100% {
+        transform: translateX(100vw);
+      }
+    }
+
+    .junimo-parade {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    .junimo-sprite {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 120px;
+      height: auto;
+      image-rendering: pixelated;
+      animation: junimoWalk 20s linear infinite;
+      transform: translateX(-150px);
+      /* Start off-screen */
+    }
+  </style>
+
   <link rel="icon" type="image/png" href="favicon.png">
 
   <script defer>
@@ -556,6 +591,10 @@
       </div>
     </div>
   </footer>
+
+  <div class="junimo-parade">
+    <img src="images/stardew/junimos_group.png" alt="Junimos" class="junimo-sprite">
+  </div>
 
   <script src="scripts/main.js"></script>
   <!-- Interactive Background -->
