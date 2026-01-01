@@ -11,7 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Typewriter effect function
     function typeText(text, callback) {
+        if (!dialogText) return;
         dialogText.innerHTML = '';
+        const arrow = document.getElementById('continueArrow');
+        if(arrow) arrow.style.display = 'none'; // Hide arrow while typing
+
         isTypewriterActive = true;
         let i = 0;
         const speed = 30; // ms per char
@@ -23,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(type, speed);
             } else {
                 isTypewriterActive = false;
-                if (callback) setTimeout(callback, 500);
+                if(arrow) arrow.style.display = 'block'; // Show arrow when done
+                if (callback) setTimeout(callback, 1000); // Wait a bit before next action
             }
         }
         type();
