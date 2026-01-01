@@ -478,13 +478,23 @@
             class="award-status winner">🏆 Winner</span><span class="award-title">Premio ASU/Schaeffer 2011 – A história
             da mulher que adotou seis crianças</span><span class="award-source">ASU/Schaeffer</span></li>
       </ul>
-      <button class="show-more-btn"
-        onclick="document.querySelector('.award-list').classList.toggle('collapsed'); this.textContent = this.textContent === 'Show More' ? 'Show Less' : 'Show More';">Show
-        More</button>
+      <button id="showMoreAwardsBtn" class="show-more-btn">Show More</button>
     </div>
   </section>
 
   <script>
+    // Awards Show More Logic
+    const showMoreBtn = document.getElementById('showMoreAwardsBtn');
+    const awardsList = document.querySelector('.award-list');
+
+    if (showMoreBtn && awardsList) {
+      showMoreBtn.addEventListener('click', () => {
+        awardsList.classList.toggle('collapsed');
+        const isCollapsed = awardsList.classList.contains('collapsed');
+        showMoreBtn.textContent = isCollapsed ? 'Show More' : 'Show Less';
+      });
+    }
+
     // Add hover effect via JS since we can't easily add CSS to style tag
     const secretLi = document.getElementById('secretAwardLi');
     if (secretLi) {
