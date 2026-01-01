@@ -824,7 +824,14 @@
         }
         typeWriter();
       };
-      // Removed click trigger dependency since icon is gone
+
+      // RESTORED Click Trigger for Mobile
+      const pokeTrigger = document.getElementById('pokeSecretTrigger');
+      if (pokeTrigger) {
+        pokeTrigger.addEventListener('click', () => {
+          window.triggerPokemonSecret();
+        });
+      }
     });
   </script>
 </body>

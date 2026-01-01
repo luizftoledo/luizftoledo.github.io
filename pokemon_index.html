@@ -65,6 +65,14 @@
       transform: translateX(-50%);
       cursor: pointer;
       z-index: 99;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s;
+    }
+
+    .poke-item-container.visible {
+      opacity: 1;
+      pointer-events: all;
     }
 
     .poke-item-sprite {
@@ -744,6 +752,19 @@
             msgBox.style.display = 'none';
           }, 5000);
         });
+
+        // Scroll Trigger
+        const candyObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            const candyContainer = document.querySelector('.poke-item-container');
+            if (entry.isIntersecting && candyContainer) {
+              candyContainer.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.5 });
+
+        const footer = document.querySelector('footer');
+        if (footer) candyObserver.observe(footer);
       }
     });
   </script>
