@@ -62,27 +62,30 @@
   </script>
 
   <style>
-    /* Junimo Parade Animation */
-    @keyframes junimoWalk {
-      0% {
-        transform: translateX(-100px);
+    /* Junimo Dance Animation */
+    @keyframes junimoDance {
+
+      0%,
+      100% {
+        transform: translateY(0);
       }
 
-      100% {
-        transform: translateX(100vw);
+      50% {
+        transform: translateY(-15px);
       }
     }
 
     .junimo-parade {
       position: fixed;
       bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       z-index: 999;
       pointer-events: none;
       opacity: 0;
-      /* Hidden by default */
       transition: opacity 1s;
     }
 
@@ -91,17 +94,27 @@
     }
 
     .junimo-sprite {
-      position: absolute;
-      bottom: 20px;
-      left: 0;
-      width: 120px;
+      width: 150px;
       height: auto;
       image-rendering: pixelated;
-      transform: translateX(-150px);
+      margin-bottom: 0px;
+      /* touch bottom */
     }
 
     .junimo-parade.visible .junimo-sprite {
-      animation: junimoWalk 20s linear infinite;
+      animation: junimoDance 0.6s ease-in-out infinite;
+    }
+
+    .junimo-message {
+      font-family: 'Vt323', monospace;
+      font-size: 28px;
+      color: #fff;
+      text-shadow: 3px 3px 0 #000;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 5px 10px;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      text-align: center;
     }
 
     /* Confetti */
@@ -664,6 +677,7 @@
   </footer>
 
   <div class="junimo-parade">
+    <div class="junimo-message">Thanks for visiting!</div>
     <img src="images/stardew/junimos_group.png" alt="Junimos" class="junimo-sprite">
   </div>
 
