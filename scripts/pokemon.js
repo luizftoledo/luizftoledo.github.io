@@ -128,21 +128,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1600); // 1.5s duration + 100ms buffer
     }
 
+    // Start Button Logic
+    const startBtn = document.getElementById('startGameBtn');
+    const startOverlay = document.getElementById('startOverlay');
+    const bgMusic = document.getElementById('portfolioMusic');
+
+    if (startBtn) {
+        startBtn.addEventListener('click', () => {
+            startOverlay.style.display = 'none';
+            if (bgMusic) {
+                bgMusic.volume = 0.4;
+                bgMusic.play().catch(e => console.log("Audio play failed:", e));
+            }
+            startGame();
+        });
+    }
+
     function captureSuccess() {
         typeText("Gotcha! GOVERNMENT RECORD was captured!", () => {
-             // Victory fanfare would play here
+             // Victory message
              setTimeout(() => {
-                 typeText("The truth has been revealed.", () => {
-                     setTimeout(() => {
-                         // Redirect to the full Pokemon-themed portfolio
-                         window.location.href = 'pokemon_index.html'; 
-                     }, 1500);
+                 typeText("The truth has been revealed.<br>Enjoy the portfolio!", () => {
+                    // Optional: maybe show confetti or just stop
                  });
              }, 2000);
         });
     }
-
-    // Start on load
-    startGame();
-
 });
