@@ -79,15 +79,12 @@
     }
 
     .junimo-parade {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
+      position: relative;
+      margin: 0 auto 20px auto;
       display: flex;
       flex-direction: column;
       align-items: center;
-      z-index: 999;
-      pointer-events: none;
+      z-index: 10;
       opacity: 0;
       transition: opacity 1s;
     }
@@ -658,6 +655,10 @@
 
   <footer class="footer section">
     <div class="container">
+      <div class="junimo-parade">
+        <div class="junimo-message">Thanks for visiting!</div>
+        <img src="images/stardew/junimos_group.png" alt="Junimos" class="junimo-sprite">
+      </div>
       <h2>
         Get in touch
       </h2>
@@ -679,10 +680,7 @@
     </div>
   </footer>
 
-  <div class="junimo-parade">
-    <div class="junimo-message">Thanks for visiting!</div>
-    <img src="images/stardew/junimos_group.png" alt="Junimos" class="junimo-sprite">
-  </div>
+
 
   <script src="scripts/main.js"></script>
   <!-- Interactive Background -->
