@@ -142,8 +142,8 @@
       <div class="hero-text">
         <div style="display: flex; flex-direction: column; gap: 15px;">
           <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-            <img src="images/pokemon/pokemon_avatar_trainer_final.png" alt="8-bit Trainer Avatar"
-              style="width: 100px; height: 100px; border: 4px solid #202020; image-rendering: pixelated; box-shadow: 4px 4px 0 rgba(0,0,0,0.2);">
+            <img src="images/pokemon/pokemon_avatar_trainer_gen2.png" alt="8-bit Trainer Avatar"
+              style="width: 120px; height: 120px; image-rendering: pixelated; filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.2));">
             <h1 style="margin: 0;">I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
           </div>
           <p>Brazilian journalist, researcher and instructor based in London, with a proven track record of producing
@@ -761,7 +761,7 @@
               candyContainer.classList.add('visible');
             }
           });
-        }, { threshold: 0.5 });
+        }, { threshold: 0.1 });
 
         const footer = document.querySelector('footer');
         if (footer) candyObserver.observe(footer);
