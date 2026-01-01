@@ -566,6 +566,21 @@
     menuToggle.addEventListener('click', () => {
       navLinks.classList.toggle('active');
     });
+
+    // Reels Carousel Navigation
+    const reelsCarousel = document.querySelector('.reels-carousel');
+    const leftBtn = document.querySelector('.reels-btn-left');
+    const rightBtn = document.querySelector('.reels-btn-right');
+
+    if (reelsCarousel && leftBtn && rightBtn) {
+      leftBtn.addEventListener('click', () => {
+        reelsCarousel.scrollBy({ left: -320, behavior: 'smooth' });
+      });
+
+      rightBtn.addEventListener('click', () => {
+        reelsCarousel.scrollBy({ left: 320, behavior: 'smooth' });
+      });
+    }
   </script>
 
   <!-- Secret Music Player Logic -->
