@@ -568,6 +568,99 @@
     });
   </script>
 
+  <!-- Secret Music Player Logic -->
+  <div id="secretMusicControls" style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
+    <button id="toggleMusicBtn" class="p5-btn"
+      style="font-size: 0.8rem; padding: 10px; border: 2px solid var(--p5-white);">
+      <i class="fas fa-volume-up"></i> Music On
+    </button>
+    <!-- Player must be visible for autoplay to work in some browsers, using 1x1 opacity 0 -->
+    <div id="youtubeAudioPlaceholder" style="width: 1px; height: 1px; opacity: 0; pointer-events: none;"></div>
+  </div>
+
+  <script>
+    // YouTube IFrame API for Secret Music
+    let player;
+    function onYouTubeIframeAPIReady() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('secret') === 'true') {
+        document.getElementById('secretMusicControls').style.display = 'block';
+
+        player = new YT.Player('youtubeAudioPlaceholder', {
+          height: '1',
+          width: '1',
+          videoId: 'ZNGqBDRJgvo',
+          playerVars: {
+            'autoplay': 1,
+            'controls': 0,
+            'start': 46,
+            'loop': 1,
+            'playlist': 'ZNGqBDRJgvo',
+            'playsinline': 1,
+            'origin': window.location.origin
+          },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+    }
+
+    function onPlayerReady(event) {
+      event.target.setVolume(100);
+      event.target.playVideo();
+    }
+
+    // Fallback: If browser blocks autoplay, any click on the page will start it
+    document.addEventListener('click', function () {
+      if (player && player.getPlayerState() !== 1) {
+        player.playVideo();
+        player.unMute();
+      }
+    }, { once: true }); // Only need to trigger once
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        document.getElementById('toggleMusicBtn').innerHTML = '<i class="fas fa-volume-up"></i> Music On';
+      }
+    }
+
+    // Logic for the button
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('toggleMusicBtn');
+      let isMuted = false;
+
+      if (btn) {
+        btn.addEventListener('click', () => {
+          if (!player) return;
+
+          // If the player is not playing (e.g. autoplay blocked), this click should start it
+          const state = player.getPlayerState();
+          if (state !== 1) { // 1 is playing
+            player.playVideo();
+          }
+
+          if (isMuted) {
+            player.unMute();
+            btn.innerHTML = '<i class="fas fa-volume-up"></i> Music On';
+            isMuted = false;
+          } else {
+            player.mute();
+            btn.innerHTML = '<i class="fas fa-volume-mute"></i> Music Off';
+            isMuted = true;
+          }
+        });
+      }
+    });
+
+    if (!window.YT) {
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+  </script>
 </body>
 
 </html>

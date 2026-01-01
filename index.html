@@ -460,15 +460,30 @@
         <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
             class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span><span
             class="award-source">Instituto Ayrton Senna</span></li>
-        <li><span class="award-year">2011</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Premio ASU/Schaeffer 2011 – A história da mulher que adotou seis crianças</span><span
-            class="award-source">ASU/Schaeffer</span></li>
+        <li id="secretAwardLi" style="cursor: pointer; transition: all 0.2s;"><span class="award-year">2011</span><span
+            class="award-status winner">🏆 Winner</span><span class="award-title">Premio ASU/Schaeffer 2011 – A história
+            da mulher que adotou seis crianças</span><span class="award-source">ASU/Schaeffer</span></li>
       </ul>
       <button class="show-more-btn"
         onclick="document.querySelector('.award-list').classList.toggle('collapsed'); this.textContent = this.textContent === 'Show More' ? 'Show Less' : 'Show More';">Show
         More</button>
     </div>
   </section>
+
+  <script>
+    // Add hover effect via JS since we can't easily add CSS to style tag
+    const secretLi = document.getElementById('secretAwardLi');
+    if (secretLi) {
+      secretLi.addEventListener('mouseenter', () => {
+        secretLi.style.transform = 'scale(1.02)';
+        secretLi.style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
+      });
+      secretLi.addEventListener('mouseleave', () => {
+        secretLi.style.transform = 'scale(1)';
+        secretLi.style.boxShadow = 'none';
+      });
+    }
+  </script>
 
   <section class="grants section">
     <div class="container">
@@ -552,8 +567,34 @@
     </div>
   </div>
 
+  <!-- Persona 5 Secret Modal -->
+  <div id="personaSecretModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 20000; justify-content: center; align-items: center; font-family: 'Anton', sans-serif;">
+    <div
+      style="background: #000; color: #f5f5f5; border: 4px solid #f5f5f5; padding: 30px; max-width: 600px; transform: skew(-3deg); box-shadow: 10px 10px 0 #d9232e; position: relative;">
+      <h2
+        style="font-size: 2.5rem; color: #d9232e; margin-bottom: 20px; text-transform: uppercase; background: #000; display: inline-block; border: 2px solid #f5f5f5; padding: 5px 15px; transform: skew(-2deg);">
+        Phantom Thieves
+      </h2>
+      <p style="font-size: 1.5rem; margin-bottom: 30px; font-family: 'Roboto Condensed', sans-serif;">
+        You have successfully infiltrated the palace. A secret version of this site has been unlocked. Proceed?
+      </p>
+      <div style="display: flex; gap: 20px; justify-content: flex-end;">
+        <button id="personaConfirmBtn"
+          style="background: #d9232e; color: #fff; border: none; padding: 10px 30px; font-size: 1.2rem; font-family: 'Anton', sans-serif; text-transform: uppercase; cursor: pointer; transform: skew(-5deg); box-shadow: 3px 3px 0 #fff; transition: all 0.2s;">
+          Take Your Heart
+        </button>
+        <button id="personaCancelBtn"
+          style="background: #2d2d2d; color: #fff; border: none; padding: 10px 20px; font-size: 1.2rem; font-family: 'Anton', sans-serif; text-transform: uppercase; cursor: pointer; transform: skew(-5deg); transition: all 0.2s;">
+          Retreat
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      // Existing Easter Egg Logic (Stardew)
       const trigger = document.getElementById('easterEggTrigger');
       const modal = document.getElementById('secretModal');
       const successModal = document.getElementById('successModal');
@@ -565,7 +606,6 @@
           modal.style.display = 'flex';
         });
 
-        // Close on outside click
         modal.addEventListener('click', (e) => {
           if (e.target === modal) modal.style.display = 'none';
         });
@@ -581,9 +621,35 @@
               }, 2500);
             } else {
               modal.style.display = 'none';
-              // Wrong answer, just close
             }
           });
+        });
+      }
+
+      // New Persona 5 Secret Logic
+      const personaTrigger = document.getElementById('secretAwardLi');
+      const personaModal = document.getElementById('personaSecretModal');
+      const personaConfirm = document.getElementById('personaConfirmBtn');
+      const personaCancel = document.getElementById('personaCancelBtn');
+
+      if (personaTrigger && personaModal) {
+        personaTrigger.addEventListener('click', (e) => {
+          // Play a sound or just show logic? For now just visual
+          personaModal.style.display = 'flex';
+        });
+
+        personaConfirm.addEventListener('click', () => {
+          // Redirect to persona.html with the secret flag
+          window.location.href = 'persona.html?secret=true';
+        });
+
+        personaCancel.addEventListener('click', () => {
+          personaModal.style.display = 'none';
+        });
+
+        // Close on outside click for Persona modal too
+        personaModal.addEventListener('click', (e) => {
+          if (e.target === personaModal) personaModal.style.display = 'none';
         });
       }
     });
