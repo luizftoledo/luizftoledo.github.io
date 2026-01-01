@@ -616,6 +616,11 @@
         Secret Unlocked!</h2>
       <p style="color: #5c3510; font-size: 18px; line-height: 1.5;">You've discovered my secret farm...</p>
       <p style="color: #5c3510; font-size: 18px; text-align: right; margin-top: 10px;">- Luiz</p>
+      <div id="stardewLoading"
+        style="display: none; margin-top: 20px; border-top: 2px dashed #6d3910; padding-top: 10px;">
+        <i class="fas fa-hourglass-half fa-spin" style="color: #5c3910;"></i>
+        <span style="color: #5c3510; font-size: 16px;"> Saving progress... Please wait.</span>
+      </div>
     </div>
   </div>
 
@@ -652,6 +657,10 @@
       style="background: #fff; border: 4px solid #333; border-radius: 4px; padding: 20px; width: 90%; max-width: 800px; min-height: 150px; position: relative; box-shadow: 6px 6px 0 rgba(0,0,0,0.5);">
       <!-- Decorative border corners if possible, simpler for now -->
       <p id="pokemonMessage" style="font-size: 14px; line-height: 1.8; color: #333; margin: 0;"></p>
+      <div id="pokemonLoading"
+        style="display: none; margin-top: 10px; font-size: 12px; color: #666; text-align: right;">
+        SAVING GAME... DON'T TURN OFF POWER.
+      </div>
       <div id="pokemonArrow"
         style="display: none; position: absolute; bottom: 15px; right: 15px; width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 12px solid #d32f2f; animation: bounce 1s infinite;">
       </div>
@@ -708,9 +717,17 @@
             if (isCorrect) {
               modal.style.display = 'none';
               successModal.style.display = 'flex';
+
+              // Show loading after a short delay or immediately? User sees success message first.
+              // Let's show loading 
+              setTimeout(() => {
+                const sl = document.getElementById('stardewLoading');
+                if (sl) sl.style.display = 'block';
+              }, 1000);
+
               setTimeout(() => {
                 window.location.href = 'stardew.html';
-              }, 2500);
+              }, 3000); // Increased time slightly to let user see loading
             } else {
               modal.style.display = 'none';
             }
@@ -731,8 +748,19 @@
         });
 
         personaConfirm.addEventListener('click', () => {
+          // Show loading
+          const pl = document.getElementById('personaLoading');
+          if (pl) pl.style.display = 'block';
+
+          // Disable buttons to prevent double click
+          personaConfirm.disabled = true;
+          personaCancel.disabled = true;
+          personaConfirm.style.opacity = 0.5;
+
           // Redirect to persona.html with the secret flag
-          window.location.href = 'persona.html?secret=true';
+          setTimeout(() => {
+            window.location.href = 'persona.html?secret=true';
+          }, 1500); // Small delay to show message
         });
 
         personaCancel.addEventListener('click', () => {
@@ -767,9 +795,16 @@
               // Flash screen effect?
               document.body.style.transition = "filter 0.5s";
               document.body.style.filter = "brightness(0)";
+
+              // Show loading text just before fade or during?
+              // Let's show it when arrow appears actually? No, when they click or just before fade.
+              // Let's make it visible just before fade.
+              const pkl = document.getElementById('pokemonLoading');
+              if (pkl) pkl.style.display = 'block';
+
               setTimeout(() => {
                 window.location.href = 'pokemon.html';
-              }, 1000);
+              }, 2000); // bit more time
             }, 2500);
           }
         }
