@@ -35,9 +35,10 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             typeText("A wild GOVERNMENT RECORD appeared!", () => {
                 setTimeout(() => {
-                    typeText("Go! JOURNALIST!");
-                }, 1500);
-                setTimeout(showBattleMenu, 3000);
+                    typeText("Go! JOURNALIST!", () => {
+                        setTimeout(showBattleMenu, 2000);
+                    });
+                }, 1500); 
             });
         }, 1000);
     }
