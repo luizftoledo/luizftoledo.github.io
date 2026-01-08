@@ -151,6 +151,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function captureSuccess() {
+        // Stop Battle Music
+        const bgMusic = document.getElementById('battleMusic');
+        if (bgMusic) {
+            bgMusic.pause();
+            bgMusic.currentTime = 0;
+        }
+
+        // Play Victory Music
+        const vicMusic = document.getElementById('victoryMusic');
+        if (vicMusic) {
+             vicMusic.volume = 0.5;
+             vicMusic.play().catch(e => console.log("Victory Audio play failed:", e));
+        }
+
         typeText("Gotcha! GOVERNMENT RECORD was captured!", () => {
              // Victory message
              setTimeout(() => {
@@ -160,11 +174,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (proceedBtn) {
                         proceedBtn.style.display = 'block';
                         proceedBtn.addEventListener('click', () => {
-                             // Stop Music
-                             const bgMusic = document.getElementById('battleMusic');
-                             if (bgMusic) {
-                                 bgMusic.pause();
-                                 bgMusic.currentTime = 0;
+                             // Stop Music (Victory)
+                             if (vicMusic) {
+                                 vicMusic.pause();
+                                 vicMusic.currentTime = 0;
                              }
                              
                              // Redirect to home/main portfolio
