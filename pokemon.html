@@ -78,6 +78,11 @@
                 </div>
                 <div class="menu-prompt">What will<br>JOURNALIST do?</div>
             </div>
+            <!-- Proceed Button (Hidden by default) -->
+            <button id="proceedBtn"
+                style="display: none; position: absolute; bottom: 40%; left: 50%; transform: translateX(-50%); padding: 15px 20px; font-family: 'Press Start 2P', cursive; font-size: 10px; background: #3888f8; color: white; border: 4px solid #fff; cursor: pointer; box-shadow: 0 0 10px rgba(56, 136, 248, 0.5); z-index: 10;">
+                Congratulations! Go back to the portfolio
+            </button>
         </div>
 
         <!-- Post-Battle Portfolio Layer -->
@@ -147,24 +152,7 @@
     <audio id="battleMusic" src="pkost_music.mp3" loop></audio>
 
     <script src="scripts/pokemon.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const startOverlay = document.getElementById('startOverlay');
-            const startBtn = document.getElementById('startBtn');
-            const audio = document.getElementById('battleMusic');
 
-            if (startBtn && audio) {
-                startBtn.addEventListener('click', () => {
-                    startOverlay.style.display = 'none';
-                    audio.volume = 0.5;
-                    audio.play().catch(e => console.log("Audio play failed:", e));
-
-                    // Trigger any other game init logic if needed
-                    // For now, removing the overlay reveals the game which has its own CSS animations
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>

@@ -135,13 +135,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Start Button Logic
-    const startBtn = document.getElementById('startGameBtn');
+    const startBtn = document.getElementById('startBtn');
     const startOverlay = document.getElementById('startOverlay');
-    const bgMusic = document.getElementById('portfolioMusic');
+    const bgMusic = document.getElementById('battleMusic'); // Fixed ID based on HTML
 
     if (startBtn) {
         startBtn.addEventListener('click', () => {
-            startOverlay.style.display = 'none';
+            if (startOverlay) startOverlay.style.display = 'none';
             if (bgMusic) {
                 bgMusic.volume = 0.4;
                 bgMusic.play().catch(e => console.log("Audio play failed:", e));
@@ -154,8 +154,23 @@ document.addEventListener('DOMContentLoaded', () => {
         typeText("Gotcha! GOVERNMENT RECORD was captured!", () => {
              // Victory message
              setTimeout(() => {
-                 typeText("The truth has been revealed.<br>Enjoy the portfolio!", () => {
-                    // Optional: maybe show confetti or just stop
+                 typeText("The truth has been revealed.\nEnjoy the portfolio!", () => {
+                    // Show Proceed Button
+                    const proceedBtn = document.getElementById('proceedBtn');
+                    if (proceedBtn) {
+                        proceedBtn.style.display = 'block';
+                        proceedBtn.addEventListener('click', () => {
+                             // Stop Music
+                             const bgMusic = document.getElementById('battleMusic');
+                             if (bgMusic) {
+                                 bgMusic.pause();
+                                 bgMusic.currentTime = 0;
+                             }
+                             
+                             // Redirect to home/main portfolio
+                             window.location.href = 'index.html';
+                        });
+                    }
                  });
              }, 2000);
         });
