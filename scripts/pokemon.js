@@ -146,6 +146,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 bgMusic.volume = 0.4;
                 bgMusic.play().catch(e => console.log("Audio play failed:", e));
             }
+            // Prime victory music for mobile (bypass autoplay policy)
+            const vicMusic = document.getElementById('victoryMusic');
+            if (vicMusic) {
+                vicMusic.volume = 0; // Mute initially
+                vicMusic.play().then(() => {
+                    vicMusic.pause();
+                    vicMusic.currentTime = 0;
+                    vicMusic.volume = 0.5; // Set volume for later
+                }).catch(e => console.log("Victory Audio priming failed:", e));
+            }
             startGame();
         });
     }

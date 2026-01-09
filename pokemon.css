@@ -13,19 +13,20 @@
     -webkit-font-smoothing: none;
 }
 
-margin: 0;
-padding: 0;
-background: #202020;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-height: 100dvh;
-/* Mobile viewport fix */
-min-height: -webkit-fill-available;
-/* Fallback for Safari */
-font-family: var(--font-pixel);
-overflow: hidden;
+body {
+    margin: 0;
+    padding: 0;
+    background: #202020;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    height: 100dvh;
+    /* Mobile viewport fix */
+    min-height: -webkit-fill-available;
+    /* Fallback for Safari */
+    font-family: var(--font-pixel);
+    overflow: hidden;
 }
 
 .game-container {
