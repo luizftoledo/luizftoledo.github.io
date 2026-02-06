@@ -1186,3 +1186,43 @@ html[data-theme='light'] {
   background: rgba(124, 255, 240, 0.1);
   transform: translateY(-2px);
 }
+
+/* Story Link Buttons (New) */
+.story-link-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.story-link {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.story-link:hover {
+  background: rgba(124, 255, 240, 0.08); /* slight accent tint */
+  border-color: var(--accent);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.story-link-icon {
+  color: var(--accent);
+  margin-right: 12px;
+  font-size: 1.2em;
+  transition: transform 0.2s ease;
+}
+
+.story-link:hover .story-link-icon {
+  transform: translateX(2px);
+}
