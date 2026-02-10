@@ -554,9 +554,9 @@ a.highlight {
 .award-list li,
 .grant-list li {
   background: var(--card);
+  border: 1px solid var(--border);
   border-left: 4px solid var(--accent);
   border-radius: var(--radius);
-  border: 1px solid var(--border);
   padding: 16px 20px;
   margin-bottom: 12px;
 }

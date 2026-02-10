@@ -183,4 +183,31 @@ document.addEventListener('DOMContentLoaded', () => {
       reelsContainer.scrollBy({ left: 320, behavior: 'smooth' });
     });
   }
+
+  // Scroll Reveal with IntersectionObserver
+  const revealElements = document.querySelectorAll('[data-reveal]');
+  if (revealElements.length > 0) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Add staggered delay for sibling elements (e.g. cards in a grid)
+          const parent = entry.target.parentElement;
+          const siblings = parent ? Array.from(parent.querySelectorAll(':scope > [data-reveal]')) : [];
+          const index = siblings.indexOf(entry.target);
+          const delay = siblings.length > 1 ? index * 80 : 0;
+
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, delay);
+
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+  }
 });
