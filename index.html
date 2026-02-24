@@ -580,7 +580,7 @@
             class="award-source">ANPR</span></li>
         <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
             class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span>
-          <img id="pokeSecretTrigger" src="pokeball_secret.png" alt="PokeSecret"
+          <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="PokeSecret"
             style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px; cursor: pointer; border-radius: 50%; z-index: 10;"
             title="???">
           <span class="award-source">Instituto Ayrton Senna</span>
@@ -665,7 +665,7 @@
             science in Public Administration (2019)</span><span class="grant-source">FGV</span></li>
         <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$
             60,000 scholarship (2019) – Jornalista de Visão</span>
-          <img id="pokeSecretTrigger" src="pokeball_secret.png" alt="O"
+          <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="O"
             style="width: 16px; height: 16px; margin-left: 5px; cursor: pointer; opacity: 0.1; transition: opacity 0.3s; vertical-align: middle;"
             onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.1">
           <span class="grant-source">Instituto Ling</span>
@@ -931,7 +931,6 @@
       }
 
       // POKEMON HEART GOLD SECRET LOGIC
-      // POKEMON HEART GOLD SECRET LOGIC
       const pokeModal = document.getElementById('pokemonSecretModal');
       const pokeMsgElement = document.getElementById('pokemonMessage');
       const pokeArrow = document.getElementById('pokemonArrow');
@@ -973,10 +972,12 @@
       };
 
       // RESTORED Click Trigger for Mobile
-      const pokeTrigger = document.getElementById('pokeSecretTrigger');
-      if (pokeTrigger) {
-        pokeTrigger.addEventListener('click', () => {
-          window.triggerPokemonSecret();
+      const pokeTriggers = document.querySelectorAll('[data-poke-trigger]');
+      if (pokeTriggers.length > 0) {
+        pokeTriggers.forEach((pokeTrigger) => {
+          pokeTrigger.addEventListener('click', () => {
+            window.triggerPokemonSecret();
+          });
         });
       }
     });
