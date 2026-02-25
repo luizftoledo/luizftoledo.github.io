@@ -23,7 +23,33 @@
 
   <link rel="icon" type="image/png" href="favicon.png">
 
-  <script defer>
+  <!-- SEO: Canonical & Twitter Cards -->
+  <link rel="canonical" href="https://luizftoledo.github.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Luiz Fernando Toledo - Data & Investigative Journalist">
+  <meta name="twitter:description" content="Award-winning Brazilian journalist based in London. Expert in data journalism, environmental investigations, and transparency.">
+  <meta name="twitter:image" content="https://luizftoledo.github.io/epstein_brazil_victims.png">
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Luiz Fernando Toledo",
+    "jobTitle": "Data & Investigative Journalist",
+    "url": "https://luizftoledo.github.io/",
+    "sameAs": [
+      "https://twitter.com/toledoluizf",
+      "https://linkedin.com/in/luizftoledo1"
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": "BBC World Service"
+    }
+  }
+  </script>
+
+  <script>
     // Force dark mode sitewide
     document.documentElement.setAttribute('data-theme', 'dark');
   </script>
@@ -36,6 +62,12 @@
 
     .award-list {
       transition: all 0.3s ease;
+    }
+
+    /* Pokeball hover effect (replaces inline onmouseover/onmouseout) */
+    .poke-secret-trigger:hover,
+    .poke-secret-trigger:focus {
+      opacity: 1 !important;
     }
   </style>
 </head>
@@ -59,13 +91,14 @@
         <li><a href="https://datafixers.org" target="_blank" rel="noopener noreferrer">Data Journalism</a></li>
       </ul>
       <div class="nav-actions">
-        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" title="Menu">
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" title="Menu">
           <i class="fas fa-bars"></i>
         </button>
       </div>
     </div>
   </nav>
 
+  <main>
   <section class="hero section">
     <div class="container">
       <div class="hero-text">
@@ -580,7 +613,7 @@
             class="award-source">ANPR</span></li>
         <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
             class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span>
-          <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="PokeSecret"
+          <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="Hidden secret" role="button" tabindex="0"
             style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px; cursor: pointer; border-radius: 50%; z-index: 10;"
             title="???">
           <span class="award-source">Instituto Ayrton Senna</span>
@@ -665,9 +698,8 @@
             science in Public Administration (2019)</span><span class="grant-source">FGV</span></li>
         <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$
             60,000 scholarship (2019) – Jornalista de Visão</span>
-          <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="O"
-            style="width: 16px; height: 16px; margin-left: 5px; cursor: pointer; opacity: 0.1; transition: opacity 0.3s; vertical-align: middle;"
-            onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.1">
+          <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="Hidden secret" role="button" tabindex="0"
+            style="width: 16px; height: 16px; margin-left: 5px; cursor: pointer; opacity: 0.1; transition: opacity 0.3s; vertical-align: middle;">
           <span class="grant-source">Instituto Ling</span>
         </li>
         <li><span class="grant-year">2018</span><span class="grant-title">ICFJ Emerging Leaders Program / fellow
@@ -712,6 +744,7 @@
     </div>
   </section>
 
+  </main>
   <footer class="footer section">
     <div class="container">
       <h2>Get in touch</h2>
@@ -725,7 +758,7 @@
             class="fab fa-linkedin-in"></i></a>
         <!-- Easter Egg Trigger: Matches .socials a style exactly -->
         <a href="#" id="easterEggTrigger">
-          <img src="images/stardew/chicken.png" alt="?"
+          <img src="images/stardew/chicken.png" alt="Hidden easter egg"
             style="width: 28px; height: 28px; opacity: 1; image-rendering: pixelated;">
         </a>
       </div>
@@ -971,12 +1004,18 @@
         typeWriter();
       };
 
-      // RESTORED Click Trigger for Mobile
+      // Click & Keyboard Trigger for Pokemon Secret
       const pokeTriggers = document.querySelectorAll('[data-poke-trigger]');
       if (pokeTriggers.length > 0) {
         pokeTriggers.forEach((pokeTrigger) => {
           pokeTrigger.addEventListener('click', () => {
             window.triggerPokemonSecret();
+          });
+          pokeTrigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              window.triggerPokemonSecret();
+            }
           });
         });
       }
