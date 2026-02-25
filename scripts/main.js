@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (menuToggle && navLinks) {
     menuToggle.addEventListener('click', () => {
       navLinks.classList.toggle('open');
+      const isOpen = navLinks.classList.contains('open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
     });
   }
 
@@ -21,21 +23,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const p = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     if (progressBar) progressBar.style.width = p + '%';
   };
-  window.addEventListener('scroll', updateProgress);
-  window.addEventListener('load', updateProgress);
 
   // Back to top button
   const backBtn = document.createElement('button');
   backBtn.className = 'back-to-top';
   backBtn.innerHTML = '↑';
   backBtn.title = 'Back to top';
+  backBtn.setAttribute('aria-label', 'Back to top');
   backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   document.body.appendChild(backBtn);
   const toggleBackBtn = () => {
     if (window.scrollY > 400) backBtn.classList.add('show'); else backBtn.classList.remove('show');
   };
-  window.addEventListener('scroll', toggleBackBtn);
-  window.addEventListener('load', toggleBackBtn);
+
+  // Throttled scroll handler using requestAnimationFrame
+  let scrollTicking = false;
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      requestAnimationFrame(() => {
+        updateProgress();
+        toggleBackBtn();
+        scrollTicking = false;
+      });
+      scrollTicking = true;
+    }
+  });
+  window.addEventListener('load', () => {
+    updateProgress();
+    toggleBackBtn();
+  });
 
   // Anchor links copy for section titles
   document.querySelectorAll('.section h2').forEach(h => {
@@ -45,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
     h.addEventListener('click', () => {
       const url = location.origin + location.pathname + '#' + (h.parentElement?.id || id || '');
       navigator.clipboard.writeText(url).then(() => {
-        // Optional: User feedback could be improved here
         const originalTitle = h.title;
         h.title = 'Link copied';
         setTimeout(() => (h.title = originalTitle), 1200);
@@ -60,7 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextButton = document.querySelector('.carousel-button--right');
     const prevButton = document.querySelector('.carousel-button--left');
     const dotsNav = document.querySelector('.carousel-nav');
-    const dots = Array.from(dotsNav.children);
+    const dots = dotsNav ? Array.from(dotsNav.children) : [];
+
+    if (!dotsNav || dots.length === 0 || slides.length === 0) return;
 
     const slideWidth = slides[0].getBoundingClientRect().width;
 
@@ -71,18 +88,20 @@ document.addEventListener('DOMContentLoaded', () => {
     slides.forEach(setSlidePosition);
 
     const moveToSlide = (track, currentSlide, targetSlide) => {
+      if (!targetSlide) return;
       track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
       currentSlide.classList.remove('current-slide');
       targetSlide.classList.add('current-slide');
 
       // Manage video playback
       manageVideoPlayback(currentSlide, targetSlide);
-    }
+    };
 
     const updateDots = (currentDot, targetDot) => {
+      if (!currentDot || !targetDot) return;
       currentDot.classList.remove('current-slide');
       targetDot.classList.add('current-slide');
-    }
+    };
 
     const hideShowArrows = (slides, prevButton, nextButton, targetIndex) => {
       if (targetIndex === 0) {
@@ -95,29 +114,30 @@ document.addEventListener('DOMContentLoaded', () => {
         prevButton.classList.remove('is-hidden');
         nextButton.classList.remove('is-hidden');
       }
-    }
+    };
 
     // Function to control YouTube videos via postMessage
     const manageVideoPlayback = (fromSlide, toSlide) => {
       // Pause the video we are leaving
       const fromIframe = fromSlide.querySelector('iframe');
       if (fromIframe) {
-        fromIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        fromIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', 'https://www.youtube.com');
       }
 
       // Play the video we are entering
       const toIframe = toSlide.querySelector('iframe');
       if (toIframe) {
-        toIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        toIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', 'https://www.youtube.com');
       }
-    }
+    };
 
     if (prevButton) {
-      prevButton.addEventListener('click', e => {
+      prevButton.addEventListener('click', () => {
         const currentSlide = track.querySelector('.current-slide');
-        const prevSlide = currentSlide.previousElementSibling;
+        const prevSlide = currentSlide?.previousElementSibling;
+        if (!prevSlide) return;
         const currentDot = dotsNav.querySelector('.current-slide');
-        const prevDot = currentDot.previousElementSibling;
+        const prevDot = currentDot?.previousElementSibling;
         const prevIndex = slides.findIndex(slide => slide === prevSlide);
 
         moveToSlide(track, currentSlide, prevSlide);
@@ -127,11 +147,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (nextButton) {
-      nextButton.addEventListener('click', e => {
+      nextButton.addEventListener('click', () => {
         const currentSlide = track.querySelector('.current-slide');
-        const nextSlide = currentSlide.nextElementSibling;
+        const nextSlide = currentSlide?.nextElementSibling;
+        if (!nextSlide) return;
         const currentDot = dotsNav.querySelector('.current-slide');
-        const nextDot = currentDot.nextElementSibling;
+        const nextDot = currentDot?.nextElementSibling;
         const nextIndex = slides.findIndex(slide => slide === nextSlide);
 
         moveToSlide(track, currentSlide, nextSlide);
@@ -150,6 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentDot = dotsNav.querySelector('.current-slide');
         const targetIndex = dots.findIndex(dot => dot === targetDot);
         const targetSlide = slides[targetIndex];
+
+        if (!targetSlide) return;
 
         moveToSlide(track, currentSlide, targetSlide);
         updateDots(currentDot, targetDot);
