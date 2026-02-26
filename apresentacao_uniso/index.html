@@ -400,6 +400,47 @@
             border-bottom: 2px solid var(--black); padding-bottom: 3px;
         }
 
+        /* ---- SLIDE: Videos ---- */
+        .video-slide {
+            text-align: center !important;
+        }
+        .video-slide .slide-concept { text-align: center; display: block; margin-bottom: 6px; }
+        .video-slide p { text-align: center; max-width: 700px; margin: 0 auto 24px; font-size: 0.85em; }
+        .video-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .video-card {
+            width: 240px;
+            text-decoration: none;
+            color: var(--black);
+            border: 1px solid var(--light-gray);
+            transition: box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 16px;
+        }
+        .video-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+        .video-play {
+            width: 64px; height: 64px;
+            border: 2px solid var(--black);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 14px;
+        }
+        .video-play svg { margin-left: 4px; }
+        .video-card .video-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6em;
+            font-weight: 500;
+            color: var(--mid);
+            letter-spacing: 0.05em;
+        }
+        .video-card .btn-read { margin-top: 10px; font-size: 0.55em; padding: 8px 16px; }
+
         img { background: var(--light-gray); }
     </style>
 </head>
@@ -574,7 +615,35 @@
                 </div>
             </section>
 
-            <!-- 11: Google NotebookLM -->
+            <!-- 11: Vídeos / Multimídia -->
+            <section class="video-slide">
+                <span class="slide-concept">Não fique só nos dados nem só no texto</span>
+                <p>O mais importante é que sua história chegue às pessoas, seja em áudio, vídeo, redes sociais, etc.</p>
+                <div class="video-grid">
+                    <a class="video-card" href="https://www.instagram.com/p/DVO4gD_j5T4/" target="_blank">
+                        <div class="video-play"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--black)"><polygon points="6,3 20,12 6,21"/></svg></div>
+                        <div class="video-label">Instagram</div>
+                        <span class="btn-read">ASSISTIR</span>
+                    </a>
+                    <a class="video-card" href="https://www.instagram.com/reel/DREheQ1DegW/" target="_blank">
+                        <div class="video-play"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--black)"><polygon points="6,3 20,12 6,21"/></svg></div>
+                        <div class="video-label">Instagram Reel</div>
+                        <span class="btn-read">ASSISTIR</span>
+                    </a>
+                    <a class="video-card" href="https://www.instagram.com/reel/DPgHVYyjcoT/" target="_blank">
+                        <div class="video-play"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--black)"><polygon points="6,3 20,12 6,21"/></svg></div>
+                        <div class="video-label">Instagram Reel</div>
+                        <span class="btn-read">ASSISTIR</span>
+                    </a>
+                    <a class="video-card" href="https://www.instagram.com/reel/DPY3sCzDfw7/" target="_blank">
+                        <div class="video-play"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--black)"><polygon points="6,3 20,12 6,21"/></svg></div>
+                        <div class="video-label">Instagram Reel</div>
+                        <span class="btn-read">ASSISTIR</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- 12: Google NotebookLM -->
             <section class="notebook-slide">
                 <div class="nb-google">Google</div>
                 <div class="nb-name">NotebookLM</div>
