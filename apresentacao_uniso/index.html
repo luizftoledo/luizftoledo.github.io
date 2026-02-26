@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
     <title>Jornalismo de dados para contar histórias | Luiz Fernando Toledo</title>
+    <script async src="https://www.instagram.com/embed.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -403,43 +404,21 @@
         /* ---- SLIDE: Videos ---- */
         .video-slide {
             text-align: center !important;
+            overflow: hidden;
         }
         .video-slide .slide-concept { text-align: center; display: block; margin-bottom: 6px; }
-        .video-slide p { text-align: center; max-width: 700px; margin: 0 auto 24px; font-size: 0.85em; }
+        .video-slide p { text-align: center; max-width: 700px; margin: 0 auto 16px; font-size: 0.8em; }
         .video-grid {
             display: flex;
-            gap: 20px;
+            gap: 12px;
             justify-content: center;
-            flex-wrap: wrap;
         }
-        .video-card {
-            width: 240px;
-            text-decoration: none;
-            color: var(--black);
-            border: 1px solid var(--light-gray);
-            transition: box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px 16px;
+        .video-grid .instagram-media {
+            min-width: 0 !important;
+            max-width: 250px !important;
+            width: 250px !important;
+            margin: 0 !important;
         }
-        .video-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-        .video-play {
-            width: 64px; height: 64px;
-            border: 2px solid var(--black);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 14px;
-        }
-        .video-play svg { margin-left: 4px; }
-        .video-card .video-label {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.6em;
-            font-weight: 500;
-            color: var(--mid);
-            letter-spacing: 0.05em;
-        }
-        .video-card .btn-read { margin-top: 10px; font-size: 0.55em; padding: 8px 16px; }
 
         img { background: var(--light-gray); }
     </style>
@@ -620,26 +599,10 @@
                 <span class="slide-concept">Não fique só nos dados nem só no texto</span>
                 <p>O mais importante é que sua história chegue às pessoas, seja em áudio, vídeo, redes sociais, etc.</p>
                 <div class="video-grid">
-                    <a class="video-card" href="https://www.instagram.com/p/DVO4gD_j5T4/" target="_blank">
-                        <div class="video-play"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--black)"><polygon points="6,3 20,12 6,21"/></svg></div>
-                        <div class="video-label">Instagram</div>
-                        <span class="btn-read">ASSISTIR</span>
-                    </a>
-                    <a class="video-card" href="https://www.instagram.com/reel/DREheQ1DegW/" target="_blank">
-                        <div class="video-play"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--black)"><polygon points="6,3 20,12 6,21"/></svg></div>
-                        <div class="video-label">Instagram Reel</div>
-                        <span class="btn-read">ASSISTIR</span>
-                    </a>
-                    <a class="video-card" href="https://www.instagram.com/reel/DPgHVYyjcoT/" target="_blank">
-                        <div class="video-play"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--black)"><polygon points="6,3 20,12 6,21"/></svg></div>
-                        <div class="video-label">Instagram Reel</div>
-                        <span class="btn-read">ASSISTIR</span>
-                    </a>
-                    <a class="video-card" href="https://www.instagram.com/reel/DPY3sCzDfw7/" target="_blank">
-                        <div class="video-play"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--black)"><polygon points="6,3 20,12 6,21"/></svg></div>
-                        <div class="video-label">Instagram Reel</div>
-                        <span class="btn-read">ASSISTIR</span>
-                    </a>
+                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVO4gD_j5T4/" data-instgrm-version="14"></blockquote>
+                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DREheQ1DegW/" data-instgrm-version="14"></blockquote>
+                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPgHVYyjcoT/" data-instgrm-version="14"></blockquote>
+                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPY3sCzDfw7/" data-instgrm-version="14"></blockquote>
                 </div>
             </section>
 
@@ -725,6 +688,12 @@
             width: 1200,
             height: 700,
             margin: 0.04
+        });
+        // Re-process Instagram embeds when slide becomes visible
+        Reveal.on('slidechanged', function() {
+            if (window.instgrm) {
+                window.instgrm.Embeds.process();
+            }
         });
     </script>
 </body>
