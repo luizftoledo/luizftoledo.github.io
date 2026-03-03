@@ -41,6 +41,32 @@
       gap: 1rem;
     }
 
+    .quick-nav {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .quick-nav .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.34rem 0.72rem;
+      background: #fbfaf7;
+      color: #4a453f;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .quick-nav .nav-btn:hover {
+      background: #f2eee7;
+      text-decoration: none;
+    }
+
     .card {
       border: 1px solid var(--line);
       border-radius: 18px;
@@ -617,6 +643,74 @@
 
     .error { color: var(--danger); }
 
+    .course-popup {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      width: min(380px, calc(100vw - 1.2rem));
+      border: 1px solid #d7cfbe;
+      border-radius: 14px;
+      background: #fffdf8;
+      box-shadow: 0 16px 36px rgba(22, 20, 18, 0.22);
+      padding: 0.78rem 0.82rem 0.74rem;
+      display: grid;
+      gap: 0.5rem;
+      z-index: 60;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .course-popup.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .course-popup .title {
+      margin: 0;
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: #4a433a;
+    }
+
+    .course-popup .text {
+      margin: 0;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #5b544b;
+    }
+
+    .course-popup .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .course-popup .cta {
+      border: 1px solid #2f6f9f;
+      border-radius: 999px;
+      background: linear-gradient(120deg, #2f6f9f, #3f8f6d);
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.34rem 0.7rem;
+    }
+
+    .course-popup .close {
+      border: 1px solid #d2cab8;
+      border-radius: 8px;
+      background: #f8f4eb;
+      color: #5d554b;
+      font-size: 0.78rem;
+      min-height: 30px;
+      padding: 0.18rem 0.45rem;
+      cursor: pointer;
+    }
+
     a {
       color: var(--accent);
       text-decoration: none;
@@ -642,6 +736,11 @@
 </head>
 <body>
   <main class="page">
+    <nav class="quick-nav" aria-label="Atalhos">
+      <a class="nav-btn" href="https://luizftoledo.github.io/">Voltar ao Portfolio</a>
+      <a class="nav-btn" href="https://datafixers.org/" target="_blank" rel="noopener noreferrer">Ir para DataFixers.org</a>
+    </nav>
+
     <header class="card hero">
       <h1>LAI no Executivo Federal: por que pedidos de informação são negados?</h1>
       <p class="sub">Painel com série histórica (2015-atual), motivos de negativa, comparação entre órgãos e foco especial em negativas ligadas a informação pessoal. Texto simples, dados oficiais e atualização automática mensal.</p>
@@ -865,6 +964,36 @@
     </footer>
   </main>
 
+  <aside class="course-popup" id="course-popup-lai" aria-live="polite">
+    <p class="title">Curso de LAI</p>
+    <p class="text">Investigue gastos públicos com a Lei de Acesso à Informação. Curso online, gravado e sob demanda.</p>
+    <div class="actions">
+      <a class="cta" href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank" rel="noopener noreferrer">Acessar curso</a>
+      <button class="close" id="course-popup-lai-close" type="button">Fechar</button>
+    </div>
+  </aside>
+
+  <script>
+    (() => {
+      const popup = document.getElementById('course-popup-lai');
+      const closeBtn = document.getElementById('course-popup-lai-close');
+      if (!popup) return;
+      const key = 'lai_dashboard_course_popup_dismissed';
+      const safeGet = () => {
+        try { return sessionStorage.getItem(key); } catch { return null; }
+      };
+      const safeSet = () => {
+        try { sessionStorage.setItem(key, '1'); } catch {}
+      };
+      if (safeGet() !== '1') popup.classList.add('show');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          popup.classList.remove('show');
+          safeSet();
+        });
+      }
+    })();
+  </script>
   <script src="./app.js"></script>
 </body>
 </html>

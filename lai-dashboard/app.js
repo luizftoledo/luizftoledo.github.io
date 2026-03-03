@@ -234,34 +234,39 @@
     const restrictedDelta = Number(monitoring.restricted_rate_delta_pp || 0);
     const deniedDelta = Number(monitoring.denied_rate_delta_pp || 0);
     const status = monitoring.restricted_rate_status || 'estável';
-    const statusLabel = status === 'piorando' ? 'Atenção: piora' : (status === 'melhorando' ? 'Sinal de melhora' : 'Quadro estável');
+    const statusLabel = status === 'piorando'
+      ? 'Atenção: cenário piorou no acumulado do ano'
+      : (status === 'melhorando' ? 'Sinal positivo: cenário melhorou no acumulado' : 'Cenário estável no acumulado');
 
     const spikes = (monitoring.org_spikes || []).slice(0, 5);
     const spikesHtml = spikes.length
       ? `<ul>${spikes.map((row) => `
-          <li><strong>${esc(row.org)}</strong>: ${nFmt.format(row.current_denied)} negativas no mês (base: ${nFmt.format(Math.round(row.baseline_denied_avg || 0))}; alta de ${pFmt.format(row.lift_ratio || 0)}).</li>
+          <li><strong>${esc(row.org)}</strong>: teve <strong>${nFmt.format(row.current_denied)}</strong> negativas no mês mais recente. A referência histórica para o mesmo mês é <strong>${nFmt.format(Math.round(row.baseline_denied_avg || 0))}</strong>, então houve alta de <strong>${pFmt.format(row.lift_ratio || 0)}</strong>.</li>
         `).join('')}</ul>`
-      : '<p>Não houve spike forte de negativas por órgão no mês mais recente.</p>';
+      : '<p>Nenhum órgão teve aumento fora do padrão histórico no mês mais recente.</p>';
 
     const themeWorsening = (monitoring.theme_worsening || []).slice(0, 5);
     const themeHtml = themeWorsening.length
       ? `<ul>${themeWorsening.map((row) => `
-          <li><strong>${esc(row.theme)}</strong>: taxa de restrição subiu ${Number(row.delta_pp || 0).toFixed(1)} p.p. no acumulado do ano.</li>
+          <li><strong>${esc(row.theme)}</strong>: a taxa de restrição subiu <strong>${Number(row.delta_pp || 0).toFixed(1)} p.p.</strong> no acumulado do ano, comparando com o mesmo período dos anos anteriores.</li>
         `).join('')}</ul>`
-      : '<p>Não houve piora forte por tema no recorte com volume mínimo.</p>';
+      : '<p>Não apareceu piora relevante por tema no recorte com volume mínimo de pedidos.</p>';
 
     alertsSummary.innerHTML = `
       <article class="alert-card">
         <h3>${statusLabel}</h3>
-        <p>No acumulado até <strong>${esc(monitoring.latest_month_label || '--')} de ${esc(String(monitoring.latest_year || '--'))}</strong>, a taxa com restrição está em <strong>${pFmt.format(current.restricted_rate || 0)}</strong> (base comparável: <strong>${pFmt.format(baseline.restricted_rate_avg || 0)}</strong>, variação de <strong>${restrictedDelta.toFixed(1)} p.p.</strong>).</p>
-        <p>A taxa de negativas totais está em <strong>${pFmt.format(current.denied_rate || 0)}</strong> (base: <strong>${pFmt.format(baseline.denied_rate_avg || 0)}</strong>, variação de <strong>${deniedDelta.toFixed(1)} p.p.</strong>).</p>
+        <p>Este diagnóstico compara o ano atual <strong>até ${esc(monitoring.latest_month_label || '--')} de ${esc(String(monitoring.latest_year || '--'))}</strong> com a média do <strong>mesmo período</strong> dos últimos anos. Isso evita comparar ano incompleto com ano fechado.</p>
+        <p><strong>Taxa com restrição</strong> (negado + parcial): está em <strong>${pFmt.format(current.restricted_rate || 0)}</strong>. A base comparável é <strong>${pFmt.format(baseline.restricted_rate_avg || 0)}</strong>, diferença de <strong>${restrictedDelta.toFixed(1)} p.p.</strong>.</p>
+        <p><strong>Taxa de negativas totais</strong>: está em <strong>${pFmt.format(current.denied_rate || 0)}</strong>. A base comparável é <strong>${pFmt.format(baseline.denied_rate_avg || 0)}</strong>, diferença de <strong>${deniedDelta.toFixed(1)} p.p.</strong>.</p>
       </article>
       <article class="alert-card">
         <h3>Órgãos com spike recente</h3>
+        <p>“Spike” significa aumento acima do padrão histórico para o mesmo mês do ano.</p>
         ${spikesHtml}
       </article>
       <article class="alert-card">
         <h3>Áreas que pioraram no ano</h3>
+        <p>Aqui entram os temas em que a proporção de pedidos com restrição subiu de forma mais clara.</p>
         ${themeHtml}
       </article>
     `;

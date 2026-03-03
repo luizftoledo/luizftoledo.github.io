@@ -43,6 +43,32 @@
       gap: 1rem;
     }
 
+    .quick-nav {
+      display: flex;
+      gap: 0.46rem;
+      flex-wrap: wrap;
+    }
+
+    .quick-nav .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      border: 1px solid #2d456f;
+      border-radius: 999px;
+      background: rgba(9, 17, 33, 0.9);
+      color: #b7cae7;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.34rem 0.72rem;
+    }
+
+    .quick-nav .nav-btn:hover {
+      background: rgba(14, 27, 52, 0.95);
+      text-decoration: none;
+    }
+
     .top-shell {
       border: 1px solid var(--line);
       border-radius: 22px;
@@ -1035,6 +1061,74 @@
       box-shadow: 0 12px 26px rgba(0, 0, 0, 0.48);
     }
 
+    .course-popup {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      width: min(390px, calc(100vw - 1.2rem));
+      border: 1px solid #314a74;
+      border-radius: 14px;
+      background: rgba(9, 17, 33, 0.97);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+      padding: 0.78rem 0.82rem 0.74rem;
+      display: grid;
+      gap: 0.5rem;
+      z-index: 70;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .course-popup.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .course-popup .title {
+      margin: 0;
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: #c5daf8;
+    }
+
+    .course-popup .text {
+      margin: 0;
+      font-size: 0.8rem;
+      line-height: 1.42;
+      color: #9db7da;
+    }
+
+    .course-popup .actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .course-popup .cta {
+      border: 1px solid #16cdd8;
+      border-radius: 999px;
+      background: linear-gradient(120deg, #4862ff, #16cdd8);
+      color: #041023;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.34rem 0.7rem;
+    }
+
+    .course-popup .close {
+      border: 1px solid #35517e;
+      border-radius: 8px;
+      background: rgba(14, 27, 52, 0.95);
+      color: #a8c0e4;
+      font-size: 0.78rem;
+      min-height: 30px;
+      padding: 0.18rem 0.45rem;
+      cursor: pointer;
+    }
+
     @media (max-width: 640px) {
       h1 {
         letter-spacing: 0.05em;
@@ -1049,6 +1143,11 @@
 </head>
 <body>
   <main class="page">
+    <nav class="quick-nav" aria-label="Atalhos">
+      <a class="nav-btn" href="https://luizftoledo.github.io/">Voltar ao Portfolio</a>
+      <a class="nav-btn" href="https://datafixers.org/" target="_blank" rel="noopener noreferrer">Ir para DataFixers.org</a>
+    </nav>
+
     <section class="top-shell">
       <div class="top-content">
         <div class="title-row">
@@ -1160,6 +1259,36 @@
     </footer>
   </main>
 
+  <aside class="course-popup" id="course-popup-ibama" aria-live="polite">
+    <p class="title">Curso de LAI</p>
+    <p class="text">Investigue gastos públicos com a Lei de Acesso à Informação. Curso online, gravado e sob demanda.</p>
+    <div class="actions">
+      <a class="cta" href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank" rel="noopener noreferrer">Acessar curso</a>
+      <button class="close" id="course-popup-ibama-close" type="button">Fechar</button>
+    </div>
+  </aside>
+
+  <script>
+    (() => {
+      const popup = document.getElementById('course-popup-ibama');
+      const closeBtn = document.getElementById('course-popup-ibama-close');
+      if (!popup) return;
+      const key = 'ibama_dashboard_course_popup_dismissed';
+      const safeGet = () => {
+        try { return sessionStorage.getItem(key); } catch { return null; }
+      };
+      const safeSet = () => {
+        try { sessionStorage.setItem(key, '1'); } catch {}
+      };
+      if (safeGet() !== '1') popup.classList.add('show');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          popup.classList.remove('show');
+          safeSet();
+        });
+      }
+    })();
+  </script>
   <script src="./app.js"></script>
 </body>
 </html>
