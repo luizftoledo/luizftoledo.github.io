@@ -160,7 +160,7 @@
       padding: 0.68rem 0.72rem;
       display: grid;
       gap: 0.45rem;
-      min-height: 320px;
+      height: 340px;
     }
 
     .chart-card h3 {
@@ -170,12 +170,15 @@
     }
 
     .chart-card canvas {
-      width: 100%;
-      height: 250px;
+      width: 100% !important;
+      height: 280px !important;
+      max-height: 280px;
+      display: block;
     }
 
     .tables,
     .orgs,
+    .search-panel,
     .ai-panel {
       padding: 1rem 1.1rem;
       display: grid;
@@ -276,6 +279,66 @@
       margin: 0;
       font-size: 0.84rem;
       color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .personal-box {
+      border: 1px solid #d9d4c8;
+      border-radius: 10px;
+      background: #fbf8f1;
+      padding: 0.5rem 0.55rem;
+      display: grid;
+      gap: 0.22rem;
+      font-size: 0.8rem;
+      color: #4a443d;
+      line-height: 1.35;
+    }
+
+    .personal-box .title {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #6b655e;
+      font-weight: 700;
+    }
+
+    .search-controls {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .filter-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 150px) minmax(200px, 1fr) minmax(170px, 230px) minmax(170px, 230px) minmax(0, 1fr) 120px;
+      gap: 0.52rem;
+      align-items: stretch;
+    }
+
+    .preset-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      align-items: center;
+    }
+
+    .preset-btn {
+      border: 1px solid #d0cbc0;
+      border-radius: 999px;
+      background: #faf8f4;
+      color: #4c4742;
+      font-size: 0.78rem;
+      padding: 0.3rem 0.62rem;
+      cursor: pointer;
+    }
+
+    .preset-btn:hover {
+      background: #f2eee7;
+    }
+
+    .search-status {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
       line-height: 1.4;
     }
 
@@ -401,6 +464,18 @@
       line-height: 1.45;
     }
 
+    .narrative strong,
+    .org-card strong,
+    .search-status strong,
+    .ai-msg .txt strong,
+    .table-wrap strong {
+      padding: 0 0.2em;
+      border-radius: 0.28em;
+      background: linear-gradient(180deg, rgba(47, 111, 159, 0.16), rgba(47, 111, 159, 0.16));
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
     .error { color: var(--danger); }
 
     a {
@@ -417,6 +492,7 @@
         grid-template-columns: 1fr;
       }
 
+      .filter-row,
       .ai-key-row,
       .ai-question-row {
         grid-template-columns: 1fr;
@@ -475,7 +551,7 @@
           <canvas id="chart-reasons"></canvas>
         </article>
         <article class="chart-card">
-          <h3>Órgãos que mais negam (top 5 + PF)</h3>
+          <h3>Órgãos que mais negam (top 10 + PF)</h3>
           <canvas id="chart-org-top"></canvas>
         </article>
         <article class="chart-card">
@@ -566,8 +642,42 @@
     </section>
 
     <section class="card orgs">
-      <h2>O que os cidadãos mais pedem para cada órgão e como isso costuma ser respondido</h2>
+      <h2>O que os cidadãos mais pedem (análise de texto do pedido) e como isso costuma ser respondido</h2>
       <div class="org-grid" id="org-cards"></div>
+    </section>
+
+    <section class="card search-panel">
+      <h2>Pesquisar dentro dos pedidos (amostra inteligente com filtros prontos)</h2>
+      <div class="search-controls">
+        <div class="filter-row">
+          <select id="search-year"></select>
+          <select id="search-org"></select>
+          <select id="search-decision-group"></select>
+          <select id="search-theme"></select>
+          <input id="search-query" type="text" placeholder="Busque palavra no teor do pedido (ex.: passagens, prontuário, licitação)">
+          <button class="btn-ai-secondary" id="btn-search-requests" type="button">Buscar</button>
+        </div>
+        <div class="preset-row" id="preset-row"></div>
+        <p class="search-status" id="search-status">Carregando amostra para busca...</p>
+      </div>
+      <article class="table-card">
+        <h3>Resultados da busca no teor dos pedidos</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ano</th>
+                <th>Órgão</th>
+                <th>Decisão</th>
+                <th>Tema</th>
+                <th>Assunto</th>
+                <th>Trecho do pedido</th>
+              </tr>
+            </thead>
+            <tbody id="table-search-results"></tbody>
+          </table>
+        </div>
+      </article>
     </section>
 
     <footer class="card ai-panel">

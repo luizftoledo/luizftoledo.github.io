@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-03T05:25:33.662119+00:00",
+  "updated_at": "2026-03-03T05:55:21.234811+00:00",
   "years_covered": [
     2015,
     2016,
@@ -26,6 +26,7 @@
   "source": {
     "portal_url": "https://buscalai.cgu.gov.br/DownloadDados/DownloadDados",
     "download_url_template": "https://dadosabertos-download.cgu.gov.br/FalaBR/Arquivos_FalaBR_Filtrado/Arquivos_csv_{year}.zip",
+    "precedentes_url": "https://www.gov.br/cgu/pt-br/acesso-a-informacao/dados-abertos/arquivos/busca-de-precedentes",
     "years_covered": [
       2015,
       2016,
@@ -41,6 +42,7 @@
       2026
     ]
   },
-  "years_refreshed_in_run": 1,
+  "sample_count": 56773,
+  "years_refreshed_in_run": 12,
   "build_notes": "Cache anual incremental: anos anteriores ficam congelados; ano corrente é reprocessado a cada execução."
 }

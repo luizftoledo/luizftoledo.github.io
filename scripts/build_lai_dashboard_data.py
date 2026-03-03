@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import datetime as dt
+import gzip
 import json
 import re
 import shutil
@@ -21,6 +22,11 @@ DOWNLOAD_URL_TEMPLATE = (
     "Arquivos_csv_{year}.zip"
 )
 DOWNLOAD_PORTAL_URL = "https://buscalai.cgu.gov.br/DownloadDados/DownloadDados"
+PRECEDENTES_URL = (
+    "https://www.gov.br/cgu/pt-br/acesso-a-informacao/dados-abertos/"
+    "arquivos/busca-de-precedentes"
+)
+
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
@@ -35,6 +41,7 @@ CACHE_DIR = DATA_DIR / "cache"
 YEARLY_CACHE_DIR = CACHE_DIR / "yearly"
 REPORT_FILE = DATA_DIR / "report_data.json"
 METADATA_FILE = DATA_DIR / "metadata.json"
+SAMPLES_FILE = DATA_DIR / "request_samples.jsonl.gz"
 
 CANONICAL_DECISIONS = (
     "Acesso Concedido",
@@ -64,6 +71,244 @@ PERSONAL_REASON_KEYWORDS = (
     "informação de terceiro",
     "terceiro",
 )
+
+THEME_RULES = [
+    (
+        "Dados pessoais e vida privada",
+        [
+            "dado pessoal",
+            "dados pessoais",
+            "informação pessoal",
+            "informacao pessoal",
+            "lgpd",
+            "privacidade",
+            "sigilo banc",
+            "sigilo fiscal",
+            "cpf",
+            "cnpj",
+            "prontuário",
+            "prontuario",
+            "endereço",
+            "endereco",
+        ],
+    ),
+    (
+        "Contratos, licitações e fornecedores",
+        [
+            "contrato",
+            "licita",
+            "pregão",
+            "pregao",
+            "edital",
+            "fornecedor",
+            "aditivo",
+            "ata de registro",
+            "dispensa de licita",
+            "inexigibilidade",
+        ],
+    ),
+    (
+        "Gastos públicos e orçamento",
+        [
+            "gasto",
+            "despesa",
+            "orçamento",
+            "orcamento",
+            "empenho",
+            "pagamento",
+            "nota fiscal",
+            "diária",
+            "diaria",
+            "passagem",
+            "custeio",
+            "dotação",
+            "dotacao",
+        ],
+    ),
+    (
+        "Servidores, salários e concursos",
+        [
+            "servidor",
+            "remuneração",
+            "remuneracao",
+            "salário",
+            "salario",
+            "cargo",
+            "concurso",
+            "nomeação",
+            "nomeacao",
+            "lotação",
+            "lotacao",
+            "folha de pagamento",
+            "benefício de servidor",
+        ],
+    ),
+    (
+        "Previdência e benefícios sociais",
+        [
+            "inss",
+            "aposentadoria",
+            "benefício",
+            "beneficio",
+            "pensão",
+            "pensao",
+            "auxílio",
+            "auxilio",
+            "bpc",
+            "cadúnico",
+            "cadunico",
+            "bolsa família",
+            "bolsa familia",
+        ],
+    ),
+    (
+        "Saúde e medicamentos",
+        [
+            "medicamento",
+            "hospital",
+            "leito",
+            "sus",
+            "tratamento",
+            "vacina",
+            "saúde",
+            "saude",
+            "fila de espera",
+        ],
+    ),
+    (
+        "Segurança pública e polícia",
+        [
+            "polícia",
+            "policia",
+            "delegacia",
+            "boletim de ocorrência",
+            "boletim de ocorrencia",
+            "inquérito",
+            "inquerito",
+            "crime",
+            "armamento",
+            "prisão",
+            "prisao",
+            "pf",
+        ],
+    ),
+    (
+        "Educação e pesquisa",
+        [
+            "escola",
+            "universidade",
+            "enem",
+            "educação",
+            "educacao",
+            "matrícula",
+            "matricula",
+            "bolsa",
+            "aluno",
+            "professor",
+        ],
+    ),
+    (
+        "Obras, infraestrutura e transportes",
+        [
+            "obra",
+            "rodovia",
+            "ponte",
+            "aeroporto",
+            "infraestrutura",
+            "transporte",
+            "pavimentação",
+            "pavimentacao",
+            "ferrovia",
+        ],
+    ),
+    (
+        "Meio ambiente e território",
+        [
+            "desmatamento",
+            "licença ambiental",
+            "licenca ambiental",
+            "ibama",
+            "icmbio",
+            "terra indígena",
+            "terra indigena",
+            "queimada",
+            "mineração",
+            "mineracao",
+        ],
+    ),
+    (
+        "Processos administrativos e sanções",
+        [
+            "processo administrativo",
+            "sindicância",
+            "sindicancia",
+            "pad",
+            "multa",
+            "auto de infração",
+            "autos de infração",
+            "sanção",
+            "sancao",
+        ],
+    ),
+]
+DEFAULT_THEME = "Outros temas"
+
+SEARCH_PRESETS = [
+    {
+        "id": "dados-pessoais",
+        "label": "Negativas por dados pessoais",
+        "filters": {
+            "theme": "Dados pessoais e vida privada",
+            "decision_group": "restricao",
+            "year": "",
+            "org": "",
+        },
+    },
+    {
+        "id": "contratos",
+        "label": "Contratos e licitações",
+        "filters": {
+            "theme": "Contratos, licitações e fornecedores",
+            "decision_group": "todos",
+            "year": "",
+            "org": "",
+        },
+    },
+    {
+        "id": "servidores",
+        "label": "Servidores e concursos",
+        "filters": {
+            "theme": "Servidores, salários e concursos",
+            "decision_group": "todos",
+            "year": "",
+            "org": "",
+        },
+    },
+    {
+        "id": "inss-beneficios",
+        "label": "INSS e benefícios",
+        "filters": {
+            "theme": "Previdência e benefícios sociais",
+            "decision_group": "todos",
+            "year": "",
+            "org": "",
+        },
+    },
+    {
+        "id": "gastos-negados",
+        "label": "Gastos públicos negados",
+        "filters": {
+            "theme": "Gastos públicos e orçamento",
+            "decision_group": "restricao",
+            "year": "",
+            "org": "",
+        },
+    },
+]
+
+SAMPLE_HASH_MOD = 1000
+SAMPLE_HASH_KEEP = 60
+MAX_SAMPLE_ROWS_PER_YEAR = 9000
 
 REASON_NORMALIZATION = {
     "dados pessoais": "Dados pessoais",
@@ -124,6 +369,13 @@ def normalize_for_match(value):
     text = text.lower()
     text = re.sub(r"\s+", " ", text).strip()
     return text
+
+
+def truncate_text(text, limit=280):
+    cleaned = normalize_text(text)
+    if len(cleaned) <= limit:
+        return cleaned
+    return cleaned[: limit - 3].rstrip() + "..."
 
 
 def canonicalize_decision(value):
@@ -247,12 +499,58 @@ def find_pedidos_member(zip_path):
     return sorted(candidates)[0]
 
 
+def build_theme_regex(theme_rules):
+    compiled = []
+    for theme, keywords in theme_rules:
+        escaped = [re.escape(keyword.lower()) for keyword in keywords if keyword.strip()]
+        if not escaped:
+            continue
+        pattern = "|".join(escaped)
+        compiled.append((theme, pattern))
+    return compiled
+
+
+THEME_REGEX = build_theme_regex(THEME_RULES)
+
+
+def detect_primary_theme(text_series):
+    primary = pd.Series([DEFAULT_THEME] * len(text_series), index=text_series.index, dtype="object")
+    for theme, pattern in THEME_REGEX:
+        mask = primary.eq(DEFAULT_THEME) & text_series.str.contains(pattern, regex=True, na=False)
+        primary.loc[mask] = theme
+    return primary
+
+
+def build_sample_rows(sample_df):
+    rows = []
+    for rec in sample_df.to_dict(orient="records"):
+        rows.append(
+            {
+                "id_pedido": rec.get("id_pedido", ""),
+                "year": int(rec.get("year", 0) or 0),
+                "org": rec.get("org", ""),
+                "decision": rec.get("decision", ""),
+                "decision_group": rec.get("decision_group", "outros"),
+                "restricted": bool(rec.get("restricted", False)),
+                "reason": rec.get("reason", ""),
+                "subject": rec.get("subject", "Assunto não informado"),
+                "theme": rec.get("theme", DEFAULT_THEME),
+                "text_excerpt": truncate_text(rec.get("request_text", ""), limit=360),
+            }
+        )
+    return rows
+
+
 def process_year_zip(year, zip_path, source_url):
     pedidos_member = find_pedidos_member(zip_path)
 
     usecols = [
+        "IdPedido",
+        "DataRegistro",
         "OrgaoDestinatario",
         "AssuntoPedido",
+        "ResumoSolicitacao",
+        "DetalhamentoSolicitacao",
         "Decisao",
         "EspecificacaoDecisao",
         "MotivoNegativaAcesso",
@@ -271,8 +569,14 @@ def process_year_zip(year, zip_path, source_url):
     org_restricted = Counter()
     org_personal = Counter()
 
-    org_assunto_total = Counter()
-    org_assunto_decision = Counter()
+    theme_total = Counter()
+    theme_restricted = Counter()
+
+    org_theme_total = Counter()
+    org_theme_restricted = Counter()
+    org_theme_decision = Counter()
+
+    request_samples = []
 
     with zipfile.ZipFile(zip_path) as zf:
         with zf.open(pedidos_member) as handle:
@@ -292,9 +596,15 @@ def process_year_zip(year, zip_path, source_url):
 
                 total_requests += len(chunk)
 
+                id_pedido = chunk["IdPedido"].fillna("").astype(str).map(normalize_text)
                 org = chunk["OrgaoDestinatario"].fillna("").astype(str).map(normalize_text)
-                assunto = chunk["AssuntoPedido"].fillna("").astype(str).map(normalize_text)
-                assunto = assunto.mask(assunto == "", "Assunto não informado")
+                subject = chunk["AssuntoPedido"].fillna("").astype(str).map(normalize_text)
+                subject = subject.mask(subject == "", "Assunto não informado")
+
+                resumo = chunk["ResumoSolicitacao"].fillna("").astype(str).map(normalize_text)
+                detalhamento = chunk["DetalhamentoSolicitacao"].fillna("").astype(str).map(normalize_text)
+                request_text = (subject + " " + resumo + " " + detalhamento).str.strip()
+                request_text_lc = request_text.str.lower()
 
                 decision = chunk["Decisao"].fillna("").astype(str).map(canonicalize_decision)
 
@@ -316,29 +626,69 @@ def process_year_zip(year, zip_path, source_url):
                 decision_counts.update(decision.value_counts(dropna=False).to_dict())
                 reason_counts.update(reason[restricted_mask].value_counts(dropna=False).to_dict())
 
+                primary_theme = detect_primary_theme(request_text_lc)
+                theme_total.update(primary_theme.value_counts(dropna=False).to_dict())
+                theme_restricted.update(primary_theme[restricted_mask].value_counts(dropna=False).to_dict())
+
                 valid_org_mask = org != ""
                 org_total.update(org[valid_org_mask].value_counts(dropna=False).to_dict())
                 org_denied.update(org[denied_mask & valid_org_mask].value_counts(dropna=False).to_dict())
                 org_restricted.update(org[restricted_mask & valid_org_mask].value_counts(dropna=False).to_dict())
                 org_personal.update(org[personal_mask & valid_org_mask].value_counts(dropna=False).to_dict())
 
-                combos = pd.DataFrame(
+                org_theme_df = pd.DataFrame(
                     {
                         "org": org[valid_org_mask],
-                        "assunto": assunto[valid_org_mask],
+                        "theme": primary_theme[valid_org_mask],
                         "decision": decision[valid_org_mask],
                     }
                 )
-                if not combos.empty:
-                    pair_counts = combos[["org", "assunto"]].value_counts(sort=False)
-                    for (org_name, assunto_name), count in pair_counts.items():
-                        org_assunto_total[f"{org_name}|||{assunto_name}"] += int(count)
 
-                    triple_counts = combos[["org", "assunto", "decision"]].value_counts(sort=False)
-                    for (org_name, assunto_name, decision_name), count in triple_counts.items():
-                        org_assunto_decision[
-                            f"{org_name}|||{assunto_name}|||{decision_name}"
-                        ] += int(count)
+                if not org_theme_df.empty:
+                    pairs = org_theme_df[["org", "theme"]].value_counts(sort=False)
+                    for (org_name, theme_name), count in pairs.items():
+                        org_theme_total[f"{org_name}|||{theme_name}"] += int(count)
+
+                    pairs_restricted = org_theme_df[restricted_mask[valid_org_mask]][
+                        ["org", "theme"]
+                    ].value_counts(sort=False)
+                    for (org_name, theme_name), count in pairs_restricted.items():
+                        org_theme_restricted[f"{org_name}|||{theme_name}"] += int(count)
+
+                    triples = org_theme_df[["org", "theme", "decision"]].value_counts(sort=False)
+                    for (org_name, theme_name, decision_name), count in triples.items():
+                        org_theme_decision[f"{org_name}|||{theme_name}|||{decision_name}"] += int(count)
+
+                if len(request_samples) < MAX_SAMPLE_ROWS_PER_YEAR:
+                    hash_values = pd.util.hash_pandas_object(
+                        id_pedido.where(id_pedido != "", request_text), index=False
+                    ).astype("uint64")
+                    sample_mask = (hash_values % SAMPLE_HASH_MOD) < SAMPLE_HASH_KEEP
+                    sample_mask = sample_mask & request_text.ne("")
+
+                    sample_df = pd.DataFrame(
+                        {
+                            "id_pedido": id_pedido[sample_mask],
+                            "year": year,
+                            "org": org[sample_mask],
+                            "decision": decision[sample_mask],
+                            "reason": reason[sample_mask],
+                            "subject": subject[sample_mask],
+                            "theme": primary_theme[sample_mask],
+                            "request_text": request_text[sample_mask],
+                            "restricted": restricted_mask[sample_mask],
+                        }
+                    )
+                    if not sample_df.empty:
+                        sample_df["decision_group"] = sample_df["decision"].map(
+                            lambda d: "restricao"
+                            if d in DECISION_RESTRICTED
+                            else ("concedido" if d == "Acesso Concedido" else "outros")
+                        )
+                        rows = build_sample_rows(sample_df)
+                        request_samples.extend(rows)
+                        if len(request_samples) > MAX_SAMPLE_ROWS_PER_YEAR:
+                            request_samples = request_samples[:MAX_SAMPLE_ROWS_PER_YEAR]
 
     denied_rate = (denied_total / total_requests) if total_requests else 0.0
     restricted_rate = (restricted_total / total_requests) if total_requests else 0.0
@@ -360,12 +710,16 @@ def process_year_zip(year, zip_path, source_url):
         "personal_share_in_restricted": personal_share_in_restricted,
         "decision_counts": dict(decision_counts),
         "reason_counts": dict(reason_counts),
+        "theme_total": dict(theme_total),
+        "theme_restricted": dict(theme_restricted),
         "org_total": dict(org_total),
         "org_denied": dict(org_denied),
         "org_restricted": dict(org_restricted),
         "org_personal": dict(org_personal),
-        "org_assunto_total": dict(org_assunto_total),
-        "org_assunto_decision": dict(org_assunto_decision),
+        "org_theme_total": dict(org_theme_total),
+        "org_theme_restricted": dict(org_theme_restricted),
+        "org_theme_decision": dict(org_theme_decision),
+        "request_samples": request_samples,
     }
 
 
@@ -411,20 +765,36 @@ def identify_pf_org(org_stats):
     return best
 
 
+def write_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def write_jsonl_gz(path, rows):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with gzip.open(path, "wt", encoding="utf-8") as gz:
+        for row in rows:
+            gz.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
 def build_report(year_payloads):
     year_payloads = sorted(year_payloads, key=lambda x: int(x["year"]))
 
     global_decisions = Counter()
     global_reasons = Counter()
+    global_theme_total = Counter()
+    global_theme_restricted = Counter()
 
     global_org_total = Counter()
     global_org_denied = Counter()
     global_org_restricted = Counter()
     global_org_personal = Counter()
 
-    global_org_assunto_total = Counter()
-    global_org_assunto_decision = Counter()
+    global_org_theme_total = Counter()
+    global_org_theme_restricted = Counter()
+    global_org_theme_decision = Counter()
 
+    all_samples = []
     yearly_series = []
 
     for payload in year_payloads:
@@ -434,10 +804,6 @@ def build_report(year_payloads):
         restricted_total = int(payload.get("restricted_total", 0))
         personal_total = int(payload.get("personal_restricted_total", 0))
 
-        denied_rate = (denied_total / total_requests) if total_requests else 0.0
-        restricted_rate = (restricted_total / total_requests) if total_requests else 0.0
-        personal_share = (personal_total / restricted_total) if restricted_total else 0.0
-
         yearly_series.append(
             {
                 "year": year,
@@ -445,20 +811,29 @@ def build_report(year_payloads):
                 "denied_total": denied_total,
                 "restricted_total": restricted_total,
                 "personal_restricted_total": personal_total,
-                "denied_rate": denied_rate,
-                "restricted_rate": restricted_rate,
-                "personal_share_in_restricted": personal_share,
+                "denied_rate": (denied_total / total_requests) if total_requests else 0.0,
+                "restricted_rate": (restricted_total / total_requests) if total_requests else 0.0,
+                "personal_share_in_restricted": (
+                    (personal_total / restricted_total) if restricted_total else 0.0
+                ),
             }
         )
 
         merge_counter_dict(global_decisions, payload.get("decision_counts", {}))
         merge_counter_dict(global_reasons, payload.get("reason_counts", {}))
+        merge_counter_dict(global_theme_total, payload.get("theme_total", {}))
+        merge_counter_dict(global_theme_restricted, payload.get("theme_restricted", {}))
+
         merge_counter_dict(global_org_total, payload.get("org_total", {}))
         merge_counter_dict(global_org_denied, payload.get("org_denied", {}))
         merge_counter_dict(global_org_restricted, payload.get("org_restricted", {}))
         merge_counter_dict(global_org_personal, payload.get("org_personal", {}))
-        merge_counter_dict(global_org_assunto_total, payload.get("org_assunto_total", {}))
-        merge_counter_dict(global_org_assunto_decision, payload.get("org_assunto_decision", {}))
+
+        merge_counter_dict(global_org_theme_total, payload.get("org_theme_total", {}))
+        merge_counter_dict(global_org_theme_restricted, payload.get("org_theme_restricted", {}))
+        merge_counter_dict(global_org_theme_decision, payload.get("org_theme_decision", {}))
+
+        all_samples.extend(payload.get("request_samples", []))
 
     overall_total = sum(item["total_requests"] for item in yearly_series)
     overall_denied = sum(item["denied_total"] for item in yearly_series)
@@ -478,6 +853,8 @@ def build_report(year_payloads):
             "personal_restricted_total": personal,
             "denied_rate": (denied / total) if total else 0.0,
             "restricted_rate": (restricted / total) if total else 0.0,
+            "personal_rate_in_total": (personal / total) if total else 0.0,
+            "personal_rate_in_restricted": (personal / restricted) if restricted else 0.0,
         }
 
     org_by_denied = sorted(
@@ -491,22 +868,27 @@ def build_report(year_payloads):
         key=lambda row: (row["denied_rate"], -row["total_requests"]),
     )
 
-    top5 = org_by_denied[:5]
-    top5_names = {row["org"] for row in top5}
+    top10 = org_by_denied[:10]
+    top10_names = {row["org"] for row in top10}
     pf_org = identify_pf_org(org_stats)
-    top5_plus_pf = list(top5)
-    if pf_org and pf_org not in top5_names:
-        top5_plus_pf.append(org_stats[pf_org])
+    top10_plus_pf = list(top10)
+    if pf_org and pf_org not in top10_names:
+        top10_plus_pf.append(org_stats[pf_org])
 
     reason_top_labels = [label for label, _ in global_reasons.most_common(8)]
     reason_top_set = set(reason_top_labels)
-
     reason_series = []
-    decision_series = []
+
+    top_theme_labels = [theme for theme, _ in global_theme_total.most_common(7)]
+    if DEFAULT_THEME not in top_theme_labels:
+        top_theme_labels.append(DEFAULT_THEME)
+    top_theme_set = set(top_theme_labels)
+    theme_series = []
 
     for payload in year_payloads:
         year = int(payload["year"])
         restricted_total = int(payload.get("restricted_total", 0))
+        year_total = int(payload.get("total_requests", 0))
 
         year_reason_counter = Counter()
         for reason, count in payload.get("reason_counts", {}).items():
@@ -534,82 +916,99 @@ def build_report(year_payloads):
             }
         )
 
-        for decision, count in payload.get("decision_counts", {}).items():
-            decision_series.append(
+        year_theme_counter = Counter()
+        for theme, count in payload.get("theme_total", {}).items():
+            key = theme if theme in top_theme_set else DEFAULT_THEME
+            year_theme_counter[key] += int(count)
+
+        for theme in top_theme_labels:
+            count = int(year_theme_counter.get(theme, 0))
+            restricted_theme_count = int(payload.get("theme_restricted", {}).get(theme, 0))
+            theme_series.append(
                 {
                     "year": year,
-                    "decision": decision,
-                    "count": int(count),
-                    "share_in_year": (int(count) / int(payload.get("total_requests", 0)))
-                    if int(payload.get("total_requests", 0))
-                    else 0.0,
+                    "theme": theme,
+                    "count": count,
+                    "share_in_year": (count / year_total) if year_total else 0.0,
+                    "restricted_count": restricted_theme_count,
+                    "restricted_rate_in_theme": (
+                        (restricted_theme_count / count) if count else 0.0
+                    ),
                 }
             )
 
-    org_assunto_by_org = defaultdict(Counter)
-    for key, count in global_org_assunto_total.items():
-        try:
-            org, assunto = key.split("|||", 1)
-        except ValueError:
-            continue
-        org_assunto_by_org[org][assunto] += int(count)
+    org_theme_counter = defaultdict(Counter)
+    org_theme_restricted_counter = defaultdict(Counter)
+    org_theme_decision_counter = defaultdict(Counter)
 
-    org_assunto_decision = defaultdict(Counter)
-    org_decisions = defaultdict(Counter)
-    for key, count in global_org_assunto_decision.items():
+    for key, count in global_org_theme_total.items():
         try:
-            org, assunto, decision = key.split("|||", 2)
+            org, theme = key.split("|||", 1)
         except ValueError:
             continue
-        org_assunto_decision[(org, assunto)][decision] += int(count)
-        org_decisions[org][decision] += int(count)
+        org_theme_counter[org][theme] += int(count)
+
+    for key, count in global_org_theme_restricted.items():
+        try:
+            org, theme = key.split("|||", 1)
+        except ValueError:
+            continue
+        org_theme_restricted_counter[org][theme] += int(count)
+
+    for key, count in global_org_theme_decision.items():
+        try:
+            org, theme, decision = key.split("|||", 2)
+        except ValueError:
+            continue
+        org_theme_decision_counter[(org, theme)][decision] += int(count)
+
+    samples_by_org_theme = defaultdict(list)
+    for row in all_samples:
+        org = normalize_text(row.get("org", ""))
+        theme = normalize_text(row.get("theme", ""))
+        text_excerpt = normalize_text(row.get("text_excerpt", ""))
+        if not org or not theme or not text_excerpt:
+            continue
+        key = (org, theme)
+        if len(samples_by_org_theme[key]) >= 2:
+            continue
+        if text_excerpt in samples_by_org_theme[key]:
+            continue
+        samples_by_org_theme[key].append(text_excerpt)
 
     org_profiles = {}
-    for org_row in top5_plus_pf:
+    for org_row in top10_plus_pf:
         org_name = org_row["org"]
-        assunto_counter = org_assunto_by_org.get(org_name, Counter())
-        top_subjects = []
+        theme_counts = org_theme_counter.get(org_name, Counter())
 
-        for assunto, assunto_total in assunto_counter.most_common(5):
-            decisions_counter = org_assunto_decision.get((org_name, assunto), Counter())
-            denied_subject = sum(
-                int(value)
-                for key, value in decisions_counter.items()
-                if key in DECISION_RESTRICTED
-            )
+        top_themes = []
+        for theme, theme_total in theme_counts.most_common(6):
+            restricted_theme = int(org_theme_restricted_counter.get(org_name, Counter()).get(theme, 0))
+            decisions_counter = org_theme_decision_counter.get((org_name, theme), Counter())
             top_decisions = [
                 {
                     "decision": decision,
                     "count": int(count),
-                    "share_in_subject": (int(count) / assunto_total) if assunto_total else 0.0,
+                    "share_in_theme": (int(count) / theme_total) if theme_total else 0.0,
                 }
                 for decision, count in decisions_counter.most_common(3)
             ]
 
-            top_subjects.append(
+            top_themes.append(
                 {
-                    "subject": assunto,
-                    "total_requests": int(assunto_total),
-                    "restricted_total": int(denied_subject),
-                    "restricted_rate": (denied_subject / assunto_total) if assunto_total else 0.0,
+                    "theme": theme,
+                    "total_requests": int(theme_total),
+                    "restricted_total": restricted_theme,
+                    "restricted_rate": (restricted_theme / theme_total) if theme_total else 0.0,
                     "top_decisions": top_decisions,
+                    "examples": samples_by_org_theme.get((org_name, theme), []),
                 }
             )
 
         org_profiles[org_name] = {
             "org": org_name,
             "summary": org_row,
-            "top_subjects": top_subjects,
-            "top_decisions": [
-                {
-                    "decision": decision,
-                    "count": int(count),
-                    "share_in_org": (int(count) / org_row["total_requests"])
-                    if org_row["total_requests"]
-                    else 0.0,
-                }
-                for decision, count in org_decisions.get(org_name, Counter()).most_common(5)
-            ],
+            "top_themes": top_themes,
         }
 
     personal_series = [
@@ -636,13 +1035,15 @@ def build_report(year_payloads):
         ],
         key=lambda row: (row["personal_restricted_total"], row["restricted_total"]),
         reverse=True,
-    )[:15]
+    )[:20]
 
+    sample_count = len(all_samples)
     report = {
         "generated_at": now_iso(),
         "source": {
             "portal_url": DOWNLOAD_PORTAL_URL,
             "download_url_template": DOWNLOAD_URL_TEMPLATE,
+            "precedentes_url": PRECEDENTES_URL,
             "years_covered": [item["year"] for item in yearly_series],
         },
         "overall": {
@@ -657,23 +1058,40 @@ def build_report(year_payloads):
             ),
         },
         "series": yearly_series,
-        "decision_series": decision_series,
         "reason_series": reason_series,
+        "theme_series": theme_series,
         "top_reasons": [
             {"reason": reason, "count": int(count)}
-            for reason, count in global_reasons.most_common(12)
+            for reason, count in global_reasons.most_common(15)
         ],
-        "decision_totals": [
-            {"decision": decision, "count": int(count)}
-            for decision, count in global_decisions.most_common()
+        "top_themes": [
+            {
+                "theme": theme,
+                "count": int(count),
+                "restricted_count": int(global_theme_restricted.get(theme, 0)),
+                "restricted_rate_in_theme": (
+                    (int(global_theme_restricted.get(theme, 0)) / int(count)) if int(count) else 0.0
+                ),
+            }
+            for theme, count in global_theme_total.most_common(15)
         ],
-        "org_ranking": org_by_denied[:40],
-        "org_lowest_denial_high_volume": org_by_low_rate[:12],
-        "org_top5_plus_pf": top5_plus_pf,
+        "org_ranking": org_by_denied[:60],
+        "org_lowest_denial_high_volume": org_by_low_rate[:15],
+        "org_top10_plus_pf": top10_plus_pf,
         "org_profiles": org_profiles,
         "personal_info": {
             "series": personal_series,
             "top_orgs": personal_top_orgs,
+        },
+        "search_dashboard": {
+            "sample_file": "./data/request_samples.jsonl.gz",
+            "sample_count": sample_count,
+            "sample_method": (
+                "amostra estratificada por hash do IdPedido (aprox. 6% do total, "
+                f"até {MAX_SAMPLE_ROWS_PER_YEAR} por ano)"
+            ),
+            "presets": SEARCH_PRESETS,
+            "available_themes": [theme for theme, _ in global_theme_total.most_common(20)],
         },
     }
 
@@ -682,14 +1100,10 @@ def build_report(year_payloads):
         "years_covered": report["source"]["years_covered"],
         "overall": report["overall"],
         "source": report["source"],
+        "sample_count": sample_count,
     }
 
-    return report, metadata
-
-
-def write_json(path, data):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+    return report, metadata, all_samples
 
 
 def run(force=False, start_year=START_YEAR_DEFAULT, end_year=None):
@@ -715,7 +1129,7 @@ def run(force=False, start_year=START_YEAR_DEFAULT, end_year=None):
     if not year_payloads:
         raise RuntimeError("Nenhum ano disponível para gerar o painel LAI.")
 
-    report, metadata = build_report(year_payloads)
+    report, metadata, samples = build_report(year_payloads)
     metadata["years_refreshed_in_run"] = refreshed
     metadata["build_notes"] = (
         "Cache anual incremental: anos anteriores ficam congelados; "
@@ -724,9 +1138,11 @@ def run(force=False, start_year=START_YEAR_DEFAULT, end_year=None):
 
     write_json(REPORT_FILE, report)
     write_json(METADATA_FILE, metadata)
+    write_jsonl_gz(SAMPLES_FILE, samples)
 
     print(f"[ok] relatório salvo em: {REPORT_FILE}")
     print(f"[ok] metadata salva em: {METADATA_FILE}")
+    print(f"[ok] amostra de pedidos salva em: {SAMPLES_FILE} ({len(samples)} linhas)")
     print(f"[ok] anos processados/reutilizados: {len(year_payloads)}")
     print(f"[ok] anos atualizados nesta execução: {refreshed}")
 
