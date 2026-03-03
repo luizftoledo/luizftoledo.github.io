@@ -94,10 +94,17 @@
       background: #faf9f5;
     }
 
-    .view-switch {
+    .source-switch {
       display: flex;
-      gap: 0.45rem;
+      gap: 0.55rem;
       flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .source-label {
+      font-size: 0.86rem;
+      color: var(--muted);
+      font-weight: 600;
     }
 
     .view-tab {
@@ -118,6 +125,46 @@
       color: #513f32;
     }
 
+    .source-updated {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+
+    .kpi-main {
+      border: 1px solid #dfccb7;
+      border-radius: 14px;
+      background: #fff6ec;
+      padding: 0.72rem 0.8rem;
+      display: grid;
+      gap: 0.24rem;
+    }
+
+    .kpi-main .label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #76553d;
+      font-weight: 700;
+    }
+
+    .kpi-main .value {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: clamp(1.34rem, 2.9vw, 2.26rem);
+      line-height: 1.12;
+      color: #2f7d59;
+      word-break: break-word;
+      font-weight: 700;
+    }
+
+    .kpi-main .subline {
+      margin: 0;
+      font-size: 0.84rem;
+      color: #6f6257;
+      line-height: 1.4;
+    }
+
     .dashboard-view {
       display: grid;
       gap: 0.9rem;
@@ -129,7 +176,7 @@
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.55rem;
     }
 
@@ -172,6 +219,86 @@
       margin: 0;
       font-size: 1rem;
       letter-spacing: 0.01em;
+    }
+
+    .panel-head {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .mini-toggle {
+      display: inline-flex;
+      gap: 0.36rem;
+      flex-wrap: wrap;
+    }
+
+    .mini-toggle button {
+      border: 1px solid #d1cec4;
+      border-radius: 999px;
+      background: #fff;
+      color: #3d3a35;
+      font-size: 0.76rem;
+      font-weight: 700;
+      min-height: 30px;
+      padding: 0.24rem 0.58rem;
+      cursor: pointer;
+    }
+
+    .mini-toggle button.active {
+      border-color: #b88a68;
+      background: #f8eee6;
+      color: #513f32;
+    }
+
+    .progress-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+
+    .progress-item {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 0.56rem 0.62rem;
+      display: grid;
+      gap: 0.38rem;
+    }
+
+    .progress-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.55rem;
+      font-size: 0.8rem;
+      color: #5f5b53;
+    }
+
+    .progress-head strong {
+      color: #3f3b35;
+    }
+
+    .progress-track {
+      height: 8px;
+      border-radius: 999px;
+      background: #eeeae0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #c1733f, #e0a176);
+      transition: width 180ms ease;
+    }
+
+    .progress-fill.good {
+      background: linear-gradient(90deg, #2f7d59, #49a373);
     }
 
     .charts {
@@ -261,6 +388,7 @@
     @media (max-width: 980px) {
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .charts { grid-template-columns: 1fr; }
+      .progress-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -288,25 +416,28 @@
         <span class="pill" id="status-snapshot">Snapshot: --</span>
         <span class="pill" id="status-source">Fonte: --</span>
       </div>
-      <div class="view-switch">
+      <div class="source-switch">
+        <span class="source-label">Escolha a fonte dos dados:</span>
         <button class="view-tab active" id="tab-view-snapshot" type="button">Versão com dados do Siga Brasil</button>
         <button class="view-tab" id="tab-view-docs" type="button">Versão com dados do portal da transparência do governo federal</button>
       </div>
+      <p class="source-updated" id="source-updated-line">Última atualização desta fonte: --</p>
+      <article class="kpi-main">
+        <div class="label">Empenhado no dia</div>
+        <div class="value good" id="kpi-day-main">--</div>
+        <p class="subline" id="kpi-day-main-note">Comparação com o snapshot anterior da fonte selecionada.</p>
+      </article>
       <div class="cards">
         <article class="card">
-          <div class="label">Empenhado no dia (positivo)</div>
-          <div class="value good" id="kpi-delta-positive">--</div>
-        </article>
-        <article class="card">
-          <div class="label">Variação líquida no dia</div>
+          <div class="label" id="label-kpi-net">Variação líquida no dia</div>
           <div class="value" id="kpi-delta-net">--</div>
         </article>
         <article class="card">
-          <div class="label">Autores com aumento hoje</div>
+          <div class="label" id="label-kpi-authors">Autores com aumento hoje</div>
           <div class="value" id="kpi-authors-up">--</div>
         </article>
         <article class="card">
-          <div class="label">Destinos com aumento hoje</div>
+          <div class="label" id="label-kpi-destinations">Destinos com aumento hoje</div>
           <div class="value" id="kpi-destinations-up">--</div>
         </article>
       </div>
@@ -314,6 +445,31 @@
     </section>
 
     <div class="dashboard-view" id="view-snapshot">
+      <section class="panel">
+        <h2>Relação entre o dia e o total da base</h2>
+        <div class="progress-grid">
+          <article class="progress-item">
+            <div class="progress-head">
+              <span>Empenhado no dia / total da base Siga Brasil</span>
+              <strong id="snapshot-progress-total-text">--</strong>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill" id="snapshot-progress-total-fill"></span>
+            </div>
+          </article>
+          <article class="progress-item">
+            <div class="progress-head">
+              <span>Empenhado no dia / empenhado do ano corrente</span>
+              <strong id="snapshot-progress-year-text">--</strong>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill good" id="snapshot-progress-year-fill"></span>
+            </div>
+          </article>
+        </div>
+        <p class="hint" id="snapshot-progress-note">As barras ajudam a ver se o movimento do dia foi grande ou pequeno no contexto geral.</p>
+      </section>
+
       <section class="panel">
         <h2>Histórico do monitoramento diário</h2>
         <p class="hint">A linha mostra a variação observada em cada atualização da base. Isso permite ver rapidamente quando houve picos.</p>
@@ -391,12 +547,12 @@
 
     <div class="dashboard-view" id="view-docs" hidden>
       <section class="panel">
-        <h2>Aba paralela: histórico diário de liberações (documentos)</h2>
-        <p class="hint">Série diária desde 1º de janeiro do ano corrente, usando a base de documentos de despesa de emendas.</p>
+        <h2>Resumo do ano na base do Portal da Transparência</h2>
+        <p class="hint">Esta visão usa os arquivos por documento de despesa. Aqui você acompanha o acumulado do ano, o último dia e o que ainda falta para chegar ao teto anual (quando a fonte traz esse teto).</p>
         <div class="cards">
           <article class="card">
-            <div class="label">Total para empenhar (estágio)</div>
-            <div class="value" id="doc-kpi-total-to-commit">--</div>
+            <div class="label">Teto anual estimado</div>
+            <div class="value" id="doc-kpi-max-year">--</div>
           </article>
           <article class="card">
             <div class="label">Já empenhado até agora</div>
@@ -411,71 +567,90 @@
             <div class="value" id="doc-kpi-paid-year">--</div>
           </article>
         </div>
+        <div class="progress-grid">
+          <article class="progress-item">
+            <div class="progress-head">
+              <span>Empenhado acumulado / teto anual</span>
+              <strong id="docs-progress-year-text">--</strong>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill good" id="docs-progress-year-fill"></span>
+            </div>
+          </article>
+          <article class="progress-item">
+            <div class="progress-head">
+              <span>Empenhado no último dia / acumulado do ano</span>
+              <strong id="docs-progress-day-text">--</strong>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill" id="docs-progress-day-fill"></span>
+            </div>
+          </article>
+        </div>
+        <p class="hint" id="docs-progress-note">Quando não há teto disponível na fonte, mostramos a comparação com o acumulado do ano.</p>
         <p class="spotlight" id="doc-spotlight">Carregando monitor paralelo...</p>
       </section>
 
       <section class="panel">
-        <h2>Liberações por dia (desde 1º de janeiro)</h2>
+        <h2>Evolução diária do empenhado (com acumulado do ano)</h2>
+        <p class="hint">A barra mostra o empenhado em cada dia. A linha mostra quanto já foi acumulado no ano até aquele momento.</p>
         <div class="chart-box">
           <canvas id="chart-docs-daily"></canvas>
         </div>
       </section>
 
       <section class="panel">
-        <h2>Quem mais empenhou no ano (documentos)</h2>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Autor</th>
-                <th>Partido</th>
-                <th>Empenhado no ano</th>
-                <th>Pago no ano</th>
-              </tr>
-            </thead>
-            <tbody id="table-docs-authors-year">
-              <tr><td colspan="4">Carregando...</td></tr>
-            </tbody>
-          </table>
+        <div class="panel-head">
+          <h2>Quem mais empenhou (pessoa/partido/bancada)</h2>
+          <div class="mini-toggle">
+            <button id="docs-mode-day" type="button">No dia</button>
+            <button class="active" id="docs-mode-year" type="button">No ano</button>
+          </div>
         </div>
-      </section>
-
-      <section class="panel">
-        <h2>Último dia disponível: quem empenhou e para onde</h2>
+        <p class="hint" id="docs-mode-note">Use os botões para trocar entre o recorte diário e o acumulado do ano.</p>
         <div class="charts">
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Autor</th>
-                  <th>Partido</th>
-                  <th>Empenhado no dia</th>
+                  <th>Grupo</th>
+                  <th>Empenhado</th>
+                  <th>% do total do recorte</th>
                 </tr>
               </thead>
-              <tbody id="table-docs-authors-day">
-                <tr><td colspan="3">Carregando...</td></tr>
+              <tbody id="table-docs-authors-dynamic">
+                <tr><td colspan="4">Carregando...</td></tr>
               </tbody>
             </table>
           </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Destino</th>
-                  <th>Empenhado no dia</th>
-                </tr>
-              </thead>
-              <tbody id="table-docs-dest-day">
-                <tr><td colspan="2">Carregando...</td></tr>
-              </tbody>
-            </table>
+          <div class="chart-box">
+            <canvas id="chart-docs-authors-share"></canvas>
           </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Para onde foi o empenho no último dia disponível</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Destino</th>
+                <th>Empenhado no dia</th>
+              </tr>
+            </thead>
+            <tbody id="table-docs-dest-day">
+              <tr><td colspan="2">Carregando...</td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
       <section class="panel">
         <h2>Apoiamento de emendas (fonte complementar)</h2>
         <p class="hint" id="apoiamento-note">Carregando fonte de apoiamento...</p>
+        <p class="hint" id="apoiamento-explain">Apoiamento indica quando um parlamentar apoia emenda de outro. Isso ajuda a entender articulações políticas, não é gasto extra separado.</p>
         <div class="table-wrap">
           <table>
             <thead>
