@@ -1,0 +1,204 @@
+{
+  "generated_at": "2026-03-03T12:28:55.601487+00:00",
+  "snapshot_date": "2026-03-03",
+  "source": {
+    "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
+    "requested_url": "https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO",
+    "download_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares/EmendasParlamentares.zip",
+    "senado_reference_url": "https://www9.senado.gov.br/QvAJAXZfc/opendoc.htm?document=senado%2Fsigabrasilpainelcidadao.qvw&host=QVS%40www9&anonymous=true&Sheet=shOrcamentoVisaoGeral",
+    "etag": "\"0e8854d58026356bd212bd1306e521ba-4\"",
+    "last_modified": "Fri, 27 Feb 2026 09:51:31 GMT",
+    "zip_bytes": 31036770
+  },
+  "metrics": {
+    "total_empenhado_atual": 302473718455.2,
+    "total_empenhado_snapshot_anterior": 302473718455.2,
+    "delta_liquido_desde_snapshot_anterior": 0.0,
+    "delta_positivo_desde_snapshot_anterior": 0.0,
+    "delta_negativo_desde_snapshot_anterior": 0.0,
+    "autores_com_aumento": 0,
+    "destinos_com_aumento": 0,
+    "pares_autor_destino_com_aumento": 0,
+    "total_autores_mapeados": 1600,
+    "total_destinos_mapeados": 5453,
+    "total_linhas_csv": 89002,
+    "baseline_initialized": false
+  },
+  "top_authors_today": [],
+  "top_destinations_today": [],
+  "top_author_destination_today": [],
+  "top_authors_total": [
+    {
+      "author": "RELATOR GERAL",
+      "total_empenhado": 47400810171.1
+    },
+    {
+      "author": "Sem informação",
+      "total_empenhado": 33074226159.7
+    },
+    {
+      "author": "COM. DA SAUDE",
+      "total_empenhado": 9565180886.56
+    },
+    {
+      "author": "COM. DESENV REGIONAL E TURISMO",
+      "total_empenhado": 8648430617.99
+    },
+    {
+      "author": "COM. ASSUNTOS SOCIAIS",
+      "total_empenhado": 3191255975.3
+    },
+    {
+      "author": "BANCADA DO RIO GRANDE DO SUL",
+      "total_empenhado": 2156941727.02
+    },
+    {
+      "author": "BANCADA DO AMAZONAS",
+      "total_empenhado": 2155410164.48
+    },
+    {
+      "author": "BANCADA DE SERGIPE",
+      "total_empenhado": 2154841561.49
+    },
+    {
+      "author": "BANCADA DO DISTRITO FEDERAL",
+      "total_empenhado": 2149164249.07
+    },
+    {
+      "author": "BANCADA DE RORAIMA",
+      "total_empenhado": 2147434416.12
+    },
+    {
+      "author": "BANCADA DE SAO PAULO",
+      "total_empenhado": 2145391067.24
+    },
+    {
+      "author": "BANCADA DE SANTA CATARINA",
+      "total_empenhado": 2144907694.53
+    },
+    {
+      "author": "BANCADA DO CEARA",
+      "total_empenhado": 2142253491.91
+    },
+    {
+      "author": "BANCADA DO ACRE",
+      "total_empenhado": 2140326581.96
+    },
+    {
+      "author": "BANCADA DO MARANHAO",
+      "total_empenhado": 2138224628.35
+    },
+    {
+      "author": "BANCADA DE RONDONIA",
+      "total_empenhado": 2138199597.1
+    },
+    {
+      "author": "BANCADA DO PIAUI",
+      "total_empenhado": 2137345161.74
+    },
+    {
+      "author": "BANCADA DA BAHIA",
+      "total_empenhado": 2135632804.07
+    },
+    {
+      "author": "BANCADA DO RIO GRANDE DO NORTE",
+      "total_empenhado": 2135625040.22
+    },
+    {
+      "author": "BANCADA DE MINAS GERAIS",
+      "total_empenhado": 2133629863.32
+    }
+  ],
+  "top_destinations_total": [
+    {
+      "destination": "MÚLTIPLO",
+      "total_empenhado": 189381723977.33
+    },
+    {
+      "destination": "Nacional",
+      "total_empenhado": 15221723658.51
+    },
+    {
+      "destination": "SÃO PAULO (UF)",
+      "total_empenhado": 5226372960.96
+    },
+    {
+      "destination": "Nordeste",
+      "total_empenhado": 5154438776.4
+    },
+    {
+      "destination": "DISTRITO FEDERAL (UF)",
+      "total_empenhado": 3908176545.08
+    },
+    {
+      "destination": "BAHIA (UF)",
+      "total_empenhado": 3901613553.26
+    },
+    {
+      "destination": "RIO DE JANEIRO (UF)",
+      "total_empenhado": 3761347314.41
+    },
+    {
+      "destination": "MINAS GERAIS (UF)",
+      "total_empenhado": 3439034268.95
+    },
+    {
+      "destination": "PARANÁ (UF)",
+      "total_empenhado": 2548433055.9
+    },
+    {
+      "destination": "RIO GRANDE DO SUL (UF)",
+      "total_empenhado": 2328792808.56
+    },
+    {
+      "destination": "Sudeste",
+      "total_empenhado": 2273432382.47
+    },
+    {
+      "destination": "ESPÍRITO SANTO (UF)",
+      "total_empenhado": 2194638594.31
+    },
+    {
+      "destination": "MATO GROSSO DO SUL (UF)",
+      "total_empenhado": 2158168437.42
+    },
+    {
+      "destination": "ACRE (UF)",
+      "total_empenhado": 2156515961.68
+    },
+    {
+      "destination": "AMAPÁ (UF)",
+      "total_empenhado": 2039999536.34
+    },
+    {
+      "destination": "PERNAMBUCO (UF)",
+      "total_empenhado": 1961773801.31
+    },
+    {
+      "destination": "RONDÔNIA (UF)",
+      "total_empenhado": 1827863175.11
+    },
+    {
+      "destination": "SANTA CATARINA (UF)",
+      "total_empenhado": 1706035904.79
+    },
+    {
+      "destination": "GOIÁS (UF)",
+      "total_empenhado": 1674984279.55
+    },
+    {
+      "destination": "PARÁ (UF)",
+      "total_empenhado": 1664858109.38
+    }
+  ],
+  "daily_history": [
+    {
+      "date": "2026-03-03",
+      "delta_positivo": 0.0,
+      "delta_liquido": 0.0,
+      "total_empenhado_atual": 302473718455.2,
+      "autores_com_aumento": 0,
+      "destinos_com_aumento": 0
+    }
+  ]
+}
