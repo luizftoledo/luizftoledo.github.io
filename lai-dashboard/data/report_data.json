@@ -1,0 +1,3102 @@
+{
+  "generated_at": "2026-03-03T05:25:33.662119+00:00",
+  "source": {
+    "portal_url": "https://buscalai.cgu.gov.br/DownloadDados/DownloadDados",
+    "download_url_template": "https://dadosabertos-download.cgu.gov.br/FalaBR/Arquivos_FalaBR_Filtrado/Arquivos_csv_{year}.zip",
+    "years_covered": [
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ]
+  },
+  "overall": {
+    "total_requests": 946326,
+    "denied_total": 62344,
+    "restricted_total": 114759,
+    "personal_restricted_total": 13041,
+    "denied_rate": 0.065880045565693,
+    "restricted_rate": 0.1212679351513115,
+    "personal_share_in_restricted": 0.11363814602776252
+  },
+  "series": [
+    {
+      "year": 2015,
+      "total_requests": 71116,
+      "denied_total": 4583,
+      "restricted_total": 8203,
+      "personal_restricted_total": 1862,
+      "denied_rate": 0.0644440069745205,
+      "restricted_rate": 0.11534675741042803,
+      "personal_share_in_restricted": 0.22699012556381812
+    },
+    {
+      "year": 2016,
+      "total_requests": 81043,
+      "denied_total": 4520,
+      "restricted_total": 9410,
+      "personal_restricted_total": 1415,
+      "denied_rate": 0.055772861320533544,
+      "restricted_rate": 0.11611120022703997,
+      "personal_share_in_restricted": 0.1503719447396387
+    },
+    {
+      "year": 2017,
+      "total_requests": 89741,
+      "denied_total": 5218,
+      "restricted_total": 8839,
+      "personal_restricted_total": 1302,
+      "denied_rate": 0.05814510647307251,
+      "restricted_rate": 0.0984945565572035,
+      "personal_share_in_restricted": 0.1473017309650413
+    },
+    {
+      "year": 2018,
+      "total_requests": 90997,
+      "denied_total": 6178,
+      "restricted_total": 10066,
+      "personal_restricted_total": 1258,
+      "denied_rate": 0.06789234809938789,
+      "restricted_rate": 0.11061903139663945,
+      "personal_share_in_restricted": 0.12497516391814027
+    },
+    {
+      "year": 2019,
+      "total_requests": 95706,
+      "denied_total": 7527,
+      "restricted_total": 12236,
+      "personal_restricted_total": 1116,
+      "denied_rate": 0.07864710676446618,
+      "restricted_rate": 0.12784987357114497,
+      "personal_share_in_restricted": 0.09120627656096764
+    },
+    {
+      "year": 2020,
+      "total_requests": 110806,
+      "denied_total": 7262,
+      "restricted_total": 12269,
+      "personal_restricted_total": 1368,
+      "denied_rate": 0.06553796725809072,
+      "restricted_rate": 0.11072505099001859,
+      "personal_share_in_restricted": 0.11150052979052898
+    },
+    {
+      "year": 2021,
+      "total_requests": 79245,
+      "denied_total": 5114,
+      "restricted_total": 9802,
+      "personal_restricted_total": 1025,
+      "denied_rate": 0.06453404000252382,
+      "restricted_rate": 0.12369234652028518,
+      "personal_share_in_restricted": 0.10457049581718017
+    },
+    {
+      "year": 2022,
+      "total_requests": 69241,
+      "denied_total": 4788,
+      "restricted_total": 8792,
+      "personal_restricted_total": 783,
+      "denied_rate": 0.06914978119900059,
+      "restricted_rate": 0.12697679120752156,
+      "personal_share_in_restricted": 0.0890582347588717
+    },
+    {
+      "year": 2023,
+      "total_requests": 89679,
+      "denied_total": 6062,
+      "restricted_total": 11283,
+      "personal_restricted_total": 861,
+      "denied_rate": 0.06759665027486926,
+      "restricted_rate": 0.1258154082895661,
+      "personal_share_in_restricted": 0.0763094921563414
+    },
+    {
+      "year": 2024,
+      "total_requests": 79232,
+      "denied_total": 5367,
+      "restricted_total": 10949,
+      "personal_restricted_total": 1064,
+      "denied_rate": 0.06773778271405492,
+      "restricted_rate": 0.1381891155088853,
+      "personal_share_in_restricted": 0.09717782445885469
+    },
+    {
+      "year": 2025,
+      "total_requests": 79428,
+      "denied_total": 4961,
+      "restricted_total": 11359,
+      "personal_restricted_total": 893,
+      "denied_rate": 0.06245908243944201,
+      "restricted_rate": 0.14301002165483204,
+      "personal_share_in_restricted": 0.07861607535874637
+    },
+    {
+      "year": 2026,
+      "total_requests": 10092,
+      "denied_total": 764,
+      "restricted_total": 1551,
+      "personal_restricted_total": 94,
+      "denied_rate": 0.07570352754657154,
+      "restricted_rate": 0.15368608799048752,
+      "personal_share_in_restricted": 0.06060606060606061
+    }
+  ],
+  "decision_series": [
+    {
+      "year": 2015,
+      "decision": "Acesso Concedido",
+      "count": 52403,
+      "share_in_year": 0.7368665279262051
+    },
+    {
+      "year": 2015,
+      "decision": "Acesso Negado",
+      "count": 4583,
+      "share_in_year": 0.0644440069745205
+    },
+    {
+      "year": 2015,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 4238,
+      "share_in_year": 0.05959277799651274
+    },
+    {
+      "year": 2015,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 3620,
+      "share_in_year": 0.05090275043590753
+    },
+    {
+      "year": 2015,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 2553,
+      "share_in_year": 0.03589909443725744
+    },
+    {
+      "year": 2015,
+      "decision": "Informação Inexistente",
+      "count": 2267,
+      "share_in_year": 0.03187749592215535
+    },
+    {
+      "year": 2015,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 1452,
+      "share_in_year": 0.020417346307441363
+    },
+    {
+      "year": 2016,
+      "decision": "Acesso Concedido",
+      "count": 58483,
+      "share_in_year": 0.7216292585417617
+    },
+    {
+      "year": 2016,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 5590,
+      "share_in_year": 0.06897572893402268
+    },
+    {
+      "year": 2016,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 4890,
+      "share_in_year": 0.060338338906506424
+    },
+    {
+      "year": 2016,
+      "decision": "Acesso Negado",
+      "count": 4520,
+      "share_in_year": 0.055772861320533544
+    },
+    {
+      "year": 2016,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 3243,
+      "share_in_year": 0.04001579408462175
+    },
+    {
+      "year": 2016,
+      "decision": "Informação Inexistente",
+      "count": 2530,
+      "share_in_year": 0.0312179953851659
+    },
+    {
+      "year": 2016,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 1787,
+      "share_in_year": 0.02205002282738793
+    },
+    {
+      "year": 2017,
+      "decision": "Acesso Concedido",
+      "count": 66829,
+      "share_in_year": 0.74468748955327
+    },
+    {
+      "year": 2017,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 6162,
+      "share_in_year": 0.06866426716885259
+    },
+    {
+      "year": 2017,
+      "decision": "Acesso Negado",
+      "count": 5218,
+      "share_in_year": 0.05814510647307251
+    },
+    {
+      "year": 2017,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 3621,
+      "share_in_year": 0.040349450084130996
+    },
+    {
+      "year": 2017,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 3112,
+      "share_in_year": 0.034677572124224156
+    },
+    {
+      "year": 2017,
+      "decision": "Informação Inexistente",
+      "count": 2897,
+      "share_in_year": 0.03228178870304543
+    },
+    {
+      "year": 2017,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 1902,
+      "share_in_year": 0.021194325893404354
+    },
+    {
+      "year": 2018,
+      "decision": "Acesso Concedido",
+      "count": 67146,
+      "share_in_year": 0.7378924579931206
+    },
+    {
+      "year": 2018,
+      "decision": "Acesso Negado",
+      "count": 6178,
+      "share_in_year": 0.06789234809938789
+    },
+    {
+      "year": 2018,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 5641,
+      "share_in_year": 0.0619910546501533
+    },
+    {
+      "year": 2018,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 3888,
+      "share_in_year": 0.04272668329725156
+    },
+    {
+      "year": 2018,
+      "decision": "Informação Inexistente",
+      "count": 3257,
+      "share_in_year": 0.035792388760069016
+    },
+    {
+      "year": 2018,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 2869,
+      "share_in_year": 0.03152851192896469
+    },
+    {
+      "year": 2018,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 2018,
+      "share_in_year": 0.022176555271052893
+    },
+    {
+      "year": 2019,
+      "decision": "Acesso Concedido",
+      "count": 68734,
+      "share_in_year": 0.7181785885942366
+    },
+    {
+      "year": 2019,
+      "decision": "Acesso Negado",
+      "count": 7527,
+      "share_in_year": 0.07864710676446618
+    },
+    {
+      "year": 2019,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 4928,
+      "share_in_year": 0.05149102459615907
+    },
+    {
+      "year": 2019,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 4709,
+      "share_in_year": 0.04920276680667879
+    },
+    {
+      "year": 2019,
+      "decision": "Informação Inexistente",
+      "count": 4193,
+      "share_in_year": 0.043811255302697846
+    },
+    {
+      "year": 2019,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 3231,
+      "share_in_year": 0.03375963889411322
+    },
+    {
+      "year": 2019,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 2384,
+      "share_in_year": 0.02490961904164838
+    },
+    {
+      "year": 2020,
+      "decision": "Acesso Concedido",
+      "count": 68818,
+      "share_in_year": 0.621067451221053
+    },
+    {
+      "year": 2020,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 20493,
+      "share_in_year": 0.18494485858166526
+    },
+    {
+      "year": 2020,
+      "decision": "Acesso Negado",
+      "count": 7262,
+      "share_in_year": 0.06553796725809072
+    },
+    {
+      "year": 2020,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 5007,
+      "share_in_year": 0.045187083731927875
+    },
+    {
+      "year": 2020,
+      "decision": "Informação Inexistente",
+      "count": 3759,
+      "share_in_year": 0.03392415573163908
+    },
+    {
+      "year": 2020,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 2936,
+      "share_in_year": 0.026496760103243505
+    },
+    {
+      "year": 2020,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 2531,
+      "share_in_year": 0.022841723372380558
+    },
+    {
+      "year": 2021,
+      "decision": "Acesso Concedido",
+      "count": 54388,
+      "share_in_year": 0.6863272130733801
+    },
+    {
+      "year": 2021,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 8664,
+      "share_in_year": 0.10933181904221087
+    },
+    {
+      "year": 2021,
+      "decision": "Acesso Negado",
+      "count": 5114,
+      "share_in_year": 0.06453404000252382
+    },
+    {
+      "year": 2021,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 4688,
+      "share_in_year": 0.059158306517761376
+    },
+    {
+      "year": 2021,
+      "decision": "Informação Inexistente",
+      "count": 3044,
+      "share_in_year": 0.038412518139945735
+    },
+    {
+      "year": 2021,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 1961,
+      "share_in_year": 0.02474604075966938
+    },
+    {
+      "year": 2021,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 1386,
+      "share_in_year": 0.0174900624645088
+    },
+    {
+      "year": 2022,
+      "decision": "Acesso Concedido",
+      "count": 51162,
+      "share_in_year": 0.7388974740399474
+    },
+    {
+      "year": 2022,
+      "decision": "Acesso Negado",
+      "count": 4788,
+      "share_in_year": 0.06914978119900059
+    },
+    {
+      "year": 2022,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 4004,
+      "share_in_year": 0.05782701000852096
+    },
+    {
+      "year": 2022,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 3169,
+      "share_in_year": 0.04576768099825248
+    },
+    {
+      "year": 2022,
+      "decision": "Informação Inexistente",
+      "count": 2446,
+      "share_in_year": 0.035325890729481085
+    },
+    {
+      "year": 2022,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 2037,
+      "share_in_year": 0.02941898586097832
+    },
+    {
+      "year": 2022,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 1635,
+      "share_in_year": 0.023613177163819124
+    },
+    {
+      "year": 2023,
+      "decision": "Acesso Concedido",
+      "count": 68086,
+      "share_in_year": 0.7592189921832313
+    },
+    {
+      "year": 2023,
+      "decision": "Acesso Negado",
+      "count": 6062,
+      "share_in_year": 0.06759665027486926
+    },
+    {
+      "year": 2023,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 5221,
+      "share_in_year": 0.058218758014696864
+    },
+    {
+      "year": 2023,
+      "decision": "Informação Inexistente",
+      "count": 3612,
+      "share_in_year": 0.04027698792359415
+    },
+    {
+      "year": 2023,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 2533,
+      "share_in_year": 0.02824518560644075
+    },
+    {
+      "year": 2023,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 2091,
+      "share_in_year": 0.023316495500618872
+    },
+    {
+      "year": 2023,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 2074,
+      "share_in_year": 0.023126930496548802
+    },
+    {
+      "year": 2024,
+      "decision": "Acesso Concedido",
+      "count": 59347,
+      "share_in_year": 0.7490281704361874
+    },
+    {
+      "year": 2024,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 5582,
+      "share_in_year": 0.07045133279483037
+    },
+    {
+      "year": 2024,
+      "decision": "Acesso Negado",
+      "count": 5367,
+      "share_in_year": 0.06773778271405492
+    },
+    {
+      "year": 2024,
+      "decision": "Informação Inexistente",
+      "count": 2936,
+      "share_in_year": 0.03705573505654281
+    },
+    {
+      "year": 2024,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 2401,
+      "share_in_year": 0.030303412762520195
+    },
+    {
+      "year": 2024,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 2036,
+      "share_in_year": 0.025696688206785136
+    },
+    {
+      "year": 2024,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 1563,
+      "share_in_year": 0.01972687802907916
+    },
+    {
+      "year": 2025,
+      "decision": "Acesso Concedido",
+      "count": 58418,
+      "share_in_year": 0.7354837085158886
+    },
+    {
+      "year": 2025,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 6398,
+      "share_in_year": 0.08055093921539004
+    },
+    {
+      "year": 2025,
+      "decision": "Acesso Negado",
+      "count": 4961,
+      "share_in_year": 0.06245908243944201
+    },
+    {
+      "year": 2025,
+      "decision": "Informação Inexistente",
+      "count": 3203,
+      "share_in_year": 0.04032582968222793
+    },
+    {
+      "year": 2025,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 2116,
+      "share_in_year": 0.026640479427909553
+    },
+    {
+      "year": 2025,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 1890,
+      "share_in_year": 0.02379513521680012
+    },
+    {
+      "year": 2025,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 1863,
+      "share_in_year": 0.023455204713702976
+    },
+    {
+      "year": 2025,
+      "decision": "Sem decisão registrada",
+      "count": 555,
+      "share_in_year": 0.006987460341441305
+    },
+    {
+      "year": 2025,
+      "decision": "Outros (texto livre)",
+      "count": 24,
+      "share_in_year": 0.00030216044719746184
+    },
+    {
+      "year": 2026,
+      "decision": "Acesso Concedido",
+      "count": 7267,
+      "share_in_year": 0.7200753071739993
+    },
+    {
+      "year": 2026,
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 787,
+      "share_in_year": 0.07798256044391598
+    },
+    {
+      "year": 2026,
+      "decision": "Acesso Negado",
+      "count": 764,
+      "share_in_year": 0.07570352754657154
+    },
+    {
+      "year": 2026,
+      "decision": "Não se trata de solicitação de informação",
+      "count": 391,
+      "share_in_year": 0.03874355925485533
+    },
+    {
+      "year": 2026,
+      "decision": "Informação Inexistente",
+      "count": 362,
+      "share_in_year": 0.03586999603646453
+    },
+    {
+      "year": 2026,
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 218,
+      "share_in_year": 0.021601268331351564
+    },
+    {
+      "year": 2026,
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 210,
+      "share_in_year": 0.020808561236623068
+    },
+    {
+      "year": 2026,
+      "decision": "Sem decisão registrada",
+      "count": 88,
+      "share_in_year": 0.008719778042013475
+    },
+    {
+      "year": 2026,
+      "decision": "Outros (texto livre)",
+      "count": 5,
+      "share_in_year": 0.0004954419342053111
+    }
+  ],
+  "reason_series": [
+    {
+      "year": 2015,
+      "reason": "Pedido genérico",
+      "count": 713,
+      "share_in_restricted": 0.08691941972449103
+    },
+    {
+      "year": 2015,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 644,
+      "share_in_restricted": 0.07850786297695965
+    },
+    {
+      "year": 2015,
+      "reason": "Parte da informação é inexistente",
+      "count": 454,
+      "share_in_restricted": 0.05534560526636596
+    },
+    {
+      "year": 2015,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 540,
+      "share_in_restricted": 0.06582957454589784
+    },
+    {
+      "year": 2015,
+      "reason": "Dados pessoais",
+      "count": 1151,
+      "share_in_restricted": 0.14031451907838596
+    },
+    {
+      "year": 2015,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 269,
+      "share_in_restricted": 0.03279288065341948
+    },
+    {
+      "year": 2015,
+      "reason": "Processo decisório em curso",
+      "count": 418,
+      "share_in_restricted": 0.05095696696330611
+    },
+    {
+      "year": 2015,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 459,
+      "share_in_restricted": 0.05595513836401317
+    },
+    {
+      "year": 2015,
+      "reason": "Outros motivos",
+      "count": 3555,
+      "share_in_restricted": 0.4333780324271608
+    },
+    {
+      "year": 2016,
+      "reason": "Pedido genérico",
+      "count": 796,
+      "share_in_restricted": 0.08459086078639745
+    },
+    {
+      "year": 2016,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 932,
+      "share_in_restricted": 0.09904357066950054
+    },
+    {
+      "year": 2016,
+      "reason": "Parte da informação é inexistente",
+      "count": 684,
+      "share_in_restricted": 0.07268862911795962
+    },
+    {
+      "year": 2016,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 614,
+      "share_in_restricted": 0.06524973432518598
+    },
+    {
+      "year": 2016,
+      "reason": "Dados pessoais",
+      "count": 628,
+      "share_in_restricted": 0.0667375132837407
+    },
+    {
+      "year": 2016,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 673,
+      "share_in_restricted": 0.07151965993623804
+    },
+    {
+      "year": 2016,
+      "reason": "Processo decisório em curso",
+      "count": 377,
+      "share_in_restricted": 0.04006376195536663
+    },
+    {
+      "year": 2016,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 441,
+      "share_in_restricted": 0.04686503719447396
+    },
+    {
+      "year": 2016,
+      "reason": "Outros motivos",
+      "count": 4265,
+      "share_in_restricted": 0.4532412327311371
+    },
+    {
+      "year": 2017,
+      "reason": "Pedido genérico",
+      "count": 1073,
+      "share_in_restricted": 0.12139382283063695
+    },
+    {
+      "year": 2017,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 811,
+      "share_in_restricted": 0.09175246068559792
+    },
+    {
+      "year": 2017,
+      "reason": "Parte da informação é inexistente",
+      "count": 744,
+      "share_in_restricted": 0.08417241769430932
+    },
+    {
+      "year": 2017,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 874,
+      "share_in_restricted": 0.09887996379680959
+    },
+    {
+      "year": 2017,
+      "reason": "Dados pessoais",
+      "count": 1019,
+      "share_in_restricted": 0.11528453444959837
+    },
+    {
+      "year": 2017,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 455,
+      "share_in_restricted": 0.05147641135875099
+    },
+    {
+      "year": 2017,
+      "reason": "Processo decisório em curso",
+      "count": 430,
+      "share_in_restricted": 0.04864803710827017
+    },
+    {
+      "year": 2017,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 552,
+      "share_in_restricted": 0.06245050345061658
+    },
+    {
+      "year": 2017,
+      "reason": "Outros motivos",
+      "count": 2881,
+      "share_in_restricted": 0.3259418486254101
+    },
+    {
+      "year": 2018,
+      "reason": "Pedido genérico",
+      "count": 1503,
+      "share_in_restricted": 0.14931452414067156
+    },
+    {
+      "year": 2018,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 904,
+      "share_in_restricted": 0.08980727200476853
+    },
+    {
+      "year": 2018,
+      "reason": "Parte da informação é inexistente",
+      "count": 868,
+      "share_in_restricted": 0.08623087621696801
+    },
+    {
+      "year": 2018,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 905,
+      "share_in_restricted": 0.08990661633220744
+    },
+    {
+      "year": 2018,
+      "reason": "Dados pessoais",
+      "count": 1044,
+      "share_in_restricted": 0.10371547784621499
+    },
+    {
+      "year": 2018,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 625,
+      "share_in_restricted": 0.06209020464931452
+    },
+    {
+      "year": 2018,
+      "reason": "Processo decisório em curso",
+      "count": 531,
+      "share_in_restricted": 0.05275183787005762
+    },
+    {
+      "year": 2018,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 641,
+      "share_in_restricted": 0.06367971388833697
+    },
+    {
+      "year": 2018,
+      "reason": "Outros motivos",
+      "count": 3045,
+      "share_in_restricted": 0.30250347705146036
+    },
+    {
+      "year": 2019,
+      "reason": "Pedido genérico",
+      "count": 1919,
+      "share_in_restricted": 0.15683229813664595
+    },
+    {
+      "year": 2019,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 942,
+      "share_in_restricted": 0.07698594311866623
+    },
+    {
+      "year": 2019,
+      "reason": "Parte da informação é inexistente",
+      "count": 1112,
+      "share_in_restricted": 0.09087937234390324
+    },
+    {
+      "year": 2019,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 1254,
+      "share_in_restricted": 0.10248447204968944
+    },
+    {
+      "year": 2019,
+      "reason": "Dados pessoais",
+      "count": 872,
+      "share_in_restricted": 0.07126511932003923
+    },
+    {
+      "year": 2019,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 1063,
+      "share_in_restricted": 0.08687479568486434
+    },
+    {
+      "year": 2019,
+      "reason": "Processo decisório em curso",
+      "count": 561,
+      "share_in_restricted": 0.04584831644328212
+    },
+    {
+      "year": 2019,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 805,
+      "share_in_restricted": 0.06578947368421052
+    },
+    {
+      "year": 2019,
+      "reason": "Outros motivos",
+      "count": 3708,
+      "share_in_restricted": 0.3030402092186989
+    },
+    {
+      "year": 2020,
+      "reason": "Pedido genérico",
+      "count": 1859,
+      "share_in_restricted": 0.15152009128698346
+    },
+    {
+      "year": 2020,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 848,
+      "share_in_restricted": 0.06911728747249164
+    },
+    {
+      "year": 2020,
+      "reason": "Parte da informação é inexistente",
+      "count": 1368,
+      "share_in_restricted": 0.11150052979052898
+    },
+    {
+      "year": 2020,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 988,
+      "share_in_restricted": 0.08052816040427092
+    },
+    {
+      "year": 2020,
+      "reason": "Dados pessoais",
+      "count": 968,
+      "share_in_restricted": 0.07889803569973103
+    },
+    {
+      "year": 2020,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 866,
+      "share_in_restricted": 0.07058439970657755
+    },
+    {
+      "year": 2020,
+      "reason": "Processo decisório em curso",
+      "count": 562,
+      "share_in_restricted": 0.04580650419757112
+    },
+    {
+      "year": 2020,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 848,
+      "share_in_restricted": 0.06911728747249164
+    },
+    {
+      "year": 2020,
+      "reason": "Outros motivos",
+      "count": 3962,
+      "share_in_restricted": 0.32292770396935366
+    },
+    {
+      "year": 2021,
+      "reason": "Pedido genérico",
+      "count": 1271,
+      "share_in_restricted": 0.1296674148133034
+    },
+    {
+      "year": 2021,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 1483,
+      "share_in_restricted": 0.15129565394817385
+    },
+    {
+      "year": 2021,
+      "reason": "Parte da informação é inexistente",
+      "count": 915,
+      "share_in_restricted": 0.09334829626606815
+    },
+    {
+      "year": 2021,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 720,
+      "share_in_restricted": 0.07345439706182412
+    },
+    {
+      "year": 2021,
+      "reason": "Dados pessoais",
+      "count": 763,
+      "share_in_restricted": 0.07784125688634973
+    },
+    {
+      "year": 2021,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 564,
+      "share_in_restricted": 0.05753927769842889
+    },
+    {
+      "year": 2021,
+      "reason": "Processo decisório em curso",
+      "count": 474,
+      "share_in_restricted": 0.04835747806570088
+    },
+    {
+      "year": 2021,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 433,
+      "share_in_restricted": 0.04417465823301367
+    },
+    {
+      "year": 2021,
+      "reason": "Outros motivos",
+      "count": 3179,
+      "share_in_restricted": 0.3243215670271373
+    },
+    {
+      "year": 2022,
+      "reason": "Pedido genérico",
+      "count": 972,
+      "share_in_restricted": 0.1105550500454959
+    },
+    {
+      "year": 2022,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 603,
+      "share_in_restricted": 0.06858507734303913
+    },
+    {
+      "year": 2022,
+      "reason": "Parte da informação é inexistente",
+      "count": 875,
+      "share_in_restricted": 0.09952229299363058
+    },
+    {
+      "year": 2022,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 732,
+      "share_in_restricted": 0.0832575068243858
+    },
+    {
+      "year": 2022,
+      "reason": "Dados pessoais",
+      "count": 474,
+      "share_in_restricted": 0.05391264786169245
+    },
+    {
+      "year": 2022,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 437,
+      "share_in_restricted": 0.04970427661510464
+    },
+    {
+      "year": 2022,
+      "reason": "Processo decisório em curso",
+      "count": 521,
+      "share_in_restricted": 0.05925841674249317
+    },
+    {
+      "year": 2022,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 322,
+      "share_in_restricted": 0.03662420382165605
+    },
+    {
+      "year": 2022,
+      "reason": "Outros motivos",
+      "count": 3856,
+      "share_in_restricted": 0.4385805277525023
+    },
+    {
+      "year": 2023,
+      "reason": "Pedido genérico",
+      "count": 1109,
+      "share_in_restricted": 0.09828946202251174
+    },
+    {
+      "year": 2023,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 1126,
+      "share_in_restricted": 0.09979615350527342
+    },
+    {
+      "year": 2023,
+      "reason": "Parte da informação é inexistente",
+      "count": 1188,
+      "share_in_restricted": 0.105291145971816
+    },
+    {
+      "year": 2023,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 1191,
+      "share_in_restricted": 0.10555703270406806
+    },
+    {
+      "year": 2023,
+      "reason": "Dados pessoais",
+      "count": 473,
+      "share_in_restricted": 0.041921474785074894
+    },
+    {
+      "year": 2023,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 829,
+      "share_in_restricted": 0.07347336701231942
+    },
+    {
+      "year": 2023,
+      "reason": "Processo decisório em curso",
+      "count": 642,
+      "share_in_restricted": 0.05689976070194097
+    },
+    {
+      "year": 2023,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 705,
+      "share_in_restricted": 0.06248338207923425
+    },
+    {
+      "year": 2023,
+      "reason": "Outros motivos",
+      "count": 4020,
+      "share_in_restricted": 0.3562882212177612
+    },
+    {
+      "year": 2024,
+      "reason": "Pedido genérico",
+      "count": 835,
+      "share_in_restricted": 0.07626267239017262
+    },
+    {
+      "year": 2024,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 1300,
+      "share_in_restricted": 0.11873230432002922
+    },
+    {
+      "year": 2024,
+      "reason": "Parte da informação é inexistente",
+      "count": 1231,
+      "share_in_restricted": 0.11243035893688921
+    },
+    {
+      "year": 2024,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 1087,
+      "share_in_restricted": 0.09927847291990136
+    },
+    {
+      "year": 2024,
+      "reason": "Dados pessoais",
+      "count": 664,
+      "share_in_restricted": 0.06064480774499954
+    },
+    {
+      "year": 2024,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 562,
+      "share_in_restricted": 0.05132888848296648
+    },
+    {
+      "year": 2024,
+      "reason": "Processo decisório em curso",
+      "count": 897,
+      "share_in_restricted": 0.08192528998082016
+    },
+    {
+      "year": 2024,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 463,
+      "share_in_restricted": 0.042286966846287334
+    },
+    {
+      "year": 2024,
+      "reason": "Outros motivos",
+      "count": 3910,
+      "share_in_restricted": 0.35711023837793404
+    },
+    {
+      "year": 2025,
+      "reason": "Pedido genérico",
+      "count": 855,
+      "share_in_restricted": 0.07527071044986354
+    },
+    {
+      "year": 2025,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 1431,
+      "share_in_restricted": 0.12597939959503476
+    },
+    {
+      "year": 2025,
+      "reason": "Parte da informação é inexistente",
+      "count": 1274,
+      "share_in_restricted": 0.11215776036622942
+    },
+    {
+      "year": 2025,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 1134,
+      "share_in_restricted": 0.09983273175455586
+    },
+    {
+      "year": 2025,
+      "reason": "Dados pessoais",
+      "count": 426,
+      "share_in_restricted": 0.037503301346949555
+    },
+    {
+      "year": 2025,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 554,
+      "share_in_restricted": 0.048771898934765384
+    },
+    {
+      "year": 2025,
+      "reason": "Processo decisório em curso",
+      "count": 836,
+      "share_in_restricted": 0.07359802799542213
+    },
+    {
+      "year": 2025,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 437,
+      "share_in_restricted": 0.038471696452152475
+    },
+    {
+      "year": 2025,
+      "reason": "Outros motivos",
+      "count": 4412,
+      "share_in_restricted": 0.38841447310502686
+    },
+    {
+      "year": 2026,
+      "reason": "Pedido genérico",
+      "count": 134,
+      "share_in_restricted": 0.08639587362991619
+    },
+    {
+      "year": 2026,
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 169,
+      "share_in_restricted": 0.10896196002578981
+    },
+    {
+      "year": 2026,
+      "reason": "Parte da informação é inexistente",
+      "count": 155,
+      "share_in_restricted": 0.09993552546744036
+    },
+    {
+      "year": 2026,
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 176,
+      "share_in_restricted": 0.11347517730496454
+    },
+    {
+      "year": 2026,
+      "reason": "Dados pessoais",
+      "count": 48,
+      "share_in_restricted": 0.030947775628626693
+    },
+    {
+      "year": 2026,
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 160,
+      "share_in_restricted": 0.1031592520954223
+    },
+    {
+      "year": 2026,
+      "reason": "Processo decisório em curso",
+      "count": 107,
+      "share_in_restricted": 0.06898774983881367
+    },
+    {
+      "year": 2026,
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 64,
+      "share_in_restricted": 0.041263700838168924
+    },
+    {
+      "year": 2026,
+      "reason": "Outros motivos",
+      "count": 538,
+      "share_in_restricted": 0.3468729851708575
+    }
+  ],
+  "top_reasons": [
+    {
+      "reason": "Pedido genérico",
+      "count": 13039
+    },
+    {
+      "reason": "Parte da informação é de competência de outro órgão/entidade",
+      "count": 11193
+    },
+    {
+      "reason": "Parte da informação é inexistente",
+      "count": 10868
+    },
+    {
+      "reason": "Informação sigilosa de acordo com legislação específica",
+      "count": 10215
+    },
+    {
+      "reason": "Dados pessoais",
+      "count": 8530
+    },
+    {
+      "reason": "Pedido desproporcional ou desarrazoado",
+      "count": 7057
+    },
+    {
+      "reason": "Processo decisório em curso",
+      "count": 6356
+    },
+    {
+      "reason": "Pedido exige tratamento adicional de dados",
+      "count": 6170
+    },
+    {
+      "reason": "Parte da informação é sigilosa de acordo com legislação específica",
+      "count": 6001
+    },
+    {
+      "reason": "Pedido incompreensível",
+      "count": 5950
+    },
+    {
+      "reason": "Parte da informação demandará mais tempo para produção",
+      "count": 5738
+    },
+    {
+      "reason": "Informação classificada conforme artigos 23 e 24 da Lei nº 12.527/2011",
+      "count": 5027
+    }
+  ],
+  "decision_totals": [
+    {
+      "decision": "Acesso Concedido",
+      "count": 681081
+    },
+    {
+      "decision": "Não se trata de solicitação de informação",
+      "count": 66326
+    },
+    {
+      "decision": "Acesso Negado",
+      "count": 62344
+    },
+    {
+      "decision": "Acesso Parcialmente Concedido",
+      "count": 52415
+    },
+    {
+      "decision": "Informação Inexistente",
+      "count": 34506
+    },
+    {
+      "decision": "Órgão não tem competência para responder sobre o assunto",
+      "count": 27696
+    },
+    {
+      "decision": "Pergunta Duplicada/Repetida",
+      "count": 21286
+    },
+    {
+      "decision": "Sem decisão registrada",
+      "count": 643
+    },
+    {
+      "decision": "Outros (texto livre)",
+      "count": 29
+    }
+  ],
+  "org_ranking": [
+    {
+      "org": "MF - Ministério da Fazenda",
+      "total_requests": 60682,
+      "denied_total": 6232,
+      "restricted_total": 8352,
+      "personal_restricted_total": 641,
+      "denied_rate": 0.10269931775485316,
+      "restricted_rate": 0.13763554266504072
+    },
+    {
+      "org": "PETROBRAS – Petróleo Brasileiro S.A.",
+      "total_requests": 30854,
+      "denied_total": 3780,
+      "restricted_total": 4839,
+      "personal_restricted_total": 101,
+      "denied_rate": 0.12251247812277176,
+      "restricted_rate": 0.15683541842224671
+    },
+    {
+      "org": "CEF – Caixa Econômica Federal",
+      "total_requests": 13933,
+      "denied_total": 2849,
+      "restricted_total": 4779,
+      "personal_restricted_total": 1479,
+      "denied_rate": 0.20447857604248906,
+      "restricted_rate": 0.3429986363310127
+    },
+    {
+      "org": "INSS – Instituto Nacional do Seguro Social",
+      "total_requests": 33088,
+      "denied_total": 2656,
+      "restricted_total": 5757,
+      "personal_restricted_total": 2542,
+      "denied_rate": 0.08027079303675048,
+      "restricted_rate": 0.17399057059961315
+    },
+    {
+      "org": "MS – Ministério da Saúde",
+      "total_requests": 45544,
+      "denied_total": 2319,
+      "restricted_total": 6334,
+      "personal_restricted_total": 530,
+      "denied_rate": 0.05091779378183734,
+      "restricted_rate": 0.13907430177410857
+    },
+    {
+      "org": "MRE – Ministério das Relações Exteriores",
+      "total_requests": 10195,
+      "denied_total": 1668,
+      "restricted_total": 2574,
+      "personal_restricted_total": 114,
+      "denied_rate": 0.16360961255517412,
+      "restricted_rate": 0.25247670426679747
+    },
+    {
+      "org": "ANEEL – Agência Nacional de Energia Elétrica",
+      "total_requests": 31677,
+      "denied_total": 1581,
+      "restricted_total": 2570,
+      "personal_restricted_total": 542,
+      "denied_rate": 0.0499100293588408,
+      "restricted_rate": 0.08113142027338448
+    },
+    {
+      "org": "ANVISA – Agência Nacional de Vigilância Sanitária",
+      "total_requests": 34246,
+      "denied_total": 1455,
+      "restricted_total": 3392,
+      "personal_restricted_total": 60,
+      "denied_rate": 0.04248671377679145,
+      "restricted_rate": 0.09904806400747533
+    },
+    {
+      "org": "MAPA - Ministério da Agricultura e Pecuária",
+      "total_requests": 21754,
+      "denied_total": 1312,
+      "restricted_total": 2060,
+      "personal_restricted_total": 104,
+      "denied_rate": 0.06031074744874506,
+      "restricted_rate": 0.09469522846373081
+    },
+    {
+      "org": "INEP – Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira",
+      "total_requests": 15133,
+      "denied_total": 1267,
+      "restricted_total": 1937,
+      "personal_restricted_total": 394,
+      "denied_rate": 0.08372431110817419,
+      "restricted_rate": 0.12799841406198376
+    },
+    {
+      "org": "BB – Banco do Brasil S.A.",
+      "total_requests": 5834,
+      "denied_total": 1205,
+      "restricted_total": 1538,
+      "personal_restricted_total": 53,
+      "denied_rate": 0.20654782310593076,
+      "restricted_rate": 0.2636270140555365
+    },
+    {
+      "org": "MGI - Ministério da Gestão e da Inovação em Serviços Públicos",
+      "total_requests": 10944,
+      "denied_total": 1189,
+      "restricted_total": 2139,
+      "personal_restricted_total": 143,
+      "denied_rate": 0.10864400584795321,
+      "restricted_rate": 0.19544956140350878
+    },
+    {
+      "org": "MEC – Ministério da Educação",
+      "total_requests": 23471,
+      "denied_total": 1175,
+      "restricted_total": 2892,
+      "personal_restricted_total": 133,
+      "denied_rate": 0.050061778364790595,
+      "restricted_rate": 0.1232158834306165
+    },
+    {
+      "org": "PF – Polícia Federal",
+      "total_requests": 11366,
+      "denied_total": 1148,
+      "restricted_total": 2054,
+      "personal_restricted_total": 606,
+      "denied_rate": 0.10100299137779342,
+      "restricted_rate": 0.1807144114024283
+    },
+    {
+      "org": "MDS - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+      "total_requests": 33525,
+      "denied_total": 1065,
+      "restricted_total": 2608,
+      "personal_restricted_total": 114,
+      "denied_rate": 0.031767337807606266,
+      "restricted_rate": 0.07779269202087995
+    },
+    {
+      "org": "CGU – Controladoria-Geral da União",
+      "total_requests": 11494,
+      "denied_total": 1054,
+      "restricted_total": 2286,
+      "personal_restricted_total": 284,
+      "denied_rate": 0.0917000174003828,
+      "restricted_rate": 0.198886375500261
+    },
+    {
+      "org": "MTE - Ministério do Trabalho e Emprego",
+      "total_requests": 6216,
+      "denied_total": 1004,
+      "restricted_total": 1432,
+      "personal_restricted_total": 397,
+      "denied_rate": 0.1615186615186615,
+      "restricted_rate": 0.23037323037323038
+    },
+    {
+      "org": "MME – Ministério de Minas e Energia",
+      "total_requests": 8707,
+      "denied_total": 1001,
+      "restricted_total": 1500,
+      "personal_restricted_total": 74,
+      "denied_rate": 0.11496497071321925,
+      "restricted_rate": 0.17227518088893992
+    },
+    {
+      "org": "AGU – Advocacia-Geral da União",
+      "total_requests": 6585,
+      "denied_total": 928,
+      "restricted_total": 1097,
+      "personal_restricted_total": 12,
+      "denied_rate": 0.14092634776006074,
+      "restricted_rate": 0.1665907365223994
+    },
+    {
+      "org": "CEX – Comando do Exército",
+      "total_requests": 6592,
+      "denied_total": 918,
+      "restricted_total": 1067,
+      "personal_restricted_total": 169,
+      "denied_rate": 0.13925970873786409,
+      "restricted_rate": 0.1618628640776699
+    },
+    {
+      "org": "BACEN – Banco Central do Brasil",
+      "total_requests": 18693,
+      "denied_total": 871,
+      "restricted_total": 1431,
+      "personal_restricted_total": 67,
+      "denied_rate": 0.04659498207885305,
+      "restricted_rate": 0.07655272026961964
+    },
+    {
+      "org": "CC-PR – Casa Civil da Presidência da República",
+      "total_requests": 6342,
+      "denied_total": 870,
+      "restricted_total": 1833,
+      "personal_restricted_total": 91,
+      "denied_rate": 0.13718070009460737,
+      "restricted_rate": 0.2890255439924314
+    },
+    {
+      "org": "FNDE – Fundo Nacional de Desenvolvimento da Educação",
+      "total_requests": 10618,
+      "denied_total": 829,
+      "restricted_total": 1179,
+      "personal_restricted_total": 54,
+      "denied_rate": 0.0780749670371068,
+      "restricted_rate": 0.11103786023733284
+    },
+    {
+      "org": "INCRA – Instituto Nacional de Colonização e Reforma Agrária",
+      "total_requests": 8004,
+      "denied_total": 777,
+      "restricted_total": 1768,
+      "personal_restricted_total": 128,
+      "denied_rate": 0.09707646176911544,
+      "restricted_rate": 0.22088955522238882
+    },
+    {
+      "org": "ANP – Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
+      "total_requests": 8271,
+      "denied_total": 754,
+      "restricted_total": 2070,
+      "personal_restricted_total": 49,
+      "denied_rate": 0.0911618909442631,
+      "restricted_rate": 0.250272034820457
+    },
+    {
+      "org": "GSI-PR – Gabinete de Segurança Institucional da Presidência da República",
+      "total_requests": 2251,
+      "denied_total": 753,
+      "restricted_total": 932,
+      "personal_restricted_total": 59,
+      "denied_rate": 0.334517992003554,
+      "restricted_rate": 0.4140382052421146
+    },
+    {
+      "org": "FUNAI – Fundação Nacional dos Povos Indígenas",
+      "total_requests": 13307,
+      "denied_total": 736,
+      "restricted_total": 1158,
+      "personal_restricted_total": 191,
+      "denied_rate": 0.05530923574058766,
+      "restricted_rate": 0.08702186818967461
+    },
+    {
+      "org": "ANTAQ – Agência Nacional de Transportes Aquaviários",
+      "total_requests": 3865,
+      "denied_total": 722,
+      "restricted_total": 898,
+      "personal_restricted_total": 23,
+      "denied_rate": 0.1868046571798189,
+      "restricted_rate": 0.23234152652005174
+    },
+    {
+      "org": "ECT – Empresa Brasileira de Correios e Telégrafos",
+      "total_requests": 6948,
+      "denied_total": 684,
+      "restricted_total": 1280,
+      "personal_restricted_total": 95,
+      "denied_rate": 0.09844559585492228,
+      "restricted_rate": 0.18422567645365573
+    },
+    {
+      "org": "IBGE – Fundação Instituto Brasileiro de Geografia e Estatística",
+      "total_requests": 10808,
+      "denied_total": 674,
+      "restricted_total": 2037,
+      "personal_restricted_total": 213,
+      "denied_rate": 0.06236121391561806,
+      "restricted_rate": 0.18847150259067358
+    },
+    {
+      "org": "PRF – Polícia Rodoviária Federal",
+      "total_requests": 6188,
+      "denied_total": 646,
+      "restricted_total": 1070,
+      "personal_restricted_total": 230,
+      "denied_rate": 0.1043956043956044,
+      "restricted_rate": 0.1729153199741435
+    },
+    {
+      "org": "MCTI – Ministério da Ciência, Tecnologia, Inovações",
+      "total_requests": 8100,
+      "denied_total": 589,
+      "restricted_total": 1001,
+      "personal_restricted_total": 53,
+      "denied_rate": 0.07271604938271604,
+      "restricted_rate": 0.12358024691358024
+    },
+    {
+      "org": "TRANSPETRO - Petrobras Transporte S.A",
+      "total_requests": 2748,
+      "denied_total": 582,
+      "restricted_total": 768,
+      "personal_restricted_total": 7,
+      "denied_rate": 0.21179039301310043,
+      "restricted_rate": 0.2794759825327511
+    },
+    {
+      "org": "ANTT – Agência Nacional de Transportes Terrestres",
+      "total_requests": 6159,
+      "denied_total": 535,
+      "restricted_total": 740,
+      "personal_restricted_total": 18,
+      "denied_rate": 0.0868647507712291,
+      "restricted_rate": 0.12014937489852248
+    },
+    {
+      "org": "SGPR – Secretaria-Geral da Presidência da República",
+      "total_requests": 5412,
+      "denied_total": 435,
+      "restricted_total": 1089,
+      "personal_restricted_total": 49,
+      "denied_rate": 0.0803769401330377,
+      "restricted_rate": 0.20121951219512196
+    },
+    {
+      "org": "MJSP – Ministério da Justiça e Segurança Pública",
+      "total_requests": 8984,
+      "denied_total": 379,
+      "restricted_total": 670,
+      "personal_restricted_total": 34,
+      "denied_rate": 0.042186108637577914,
+      "restricted_rate": 0.07457702582368655
+    },
+    {
+      "org": "DNIT – Departamento Nacional de Infraestrutura de Transportes",
+      "total_requests": 7866,
+      "denied_total": 374,
+      "restricted_total": 534,
+      "personal_restricted_total": 37,
+      "denied_rate": 0.047546402237477754,
+      "restricted_rate": 0.06788710907704043
+    },
+    {
+      "org": "DATAPREV – Empresa de Tecnologia e Informações da Previdência",
+      "total_requests": 2514,
+      "denied_total": 369,
+      "restricted_total": 409,
+      "personal_restricted_total": 4,
+      "denied_rate": 0.1467780429594272,
+      "restricted_rate": 0.16268894192521877
+    },
+    {
+      "org": "MD – Ministério da Defesa",
+      "total_requests": 5117,
+      "denied_total": 342,
+      "restricted_total": 907,
+      "personal_restricted_total": 39,
+      "denied_rate": 0.06683603674027751,
+      "restricted_rate": 0.17725229626734415
+    },
+    {
+      "org": "MPS - Ministério da Previdência Social",
+      "total_requests": 1780,
+      "denied_total": 341,
+      "restricted_total": 462,
+      "personal_restricted_total": 220,
+      "denied_rate": 0.19157303370786516,
+      "restricted_rate": 0.2595505617977528
+    }
+  ],
+  "org_lowest_denial_high_volume": [
+    {
+      "org": "UNIVASF – Fundação Universidade Federal do Vale do São Francisco",
+      "total_requests": 1961,
+      "denied_total": 16,
+      "restricted_total": 47,
+      "personal_restricted_total": 3,
+      "denied_rate": 0.00815910249872514,
+      "restricted_rate": 0.0239673635900051
+    },
+    {
+      "org": "UFT – Fundação Universidade Federal do Tocantins",
+      "total_requests": 1649,
+      "denied_total": 16,
+      "restricted_total": 38,
+      "personal_restricted_total": 2,
+      "denied_rate": 0.009702850212249849,
+      "restricted_rate": 0.02304426925409339
+    },
+    {
+      "org": "IFPE – Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco",
+      "total_requests": 2228,
+      "denied_total": 24,
+      "restricted_total": 112,
+      "personal_restricted_total": 2,
+      "denied_rate": 0.010771992818671455,
+      "restricted_rate": 0.05026929982046679
+    },
+    {
+      "org": "IFCE – Instituto Federal de Educação, Ciência e Tecnologia do Ceará",
+      "total_requests": 1587,
+      "denied_total": 19,
+      "restricted_total": 38,
+      "personal_restricted_total": 6,
+      "denied_rate": 0.011972274732199117,
+      "restricted_rate": 0.023944549464398234
+    },
+    {
+      "org": "ANA – Agência Nacional de Águas",
+      "total_requests": 4409,
+      "denied_total": 54,
+      "restricted_total": 88,
+      "personal_restricted_total": 5,
+      "denied_rate": 0.01224767520979814,
+      "restricted_rate": 0.01995917441596734
+    },
+    {
+      "org": "UFSCar – Fundação Universidade Federal de São Carlos",
+      "total_requests": 1656,
+      "denied_total": 21,
+      "restricted_total": 77,
+      "personal_restricted_total": 31,
+      "denied_rate": 0.012681159420289856,
+      "restricted_rate": 0.0464975845410628
+    },
+    {
+      "org": "UFS – Fundação Universidade Federal de Sergipe",
+      "total_requests": 1862,
+      "denied_total": 24,
+      "restricted_total": 93,
+      "personal_restricted_total": 14,
+      "denied_rate": 0.01288936627282492,
+      "restricted_rate": 0.04994629430719656
+    },
+    {
+      "org": "INMETRO – Instituto Nacional de Metrologia, Qualidade e Tecnologia",
+      "total_requests": 2782,
+      "denied_total": 38,
+      "restricted_total": 81,
+      "personal_restricted_total": 3,
+      "denied_rate": 0.013659237958303379,
+      "restricted_rate": 0.029115744069015098
+    },
+    {
+      "org": "IFAL – Instituto Federal de Educação, Ciência e Tecnologia de Alagoas",
+      "total_requests": 1709,
+      "denied_total": 24,
+      "restricted_total": 77,
+      "personal_restricted_total": 26,
+      "denied_rate": 0.014043300175541252,
+      "restricted_rate": 0.04505558806319485
+    },
+    {
+      "org": "EMBRAPA – Empresa Brasileira de Pesquisa Agropecuária",
+      "total_requests": 2899,
+      "denied_total": 44,
+      "restricted_total": 75,
+      "personal_restricted_total": 5,
+      "denied_rate": 0.015177647464642981,
+      "restricted_rate": 0.025870989996550534
+    },
+    {
+      "org": "UFOP – Fundação Universidade Federal de Ouro Preto",
+      "total_requests": 1553,
+      "denied_total": 25,
+      "restricted_total": 84,
+      "personal_restricted_total": 19,
+      "denied_rate": 0.016097875080489377,
+      "restricted_rate": 0.0540888602704443
+    },
+    {
+      "org": "MTur - Ministério do Turismo",
+      "total_requests": 2496,
+      "denied_total": 42,
+      "restricted_total": 159,
+      "personal_restricted_total": 10,
+      "denied_rate": 0.016826923076923076,
+      "restricted_rate": 0.06370192307692307
+    }
+  ],
+  "org_top5_plus_pf": [
+    {
+      "org": "MF - Ministério da Fazenda",
+      "total_requests": 60682,
+      "denied_total": 6232,
+      "restricted_total": 8352,
+      "personal_restricted_total": 641,
+      "denied_rate": 0.10269931775485316,
+      "restricted_rate": 0.13763554266504072
+    },
+    {
+      "org": "PETROBRAS – Petróleo Brasileiro S.A.",
+      "total_requests": 30854,
+      "denied_total": 3780,
+      "restricted_total": 4839,
+      "personal_restricted_total": 101,
+      "denied_rate": 0.12251247812277176,
+      "restricted_rate": 0.15683541842224671
+    },
+    {
+      "org": "CEF – Caixa Econômica Federal",
+      "total_requests": 13933,
+      "denied_total": 2849,
+      "restricted_total": 4779,
+      "personal_restricted_total": 1479,
+      "denied_rate": 0.20447857604248906,
+      "restricted_rate": 0.3429986363310127
+    },
+    {
+      "org": "INSS – Instituto Nacional do Seguro Social",
+      "total_requests": 33088,
+      "denied_total": 2656,
+      "restricted_total": 5757,
+      "personal_restricted_total": 2542,
+      "denied_rate": 0.08027079303675048,
+      "restricted_rate": 0.17399057059961315
+    },
+    {
+      "org": "MS – Ministério da Saúde",
+      "total_requests": 45544,
+      "denied_total": 2319,
+      "restricted_total": 6334,
+      "personal_restricted_total": 530,
+      "denied_rate": 0.05091779378183734,
+      "restricted_rate": 0.13907430177410857
+    },
+    {
+      "org": "PF – Polícia Federal",
+      "total_requests": 11366,
+      "denied_total": 1148,
+      "restricted_total": 2054,
+      "personal_restricted_total": 606,
+      "denied_rate": 0.10100299137779342,
+      "restricted_rate": 0.1807144114024283
+    }
+  ],
+  "org_profiles": {
+    "MF - Ministério da Fazenda": {
+      "org": "MF - Ministério da Fazenda",
+      "summary": {
+        "org": "MF - Ministério da Fazenda",
+        "total_requests": 60682,
+        "denied_total": 6232,
+        "restricted_total": 8352,
+        "personal_restricted_total": 641,
+        "denied_rate": 0.10269931775485316,
+        "restricted_rate": 0.13763554266504072
+      },
+      "top_subjects": [
+        {
+          "subject": "Outros em Economia e Finanças",
+          "total_requests": 22684,
+          "restricted_total": 2006,
+          "restricted_rate": 0.08843237524246164,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 12841,
+              "share_in_subject": 0.5660818197848704
+            },
+            {
+              "decision": "Não se trata de solicitação de informação",
+              "count": 6617,
+              "share_in_subject": 0.29170340327984484
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 1696,
+              "share_in_subject": 0.07476635514018691
+            }
+          ]
+        },
+        {
+          "subject": "Serviços Públicos",
+          "total_requests": 13874,
+          "restricted_total": 1772,
+          "restricted_rate": 0.12772091682283407,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 8066,
+              "share_in_subject": 0.5813752342511171
+            },
+            {
+              "decision": "Não se trata de solicitação de informação",
+              "count": 2155,
+              "share_in_subject": 0.1553265100187401
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 1460,
+              "share_in_subject": 0.10523280957186104
+            }
+          ]
+        },
+        {
+          "subject": "Acesso à informação",
+          "total_requests": 9029,
+          "restricted_total": 2061,
+          "restricted_rate": 0.2282644811164027,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 5192,
+              "share_in_subject": 0.5750359951268136
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 1384,
+              "share_in_subject": 0.15328386310776387
+            },
+            {
+              "decision": "Não se trata de solicitação de informação",
+              "count": 877,
+              "share_in_subject": 0.09713146527854691
+            }
+          ]
+        },
+        {
+          "subject": "Proteção e Benefícios ao Trabalhador",
+          "total_requests": 3879,
+          "restricted_total": 641,
+          "restricted_rate": 0.16524877545759217,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 2492,
+              "share_in_subject": 0.6424336169115752
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 442,
+              "share_in_subject": 0.11394689352926012
+            },
+            {
+              "decision": "Não se trata de solicitação de informação",
+              "count": 370,
+              "share_in_subject": 0.09538540861046661
+            }
+          ]
+        },
+        {
+          "subject": "Outros em Comércio e serviços",
+          "total_requests": 1363,
+          "restricted_total": 251,
+          "restricted_rate": 0.18415260454878943,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 844,
+              "share_in_subject": 0.6192223037417461
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 154,
+              "share_in_subject": 0.11298606016140866
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 97,
+              "share_in_subject": 0.07116654438738078
+            }
+          ]
+        }
+      ],
+      "top_decisions": [
+        {
+          "decision": "Acesso Concedido",
+          "count": 34878,
+          "share_in_org": 0.5747668171780759
+        },
+        {
+          "decision": "Não se trata de solicitação de informação",
+          "count": 12065,
+          "share_in_org": 0.19882337431198707
+        },
+        {
+          "decision": "Acesso Negado",
+          "count": 6232,
+          "share_in_org": 0.10269931775485316
+        },
+        {
+          "decision": "Acesso Parcialmente Concedido",
+          "count": 2120,
+          "share_in_org": 0.03493622491018754
+        },
+        {
+          "decision": "Pergunta Duplicada/Repetida",
+          "count": 1959,
+          "share_in_org": 0.03228304933917801
+        }
+      ]
+    },
+    "PETROBRAS – Petróleo Brasileiro S.A.": {
+      "org": "PETROBRAS – Petróleo Brasileiro S.A.",
+      "summary": {
+        "org": "PETROBRAS – Petróleo Brasileiro S.A.",
+        "total_requests": 30854,
+        "denied_total": 3780,
+        "restricted_total": 4839,
+        "personal_restricted_total": 101,
+        "denied_rate": 0.12251247812277176,
+        "restricted_rate": 0.15683541842224671
+      },
+      "top_subjects": [
+        {
+          "subject": "Outros em Energia",
+          "total_requests": 12482,
+          "restricted_total": 1648,
+          "restricted_rate": 0.13203012337766384,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 9612,
+              "share_in_subject": 0.7700688992148694
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 1246,
+              "share_in_subject": 0.09982374619452011
+            },
+            {
+              "decision": "Pergunta Duplicada/Repetida",
+              "count": 602,
+              "share_in_subject": 0.048229450408588365
+            }
+          ]
+        },
+        {
+          "subject": "Acesso à informação",
+          "total_requests": 6049,
+          "restricted_total": 797,
+          "restricted_rate": 0.13175731525872045,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 4566,
+              "share_in_subject": 0.7548355100016532
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 632,
+              "share_in_subject": 0.10448007935195901
+            },
+            {
+              "decision": "Pergunta Duplicada/Repetida",
+              "count": 289,
+              "share_in_subject": 0.047776491982145806
+            }
+          ]
+        },
+        {
+          "subject": "Licitações",
+          "total_requests": 4711,
+          "restricted_total": 824,
+          "restricted_rate": 0.17490978560815112,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 3296,
+              "share_in_subject": 0.6996391424326045
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 723,
+              "share_in_subject": 0.15347060072171514
+            },
+            {
+              "decision": "Informação Inexistente",
+              "count": 366,
+              "share_in_subject": 0.07769051156866907
+            }
+          ]
+        },
+        {
+          "subject": "Transparência",
+          "total_requests": 2487,
+          "restricted_total": 461,
+          "restricted_rate": 0.18536389223964617,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 1877,
+              "share_in_subject": 0.754724567752312
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 325,
+              "share_in_subject": 0.13067953357458786
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 136,
+              "share_in_subject": 0.0546843586650583
+            }
+          ]
+        },
+        {
+          "subject": "Transparência e acesso à informação",
+          "total_requests": 923,
+          "restricted_total": 159,
+          "restricted_rate": 0.1722643553629469,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 732,
+              "share_in_subject": 0.7930660888407367
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 135,
+              "share_in_subject": 0.14626218851570963
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 24,
+              "share_in_subject": 0.02600216684723727
+            }
+          ]
+        }
+      ],
+      "top_decisions": [
+        {
+          "decision": "Acesso Concedido",
+          "count": 22785,
+          "share_in_org": 0.7384779931289298
+        },
+        {
+          "decision": "Acesso Negado",
+          "count": 3780,
+          "share_in_org": 0.12251247812277176
+        },
+        {
+          "decision": "Pergunta Duplicada/Repetida",
+          "count": 1329,
+          "share_in_org": 0.043073831593958646
+        },
+        {
+          "decision": "Acesso Parcialmente Concedido",
+          "count": 1059,
+          "share_in_org": 0.03432294029947495
+        },
+        {
+          "decision": "Informação Inexistente",
+          "count": 927,
+          "share_in_org": 0.030044726777727362
+        }
+      ]
+    },
+    "CEF – Caixa Econômica Federal": {
+      "org": "CEF – Caixa Econômica Federal",
+      "summary": {
+        "org": "CEF – Caixa Econômica Federal",
+        "total_requests": 13933,
+        "denied_total": 2849,
+        "restricted_total": 4779,
+        "personal_restricted_total": 1479,
+        "denied_rate": 0.20447857604248906,
+        "restricted_rate": 0.3429986363310127
+      },
+      "top_subjects": [
+        {
+          "subject": "Outros em Economia e Finanças",
+          "total_requests": 10084,
+          "restricted_total": 3530,
+          "restricted_rate": 0.350059500198334,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 3837,
+              "share_in_subject": 0.3805037683458945
+            },
+            {
+              "decision": "Não se trata de solicitação de informação",
+              "count": 2492,
+              "share_in_subject": 0.2471241570805236
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 1870,
+              "share_in_subject": 0.18544228480761601
+            }
+          ]
+        },
+        {
+          "subject": "Acesso à informação",
+          "total_requests": 660,
+          "restricted_total": 173,
+          "restricted_rate": 0.26212121212121214,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 450,
+              "share_in_subject": 0.6818181818181818
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 94,
+              "share_in_subject": 0.14242424242424243
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 79,
+              "share_in_subject": 0.11969696969696969
+            }
+          ]
+        },
+        {
+          "subject": "Outros em Comércio e serviços",
+          "total_requests": 558,
+          "restricted_total": 211,
+          "restricted_rate": 0.3781362007168459,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 218,
+              "share_in_subject": 0.3906810035842294
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 189,
+              "share_in_subject": 0.3387096774193548
+            },
+            {
+              "decision": "Não se trata de solicitação de informação",
+              "count": 124,
+              "share_in_subject": 0.2222222222222222
+            }
+          ]
+        },
+        {
+          "subject": "Proteção e Benefícios ao Trabalhador",
+          "total_requests": 531,
+          "restricted_total": 400,
+          "restricted_rate": 0.7532956685499058,
+          "top_decisions": [
+            {
+              "decision": "Acesso Negado",
+              "count": 372,
+              "share_in_subject": 0.7005649717514124
+            },
+            {
+              "decision": "Acesso Concedido",
+              "count": 107,
+              "share_in_subject": 0.2015065913370998
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 28,
+              "share_in_subject": 0.05273069679849341
+            }
+          ]
+        },
+        {
+          "subject": "Outros em Habitação",
+          "total_requests": 292,
+          "restricted_total": 103,
+          "restricted_rate": 0.3527397260273973,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 163,
+              "share_in_subject": 0.5582191780821918
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 82,
+              "share_in_subject": 0.2808219178082192
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 21,
+              "share_in_subject": 0.07191780821917808
+            }
+          ]
+        }
+      ],
+      "top_decisions": [
+        {
+          "decision": "Acesso Concedido",
+          "count": 6076,
+          "share_in_org": 0.4360869877269791
+        },
+        {
+          "decision": "Acesso Negado",
+          "count": 2849,
+          "share_in_org": 0.20447857604248906
+        },
+        {
+          "decision": "Não se trata de solicitação de informação",
+          "count": 2799,
+          "share_in_org": 0.20088997344434079
+        },
+        {
+          "decision": "Acesso Parcialmente Concedido",
+          "count": 1930,
+          "share_in_org": 0.13852006028852365
+        },
+        {
+          "decision": "Informação Inexistente",
+          "count": 147,
+          "share_in_org": 0.010550491638555946
+        }
+      ]
+    },
+    "INSS – Instituto Nacional do Seguro Social": {
+      "org": "INSS – Instituto Nacional do Seguro Social",
+      "summary": {
+        "org": "INSS – Instituto Nacional do Seguro Social",
+        "total_requests": 33088,
+        "denied_total": 2656,
+        "restricted_total": 5757,
+        "personal_restricted_total": 2542,
+        "denied_rate": 0.08027079303675048,
+        "restricted_rate": 0.17399057059961315
+      },
+      "top_subjects": [
+        {
+          "subject": "Outros em Previdência",
+          "total_requests": 18912,
+          "restricted_total": 3926,
+          "restricted_rate": 0.20759306260575297,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 12571,
+              "share_in_subject": 0.6647102368866328
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 2218,
+              "share_in_subject": 0.11728003384094755
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 1708,
+              "share_in_subject": 0.09031302876480542
+            }
+          ]
+        },
+        {
+          "subject": "Acesso à informação",
+          "total_requests": 7252,
+          "restricted_total": 720,
+          "restricted_rate": 0.09928295642581357,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 6048,
+              "share_in_subject": 0.833976833976834
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 388,
+              "share_in_subject": 0.053502482073910645
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 332,
+              "share_in_subject": 0.045780474351902925
+            }
+          ]
+        },
+        {
+          "subject": "Benefícios e serviços",
+          "total_requests": 1279,
+          "restricted_total": 155,
+          "restricted_rate": 0.12118842845973417,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 1042,
+              "share_in_subject": 0.8146989835809226
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 93,
+              "share_in_subject": 0.0727130570758405
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 62,
+              "share_in_subject": 0.04847537138389367
+            }
+          ]
+        },
+        {
+          "subject": "Aposentadoria",
+          "total_requests": 1003,
+          "restricted_total": 159,
+          "restricted_rate": 0.1585244267198405,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 714,
+              "share_in_subject": 0.711864406779661
+            },
+            {
+              "decision": "Não se trata de solicitação de informação",
+              "count": 94,
+              "share_in_subject": 0.09371884346959122
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 86,
+              "share_in_subject": 0.08574277168494517
+            }
+          ]
+        },
+        {
+          "subject": "Previdência Básica",
+          "total_requests": 911,
+          "restricted_total": 203,
+          "restricted_rate": 0.22283205268935236,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 668,
+              "share_in_subject": 0.7332601536772777
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 103,
+              "share_in_subject": 0.11306256860592755
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 100,
+              "share_in_subject": 0.10976948408342481
+            }
+          ]
+        }
+      ],
+      "top_decisions": [
+        {
+          "decision": "Acesso Concedido",
+          "count": 23726,
+          "share_in_org": 0.7170575435203095
+        },
+        {
+          "decision": "Acesso Parcialmente Concedido",
+          "count": 3101,
+          "share_in_org": 0.09371977756286266
+        },
+        {
+          "decision": "Acesso Negado",
+          "count": 2656,
+          "share_in_org": 0.08027079303675048
+        },
+        {
+          "decision": "Não se trata de solicitação de informação",
+          "count": 1850,
+          "share_in_org": 0.0559115087040619
+        },
+        {
+          "decision": "Informação Inexistente",
+          "count": 665,
+          "share_in_org": 0.02009792069632495
+        }
+      ]
+    },
+    "MS – Ministério da Saúde": {
+      "org": "MS – Ministério da Saúde",
+      "summary": {
+        "org": "MS – Ministério da Saúde",
+        "total_requests": 45544,
+        "denied_total": 2319,
+        "restricted_total": 6334,
+        "personal_restricted_total": 530,
+        "denied_rate": 0.05091779378183734,
+        "restricted_rate": 0.13907430177410857
+      },
+      "top_subjects": [
+        {
+          "subject": "Outros em Saúde",
+          "total_requests": 22724,
+          "restricted_total": 2629,
+          "restricted_rate": 0.115692659743003,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 18469,
+              "share_in_subject": 0.812753036437247
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 1577,
+              "share_in_subject": 0.06939799331103678
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 1052,
+              "share_in_subject": 0.046294666431966204
+            }
+          ]
+        },
+        {
+          "subject": "Acesso à informação",
+          "total_requests": 11104,
+          "restricted_total": 1999,
+          "restricted_rate": 0.18002521613832853,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 8194,
+              "share_in_subject": 0.7379322766570605
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 1298,
+              "share_in_subject": 0.11689481268011527
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 701,
+              "share_in_subject": 0.06313040345821326
+            }
+          ]
+        },
+        {
+          "subject": "Medicamentos e Aparelhos",
+          "total_requests": 2181,
+          "restricted_total": 238,
+          "restricted_rate": 0.10912425492893169,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 1820,
+              "share_in_subject": 0.83447959651536
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 131,
+              "share_in_subject": 0.06006419073819349
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 107,
+              "share_in_subject": 0.049060064190738197
+            }
+          ]
+        },
+        {
+          "subject": "Coronavírus (COVID-19)",
+          "total_requests": 1483,
+          "restricted_total": 196,
+          "restricted_rate": 0.13216453135536074,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 1166,
+              "share_in_subject": 0.7862440997977074
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 99,
+              "share_in_subject": 0.0667565745111261
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 97,
+              "share_in_subject": 0.06540795684423466
+            }
+          ]
+        },
+        {
+          "subject": "Transparência e acesso à informação",
+          "total_requests": 530,
+          "restricted_total": 115,
+          "restricted_rate": 0.2169811320754717,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 371,
+              "share_in_subject": 0.7
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 86,
+              "share_in_subject": 0.16226415094339622
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 29,
+              "share_in_subject": 0.05471698113207547
+            }
+          ]
+        }
+      ],
+      "top_decisions": [
+        {
+          "decision": "Acesso Concedido",
+          "count": 35577,
+          "share_in_org": 0.7811566836465835
+        },
+        {
+          "decision": "Acesso Parcialmente Concedido",
+          "count": 4015,
+          "share_in_org": 0.0881565079922712
+        },
+        {
+          "decision": "Acesso Negado",
+          "count": 2319,
+          "share_in_org": 0.05091779378183734
+        },
+        {
+          "decision": "Órgão não tem competência para responder sobre o assunto",
+          "count": 1118,
+          "share_in_org": 0.02454769014579308
+        },
+        {
+          "decision": "Informação Inexistente",
+          "count": 1012,
+          "share_in_org": 0.022220270507640964
+        }
+      ]
+    },
+    "PF – Polícia Federal": {
+      "org": "PF – Polícia Federal",
+      "summary": {
+        "org": "PF – Polícia Federal",
+        "total_requests": 11366,
+        "denied_total": 1148,
+        "restricted_total": 2054,
+        "personal_restricted_total": 606,
+        "denied_rate": 0.10100299137779342,
+        "restricted_rate": 0.1807144114024283
+      },
+      "top_subjects": [
+        {
+          "subject": "Passaporte",
+          "total_requests": 2964,
+          "restricted_total": 293,
+          "restricted_rate": 0.09885290148448043,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 2600,
+              "share_in_subject": 0.8771929824561403
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 253,
+              "share_in_subject": 0.08535762483130904
+            },
+            {
+              "decision": "Não se trata de solicitação de informação",
+              "count": 43,
+              "share_in_subject": 0.014507422402159244
+            }
+          ]
+        },
+        {
+          "subject": "Outros em Relações Internacionais",
+          "total_requests": 2197,
+          "restricted_total": 288,
+          "restricted_rate": 0.13108784706417842,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 1709,
+              "share_in_subject": 0.7778789258079198
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 176,
+              "share_in_subject": 0.08010923987255349
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 112,
+              "share_in_subject": 0.05097860719162494
+            }
+          ]
+        },
+        {
+          "subject": "Outros em Segurança e Ordem Pública",
+          "total_requests": 2041,
+          "restricted_total": 616,
+          "restricted_rate": 0.30181283684468396,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 1148,
+              "share_in_subject": 0.5624693777560019
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 320,
+              "share_in_subject": 0.1567858892699657
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 296,
+              "share_in_subject": 0.14502694757471826
+            }
+          ]
+        },
+        {
+          "subject": "Armamento",
+          "total_requests": 1434,
+          "restricted_total": 358,
+          "restricted_rate": 0.2496513249651325,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 959,
+              "share_in_subject": 0.6687587168758717
+            },
+            {
+              "decision": "Acesso Parcialmente Concedido",
+              "count": 298,
+              "share_in_subject": 0.20781032078103207
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 60,
+              "share_in_subject": 0.04184100418410042
+            }
+          ]
+        },
+        {
+          "subject": "Certidões e Declarações",
+          "total_requests": 446,
+          "restricted_total": 57,
+          "restricted_rate": 0.12780269058295965,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 299,
+              "share_in_subject": 0.6704035874439462
+            },
+            {
+              "decision": "Não se trata de solicitação de informação",
+              "count": 83,
+              "share_in_subject": 0.1860986547085202
+            },
+            {
+              "decision": "Acesso Negado",
+              "count": 34,
+              "share_in_subject": 0.07623318385650224
+            }
+          ]
+        }
+      ],
+      "top_decisions": [
+        {
+          "decision": "Acesso Concedido",
+          "count": 8152,
+          "share_in_org": 0.717226816822101
+        },
+        {
+          "decision": "Acesso Negado",
+          "count": 1148,
+          "share_in_org": 0.10100299137779342
+        },
+        {
+          "decision": "Acesso Parcialmente Concedido",
+          "count": 906,
+          "share_in_org": 0.07971142002463488
+        },
+        {
+          "decision": "Não se trata de solicitação de informação",
+          "count": 444,
+          "share_in_org": 0.03906387471405948
+        },
+        {
+          "decision": "Órgão não tem competência para responder sobre o assunto",
+          "count": 352,
+          "share_in_org": 0.030969558331866973
+        }
+      ]
+    }
+  },
+  "personal_info": {
+    "series": [
+      {
+        "year": 2015,
+        "count": 1862,
+        "share_in_restricted": 0.22699012556381812
+      },
+      {
+        "year": 2016,
+        "count": 1415,
+        "share_in_restricted": 0.1503719447396387
+      },
+      {
+        "year": 2017,
+        "count": 1302,
+        "share_in_restricted": 0.1473017309650413
+      },
+      {
+        "year": 2018,
+        "count": 1258,
+        "share_in_restricted": 0.12497516391814027
+      },
+      {
+        "year": 2019,
+        "count": 1116,
+        "share_in_restricted": 0.09120627656096764
+      },
+      {
+        "year": 2020,
+        "count": 1368,
+        "share_in_restricted": 0.11150052979052898
+      },
+      {
+        "year": 2021,
+        "count": 1025,
+        "share_in_restricted": 0.10457049581718017
+      },
+      {
+        "year": 2022,
+        "count": 783,
+        "share_in_restricted": 0.0890582347588717
+      },
+      {
+        "year": 2023,
+        "count": 861,
+        "share_in_restricted": 0.0763094921563414
+      },
+      {
+        "year": 2024,
+        "count": 1064,
+        "share_in_restricted": 0.09717782445885469
+      },
+      {
+        "year": 2025,
+        "count": 893,
+        "share_in_restricted": 0.07861607535874637
+      },
+      {
+        "year": 2026,
+        "count": 94,
+        "share_in_restricted": 0.06060606060606061
+      }
+    ],
+    "top_orgs": [
+      {
+        "org": "INSS – Instituto Nacional do Seguro Social",
+        "total_requests": 33088,
+        "denied_total": 2656,
+        "restricted_total": 5757,
+        "personal_restricted_total": 2542,
+        "denied_rate": 0.08027079303675048,
+        "restricted_rate": 0.17399057059961315,
+        "share_in_org_restricted": 0.4415494180997047
+      },
+      {
+        "org": "CEF – Caixa Econômica Federal",
+        "total_requests": 13933,
+        "denied_total": 2849,
+        "restricted_total": 4779,
+        "personal_restricted_total": 1479,
+        "denied_rate": 0.20447857604248906,
+        "restricted_rate": 0.3429986363310127,
+        "share_in_org_restricted": 0.30947897049591966
+      },
+      {
+        "org": "MF - Ministério da Fazenda",
+        "total_requests": 60682,
+        "denied_total": 6232,
+        "restricted_total": 8352,
+        "personal_restricted_total": 641,
+        "denied_rate": 0.10269931775485316,
+        "restricted_rate": 0.13763554266504072,
+        "share_in_org_restricted": 0.07674808429118773
+      },
+      {
+        "org": "PF – Polícia Federal",
+        "total_requests": 11366,
+        "denied_total": 1148,
+        "restricted_total": 2054,
+        "personal_restricted_total": 606,
+        "denied_rate": 0.10100299137779342,
+        "restricted_rate": 0.1807144114024283,
+        "share_in_org_restricted": 0.29503407984420643
+      },
+      {
+        "org": "ANEEL – Agência Nacional de Energia Elétrica",
+        "total_requests": 31677,
+        "denied_total": 1581,
+        "restricted_total": 2570,
+        "personal_restricted_total": 542,
+        "denied_rate": 0.0499100293588408,
+        "restricted_rate": 0.08113142027338448,
+        "share_in_org_restricted": 0.21089494163424125
+      },
+      {
+        "org": "MS – Ministério da Saúde",
+        "total_requests": 45544,
+        "denied_total": 2319,
+        "restricted_total": 6334,
+        "personal_restricted_total": 530,
+        "denied_rate": 0.05091779378183734,
+        "restricted_rate": 0.13907430177410857,
+        "share_in_org_restricted": 0.08367540258920114
+      },
+      {
+        "org": "MTE - Ministério do Trabalho e Emprego",
+        "total_requests": 6216,
+        "denied_total": 1004,
+        "restricted_total": 1432,
+        "personal_restricted_total": 397,
+        "denied_rate": 0.1615186615186615,
+        "restricted_rate": 0.23037323037323038,
+        "share_in_org_restricted": 0.2772346368715084
+      },
+      {
+        "org": "INEP – Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira",
+        "total_requests": 15133,
+        "denied_total": 1267,
+        "restricted_total": 1937,
+        "personal_restricted_total": 394,
+        "denied_rate": 0.08372431110817419,
+        "restricted_rate": 0.12799841406198376,
+        "share_in_org_restricted": 0.20340733092410945
+      },
+      {
+        "org": "CGU – Controladoria-Geral da União",
+        "total_requests": 11494,
+        "denied_total": 1054,
+        "restricted_total": 2286,
+        "personal_restricted_total": 284,
+        "denied_rate": 0.0917000174003828,
+        "restricted_rate": 0.198886375500261,
+        "share_in_org_restricted": 0.1242344706911636
+      },
+      {
+        "org": "PRF – Polícia Rodoviária Federal",
+        "total_requests": 6188,
+        "denied_total": 646,
+        "restricted_total": 1070,
+        "personal_restricted_total": 230,
+        "denied_rate": 0.1043956043956044,
+        "restricted_rate": 0.1729153199741435,
+        "share_in_org_restricted": 0.21495327102803738
+      },
+      {
+        "org": "MPS - Ministério da Previdência Social",
+        "total_requests": 1780,
+        "denied_total": 341,
+        "restricted_total": 462,
+        "personal_restricted_total": 220,
+        "denied_rate": 0.19157303370786516,
+        "restricted_rate": 0.2595505617977528,
+        "share_in_org_restricted": 0.47619047619047616
+      },
+      {
+        "org": "IBGE – Fundação Instituto Brasileiro de Geografia e Estatística",
+        "total_requests": 10808,
+        "denied_total": 674,
+        "restricted_total": 2037,
+        "personal_restricted_total": 213,
+        "denied_rate": 0.06236121391561806,
+        "restricted_rate": 0.18847150259067358,
+        "share_in_org_restricted": 0.10456553755522828
+      },
+      {
+        "org": "FUNAI – Fundação Nacional dos Povos Indígenas",
+        "total_requests": 13307,
+        "denied_total": 736,
+        "restricted_total": 1158,
+        "personal_restricted_total": 191,
+        "denied_rate": 0.05530923574058766,
+        "restricted_rate": 0.08702186818967461,
+        "share_in_org_restricted": 0.16493955094991364
+      },
+      {
+        "org": "CEX – Comando do Exército",
+        "total_requests": 6592,
+        "denied_total": 918,
+        "restricted_total": 1067,
+        "personal_restricted_total": 169,
+        "denied_rate": 0.13925970873786409,
+        "restricted_rate": 0.1618628640776699,
+        "share_in_org_restricted": 0.1583880037488285
+      },
+      {
+        "org": "MGI - Ministério da Gestão e da Inovação em Serviços Públicos",
+        "total_requests": 10944,
+        "denied_total": 1189,
+        "restricted_total": 2139,
+        "personal_restricted_total": 143,
+        "denied_rate": 0.10864400584795321,
+        "restricted_rate": 0.19544956140350878,
+        "share_in_org_restricted": 0.06685366993922394
+      }
+    ]
+  }
+}

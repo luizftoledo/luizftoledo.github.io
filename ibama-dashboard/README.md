@@ -25,7 +25,7 @@ Workflow: `.github/workflows/update-ibama-dashboard.yml`
 ## Build manual local
 
 ```bash
-cd /Users/luizfernandotoledo/Desktop/Code_folder/cursor_testes/luizftoledo.github.io
+cd <seu-repositorio>
 python3 scripts/build_ibama_dashboard_data.py
 ```
 

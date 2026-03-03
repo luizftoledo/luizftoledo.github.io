@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LAI: Negativas de Pedidos no Governo Federal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #f7f6f3;
+      --paper: #ffffff;
+      --line: #dfddd7;
+      --ink: #23211f;
+      --muted: #68635d;
+      --accent: #2f6f9f;
+      --accent-2: #3f8f6d;
+      --accent-3: #8d5f2c;
+      --danger: #b64242;
+      --shadow: 0 10px 26px rgba(22, 20, 18, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(47, 111, 159, 0.08), transparent 34%),
+        radial-gradient(circle at 95% 0%, rgba(63, 143, 109, 0.07), transparent 30%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(1220px, 95vw);
+      margin: 1.1rem auto 2.5rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 1.15rem 1.2rem 1.1rem;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    h1 {
+      font-family: "Source Serif 4", serif;
+      margin: 0;
+      font-size: clamp(1.35rem, 2.8vw, 2.2rem);
+      line-height: 1.15;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.45;
+      max-width: 90ch;
+    }
+
+    .update-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.25rem 0.62rem;
+      background: #f9f8f6;
+      color: #4f4a44;
+      font-size: 0.75rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.65rem;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 0.7rem 0.72rem;
+      background: #fcfbfa;
+      min-height: 94px;
+    }
+
+    .metric .label {
+      font-size: 0.74rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .metric .value {
+      margin-top: 0.4rem;
+      font-family: "JetBrains Mono", monospace;
+      font-size: clamp(0.93rem, 1.35vw, 1.08rem);
+      color: #213241;
+      line-height: 1.3;
+    }
+
+    .narrative {
+      padding: 1rem 1.1rem;
+    }
+
+    .narrative h2,
+    .charts h2,
+    .tables h2,
+    .orgs h2,
+    .ai-panel h2 {
+      margin: 0;
+      font-size: 1.02rem;
+    }
+
+    .narrative-list {
+      margin: 0.68rem 0 0;
+      padding-left: 1rem;
+      display: grid;
+      gap: 0.5rem;
+      color: #322f2b;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .charts {
+      padding: 1rem 1.1rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .chart-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 0.68rem 0.72rem;
+      display: grid;
+      gap: 0.45rem;
+      min-height: 320px;
+    }
+
+    .chart-card h3 {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #38332d;
+    }
+
+    .chart-card canvas {
+      width: 100%;
+      height: 250px;
+    }
+
+    .tables,
+    .orgs,
+    .ai-panel {
+      padding: 1rem 1.1rem;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .table-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .table-card h3 {
+      margin: 0;
+      padding: 0.66rem 0.76rem;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--line);
+      background: #faf9f7;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      max-height: 320px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+    }
+
+    th,
+    td {
+      padding: 0.48rem 0.55rem;
+      border-bottom: 1px solid #efede8;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f7f5f2;
+      color: #4b4640;
+      font-size: 0.77rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tbody tr:nth-child(even) { background: #fdfcfb; }
+
+    .org-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .org-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 0.75rem 0.78rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .org-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .org-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .org-tags {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .mini-tag {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.15rem 0.45rem;
+      font-size: 0.72rem;
+      color: #4f4a44;
+      background: #faf8f5;
+    }
+
+    .org-note {
+      margin: 0;
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .ai-row {
+      display: grid;
+      gap: 0.58rem;
+    }
+
+    .ai-key-row {
+      grid-template-columns: minmax(200px, 1fr) 180px 180px;
+    }
+
+    .ai-question-row {
+      grid-template-columns: minmax(0, 1fr) 130px;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font: inherit;
+      border-radius: 11px;
+      border: 1px solid #bcb7ad;
+      padding: 0.58rem 0.66rem;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 82px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(47, 111, 159, 0.2);
+    }
+
+    button {
+      cursor: pointer;
+      border: 0;
+      font-weight: 700;
+      transition: filter 130ms ease, transform 130ms ease;
+    }
+
+    button:hover { filter: brightness(1.03); transform: translateY(-1px); }
+    button:disabled { opacity: 0.62; cursor: wait; transform: none; }
+
+    .btn-ai {
+      background: linear-gradient(120deg, #2f6f9f, #3f8f6d);
+      color: #fff;
+    }
+
+    .btn-ai-secondary {
+      border: 1px solid #c8c2b8;
+      background: #fbf9f6;
+      color: #4f4a44;
+    }
+
+    .ai-chat {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fcfbf9;
+      padding: 0.65rem;
+      min-height: 180px;
+      max-height: 420px;
+      overflow: auto;
+      display: grid;
+      gap: 0.42rem;
+    }
+
+    .ai-msg {
+      border: 1px solid #e4e1db;
+      border-radius: 10px;
+      padding: 0.52rem 0.58rem;
+      background: #fff;
+      display: grid;
+      gap: 0.32rem;
+      font-size: 0.86rem;
+      line-height: 1.4;
+    }
+
+    .ai-msg.user {
+      border-color: #cad9e6;
+      background: #f4f8fc;
+    }
+
+    .ai-msg .role {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #6c6660;
+      font-weight: 700;
+    }
+
+    .ai-msg .txt p,
+    .ai-msg .txt ul,
+    .ai-msg .txt ol {
+      margin: 0;
+    }
+
+    .ai-msg .txt ul,
+    .ai-msg .txt ol {
+      padding-left: 1.1rem;
+    }
+
+    .ai-msg .txt code {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.8rem;
+      background: #f3f1ec;
+      border: 1px solid #e1ddd5;
+      border-radius: 6px;
+      padding: 0.1rem 0.22rem;
+    }
+
+    .ai-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .error { color: var(--danger); }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    @media (max-width: 1024px) {
+      .metrics,
+      .chart-grid,
+      .org-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ai-key-row,
+      .ai-question-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="card hero">
+      <h1>LAI no Executivo Federal: por que pedidos de informação são negados?</h1>
+      <p class="sub">Painel com série histórica (2015-atual), motivos de negativa, comparação entre órgãos e foco especial em negativas ligadas a informação pessoal. Texto simples, dados oficiais e atualização automática mensal.</p>
+      <div class="update-line">
+        <span id="updated-line">Atualização: carregando...</span>
+        <span class="pill" id="years-pill">anos: --</span>
+        <span class="pill">fonte: Busca LAI / CGU</span>
+      </div>
+      <div class="metrics">
+        <article class="metric">
+          <div class="label">Pedidos (série inteira)</div>
+          <div class="value" id="metric-total-requests">--</div>
+        </article>
+        <article class="metric">
+          <div class="label">Negados totalmente</div>
+          <div class="value" id="metric-denied-total">--</div>
+        </article>
+        <article class="metric">
+          <div class="label">Com restrição (negado + parcial)</div>
+          <div class="value" id="metric-restricted-total">--</div>
+        </article>
+        <article class="metric">
+          <div class="label">Negativas por informação pessoal</div>
+          <div class="value" id="metric-personal-total">--</div>
+        </article>
+      </div>
+    </header>
+
+    <section class="card narrative">
+      <h2>Leitura rápida dos dados</h2>
+      <ul class="narrative-list" id="narrative-list"></ul>
+    </section>
+
+    <section class="card charts">
+      <h2>Gráficos comparando ano a ano</h2>
+      <div class="chart-grid">
+        <article class="chart-card">
+          <h3>Pedidos e negativas por ano</h3>
+          <canvas id="chart-yearly-volume"></canvas>
+        </article>
+        <article class="chart-card">
+          <h3>Taxa de negativa ao longo do tempo</h3>
+          <canvas id="chart-yearly-rate"></canvas>
+        </article>
+        <article class="chart-card">
+          <h3>Motivos de negativa (top motivos)</h3>
+          <canvas id="chart-reasons"></canvas>
+        </article>
+        <article class="chart-card">
+          <h3>Órgãos que mais negam (top 5 + PF)</h3>
+          <canvas id="chart-org-top"></canvas>
+        </article>
+        <article class="chart-card">
+          <h3>Quem nega menos (entre órgãos com maior volume)</h3>
+          <canvas id="chart-org-low"></canvas>
+        </article>
+        <article class="chart-card">
+          <h3>Foco: negativas por informação pessoal</h3>
+          <canvas id="chart-personal"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <section class="card tables">
+      <h2>Tabelas de exemplo (dados reais)</h2>
+      <article class="table-card">
+        <h3>Série histórica anual</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ano</th>
+                <th>Pedidos</th>
+                <th>Negados</th>
+                <th>Com restrição</th>
+                <th>Taxa negado</th>
+                <th>Taxa com restrição</th>
+                <th>Pessoais (qtde)</th>
+                <th>Pessoais (% nas restrições)</th>
+              </tr>
+            </thead>
+            <tbody id="table-yearly"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="table-card">
+        <h3>Motivos mais frequentes de negativa/restrição</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Motivo</th>
+                <th>Quantidade</th>
+                <th>% do total com restrição</th>
+              </tr>
+            </thead>
+            <tbody id="table-reasons"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="table-card">
+        <h3>Top órgãos que mais negam (com PF incluída)</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Órgão</th>
+                <th>Pedidos</th>
+                <th>Negados</th>
+                <th>Com restrição</th>
+                <th>Taxa negado</th>
+                <th>Taxa com restrição</th>
+              </tr>
+            </thead>
+            <tbody id="table-org-top"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="table-card">
+        <h3>Negativas por informação pessoal: órgãos com mais casos</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Órgão</th>
+                <th>Pessoais (qtde)</th>
+                <th>Com restrição</th>
+                <th>% pessoal dentro das restrições</th>
+              </tr>
+            </thead>
+            <tbody id="table-personal-top"></tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <section class="card orgs">
+      <h2>O que os cidadãos mais pedem para cada órgão e como isso costuma ser respondido</h2>
+      <div class="org-grid" id="org-cards"></div>
+    </section>
+
+    <footer class="card ai-panel">
+      <h2>IA para entender negativas e montar pedidos melhores</h2>
+      <div class="ai-row ai-key-row">
+        <input id="gemini-key" type="password" placeholder="Cole sua Gemini API key (fica só no seu navegador)">
+        <select id="ai-year-filter"></select>
+        <select id="ai-org-filter"></select>
+      </div>
+      <div class="ai-chat" id="ai-chat" aria-live="polite"></div>
+      <div class="ai-row ai-question-row">
+        <textarea id="ai-question" placeholder="Descreva seu caso concreto: o que você quer pedir, para qual órgão, e qual negativa recebeu (se houver)."></textarea>
+        <button class="btn-ai" id="btn-ask-ai" type="button">Perguntar</button>
+      </div>
+      <div class="ai-row" style="grid-template-columns: 180px;">
+        <button class="btn-ai-secondary" id="btn-ai-reset" type="button">Nova conversa</button>
+      </div>
+      <p class="ai-note">
+        O chat usa o contexto dos dados desta página e orienta em linguagem simples: motivo provável da negativa, argumentos possíveis no recurso, e um modelo curto de pedido melhor formulado.
+        Para precedentes recursais oficiais (CGU/CMRI), consulte também
+        <a href="https://www.gov.br/cgu/pt-br/acesso-a-informacao/dados-abertos/arquivos/busca-de-precedentes" target="_blank" rel="noopener noreferrer">Busca de Precedentes</a>.
+      </p>
+      <p class="ai-note error" id="ai-status"></p>
+    </footer>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>
