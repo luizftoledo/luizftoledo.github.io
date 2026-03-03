@@ -33,6 +33,7 @@ USER_AGENT = (
 )
 DOWNLOAD_TIMEOUT = 300
 START_YEAR_DEFAULT = 2015
+MIN_REQUESTS_TOP_DENIAL_RATE_CURRENT_YEAR = 200
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DASH_DIR = ROOT_DIR / "lai-dashboard"
@@ -1363,6 +1364,35 @@ def build_report(year_payloads):
         (current_ytd["restricted_rate"] - baseline["restricted_rate_avg"]) * 100
     )
 
+    top_denial_rate_current_year = []
+    if latest_month:
+        current_org_total_ytd = {}
+        current_org_denied_ytd = {}
+        for org, month_counter in (latest_ctx.get("org_month_total", {}) or {}).items():
+            current_org_total_ytd[org] = int(ytd_sum(month_counter, latest_month))
+        for org, month_counter in (latest_ctx.get("org_month_denied", {}) or {}).items():
+            current_org_denied_ytd[org] = int(ytd_sum(month_counter, latest_month))
+
+        for org, total_requests in current_org_total_ytd.items():
+            if total_requests < MIN_REQUESTS_TOP_DENIAL_RATE_CURRENT_YEAR:
+                continue
+            denied_total = int(current_org_denied_ytd.get(org, 0))
+            denied_rate = (denied_total / total_requests) if total_requests else 0.0
+            top_denial_rate_current_year.append(
+                {
+                    "org": org,
+                    "total_requests": int(total_requests),
+                    "denied_total": int(denied_total),
+                    "denied_rate": denied_rate,
+                }
+            )
+
+    top_denial_rate_current_year = sorted(
+        top_denial_rate_current_year,
+        key=lambda row: (row["denied_rate"], row["denied_total"], row["total_requests"]),
+        reverse=True,
+    )[:5]
+
     org_spikes = []
     if latest_month and comparison_years:
         current_org_denied = {
@@ -1498,6 +1528,8 @@ def build_report(year_payloads):
         "restricted_rate_status": (
             rate_status(restricted_delta_pp) if baseline_rows else "sem base"
         ),
+        "top_denial_rate_current_year": top_denial_rate_current_year,
+        "top_denial_rate_min_requests": MIN_REQUESTS_TOP_DENIAL_RATE_CURRENT_YEAR,
         "org_spikes": org_spikes,
         "theme_worsening": theme_worsening,
     }
@@ -1596,6 +1628,11 @@ def build_report(year_payloads):
             ),
         },
         "monitoring_rules": {
+            "top_denial_rate_current_year": (
+                "Top 5 por taxa de negativa no ano vigente = negativas acumuladas no ano "
+                "até o mês mais recente dividido pelo total de pedidos no mesmo período, "
+                f"com filtro mínimo de {MIN_REQUESTS_TOP_DENIAL_RATE_CURRENT_YEAR} pedidos."
+            ),
             "recent_spike": (
                 "Spike recente por órgão = mês mais recente do ano atual comparado à média "
                 "do mesmo mês nos últimos até 3 anos (com filtros mínimos de volume)."

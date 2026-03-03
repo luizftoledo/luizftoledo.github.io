@@ -53,6 +53,7 @@
   const aiResetBtn = document.getElementById('btn-ai-reset');
   const aiStatus = document.getElementById('ai-status');
   const methodologyContent = document.getElementById('methodology-content');
+  const sourcesList = document.getElementById('sources-list');
 
   const chartInstances = [];
 
@@ -137,6 +138,12 @@
     const clean = (text || '').toString().replace(/\s+/g, ' ').trim();
     if (clean.length <= limit) return clean;
     return `${clean.slice(0, limit - 1).trim()}…`;
+  }
+
+  function buildBuscaRequestLink(idPedido) {
+    const id = (idPedido || '').toString().trim();
+    if (!id) return '';
+    return `https://buscalai.cgu.gov.br/busca/${encodeURIComponent(id)}`;
   }
 
   function renderPartialYearHints() {
@@ -237,13 +244,13 @@
     const statusLabel = status === 'piorando'
       ? 'Atenção: cenário piorou no acumulado do ano'
       : (status === 'melhorando' ? 'Sinal positivo: cenário melhorou no acumulado' : 'Cenário estável no acumulado');
-
-    const spikes = (monitoring.org_spikes || []).slice(0, 5);
-    const spikesHtml = spikes.length
-      ? `<ul>${spikes.map((row) => `
-          <li><strong>${esc(row.org)}</strong>: teve <strong>${nFmt.format(row.current_denied)}</strong> negativas no mês mais recente. A referência histórica para o mesmo mês é <strong>${nFmt.format(Math.round(row.baseline_denied_avg || 0))}</strong>, então houve alta de <strong>${pFmt.format(row.lift_ratio || 0)}</strong>.</li>
-        `).join('')}</ul>`
-      : '<p>Nenhum órgão teve aumento fora do padrão histórico no mês mais recente.</p>';
+    const topRateRows = (monitoring.top_denial_rate_current_year || []).slice(0, 5);
+    const minRequestsTopRate = Number(monitoring.top_denial_rate_min_requests || 0);
+    const topRateHtml = topRateRows.length
+      ? `<ol>${topRateRows.map((row) => `
+          <li><strong>${esc(row.org)}</strong>: <strong>${pFmt.format(row.denied_rate || 0)}</strong> de negativas no ano vigente, com <strong>${nFmt.format(row.denied_total || 0)}</strong> negados em <strong>${nFmt.format(row.total_requests || 0)}</strong> pedidos.</li>
+        `).join('')}</ol>`
+      : '<p>Sem dados suficientes para montar o ranking proporcional neste momento.</p>';
 
     const themeWorsening = (monitoring.theme_worsening || []).slice(0, 5);
     const themeHtml = themeWorsening.length
@@ -260,9 +267,9 @@
         <p><strong>Taxa de negativas totais</strong>: está em <strong>${pFmt.format(current.denied_rate || 0)}</strong>. A base comparável é <strong>${pFmt.format(baseline.denied_rate_avg || 0)}</strong>, diferença de <strong>${deniedDelta.toFixed(1)} p.p.</strong>.</p>
       </article>
       <article class="alert-card">
-        <h3>Órgãos com spike recente</h3>
-        <p>“Spike” significa aumento acima do padrão histórico para o mesmo mês do ano.</p>
-        ${spikesHtml}
+        <h3>Top 5 taxas de negativa no ano vigente</h3>
+        <p>Ranking proporcional: mostra quem mais nega em relação ao próprio volume de pedidos no ano atual (até ${esc(monitoring.latest_month_label || '--')}), com mínimo de ${nFmt.format(minRequestsTopRate)} pedidos no período.</p>
+        ${topRateHtml}
       </article>
       <article class="alert-card">
         <h3>Áreas que pioraram no ano</h3>
@@ -282,7 +289,7 @@
     }));
     const files = (m.source_files || []).map((item) => `<code>${esc(item)}</code>`).join(', ');
     const comparisonRule = (((m.monitoring_rules || {}).government_diagnosis) || '').trim();
-    const spikeRule = (((m.monitoring_rules || {}).recent_spike) || '').trim();
+    const topRateRule = (((m.monitoring_rules || {}).top_denial_rate_current_year) || '').trim();
     const themeRule = (((m.monitoring_rules || {}).theme_worsening) || '').trim();
 
     methodologyContent.innerHTML = `
@@ -329,7 +336,7 @@
           <li><strong>Amostra para busca:</strong> ${(m.sampling_for_search || {}).method ? esc((m.sampling_for_search || {}).method) : '--'}.</li>
           <li><strong>Volume da amostra:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).sample_count || 0))}</strong> pedidos.</li>
           <li><strong>Cobertura completa no top 10+PF:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).top_org_rows_in_search || 0))}</strong> pedidos.</li>
-          <li><strong>Link BuscaLAI:</strong> cada pedido da amostra pode trazer URL direta via <code>IdPedido</code>, a partir de <code>PedidosLinkArquivo</code>.</li>
+          <li><strong>Link BuscaLAI:</strong> cada pedido com <code>IdPedido</code> recebe link direto <code>/busca/{id}</code>; quando houver, também aparece link de anexo de resposta.</li>
         </ul>
       </details>
 
@@ -337,11 +344,45 @@
         <summary>Regras dos alertas do monitoramento</summary>
         <ul>
           <li><strong>Diagnóstico do período:</strong> ${comparisonRule ? esc(comparisonRule) : '--'}.</li>
-          <li><strong>Spike por órgão:</strong> ${spikeRule ? esc(spikeRule) : '--'}.</li>
+          <li><strong>Top 5 proporcional por negativa:</strong> ${topRateRule ? esc(topRateRule) : '--'}.</li>
           <li><strong>Piora por tema:</strong> ${themeRule ? esc(themeRule) : '--'}.</li>
         </ul>
       </details>
     `;
+  }
+
+  function renderSourcesFooter() {
+    if (!sourcesList) return;
+
+    const source = reportData.source || {};
+    const years = source.years_covered || [];
+    const template = source.download_url_template || '';
+    const links = [];
+    const seen = new Set();
+
+    const addLink = (label, url) => {
+      const clean = (url || '').toString().trim();
+      if (!clean || seen.has(clean)) return;
+      seen.add(clean);
+      links.push({ label, url: clean });
+    };
+
+    addLink('Portal oficial de download (Busca LAI / CGU)', source.portal_url);
+    years.forEach((year) => {
+      if (!template.includes('{year}')) return;
+      addLink(`Arquivo anual ${year} (ZIP com CSV)`, template.replace('{year}', String(year)));
+    });
+    addLink('Busca de precedentes recursais (CGU/CMRI)', source.precedentes_url);
+    addLink('Painel oficial LAI (Central de Painéis CGU)', 'https://centralpaineis.cgu.gov.br/visualizar/lai');
+    addLink('API pública do painel LAI (Central de Painéis CGU)', 'https://centralpaineis.cgu.gov.br/api/publico/visualizar/lai');
+    addLink('Busca direta por pedido no BuscaLAI', 'https://buscalai.cgu.gov.br/busca/{id_pedido}');
+    addLink('API pública de detalhe do pedido', 'https://api-laibr.cgu.gov.br/buscar-pedidos/{id_pedido}');
+
+    sourcesList.innerHTML = links.length
+      ? links.map((item) => (
+        `<li><a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.label)}</a></li>`
+      )).join('')
+      : '<li>Sem links disponíveis no momento.</li>';
   }
 
   function renderNarrative() {
@@ -911,7 +952,9 @@
           <td>${esc(row.decision || '--')}</td>
           <td>${esc(row.theme || '--')}</td>
           <td>${esc(row.subject || '--')}</td>
-          <td>${row.request_link ? `<a href="${esc(row.request_link)}" target="_blank" rel="noopener noreferrer">Abrir</a>` : '--'}</td>
+          <td>${row.request_public_link
+            ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Pedido</a>${row.request_attachment_link ? ` · <a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : ''}`
+            : (row.request_attachment_link ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : '--')}</td>
           <td>${esc(row.text_excerpt || '--')}</td>
         </tr>
       `).join('')
@@ -1204,6 +1247,10 @@
         .filter(Boolean)
         .map((row) => ({
           ...row,
+          id_pedido: (row.id_pedido || '').toString().trim(),
+          request_public_link: buildBuscaRequestLink(row.id_pedido),
+          request_attachment_link: (row.request_attachment_link || row.request_link || '').toString().trim(),
+          request_link: buildBuscaRequestLink(row.id_pedido) || (row.request_attachment_link || row.request_link || '').toString().trim(),
           year: Number(row.year || 0),
           search_blob: normalizeForSearch(`${row.org || ''} ${row.subject || ''} ${row.text_excerpt || ''} ${row.theme || ''} ${row.decision || ''} ${row.reason || ''}`),
         }));
@@ -1266,6 +1313,7 @@
     renderTables();
     renderOrgCards();
     renderMethodology();
+    renderSourcesFooter();
 
     restoreGeminiKey();
     populateAiFilters();

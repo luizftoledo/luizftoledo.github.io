@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T10:11:14.365413+00:00",
+  "generated_at": "2026-03-03T10:40:00.791770+00:00",
   "source": {
     "portal_url": "https://buscalai.cgu.gov.br/DownloadDados/DownloadDados",
     "download_url_template": "https://dadosabertos-download.cgu.gov.br/FalaBR/Arquivos_FalaBR_Filtrado/Arquivos_csv_{year}.zip",
@@ -6593,6 +6593,39 @@
     "restricted_rate_delta_pp": 1.8418379421642568,
     "denied_rate_status": "piorando",
     "restricted_rate_status": "piorando",
+    "top_denial_rate_current_year": [
+      {
+        "org": "PF – Polícia Federal",
+        "total_requests": 212,
+        "denied_total": 44,
+        "denied_rate": 0.20754716981132076
+      },
+      {
+        "org": "MF - Ministério da Fazenda",
+        "total_requests": 236,
+        "denied_total": 35,
+        "denied_rate": 0.1483050847457627
+      },
+      {
+        "org": "PETROBRAS – Petróleo Brasileiro S.A.",
+        "total_requests": 356,
+        "denied_total": 48,
+        "denied_rate": 0.1348314606741573
+      },
+      {
+        "org": "ANEEL – Agência Nacional de Energia Elétrica",
+        "total_requests": 262,
+        "denied_total": 29,
+        "denied_rate": 0.11068702290076336
+      },
+      {
+        "org": "ANVISA – Agência Nacional de Vigilância Sanitária",
+        "total_requests": 284,
+        "denied_total": 15,
+        "denied_rate": 0.0528169014084507
+      }
+    ],
+    "top_denial_rate_min_requests": 200,
     "org_spikes": [],
     "theme_worsening": [
       {
@@ -6992,6 +7025,7 @@
       "pf_rule": "A Polícia Federal é incluída no bloco principal mesmo fora do top 10."
     },
     "monitoring_rules": {
+      "top_denial_rate_current_year": "Top 5 por taxa de negativa no ano vigente = negativas acumuladas no ano até o mês mais recente dividido pelo total de pedidos no mesmo período, com filtro mínimo de 200 pedidos.",
       "recent_spike": "Spike recente por órgão = mês mais recente do ano atual comparado à média do mesmo mês nos últimos até 3 anos (com filtros mínimos de volume).",
       "government_diagnosis": "Diagnóstico YTD compara o ano atual até o mês mais recente com a média dos mesmos meses nos últimos até 3 anos.",
       "theme_worsening": "Piora por tema considera aumento da taxa de restrição no YTD contra a base histórica comparável de meses."

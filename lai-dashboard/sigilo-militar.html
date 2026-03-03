@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitor de Sigilo Militar (LAI)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #f7f6f3;
+      --paper: #ffffff;
+      --line: #dfddd7;
+      --ink: #23211f;
+      --muted: #68635d;
+      --accent: #2f6f9f;
+      --accent-2: #3f8f6d;
+      --danger: #b64242;
+      --chip: #f3efe5;
+      --shadow: 0 10px 26px rgba(22, 20, 18, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(47, 111, 159, 0.08), transparent 34%),
+        radial-gradient(circle at 95% 0%, rgba(63, 143, 109, 0.07), transparent 30%),
+        var(--bg);
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(1220px, 95vw);
+      margin: 1.1rem auto 2.6rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .quick-nav {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.34rem 0.72rem;
+      background: #fbfaf7;
+      color: #4a453f;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .nav-btn:hover {
+      text-decoration: none;
+      background: #f2eee7;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      padding: 1.05rem 1.1rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Source Serif 4", serif;
+      font-size: clamp(1.35rem, 2.8vw, 2.16rem);
+      line-height: 1.16;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.08rem;
+      letter-spacing: 0.01em;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 0.96rem;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .hero {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .hero .sub {
+      font-size: 0.95rem;
+    }
+
+    .meta-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      align-items: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #f8f6f1;
+      padding: 0.22rem 0.62rem;
+      font-size: 0.75rem;
+      color: #4f4a44;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.62rem;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfaf7;
+      padding: 0.65rem 0.72rem;
+      display: grid;
+      gap: 0.26rem;
+    }
+
+    .metric .label {
+      color: #676058;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .metric .value {
+      font-size: 1.25rem;
+      font-weight: 800;
+      line-height: 1.06;
+    }
+
+    .alert-list {
+      margin: 0;
+      padding-left: 1.05rem;
+      display: grid;
+      gap: 0.35rem;
+      color: #413b35;
+      font-size: 0.91rem;
+    }
+
+    .alert-list strong {
+      background: #e9eef2;
+      border-radius: 6px;
+      padding: 0.02rem 0.22rem;
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.74rem;
+      align-items: stretch;
+    }
+
+    .chart-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfaf7;
+      padding: 0.7rem;
+      display: grid;
+      gap: 0.45rem;
+      min-height: 300px;
+    }
+
+    .chart-card canvas {
+      width: 100%;
+      height: 240px;
+      max-height: 240px;
+    }
+
+    .org-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+      align-items: start;
+    }
+
+    .org-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fbfaf7;
+      padding: 0.82rem;
+      display: grid;
+      gap: 0.6rem;
+      min-width: 0;
+    }
+
+    .org-title {
+      font-size: 1.03rem;
+      font-weight: 800;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+    }
+
+    .chip {
+      border: 1px solid #d4cec2;
+      border-radius: 999px;
+      background: var(--chip);
+      padding: 0.2rem 0.54rem;
+      font-size: 0.78rem;
+      color: #4d4740;
+      white-space: nowrap;
+    }
+
+    .subhead {
+      font-size: 0.79rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: #676058;
+    }
+
+    .kv {
+      margin: 0;
+      padding-left: 1.02rem;
+      display: grid;
+      gap: 0.24rem;
+      color: #423c35;
+      font-size: 0.89rem;
+    }
+
+    .quote {
+      margin: 0;
+      color: #4c463f;
+      font-size: 0.87rem;
+      line-height: 1.44;
+      background: #f4f1ea;
+      border: 1px solid #ddd5c5;
+      border-radius: 10px;
+      padding: 0.48rem 0.55rem;
+      overflow-wrap: anywhere;
+    }
+
+    .search-controls {
+      display: grid;
+      gap: 0.58rem;
+      margin-bottom: 0.72rem;
+    }
+
+    .filter-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .filter-row-2 {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+    }
+
+    select,
+    input,
+    button {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.42rem 0.56rem;
+      font: inherit;
+      font-size: 0.88rem;
+      color: var(--ink);
+      background: #fff;
+      min-width: 0;
+    }
+
+    button {
+      cursor: pointer;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      color: #fff;
+      border-color: transparent;
+      font-weight: 700;
+      padding-inline: 1rem;
+    }
+
+    .search-status {
+      font-size: 0.83rem;
+      color: #59534d;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 880px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid #ece8de;
+      padding: 0.52rem 0.62rem;
+      text-align: left;
+      vertical-align: top;
+      font-size: 0.86rem;
+      color: #3f3933;
+    }
+
+    th {
+      background: #f3f0ea;
+      color: #4b453e;
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    tbody tr:hover td {
+      background: #faf8f3;
+    }
+
+    .method-list {
+      margin: 0;
+      padding-left: 1.05rem;
+      display: grid;
+      gap: 0.32rem;
+      font-size: 0.87rem;
+      color: #4b453f;
+    }
+
+    .sources {
+      margin: 0;
+      padding-left: 1rem;
+      display: grid;
+      gap: 0.22rem;
+      font-size: 0.83rem;
+    }
+
+    .author-note {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .author-note p {
+      font-size: 0.89rem;
+      color: #4a443e;
+      line-height: 1.45;
+    }
+
+    .author-note strong {
+      background: #e9eef2;
+      border-radius: 6px;
+      padding: 0.02rem 0.22rem;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover { text-decoration: underline; }
+
+    .course-popup {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      width: min(360px, calc(100vw - 20px));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fffaf0;
+      box-shadow: var(--shadow);
+      padding: 0.72rem 0.76rem;
+      display: none;
+      z-index: 22;
+      gap: 0.4rem;
+    }
+
+    .course-popup.show {
+      display: grid;
+    }
+
+    .course-popup .title {
+      margin: 0;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #403a34;
+    }
+
+    .course-popup .text {
+      margin: 0;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #5b544b;
+    }
+
+    .course-popup .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .course-popup .cta {
+      border: 1px solid #2f6f9f;
+      border-radius: 999px;
+      background: linear-gradient(120deg, #2f6f9f, #3f8f6d);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.3rem 0.68rem;
+      text-decoration: none;
+    }
+
+    .course-popup .close {
+      border: 1px solid #d2cab8;
+      border-radius: 8px;
+      background: #f8f4eb;
+      color: #5d554b;
+      font-size: 0.78rem;
+      min-height: 30px;
+      padding: 0.18rem 0.45rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+      .metrics,
+      .chart-grid,
+      .org-grid,
+      .filter-row {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <nav class="quick-nav" aria-label="Atalhos">
+      <a class="nav-btn" href="https://luizftoledo.github.io/">Voltar ao Portfolio</a>
+      <a class="nav-btn" href="https://luizftoledo.github.io/lai-dashboard/">Voltar ao painel LAI geral</a>
+      <a class="nav-btn" href="https://datafixers.org/" target="_blank" rel="noopener noreferrer">Ir para DataFixers.org</a>
+    </nav>
+
+    <header class="card hero">
+      <h1>Monitor de Sigilo Militar (LAI)</h1>
+      <p class="sub">Recorte dedicado a 4 órgãos: CEX, MD, CMAR e COMAER. O foco é mostrar de forma simples o volume de negativas, os principais motivos e os temas mais sensíveis, com busca no texto dos pedidos.</p>
+      <div class="meta-line">
+        <span id="updated-line">Atualização: carregando...</span>
+        <span class="pill">órgãos: CEX, MD, CMAR, COMAER</span>
+        <span class="pill">fonte: Busca LAI / CGU</span>
+      </div>
+      <div class="metrics">
+        <article class="metric">
+          <div class="label">Pedidos (4 órgãos)</div>
+          <div class="value" id="metric-total">--</div>
+        </article>
+        <article class="metric">
+          <div class="label">Negados totalmente</div>
+          <div class="value" id="metric-denied">--</div>
+        </article>
+        <article class="metric">
+          <div class="label">Com restrição</div>
+          <div class="value" id="metric-restricted">--</div>
+        </article>
+        <article class="metric">
+          <div class="label">Informação pessoal</div>
+          <div class="value" id="metric-personal">--</div>
+        </article>
+      </div>
+      <ul class="alert-list" id="alert-list">
+        <li>Carregando diagnóstico...</li>
+      </ul>
+    </header>
+
+    <section class="card">
+      <h2>Comparação rápida entre os 4 órgãos</h2>
+      <div class="chart-grid" style="margin-top: 0.68rem;">
+        <article class="chart-card">
+          <h3>Quantidade de negativas e restrições</h3>
+          <canvas id="chart-org-volume"></canvas>
+        </article>
+        <article class="chart-card">
+          <h3>Taxas de negativa e de restrição</h3>
+          <canvas id="chart-org-rate"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>O que esses órgãos mais negam (temas e motivos)</h2>
+      <p style="margin-top: 0.4rem;">Nesta seção, os textos e motivos vêm do recorte de pedidos disponível para busca no painel.</p>
+      <div class="org-grid" id="org-cards" style="margin-top: 0.66rem;"></div>
+    </section>
+
+    <section class="card">
+      <h2>Busca e pesquisa nos pedidos desses órgãos</h2>
+      <div class="search-controls">
+        <div class="filter-row">
+          <select id="search-org"></select>
+          <select id="search-year"></select>
+          <select id="search-decision"></select>
+          <select id="search-theme"></select>
+        </div>
+        <div class="filter-row-2">
+          <input id="search-query" type="text" placeholder="Busque no teor do pedido (ex.: armamento, operação, soldo, contrato)">
+          <button id="btn-search" type="button">Buscar</button>
+        </div>
+        <p class="search-status" id="search-status">Carregando base de busca...</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Ano</th>
+              <th>Órgão</th>
+              <th>Decisão</th>
+              <th>Motivo</th>
+              <th>Tema</th>
+              <th>Assunto</th>
+              <th>Link</th>
+              <th>Trecho</th>
+            </tr>
+          </thead>
+          <tbody id="table-search-results"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Metodologia deste recorte</h2>
+      <ul class="method-list" id="method-list">
+        <li>Carregando metodologia...</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Fontes usadas</h2>
+      <ul class="sources" id="sources-list">
+        <li>Carregando links...</li>
+      </ul>
+    </section>
+
+    <section class="card author-note">
+      <h2>Nota do Autor</h2>
+      <p>O autor desta dashboard pesquisou este tema no mestrado:
+        <a href="https://repositorio.fgv.br/items/e0088610-e3e2-4c40-afad-4461cf6e2df6" target="_blank" rel="noopener noreferrer">dissertação no repositório da FGV</a>.
+      </p>
+      <p><strong>Por que monitorar sigilo militar importa:</strong> porque decisões de sigilo afetam diretamente o direito de acesso à informação sobre gastos, contratos, políticas de defesa e uso de recursos públicos. Acompanhar padrões de negativas ajuda a separar proteção legítima de interesse público de bloqueios excessivos de transparência, permitindo um debate público mais informado.</p>
+    </section>
+  </main>
+
+  <aside class="course-popup" id="course-popup-sigilo" aria-live="polite">
+    <p class="title">Curso de LAI</p>
+    <p class="text">Investigue gastos públicos com a Lei de Acesso à Informação. Curso online, gravado e sob demanda.</p>
+    <div class="actions">
+      <a class="cta" href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank" rel="noopener noreferrer">Acessar curso</a>
+      <button class="close" id="course-popup-sigilo-close" type="button">Fechar</button>
+    </div>
+  </aside>
+
+  <script>
+    (() => {
+      const popup = document.getElementById('course-popup-sigilo');
+      const closeBtn = document.getElementById('course-popup-sigilo-close');
+      if (!popup) return;
+      const key = 'lai_sigilo_militar_course_popup_dismissed';
+      const safeGet = () => {
+        try { return sessionStorage.getItem(key); } catch { return null; }
+      };
+      const safeSet = () => {
+        try { sessionStorage.setItem(key, '1'); } catch {}
+      };
+      if (safeGet() !== '1') popup.classList.add('show');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          popup.classList.remove('show');
+          safeSet();
+        });
+      }
+    })();
+  </script>
+  <script src="./sigilo-militar.js"></script>
+</body>
+</html>
