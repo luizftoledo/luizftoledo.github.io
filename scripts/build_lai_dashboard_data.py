@@ -499,6 +499,15 @@ def find_pedidos_member(zip_path):
     return sorted(candidates)[0]
 
 
+def find_pedidos_link_member(zip_path):
+    with zipfile.ZipFile(zip_path) as zf:
+        names = zf.namelist()
+    candidates = [name for name in names if "PedidosLinkArquivo" in name]
+    if not candidates:
+        return None
+    return sorted(candidates)[0]
+
+
 def build_theme_regex(theme_rules):
     compiled = []
     for theme, keywords in theme_rules:
@@ -536,13 +545,69 @@ def build_sample_rows(sample_df):
                 "subject": rec.get("subject", "Assunto não informado"),
                 "theme": rec.get("theme", DEFAULT_THEME),
                 "text_excerpt": truncate_text(rec.get("request_text", ""), limit=360),
+                "request_link": normalize_text(rec.get("request_link", "")),
             }
         )
     return rows
 
 
+def load_request_links(zip_path):
+    member = find_pedidos_link_member(zip_path)
+    if not member:
+        return {}
+
+    links = {}
+    with zipfile.ZipFile(zip_path) as zf:
+        with zf.open(member) as handle:
+            iterator = pd.read_csv(
+                handle,
+                sep=";",
+                encoding="utf-16",
+                dtype=str,
+                usecols=["IdPedido", "TipoAnexo", "UrlArquivo"],
+                chunksize=180_000,
+                on_bad_lines="skip",
+            )
+
+            for chunk in iterator:
+                if chunk.empty:
+                    continue
+
+                chunk = chunk.fillna("")
+                id_series = chunk["IdPedido"].astype(str).map(normalize_text)
+                url_series = chunk["UrlArquivo"].astype(str).map(normalize_text)
+                tipo_series = chunk["TipoAnexo"].astype(str).map(normalize_for_match)
+
+                valid = id_series.ne("") & url_series.ne("")
+                if not valid.any():
+                    continue
+
+                valid_df = pd.DataFrame(
+                    {
+                        "id_pedido": id_series[valid],
+                        "url": url_series[valid],
+                        "tipo": tipo_series[valid],
+                    }
+                )
+                if valid_df.empty:
+                    continue
+
+                # Prioridade: primeiro tenta "Anexo Resposta"; depois qualquer URL.
+                valid_df["priority"] = valid_df["tipo"].map(
+                    lambda t: 2 if "resposta" in t else (1 if "pedido" in t else 0)
+                )
+
+                for rec in valid_df.to_dict(orient="records"):
+                    pid = rec["id_pedido"]
+                    if pid not in links or rec["priority"] > links[pid]["priority"]:
+                        links[pid] = {"url": rec["url"], "priority": rec["priority"]}
+
+    return {pid: payload["url"] for pid, payload in links.items()}
+
+
 def process_year_zip(year, zip_path, source_url):
     pedidos_member = find_pedidos_member(zip_path)
+    request_links = load_request_links(zip_path)
 
     usecols = [
         "IdPedido",
@@ -563,14 +628,22 @@ def process_year_zip(year, zip_path, source_url):
 
     decision_counts = Counter()
     reason_counts = Counter()
+    monthly_total = Counter()
+    monthly_denied = Counter()
+    monthly_restricted = Counter()
+    monthly_personal = Counter()
 
     org_total = Counter()
     org_denied = Counter()
     org_restricted = Counter()
     org_personal = Counter()
+    org_month_total = Counter()
+    org_month_denied = Counter()
 
     theme_total = Counter()
     theme_restricted = Counter()
+    theme_month_total = Counter()
+    theme_month_restricted = Counter()
 
     org_theme_total = Counter()
     org_theme_restricted = Counter()
@@ -615,6 +688,12 @@ def process_year_zip(year, zip_path, source_url):
                 reason_raw = reason_source.where(reason_source != "", motivo_fallback)
                 reason = reason_raw.map(canonicalize_reason)
 
+                data_registro = chunk["DataRegistro"].fillna("").astype(str).map(normalize_text)
+                data_registro_dt = pd.to_datetime(data_registro, dayfirst=True, errors="coerce")
+                month_num = data_registro_dt.dt.month.fillna(0).astype(int)
+                month_str = month_num.astype(str).str.zfill(2)
+                valid_month_mask = month_num.between(1, 12)
+
                 denied_mask = decision == DECISION_DENIED
                 restricted_mask = decision.isin(DECISION_RESTRICTED)
                 personal_mask = restricted_mask & reason.map(is_personal_reason)
@@ -625,16 +704,52 @@ def process_year_zip(year, zip_path, source_url):
 
                 decision_counts.update(decision.value_counts(dropna=False).to_dict())
                 reason_counts.update(reason[restricted_mask].value_counts(dropna=False).to_dict())
+                monthly_total.update(month_num[valid_month_mask].value_counts(dropna=False).to_dict())
+                monthly_denied.update(
+                    month_num[valid_month_mask & denied_mask].value_counts(dropna=False).to_dict()
+                )
+                monthly_restricted.update(
+                    month_num[valid_month_mask & restricted_mask].value_counts(dropna=False).to_dict()
+                )
+                monthly_personal.update(
+                    month_num[valid_month_mask & personal_mask].value_counts(dropna=False).to_dict()
+                )
 
                 primary_theme = detect_primary_theme(request_text_lc)
                 theme_total.update(primary_theme.value_counts(dropna=False).to_dict())
                 theme_restricted.update(primary_theme[restricted_mask].value_counts(dropna=False).to_dict())
+
+                theme_valid_month_mask = valid_month_mask
+                if theme_valid_month_mask.any():
+                    theme_month_key = primary_theme[theme_valid_month_mask] + "|||" + month_str[theme_valid_month_mask]
+                    theme_month_total.update(theme_month_key.value_counts(dropna=False).to_dict())
+
+                    theme_month_restricted_key = (
+                        primary_theme[theme_valid_month_mask & restricted_mask]
+                        + "|||"
+                        + month_str[theme_valid_month_mask & restricted_mask]
+                    )
+                    theme_month_restricted.update(
+                        theme_month_restricted_key.value_counts(dropna=False).to_dict()
+                    )
 
                 valid_org_mask = org != ""
                 org_total.update(org[valid_org_mask].value_counts(dropna=False).to_dict())
                 org_denied.update(org[denied_mask & valid_org_mask].value_counts(dropna=False).to_dict())
                 org_restricted.update(org[restricted_mask & valid_org_mask].value_counts(dropna=False).to_dict())
                 org_personal.update(org[personal_mask & valid_org_mask].value_counts(dropna=False).to_dict())
+
+                org_valid_month_mask = valid_org_mask & valid_month_mask
+                if org_valid_month_mask.any():
+                    org_month_key = org[org_valid_month_mask] + "|||" + month_str[org_valid_month_mask]
+                    org_month_total.update(org_month_key.value_counts(dropna=False).to_dict())
+
+                    org_month_denied_key = (
+                        org[org_valid_month_mask & denied_mask]
+                        + "|||"
+                        + month_str[org_valid_month_mask & denied_mask]
+                    )
+                    org_month_denied.update(org_month_denied_key.value_counts(dropna=False).to_dict())
 
                 org_theme_df = pd.DataFrame(
                     {
@@ -676,6 +791,7 @@ def process_year_zip(year, zip_path, source_url):
                             "subject": subject[sample_mask],
                             "theme": primary_theme[sample_mask],
                             "request_text": request_text[sample_mask],
+                            "request_link": id_pedido[sample_mask].map(request_links).fillna(""),
                             "restricted": restricted_mask[sample_mask],
                         }
                     )
@@ -710,12 +826,20 @@ def process_year_zip(year, zip_path, source_url):
         "personal_share_in_restricted": personal_share_in_restricted,
         "decision_counts": dict(decision_counts),
         "reason_counts": dict(reason_counts),
+        "monthly_total": dict(monthly_total),
+        "monthly_denied": dict(monthly_denied),
+        "monthly_restricted": dict(monthly_restricted),
+        "monthly_personal": dict(monthly_personal),
         "theme_total": dict(theme_total),
         "theme_restricted": dict(theme_restricted),
+        "theme_month_total": dict(theme_month_total),
+        "theme_month_restricted": dict(theme_month_restricted),
         "org_total": dict(org_total),
         "org_denied": dict(org_denied),
         "org_restricted": dict(org_restricted),
         "org_personal": dict(org_personal),
+        "org_month_total": dict(org_month_total),
+        "org_month_denied": dict(org_month_denied),
         "org_theme_total": dict(org_theme_total),
         "org_theme_restricted": dict(org_theme_restricted),
         "org_theme_decision": dict(org_theme_decision),
@@ -777,6 +901,56 @@ def write_jsonl_gz(path, rows):
             gz.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
+def to_int_key_counter(mapping):
+    counter = Counter()
+    for key, value in (mapping or {}).items():
+        try:
+            month = int(key)
+        except (TypeError, ValueError):
+            continue
+        if 1 <= month <= 12:
+            counter[month] += int(value)
+    return counter
+
+
+def ytd_sum(counter_by_month, month_limit):
+    return sum(int(counter_by_month.get(month, 0)) for month in range(1, month_limit + 1))
+
+
+def split_key_month_counter(mapping):
+    result = defaultdict(Counter)
+    for key, value in (mapping or {}).items():
+        if "|||" not in key:
+            continue
+        left, month_str = key.rsplit("|||", 1)
+        try:
+            month = int(month_str)
+        except (TypeError, ValueError):
+            continue
+        if not (1 <= month <= 12):
+            continue
+        result[left][month] += int(value)
+    return result
+
+
+def month_label_pt(month_num):
+    labels = {
+        1: "janeiro",
+        2: "fevereiro",
+        3: "março",
+        4: "abril",
+        5: "maio",
+        6: "junho",
+        7: "julho",
+        8: "agosto",
+        9: "setembro",
+        10: "outubro",
+        11: "novembro",
+        12: "dezembro",
+    }
+    return labels.get(int(month_num), str(month_num))
+
+
 def build_report(year_payloads):
     year_payloads = sorted(year_payloads, key=lambda x: int(x["year"]))
 
@@ -796,6 +970,8 @@ def build_report(year_payloads):
 
     all_samples = []
     yearly_series = []
+    monthly_series = []
+    year_context = {}
 
     for payload in year_payloads:
         year = int(payload["year"])
@@ -803,6 +979,37 @@ def build_report(year_payloads):
         denied_total = int(payload.get("denied_total", 0))
         restricted_total = int(payload.get("restricted_total", 0))
         personal_total = int(payload.get("personal_restricted_total", 0))
+
+        month_total_counter = to_int_key_counter(payload.get("monthly_total", {}))
+        month_denied_counter = to_int_key_counter(payload.get("monthly_denied", {}))
+        month_restricted_counter = to_int_key_counter(payload.get("monthly_restricted", {}))
+        month_personal_counter = to_int_key_counter(payload.get("monthly_personal", {}))
+        org_month_total_counter = split_key_month_counter(payload.get("org_month_total", {}))
+        org_month_denied_counter = split_key_month_counter(payload.get("org_month_denied", {}))
+        theme_month_total_counter = split_key_month_counter(payload.get("theme_month_total", {}))
+        theme_month_restricted_counter = split_key_month_counter(payload.get("theme_month_restricted", {}))
+
+        for month in range(1, 13):
+            month_total = int(month_total_counter.get(month, 0))
+            month_denied = int(month_denied_counter.get(month, 0))
+            month_restricted = int(month_restricted_counter.get(month, 0))
+            month_personal = int(month_personal_counter.get(month, 0))
+            monthly_series.append(
+                {
+                    "year": year,
+                    "month": month,
+                    "month_label": month_label_pt(month),
+                    "total_requests": month_total,
+                    "denied_total": month_denied,
+                    "restricted_total": month_restricted,
+                    "personal_restricted_total": month_personal,
+                    "denied_rate": (month_denied / month_total) if month_total else 0.0,
+                    "restricted_rate": (month_restricted / month_total) if month_total else 0.0,
+                    "personal_share_in_restricted": (
+                        (month_personal / month_restricted) if month_restricted else 0.0
+                    ),
+                }
+            )
 
         yearly_series.append(
             {
@@ -818,6 +1025,18 @@ def build_report(year_payloads):
                 ),
             }
         )
+
+        year_context[year] = {
+            "payload": payload,
+            "monthly_total": month_total_counter,
+            "monthly_denied": month_denied_counter,
+            "monthly_restricted": month_restricted_counter,
+            "monthly_personal": month_personal_counter,
+            "org_month_total": org_month_total_counter,
+            "org_month_denied": org_month_denied_counter,
+            "theme_month_total": theme_month_total_counter,
+            "theme_month_restricted": theme_month_restricted_counter,
+        }
 
         merge_counter_dict(global_decisions, payload.get("decision_counts", {}))
         merge_counter_dict(global_reasons, payload.get("reason_counts", {}))
@@ -1037,7 +1256,325 @@ def build_report(year_payloads):
         reverse=True,
     )[:20]
 
+    latest_year = int(yearly_series[-1]["year"])
+    latest_ctx = year_context.get(latest_year, {})
+    latest_month = max(
+        [month for month, count in (latest_ctx.get("monthly_total", {}) or {}).items() if int(count) > 0],
+        default=0,
+    )
+    latest_month = int(latest_month or 0)
+    latest_month_name = month_label_pt(latest_month) if latest_month else ""
+
+    previous_years = sorted([year for year in year_context.keys() if int(year) < latest_year])
+    comparison_years = previous_years[-3:]
+
+    def safe_avg(values):
+        return (sum(values) / len(values)) if values else 0.0
+
+    def rate_status(delta_pp):
+        if delta_pp >= 0.8:
+            return "piorando"
+        if delta_pp <= -0.8:
+            return "melhorando"
+        return "estável"
+
+    current_ytd = {
+        "total_requests": ytd_sum(latest_ctx.get("monthly_total", {}), latest_month) if latest_month else 0,
+        "denied_total": ytd_sum(latest_ctx.get("monthly_denied", {}), latest_month) if latest_month else 0,
+        "restricted_total": ytd_sum(latest_ctx.get("monthly_restricted", {}), latest_month) if latest_month else 0,
+        "personal_restricted_total": ytd_sum(latest_ctx.get("monthly_personal", {}), latest_month) if latest_month else 0,
+    }
+    current_ytd["denied_rate"] = (
+        (current_ytd["denied_total"] / current_ytd["total_requests"])
+        if current_ytd["total_requests"]
+        else 0.0
+    )
+    current_ytd["restricted_rate"] = (
+        (current_ytd["restricted_total"] / current_ytd["total_requests"])
+        if current_ytd["total_requests"]
+        else 0.0
+    )
+
+    baseline_rows = []
+    for year in comparison_years:
+        ctx = year_context.get(year, {})
+        total = ytd_sum(ctx.get("monthly_total", {}), latest_month) if latest_month else 0
+        denied = ytd_sum(ctx.get("monthly_denied", {}), latest_month) if latest_month else 0
+        restricted = ytd_sum(ctx.get("monthly_restricted", {}), latest_month) if latest_month else 0
+        personal = ytd_sum(ctx.get("monthly_personal", {}), latest_month) if latest_month else 0
+        baseline_rows.append(
+            {
+                "year": int(year),
+                "total_requests": int(total),
+                "denied_total": int(denied),
+                "restricted_total": int(restricted),
+                "personal_restricted_total": int(personal),
+                "denied_rate": (denied / total) if total else 0.0,
+                "restricted_rate": (restricted / total) if total else 0.0,
+            }
+        )
+
+    baseline = {
+        "years": [row["year"] for row in baseline_rows],
+        "total_requests_avg": safe_avg([row["total_requests"] for row in baseline_rows]),
+        "denied_total_avg": safe_avg([row["denied_total"] for row in baseline_rows]),
+        "restricted_total_avg": safe_avg([row["restricted_total"] for row in baseline_rows]),
+        "personal_restricted_total_avg": safe_avg(
+            [row["personal_restricted_total"] for row in baseline_rows]
+        ),
+        "denied_rate_avg": safe_avg([row["denied_rate"] for row in baseline_rows]),
+        "restricted_rate_avg": safe_avg([row["restricted_rate"] for row in baseline_rows]),
+    }
+
+    denied_delta_pp = (current_ytd["denied_rate"] - baseline["denied_rate_avg"]) * 100
+    restricted_delta_pp = (
+        (current_ytd["restricted_rate"] - baseline["restricted_rate_avg"]) * 100
+    )
+
+    org_spikes = []
+    if latest_month and comparison_years:
+        current_org_denied = {
+            org: int(counter.get(latest_month, 0))
+            for org, counter in (latest_ctx.get("org_month_denied", {}) or {}).items()
+        }
+        current_org_total = {
+            org: int(counter.get(latest_month, 0))
+            for org, counter in (latest_ctx.get("org_month_total", {}) or {}).items()
+        }
+
+        for org, current_denied in current_org_denied.items():
+            if current_denied < 12:
+                continue
+
+            baseline_denied_values = []
+            baseline_total_values = []
+            for year in comparison_years:
+                ctx = year_context.get(year, {})
+                baseline_denied_values.append(
+                    int((ctx.get("org_month_denied", {}).get(org, Counter())).get(latest_month, 0))
+                )
+                baseline_total_values.append(
+                    int((ctx.get("org_month_total", {}).get(org, Counter())).get(latest_month, 0))
+                )
+
+            baseline_denied = safe_avg(baseline_denied_values)
+            baseline_total = safe_avg(baseline_total_values)
+            if baseline_denied < 6:
+                continue
+
+            delta_abs = current_denied - baseline_denied
+            lift_ratio = ((current_denied / baseline_denied) - 1) if baseline_denied else 0.0
+            current_total = int(current_org_total.get(org, 0))
+            current_rate = (current_denied / current_total) if current_total else 0.0
+            baseline_rate = (baseline_denied / baseline_total) if baseline_total else 0.0
+
+            if current_denied >= baseline_denied * 1.35 and delta_abs >= 8:
+                org_spikes.append(
+                    {
+                        "org": org,
+                        "current_denied": int(current_denied),
+                        "baseline_denied_avg": baseline_denied,
+                        "delta_abs": delta_abs,
+                        "lift_ratio": lift_ratio,
+                        "current_denied_rate": current_rate,
+                        "baseline_denied_rate_avg": baseline_rate,
+                    }
+                )
+
+    org_spikes = sorted(
+        org_spikes,
+        key=lambda row: (row["lift_ratio"], row["delta_abs"]),
+        reverse=True,
+    )[:8]
+
+    def theme_ytd_map(theme_month_map, month_limit):
+        out = Counter()
+        for theme, counter in (theme_month_map or {}).items():
+            out[theme] += int(ytd_sum(counter, month_limit))
+        return out
+
+    theme_worsening = []
+    if latest_month and comparison_years:
+        current_theme_total = theme_ytd_map(latest_ctx.get("theme_month_total", {}), latest_month)
+        current_theme_restricted = theme_ytd_map(
+            latest_ctx.get("theme_month_restricted", {}), latest_month
+        )
+
+        baseline_theme_total_by_year = []
+        baseline_theme_restricted_by_year = []
+        for year in comparison_years:
+            ctx = year_context.get(year, {})
+            baseline_theme_total_by_year.append(
+                theme_ytd_map(ctx.get("theme_month_total", {}), latest_month)
+            )
+            baseline_theme_restricted_by_year.append(
+                theme_ytd_map(ctx.get("theme_month_restricted", {}), latest_month)
+            )
+
+        all_themes = set(current_theme_total.keys())
+        for counter in baseline_theme_total_by_year:
+            all_themes.update(counter.keys())
+
+        for theme in all_themes:
+            curr_total = int(current_theme_total.get(theme, 0))
+            curr_restricted = int(current_theme_restricted.get(theme, 0))
+            if curr_total < 120:
+                continue
+
+            base_total_values = [int(counter.get(theme, 0)) for counter in baseline_theme_total_by_year]
+            base_restricted_values = [
+                int(counter.get(theme, 0)) for counter in baseline_theme_restricted_by_year
+            ]
+            base_total = safe_avg(base_total_values)
+            base_restricted = safe_avg(base_restricted_values)
+            if base_total < 120:
+                continue
+
+            curr_rate = (curr_restricted / curr_total) if curr_total else 0.0
+            base_rate = (base_restricted / base_total) if base_total else 0.0
+            delta_pp = (curr_rate - base_rate) * 100
+
+            if delta_pp >= 1.0:
+                theme_worsening.append(
+                    {
+                        "theme": theme,
+                        "current_restricted_rate": curr_rate,
+                        "baseline_restricted_rate_avg": base_rate,
+                        "delta_pp": delta_pp,
+                        "current_total_requests": curr_total,
+                        "current_restricted_total": curr_restricted,
+                    }
+                )
+
+    theme_worsening = sorted(
+        theme_worsening,
+        key=lambda row: (row["delta_pp"], row["current_restricted_total"]),
+        reverse=True,
+    )[:8]
+
+    monitoring = {
+        "latest_year": latest_year,
+        "latest_month": latest_month,
+        "latest_month_label": latest_month_name,
+        "is_partial_year": bool(latest_month and latest_month < 12),
+        "comparison_years": comparison_years,
+        "current_ytd": current_ytd,
+        "baseline_ytd_avg": baseline,
+        "denied_rate_delta_pp": denied_delta_pp,
+        "restricted_rate_delta_pp": restricted_delta_pp,
+        "denied_rate_status": rate_status(denied_delta_pp) if baseline_rows else "sem base",
+        "restricted_rate_status": (
+            rate_status(restricted_delta_pp) if baseline_rows else "sem base"
+        ),
+        "org_spikes": org_spikes,
+        "theme_worsening": theme_worsening,
+    }
+
     sample_count = len(all_samples)
+    methodology = {
+        "unit_of_analysis": "pedido individual da base Pedidos_csv",
+        "source_files": [
+            "Pedidos_csv_YYYY.csv",
+            "PedidosLinkArquivo_csv_YYYY.csv (link do pedido/anexo no BuscaLAI)",
+        ],
+        "period_rule": (
+            "Série anual de 2015 até o ano corrente da execução. "
+            "O ano corrente é parcial até 31 de dezembro."
+        ),
+        "decision_rules": {
+            "denied_total": "Decisão canônica igual a 'Acesso Negado'.",
+            "restricted_total": (
+                "Decisão canônica em {'Acesso Negado', "
+                "'Acesso Parcialmente Concedido'}."
+            ),
+            "decision_canonicalization": (
+                "Padronização do campo Decisao para um conjunto canônico de respostas "
+                "e agrupamento de textos livres longos em 'Outros (texto livre)'."
+            ),
+        },
+        "negative_reason_rules": {
+            "primary_source": "EspecificacaoDecisao",
+            "fallback_source": "MotivoNegativaAcesso",
+            "normalization": (
+                "Padronização textual (acentos, espaços e variações comuns) para "
+                "consolidar motivos equivalentes."
+            ),
+        },
+        "personal_info_rule": {
+            "description": (
+                "Um caso entra em 'informação pessoal' quando está em restrição "
+                "(negado ou parcial) e o motivo contém termos de privacidade."
+            ),
+            "keywords": list(PERSONAL_REASON_KEYWORDS),
+        },
+        "theme_classification": {
+            "text_fields_used": [
+                "AssuntoPedido",
+                "ResumoSolicitacao",
+                "DetalhamentoSolicitacao",
+            ],
+            "text_build_rule": "Concatenação desses 3 campos, com limpeza de espaços.",
+            "assignment_rule": (
+                "Classificação por regras de palavras-chave; vale o primeiro tema "
+                "cujas palavras aparecem no texto."
+            ),
+            "default_theme": DEFAULT_THEME,
+            "themes": [
+                {"theme": theme, "keywords": keywords}
+                for theme, keywords in THEME_RULES
+            ],
+        },
+        "sampling_for_search": {
+            "purpose": "Busca rápida no teor dos pedidos dentro do painel.",
+            "method": (
+                "Amostragem por hash determinístico do IdPedido "
+                f"(mantém ~{SAMPLE_HASH_KEEP / SAMPLE_HASH_MOD:.1%} por ano, "
+                f"teto de {MAX_SAMPLE_ROWS_PER_YEAR} pedidos/ano)."
+            ),
+            "request_link_rule": (
+                "Cada pedido da amostra pode receber URL do BuscaLAI via chave IdPedido, "
+                "a partir do arquivo PedidosLinkArquivo; quando há múltiplos links, "
+                "prioriza-se 'Anexo Resposta'."
+            ),
+            "hash_rule": {
+                "modulus": SAMPLE_HASH_MOD,
+                "keep_if_mod_lt": SAMPLE_HASH_KEEP,
+            },
+            "sample_count": sample_count,
+        },
+        "ranking_rules": {
+            "top_denials": (
+                "Ranking ordenado por quantidade absoluta de negativas "
+                "(desempate por restrições e depois por volume total)."
+            ),
+            "lowest_denial_high_volume": (
+                "Ranking de menor taxa de negativa considera apenas órgãos com "
+                "pelo menos 1.500 pedidos na série."
+            ),
+            "pf_rule": (
+                "A Polícia Federal é incluída no bloco principal mesmo fora do top 10."
+            ),
+        },
+        "monitoring_rules": {
+            "recent_spike": (
+                "Spike recente por órgão = mês mais recente do ano atual comparado à média "
+                "do mesmo mês nos últimos até 3 anos (com filtros mínimos de volume)."
+            ),
+            "government_diagnosis": (
+                "Diagnóstico YTD compara o ano atual até o mês mais recente com a média "
+                "dos mesmos meses nos últimos até 3 anos."
+            ),
+            "theme_worsening": (
+                "Piora por tema considera aumento da taxa de restrição no YTD contra a base "
+                "histórica comparável de meses."
+            ),
+        },
+        "incremental_update_rule": (
+            "Cache anual incremental: anos passados ficam congelados; "
+            "ano corrente é reprocessado em cada atualização."
+        ),
+    }
+
     report = {
         "generated_at": now_iso(),
         "source": {
@@ -1058,6 +1595,7 @@ def build_report(year_payloads):
             ),
         },
         "series": yearly_series,
+        "monthly_series": monthly_series,
         "reason_series": reason_series,
         "theme_series": theme_series,
         "top_reasons": [
@@ -1083,6 +1621,7 @@ def build_report(year_payloads):
             "series": personal_series,
             "top_orgs": personal_top_orgs,
         },
+        "monitoring": monitoring,
         "search_dashboard": {
             "sample_file": "./data/request_samples.jsonl.gz",
             "sample_count": sample_count,
@@ -1093,6 +1632,7 @@ def build_report(year_payloads):
             "presets": SEARCH_PRESETS,
             "available_themes": [theme for theme, _ in global_theme_total.most_common(20)],
         },
+        "methodology": methodology,
     }
 
     metadata = {

@@ -89,6 +89,12 @@
       text-transform: uppercase;
     }
 
+    .pill-warning {
+      border-color: #d4c9b0;
+      background: #f9f2e3;
+      color: #6d5732;
+    }
+
     .metrics {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -123,12 +129,56 @@
     }
 
     .narrative h2,
+    .alerts h2,
     .charts h2,
     .tables h2,
     .orgs h2,
+    .methodology h2,
     .ai-panel h2 {
       margin: 0;
       font-size: 1.02rem;
+    }
+
+    .alerts {
+      padding: 1rem 1.1rem;
+      display: grid;
+      gap: 0.68rem;
+    }
+
+    .alerts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+
+    .alert-card {
+      border: 1px solid #ddd7cc;
+      border-radius: 12px;
+      background: #fdfbf7;
+      padding: 0.62rem 0.66rem;
+      display: grid;
+      gap: 0.42rem;
+      min-width: 0;
+    }
+
+    .alert-card h3 {
+      margin: 0;
+      font-size: 0.86rem;
+      color: #4d463d;
+    }
+
+    .alert-card p,
+    .alert-card ul {
+      margin: 0;
+      font-size: 0.82rem;
+      color: #4b4640;
+      line-height: 1.4;
+    }
+
+    .alert-card ul {
+      padding-left: 1rem;
+      display: grid;
+      gap: 0.24rem;
     }
 
     .narrative-list {
@@ -145,6 +195,17 @@
       padding: 1rem 1.1rem;
       display: grid;
       gap: 0.75rem;
+    }
+
+    .section-note {
+      margin: 0;
+      border: 1px solid #d9d4c8;
+      border-radius: 10px;
+      background: #fbf8f1;
+      color: #5e574d;
+      font-size: 0.82rem;
+      line-height: 1.42;
+      padding: 0.5rem 0.6rem;
     }
 
     .chart-grid {
@@ -205,6 +266,13 @@
       max-height: 320px;
     }
 
+    .table-note {
+      margin: 0.52rem 0.74rem 0.7rem;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      color: #5f5a52;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -245,6 +313,8 @@
       padding: 0.75rem 0.78rem;
       display: grid;
       gap: 0.5rem;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .org-head {
@@ -280,6 +350,23 @@
       font-size: 0.84rem;
       color: var(--muted);
       line-height: 1.4;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .org-card .table-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .org-card .table-wrap table {
+      table-layout: fixed;
+    }
+
+    .org-card .table-wrap th,
+    .org-card .table-wrap td {
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .personal-box {
@@ -464,6 +551,58 @@
       line-height: 1.45;
     }
 
+    .methodology {
+      padding: 1rem 1.1rem;
+      display: grid;
+      gap: 0.64rem;
+    }
+
+    .methodology-content {
+      display: grid;
+      gap: 0.58rem;
+      font-size: 0.86rem;
+      color: #44403a;
+      line-height: 1.45;
+    }
+
+    .methodology-content p {
+      margin: 0;
+    }
+
+    .methodology-content ul {
+      margin: 0;
+      padding-left: 1rem;
+      display: grid;
+      gap: 0.28rem;
+    }
+
+    .methodology-details {
+      border: 1px solid #ded9cf;
+      border-radius: 10px;
+      background: #fcfbf8;
+      padding: 0.45rem 0.55rem;
+    }
+
+    .methodology-details summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: #4f4a44;
+      list-style: none;
+    }
+
+    .methodology-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .methodology-details summary::before {
+      content: "▸ ";
+      color: #6e675e;
+    }
+
+    .methodology-details[open] summary::before {
+      content: "▾ ";
+    }
+
     .narrative strong,
     .org-card strong,
     .search-status strong,
@@ -487,6 +626,7 @@
 
     @media (max-width: 1024px) {
       .metrics,
+      .alerts-grid,
       .chart-grid,
       .org-grid {
         grid-template-columns: 1fr;
@@ -508,6 +648,7 @@
       <div class="update-line">
         <span id="updated-line">Atualização: carregando...</span>
         <span class="pill" id="years-pill">anos: --</span>
+        <span class="pill pill-warning" id="partial-year-pill" hidden>ano parcial</span>
         <span class="pill">fonte: Busca LAI / CGU</span>
       </div>
       <div class="metrics">
@@ -530,6 +671,16 @@
       </div>
     </header>
 
+    <section class="card alerts">
+      <h2>Resumo de atenção agora</h2>
+      <div class="alerts-grid" id="alerts-summary">
+        <article class="alert-card">
+          <h3>Carregando monitoramento...</h3>
+          <p>Aguarde os alertas automáticos com base no período mais recente.</p>
+        </article>
+      </div>
+    </section>
+
     <section class="card narrative">
       <h2>Leitura rápida dos dados</h2>
       <ul class="narrative-list" id="narrative-list"></ul>
@@ -537,6 +688,7 @@
 
     <section class="card charts">
       <h2>Gráficos comparando ano a ano</h2>
+      <p class="section-note" id="chart-partial-note" hidden></p>
       <div class="chart-grid">
         <article class="chart-card">
           <h3>Pedidos e negativas por ano</h3>
@@ -586,6 +738,7 @@
             <tbody id="table-yearly"></tbody>
           </table>
         </div>
+        <p class="table-note" id="yearly-partial-note" hidden></p>
       </article>
 
       <article class="table-card">
@@ -671,6 +824,7 @@
                 <th>Decisão</th>
                 <th>Tema</th>
                 <th>Assunto</th>
+                <th>Link BuscaLAI</th>
                 <th>Trecho do pedido</th>
               </tr>
             </thead>
@@ -678,6 +832,13 @@
           </table>
         </div>
       </article>
+    </section>
+
+    <section class="card methodology">
+      <h2>Nota metodológica (como os dados foram tratados)</h2>
+      <div class="methodology-content" id="methodology-content">
+        <p>Carregando metodologia...</p>
+      </div>
     </section>
 
     <footer class="card ai-panel">

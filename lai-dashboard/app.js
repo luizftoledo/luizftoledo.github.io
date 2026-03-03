@@ -15,6 +15,9 @@
 
   const updatedLine = document.getElementById('updated-line');
   const yearsPill = document.getElementById('years-pill');
+  const partialYearPill = document.getElementById('partial-year-pill');
+  const chartPartialNote = document.getElementById('chart-partial-note');
+  const yearlyPartialNote = document.getElementById('yearly-partial-note');
 
   const metricTotalRequests = document.getElementById('metric-total-requests');
   const metricDeniedTotal = document.getElementById('metric-denied-total');
@@ -22,6 +25,7 @@
   const metricPersonalTotal = document.getElementById('metric-personal-total');
 
   const narrativeList = document.getElementById('narrative-list');
+  const alertsSummary = document.getElementById('alerts-summary');
 
   const tableYearly = document.getElementById('table-yearly');
   const tableReasons = document.getElementById('table-reasons');
@@ -48,6 +52,7 @@
   const aiAskBtn = document.getElementById('btn-ask-ai');
   const aiResetBtn = document.getElementById('btn-ai-reset');
   const aiStatus = document.getElementById('ai-status');
+  const methodologyContent = document.getElementById('methodology-content');
 
   const chartInstances = [];
 
@@ -55,6 +60,7 @@
   let metadata = null;
   let requestSamples = [];
   let lastSearchResults = [];
+  let partialYearCtx = null;
 
   let aiMessages = [];
   let aiHistory = [];
@@ -86,10 +92,75 @@
     return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
   }
 
+  function formatMonthYear(iso) {
+    if (!iso) return '--';
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return '--';
+    return d.toLocaleDateString('pt-BR', {
+      timeZone: 'America/Cuiaba',
+      month: 'long',
+      year: 'numeric',
+    });
+  }
+
+  function getPartialYearContext(series) {
+    if (!series.length) return null;
+    const last = series[series.length - 1];
+    const year = Number(last.year);
+    if (!Number.isFinite(year)) return null;
+
+    const updatedIso = (metadata || {}).updated_at || reportData.generated_at;
+    const updatedDate = new Date(updatedIso);
+    if (Number.isNaN(updatedDate.getTime())) return null;
+
+    const buildYear = Number(updatedDate.toLocaleDateString('en-CA', {
+      timeZone: 'America/Cuiaba',
+      year: 'numeric',
+    }));
+    if (year !== buildYear) return null;
+
+    return {
+      year,
+      yearLabel: `${year}*`,
+      cutoffDateTime: formatDateTime(updatedIso),
+      cutoffMonthYear: formatMonthYear(updatedIso),
+    };
+  }
+
   function shortOrgName(name) {
     if (!name) return '';
     if (name.length <= 40) return name;
     return `${name.slice(0, 39)}...`;
+  }
+
+  function compactText(text, limit = 220) {
+    const clean = (text || '').toString().replace(/\s+/g, ' ').trim();
+    if (clean.length <= limit) return clean;
+    return `${clean.slice(0, limit - 1).trim()}…`;
+  }
+
+  function renderPartialYearHints() {
+    if (!partialYearCtx) {
+      if (partialYearPill) partialYearPill.hidden = true;
+      if (chartPartialNote) chartPartialNote.hidden = true;
+      if (yearlyPartialNote) yearlyPartialNote.hidden = true;
+      return;
+    }
+
+    const note = `* <strong>${partialYearCtx.year}</strong> é um ano parcial (dados acumulados até <strong>${esc(partialYearCtx.cutoffDateTime)}</strong>). Nos gráficos, esse ano aparece com asterisco e marcação mais clara.`;
+
+    if (partialYearPill) {
+      partialYearPill.hidden = false;
+      partialYearPill.textContent = `${partialYearCtx.year} parcial`;
+    }
+    if (chartPartialNote) {
+      chartPartialNote.hidden = false;
+      chartPartialNote.innerHTML = note;
+    }
+    if (yearlyPartialNote) {
+      yearlyPartialNote.hidden = false;
+      yearlyPartialNote.innerHTML = note;
+    }
   }
 
   async function fetchJson(url) {
@@ -132,6 +203,7 @@
     const maxYear = years.length ? Math.max(...years) : '--';
     yearsPill.textContent = `anos: ${minYear}-${maxYear}`;
     updatedLine.textContent = `Atualizado em ${formatDateTime((metadata || {}).updated_at || reportData.generated_at)} (America/Cuiaba)`;
+    renderPartialYearHints();
   }
 
   function renderMetrics() {
@@ -140,6 +212,130 @@
     metricDeniedTotal.textContent = `${nFmt.format(overall.denied_total || 0)} (${pFmt.format(overall.denied_rate || 0)})`;
     metricRestrictedTotal.textContent = `${nFmt.format(overall.restricted_total || 0)} (${pFmt.format(overall.restricted_rate || 0)})`;
     metricPersonalTotal.textContent = `${nFmt.format(overall.personal_restricted_total || 0)} (${pFmt.format(overall.personal_share_in_restricted || 0)})`;
+  }
+
+  function renderAlertsSummary() {
+    if (!alertsSummary) return;
+    const monitoring = reportData.monitoring || {};
+    const baseline = monitoring.baseline_ytd_avg || {};
+    const current = monitoring.current_ytd || {};
+    const hasComparableBase = Array.isArray(monitoring.comparison_years) && monitoring.comparison_years.length > 0;
+
+    if (!hasComparableBase || !monitoring.latest_month) {
+      alertsSummary.innerHTML = `
+        <article class="alert-card">
+          <h3>Resumo do monitoramento</h3>
+          <p>Sem base comparável suficiente para gerar alertas de período no momento.</p>
+        </article>
+      `;
+      return;
+    }
+
+    const restrictedDelta = Number(monitoring.restricted_rate_delta_pp || 0);
+    const deniedDelta = Number(monitoring.denied_rate_delta_pp || 0);
+    const status = monitoring.restricted_rate_status || 'estável';
+    const statusLabel = status === 'piorando' ? 'Atenção: piora' : (status === 'melhorando' ? 'Sinal de melhora' : 'Quadro estável');
+
+    const spikes = (monitoring.org_spikes || []).slice(0, 5);
+    const spikesHtml = spikes.length
+      ? `<ul>${spikes.map((row) => `
+          <li><strong>${esc(row.org)}</strong>: ${nFmt.format(row.current_denied)} negativas no mês (base: ${nFmt.format(Math.round(row.baseline_denied_avg || 0))}; alta de ${pFmt.format(row.lift_ratio || 0)}).</li>
+        `).join('')}</ul>`
+      : '<p>Não houve spike forte de negativas por órgão no mês mais recente.</p>';
+
+    const themeWorsening = (monitoring.theme_worsening || []).slice(0, 5);
+    const themeHtml = themeWorsening.length
+      ? `<ul>${themeWorsening.map((row) => `
+          <li><strong>${esc(row.theme)}</strong>: taxa de restrição subiu ${Number(row.delta_pp || 0).toFixed(1)} p.p. no acumulado do ano.</li>
+        `).join('')}</ul>`
+      : '<p>Não houve piora forte por tema no recorte com volume mínimo.</p>';
+
+    alertsSummary.innerHTML = `
+      <article class="alert-card">
+        <h3>${statusLabel}</h3>
+        <p>No acumulado até <strong>${esc(monitoring.latest_month_label || '--')} de ${esc(String(monitoring.latest_year || '--'))}</strong>, a taxa com restrição está em <strong>${pFmt.format(current.restricted_rate || 0)}</strong> (base comparável: <strong>${pFmt.format(baseline.restricted_rate_avg || 0)}</strong>, variação de <strong>${restrictedDelta.toFixed(1)} p.p.</strong>).</p>
+        <p>A taxa de negativas totais está em <strong>${pFmt.format(current.denied_rate || 0)}</strong> (base: <strong>${pFmt.format(baseline.denied_rate_avg || 0)}</strong>, variação de <strong>${deniedDelta.toFixed(1)} p.p.</strong>).</p>
+      </article>
+      <article class="alert-card">
+        <h3>Órgãos com spike recente</h3>
+        ${spikesHtml}
+      </article>
+      <article class="alert-card">
+        <h3>Áreas que pioraram no ano</h3>
+        ${themeHtml}
+      </article>
+    `;
+  }
+
+  function renderMethodology() {
+    if (!methodologyContent) return;
+    const m = reportData.methodology || {};
+    const source = reportData.source || {};
+    const themes = ((((m.theme_classification || {}).themes) || [])).map((item) => ({
+      theme: item.theme,
+      keywords: (item.keywords || []).slice(0, 8),
+    }));
+    const files = (m.source_files || []).map((item) => `<code>${esc(item)}</code>`).join(', ');
+    const comparisonRule = (((m.monitoring_rules || {}).government_diagnosis) || '').trim();
+    const spikeRule = (((m.monitoring_rules || {}).recent_spike) || '').trim();
+    const themeRule = (((m.monitoring_rules || {}).theme_worsening) || '').trim();
+
+    methodologyContent.innerHTML = `
+      <p><strong>Fonte oficial:</strong> <a href="${esc(source.portal_url || '#')}" target="_blank" rel="noopener noreferrer">Busca LAI (CGU)</a>. Arquivos usados: ${files || '--'}.</p>
+
+      <details class="methodology-details" open>
+        <summary>Como os indicadores foram calculados</summary>
+        <ul>
+          <li><strong>Unidade de análise:</strong> cada pedido individual da base anual.</li>
+          <li><strong>Negado total:</strong> decisão canônica igual a “Acesso Negado”.</li>
+          <li><strong>Com restrição:</strong> “Acesso Negado” + “Acesso Parcialmente Concedido”.</li>
+          <li><strong>Motivo da negativa:</strong> usa <code>EspecificacaoDecisao</code> e, quando vazio, <code>MotivoNegativaAcesso</code>, com padronização textual.</li>
+          <li><strong>Informação pessoal:</strong> caso com restrição cujo motivo contém termos de privacidade/LGPD.</li>
+          <li><strong>Ano parcial:</strong> no ano corrente, o painel mostra acumulado até a data da atualização.</li>
+        </ul>
+      </details>
+
+      <details class="methodology-details">
+        <summary>O que significa cada tema de pedido</summary>
+        <p>O tema vem do texto combinado de <code>AssuntoPedido</code>, <code>ResumoSolicitacao</code> e <code>DetalhamentoSolicitacao</code>, por regras de palavras-chave.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Tema</th>
+                <th>Palavras-chave usadas na classificação</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${themes.map((row) => `
+                <tr>
+                  <td>${esc(row.theme)}</td>
+                  <td>${esc(row.keywords.join(', '))}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <details class="methodology-details">
+        <summary>Amostragem e links na tabela de pedidos</summary>
+        <ul>
+          <li><strong>Amostra para busca:</strong> ${(m.sampling_for_search || {}).method ? esc((m.sampling_for_search || {}).method) : '--'}.</li>
+          <li><strong>Volume da amostra:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).sample_count || 0))}</strong> pedidos.</li>
+          <li><strong>Link BuscaLAI:</strong> cada pedido da amostra pode trazer URL direta via <code>IdPedido</code>, a partir de <code>PedidosLinkArquivo</code>.</li>
+        </ul>
+      </details>
+
+      <details class="methodology-details">
+        <summary>Regras dos alertas do monitoramento</summary>
+        <ul>
+          <li><strong>Diagnóstico do período:</strong> ${comparisonRule ? esc(comparisonRule) : '--'}.</li>
+          <li><strong>Spike por órgão:</strong> ${spikeRule ? esc(spikeRule) : '--'}.</li>
+          <li><strong>Piora por tema:</strong> ${themeRule ? esc(themeRule) : '--'}.</li>
+        </ul>
+      </details>
+    `;
   }
 
   function renderNarrative() {
@@ -154,18 +350,29 @@
 
     const first = series[0];
     const last = series[series.length - 1];
-    const peakDenied = [...series].sort((a, b) => b.denied_total - a.denied_total)[0];
-    const peakRestricted = [...series].sort((a, b) => b.restricted_rate - a.restricted_rate)[0];
+    const comparableSeries = partialYearCtx
+      ? series.filter((row) => Number(row.year) !== Number(partialYearCtx.year))
+      : series;
+    const peakBase = comparableSeries.length ? comparableSeries : series;
+
+    const peakDenied = [...peakBase].sort((a, b) => b.denied_total - a.denied_total)[0];
+    const peakRestricted = [...peakBase].sort((a, b) => b.restricted_rate - a.restricted_rate)[0];
     const mainReason = topReasons[0] || { reason: 'Sem informação', count: 0 };
     const topOrg = topOrgs[0] || { org: 'Sem informação', denied_total: 0 };
+    const endLabel = partialYearCtx ? partialYearCtx.yearLabel : String(last.year);
+    const peakLabel = partialYearCtx ? 'entre anos completos' : 'na série histórica';
 
     const bullets = [
-      `No período analisado (${first.year} a ${last.year}), a base registra <strong>${nFmt.format(reportData.overall.total_requests || 0)}</strong> pedidos, dos quais <strong>${nFmt.format(reportData.overall.denied_total || 0)}</strong> foram negados totalmente e <strong>${nFmt.format(reportData.overall.restricted_total || 0)}</strong> tiveram algum tipo de restrição.`,
-      `O ano com mais negativas totais foi <strong>${peakDenied.year}</strong>, com <strong>${nFmt.format(peakDenied.denied_total)}</strong> casos. A maior taxa de restrição apareceu em <strong>${peakRestricted.year}</strong> (<strong>${pFmt.format(peakRestricted.restricted_rate)}</strong>).`,
+      `No período analisado (${first.year} a ${endLabel}), a base registra <strong>${nFmt.format(reportData.overall.total_requests || 0)}</strong> pedidos, dos quais <strong>${nFmt.format(reportData.overall.denied_total || 0)}</strong> foram negados totalmente e <strong>${nFmt.format(reportData.overall.restricted_total || 0)}</strong> tiveram algum tipo de restrição.`,
+      `O pico de negativas ${peakLabel} foi em <strong>${peakDenied.year}</strong>, com <strong>${nFmt.format(peakDenied.denied_total)}</strong> casos. A maior taxa de restrição apareceu em <strong>${peakRestricted.year}</strong> (<strong>${pFmt.format(peakRestricted.restricted_rate)}</strong>).`,
       `O motivo mais comum entre as restrições é <strong>${esc(mainReason.reason)}</strong>, com <strong>${nFmt.format(mainReason.count || 0)}</strong> ocorrências na série histórica.`,
       `Entre os órgãos, o que mais concentra negativas no período é <strong>${esc(topOrg.org)}</strong> (<strong>${nFmt.format(topOrg.denied_total || 0)}</strong> negativas).`,
       `No recorte de informação pessoal, há <strong>${nFmt.format(reportData.overall.personal_restricted_total || 0)}</strong> negativas/restrições ligadas a esse tema, o que representa <strong>${pFmt.format(reportData.overall.personal_share_in_restricted || 0)}</strong> das restrições totais.`,
     ];
+
+    if (partialYearCtx) {
+      bullets.push(`Atenção: <strong>${partialYearCtx.year}</strong> ainda não terminou (dados acumulados até <strong>${esc(partialYearCtx.cutoffDateTime)}</strong>). Por isso ele aparece como ano parcial e não deve ser comparado como ano fechado.`);
+    }
 
     narrativeList.innerHTML = bullets.map((text) => `<li>${text}</li>`).join('');
   }
@@ -174,7 +381,12 @@
     destroyCharts();
 
     const series = reportData.series || [];
-    const years = series.map((row) => String(row.year));
+    const partialYear = partialYearCtx ? Number(partialYearCtx.year) : null;
+    const partialIndex = partialYearCtx
+      ? series.findIndex((row) => Number(row.year) === partialYear)
+      : -1;
+    const hasPartial = partialIndex >= 0;
+    const years = series.map((row, idx) => (idx === partialIndex ? `${row.year}*` : String(row.year)));
     const palette = ['#2f6f9f', '#3f8f6d', '#8d5f2c', '#7a4f9e', '#b36f18', '#5a7a2d', '#a04747', '#65758f'];
 
     const commonOptions = {
@@ -184,30 +396,66 @@
       plugins: { legend: { position: 'bottom' } },
     };
 
+    const splitSeries = (accessor) => ({
+      complete: series.map((row, idx) => (idx === partialIndex ? null : accessor(row))),
+      partial: hasPartial ? series.map((row, idx) => (idx === partialIndex ? accessor(row) : null)) : [],
+    });
+
+    const reqSplit = splitSeries((row) => row.total_requests);
+    const deniedSplit = splitSeries((row) => row.denied_total);
+
+    const volumeDatasets = [
+      {
+        type: 'line',
+        label: hasPartial ? 'Pedidos (anos completos)' : 'Pedidos',
+        data: reqSplit.complete,
+        borderColor: '#2f6f9f',
+        backgroundColor: 'rgba(47,111,159,0.15)',
+        yAxisID: 'y',
+        tension: 0.25,
+        pointRadius: 2,
+      },
+      {
+        type: 'bar',
+        label: hasPartial ? 'Negados (anos completos)' : 'Negados',
+        data: deniedSplit.complete,
+        backgroundColor: 'rgba(182,66,66,0.85)',
+        borderRadius: 6,
+        yAxisID: 'y1',
+      },
+    ];
+
+    if (hasPartial) {
+      volumeDatasets.push(
+        {
+          type: 'line',
+          label: `Pedidos (${partialYearCtx.year} parcial)`,
+          data: reqSplit.partial,
+          borderColor: '#2f6f9f',
+          backgroundColor: 'rgba(47,111,159,0.12)',
+          yAxisID: 'y',
+          showLine: false,
+          pointRadius: 5,
+          pointStyle: 'rectRot',
+        },
+        {
+          type: 'bar',
+          label: `Negados (${partialYearCtx.year} parcial)`,
+          data: deniedSplit.partial,
+          backgroundColor: 'rgba(182,66,66,0.35)',
+          borderColor: 'rgba(182,66,66,0.9)',
+          borderWidth: 1,
+          borderRadius: 6,
+          yAxisID: 'y1',
+        },
+      );
+    }
+
     pushChart(new Chart(document.getElementById('chart-yearly-volume'), {
       type: 'bar',
       data: {
         labels: years,
-        datasets: [
-          {
-            type: 'line',
-            label: 'Pedidos',
-            data: series.map((row) => row.total_requests),
-            borderColor: '#2f6f9f',
-            backgroundColor: 'rgba(47,111,159,0.15)',
-            yAxisID: 'y',
-            tension: 0.25,
-            pointRadius: 2,
-          },
-          {
-            type: 'bar',
-            label: 'Negados',
-            data: series.map((row) => row.denied_total),
-            backgroundColor: 'rgba(182,66,66,0.85)',
-            borderRadius: 6,
-            yAxisID: 'y1',
-          },
-        ],
+        datasets: volumeDatasets,
       },
       options: {
         ...commonOptions,
@@ -218,28 +466,54 @@
       },
     }));
 
+    const deniedRateSplit = splitSeries((row) => row.denied_rate * 100);
+    const restrictedRateSplit = splitSeries((row) => row.restricted_rate * 100);
+    const rateDatasets = [
+      {
+        label: hasPartial ? 'Taxa de negado (anos completos)' : 'Taxa de negado total',
+        data: deniedRateSplit.complete,
+        borderColor: '#b64242',
+        backgroundColor: 'rgba(182,66,66,0.12)',
+        tension: 0.25,
+        fill: true,
+      },
+      {
+        label: hasPartial ? 'Taxa com restrição (anos completos)' : 'Taxa com restrição (negado + parcial)',
+        data: restrictedRateSplit.complete,
+        borderColor: '#3f8f6d',
+        backgroundColor: 'rgba(63,143,109,0.12)',
+        tension: 0.25,
+        fill: true,
+      },
+    ];
+    if (hasPartial) {
+      rateDatasets.push(
+        {
+          label: `Taxa de negado (${partialYearCtx.year} parcial)`,
+          data: deniedRateSplit.partial,
+          borderColor: '#b64242',
+          backgroundColor: 'rgba(182,66,66,0.18)',
+          showLine: false,
+          pointRadius: 5,
+          pointStyle: 'rectRot',
+        },
+        {
+          label: `Taxa com restrição (${partialYearCtx.year} parcial)`,
+          data: restrictedRateSplit.partial,
+          borderColor: '#3f8f6d',
+          backgroundColor: 'rgba(63,143,109,0.2)',
+          showLine: false,
+          pointRadius: 5,
+          pointStyle: 'rectRot',
+        },
+      );
+    }
+
     pushChart(new Chart(document.getElementById('chart-yearly-rate'), {
       type: 'line',
       data: {
         labels: years,
-        datasets: [
-          {
-            label: 'Taxa de negado total',
-            data: series.map((row) => row.denied_rate * 100),
-            borderColor: '#b64242',
-            backgroundColor: 'rgba(182,66,66,0.12)',
-            tension: 0.25,
-            fill: true,
-          },
-          {
-            label: 'Taxa com restrição (negado + parcial)',
-            data: series.map((row) => row.restricted_rate * 100),
-            borderColor: '#3f8f6d',
-            backgroundColor: 'rgba(63,143,109,0.12)',
-            tension: 0.25,
-            fill: true,
-          },
-        ],
+        datasets: rateDatasets,
       },
       options: {
         ...commonOptions,
@@ -267,12 +541,16 @@
 
     const reasonDatasets = reasonLabels.map((reason, idx) => ({
       label: reason,
-      data: years.map((year) => {
-        const yearMap = reasonMapByYear.get(String(year)) || {};
+      data: series.map((row) => {
+        const yearMap = reasonMapByYear.get(String(row.year)) || {};
         return yearMap[reason] || 0;
       }),
-      backgroundColor: `${palette[idx % palette.length]}cc`,
-      borderColor: palette[idx % palette.length],
+      backgroundColor: years.map((_, yearIdx) => (
+        yearIdx === partialIndex ? `${palette[idx % palette.length]}55` : `${palette[idx % palette.length]}cc`
+      )),
+      borderColor: years.map((_, yearIdx) => (
+        yearIdx === partialIndex ? `${palette[idx % palette.length]}99` : palette[idx % palette.length]
+      )),
       borderWidth: 1,
       stack: 'motivos',
     }));
@@ -354,30 +632,78 @@
     }));
 
     const personalSeries = (reportData.personal_info || {}).series || [];
+    const personalLabels = personalSeries.map((row) => (
+      (partialYearCtx && Number(row.year) === partialYear) ? `${row.year}*` : String(row.year)
+    ));
+    const personalSplit = {
+      countComplete: personalSeries.map((row) => (
+        (partialYearCtx && Number(row.year) === partialYear) ? null : row.count
+      )),
+      countPartial: hasPartial ? personalSeries.map((row) => (
+        (Number(row.year) === partialYear) ? row.count : null
+      )) : [],
+      shareComplete: personalSeries.map((row) => (
+        (partialYearCtx && Number(row.year) === partialYear) ? null : row.share_in_restricted * 100
+      )),
+      sharePartial: hasPartial ? personalSeries.map((row) => (
+        (Number(row.year) === partialYear) ? row.share_in_restricted * 100 : null
+      )) : [],
+    };
+
+    const personalDatasets = [
+      {
+        label: hasPartial
+          ? 'Qtde por informação pessoal (anos completos)'
+          : 'Qtde de negativas/restrições por informação pessoal',
+        data: personalSplit.countComplete,
+        borderColor: '#8d5f2c',
+        backgroundColor: 'rgba(141,95,44,0.16)',
+        yAxisID: 'y',
+        tension: 0.22,
+        fill: true,
+      },
+      {
+        label: hasPartial
+          ? '% pessoal nas restrições (anos completos)'
+          : '% pessoal dentro das restrições',
+        data: personalSplit.shareComplete,
+        borderColor: '#2f6f9f',
+        backgroundColor: 'rgba(47,111,159,0.12)',
+        yAxisID: 'y1',
+        tension: 0.22,
+        fill: true,
+      },
+    ];
+    if (hasPartial) {
+      personalDatasets.push(
+        {
+          label: `Qtde (${partialYearCtx.year} parcial)`,
+          data: personalSplit.countPartial,
+          borderColor: '#8d5f2c',
+          backgroundColor: 'rgba(141,95,44,0.25)',
+          yAxisID: 'y',
+          showLine: false,
+          pointRadius: 5,
+          pointStyle: 'rectRot',
+        },
+        {
+          label: `% pessoal (${partialYearCtx.year} parcial)`,
+          data: personalSplit.sharePartial,
+          borderColor: '#2f6f9f',
+          backgroundColor: 'rgba(47,111,159,0.25)',
+          yAxisID: 'y1',
+          showLine: false,
+          pointRadius: 5,
+          pointStyle: 'rectRot',
+        },
+      );
+    }
+
     pushChart(new Chart(document.getElementById('chart-personal'), {
       type: 'line',
       data: {
-        labels: personalSeries.map((row) => String(row.year)),
-        datasets: [
-          {
-            label: 'Qtde de negativas/restrições por informação pessoal',
-            data: personalSeries.map((row) => row.count),
-            borderColor: '#8d5f2c',
-            backgroundColor: 'rgba(141,95,44,0.16)',
-            yAxisID: 'y',
-            tension: 0.22,
-            fill: true,
-          },
-          {
-            label: '% pessoal dentro das restrições',
-            data: personalSeries.map((row) => row.share_in_restricted * 100),
-            borderColor: '#2f6f9f',
-            backgroundColor: 'rgba(47,111,159,0.12)',
-            yAxisID: 'y1',
-            tension: 0.22,
-            fill: true,
-          },
-        ],
+        labels: personalLabels,
+        datasets: personalDatasets,
       },
       options: {
         ...commonOptions,
@@ -397,7 +723,7 @@
   function renderTables() {
     tableYearly.innerHTML = (reportData.series || []).map((row) => `
       <tr>
-        <td>${row.year}</td>
+        <td>${(partialYearCtx && Number(row.year) === Number(partialYearCtx.year)) ? `${row.year}*` : row.year}</td>
         <td>${nFmt.format(row.total_requests)}</td>
         <td>${nFmt.format(row.denied_total)}</td>
         <td>${nFmt.format(row.restricted_total)}</td>
@@ -467,7 +793,7 @@
         const examples = item.examples || [];
         if (!examples.length) return '';
         return `
-          <div class="org-note"><strong>${esc(item.theme)}</strong>: ${examples.map((txt) => `“${esc(txt)}”`).join(' | ')}</div>
+          <div class="org-note"><strong>${esc(item.theme)}</strong>: ${examples.map((txt) => `“${esc(compactText(txt, 220))}”`).join(' | ')}</div>
         `;
       }).join('');
 
@@ -579,10 +905,11 @@
           <td>${esc(row.decision || '--')}</td>
           <td>${esc(row.theme || '--')}</td>
           <td>${esc(row.subject || '--')}</td>
+          <td>${row.request_link ? `<a href="${esc(row.request_link)}" target="_blank" rel="noopener noreferrer">Abrir</a>` : '--'}</td>
           <td>${esc(row.text_excerpt || '--')}</td>
         </tr>
       `).join('')
-      : '<tr><td colspan="6">Nenhum resultado para esse filtro.</td></tr>';
+      : '<tr><td colspan="7">Nenhum resultado para esse filtro.</td></tr>';
 
     const sampleInfo = reportData.search_dashboard || {};
     searchStatus.innerHTML = `Busca em <strong>${nFmt.format(sampleInfo.sample_count || requestSamples.length)}</strong> pedidos da amostra (${esc(sampleInfo.sample_method || 'amostragem')}). Resultado atual: <strong>${nFmt.format(filtered.length)}</strong> registros${filtered.length > shown.length ? ` (mostrando ${nFmt.format(shown.length)}).` : '.'}`;
@@ -722,6 +1049,7 @@
         decision: row.decision,
         theme: row.theme,
         subject: row.subject,
+        request_link: row.request_link,
         text_excerpt: row.text_excerpt,
       })),
       aviso_amostra: (reportData.search_dashboard || {}).sample_method || '',
@@ -923,12 +1251,15 @@
       return;
     }
 
+    partialYearCtx = getPartialYearContext(reportData.series || []);
     renderHeaderMeta();
     renderMetrics();
+    renderAlertsSummary();
     renderNarrative();
     renderCharts();
     renderTables();
     renderOrgCards();
+    renderMethodology();
 
     restoreGeminiKey();
     populateAiFilters();
