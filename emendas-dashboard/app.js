@@ -14,18 +14,40 @@
     statusUpdate: document.getElementById('status-update'),
     statusSnapshot: document.getElementById('status-snapshot'),
     statusSource: document.getElementById('status-source'),
+
+    tabViewSnapshot: document.getElementById('tab-view-snapshot'),
+    tabViewDocs: document.getElementById('tab-view-docs'),
+    viewSnapshot: document.getElementById('view-snapshot'),
+    viewDocs: document.getElementById('view-docs'),
+
     kpiDeltaPositive: document.getElementById('kpi-delta-positive'),
     kpiDeltaNet: document.getElementById('kpi-delta-net'),
     kpiAuthorsUp: document.getElementById('kpi-authors-up'),
     kpiDestinationsUp: document.getElementById('kpi-destinations-up'),
     spotlight: document.getElementById('spotlight'),
+
+    docKpiTotalToCommit: document.getElementById('doc-kpi-total-to-commit'),
+    docKpiCommittedSoFar: document.getElementById('doc-kpi-committed-so-far'),
+    docKpiCommittedLastDay: document.getElementById('doc-kpi-committed-last-day'),
+    docKpiPaidYear: document.getElementById('doc-kpi-paid-year'),
+    docSpotlight: document.getElementById('doc-spotlight'),
+
     tablePairs: document.getElementById('table-pairs'),
     tableAuthorsTotal: document.getElementById('table-authors-total'),
     tableDestinationsTotal: document.getElementById('table-destinations-total'),
+
+    tableDocsAuthorsYear: document.getElementById('table-docs-authors-year'),
+    tableDocsAuthorsDay: document.getElementById('table-docs-authors-day'),
+    tableDocsDestDay: document.getElementById('table-docs-dest-day'),
+    tableApoiamentoTop: document.getElementById('table-apoiamento-top'),
+    apoiamentoNote: document.getElementById('apoiamento-note'),
+
     sourcesList: document.getElementById('sources-list'),
+
     chartHistory: document.getElementById('chart-history'),
     chartAuthors: document.getElementById('chart-authors'),
     chartDestinations: document.getElementById('chart-destinations'),
+    chartDocsDaily: document.getElementById('chart-docs-daily'),
   };
 
   const chartInstances = [];
@@ -65,6 +87,14 @@
     return resp.json();
   }
 
+  function setActiveView(viewId) {
+    const isSnapshot = viewId === 'snapshot';
+    els.viewSnapshot.hidden = !isSnapshot;
+    els.viewDocs.hidden = isSnapshot;
+    els.tabViewSnapshot.classList.toggle('active', isSnapshot);
+    els.tabViewDocs.classList.toggle('active', !isSnapshot);
+  }
+
   function setKpis(metrics) {
     const deltaNet = Number(metrics.delta_liquido_desde_snapshot_anterior || 0);
     const deltaPositive = Number(metrics.delta_positivo_desde_snapshot_anterior || 0);
@@ -97,7 +127,8 @@
     els.spotlight.innerHTML = `
       No snapshot de <strong>${esc(report.snapshot_date || '--')}</strong>, o monitor identificou
       <strong>${money(delta)}</strong> de aumento positivo em empenhos.
-      Quem mais cresceu no dia foi <strong>${esc(topAuthor.author)}</strong> (${money(topAuthor.delta_empenhado)}),
+      Quem mais cresceu no dia foi <strong>${esc(topAuthor.author)}</strong>
+      (${esc(topAuthor.party || 'sem partido mapeado')}, ${money(topAuthor.delta_empenhado)}),
       e o principal destino foi <strong>${esc(topDestination.destination)}</strong>
       (${money(topDestination.delta_empenhado)}).
     `;
@@ -105,15 +136,30 @@
 
   function renderPairsTable(rows) {
     if (!rows.length) {
-      els.tablePairs.innerHTML = '<tr><td colspan="4">Sem variação positiva no dia.</td></tr>';
+      els.tablePairs.innerHTML = '<tr><td colspan="5">Sem variação positiva no dia.</td></tr>';
       return;
     }
     els.tablePairs.innerHTML = rows.slice(0, 40).map((row) => `
       <tr>
         <td>${esc(row.author)}</td>
+        <td>${esc(row.party || 'Nao identificado')}</td>
         <td>${esc(row.destination)}</td>
         <td>${money(row.delta_empenhado)}</td>
         <td>${money(row.current_empenhado)}</td>
+      </tr>
+    `).join('');
+  }
+
+  function renderAuthorsTotalTable(rows) {
+    if (!rows.length) {
+      els.tableAuthorsTotal.innerHTML = '<tr><td colspan="3">Sem dados.</td></tr>';
+      return;
+    }
+    els.tableAuthorsTotal.innerHTML = rows.slice(0, 20).map((row) => `
+      <tr>
+        <td>${esc(row.author)}</td>
+        <td>${esc(row.party || 'Nao identificado')}</td>
+        <td>${money(row.total_empenhado)}</td>
       </tr>
     `).join('');
   }
@@ -229,6 +275,155 @@
     chartInstances.push(chart);
   }
 
+  function renderDocsDailyChart(dailySeries) {
+    const labels = dailySeries.map((row) => row.date || '--');
+    const empenhado = dailySeries.map((row) => Number(row.empenhado || 0));
+    const pago = dailySeries.map((row) => Number(row.pago || 0));
+
+    const chart = new Chart(els.chartDocsDaily, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Empenhado por dia',
+            data: empenhado,
+            borderColor: '#c1733f',
+            backgroundColor: 'rgba(193, 115, 63, 0.18)',
+            borderWidth: 2,
+            tension: 0.18,
+            fill: true,
+            pointRadius: 1.2,
+          },
+          {
+            label: 'Pago por dia',
+            data: pago,
+            borderColor: '#3f6b7b',
+            borderWidth: 1.8,
+            tension: 0.18,
+            fill: false,
+            pointRadius: 1.1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            ticks: {
+              callback: (value) => moneyFmt.format(value),
+            },
+          },
+        },
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (ctx) => `${ctx.dataset.label}: ${money(ctx.parsed.y)}`,
+            },
+          },
+        },
+      },
+    });
+    chartInstances.push(chart);
+  }
+
+  function renderDocsTable(target, rows, rowBuilder, emptyColspan) {
+    if (!rows.length) {
+      target.innerHTML = `<tr><td colspan="${emptyColspan}">Sem dados.</td></tr>`;
+      return;
+    }
+    target.innerHTML = rows.map(rowBuilder).join('');
+  }
+
+  function renderParallelMonitor(report) {
+    const parallel = report.parallel_monitor || {};
+    const execucao = parallel.execucao_ano_corrente || {};
+    const docs = parallel.documents || {};
+    const apoiamento = parallel.apoiamento || {};
+    const unicoYear = report.unico_year_summary || {};
+
+    const stageValues = execucao.stage_values || {};
+    const totalToCommit = Number(stageValues.a_empenhar || 0) > 0
+      ? Number(stageValues.a_empenhar || 0) + Number(stageValues.empenhado || 0)
+      : (Number(stageValues.empenhado || 0) || null);
+
+    els.docKpiTotalToCommit.textContent = totalToCommit === null ? 'não disponível' : money(totalToCommit);
+    els.docKpiCommittedSoFar.textContent = money(unicoYear.total_empenhado || (docs.totals || {}).total_empenhado_year || 0);
+    els.docKpiCommittedLastDay.textContent = money((docs.totals || {}).total_empenhado_last_day || 0);
+    els.docKpiPaidYear.textContent = money((docs.totals || {}).total_pago_year || 0);
+
+    const maxDate = docs.date_max || '--';
+    const minDate = docs.date_min || '--';
+    const rowsValid = Number(docs.rows_valid_year || 0);
+    els.docSpotlight.innerHTML = `
+      Série diária de <strong>${esc(minDate)}</strong> até <strong>${esc(maxDate)}</strong>.
+      Último dia com movimentação: <strong>${esc(maxDate)}</strong>.
+      Registros processados na fonte de documentos: <strong>${nFmt.format(rowsValid)}</strong>.
+    `;
+
+    renderDocsTable(
+      els.tableDocsAuthorsYear,
+      (docs.top_authors_year || []).slice(0, 20),
+      (row) => `
+        <tr>
+          <td>${esc(row.author)}</td>
+          <td>${esc(row.party || 'Nao identificado')}</td>
+          <td>${money(row.empenhado)}</td>
+          <td>${money(row.pago)}</td>
+        </tr>
+      `,
+      4
+    );
+
+    renderDocsTable(
+      els.tableDocsAuthorsDay,
+      (docs.top_authors_last_day || []).slice(0, 20),
+      (row) => `
+        <tr>
+          <td>${esc(row.author)}</td>
+          <td>${esc(row.party || 'Nao identificado')}</td>
+          <td>${money(row.empenhado)}</td>
+        </tr>
+      `,
+      3
+    );
+
+    renderDocsTable(
+      els.tableDocsDestDay,
+      (docs.top_destinations_last_day || []).slice(0, 20),
+      (row) => `
+        <tr>
+          <td>${esc(row.destination)}</td>
+          <td>${money(row.empenhado)}</td>
+        </tr>
+      `,
+      2
+    );
+
+    if (apoiamento.available) {
+      els.apoiamentoNote.textContent = `Base de apoiamento disponível para ${apoiamento.year}.`;
+      renderDocsTable(
+        els.tableApoiamentoTop,
+        (apoiamento.top_supporters || []).slice(0, 20),
+        (row) => `
+          <tr>
+            <td>${esc(row.supporter)}</td>
+            <td>${money(row.empenhado)}</td>
+            <td>${money(row.pago)}</td>
+            <td>${nFmt.format(row.authors_count || 0)}</td>
+          </tr>
+        `,
+        4
+      );
+    } else {
+      els.apoiamentoNote.textContent = 'Não houve arquivo de apoiamento disponível no momento desta atualização.';
+      els.tableApoiamentoTop.innerHTML = '<tr><td colspan="4">Sem dados de apoiamento disponíveis.</td></tr>';
+    }
+
+    renderDocsDailyChart(docs.daily_series || []);
+  }
+
   function renderSources(report) {
     const source = report.source || {};
     const topAuthor = (report.top_authors_today || [])[0];
@@ -237,10 +432,17 @@
     const authorShare = topAuthor ? Number(topAuthor.share_in_day || 0) : 0;
     const destinationShare = topDestination ? Number(topDestination.share_in_day || 0) : 0;
 
+    const parallel = report.parallel_monitor || {};
+    const docsSource = ((parallel.documents || {}).source) || {};
+    const apoiamentoSource = ((parallel.apoiamento || {}).source) || {};
+    const execucao = parallel.execucao_ano_corrente || {};
+
     const items = [
-      `<li><strong>Base principal:</strong> <a href="${esc(source.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Portal da Transparência - Download de Emendas</a>.</li>`,
-      `<li><strong>Referência de monitoramento usada anteriormente:</strong> <a href="${esc(source.senado_reference_url || '#')}" target="_blank" rel="noopener noreferrer">Painel SIGA Brasil no Senado</a>.</li>`,
-      `<li><strong>Regra deste monitor:</strong> “Empenhado no dia” = variação positiva no acumulado entre snapshots consecutivos da mesma base.</li>`,
+      `<li><strong>Base principal (snapshot):</strong> <a href="${esc(source.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Portal da Transparência - Emendas (UNICO)</a>.</li>`,
+      `<li><strong>Aba paralela - documentos:</strong> <a href="${esc(docsSource.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Emendas por documentos de despesa (ano corrente)</a>.</li>`,
+      `<li><strong>Aba paralela - apoiamento:</strong> <a href="${esc(apoiamentoSource.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Apoiamento de emendas parlamentares por documentos</a>.</li>`,
+      `<li><strong>Endpoint de execução (ano corrente):</strong> <a href="${esc(execucao.endpoint_url || '#')}" target="_blank" rel="noopener noreferrer">execucao-despesas-ano-corrente/resultadoGrafico</a>.</li>`,
+      `<li><strong>Regra do monitor principal:</strong> “Empenhado no dia” = variação positiva no acumulado entre snapshots consecutivos da mesma base.</li>`,
       `<li><strong>Leitura rápida do dia:</strong> total positivo de ${money(dayTotal)}.`
       + (topAuthor ? ` Autor líder: ${esc(topAuthor.author)} (${pctFmt.format(authorShare)} do total do dia).` : '')
       + (topDestination ? ` Destino líder: ${esc(topDestination.destination)} (${pctFmt.format(destinationShare)} do total do dia).` : '')
@@ -273,10 +475,10 @@
     setStatus(report, metadata || {});
     setKpis(report.metrics || {});
     setSpotlight(report);
+
     renderPairsTable(report.top_author_destination_today || []);
-    renderSimpleTable(els.tableAuthorsTotal, report.top_authors_total || [], 'author', 'total_empenhado');
+    renderAuthorsTotalTable(report.top_authors_total || []);
     renderSimpleTable(els.tableDestinationsTotal, report.top_destinations_total || [], 'destination', 'total_empenhado');
-    renderSources(report);
 
     renderHistoryChart(report.daily_history || []);
     renderBarChart(
@@ -295,6 +497,13 @@
       'Aumento por destino',
       'rgba(63, 107, 123, 0.72)'
     );
+
+    renderParallelMonitor(report);
+    renderSources(report);
+
+    els.tabViewSnapshot.addEventListener('click', () => setActiveView('snapshot'));
+    els.tabViewDocs.addEventListener('click', () => setActiveView('docs'));
+    setActiveView('snapshot');
   }
 
   boot();

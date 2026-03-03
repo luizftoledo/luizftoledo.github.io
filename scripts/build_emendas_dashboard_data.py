@@ -13,6 +13,7 @@ import unicodedata
 import urllib.error
 import urllib.request
 import zipfile
+import xml.etree.ElementTree as ET
 from collections import defaultdict
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -23,6 +24,31 @@ FALLBACK_ZIP_URL = (
     "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/"
     "emendas-parlamentares/EmendasParlamentares.zip"
 )
+DOCUMENTS_DOWNLOAD_URL_TEMPLATE = (
+    "https://portaldatransparencia.gov.br/download-de-dados/"
+    "emendas-parlamentares-documentos/{year}"
+)
+DOCUMENTS_FALLBACK_ZIP_URL_TEMPLATE = (
+    "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/"
+    "emendas-parlamentares-documentos/{year}_EmendasParlamentaresPorDocumento.zip"
+)
+APOIAMENTO_DOWNLOAD_URL_TEMPLATE = (
+    "https://portaldatransparencia.gov.br/download-de-dados/"
+    "apoiamento-emendas-parlamentares-documentos/{year}"
+)
+APOIAMENTO_FALLBACK_ZIP_URL_TEMPLATE = (
+    "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/"
+    "apoiamento-emendas-parlamentares-documentos/{year}_ApoiamentoEmendasParlamentares.zip"
+)
+EXECUCAO_ANO_CORRENTE_ENDPOINT_TEMPLATE = (
+    "https://portaldatransparencia.gov.br/emendas/execucao-despesas-ano-corrente/"
+    "resultadoGrafico?ano={year}"
+)
+CAMARA_DEPUTADOS_URL = (
+    "https://dadosabertos.camara.leg.br/api/v2/deputados"
+    "?itens=700&ordem=ASC&ordenarPor=nome"
+)
+SENADO_LISTA_URL = "https://legis.senado.leg.br/dadosabertos/senador/lista/atual"
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
@@ -65,6 +91,25 @@ def normalize_column(value):
     return text
 
 
+def normalize_person_name(value):
+    text = normalize_text(value)
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    text = text.upper()
+    text = re.sub(r"[^A-Z0-9 ]+", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def parse_ddmmyyyy(value):
+    text = normalize_text(value)
+    if not text:
+        return None
+    try:
+        return dt.datetime.strptime(text, "%d/%m/%Y").date()
+    except ValueError:
+        return None
+
+
 def parse_currency(value):
     text = normalize_text(value)
     if not text:
@@ -84,6 +129,10 @@ def to_float(value):
     if isinstance(value, Decimal):
         return float(value.quantize(Decimal("0.01")))
     return float(value)
+
+
+def parse_brl_number(value):
+    return to_float(parse_currency(value))
 
 
 def download_with_urllib(url, target):
@@ -138,6 +187,13 @@ def fetch_headers(url):
         return {"etag": "", "last_modified": "", "content_length": "", "final_url": ""}
 
 
+def fetch_json_url(url):
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=180) as resp:
+        payload = resp.read().decode("utf-8")
+    return json.loads(payload)
+
+
 def load_json(path, default):
     if not path.exists():
         return default
@@ -163,6 +219,58 @@ def load_state():
 def save_state(payload):
     with gzip.open(STATE_FILE, "wt", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False)
+
+
+def resolve_party(author_name, party_lookup):
+    name = normalize_person_name(author_name)
+    if not name:
+        return "Nao identificado"
+    if "BANCADA" in name:
+        return "Bancada"
+    if name.startswith("COM ") or name.startswith("COM.") or "COMISSAO" in name:
+        return "Comissao"
+    if "RELATOR" in name:
+        return "Relatoria"
+    return party_lookup.get(name) or "Nao identificado"
+
+
+def fetch_party_lookup():
+    lookup = {}
+    metadata = {"camara_mapeados": 0, "senado_mapeados": 0}
+
+    try:
+        data = fetch_json_url(CAMARA_DEPUTADOS_URL)
+        for row in data.get("dados", []):
+            name = normalize_person_name(row.get("nome", ""))
+            party = normalize_text(row.get("siglaPartido", ""))
+            if name and party:
+                lookup[name] = party
+                metadata["camara_mapeados"] += 1
+    except Exception:
+        pass
+
+    try:
+        req = urllib.request.Request(SENADO_LISTA_URL, headers={"User-Agent": USER_AGENT})
+        with urllib.request.urlopen(req, timeout=180) as resp:
+            xml_payload = resp.read()
+        root = ET.fromstring(xml_payload)
+        for parlamentar in root.findall(".//Parlamentar"):
+            name = normalize_person_name(parlamentar.findtext(".//NomeParlamentar", default=""))
+            party = normalize_text(parlamentar.findtext(".//SiglaPartidoParlamentar", default=""))
+            if name and party and name not in lookup:
+                lookup[name] = party
+                metadata["senado_mapeados"] += 1
+    except Exception:
+        pass
+
+    return lookup, metadata
+
+
+def split_author_party_key(key):
+    if "|||" not in key:
+        return key, "Nao identificado"
+    author, party = key.split("|||", 1)
+    return author, party
 
 
 def pick_primary_member(names):
@@ -201,9 +309,318 @@ def apply_diff(curr_map, prev_map):
     return positive, positive_total, negative_total
 
 
+def fetch_execucao_ano_corrente(year):
+    url = EXECUCAO_ANO_CORRENTE_ENDPOINT_TEMPLATE.format(year=year)
+    try:
+        payload = fetch_json_url(url)
+    except Exception:
+        return {"year": year, "endpoint_url": url, "stages": [], "stage_values": {}}
+
+    stages = []
+    stage_values = {}
+    for row in payload:
+        valores = row.get("valores", []) if isinstance(row, dict) else []
+        if len(valores) < 2:
+            continue
+        stage = normalize_text(valores[0])
+        value = parse_currency(valores[1])
+        if not stage:
+            continue
+        amount = to_float(value)
+        stages.append({"stage": stage, "value": amount})
+        stage_values[normalize_column(stage)] = amount
+
+    return {
+        "year": year,
+        "endpoint_url": url,
+        "stages": stages,
+        "stage_values": stage_values,
+    }
+
+
+def build_documents_monitor(year, party_lookup):
+    requested_url = DOCUMENTS_DOWNLOAD_URL_TEMPLATE.format(year=year)
+    fallback_url = DOCUMENTS_FALLBACK_ZIP_URL_TEMPLATE.format(year=year)
+    headers = fetch_headers(requested_url)
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        zip_path = Path(tmpdir) / f"docs-{year}.zip"
+        try:
+            download_source(requested_url, zip_path)
+        except Exception:
+            download_source(fallback_url, zip_path)
+            if not headers.get("final_url"):
+                headers["final_url"] = fallback_url
+
+        with zipfile.ZipFile(zip_path) as zf:
+            csv_members = [name for name in zf.namelist() if name.lower().endswith(".csv")]
+            if not csv_members:
+                raise RuntimeError("Arquivo de documentos de emendas sem CSV.")
+            member = csv_members[0]
+            with zf.open(member) as fh:
+                reader = csv.DictReader(io.TextIOWrapper(fh, encoding="latin-1", newline=""), delimiter=";")
+                if not reader.fieldnames:
+                    raise RuntimeError("CSV de documentos sem cabeçalho.")
+
+                col_map = {normalize_column(name): name for name in reader.fieldnames}
+
+                def get_col(row, norm_name):
+                    return normalize_text(row.get(col_map.get(norm_name, ""), ""))
+
+                daily_empenhado = defaultdict(lambda: Decimal("0"))
+                daily_pago = defaultdict(lambda: Decimal("0"))
+                author_year_empenhado = defaultdict(lambda: Decimal("0"))
+                author_year_pago = defaultdict(lambda: Decimal("0"))
+                author_last_day_empenhado = defaultdict(lambda: Decimal("0"))
+                destination_last_day_empenhado = defaultdict(lambda: Decimal("0"))
+
+                rows_processed = 0
+                valid_rows = 0
+                max_date = None
+                min_date = None
+
+                buffered_rows = []
+                for row in reader:
+                    rows_processed += 1
+                    data_doc = parse_ddmmyyyy(get_col(row, "data_documento"))
+                    if not data_doc or data_doc.year != year:
+                        continue
+                    valid_rows += 1
+                    if min_date is None or data_doc < min_date:
+                        min_date = data_doc
+                    if max_date is None or data_doc > max_date:
+                        max_date = data_doc
+                    buffered_rows.append((row, data_doc))
+
+                if max_date is None:
+                    return {
+                        "year": year,
+                        "source": {
+                            "requested_url": requested_url,
+                            "download_url": headers.get("final_url") or fallback_url,
+                            "last_modified": headers.get("last_modified", ""),
+                            "etag": headers.get("etag", ""),
+                            "csv_member": member,
+                        },
+                        "rows_processed": rows_processed,
+                        "rows_valid_year": 0,
+                        "date_min": "",
+                        "date_max": "",
+                        "daily_series": [],
+                        "top_authors_year": [],
+                        "top_authors_last_day": [],
+                        "top_destinations_last_day": [],
+                        "totals": {
+                            "total_empenhado_year": 0.0,
+                            "total_pago_year": 0.0,
+                            "total_empenhado_last_day": 0.0,
+                            "total_pago_last_day": 0.0,
+                        },
+                    }
+
+                for row, data_doc in buffered_rows:
+                    date_key = data_doc.isoformat()
+                    author = get_col(row, "nome_do_autor_da_emenda") or "Autor não informado"
+                    party = resolve_party(author, party_lookup)
+                    author_party_key = f"{author}|||{party}"
+                    destination = (
+                        get_col(row, "localidade_de_aplicacao_do_recurso")
+                        or (
+                            f"{get_col(row, 'municipio_de_aplicacao_do_recurso')} - {get_col(row, 'uf_de_aplicacao_do_recurso')}"
+                            if get_col(row, "municipio_de_aplicacao_do_recurso") or get_col(row, "uf_de_aplicacao_do_recurso")
+                            else "Destino não informado"
+                        )
+                    )
+
+                    valor_empenhado = parse_currency(get_col(row, "valor_empenhado"))
+                    valor_pago = parse_currency(get_col(row, "valor_pago"))
+
+                    if valor_empenhado > 0:
+                        daily_empenhado[date_key] += valor_empenhado
+                        author_year_empenhado[author_party_key] += valor_empenhado
+                        if data_doc == max_date:
+                            author_last_day_empenhado[author_party_key] += valor_empenhado
+                            destination_last_day_empenhado[destination] += valor_empenhado
+
+                    if valor_pago > 0:
+                        daily_pago[date_key] += valor_pago
+                        author_year_pago[author_party_key] += valor_pago
+
+                start_date = dt.date(year, 1, 1)
+                end_date = max_date
+                running_empenhado = Decimal("0")
+                running_pago = Decimal("0")
+                series = []
+                cursor = start_date
+                while cursor <= end_date:
+                    key = cursor.isoformat()
+                    day_emp = daily_empenhado.get(key, Decimal("0"))
+                    day_pago = daily_pago.get(key, Decimal("0"))
+                    running_empenhado += day_emp
+                    running_pago += day_pago
+                    series.append(
+                        {
+                            "date": key,
+                            "empenhado": to_float(day_emp),
+                            "pago": to_float(day_pago),
+                            "acumulado_empenhado": to_float(running_empenhado),
+                            "acumulado_pago": to_float(running_pago),
+                        }
+                    )
+                    cursor += dt.timedelta(days=1)
+
+                top_year_keys = sort_top(author_year_empenhado, 20)
+                top_last_day_keys = sort_top(author_last_day_empenhado, 20)
+                top_destinations_last_day = sort_top(destination_last_day_empenhado, 20)
+
+                top_authors_year = []
+                for key, empenhado in top_year_keys:
+                    author, party = split_author_party_key(key)
+                    pago = author_year_pago.get(key, Decimal("0"))
+                    top_authors_year.append(
+                        {
+                            "author": author,
+                            "party": party,
+                            "empenhado": to_float(empenhado),
+                            "pago": to_float(pago),
+                        }
+                    )
+
+                top_authors_last_day = []
+                for key, empenhado in top_last_day_keys:
+                    author, party = split_author_party_key(key)
+                    top_authors_last_day.append(
+                        {"author": author, "party": party, "empenhado": to_float(empenhado)}
+                    )
+
+                return {
+                    "year": year,
+                    "source": {
+                        "requested_url": requested_url,
+                        "download_url": headers.get("final_url") or fallback_url,
+                        "last_modified": headers.get("last_modified", ""),
+                        "etag": headers.get("etag", ""),
+                        "csv_member": member,
+                    },
+                    "rows_processed": rows_processed,
+                    "rows_valid_year": valid_rows,
+                    "date_min": min_date.isoformat() if min_date else "",
+                    "date_max": max_date.isoformat() if max_date else "",
+                    "daily_series": series,
+                    "top_authors_year": top_authors_year,
+                    "top_authors_last_day": top_authors_last_day,
+                    "top_destinations_last_day": [
+                        {"destination": destination, "empenhado": to_float(value)}
+                        for destination, value in top_destinations_last_day
+                    ],
+                    "totals": {
+                        "total_empenhado_year": to_float(sum(daily_empenhado.values(), Decimal("0"))),
+                        "total_pago_year": to_float(sum(daily_pago.values(), Decimal("0"))),
+                        "total_empenhado_last_day": to_float(daily_empenhado.get(max_date.isoformat(), Decimal("0"))),
+                        "total_pago_last_day": to_float(daily_pago.get(max_date.isoformat(), Decimal("0"))),
+                    },
+                }
+
+
+def build_apoiamento_monitor(current_year):
+    selected_year = None
+    zip_path = None
+    headers = {}
+    requested_url = ""
+    fallback_url = ""
+
+    for year in range(current_year, 2019, -1):
+        requested_url = APOIAMENTO_DOWNLOAD_URL_TEMPLATE.format(year=year)
+        fallback_url = APOIAMENTO_FALLBACK_ZIP_URL_TEMPLATE.format(year=year)
+        headers = fetch_headers(requested_url)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            candidate = Path(tmpdir) / f"apoiamento-{year}.zip"
+            try:
+                download_source(requested_url, candidate)
+                selected_year = year
+                zip_path = candidate.read_bytes()
+                break
+            except Exception:
+                try:
+                    download_source(fallback_url, candidate)
+                    selected_year = year
+                    if not headers.get("final_url"):
+                        headers["final_url"] = fallback_url
+                    zip_path = candidate.read_bytes()
+                    break
+                except Exception:
+                    continue
+
+    if selected_year is None or zip_path is None:
+        return {
+            "available": False,
+            "year": None,
+            "rows_processed": 0,
+            "top_supporters": [],
+            "source": {"requested_url": "", "download_url": ""},
+        }
+
+    supporters_empenhado = defaultdict(lambda: Decimal("0"))
+    supporters_pago = defaultdict(lambda: Decimal("0"))
+    supporters_authors = defaultdict(set)
+    rows_processed = 0
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        zpath = Path(tmpdir) / "apoiamento.zip"
+        zpath.write_bytes(zip_path)
+        with zipfile.ZipFile(zpath) as zf:
+            csv_members = [name for name in zf.namelist() if name.lower().endswith(".csv")]
+            member = csv_members[0] if csv_members else ""
+            if member:
+                with zf.open(member) as fh:
+                    reader = csv.DictReader(io.TextIOWrapper(fh, encoding="latin-1", newline=""), delimiter=";")
+                    col_map = {normalize_column(name): name for name in (reader.fieldnames or [])}
+
+                    def get_col(row, norm_name):
+                        return normalize_text(row.get(col_map.get(norm_name, ""), ""))
+
+                    for row in reader:
+                        rows_processed += 1
+                        apoiador = get_col(row, "apoiador") or "Apoiador não informado"
+                        author = get_col(row, "nome_do_autor_da_emenda") or "Autor não informado"
+                        valor_empenhado = parse_currency(get_col(row, "valor_empenhado"))
+                        valor_pago = parse_currency(get_col(row, "valor_pago"))
+                        if valor_empenhado > 0:
+                            supporters_empenhado[apoiador] += valor_empenhado
+                        if valor_pago > 0:
+                            supporters_pago[apoiador] += valor_pago
+                        supporters_authors[apoiador].add(author)
+
+    top_supporters = []
+    for apoiador, value in sort_top(supporters_empenhado, 20):
+        top_supporters.append(
+            {
+                "supporter": apoiador,
+                "empenhado": to_float(value),
+                "pago": to_float(supporters_pago.get(apoiador, Decimal("0"))),
+                "authors_count": len(supporters_authors.get(apoiador, set())),
+            }
+        )
+
+    return {
+        "available": True,
+        "year": selected_year,
+        "rows_processed": rows_processed,
+        "top_supporters": top_supporters,
+        "source": {
+            "requested_url": requested_url,
+            "download_url": headers.get("final_url") or fallback_url,
+            "last_modified": headers.get("last_modified", ""),
+            "etag": headers.get("etag", ""),
+        },
+    }
+
+
 def build_report(current, previous, headers, source_zip_size, has_previous):
     total_current = current["total_empenhado"]
     total_previous = Decimal(str(previous.get("total_empenhado", 0.0))) if has_previous else total_current
+    current_year = int(current.get("current_year", dt.date.today().year))
+    current_year_totals = current.get("current_year_totals", {})
 
     if has_previous:
         author_growth, author_positive_total, author_negative_total = apply_diff(
@@ -238,9 +655,11 @@ def build_report(current, previous, headers, source_zip_size, has_previous):
     pair_rows = []
     for key, delta in top_pair_growth:
         author, destination = key.split("|||", 1)
+        party = current["author_party_map"].get(author, "Nao identificado")
         pair_rows.append(
             {
                 "author": author,
+                "party": party,
                 "destination": destination,
                 "delta_empenhado": to_float(delta),
                 "current_empenhado": to_float(current["author_destination_totals"].get(key, Decimal("0"))),
@@ -275,10 +694,15 @@ def build_report(current, previous, headers, source_zip_size, has_previous):
             "total_destinos_mapeados": len(current["destination_totals"]),
             "total_linhas_csv": current["rows_processed"],
             "baseline_initialized": not has_previous,
+            "current_year": current_year,
+            "current_year_total_empenhado": to_float(current_year_totals.get("total_empenhado", Decimal("0"))),
+            "current_year_total_liquidado": to_float(current_year_totals.get("total_liquidado", Decimal("0"))),
+            "current_year_total_pago": to_float(current_year_totals.get("total_pago", Decimal("0"))),
         },
         "top_authors_today": [
             {
                 "author": name,
+                "party": current["author_party_map"].get(name, "Nao identificado"),
                 "delta_empenhado": to_float(delta),
                 "share_in_day": safe_share(delta, delta_positive),
                 "current_empenhado": to_float(current["author_totals"].get(name, Decimal("0"))),
@@ -296,13 +720,23 @@ def build_report(current, previous, headers, source_zip_size, has_previous):
         ],
         "top_author_destination_today": pair_rows,
         "top_authors_total": [
-            {"author": name, "total_empenhado": to_float(value)}
+            {
+                "author": name,
+                "party": current["author_party_map"].get(name, "Nao identificado"),
+                "total_empenhado": to_float(value),
+            }
             for name, value in top_authors_total
         ],
         "top_destinations_total": [
             {"destination": name, "total_empenhado": to_float(value)}
             for name, value in top_destinations_total
         ],
+        "unico_year_summary": {
+            "year": current_year,
+            "total_empenhado": to_float(current_year_totals.get("total_empenhado", Decimal("0"))),
+            "total_liquidado": to_float(current_year_totals.get("total_liquidado", Decimal("0"))),
+            "total_pago": to_float(current_year_totals.get("total_pago", Decimal("0"))),
+        },
     }
     return report
 
@@ -329,7 +763,8 @@ def update_history(report):
     return history
 
 
-def build_current_aggregates(zip_path):
+def build_current_aggregates(zip_path, party_lookup):
+    current_year = dt.date.today().year
     with zipfile.ZipFile(zip_path) as zf:
         member = pick_primary_member(zf.namelist())
         with zf.open(member) as fh:
@@ -347,13 +782,25 @@ def build_current_aggregates(zip_path):
 
             rows_processed = 0
             total_empenhado = Decimal("0")
+            year_total_empenhado = Decimal("0")
+            year_total_liquidado = Decimal("0")
+            year_total_pago = Decimal("0")
             author_totals = defaultdict(lambda: Decimal("0"))
+            author_party_totals = defaultdict(lambda: Decimal("0"))
+            author_party_map = {}
             destination_totals = defaultdict(lambda: Decimal("0"))
             author_destination_totals = defaultdict(lambda: Decimal("0"))
 
             for row in reader:
                 rows_processed += 1
+                ano_emenda = int(get_col(row, "ano_da_emenda") or "0")
                 valor_empenhado = parse_currency(get_col(row, "valor_empenhado"))
+                valor_liquidado = parse_currency(get_col(row, "valor_liquidado"))
+                valor_pago = parse_currency(get_col(row, "valor_pago"))
+                if ano_emenda == current_year:
+                    year_total_empenhado += valor_empenhado
+                    year_total_liquidado += valor_liquidado
+                    year_total_pago += valor_pago
                 if valor_empenhado == 0:
                     continue
 
@@ -361,6 +808,7 @@ def build_current_aggregates(zip_path):
                     get_col(row, "nome_do_autor_da_emenda")
                     or "Autor não informado"
                 )
+                party = resolve_party(author, party_lookup)
                 destination = (
                     get_col(row, "localidade_de_aplicacao_do_recurso")
                     or (
@@ -370,16 +818,28 @@ def build_current_aggregates(zip_path):
                     )
                 )
                 pair_key = f"{author}|||{destination}"
+                author_party_key = f"{author}|||{party}"
 
                 total_empenhado += valor_empenhado
                 author_totals[author] += valor_empenhado
+                author_party_totals[author_party_key] += valor_empenhado
+                if author not in author_party_map or author_party_map[author] == "Nao identificado":
+                    author_party_map[author] = party
                 destination_totals[destination] += valor_empenhado
                 author_destination_totals[pair_key] += valor_empenhado
 
     return {
         "rows_processed": rows_processed,
         "total_empenhado": total_empenhado,
+        "current_year": current_year,
+        "current_year_totals": {
+            "total_empenhado": year_total_empenhado,
+            "total_liquidado": year_total_liquidado,
+            "total_pago": year_total_pago,
+        },
         "author_totals": author_totals,
+        "author_party_totals": author_party_totals,
+        "author_party_map": author_party_map,
         "destination_totals": destination_totals,
         "author_destination_totals": author_destination_totals,
     }
@@ -388,6 +848,9 @@ def build_current_aggregates(zip_path):
 def write_metadata(report):
     metrics = report["metrics"]
     source = report["source"]
+    parallel = report.get("parallel_monitor", {})
+    documents = parallel.get("documents", {})
+    apoiamento = parallel.get("apoiamento", {})
     metadata = {
         "updated_at": report["generated_at"],
         "snapshot_date": report["snapshot_date"],
@@ -400,6 +863,14 @@ def write_metadata(report):
         "rows_processed": metrics["total_linhas_csv"],
         "authors_mapped": metrics["total_autores_mapeados"],
         "destinations_mapped": metrics["total_destinos_mapeados"],
+        "current_year": metrics.get("current_year"),
+        "current_year_total_empenhado": metrics.get("current_year_total_empenhado", 0),
+        "current_year_total_liquidado": metrics.get("current_year_total_liquidado", 0),
+        "current_year_total_pago": metrics.get("current_year_total_pago", 0),
+        "documents_source_url": ((documents.get("source") or {}).get("download_url")) or "",
+        "documents_last_modified": ((documents.get("source") or {}).get("last_modified")) or "",
+        "apoiamento_source_url": ((apoiamento.get("source") or {}).get("download_url")) or "",
+        "apoiamento_last_modified": ((apoiamento.get("source") or {}).get("last_modified")) or "",
     }
     META_FILE.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
     return metadata
@@ -456,10 +927,22 @@ def build_dashboard(force=False):
             if not headers.get("final_url"):
                 headers["final_url"] = FALLBACK_ZIP_URL
 
-        current = build_current_aggregates(zip_path)
+        party_lookup, party_lookup_meta = fetch_party_lookup()
+        current = build_current_aggregates(zip_path, party_lookup)
         previous = load_state()
         has_previous = bool(previous.get("snapshot_date")) and bool(previous.get("author_totals"))
         report = build_report(current, previous, headers, zip_path.stat().st_size, has_previous)
+        current_year = int((report.get("unico_year_summary") or {}).get("year") or dt.date.today().year)
+        execucao_ano_corrente = fetch_execucao_ano_corrente(current_year)
+        documents_monitor = build_documents_monitor(current_year, party_lookup)
+        apoiamento_monitor = build_apoiamento_monitor(current_year)
+        report["parallel_monitor"] = {
+            "year": current_year,
+            "execucao_ano_corrente": execucao_ano_corrente,
+            "documents": documents_monitor,
+            "apoiamento": apoiamento_monitor,
+            "party_lookup": party_lookup_meta,
+        }
         update_history(report)
         save_report(report)
         write_metadata(report)

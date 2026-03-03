@@ -94,6 +94,39 @@
       background: #faf9f5;
     }
 
+    .view-switch {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .view-tab {
+      border: 1px solid #d1cec4;
+      border-radius: 999px;
+      background: #fff;
+      color: #3d3a35;
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-height: 34px;
+      padding: 0.34rem 0.7rem;
+      cursor: pointer;
+    }
+
+    .view-tab.active {
+      border-color: #b88a68;
+      background: #f8eee6;
+      color: #513f32;
+    }
+
+    .dashboard-view {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .dashboard-view[hidden] {
+      display: none;
+    }
+
     .cards {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -255,6 +288,10 @@
         <span class="pill" id="status-snapshot">Snapshot: --</span>
         <span class="pill" id="status-source">Fonte: --</span>
       </div>
+      <div class="view-switch">
+        <button class="view-tab active" id="tab-view-snapshot" type="button">Monitor UNICO (snapshot)</button>
+        <button class="view-tab" id="tab-view-docs" type="button">Aba paralela: documentos + apoiamento</button>
+      </div>
       <div class="cards">
         <article class="card">
           <div class="label">Empenhado no dia (positivo)</div>
@@ -276,77 +313,186 @@
       <p class="spotlight" id="spotlight">Sem dados carregados.</p>
     </section>
 
-    <section class="panel">
-      <h2>Histórico do monitoramento diário</h2>
-      <p class="hint">A linha mostra a variação observada em cada atualização da base. Isso permite ver rapidamente quando houve picos.</p>
-      <div class="chart-box">
-        <canvas id="chart-history"></canvas>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>Quem teve maior aumento hoje e para onde foi</h2>
-      <div class="charts">
+    <div class="dashboard-view" id="view-snapshot">
+      <section class="panel">
+        <h2>Histórico do monitoramento diário</h2>
+        <p class="hint">A linha mostra a variação observada em cada atualização da base. Isso permite ver rapidamente quando houve picos.</p>
         <div class="chart-box">
-          <canvas id="chart-authors"></canvas>
+          <canvas id="chart-history"></canvas>
         </div>
-        <div class="chart-box">
-          <canvas id="chart-destinations"></canvas>
+      </section>
+
+      <section class="panel">
+        <h2>Quem teve maior aumento hoje e para onde foi</h2>
+        <div class="charts">
+          <div class="chart-box">
+            <canvas id="chart-authors"></canvas>
+          </div>
+          <div class="chart-box">
+            <canvas id="chart-destinations"></canvas>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="panel">
-      <h2>Pares autor -> destino com maior aumento no dia</h2>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Autor</th>
-              <th>Destino do recurso</th>
-              <th>Aumento no dia</th>
-              <th>Total acumulado do par</th>
-            </tr>
-          </thead>
-          <tbody id="table-pairs">
-            <tr><td colspan="4">Carregando...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="panel">
-      <h2>Top acumulado (contexto)</h2>
-      <p class="hint">Essas tabelas ajudam a comparar o movimento do dia com o peso acumulado da base.</p>
-      <div class="charts">
+      <section class="panel">
+        <h2>Pares autor -> destino com maior aumento no dia</h2>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Autor</th>
-                <th>Total empenhado acumulado</th>
+                <th>Partido</th>
+                <th>Destino do recurso</th>
+                <th>Aumento no dia</th>
+                <th>Total acumulado do par</th>
               </tr>
             </thead>
-            <tbody id="table-authors-total">
-              <tr><td colspan="2">Carregando...</td></tr>
+            <tbody id="table-pairs">
+              <tr><td colspan="5">Carregando...</td></tr>
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section class="panel">
+        <h2>Top acumulado (contexto)</h2>
+        <p class="hint">Essas tabelas ajudam a comparar o movimento do dia com o peso acumulado da base.</p>
+        <div class="charts">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autor</th>
+                  <th>Partido</th>
+                  <th>Total empenhado acumulado</th>
+                </tr>
+              </thead>
+              <tbody id="table-authors-total">
+                <tr><td colspan="3">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Destino</th>
+                  <th>Total empenhado acumulado</th>
+                </tr>
+              </thead>
+              <tbody id="table-destinations-total">
+                <tr><td colspan="2">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="dashboard-view" id="view-docs" hidden>
+      <section class="panel">
+        <h2>Aba paralela: histórico diário de liberações (documentos)</h2>
+        <p class="hint">Série diária desde 1º de janeiro do ano corrente, usando a base de documentos de despesa de emendas.</p>
+        <div class="cards">
+          <article class="card">
+            <div class="label">Total para empenhar (estágio)</div>
+            <div class="value" id="doc-kpi-total-to-commit">--</div>
+          </article>
+          <article class="card">
+            <div class="label">Já empenhado até agora</div>
+            <div class="value" id="doc-kpi-committed-so-far">--</div>
+          </article>
+          <article class="card">
+            <div class="label">Empenhado no último dia</div>
+            <div class="value good" id="doc-kpi-committed-last-day">--</div>
+          </article>
+          <article class="card">
+            <div class="label">Pago no ano (documentos)</div>
+            <div class="value" id="doc-kpi-paid-year">--</div>
+          </article>
+        </div>
+        <p class="spotlight" id="doc-spotlight">Carregando monitor paralelo...</p>
+      </section>
+
+      <section class="panel">
+        <h2>Liberações por dia (desde 1º de janeiro)</h2>
+        <div class="chart-box">
+          <canvas id="chart-docs-daily"></canvas>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Quem mais empenhou no ano (documentos)</h2>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Destino</th>
-                <th>Total empenhado acumulado</th>
+                <th>Autor</th>
+                <th>Partido</th>
+                <th>Empenhado no ano</th>
+                <th>Pago no ano</th>
               </tr>
             </thead>
-            <tbody id="table-destinations-total">
-              <tr><td colspan="2">Carregando...</td></tr>
+            <tbody id="table-docs-authors-year">
+              <tr><td colspan="4">Carregando...</td></tr>
             </tbody>
           </table>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="panel">
+        <h2>Último dia disponível: quem empenhou e para onde</h2>
+        <div class="charts">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autor</th>
+                  <th>Partido</th>
+                  <th>Empenhado no dia</th>
+                </tr>
+              </thead>
+              <tbody id="table-docs-authors-day">
+                <tr><td colspan="3">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Destino</th>
+                  <th>Empenhado no dia</th>
+                </tr>
+              </thead>
+              <tbody id="table-docs-dest-day">
+                <tr><td colspan="2">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Apoiamento de emendas (fonte complementar)</h2>
+        <p class="hint" id="apoiamento-note">Carregando fonte de apoiamento...</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Apoiador</th>
+                <th>Empenhado</th>
+                <th>Pago</th>
+                <th>Autores diferentes apoiados</th>
+              </tr>
+            </thead>
+            <tbody id="table-apoiamento-top">
+              <tr><td colspan="4">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
 
     <section class="panel">
       <h2>Metodologia e fontes</h2>
