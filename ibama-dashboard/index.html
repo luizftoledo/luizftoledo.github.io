@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <link rel="stylesheet" href="./vendor/leaflet.css">
+  <script src="./vendor/leaflet.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root {
@@ -142,6 +142,37 @@
       background: #daf0ea;
       color: #1e574c;
       box-shadow: 0 0 0 2px rgba(30, 126, 109, 0.2);
+    }
+
+    .view-tabs {
+      display: flex;
+      gap: 0.48rem;
+      flex-wrap: wrap;
+      margin-top: 0.05rem;
+    }
+
+    .view-tab {
+      border: 1px solid #2a436e;
+      background: rgba(9, 16, 32, 0.86);
+      color: #9fb9de;
+      min-height: 34px;
+      padding: 0.38rem 0.72rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .view-tab.active {
+      border-color: #24f6cc;
+      background: linear-gradient(120deg, rgba(36, 246, 204, 0.22), rgba(92, 127, 255, 0.24));
+      color: #e7fbff;
+      box-shadow:
+        0 0 0 1px rgba(36, 246, 204, 0.4),
+        0 0 24px rgba(36, 246, 204, 0.2);
+    }
+
+    .view-panel.hidden {
+      display: none !important;
     }
 
     input, select, button, textarea {
@@ -342,6 +373,83 @@
       background: var(--panel);
       box-shadow: var(--shadow);
       overflow: hidden;
+    }
+
+    .watch-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .watch-body {
+      padding: 0.9rem 1rem 1rem;
+      display: grid;
+      gap: 0.74rem;
+    }
+
+    .watch-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.56rem;
+    }
+
+    .watch-card {
+      border: 1px solid #22395f;
+      border-radius: 12px;
+      padding: 0.62rem 0.66rem;
+      background: linear-gradient(180deg, rgba(10, 17, 35, 0.92), rgba(7, 12, 24, 0.92));
+      display: grid;
+      gap: 0.28rem;
+      min-width: 0;
+    }
+
+    .watch-card .label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #7f9ac2;
+    }
+
+    .watch-card .value {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.92rem;
+      color: #d6f2ff;
+      line-height: 1.34;
+      word-break: break-word;
+    }
+
+    .watch-details {
+      display: grid;
+      gap: 0.64rem;
+    }
+
+    .watch-detail-card {
+      border: 1px solid #203354;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(7, 12, 24, 0.94);
+    }
+
+    .watch-detail-card h3 {
+      margin: 0;
+      padding: 0.6rem 0.72rem;
+      border-bottom: 1px solid #1f3357;
+      font-size: 0.84rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #dff4ff;
+      font-family: "Orbitron", sans-serif;
+    }
+
+    .watch-detail-wrap {
+      overflow-x: auto;
+    }
+
+    .watch-detail-wrap table {
+      min-width: 640px;
+      font-size: 0.84rem;
     }
 
     .section-head {
@@ -624,6 +732,10 @@
         grid-template-columns: 1fr;
       }
 
+      .watch-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .map-panel {
         position: static;
       }
@@ -647,6 +759,10 @@
         width: min(100vw, 100%);
         margin: 0;
         padding: 0.6rem;
+      }
+
+      .watch-cards {
+        grid-template-columns: 1fr;
       }
 
       .top-content {
@@ -1169,6 +1285,10 @@
           <button class="dataset-tab" id="tab-icmbio" type="button">ICMBio</button>
         </div>
         <p class="hint" id="dataset-summary">Resultados serao divididos entre IBAMA e ICMBio.</p>
+        <div class="view-tabs" id="view-tabs">
+          <button class="view-tab active" id="view-story" type="button">Mapa narrativo</button>
+          <button class="view-tab" id="view-watch" type="button">Ficar de olho</button>
+        </div>
 
         <div class="metrics-grid">
           <article class="metric">
@@ -1198,7 +1318,7 @@
       </div>
     </section>
 
-    <section class="story-layout">
+    <section class="story-layout view-panel" id="story-section">
       <div class="story-steps" id="story-steps"></div>
 
       <aside class="map-panel">
@@ -1208,6 +1328,18 @@
           <p id="map-description">Execute uma busca para ver os pontos georreferenciados e a narrativa orientada por scroll.</p>
         </div>
       </aside>
+    </section>
+
+    <section class="watch-panel view-panel hidden" id="watch-section">
+      <header class="section-head">
+        <h2>Ficar de olho: alertas de multas altas</h2>
+        <span class="badge" id="watch-badge">multao: --</span>
+      </header>
+      <div class="watch-body">
+        <p class="hint" id="watch-summary">Rode uma busca para ver os alertas.</p>
+        <div class="watch-cards" id="watch-cards"></div>
+        <div class="watch-details" id="watch-details"></div>
+      </div>
     </section>
 
     <section class="results-panel">
@@ -1289,6 +1421,7 @@
       }
     })();
   </script>
+  <script src="./vendor/pako.min.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

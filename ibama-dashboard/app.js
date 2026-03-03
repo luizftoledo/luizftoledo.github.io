@@ -7,6 +7,8 @@
     const tabIbama = document.getElementById('tab-ibama');
     const tabIcmbio = document.getElementById('tab-icmbio');
     const datasetSummary = document.getElementById('dataset-summary');
+    const viewStoryBtn = document.getElementById('view-story');
+    const viewWatchBtn = document.getElementById('view-watch');
     const googleClientIdInput = document.getElementById('google-client-id');
     const sheetsStatus = document.getElementById('sheets-status');
 
@@ -20,6 +22,12 @@
     const storyStepsEl = document.getElementById('story-steps');
     const mapTitle = document.getElementById('map-title');
     const mapDescription = document.getElementById('map-description');
+    const storySection = document.getElementById('story-section');
+    const watchSection = document.getElementById('watch-section');
+    const watchBadge = document.getElementById('watch-badge');
+    const watchSummary = document.getElementById('watch-summary');
+    const watchCards = document.getElementById('watch-cards');
+    const watchDetails = document.getElementById('watch-details');
     const resultsBody = document.getElementById('results-body');
 
     const geminiKeyInput = document.getElementById('gemini-key');
@@ -35,6 +43,7 @@
     let currentSearchData = null;
     let searchDataByDataset = { ibama: null, icmbio: null };
     let activeDataset = 'ibama';
+    let activeView = 'story';
     let map = null;
     let mapLayer = null;
     let stepObserver = null;
@@ -51,9 +60,15 @@
       ibama: './data/ibama_records.jsonl.gz',
       icmbio: './data/icmbio_records.jsonl.gz',
     };
-    const SEARCH_LIMIT = 120;
-    const MAP_LIMIT = 1400;
-    const EXPORT_MAX_ROWS = 300000;
+    const WATCH_BIG_FINE_MIN = 500000;
+    const MOBILE_LIGHT_MODE = (() => {
+      const smallScreen = window.matchMedia ? window.matchMedia('(max-width: 900px)').matches : false;
+      const lowRam = Number.isFinite(Number(navigator.deviceMemory)) && Number(navigator.deviceMemory) <= 4;
+      return smallScreen || lowRam;
+    })();
+    const SEARCH_LIMIT = MOBILE_LIGHT_MODE ? 80 : 120;
+    const MAP_LIMIT = MOBILE_LIGHT_MODE ? 520 : 1400;
+    const EXPORT_MAX_ROWS = MOBILE_LIGHT_MODE ? 150000 : 300000;
 
     let googleAccessToken = '';
     let googleTokenExpiresAt = 0;
@@ -61,6 +76,7 @@
     let aiChatMessages = [];
     let aiLastContextStamp = '';
     let dashboardMetadata = null;
+    let lastSearchFingerprint = '';
     const recordsCache = { ibama: null, icmbio: null };
 
     function esc(text) {
@@ -122,6 +138,11 @@
       return { q, tokens, uf };
     }
 
+    function getSearchFingerprint() {
+      const parsed = parseSearchParams();
+      return `${parsed.q}|${parsed.uf}`;
+    }
+
     function setBaseStats(stats) {
       baseStats = stats;
       metricBaseFines.textContent = moneyFmt.format(stats.total_multas || 0);
@@ -144,13 +165,19 @@
     }
 
     function updateDatasetTabs() {
-      const ibamaTotal = (searchDataByDataset.ibama || {}).total_match || 0;
-      const icmbioTotal = (searchDataByDataset.icmbio || {}).total_match || 0;
-      tabIbama.textContent = `IBAMA (${numberFmt.format(ibamaTotal)})`;
-      tabIcmbio.textContent = `ICMBio (${numberFmt.format(icmbioTotal)})`;
+      const ibamaLoaded = Boolean(searchDataByDataset.ibama);
+      const icmbioLoaded = Boolean(searchDataByDataset.icmbio);
+      const ibamaTotal = ibamaLoaded ? Number((searchDataByDataset.ibama || {}).total_match || 0) : null;
+      const icmbioTotal = icmbioLoaded ? Number((searchDataByDataset.icmbio || {}).total_match || 0) : null;
+      tabIbama.textContent = `IBAMA (${ibamaTotal === null ? '...' : numberFmt.format(ibamaTotal)})`;
+      tabIcmbio.textContent = `ICMBio (${icmbioTotal === null ? '...' : numberFmt.format(icmbioTotal)})`;
       tabIbama.classList.toggle('active', activeDataset === 'ibama');
       tabIcmbio.classList.toggle('active', activeDataset === 'icmbio');
-      datasetSummary.textContent = `Busca dividida: IBAMA ${numberFmt.format(ibamaTotal)} registros, ICMBio ${numberFmt.format(icmbioTotal)} registros.`;
+      if (MOBILE_LIGHT_MODE) {
+        datasetSummary.textContent = `Modo leve mobile ativo: busca carrega um órgão por vez para evitar travamentos. Toque na aba do outro órgão para carregar.`;
+        return;
+      }
+      datasetSummary.textContent = `Busca dividida: IBAMA ${numberFmt.format(ibamaTotal || 0)} registros, ICMBio ${numberFmt.format(icmbioTotal || 0)} registros.`;
     }
 
     function getDatasetMeta(dataset) {
@@ -195,9 +222,10 @@
         const stream = new Blob([gzBuffer]).stream().pipeThrough(new DecompressionStream('gzip'));
         return new Response(stream).text();
       }
-      const pako = await import('https://cdn.jsdelivr.net/npm/pako@2.1.0/+esm');
-      const unzipped = pako.ungzip(new Uint8Array(gzBuffer), { to: 'string' });
-      return unzipped;
+      if (window.pako && typeof window.pako.ungzip === 'function') {
+        return window.pako.ungzip(new Uint8Array(gzBuffer), { to: 'string' });
+      }
+      throw new Error('Navegador sem suporte para descompactar gzip (DecompressionStream/pako).');
     }
 
     async function ensureDatasetLoaded(dataset) {
@@ -241,10 +269,48 @@
       }
     }
 
+    function isDeforestationRelated(text) {
+      const normalized = normalizeText(text || '');
+      if (!normalized) return false;
+      return (
+        normalized.includes('desmat') ||
+        normalized.includes('supressao de vegetacao') ||
+        normalized.includes('vegetacao nativa') ||
+        normalized.includes('corte raso') ||
+        normalized.includes('queimada')
+      );
+    }
+
+    function upsertOffenderYearMap(mapObj, name, fine, isBigFine, isDeforestation) {
+      const offenderName = (name || '').toString().trim();
+      if (!offenderName) return;
+      const row = mapObj.get(offenderName) || {
+        nome_infrator: offenderName,
+        quantidade: 0,
+        total_multas: 0,
+        big_quantidade: 0,
+        big_total: 0,
+        desmat_quantidade: 0,
+        desmat_total: 0,
+      };
+      row.quantidade += 1;
+      row.total_multas += fine;
+      if (isBigFine) {
+        row.big_quantidade += 1;
+        row.big_total += fine;
+      }
+      if (isDeforestation) {
+        row.desmat_quantidade += 1;
+        row.desmat_total += fine;
+      }
+      mapObj.set(offenderName, row);
+    }
+
     async function localSearchDataset(dataset) {
       const records = await ensureDatasetLoaded(dataset);
       const { tokens, uf } = parseSearchParams();
       const meta = getDatasetMeta(dataset);
+      const calendarYear = String(new Date().getFullYear());
 
       const matchedIndices = [];
       const topResults = [];
@@ -252,6 +318,12 @@
       const statesMap = new Map();
       const offendersMap = new Map();
       const timelineMap = new Map();
+      const yearWatchMap = new Map();
+      const currentYearOffenderMap = new Map();
+      let latestYearSeen = '';
+      let latestYearOffenderMap = new Map();
+      const bigFineEvents = [];
+      const desmatByYearMap = new Map();
 
       let totalMatch = 0;
       let totalMultas = 0;
@@ -281,6 +353,8 @@
           }
           hasPositiveFine = true;
         }
+        const isBigFine = fine >= WATCH_BIG_FINE_MIN;
+        const isDesmat = isDeforestationRelated(row.des_auto_infracao || '');
 
         if (row.data_evento) {
           if (!dateMin || row.data_evento < dateMin) dateMin = row.data_evento;
@@ -291,6 +365,48 @@
             existingYear.quantidade += 1;
             existingYear.total_multas += fine;
             timelineMap.set(year, existingYear);
+
+            const watchYear = yearWatchMap.get(year) || { ano: year, quantidade: 0, total_multas: 0, big_quantidade: 0, big_total: 0 };
+            watchYear.quantidade += 1;
+            watchYear.total_multas += fine;
+            if (isBigFine) {
+              watchYear.big_quantidade += 1;
+              watchYear.big_total += fine;
+            }
+            yearWatchMap.set(year, watchYear);
+
+            if (isBigFine && row.nome_infrator) {
+              bigFineEvents.push({ ano: year, nome_infrator: row.nome_infrator, valor_multa: fine });
+            }
+
+            if (!latestYearSeen || year > latestYearSeen) {
+              latestYearSeen = year;
+              latestYearOffenderMap = new Map();
+            }
+
+            if (row.nome_infrator) {
+              if (year === calendarYear) {
+                upsertOffenderYearMap(currentYearOffenderMap, row.nome_infrator, fine, isBigFine, isDesmat);
+              }
+              if (year === latestYearSeen) {
+                upsertOffenderYearMap(latestYearOffenderMap, row.nome_infrator, fine, isBigFine, isDesmat);
+              }
+            }
+
+            if (isDesmat) {
+              const desmatRow = desmatByYearMap.get(year) || {
+                ano: year,
+                quantidade: 0,
+                total_multas: 0,
+                offenders: new Map(),
+              };
+              desmatRow.quantidade += 1;
+              desmatRow.total_multas += fine;
+              if (row.nome_infrator) {
+                upsertOffenderYearMap(desmatRow.offenders, row.nome_infrator, fine, isBigFine, true);
+              }
+              desmatByYearMap.set(year, desmatRow);
+            }
           }
         }
 
@@ -330,6 +446,68 @@
         .slice(0, 10);
       const timeline = [...timelineMap.values()]
         .sort((a, b) => a.ano.localeCompare(b.ano));
+      const yearWatchSeries = [...yearWatchMap.values()]
+        .sort((a, b) => a.ano.localeCompare(b.ano));
+
+      const availableYears = timeline.map((row) => row.ano);
+      const targetYear = availableYears.includes(calendarYear)
+        ? calendarYear
+        : (availableYears[availableYears.length - 1] || '');
+      const targetYearStats = yearWatchMap.get(targetYear) || { quantidade: 0, total_multas: 0, big_quantidade: 0, big_total: 0 };
+      const previousYearStats = yearWatchMap.get(String(Number(targetYear) - 1)) || { quantidade: 0, total_multas: 0, big_quantidade: 0, big_total: 0 };
+
+      const baselineRows = yearWatchSeries.filter((row) => Number(row.ano) < Number(targetYear)).slice(-3);
+      const baselineBigCountAvg = baselineRows.length
+        ? baselineRows.reduce((acc, row) => acc + Number(row.big_quantidade || 0), 0) / baselineRows.length
+        : 0;
+      const baselineBigValueAvg = baselineRows.length
+        ? baselineRows.reduce((acc, row) => acc + Number(row.big_total || 0), 0) / baselineRows.length
+        : 0;
+
+      const targetOffenderMap = (targetYear && targetYear === calendarYear)
+        ? currentYearOffenderMap
+        : latestYearOffenderMap;
+      const targetOffenders = [...targetOffenderMap.values()];
+      const topCurrentByCount = [...targetOffenders]
+        .sort((a, b) => (b.quantidade - a.quantidade) || (b.total_multas - a.total_multas))
+        .slice(0, 10);
+      const topCurrentByValue = [...targetOffenders]
+        .sort((a, b) => (b.total_multas - a.total_multas) || (b.quantidade - a.quantidade))
+        .slice(0, 10);
+
+      const seenBigBefore = new Set();
+      const currentBigByOffender = new Map();
+      for (let i = 0; i < bigFineEvents.length; i += 1) {
+        const item = bigFineEvents[i];
+        const offender = (item.nome_infrator || '').toString().trim();
+        if (!offender) continue;
+        if (item.ano < targetYear) {
+          seenBigBefore.add(offender);
+          continue;
+        }
+        if (item.ano !== targetYear) continue;
+        const row = currentBigByOffender.get(offender) || { nome_infrator: offender, big_quantidade: 0, big_total: 0 };
+        row.big_quantidade += 1;
+        row.big_total += Number(item.valor_multa || 0);
+        currentBigByOffender.set(offender, row);
+      }
+
+      const newBigPlayers = [...currentBigByOffender.values()]
+        .filter((row) => !seenBigBefore.has(row.nome_infrator))
+        .sort((a, b) => (b.big_total - a.big_total) || (b.big_quantidade - a.big_quantidade))
+        .slice(0, 10);
+
+      const targetDesmat = desmatByYearMap.get(targetYear) || { quantidade: 0, total_multas: 0, offenders: new Map() };
+      const topDesmatOffenders = [...targetDesmat.offenders.values()]
+        .sort((a, b) => (b.desmat_total - a.desmat_total) || (b.desmat_quantidade - a.desmat_quantidade))
+        .slice(0, 10);
+
+      const deltaPct = (current, previous) => {
+        const c = Number(current || 0);
+        const p = Number(previous || 0);
+        if (p <= 0) return null;
+        return (c - p) / p;
+      };
 
       return {
         dataset,
@@ -350,6 +528,29 @@
         timeline,
         map_points: topMapPoints.slice(0, MAP_LIMIT),
         results: topResults.slice(0, SEARCH_LIMIT),
+        watch: {
+          threshold: WATCH_BIG_FINE_MIN,
+          target_year: targetYear,
+          target_year_is_partial: targetYear === calendarYear,
+          latest_year_in_data: latestYearSeen || targetYear,
+          target_stats: targetYearStats,
+          previous_stats: previousYearStats,
+          baseline_years: baselineRows.map((row) => row.ano),
+          baseline_big_count_avg: baselineBigCountAvg,
+          baseline_big_value_avg: baselineBigValueAvg,
+          delta_big_count_vs_prev: deltaPct(targetYearStats.big_quantidade, previousYearStats.big_quantidade),
+          delta_big_value_vs_prev: deltaPct(targetYearStats.big_total, previousYearStats.big_total),
+          delta_big_count_vs_baseline: deltaPct(targetYearStats.big_quantidade, baselineBigCountAvg),
+          delta_big_value_vs_baseline: deltaPct(targetYearStats.big_total, baselineBigValueAvg),
+          top_current_by_count: topCurrentByCount,
+          top_current_by_value: topCurrentByValue,
+          new_big_players: newBigPlayers,
+          desmat_target: {
+            quantidade: targetDesmat.quantidade || 0,
+            total_multas: targetDesmat.total_multas || 0,
+            top_offenders: topDesmatOffenders,
+          },
+        },
       };
     }
 
@@ -358,6 +559,7 @@
       if (!currentSearchData) {
         storyStepsEl.innerHTML = `<article class="story-step active"><h3>Sem dados</h3><p class="empty">Ainda nao ha resultado para ${esc(getDatasetLabel(activeDataset))}.</p></article>`;
         resultsBody.innerHTML = `<tr><td colspan="6" class="empty">Nenhum dado para ${esc(getDatasetLabel(activeDataset))}.</td></tr>`;
+        renderWatchPanel(null);
         return;
       }
 
@@ -369,12 +571,196 @@
 
       renderResultTable(currentSearchData.results || []);
       renderStory(currentSearchData);
+      renderWatchPanel(currentSearchData);
     }
 
-    function setActiveDataset(dataset) {
+    async function setActiveDataset(dataset) {
       activeDataset = dataset === 'icmbio' ? 'icmbio' : 'ibama';
       updateDatasetTabs();
+      const fingerprint = getSearchFingerprint();
+      if (!searchDataByDataset[activeDataset] || lastSearchFingerprint !== fingerprint) {
+        await runSearch(activeDataset);
+        return;
+      }
       renderActiveDataset();
+    }
+
+    function formatDeltaLabel(delta) {
+      if (!Number.isFinite(Number(delta))) return 'sem base comparavel';
+      const value = Number(delta);
+      const sign = value > 0 ? '+' : '';
+      return `${sign}${(value * 100).toFixed(1)}%`;
+    }
+
+    function renderWatchPanel(data) {
+      if (!watchBadge || !watchSummary || !watchCards || !watchDetails) return;
+      if (!data || !data.watch) {
+        watchBadge.textContent = `multao >= ${moneyFmt.format(WATCH_BIG_FINE_MIN)}`;
+        watchSummary.textContent = `Sem dados para montar o painel de tendencia.`;
+        watchCards.innerHTML = '';
+        watchDetails.innerHTML = '';
+        return;
+      }
+
+      const watch = data.watch || {};
+      const targetYear = watch.target_year || '--';
+      const targetLabel = watch.target_year_is_partial ? `${targetYear} (ano em andamento)` : `${targetYear}`;
+      const targetStats = watch.target_stats || {};
+      const desmat = watch.desmat_target || {};
+      const topByCount = watch.top_current_by_count || [];
+      const topByValue = watch.top_current_by_value || [];
+      const newPlayers = watch.new_big_players || [];
+      const desmatTop = desmat.top_offenders || [];
+
+      watchBadge.textContent = `multao >= ${moneyFmt.format(Number(watch.threshold || WATCH_BIG_FINE_MIN))}`;
+      watchSummary.innerHTML = [
+        `Painel focado em multas altas para <strong>${esc(getDatasetLabel(data.dataset || activeDataset))}</strong>.`,
+        `Ano monitorado: <strong>${esc(targetLabel)}</strong>.`,
+        `Use este bloco para ver quem lidera em volume, valor, desmatamento e novos autuados com multas altas.`,
+      ].join(' ');
+
+      watchCards.innerHTML = [
+        {
+          label: 'Multoes no ano monitorado',
+          value: `${numberFmt.format(targetStats.big_quantidade || 0)} autos`,
+        },
+        {
+          label: 'Valor das multoes',
+          value: moneyFmt.format(targetStats.big_total || 0),
+        },
+        {
+          label: 'Variacao vs ano anterior',
+          value: `Qtde ${formatDeltaLabel(watch.delta_big_count_vs_prev)} | Valor ${formatDeltaLabel(watch.delta_big_value_vs_prev)}`,
+        },
+        {
+          label: `Variacao vs media (${(watch.baseline_years || []).join(', ') || 'sem base'})`,
+          value: `Qtde ${formatDeltaLabel(watch.delta_big_count_vs_baseline)} | Valor ${formatDeltaLabel(watch.delta_big_value_vs_baseline)}`,
+        },
+        {
+          label: 'Autos com perfil de desmatamento',
+          value: `${numberFmt.format(desmat.quantidade || 0)} autos`,
+        },
+        {
+          label: 'Valor de desmatamento',
+          value: moneyFmt.format(desmat.total_multas || 0),
+        },
+      ].map((card) => `
+        <article class="watch-card">
+          <div class="label">${esc(card.label)}</div>
+          <div class="value">${esc(card.value)}</div>
+        </article>
+      `).join('');
+
+      const renderRows = (rows, mapper, emptyLabel) => {
+        if (!rows.length) return `<tr><td colspan="3" class="empty">${esc(emptyLabel)}</td></tr>`;
+        return rows.map(mapper).join('');
+      };
+
+      watchDetails.innerHTML = `
+        <article class="watch-detail-card">
+          <h3>Quem mais levou multa em ${esc(targetLabel)} (quantidade)</h3>
+          <div class="watch-detail-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autuado</th>
+                  <th>Autos</th>
+                  <th>Valor total</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderRows(topByCount.slice(0, 10), (row) => `
+                  <tr>
+                    <td>${esc(row.nome_infrator || '-')}</td>
+                    <td>${numberFmt.format(row.quantidade || 0)}</td>
+                    <td>${esc(moneyFmt.format(row.total_multas || 0))}</td>
+                  </tr>
+                `, 'Sem evidencias para o filtro atual.')}
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="watch-detail-card">
+          <h3>Quem mais levou multa em ${esc(targetLabel)} (valor)</h3>
+          <div class="watch-detail-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autuado</th>
+                  <th>Valor total</th>
+                  <th>Autos</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderRows(topByValue.slice(0, 10), (row) => `
+                  <tr>
+                    <td>${esc(row.nome_infrator || '-')}</td>
+                    <td>${esc(moneyFmt.format(row.total_multas || 0))}</td>
+                    <td>${numberFmt.format(row.quantidade || 0)}</td>
+                  </tr>
+                `, 'Sem evidencias para o filtro atual.')}
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="watch-detail-card">
+          <h3>Novos autuados com multoes em ${esc(targetLabel)}</h3>
+          <div class="watch-detail-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autuado</th>
+                  <th>Multoes no ano</th>
+                  <th>Valor das multoes</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderRows(newPlayers.slice(0, 10), (row) => `
+                  <tr>
+                    <td>${esc(row.nome_infrator || '-')}</td>
+                    <td>${numberFmt.format(row.big_quantidade || 0)}</td>
+                    <td>${esc(moneyFmt.format(row.big_total || 0))}</td>
+                  </tr>
+                `, 'Nenhum novo player com multao no recorte atual.')}
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="watch-detail-card">
+          <h3>Desmatamento: principais autuados em ${esc(targetLabel)}</h3>
+          <div class="watch-detail-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autuado</th>
+                  <th>Autos com desmatamento</th>
+                  <th>Valor total</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderRows(desmatTop.slice(0, 10), (row) => `
+                  <tr>
+                    <td>${esc(row.nome_infrator || '-')}</td>
+                    <td>${numberFmt.format(row.desmat_quantidade || 0)}</td>
+                    <td>${esc(moneyFmt.format(row.desmat_total || 0))}</td>
+                  </tr>
+                `, 'Sem autos com termos de desmatamento neste filtro.')}
+              </tbody>
+            </table>
+          </div>
+        </article>
+      `;
+    }
+
+    function setViewMode(mode) {
+      activeView = mode === 'watch' ? 'watch' : 'story';
+      if (storySection) storySection.classList.toggle('hidden', activeView !== 'story');
+      if (watchSection) watchSection.classList.toggle('hidden', activeView !== 'watch');
+      if (viewStoryBtn) viewStoryBtn.classList.toggle('active', activeView === 'story');
+      if (viewWatchBtn) viewWatchBtn.classList.toggle('active', activeView === 'watch');
+      if (map && activeView === 'story') {
+        setTimeout(() => map.invalidateSize(), 120);
+      }
     }
 
     function renderResultTable(rows) {
@@ -648,49 +1034,93 @@
         results: [],
         matched_indices: [],
         export_limited: false,
+        watch: {
+          threshold: WATCH_BIG_FINE_MIN,
+          target_year: '',
+          target_year_is_partial: false,
+          latest_year_in_data: '',
+          target_stats: { quantidade: 0, total_multas: 0, big_quantidade: 0, big_total: 0 },
+          previous_stats: { quantidade: 0, total_multas: 0, big_quantidade: 0, big_total: 0 },
+          baseline_years: [],
+          baseline_big_count_avg: 0,
+          baseline_big_value_avg: 0,
+          delta_big_count_vs_prev: null,
+          delta_big_value_vs_prev: null,
+          delta_big_count_vs_baseline: null,
+          delta_big_value_vs_baseline: null,
+          top_current_by_count: [],
+          top_current_by_value: [],
+          new_big_players: [],
+          desmat_target: { quantidade: 0, total_multas: 0, top_offenders: [] },
+        },
       };
     }
 
-    async function runSearch() {
+    async function runSearch(forceDataset = '') {
       btnSearch.disabled = true;
-      statusLine.textContent = 'Buscando IBAMA + ICMBio nos dados locais otimizados...';
+      statusLine.textContent = MOBILE_LIGHT_MODE
+        ? 'Buscando dados em modo leve mobile...'
+        : 'Buscando IBAMA + ICMBio nos dados locais otimizados...';
 
       try {
-        const [ibamaResult, icmbioResult] = await Promise.allSettled([
-          localSearchDataset('ibama'),
-          localSearchDataset('icmbio'),
-        ]);
+        const currentFingerprint = getSearchFingerprint();
+        const filterChanged = currentFingerprint !== lastSearchFingerprint;
+        if (filterChanged) {
+          searchDataByDataset = { ibama: null, icmbio: null };
+          lastSearchFingerprint = currentFingerprint;
+        }
 
-        const ibamaData = ibamaResult.status === 'fulfilled' ? ibamaResult.value : emptyDatasetPayload('ibama');
-        const icmbioData = icmbioResult.status === 'fulfilled' ? icmbioResult.value : emptyDatasetPayload('icmbio');
+        const explicitDataset = forceDataset === 'ibama' || forceDataset === 'icmbio' ? forceDataset : '';
+        const datasetsToLoad = explicitDataset
+          ? [explicitDataset]
+          : (MOBILE_LIGHT_MODE ? [activeDataset] : ['ibama', 'icmbio']);
 
-        searchDataByDataset = {
-          ibama: ibamaData,
-          icmbio: icmbioData,
-        };
-
-        const ibamaCount = ibamaData.total_match || 0;
-        const icmbioCount = icmbioData.total_match || 0;
-        const ibamaResultCount = (ibamaData.results || []).length;
-        const icmbioResultCount = (icmbioData.results || []).length;
-        const futures = (ibamaData.datas_futuras_ignoradas || 0) + (icmbioData.datas_futuras_ignoradas || 0);
+        const settled = await Promise.allSettled(datasetsToLoad.map((dataset) => localSearchDataset(dataset)));
         const warnings = [];
-        if (ibamaResult.status === 'rejected') warnings.push('IBAMA indisponivel');
-        if (icmbioResult.status === 'rejected') warnings.push('ICMBio indisponivel');
+        settled.forEach((result, idx) => {
+          const dataset = datasetsToLoad[idx];
+          if (result.status === 'fulfilled') {
+            searchDataByDataset[dataset] = result.value;
+            return;
+          }
+          const fallback = emptyDatasetPayload(dataset);
+          fallback.error_message = result.reason?.message || 'falha desconhecida';
+          searchDataByDataset[dataset] = fallback;
+          warnings.push(`${getDatasetLabel(dataset)} indisponivel`);
+        });
+
+        const ibamaData = searchDataByDataset.ibama;
+        const icmbioData = searchDataByDataset.icmbio;
+        const ibamaCount = Number((ibamaData || {}).total_match || 0);
+        const icmbioCount = Number((icmbioData || {}).total_match || 0);
+        const ibamaResultCount = Number(((ibamaData || {}).results || []).length);
+        const icmbioResultCount = Number(((icmbioData || {}).results || []).length);
+        const futures = Number((ibamaData || {}).datas_futuras_ignoradas || 0) + Number((icmbioData || {}).datas_futuras_ignoradas || 0);
 
         const exportWarnings = [];
-        if (ibamaData.export_limited) exportWarnings.push('IBAMA exporta ate 300k linhas por busca');
-        if (icmbioData.export_limited) exportWarnings.push('ICMBio exporta ate 300k linhas por busca');
-        statusLine.textContent = `IBAMA ${numberFmt.format(ibamaCount)} (amostra ${numberFmt.format(ibamaResultCount)}) | ICMBio ${numberFmt.format(icmbioCount)} (amostra ${numberFmt.format(icmbioResultCount)}). Datas futuras ignoradas: ${numberFmt.format(futures)}.${warnings.length ? ` Aviso: ${warnings.join(' / ')}.` : ''}${exportWarnings.length ? ` ${exportWarnings.join(' | ')}.` : ''}`;
+        if ((ibamaData || {}).export_limited) exportWarnings.push(`IBAMA exporta ate ${numberFmt.format(EXPORT_MAX_ROWS)} linhas por busca`);
+        if ((icmbioData || {}).export_limited) exportWarnings.push(`ICMBio exporta ate ${numberFmt.format(EXPORT_MAX_ROWS)} linhas por busca`);
+
+        if (MOBILE_LIGHT_MODE) {
+          const activeData = searchDataByDataset[activeDataset] || emptyDatasetPayload(activeDataset);
+          const activeLabel = getDatasetLabel(activeDataset);
+          const otherDataset = activeDataset === 'ibama' ? 'icmbio' : 'ibama';
+          const otherLoaded = Boolean(searchDataByDataset[otherDataset]);
+          statusLine.textContent = `${activeLabel} ${numberFmt.format(activeData.total_match || 0)} (amostra ${numberFmt.format((activeData.results || []).length)}). Modo leve mobile ativo.${otherLoaded ? '' : ` Para carregar ${getDatasetLabel(otherDataset)}, toque na aba correspondente.`} Datas futuras ignoradas: ${numberFmt.format(futures)}.${warnings.length ? ` Aviso: ${warnings.join(' / ')}.` : ''}${exportWarnings.length ? ` ${exportWarnings.join(' | ')}.` : ''}`;
+        } else {
+          statusLine.textContent = `IBAMA ${numberFmt.format(ibamaCount)} (amostra ${numberFmt.format(ibamaResultCount)}) | ICMBio ${numberFmt.format(icmbioCount)} (amostra ${numberFmt.format(icmbioResultCount)}). Datas futuras ignoradas: ${numberFmt.format(futures)}.${warnings.length ? ` Aviso: ${warnings.join(' / ')}.` : ''}${exportWarnings.length ? ` ${exportWarnings.join(' | ')}.` : ''}`;
+        }
 
         updateDatasetTabs();
         renderActiveDataset();
       } catch (error) {
-        searchDataByDataset = { ibama: null, icmbio: null };
-        currentSearchData = null;
+        const fallback = emptyDatasetPayload(activeDataset);
+        searchDataByDataset[activeDataset] = fallback;
+        currentSearchData = fallback;
         storyStepsEl.innerHTML = `<article class="story-step active"><h3>Erro de busca</h3><p class="empty">${esc(error.message)}</p></article>`;
         resultsBody.innerHTML = `<tr><td colspan="6" class="empty">Falha ao buscar dados: ${esc(error.message)}</td></tr>`;
-        statusLine.textContent = 'Erro ao consultar a API de busca.';
+        renderWatchPanel(null);
+        statusLine.textContent = 'Erro ao consultar os dados locais.';
         updateDatasetTabs();
       } finally {
         btnSearch.disabled = false;
@@ -1229,6 +1659,7 @@
 
     async function boot() {
       initMap();
+      setViewMode('story');
       restoreGeminiKey();
       resetAiConversation();
       restoreGoogleClientId();
@@ -1249,16 +1680,22 @@
       await runSearch();
     }
 
-    btnSearch.addEventListener('click', runSearch);
+    btnSearch.addEventListener('click', () => runSearch());
     queryInput.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
         runSearch();
       }
     });
-    ufFilter.addEventListener('change', runSearch);
+    ufFilter.addEventListener('change', () => runSearch());
     tabIbama.addEventListener('click', () => setActiveDataset('ibama'));
     tabIcmbio.addEventListener('click', () => setActiveDataset('icmbio'));
+    if (viewStoryBtn) {
+      viewStoryBtn.addEventListener('click', () => setViewMode('story'));
+    }
+    if (viewWatchBtn) {
+      viewWatchBtn.addEventListener('click', () => setViewMode('watch'));
+    }
 
     btnExportCsv.addEventListener('click', exportCsv);
     btnExportCsv2.addEventListener('click', exportCsv);

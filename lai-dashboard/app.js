@@ -78,6 +78,7 @@
   const sourcesList = document.getElementById('sources-list');
 
   const chartInstances = [];
+  const MOBILE_SAMPLE_LIMIT = 25000;
 
   let reportData = null;
   let metadata = null;
@@ -93,6 +94,7 @@
   let aiMessages = [];
   let aiHistory = [];
   let aiContextStamp = '';
+  let sampleLoadNotice = '';
 
   function esc(text) {
     return (text || '').toString()
@@ -205,22 +207,49 @@
 
   function buildBuscaRequestLink(idPedido) {
     const id = (idPedido || '').toString().trim();
+    if (!/^\d+$/.test(id)) return '';
     if (!id) return '';
     return `https://buscalai.cgu.gov.br/busca/${encodeURIComponent(id)}`;
   }
 
   function buildApiRequestLink(idPedido) {
     const id = (idPedido || '').toString().trim();
+    if (!/^\d+$/.test(id)) return '';
     if (!id) return '';
     return `https://api-laibr.cgu.gov.br/buscar-pedidos/${encodeURIComponent(id)}`;
   }
 
   function isBuscaRequestLink(url) {
-    return /buscalai\.cgu\.gov\.br\/busca\//i.test((url || '').toString());
+    const raw = (url || '').toString().trim();
+    const match = raw.match(/buscalai\.cgu\.gov\.br\/busca\/([^/?#]+)/i);
+    if (!match) return false;
+    try {
+      return /^\d+$/.test(decodeURIComponent(match[1] || '').trim());
+    } catch (error) {
+      return false;
+    }
   }
 
   function isApiRequestLink(url) {
-    return /api-laibr\.cgu\.gov\.br\/buscar-pedidos\//i.test((url || '').toString());
+    const raw = (url || '').toString().trim();
+    const match = raw.match(/api-laibr\.cgu\.gov\.br\/buscar-pedidos\/([^/?#]+)/i);
+    if (!match) return false;
+    try {
+      return /^\d+$/.test(decodeURIComponent(match[1] || '').trim());
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function isHttpUrl(url) {
+    const raw = (url || '').toString().trim();
+    if (!raw) return false;
+    try {
+      const parsed = new URL(raw);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch (error) {
+      return false;
+    }
   }
 
   function resolveRequestLinks(idPedido, requestPublicLink, requestAttachmentLink, requestFallbackLink) {
@@ -231,31 +260,49 @@
 
     let apiLink = buildApiRequestLink(id);
     let buscaLink = buildBuscaRequestLink(id);
+    let externalPublicLink = '';
+    const acceptAttachmentLink = (url) => {
+      if (!isHttpUrl(url)) return '';
+      if (/buscalai\.cgu\.gov\.br\/busca\//i.test(url)) {
+        return isBuscaRequestLink(url) ? url : '';
+      }
+      if (/api-laibr\.cgu\.gov\.br\/buscar-pedidos\//i.test(url)) {
+        return isApiRequestLink(url) ? url : '';
+      }
+      return url;
+    };
+    let attachmentLink = acceptAttachmentLink(attachmentRaw);
 
     if (publicRaw) {
       if (isApiRequestLink(publicRaw)) {
         apiLink = publicRaw;
       } else if (isBuscaRequestLink(publicRaw)) {
         buscaLink = publicRaw;
-      } else if (!apiLink) {
-        apiLink = publicRaw;
+      } else if (!externalPublicLink && isHttpUrl(publicRaw) && !/buscalai\.cgu\.gov\.br|api-laibr\.cgu\.gov\.br/i.test(publicRaw)) {
+        externalPublicLink = publicRaw;
       }
     }
 
-    if (!apiLink && fallbackRaw && !isBuscaRequestLink(fallbackRaw)) {
-      apiLink = fallbackRaw;
-    }
-    if (!buscaLink && fallbackRaw && isBuscaRequestLink(fallbackRaw)) {
-      buscaLink = fallbackRaw;
+    if (fallbackRaw) {
+      if (!buscaLink && isBuscaRequestLink(fallbackRaw)) {
+        buscaLink = fallbackRaw;
+      } else if (!apiLink && isApiRequestLink(fallbackRaw)) {
+        apiLink = fallbackRaw;
+      } else if (!externalPublicLink && isHttpUrl(fallbackRaw) && !/buscalai\.cgu\.gov\.br|api-laibr\.cgu\.gov\.br/i.test(fallbackRaw)) {
+        externalPublicLink = fallbackRaw;
+      }
     }
 
-    const publicLink = apiLink || buscaLink || fallbackRaw;
+    const publicLink = buscaLink || apiLink || externalPublicLink;
+    if (!attachmentLink) {
+      attachmentLink = acceptAttachmentLink(fallbackRaw);
+    }
     return {
       request_public_link: publicLink,
       request_api_link: apiLink,
       request_buscalai_link: buscaLink,
-      request_attachment_link: attachmentRaw,
-      request_link: publicLink || attachmentRaw || fallbackRaw,
+      request_attachment_link: attachmentLink,
+      request_link: publicLink || attachmentLink,
     };
   }
 
@@ -302,8 +349,10 @@
       const stream = new Blob([gzBuffer]).stream().pipeThrough(new DecompressionStream('gzip'));
       return new Response(stream).text();
     }
-    const pako = await import('https://cdn.jsdelivr.net/npm/pako@2.1.0/+esm');
-    return pako.ungzip(new Uint8Array(gzBuffer), { to: 'string' });
+    if (window.pako && typeof window.pako.ungzip === 'function') {
+      return window.pako.ungzip(new Uint8Array(gzBuffer), { to: 'string' });
+    }
+    throw new Error('Navegador sem suporte local para descompactar gzip (pako/DecompressionStream).');
   }
 
   function destroyCharts() {
@@ -543,6 +592,10 @@
 
   function renderCharts() {
     destroyCharts();
+    if (typeof window.Chart !== 'function') {
+      narrativeList.innerHTML = '<li class="error">Falha ao renderizar gráficos: biblioteca Chart indisponível.</li>';
+      return;
+    }
 
     const series = reportData.series || [];
     const partialYear = partialYearCtx ? Number(partialYearCtx.year) : null;
@@ -1064,7 +1117,9 @@
           const links = [
             requestPublicLink ? `<a href="${esc(requestPublicLink)}" target="_blank" rel="noopener noreferrer">Abrir pedido completo</a>` : '',
             (requestBuscaLink && requestBuscaLink !== requestPublicLink) ? `<a href="${esc(requestBuscaLink)}" target="_blank" rel="noopener noreferrer">Abrir no BuscaLAI</a>` : '',
-            requestAttachmentLink ? `<a href="${esc(requestAttachmentLink)}" target="_blank" rel="noopener noreferrer">Abrir anexo</a>` : '',
+            (requestAttachmentLink && requestAttachmentLink !== requestPublicLink && requestAttachmentLink !== requestBuscaLink)
+              ? `<a href="${esc(requestAttachmentLink)}" target="_blank" rel="noopener noreferrer">Abrir anexo</a>`
+              : '',
           ].filter(Boolean).join(' · ');
 
           return `
@@ -1193,7 +1248,9 @@
             (row.request_buscalai_link && row.request_buscalai_link !== row.request_public_link)
               ? `<a href="${esc(row.request_buscalai_link)}" target="_blank" rel="noopener noreferrer">BuscaLAI</a>`
               : '',
-            row.request_attachment_link ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : '',
+            (row.request_attachment_link && row.request_attachment_link !== row.request_public_link && row.request_attachment_link !== row.request_buscalai_link)
+              ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>`
+              : '',
           ].filter(Boolean).join(' · ') || '--'}</td>
           <td>${esc(row.text_excerpt || '--')}</td>
         </tr>
@@ -1201,7 +1258,8 @@
       : '<tr><td colspan="7">Nenhum resultado para esse filtro.</td></tr>';
 
     const sampleInfo = reportData.search_dashboard || {};
-    searchStatus.innerHTML = `Busca em <strong>${nFmt.format(sampleInfo.sample_count || requestSamples.length)}</strong> pedidos da amostra (${esc(sampleInfo.sample_method || 'amostragem')}). Resultado atual: <strong>${nFmt.format(filtered.length)}</strong> registros${filtered.length > shown.length ? ` (mostrando ${nFmt.format(shown.length)}).` : '.'}`;
+    const notice = sampleLoadNotice ? ` ${esc(sampleLoadNotice)}` : '';
+    searchStatus.innerHTML = `Busca em <strong>${nFmt.format(sampleInfo.sample_count || requestSamples.length)}</strong> pedidos da amostra (${esc(sampleInfo.sample_method || 'amostragem')}). Resultado atual: <strong>${nFmt.format(filtered.length)}</strong> registros${filtered.length > shown.length ? ` (mostrando ${nFmt.format(shown.length)}).` : '.'}${notice}`;
   }
 
   function saveGeminiKey() {
@@ -1479,19 +1537,23 @@
 
     try {
       const text = await fetchGzipText(samplePath);
-      const parsed = text
-        .split('\n')
-        .map((line) => line.trim())
-        .filter(Boolean)
-        .map((line) => {
-          try {
-            return JSON.parse(line);
-          } catch {
-            return null;
-          }
-        })
-        .filter(Boolean)
-        .map((row) => {
+      const isMobileMode = window.matchMedia('(max-width: 680px)').matches || (Number(navigator.deviceMemory || 0) > 0 && Number(navigator.deviceMemory || 0) <= 4);
+      const maxRows = isMobileMode ? MOBILE_SAMPLE_LIMIT : Number.POSITIVE_INFINITY;
+      const parsed = [];
+      let parsedCount = 0;
+
+      const lines = text.split('\n');
+      for (let i = 0; i < lines.length; i += 1) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        let row = null;
+        try {
+          row = JSON.parse(line);
+        } catch {
+          row = null;
+        }
+        if (!row) continue;
+        parsed.push((() => {
           const idPedido = (row.id_pedido || '').toString().trim();
           const linkPack = resolveRequestLinks(
             idPedido,
@@ -1506,12 +1568,20 @@
             year: Number(row.year || 0),
             search_blob: normalizeForSearch(`${row.org || ''} ${row.subject || ''} ${row.text_excerpt || ''} ${row.theme || ''} ${row.decision || ''} ${row.reason || ''}`),
           };
-        });
+        })());
+        parsedCount += 1;
+        if (parsedCount >= maxRows) break;
+      }
+
       samplesBySource[sourceId] = parsed;
       requestSamples = parsed;
+      sampleLoadNotice = (isMobileMode && Number.isFinite(maxRows) && parsedCount >= maxRows)
+        ? `Modo leve no mobile: primeiros ${nFmt.format(maxRows)} pedidos para estabilidade.`
+        : '';
     } catch (error) {
       requestSamples = [];
       samplesBySource[sourceId] = [];
+      sampleLoadNotice = '';
       searchStatus.textContent = `Não foi possível carregar a amostra de pedidos desta fonte: ${error.message}`;
       searchStatus.classList.add('error');
     }
