@@ -605,9 +605,10 @@ def load_request_links(zip_path):
     return {pid: payload["url"] for pid, payload in links.items()}
 
 
-def process_year_zip(year, zip_path, source_url):
+def process_year_zip(year, zip_path, source_url, priority_orgs=None):
     pedidos_member = find_pedidos_member(zip_path)
     request_links = load_request_links(zip_path)
+    priority_orgs = set(priority_orgs or [])
 
     usecols = [
         "IdPedido",
@@ -650,6 +651,7 @@ def process_year_zip(year, zip_path, source_url):
     org_theme_decision = Counter()
 
     request_samples = []
+    sampled_hash_count = 0
 
     with zipfile.ZipFile(zip_path) as zf:
         with zf.open(pedidos_member) as handle:
@@ -774,37 +776,50 @@ def process_year_zip(year, zip_path, source_url):
                     for (org_name, theme_name, decision_name), count in triples.items():
                         org_theme_decision[f"{org_name}|||{theme_name}|||{decision_name}"] += int(count)
 
-                if len(request_samples) < MAX_SAMPLE_ROWS_PER_YEAR:
-                    hash_values = pd.util.hash_pandas_object(
-                        id_pedido.where(id_pedido != "", request_text), index=False
-                    ).astype("uint64")
-                    sample_mask = (hash_values % SAMPLE_HASH_MOD) < SAMPLE_HASH_KEEP
-                    sample_mask = sample_mask & request_text.ne("")
+                hash_values = pd.util.hash_pandas_object(
+                    id_pedido.where(id_pedido != "", request_text), index=False
+                ).astype("uint64")
+                hash_mask = (hash_values % SAMPLE_HASH_MOD) < SAMPLE_HASH_KEEP
+                text_mask = request_text.ne("")
+                priority_mask = org.isin(priority_orgs) & text_mask
 
-                    sample_df = pd.DataFrame(
-                        {
-                            "id_pedido": id_pedido[sample_mask],
-                            "year": year,
-                            "org": org[sample_mask],
-                            "decision": decision[sample_mask],
-                            "reason": reason[sample_mask],
-                            "subject": subject[sample_mask],
-                            "theme": primary_theme[sample_mask],
-                            "request_text": request_text[sample_mask],
-                            "request_link": id_pedido[sample_mask].map(request_links).fillna(""),
-                            "restricted": restricted_mask[sample_mask],
-                        }
+                hash_mask = hash_mask & text_mask & (~priority_mask)
+
+                base_df = pd.DataFrame(
+                    {
+                        "id_pedido": id_pedido,
+                        "year": year,
+                        "org": org,
+                        "decision": decision,
+                        "reason": reason,
+                        "subject": subject,
+                        "theme": primary_theme,
+                        "request_text": request_text,
+                        "request_link": id_pedido.map(request_links).fillna(""),
+                        "restricted": restricted_mask,
+                    }
+                )
+
+                priority_df = base_df[priority_mask]
+
+                hash_remaining = max(0, MAX_SAMPLE_ROWS_PER_YEAR - sampled_hash_count)
+                hash_df = base_df[hash_mask]
+                if hash_remaining <= 0:
+                    hash_df = hash_df.iloc[0:0]
+                elif len(hash_df) > hash_remaining:
+                    hash_df = hash_df.iloc[:hash_remaining]
+
+                selected_df = pd.concat([priority_df, hash_df], ignore_index=True)
+                sampled_hash_count += len(hash_df)
+
+                if not selected_df.empty:
+                    selected_df["decision_group"] = selected_df["decision"].map(
+                        lambda d: "restricao"
+                        if d in DECISION_RESTRICTED
+                        else ("concedido" if d == "Acesso Concedido" else "outros")
                     )
-                    if not sample_df.empty:
-                        sample_df["decision_group"] = sample_df["decision"].map(
-                            lambda d: "restricao"
-                            if d in DECISION_RESTRICTED
-                            else ("concedido" if d == "Acesso Concedido" else "outros")
-                        )
-                        rows = build_sample_rows(sample_df)
-                        request_samples.extend(rows)
-                        if len(request_samples) > MAX_SAMPLE_ROWS_PER_YEAR:
-                            request_samples = request_samples[:MAX_SAMPLE_ROWS_PER_YEAR]
+                    rows = build_sample_rows(selected_df)
+                    request_samples.extend(rows)
 
     denied_rate = (denied_total / total_requests) if total_requests else 0.0
     restricted_rate = (restricted_total / total_requests) if total_requests else 0.0
@@ -847,7 +862,7 @@ def process_year_zip(year, zip_path, source_url):
     }
 
 
-def maybe_process_year(year, force=False):
+def maybe_process_year(year, force=False, priority_orgs=None):
     cache = load_year_cache(year)
     current_year = dt.date.today().year
     should_refresh = force or cache is None or year >= current_year
@@ -871,7 +886,12 @@ def maybe_process_year(year, force=False):
             return None, False
 
         print(f"[process] {year}: processando Pedidos_csv")
-        payload = process_year_zip(year=year, zip_path=zip_path, source_url=url)
+        payload = process_year_zip(
+            year=year,
+            zip_path=zip_path,
+            source_url=url,
+            priority_orgs=priority_orgs,
+        )
         save_year_cache(payload)
         return payload, True
 
@@ -949,6 +969,18 @@ def month_label_pt(month_num):
         12: "dezembro",
     }
     return labels.get(int(month_num), str(month_num))
+
+
+def load_priority_orgs_from_previous_report():
+    if not REPORT_FILE.exists():
+        return set()
+    try:
+        report = json.loads(REPORT_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return set()
+    top = report.get("org_top10_plus_pf", []) or report.get("org_top5_plus_pf", [])
+    names = {normalize_text(item.get("org", "")) for item in top if normalize_text(item.get("org", ""))}
+    return names
 
 
 def build_report(year_payloads):
@@ -1471,6 +1503,11 @@ def build_report(year_payloads):
     }
 
     sample_count = len(all_samples)
+    top_org_names = [row["org"] for row in top10_plus_pf]
+    top_org_name_set = set(top_org_names)
+    top_org_rows_in_search = sum(
+        1 for row in all_samples if row.get("org", "") in top_org_name_set
+    )
     methodology = {
         "unit_of_analysis": "pedido individual da base Pedidos_csv",
         "source_files": [
@@ -1527,9 +1564,10 @@ def build_report(year_payloads):
         "sampling_for_search": {
             "purpose": "Busca rápida no teor dos pedidos dentro do painel.",
             "method": (
-                "Amostragem por hash determinístico do IdPedido "
-                f"(mantém ~{SAMPLE_HASH_KEEP / SAMPLE_HASH_MOD:.1%} por ano, "
-                f"teto de {MAX_SAMPLE_ROWS_PER_YEAR} pedidos/ano)."
+                "Regra híbrida: cobertura completa dos pedidos dos órgãos do top 10+PF "
+                "e, para os demais órgãos, amostragem por hash determinístico do IdPedido "
+                f"(~{SAMPLE_HASH_KEEP / SAMPLE_HASH_MOD:.1%} por ano, "
+                f"teto de {MAX_SAMPLE_ROWS_PER_YEAR} pedidos/ano fora do top)."
             ),
             "request_link_rule": (
                 "Cada pedido da amostra pode receber URL do BuscaLAI via chave IdPedido, "
@@ -1541,6 +1579,8 @@ def build_report(year_payloads):
                 "keep_if_mod_lt": SAMPLE_HASH_KEEP,
             },
             "sample_count": sample_count,
+            "top_org_rows_in_search": top_org_rows_in_search,
+            "top_orgs_covered": top_org_names,
         },
         "ranking_rules": {
             "top_denials": (
@@ -1626,9 +1666,11 @@ def build_report(year_payloads):
             "sample_file": "./data/request_samples.jsonl.gz",
             "sample_count": sample_count,
             "sample_method": (
-                "amostra estratificada por hash do IdPedido (aprox. 6% do total, "
-                f"até {MAX_SAMPLE_ROWS_PER_YEAR} por ano)"
+                "cobertura completa do top 10+PF + amostra hash para os demais órgãos "
+                f"(~6% e até {MAX_SAMPLE_ROWS_PER_YEAR} por ano fora do top)"
             ),
+            "top_orgs_covered": top_org_names,
+            "top_org_rows_in_search": top_org_rows_in_search,
             "presets": SEARCH_PRESETS,
             "available_themes": [theme for theme, _ in global_theme_total.most_common(20)],
         },
@@ -1651,15 +1693,22 @@ def run(force=False, start_year=START_YEAR_DEFAULT, end_year=None):
 
     current_year = dt.date.today().year
     final_end_year = end_year if end_year is not None else current_year
+    priority_orgs = load_priority_orgs_from_previous_report()
 
     years = list(range(int(start_year), int(final_end_year) + 1))
     print(f"[info] anos avaliados: {years[0]}-{years[-1]}")
+    if priority_orgs:
+        print(f"[info] cobertura completa na busca para top órgãos (base anterior): {len(priority_orgs)}")
 
     year_payloads = []
     refreshed = 0
 
     for year in years:
-        payload, was_refreshed = maybe_process_year(year, force=force)
+        payload, was_refreshed = maybe_process_year(
+            year,
+            force=force,
+            priority_orgs=priority_orgs,
+        )
         if payload is None:
             continue
         year_payloads.append(payload)

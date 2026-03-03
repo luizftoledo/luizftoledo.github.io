@@ -323,6 +323,7 @@
         <ul>
           <li><strong>Amostra para busca:</strong> ${(m.sampling_for_search || {}).method ? esc((m.sampling_for_search || {}).method) : '--'}.</li>
           <li><strong>Volume da amostra:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).sample_count || 0))}</strong> pedidos.</li>
+          <li><strong>Cobertura completa no top 10+PF:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).top_org_rows_in_search || 0))}</strong> pedidos.</li>
           <li><strong>Link BuscaLAI:</strong> cada pedido da amostra pode trazer URL direta via <code>IdPedido</code>, a partir de <code>PedidosLinkArquivo</code>.</li>
         </ul>
       </details>
