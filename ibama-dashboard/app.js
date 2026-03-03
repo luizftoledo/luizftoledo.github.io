@@ -18,6 +18,11 @@
     const metricFilteredFines = document.getElementById('metric-filtered-fines');
     const statusLine = document.getElementById('status-line');
     const updatedBadge = document.getElementById('updated-badge');
+    const loadStatusLabel = document.getElementById('load-status-label');
+    const loadStatusSummary = document.getElementById('load-status-summary');
+    const loadStatusFill = document.getElementById('load-status-fill');
+    const loadStatusIbama = document.getElementById('load-status-ibama');
+    const loadStatusIcmbio = document.getElementById('load-status-icmbio');
 
     const storyStepsEl = document.getElementById('story-steps');
     const mapTitle = document.getElementById('map-title');
@@ -78,6 +83,11 @@
     let dashboardMetadata = null;
     let lastSearchFingerprint = '';
     const recordsCache = { ibama: null, icmbio: null };
+    const recordsLoadPromises = { ibama: null, icmbio: null };
+    const datasetLoadState = {
+      ibama: { phase: 'idle', percent: 0, rows: 0, totalLines: 0, error: '' },
+      icmbio: { phase: 'idle', percent: 0, rows: 0, totalLines: 0, error: '' },
+    };
 
     function esc(text) {
       return (text || '').toString()
@@ -100,6 +110,81 @@
       const d = new Date(isoDateTime);
       if (Number.isNaN(d.getTime())) return '-';
       return d.toLocaleString('pt-BR');
+    }
+
+    function getLoadPhaseLabel(phase) {
+      if (phase === 'fetching') return 'baixando e descompactando';
+      if (phase === 'parsing') return 'lendo registros';
+      if (phase === 'ready') return 'pronto';
+      if (phase === 'error') return 'erro';
+      return 'aguardando';
+    }
+
+    function setDatasetLoadState(dataset, patch) {
+      if (!(dataset in datasetLoadState)) return;
+      datasetLoadState[dataset] = {
+        ...datasetLoadState[dataset],
+        ...patch,
+      };
+      renderLoadStatus();
+    }
+
+    function renderLoadStatus() {
+      if (!loadStatusLabel || !loadStatusSummary || !loadStatusFill || !loadStatusIbama || !loadStatusIcmbio) return;
+
+      const states = [datasetLoadState.ibama, datasetLoadState.icmbio];
+      const averagePercent = Math.round(states.reduce((acc, row) => acc + Number(row.percent || 0), 0) / states.length);
+      const inProgress = states.some((row) => row.phase === 'fetching' || row.phase === 'parsing');
+      const loadedCount = states.filter((row) => row.phase === 'ready').length;
+      const hasErrors = states.some((row) => row.phase === 'error');
+      const hasIdle = states.some((row) => row.phase === 'idle');
+      const displayPercent = (MOBILE_LIGHT_MODE && loadedCount === 1 && hasIdle && !inProgress && !hasErrors)
+        ? 100
+        : averagePercent;
+
+      if (inProgress) {
+        loadStatusLabel.textContent = 'Carregando base local...';
+        loadStatusSummary.textContent = `${displayPercent}%`;
+      } else if (hasErrors) {
+        loadStatusLabel.textContent = 'Falha em parte da base local';
+        loadStatusSummary.textContent = 'erro';
+      } else if (loadedCount === 2) {
+        loadStatusLabel.textContent = 'Base local pronta para busca e chat';
+        loadStatusSummary.textContent = '100%';
+      } else if (loadedCount === 1) {
+        loadStatusLabel.textContent = 'Base do órgão ativo pronta (o outro órgão carrega ao abrir a aba dele)';
+        loadStatusSummary.textContent = `${displayPercent}%`;
+      } else {
+        loadStatusLabel.textContent = 'Base local ainda não carregada';
+        loadStatusSummary.textContent = `${displayPercent}%`;
+      }
+
+      loadStatusFill.style.width = `${Math.max(0, Math.min(100, displayPercent))}%`;
+
+      const formatDatasetLine = (dataset) => {
+        const state = datasetLoadState[dataset];
+        const label = getDatasetLabel(dataset);
+        const phase = getLoadPhaseLabel(state.phase);
+        const rows = Number(state.rows || 0);
+        if (state.phase === 'error') {
+          return `${label}: erro (${state.error || 'falha ao carregar'})`;
+        }
+        if (state.phase === 'parsing') {
+          const totalLines = Number(state.totalLines || 0);
+          const linesText = totalLines > 0 ? `${numberFmt.format(totalLines)} linhas` : 'linhas em processamento';
+          return `${label}: ${phase} (${state.percent}% • ${numberFmt.format(rows)} registros válidos • ${linesText})`;
+        }
+        if (state.phase === 'ready') {
+          return `${label}: pronto (${numberFmt.format(rows)} registros)`;
+        }
+        if (state.phase === 'fetching') {
+          return `${label}: ${phase} (${state.percent}%)`;
+        }
+        return `${label}: aguardando`;
+      };
+
+      loadStatusIbama.textContent = formatDatasetLine('ibama');
+      loadStatusIcmbio.textContent = formatDatasetLine('icmbio');
     }
 
     async function fetchJson(url) {
@@ -230,31 +315,102 @@
 
     async function ensureDatasetLoaded(dataset) {
       if (recordsCache[dataset]) {
+        if (datasetLoadState[dataset] && datasetLoadState[dataset].phase !== 'ready') {
+          setDatasetLoadState(dataset, {
+            phase: 'ready',
+            percent: 100,
+            rows: Number((recordsCache[dataset] || []).length),
+            totalLines: Number((recordsCache[dataset] || []).length),
+            error: '',
+          });
+        }
         return recordsCache[dataset];
+      }
+      if (recordsLoadPromises[dataset]) {
+        return recordsLoadPromises[dataset];
       }
       const filePath = DATA_FILES[dataset];
       if (!filePath) {
         throw new Error(`Dataset invalido: ${dataset}`);
       }
 
-      const rawText = await fetchGzipText(filePath);
-      const lines = rawText.split('\n');
-      const rows = [];
-      for (let i = 0; i < lines.length; i += 1) {
-        const line = lines[i].trim();
-        if (!line) continue;
+      const loadPromise = (async () => {
         try {
-          const parsed = JSON.parse(line);
-          const record = parseDatasetRecord(parsed);
-          record.search_blob = `${record.nome_infrator} ${record.des_auto_infracao} ${record.municipio} ${record.uf} ${record.num_processo} ${record.cpf_cnpj_infrator}`.trim();
-          rows.push(record);
+          setDatasetLoadState(dataset, {
+            phase: 'fetching',
+            percent: 4,
+            rows: 0,
+            totalLines: 0,
+            error: '',
+          });
+
+          const rawText = await fetchGzipText(filePath);
+          const lines = rawText.split('\n');
+          const rows = [];
+          const totalLines = Math.max(lines.length, 1);
+          const progressStep = Math.max(6000, Math.floor(totalLines / 42));
+          const yieldStep = progressStep * 2;
+
+          setDatasetLoadState(dataset, {
+            phase: 'parsing',
+            percent: 8,
+            rows: 0,
+            totalLines,
+            error: '',
+          });
+
+          for (let i = 0; i < lines.length; i += 1) {
+            const line = lines[i].trim();
+            if (!line) continue;
+            try {
+              const parsed = JSON.parse(line);
+              const record = parseDatasetRecord(parsed);
+              record.search_blob = `${record.nome_infrator} ${record.des_auto_infracao} ${record.municipio} ${record.uf} ${record.num_processo} ${record.cpf_cnpj_infrator}`.trim();
+              rows.push(record);
+            } catch (error) {
+              // Ignore malformed line instead of aborting whole dataset load.
+              continue;
+            }
+
+            if ((i + 1) % progressStep === 0 || i === lines.length - 1) {
+              const parsingPct = Math.max(8, Math.min(99, Math.round(((i + 1) / totalLines) * 92)));
+              setDatasetLoadState(dataset, {
+                phase: 'parsing',
+                percent: parsingPct,
+                rows: rows.length,
+                totalLines,
+              });
+            }
+            if ((i + 1) % yieldStep === 0) {
+              await new Promise((resolve) => {
+                setTimeout(resolve, 0);
+              });
+            }
+          }
+
+          recordsCache[dataset] = rows;
+          setDatasetLoadState(dataset, {
+            phase: 'ready',
+            percent: 100,
+            rows: rows.length,
+            totalLines,
+            error: '',
+          });
+          return rows;
         } catch (error) {
-          // Ignore malformed line instead of aborting whole dataset load.
-          continue;
+          setDatasetLoadState(dataset, {
+            phase: 'error',
+            percent: 0,
+            error: error?.message || 'falha ao carregar base',
+          });
+          throw error;
+        } finally {
+          recordsLoadPromises[dataset] = null;
         }
-      }
-      recordsCache[dataset] = rows;
-      return rows;
+      })();
+
+      recordsLoadPromises[dataset] = loadPromise;
+      return loadPromise;
     }
 
     function upsertTopRow(topRows, row, limit) {
@@ -1659,7 +1815,9 @@
 
     async function boot() {
       initMap();
-      setViewMode('story');
+      renderLoadStatus();
+      const initialView = ((document.body && document.body.dataset && document.body.dataset.initialView) || '').toLowerCase();
+      setViewMode(initialView === 'watch' ? 'watch' : 'story');
       restoreGeminiKey();
       resetAiConversation();
       restoreGoogleClientId();

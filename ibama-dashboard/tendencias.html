@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>IBAMA - Scrollytelling de Autos</title>
+  <title>IBAMA + ICMBio - Tendências de Multas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -1258,19 +1258,19 @@
   </style>
   <link rel="stylesheet" href="./theme-datafixers.css">
 </head>
-<body>
+<body data-initial-view="watch">
   <main class="page">
     <nav class="quick-nav" aria-label="Atalhos">
+      <a class="nav-btn" href="./index.html">Voltar ao painel principal</a>
       <a class="nav-btn" href="https://luizftoledo.github.io/">Voltar ao Portfolio</a>
-      <a class="nav-btn" href="./tendencias.html">Abrir aba de tendências</a>
       <a class="nav-btn" href="https://datafixers.org/" target="_blank" rel="noopener noreferrer">Ir para DataFixers.org</a>
     </nav>
 
     <section class="top-shell">
       <div class="top-content">
         <div class="title-row">
-          <h1>Scrollytelling IBAMA + ICMBio: autos filtrados</h1>
-          <p class="subtitle">Busque por nome do autuado, trecho de descricao da multa (ex: desmatamento, indigena), com ou sem acento e com qualquer caixa.</p>
+          <h1>Ficar de olho: tendências de multas (IBAMA + ICMBio)</h1>
+          <p class="subtitle">Esta aba mostra alertas de tendência: quem mais aparece, novos players com multões e foco em autos ligados a desmatamento.</p>
         </div>
 
         <div class="search-row">
@@ -1287,6 +1287,10 @@
           <button class="dataset-tab" id="tab-icmbio" type="button">ICMBio</button>
         </div>
         <p class="hint" id="dataset-summary">Resultados serao divididos entre IBAMA e ICMBio.</p>
+        <div class="view-tabs" id="view-tabs">
+          <button class="view-tab active" id="view-story" type="button">Mapa narrativo</button>
+          <button class="view-tab" id="view-watch" type="button">Ficar de olho</button>
+        </div>
 
         <div class="metrics-grid">
           <article class="metric">
@@ -1339,6 +1343,18 @@
           <p id="map-description">Execute uma busca para ver os pontos georreferenciados e a narrativa orientada por scroll.</p>
         </div>
       </aside>
+    </section>
+
+    <section class="watch-panel view-panel hidden" id="watch-section">
+      <header class="section-head">
+        <h2>Ficar de olho: alertas de multas altas</h2>
+        <span class="badge" id="watch-badge">multao: --</span>
+      </header>
+      <div class="watch-body">
+        <p class="hint" id="watch-summary">Rode uma busca para ver os alertas.</p>
+        <div class="watch-cards" id="watch-cards"></div>
+        <div class="watch-details" id="watch-details"></div>
+      </div>
     </section>
 
     <section class="results-panel">
