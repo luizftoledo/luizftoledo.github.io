@@ -45,8 +45,13 @@
   const alertsSummary = document.getElementById('alerts-summary');
 
   const tableYearly = document.getElementById('table-yearly');
+  const tableReasonsHead = document.getElementById('table-reasons-head');
   const tableReasons = document.getElementById('table-reasons');
+  const tableReasonsNote = document.getElementById('table-reasons-note');
+  const reasonModeGlobal = document.getElementById('reason-mode-global');
+  const reasonModeYearly = document.getElementById('reason-mode-yearly');
   const tableOrgTop = document.getElementById('table-org-top');
+  const tablePersonalYearly = document.getElementById('table-personal-yearly');
   const tablePersonalTop = document.getElementById('table-personal-top');
 
   const orgCards = document.getElementById('org-cards');
@@ -81,6 +86,7 @@
   let sourceDataMap = {};
   let samplesBySource = {};
   let activeSourceId = '';
+  let reasonTableMode = 'global';
   let lastSearchResults = [];
   let partialYearCtx = null;
 
@@ -828,6 +834,77 @@
     }));
   }
 
+  function updateReasonModeButtons() {
+    if (!reasonModeGlobal || !reasonModeYearly) return;
+    const globalActive = reasonTableMode === 'global';
+    reasonModeGlobal.classList.toggle('active', globalActive);
+    reasonModeGlobal.setAttribute('aria-selected', globalActive ? 'true' : 'false');
+    reasonModeYearly.classList.toggle('active', !globalActive);
+    reasonModeYearly.setAttribute('aria-selected', globalActive ? 'false' : 'true');
+  }
+
+  function renderReasonsTable() {
+    if (!tableReasons || !tableReasonsHead || !tableReasonsNote) return;
+
+    if (reasonTableMode === 'yearly') {
+      tableReasonsHead.innerHTML = `
+        <th>Ano</th>
+        <th>Motivo principal</th>
+        <th>Quantidade</th>
+        <th>% das restrições no ano</th>
+      `;
+
+      const reasonByYear = new Map();
+      (reportData.reason_series || []).forEach((row) => {
+        const year = Number(row.year || 0);
+        if (!Number.isFinite(year)) return;
+        if (!reasonByYear.has(year)) reasonByYear.set(year, []);
+        reasonByYear.get(year).push({
+          reason: row.reason || 'Motivo não informado',
+          count: Number(row.count || 0),
+        });
+      });
+
+      const yearlyRows = [...(reportData.series || [])]
+        .sort((a, b) => Number(b.year || 0) - Number(a.year || 0))
+        .map((yearRow) => {
+          const year = Number(yearRow.year || 0);
+          const restrictedTotal = Number(yearRow.restricted_total || 0);
+          const reasons = [...(reasonByYear.get(year) || [])]
+            .sort((a, b) => Number(b.count || 0) - Number(a.count || 0));
+          const top = reasons[0] || { reason: 'Sem motivo registrado', count: 0 };
+          const yearLabel = (partialYearCtx && Number(partialYearCtx.year) === year) ? `${year}*` : String(year);
+          return `
+            <tr>
+              <td>${esc(yearLabel)}</td>
+              <td>${esc(top.reason)}</td>
+              <td>${nFmt.format(top.count || 0)}</td>
+              <td>${restrictedTotal ? pFmt.format((top.count || 0) / restrictedTotal) : '--'}</td>
+            </tr>
+          `;
+        });
+
+      tableReasons.innerHTML = yearlyRows.join('');
+      tableReasonsNote.innerHTML = 'Mostra o motivo mais frequente de negativa/restrição em cada ano. A porcentagem usa como base o total de casos com restrição daquele ano.';
+      return;
+    }
+
+    tableReasonsHead.innerHTML = `
+      <th>Motivo</th>
+      <th>Quantidade</th>
+      <th>% do total com restrição</th>
+    `;
+    const totalRestricted = Number((reportData.overall || {}).restricted_total || 0);
+    tableReasons.innerHTML = (reportData.top_reasons || []).slice(0, 15).map((row) => `
+      <tr>
+        <td>${esc(row.reason)}</td>
+        <td>${nFmt.format(row.count || 0)}</td>
+        <td>${totalRestricted ? pFmt.format((row.count || 0) / totalRestricted) : '--'}</td>
+      </tr>
+    `).join('');
+    tableReasonsNote.innerHTML = 'Ranking geral da série histórica completa, independente de ano.';
+  }
+
   function renderTables() {
     tableYearly.innerHTML = (reportData.series || []).map((row) => `
       <tr>
@@ -842,14 +919,7 @@
       </tr>
     `).join('');
 
-    const totalRestricted = Number((reportData.overall || {}).restricted_total || 0);
-    tableReasons.innerHTML = (reportData.top_reasons || []).slice(0, 15).map((row) => `
-      <tr>
-        <td>${esc(row.reason)}</td>
-        <td>${nFmt.format(row.count || 0)}</td>
-        <td>${totalRestricted ? pFmt.format((row.count || 0) / totalRestricted) : '--'}</td>
-      </tr>
-    `).join('');
+    renderReasonsTable();
 
     const top = reportData.org_top10_plus_pf || reportData.org_top5_plus_pf || [];
     tableOrgTop.innerHTML = top.map((row) => `
@@ -862,6 +932,31 @@
         <td>${pFmt.format(row.restricted_rate)}</td>
       </tr>
     `).join('');
+
+    const personalSeries = (((reportData.personal_info || {}).series) || []);
+    tablePersonalYearly.innerHTML = personalSeries.map((row, index) => {
+      const prev = index > 0 ? personalSeries[index - 1] : null;
+      const count = Number(row.count || 0);
+      const prevCount = Number((prev || {}).count || 0);
+      const deltaCount = prev ? (count - prevCount) : 0;
+      const deltaPct = prev
+        ? (prevCount > 0 ? deltaCount / prevCount : null)
+        : null;
+      const deltaLabel = !prev
+        ? '--'
+        : (deltaPct === null
+          ? `${deltaCount > 0 ? '+' : ''}${nFmt.format(deltaCount)} (base anterior = 0)`
+          : `${deltaCount > 0 ? '+' : ''}${nFmt.format(deltaCount)} (${(deltaPct >= 0 ? '+' : '')}${(deltaPct * 100).toFixed(1)}%)`);
+
+      return `
+        <tr>
+          <td>${(partialYearCtx && Number(row.year) === Number(partialYearCtx.year)) ? `${row.year}*` : row.year}</td>
+          <td>${nFmt.format(count)}</td>
+          <td>${pFmt.format(row.share_in_restricted || 0)}</td>
+          <td>${esc(deltaLabel)}</td>
+        </tr>
+      `;
+    }).join('');
 
     tablePersonalTop.innerHTML = (((reportData.personal_info || {}).top_orgs) || []).slice(0, 20).map((row) => `
       <tr>
@@ -1409,6 +1504,7 @@
     renderAlertsSummary();
     renderNarrative();
     renderCharts();
+    updateReasonModeButtons();
     renderTables();
     renderOrgCards();
     renderMethodology();
@@ -1424,6 +1520,21 @@
   }
 
   function bindEvents() {
+    if (reasonModeGlobal) {
+      reasonModeGlobal.addEventListener('click', () => {
+        reasonTableMode = 'global';
+        updateReasonModeButtons();
+        renderReasonsTable();
+      });
+    }
+    if (reasonModeYearly) {
+      reasonModeYearly.addEventListener('click', () => {
+        reasonTableMode = 'yearly';
+        updateReasonModeButtons();
+        renderReasonsTable();
+      });
+    }
+
     if (sourceSelect) {
       sourceSelect.addEventListener('change', async () => {
         await applySource(sourceSelect.value);

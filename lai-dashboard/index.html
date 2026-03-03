@@ -328,6 +328,46 @@
       background: #faf9f7;
     }
 
+    .table-toggle-row {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      padding: 0.58rem 0.7rem 0.16rem;
+      border-bottom: 1px solid #ece9e3;
+      background: #fff;
+    }
+
+    .table-toggle {
+      min-height: 34px;
+      border: 1px solid #d8d3c8;
+      border-radius: 999px;
+      background: #fbfaf8;
+      color: #4d4943;
+      padding: 0.3rem 0.64rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .table-toggle.active {
+      border-color: #2f6f9f;
+      background: #e8f0f6;
+      color: #214b68;
+      box-shadow: 0 0 0 2px rgba(47, 111, 159, 0.12);
+    }
+
+    .table-inline-note {
+      font-size: 0.78rem;
+      color: #5a544d;
+      font-weight: 500;
+    }
+
+    .table-inline-note a {
+      color: #2f6f9f;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
     .table-wrap {
       overflow: auto;
       max-height: 320px;
@@ -366,6 +406,35 @@
     }
 
     tbody tr:nth-child(even) { background: #fdfcfb; }
+
+    .video-embed {
+      padding: 0.56rem 0.7rem 0.72rem;
+      border-top: 1px solid #ece9e3;
+      background: #fff;
+      display: grid;
+      gap: 0.44rem;
+    }
+
+    .video-embed p {
+      margin: 0;
+      font-size: 0.79rem;
+      color: #605a53;
+      line-height: 1.4;
+    }
+
+    .video-embed iframe {
+      width: 100%;
+      min-height: 240px;
+      border: 0;
+      border-radius: 10px;
+      background: #101010;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.56rem;
+    }
 
     .org-grid {
       display: grid;
@@ -829,7 +898,8 @@
       .metrics,
       .alerts-grid,
       .chart-grid,
-      .org-grid {
+      .org-grid,
+      .video-grid {
         grid-template-columns: 1fr;
       }
 
@@ -958,17 +1028,50 @@
 
       <article class="table-card">
         <h3>Motivos mais frequentes de negativa/restrição</h3>
+        <div class="table-toggle-row" role="tablist" aria-label="Modo da tabela de motivos">
+          <button class="table-toggle active" id="reason-mode-global" type="button" role="tab" aria-selected="true">Top geral</button>
+          <button class="table-toggle" id="reason-mode-yearly" type="button" role="tab" aria-selected="false">Como foi em cada ano</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr id="table-reasons-head"></tr>
+            </thead>
+            <tbody id="table-reasons"></tbody>
+          </table>
+        </div>
+        <p class="table-note" id="table-reasons-note"></p>
+      </article>
+
+      <article class="table-card">
+        <h3>Informação pessoal em série histórica <span class="table-inline-note">(o chamado <a href="https://www.youtube.com/watch?v=BAUB6kCcs8k" target="_blank" rel="noopener noreferrer">"Sigilo dos 100 anos"</a>)</span></h3>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Motivo</th>
-                <th>Quantidade</th>
-                <th>% do total com restrição</th>
+                <th>Ano</th>
+                <th>Casos (qtde)</th>
+                <th>% das restrições no ano</th>
+                <th>Variação vs ano anterior</th>
               </tr>
             </thead>
-            <tbody id="table-reasons"></tbody>
+            <tbody id="table-personal-yearly"></tbody>
           </table>
+        </div>
+        <div class="video-embed">
+          <p>Vídeo curto para contextualizar o tema em linguagem simples.</p>
+          <iframe src="https://www.youtube.com/embed/BAUB6kCcs8k" title="Explicação sobre Sigilo dos 100 anos" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+      </article>
+
+      <article class="table-card">
+        <h3>Quando usar (ou não) a LAI: guia rápido em vídeo</h3>
+        <div class="video-embed">
+          <p>Dois vídeos diretos ao ponto para ajudar a decidir quando a LAI é o melhor caminho e como evitar pedidos que costumam ser negados.</p>
+          <div class="video-grid">
+            <iframe src="https://www.youtube.com/embed/FNOqGj7eQ34" title="Quando usar ou não a LAI - vídeo 1" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/y5O3tkyL-Ac" title="Quando usar ou não a LAI - vídeo 2" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
         </div>
       </article>
 
