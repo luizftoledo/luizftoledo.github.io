@@ -1,6 +1,9 @@
 {
-  "updated_at": "2026-03-03T10:54:04.020881+00:00",
+  "updated_at": "2026-03-03T11:11:23.092692+00:00",
   "years_covered": [
+    2012,
+    2013,
+    2014,
     2015,
     2016,
     2017,
@@ -15,19 +18,24 @@
     2026
   ],
   "overall": {
-    "total_requests": 946326,
-    "denied_total": 62344,
-    "restricted_total": 114759,
-    "personal_restricted_total": 13041,
-    "denied_rate": 0.065880045565693,
-    "restricted_rate": 0.1212679351513115,
-    "personal_share_in_restricted": 0.11363814602776252
+    "total_requests": 1638610,
+    "denied_total": 128743,
+    "restricted_total": 215398,
+    "personal_restricted_total": 43482,
+    "denied_rate": 0.07856842079567439,
+    "restricted_rate": 0.13145165719725865,
+    "personal_share_in_restricted": 0.20186816962088786
   },
   "source": {
-    "portal_url": "https://buscalai.cgu.gov.br/DownloadDados/DownloadDados",
-    "download_url_template": "https://dadosabertos-download.cgu.gov.br/FalaBR/Arquivos_FalaBR_Filtrado/Arquivos_csv_{year}.zip",
+    "source_id": "ampla",
+    "source_label": "Todos os pedidos e recursos (Fala.BR/CGU)",
+    "portal_url": "https://falabr.cgu.gov.br/web/dadosabertoslai",
+    "download_url_template": "https://dadosabertos-download.cgu.gov.br/FalaBR/Arquivos_FalaBR/Pedidos_csv_{year}.zip",
     "precedentes_url": "https://www.gov.br/cgu/pt-br/acesso-a-informacao/dados-abertos/arquivos/busca-de-precedentes",
     "years_covered": [
+      2012,
+      2013,
+      2014,
       2015,
       2016,
       2017,
@@ -42,7 +50,7 @@
       2026
     ]
   },
-  "sample_count": 346922,
-  "years_refreshed_in_run": 1,
+  "sample_count": 622743,
+  "years_refreshed_in_run": 8,
   "build_notes": "Cache anual incremental: anos anteriores ficam congelados; ano corrente é reprocessado a cada execução."
 }

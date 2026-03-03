@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LAI: Negativas de Pedidos no Governo Federal</title>
+  <title>Transparência no governo federal: por que pedidos de informação são negados?</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
@@ -38,7 +38,12 @@
       width: min(1220px, 95vw);
       margin: 1.1rem auto 2.5rem;
       display: grid;
+      grid-template-columns: minmax(0, 1fr);
       gap: 1rem;
+    }
+
+    .page > * {
+      min-width: 0;
     }
 
     .quick-nav {
@@ -102,6 +107,42 @@
       align-items: center;
       color: var(--muted);
       font-size: 0.84rem;
+    }
+
+    .source-switch {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfaf7;
+      padding: 0.62rem 0.66rem;
+      display: grid;
+      gap: 0.42rem;
+      max-width: 860px;
+    }
+
+    .source-switch .label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #676058;
+      font-weight: 700;
+    }
+
+    .source-switch select {
+      min-height: 38px;
+      border: 1px solid #d9d6ce;
+      border-radius: 9px;
+      background: #fff;
+      color: #2e2a27;
+      font: inherit;
+      font-size: 0.87rem;
+      padding: 0.38rem 0.5rem;
+    }
+
+    .source-note {
+      margin: 0;
+      font-size: 0.82rem;
+      color: #5a544d;
+      line-height: 1.4;
     }
 
     .pill {
@@ -804,18 +845,26 @@
   <main class="page">
     <nav class="quick-nav" aria-label="Atalhos">
       <a class="nav-btn" href="https://luizftoledo.github.io/">Voltar ao Portfolio</a>
-      <a class="nav-btn" href="https://luizftoledo.github.io/lai-dashboard/sigilo-militar.html">Monitor Sigilo Militar</a>
+      <a class="nav-btn" href="https://luizftoledo.github.io/lai-dashboard/sigilo-militar.html">Monitor do sigilo militar</a>
       <a class="nav-btn" href="https://datafixers.org/" target="_blank" rel="noopener noreferrer">Ir para DataFixers.org</a>
     </nav>
 
     <header class="card hero">
-      <h1>LAI no Executivo Federal: por que pedidos de informação são negados?</h1>
-      <p class="sub">Painel com série histórica (2015-atual), motivos de negativa, comparação entre órgãos e foco especial em negativas ligadas a informação pessoal. Texto simples, dados oficiais e atualização automática mensal.</p>
+      <h1>Transparência no governo federal: por que pedidos de informação são negados?</h1>
+      <p class="sub">Este painel analisa os pedidos feitos pela Lei de Acesso à Informação (LAI). O texto oficial da lei é a <a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm" target="_blank" rel="noopener noreferrer">Lei nº 12.527/2011</a>. Se você quiser uma explicação prática e simples de como usar a LAI, veja meu <a href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank" rel="noopener noreferrer">curso na Udemy</a>.</p>
+      <div class="source-switch">
+        <label class="label" for="source-select">Fonte da análise</label>
+        <select id="source-select">
+          <option value="ampla">Base ampla CGU (todos os pedidos e recursos) - padrão</option>
+          <option value="publica">Base pública BuscaLAI (pedidos marcados como públicos)</option>
+        </select>
+        <p class="source-note" id="source-note">Carregando descrição da fonte...</p>
+      </div>
       <div class="update-line">
         <span id="updated-line">Atualização: carregando...</span>
         <span class="pill" id="years-pill">anos: --</span>
         <span class="pill pill-warning" id="partial-year-pill" hidden>ano parcial</span>
-        <span class="pill">fonte: Busca LAI / CGU</span>
+        <span class="pill">fontes: CGU (Fala.BR + BuscaLAI)</span>
       </div>
       <div class="metrics">
         <article class="metric">

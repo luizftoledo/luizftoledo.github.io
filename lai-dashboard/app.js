@@ -1,6 +1,21 @@
 (() => {
-  const DATA_FILE = './data/report_data.json';
-  const METADATA_FILE = './data/metadata.json';
+  const SOURCES_INDEX_FILE = './data/report_sources.json';
+  const FALLBACK_SOURCES = {
+    ampla: {
+      id: 'ampla',
+      label: 'Base ampla CGU (todos os pedidos e recursos)',
+      report_file: './data/report_data.json',
+      metadata_file: './data/metadata.json',
+      samples_file: './data/request_samples.jsonl.gz',
+    },
+    publica: {
+      id: 'publica',
+      label: 'Base pública BuscaLAI (pedidos marcados como públicos)',
+      report_file: './data/report_data_publica.json',
+      metadata_file: './data/metadata_publica.json',
+      samples_file: './data/request_samples_publica.jsonl.gz',
+    },
+  };
 
   const GEMINI_STORAGE_KEY = 'lai_dashboard_gemini_key';
   const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
@@ -18,6 +33,8 @@
   const partialYearPill = document.getElementById('partial-year-pill');
   const chartPartialNote = document.getElementById('chart-partial-note');
   const yearlyPartialNote = document.getElementById('yearly-partial-note');
+  const sourceSelect = document.getElementById('source-select');
+  const sourceNote = document.getElementById('source-note');
 
   const metricTotalRequests = document.getElementById('metric-total-requests');
   const metricDeniedTotal = document.getElementById('metric-denied-total');
@@ -60,6 +77,10 @@
   let reportData = null;
   let metadata = null;
   let requestSamples = [];
+  let sourceCatalog = {};
+  let sourceDataMap = {};
+  let samplesBySource = {};
+  let activeSourceId = '';
   let lastSearchResults = [];
   let partialYearCtx = null;
 
@@ -140,6 +161,42 @@
     return `${clean.slice(0, limit - 1).trim()}…`;
   }
 
+  function getLoadedSourceIds() {
+    return Object.keys(sourceDataMap).filter((id) => sourceDataMap[id] && sourceDataMap[id].report);
+  }
+
+  function describeSource(sourceId, sourceLabel) {
+    if (sourceId === 'ampla') {
+      return `${sourceLabel || 'Base ampla'}: inclui todos os pedidos e recursos do Fala.BR (escopo mais completo), porém sem detalhamento textual completo do pedido em todos os casos.`;
+    }
+    if (sourceId === 'publica') {
+      return `${sourceLabel || 'Base pública'}: inclui os pedidos marcados como públicos no BuscaLAI; é menor, mas permite leitura mais rica do conteúdo do pedido e dos anexos.`;
+    }
+    return sourceLabel || 'Fonte de dados da análise.';
+  }
+
+  function renderSourceSelector() {
+    if (!sourceSelect) return;
+    const ids = getLoadedSourceIds();
+    sourceSelect.innerHTML = ids.map((id) => {
+      const label = ((sourceDataMap[id] || {}).cfg || {}).label || id;
+      return `<option value="${esc(id)}">${esc(label)}</option>`;
+    }).join('');
+    if (ids.includes(activeSourceId)) sourceSelect.value = activeSourceId;
+  }
+
+  function renderSourceNote() {
+    if (!sourceNote || !reportData) return;
+    const source = reportData.source || {};
+    const ids = getLoadedSourceIds();
+    const sourceLabel = source.source_label || (((sourceDataMap[activeSourceId] || {}).cfg || {}).label || '');
+    const note = describeSource(source.source_id || activeSourceId, sourceLabel);
+    const extra = ids.length >= 2
+      ? ' Você pode trocar a fonte no seletor acima.'
+      : '';
+    sourceNote.textContent = `${note}${extra}`;
+  }
+
   function buildBuscaRequestLink(idPedido) {
     const id = (idPedido || '').toString().trim();
     if (!id) return '';
@@ -210,6 +267,7 @@
     const maxYear = years.length ? Math.max(...years) : '--';
     yearsPill.textContent = `anos: ${minYear}-${maxYear}`;
     updatedLine.textContent = `Atualizado em ${formatDateTime((metadata || {}).updated_at || reportData.generated_at)} (America/Cuiaba)`;
+    renderSourceNote();
     renderPartialYearHints();
   }
 
@@ -283,6 +341,7 @@
     if (!methodologyContent) return;
     const m = reportData.methodology || {};
     const source = reportData.source || {};
+    const sourceScope = (m.data_scope || source.source_label || '').trim();
     const themes = ((((m.theme_classification || {}).themes) || [])).map((item) => ({
       theme: item.theme,
       keywords: (item.keywords || []).slice(0, 8),
@@ -293,7 +352,9 @@
     const themeRule = (((m.monitoring_rules || {}).theme_worsening) || '').trim();
 
     methodologyContent.innerHTML = `
-      <p><strong>Fonte oficial:</strong> <a href="${esc(source.portal_url || '#')}" target="_blank" rel="noopener noreferrer">Busca LAI (CGU)</a>. Arquivos usados: ${files || '--'}.</p>
+      ${sourceScope ? `<p><strong>Escopo desta fonte:</strong> ${esc(sourceScope)}.</p>` : ''}
+      <p><strong>Comparação entre fontes:</strong> a base ampla (Fala.BR) traz o universo total de pedidos e recursos e tende a ter números maiores. A base pública (BuscaLAI) é um subconjunto com pedidos marcados como públicos e costuma ter menos registros, mas maior detalhamento textual para análise qualitativa.</p>
+      <p><strong>Fonte oficial:</strong> <a href="${esc(source.portal_url || '#')}" target="_blank" rel="noopener noreferrer">Portal de dados da CGU</a>. Arquivos usados: ${files || '--'}.</p>
 
       <details class="methodology-details" open>
         <summary>Como os indicadores foram calculados</summary>
@@ -1252,12 +1313,18 @@
     }
   }
 
-  async function loadRequestSamples() {
-    const samplePath = ((reportData.search_dashboard || {}).sample_file) || './data/request_samples.jsonl.gz';
+  async function loadRequestSamples(sourceId) {
+    if (samplesBySource[sourceId]) {
+      requestSamples = samplesBySource[sourceId];
+      return;
+    }
+
+    const sourceCfg = ((sourceDataMap[sourceId] || {}).cfg) || {};
+    const samplePath = sourceCfg.samples_file || ((reportData.search_dashboard || {}).sample_file) || './data/request_samples.jsonl.gz';
 
     try {
       const text = await fetchGzipText(samplePath);
-      requestSamples = text
+      const parsed = text
         .split('\n')
         .map((line) => line.trim())
         .filter(Boolean)
@@ -1272,20 +1339,97 @@
         .map((row) => ({
           ...row,
           id_pedido: (row.id_pedido || '').toString().trim(),
-          request_public_link: buildBuscaRequestLink(row.id_pedido),
+          request_public_link: (row.request_public_link || buildBuscaRequestLink(row.id_pedido)).toString().trim(),
           request_attachment_link: (row.request_attachment_link || row.request_link || '').toString().trim(),
-          request_link: buildBuscaRequestLink(row.id_pedido) || (row.request_attachment_link || row.request_link || '').toString().trim(),
+          request_link: (row.request_public_link || buildBuscaRequestLink(row.id_pedido) || row.request_attachment_link || row.request_link || '').toString().trim(),
           year: Number(row.year || 0),
           search_blob: normalizeForSearch(`${row.org || ''} ${row.subject || ''} ${row.text_excerpt || ''} ${row.theme || ''} ${row.decision || ''} ${row.reason || ''}`),
         }));
+      samplesBySource[sourceId] = parsed;
+      requestSamples = parsed;
     } catch (error) {
       requestSamples = [];
-      searchStatus.textContent = `Não foi possível carregar a amostra de pedidos: ${error.message}`;
+      samplesBySource[sourceId] = [];
+      searchStatus.textContent = `Não foi possível carregar a amostra de pedidos desta fonte: ${error.message}`;
       searchStatus.classList.add('error');
     }
   }
 
+  async function loadSourceCatalogAndData() {
+    let indexPayload = null;
+    try {
+      indexPayload = await fetchJson(SOURCES_INDEX_FILE);
+    } catch {
+      indexPayload = null;
+    }
+
+    const catalog = (indexPayload && indexPayload.sources) ? indexPayload.sources : FALLBACK_SOURCES;
+    sourceCatalog = catalog;
+    sourceDataMap = {};
+    samplesBySource = {};
+
+    const entries = Object.entries(catalog);
+    for (const [id, rawCfg] of entries) {
+      const cfg = { id, ...rawCfg };
+      const reportPath = cfg.report_file || (id === 'publica' ? FALLBACK_SOURCES.publica.report_file : FALLBACK_SOURCES.ampla.report_file);
+      const metadataPath = cfg.metadata_file || (id === 'publica' ? FALLBACK_SOURCES.publica.metadata_file : FALLBACK_SOURCES.ampla.metadata_file);
+
+      try {
+        const [report, meta] = await Promise.all([
+          fetchJson(reportPath),
+          fetchJson(metadataPath).catch(() => null),
+        ]);
+        sourceDataMap[id] = { cfg, report, metadata: meta };
+      } catch {
+        // Ignora fontes indisponíveis para não quebrar o painel.
+      }
+    }
+
+    const loaded = getLoadedSourceIds();
+    if (!loaded.length) {
+      throw new Error('Nenhuma fonte de dados da dashboard pôde ser carregada.');
+    }
+
+    const preferred = (indexPayload && indexPayload.default_source) || 'ampla';
+    activeSourceId = loaded.includes(preferred) ? preferred : loaded[0];
+  }
+
+  async function applySource(sourceId) {
+    const bundle = sourceDataMap[sourceId];
+    if (!bundle) return;
+
+    activeSourceId = sourceId;
+    reportData = bundle.report;
+    metadata = bundle.metadata;
+    partialYearCtx = getPartialYearContext(reportData.series || []);
+
+    renderSourceSelector();
+    renderHeaderMeta();
+    renderMetrics();
+    renderAlertsSummary();
+    renderNarrative();
+    renderCharts();
+    renderTables();
+    renderOrgCards();
+    renderMethodology();
+    renderSourcesFooter();
+
+    restoreGeminiKey();
+    populateAiFilters();
+    resetAiConversation('Pronto. Descreva seu caso e eu te ajudo com leitura da negativa e rascunho de pedido/recurso.');
+
+    await loadRequestSamples(sourceId);
+    renderSearchFilters();
+    runRequestSearch();
+  }
+
   function bindEvents() {
+    if (sourceSelect) {
+      sourceSelect.addEventListener('change', async () => {
+        await applySource(sourceSelect.value);
+      });
+    }
+
     searchBtn.addEventListener('click', runRequestSearch);
     [searchYear, searchOrg, searchDecisionGroup, searchTheme].forEach((el) => {
       el.addEventListener('change', runRequestSearch);
@@ -1319,33 +1463,12 @@
     bindEvents();
 
     try {
-      [reportData, metadata] = await Promise.all([
-        fetchJson(DATA_FILE),
-        fetchJson(METADATA_FILE).catch(() => null),
-      ]);
+      await loadSourceCatalogAndData();
+      await applySource(activeSourceId);
     } catch (error) {
       narrativeList.innerHTML = `<li class="error">Falha ao carregar os dados: ${esc(error.message)}</li>`;
       return;
     }
-
-    partialYearCtx = getPartialYearContext(reportData.series || []);
-    renderHeaderMeta();
-    renderMetrics();
-    renderAlertsSummary();
-    renderNarrative();
-    renderCharts();
-    renderTables();
-    renderOrgCards();
-    renderMethodology();
-    renderSourcesFooter();
-
-    restoreGeminiKey();
-    populateAiFilters();
-    resetAiConversation('Pronto. Descreva seu caso e eu te ajudo com leitura da negativa e rascunho de pedido/recurso.');
-
-    await loadRequestSamples();
-    renderSearchFilters();
-    runRequestSearch();
   }
 
   boot();

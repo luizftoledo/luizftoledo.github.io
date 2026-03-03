@@ -22,6 +22,8 @@ DOWNLOAD_URL_TEMPLATE = (
     "Arquivos_csv_{year}.zip"
 )
 DOWNLOAD_PORTAL_URL = "https://buscalai.cgu.gov.br/DownloadDados/DownloadDados"
+SOURCE_ID = "publica"
+SOURCE_LABEL = "Pedidos e recursos marcados como públicos (BuscaLAI)"
 PRECEDENTES_URL = (
     "https://www.gov.br/cgu/pt-br/acesso-a-informacao/dados-abertos/"
     "arquivos/busca-de-precedentes"
@@ -623,7 +625,7 @@ def process_year_zip(year, zip_path, source_url, priority_orgs=None):
     request_links = load_request_links(zip_path)
     priority_orgs = set(priority_orgs or [])
 
-    usecols = [
+    wanted_cols = [
         "IdPedido",
         "DataRegistro",
         "OrgaoDestinatario",
@@ -634,6 +636,20 @@ def process_year_zip(year, zip_path, source_url, priority_orgs=None):
         "EspecificacaoDecisao",
         "MotivoNegativaAcesso",
     ]
+
+    with zipfile.ZipFile(zip_path) as zf:
+        with zf.open(pedidos_member) as handle:
+            header_df = pd.read_csv(
+                handle,
+                sep=";",
+                encoding="utf-16",
+                dtype=str,
+                nrows=0,
+                on_bad_lines="skip",
+            )
+            available_cols = set(header_df.columns)
+
+    usecols = [col for col in wanted_cols if col in available_cols]
 
     total_requests = 0
     denied_total = 0
@@ -689,17 +705,35 @@ def process_year_zip(year, zip_path, source_url, priority_orgs=None):
                 subject = chunk["AssuntoPedido"].fillna("").astype(str).map(normalize_text)
                 subject = subject.mask(subject == "", "Assunto não informado")
 
-                resumo = chunk["ResumoSolicitacao"].fillna("").astype(str).map(normalize_text)
-                detalhamento = chunk["DetalhamentoSolicitacao"].fillna("").astype(str).map(normalize_text)
+                if "ResumoSolicitacao" in chunk.columns:
+                    resumo = chunk["ResumoSolicitacao"].fillna("").astype(str).map(normalize_text)
+                else:
+                    resumo = pd.Series([""] * len(chunk), index=chunk.index, dtype="object")
+
+                if "DetalhamentoSolicitacao" in chunk.columns:
+                    detalhamento = (
+                        chunk["DetalhamentoSolicitacao"].fillna("").astype(str).map(normalize_text)
+                    )
+                else:
+                    detalhamento = pd.Series([""] * len(chunk), index=chunk.index, dtype="object")
                 request_text = (subject + " " + resumo + " " + detalhamento).str.strip()
                 request_text_lc = request_text.str.lower()
 
                 decision = chunk["Decisao"].fillna("").astype(str).map(canonicalize_decision)
 
-                reason_source = (
-                    chunk["EspecificacaoDecisao"].fillna("").astype(str).map(normalize_text)
-                )
-                motivo_fallback = chunk["MotivoNegativaAcesso"].fillna("").astype(str).map(normalize_text)
+                if "EspecificacaoDecisao" in chunk.columns:
+                    reason_source = (
+                        chunk["EspecificacaoDecisao"].fillna("").astype(str).map(normalize_text)
+                    )
+                else:
+                    reason_source = pd.Series([""] * len(chunk), index=chunk.index, dtype="object")
+
+                if "MotivoNegativaAcesso" in chunk.columns:
+                    motivo_fallback = (
+                        chunk["MotivoNegativaAcesso"].fillna("").astype(str).map(normalize_text)
+                    )
+                else:
+                    motivo_fallback = pd.Series([""] * len(chunk), index=chunk.index, dtype="object")
                 reason_raw = reason_source.where(reason_source != "", motivo_fallback)
                 reason = reason_raw.map(canonicalize_reason)
 
@@ -1569,14 +1603,27 @@ def build_report(year_payloads):
     top_org_rows_in_search = sum(
         1 for row in all_samples if row.get("org", "") in top_org_name_set
     )
+    period_start_year = int(yearly_series[0]["year"]) if yearly_series else int(START_YEAR_DEFAULT)
+    source_files = ["Pedidos_csv_YYYY.csv"]
+    if "Filtrado" in DOWNLOAD_URL_TEMPLATE:
+        source_files.append("PedidosLinkArquivo_csv_YYYY.csv (link do pedido/anexo no BuscaLAI)")
+    request_link_rule = (
+        "Cada pedido da amostra recebe URL pública do pedido no formato "
+        "https://buscalai.cgu.gov.br/busca/{IdPedido}; quando houver registro "
+        "no arquivo PedidosLinkArquivo, também mantém URL de anexo."
+        if "Filtrado" in DOWNLOAD_URL_TEMPLATE
+        else (
+            "Cada pedido da amostra recebe URL pública no formato "
+            "https://buscalai.cgu.gov.br/busca/{IdPedido}. "
+            "Nesta fonte não há tabela PedidosLinkArquivo para anexos."
+        )
+    )
     methodology = {
         "unit_of_analysis": "pedido individual da base Pedidos_csv",
-        "source_files": [
-            "Pedidos_csv_YYYY.csv",
-            "PedidosLinkArquivo_csv_YYYY.csv (link do pedido/anexo no BuscaLAI)",
-        ],
+        "data_scope": SOURCE_LABEL,
+        "source_files": source_files,
         "period_rule": (
-            "Série anual de 2015 até o ano corrente da execução. "
+            f"Série anual de {period_start_year} até o ano corrente da execução. "
             "O ano corrente é parcial até 31 de dezembro."
         ),
         "decision_rules": {
@@ -1630,11 +1677,7 @@ def build_report(year_payloads):
                 f"(~{SAMPLE_HASH_KEEP / SAMPLE_HASH_MOD:.1%} por ano, "
                 f"teto de {MAX_SAMPLE_ROWS_PER_YEAR} pedidos/ano fora do top)."
             ),
-            "request_link_rule": (
-                "Cada pedido da amostra recebe URL pública do pedido no formato "
-                "https://buscalai.cgu.gov.br/busca/{IdPedido}; quando houver registro "
-                "no arquivo PedidosLinkArquivo, também mantém URL de anexo."
-            ),
+            "request_link_rule": request_link_rule,
             "hash_rule": {
                 "modulus": SAMPLE_HASH_MOD,
                 "keep_if_mod_lt": SAMPLE_HASH_KEEP,
@@ -1681,9 +1724,13 @@ def build_report(year_payloads):
         ),
     }
 
+    sample_file_rel = f"./data/{SAMPLES_FILE.name}"
+
     report = {
         "generated_at": now_iso(),
         "source": {
+            "source_id": SOURCE_ID,
+            "source_label": SOURCE_LABEL,
             "portal_url": DOWNLOAD_PORTAL_URL,
             "download_url_template": DOWNLOAD_URL_TEMPLATE,
             "precedentes_url": PRECEDENTES_URL,
@@ -1729,7 +1776,7 @@ def build_report(year_payloads):
         },
         "monitoring": monitoring,
         "search_dashboard": {
-            "sample_file": "./data/request_samples.jsonl.gz",
+            "sample_file": sample_file_rel,
             "sample_count": sample_count,
             "sample_method": (
                 "cobertura completa do top 10+PF + amostra hash para os demais órgãos "

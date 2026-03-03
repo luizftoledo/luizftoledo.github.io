@@ -1,7 +1,9 @@
 (() => {
-  const DATA_FILE = './data/report_data.json';
-  const METADATA_FILE = './data/metadata.json';
-  const SAMPLE_FILE_FALLBACK = './data/request_samples.jsonl.gz';
+  const METRICS_DATA_FILE = './data/report_data.json';
+  const METRICS_METADATA_FILE = './data/metadata.json';
+  const SOURCE_INDEX_FILE = './data/report_sources.json';
+  const TEXT_SAMPLE_FILE_PRIMARY = './data/request_samples_publica.jsonl.gz';
+  const TEXT_SAMPLE_FILE_FALLBACK = './data/request_samples.jsonl.gz';
 
   const TARGET_ORGS = [
     { code: 'CEX', org: 'CEX – Comando do Exército' },
@@ -34,6 +36,10 @@
   const searchQuery = document.getElementById('search-query');
   const searchBtn = document.getElementById('btn-search');
   const searchStatus = document.getElementById('search-status');
+  const searchPagination = document.getElementById('search-pagination');
+  const searchPageInfo = document.getElementById('search-page-info');
+  const searchPagePrev = document.getElementById('btn-page-prev');
+  const searchPageNext = document.getElementById('btn-page-next');
   const tableSearchResults = document.getElementById('table-search-results');
 
   const methodList = document.getElementById('method-list');
@@ -45,6 +51,9 @@
   let militaryRows = [];
   let orgStats = [];
   let orgAnalysis = {};
+  let textSamplePathUsed = '';
+  let searchCurrentPage = 1;
+  const SEARCH_PAGE_SIZE = 25;
 
   function esc(text) {
     return (text || '').toString()
@@ -75,6 +84,11 @@
     const id = (idPedido || '').toString().trim();
     if (!id) return '';
     return `https://buscalai.cgu.gov.br/busca/${encodeURIComponent(id)}`;
+  }
+
+  function isPublicTextSamplePath(path) {
+    const clean = (path || '').toString().toLowerCase();
+    return clean.includes('publica') || clean.includes('filtrado');
   }
 
   function formatDateTime(iso) {
@@ -237,13 +251,16 @@
       reasonCounter.set(row.reason, (reasonCounter.get(row.reason) || 0) + 1);
     });
     const topReason = [...reasonCounter.entries()].sort((a, b) => b[1] - a[1])[0];
+    const textBaseLabel = isPublicTextSamplePath(textSamplePathUsed)
+      ? 'base pública textual (BuscaLAI)'
+      : 'base textual carregada';
 
     alertList.innerHTML = [
       `<li><strong>Maior taxa de negativa:</strong> ${esc(maxDeniedRate.org)} (${pFmt.format(maxDeniedRate.denied_rate)}).</li>`,
       `<li><strong>Maior taxa de restrição:</strong> ${esc(maxRestrictedRate.org)} (${pFmt.format(maxRestrictedRate.restricted_rate)}).</li>`,
       `<li><strong>Maior volume absoluto de negativas:</strong> ${esc(maxDeniedTotal.org)} (${nFmt.format(maxDeniedTotal.denied_total)} negativas).</li>`,
       `<li><strong>Motivo mais frequente no recorte textual:</strong> ${esc(topReason ? topReason[0] : 'Sem dado suficiente')}.</li>`,
-      `<li><strong>Base pesquisável deste monitor:</strong> ${nFmt.format(militaryRows.length)} pedidos com texto, filtrados para os 4 órgãos.</li>`,
+      `<li><strong>Base pesquisável deste monitor:</strong> ${nFmt.format(militaryRows.length)} pedidos com texto (${textBaseLabel}), filtrados para os 4 órgãos.</li>`,
     ].join('');
   }
 
@@ -366,7 +383,16 @@
     searchTheme.innerHTML = `<option value="">Tema: todos</option>${themes.map((theme) => `<option value="${esc(theme)}">${esc(theme)}</option>`).join('')}`;
   }
 
-  function runSearch() {
+  function renderPagination(totalRows, shownRows) {
+    if (!searchPagination || !searchPageInfo || !searchPagePrev || !searchPageNext) return;
+    const totalPages = Math.max(1, Math.ceil(totalRows / SEARCH_PAGE_SIZE));
+    searchPagination.hidden = totalRows <= SEARCH_PAGE_SIZE;
+    searchPageInfo.textContent = `Página ${nFmt.format(searchCurrentPage)} de ${nFmt.format(totalPages)} · ${nFmt.format(shownRows)} itens nesta página`;
+    searchPagePrev.disabled = searchCurrentPage <= 1;
+    searchPageNext.disabled = searchCurrentPage >= totalPages;
+  }
+
+  function runSearch({ resetPage = true } = {}) {
     const org = searchOrg.value;
     const year = searchYear.value;
     const decision = searchDecision.value;
@@ -391,7 +417,13 @@
       return String(a.org || '').localeCompare(String(b.org || ''), 'pt-BR');
     });
 
-    const shown = rows.slice(0, 260);
+    if (resetPage) searchCurrentPage = 1;
+    const totalPages = Math.max(1, Math.ceil(rows.length / SEARCH_PAGE_SIZE));
+    if (searchCurrentPage > totalPages) searchCurrentPage = totalPages;
+    const start = (searchCurrentPage - 1) * SEARCH_PAGE_SIZE;
+    const end = start + SEARCH_PAGE_SIZE;
+    const shown = rows.slice(start, end);
+
     tableSearchResults.innerHTML = shown.length
       ? shown.map((row) => `
         <tr>
@@ -409,7 +441,13 @@
       `).join('')
       : '<tr><td colspan="8">Nenhum resultado com esse filtro.</td></tr>';
 
-    searchStatus.innerHTML = `Base deste monitor: <strong>${nFmt.format(militaryRows.length)}</strong> pedidos filtrados para CEX, MD, CMAR e COMAER. Resultado atual: <strong>${nFmt.format(rows.length)}</strong>${rows.length > shown.length ? ` (mostrando ${nFmt.format(shown.length)}).` : '.'}`;
+    const textBaseLabel = isPublicTextSamplePath(textSamplePathUsed)
+      ? 'base pública textual (BuscaLAI)'
+      : 'base textual carregada';
+    const shownStart = rows.length ? start + 1 : 0;
+    const shownEnd = start + shown.length;
+    searchStatus.innerHTML = `Base textual deste monitor: <strong>${nFmt.format(militaryRows.length)}</strong> pedidos (${textBaseLabel}) filtrados para CEX, MD, CMAR e COMAER. Resultado atual: <strong>${nFmt.format(rows.length)}</strong>${rows.length ? ` (mostrando ${nFmt.format(shownStart)}-${nFmt.format(shownEnd)}).` : '.'}`;
+    renderPagination(rows.length, shown.length);
   }
 
   function renderMethodology() {
@@ -417,12 +455,15 @@
     const years = source.years_covered || [];
     const start = years.length ? Math.min(...years) : '--';
     const end = years.length ? Math.max(...years) : '--';
+    const textSourceLabel = isPublicTextSamplePath(textSamplePathUsed)
+      ? 'base pública do BuscaLAI (pedidos com texto)'
+      : 'base textual disponível no build atual';
 
     methodList.innerHTML = [
       `<li>Recorte institucional fixo: <strong>CEX</strong>, <strong>MD</strong>, <strong>CMAR</strong> e <strong>COMAER</strong>.</li>`,
-      `<li>Período coberto: <strong>${start}-${end}</strong>, com dados oficiais da base LAI (CGU).</li>`,
-      '<li>Indicadores de pedidos, negativas e restrições por órgão usam o total consolidado da série histórica.</li>',
-      `<li>A análise textual (“temas”, “motivos” e busca) usa a base pesquisável do painel, com <strong>${nFmt.format(militaryRows.length)}</strong> pedidos desses 4 órgãos.</li>`,
+      `<li>Período coberto: <strong>${start}-${end}</strong>, com dados oficiais da CGU.</li>`,
+      '<li>Indicadores de pedidos, negativas e restrições usam a base ampla da CGU (todos os pedidos e recursos do Fala.BR).</li>',
+      `<li>A análise textual (“temas”, “motivos” e busca) usa a ${textSourceLabel}, com <strong>${nFmt.format(militaryRows.length)}</strong> pedidos desses 4 órgãos.</li>`,
       '<li>Link de cada linha: prioridade para o pedido público direto no BuscaLAI (<code>/busca/{id}</code>), com link de anexo quando disponível.</li>',
       '<li>Definições: “com restrição” = <code>Acesso Negado</code> + <code>Acesso Parcialmente Concedido</code>.</li>',
     ].join('');
@@ -441,11 +482,28 @@
       links.push({ label, url: clean });
     };
 
-    add('Portal oficial de download (Busca LAI / CGU)', source.portal_url);
+    add('Base ampla (todos os pedidos e recursos) - Fala.BR/CGU', 'https://falabr.cgu.gov.br/web/dadosabertoslai');
     years.forEach((year) => {
-      if (!template.includes('{year}')) return;
-      add(`Arquivo anual ${year} (ZIP com CSV)`, template.replace('{year}', String(year)));
+      add(
+        `Arquivo anual ${year} da base ampla (Pedidos_csv)`,
+        `https://dadosabertos-download.cgu.gov.br/FalaBR/Arquivos_FalaBR/Pedidos_csv_${year}.zip`
+      );
     });
+    add('Base pública com texto dos pedidos - BuscaLAI/CGU', 'https://buscalai.cgu.gov.br/DownloadDados/DownloadDados');
+    years.forEach((year) => {
+      add(
+        `Arquivo anual ${year} da base pública (Arquivos_csv)`,
+        `https://dadosabertos-download.cgu.gov.br/FalaBR/Arquivos_FalaBR_Filtrado/Arquivos_csv_${year}.zip`
+      );
+    });
+    if (source.portal_url) {
+      add('Portal oficial da fonte principal usada nos indicadores', source.portal_url);
+    }
+    if (template.includes('{year}')) {
+      years.forEach((year) => {
+        add(`Arquivo anual ${year} da fonte principal`, template.replace('{year}', String(year)));
+      });
+    }
     add('Painel oficial LAI (Central de Painéis CGU)', 'https://centralpaineis.cgu.gov.br/visualizar/lai');
     add('API pública do painel LAI (Central de Painéis CGU)', 'https://centralpaineis.cgu.gov.br/api/publico/visualizar/lai');
     add('Busca pública direta por pedido', 'https://buscalai.cgu.gov.br/busca/{id_pedido}');
@@ -456,19 +514,66 @@
   }
 
   function bindEvents() {
-    searchBtn.addEventListener('click', runSearch);
-    [searchOrg, searchYear, searchDecision, searchTheme].forEach((el) => el.addEventListener('change', runSearch));
+    searchBtn.addEventListener('click', () => runSearch({ resetPage: true }));
+    [searchOrg, searchYear, searchDecision, searchTheme].forEach((el) => {
+      el.addEventListener('change', () => runSearch({ resetPage: true }));
+    });
     searchQuery.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
-        runSearch();
+        runSearch({ resetPage: true });
       }
     });
+    if (searchPagePrev) {
+      searchPagePrev.addEventListener('click', () => {
+        searchCurrentPage = Math.max(1, searchCurrentPage - 1);
+        runSearch({ resetPage: false });
+      });
+    }
+    if (searchPageNext) {
+      searchPageNext.addEventListener('click', () => {
+        searchCurrentPage += 1;
+        runSearch({ resetPage: false });
+      });
+    }
   }
 
   async function loadMilitaryRows() {
-    const samplePath = ((reportData.search_dashboard || {}).sample_file) || SAMPLE_FILE_FALLBACK;
-    const text = await fetchGzipText(samplePath);
+    let sourceIndex = null;
+    try {
+      sourceIndex = await fetchJson(SOURCE_INDEX_FILE);
+    } catch {
+      sourceIndex = null;
+    }
+
+    const candidates = [
+      (((sourceIndex || {}).sources || {}).publica || {}).samples_file || '',
+      TEXT_SAMPLE_FILE_PRIMARY,
+      ((reportData.search_dashboard || {}).sample_file) || '',
+      TEXT_SAMPLE_FILE_FALLBACK,
+    ]
+      .map((value) => (value || '').toString().trim())
+      .filter(Boolean);
+
+    const dedupCandidates = [...new Set(candidates)];
+
+    let text = '';
+    let loaded = false;
+    let lastError = null;
+    for (const candidatePath of dedupCandidates) {
+      try {
+        text = await fetchGzipText(candidatePath);
+        textSamplePathUsed = candidatePath;
+        loaded = true;
+        break;
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    if (!loaded) {
+      throw new Error(lastError ? lastError.message : 'falha ao carregar base textual');
+    }
 
     militaryRows = text
       .split('\n')
@@ -514,8 +619,8 @@
 
     try {
       [reportData, metadata] = await Promise.all([
-        fetchJson(DATA_FILE),
-        fetchJson(METADATA_FILE).catch(() => null),
+        fetchJson(METRICS_DATA_FILE),
+        fetchJson(METRICS_METADATA_FILE).catch(() => null),
       ]);
       await loadMilitaryRows();
     } catch (error) {

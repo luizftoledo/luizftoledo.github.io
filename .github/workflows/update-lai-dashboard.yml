@@ -27,9 +27,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas
 
-      - name: Build LAI data (incremental)
+      - name: Build LAI data (ampla + pública)
         run: |
-          python scripts/build_lai_dashboard_data.py
+          python scripts/build_lai_dashboard_sources.py
 
       - name: Commit and push if changed
         run: |

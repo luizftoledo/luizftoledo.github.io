@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Monitor de Sigilo Militar (LAI)</title>
+  <title>Monitor do sigilo militar (LAI)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
@@ -38,7 +38,12 @@
       width: min(1220px, 95vw);
       margin: 1.1rem auto 2.6rem;
       display: grid;
+      grid-template-columns: minmax(0, 1fr);
       gap: 1rem;
+    }
+
+    .page > * {
+      min-width: 0;
     }
 
     .quick-nav {
@@ -308,6 +313,35 @@
       color: #59534d;
     }
 
+    .pager {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      margin-top: -0.1rem;
+    }
+
+    .pager button {
+      min-height: 34px;
+      background: #f6f3ec;
+      color: #4f483f;
+      border: 1px solid #d9d2c4;
+      padding-inline: 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .pager button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .pager-info {
+      font-size: 0.82rem;
+      color: #59534d;
+      font-weight: 700;
+    }
+
     .table-wrap {
       width: 100%;
       overflow-x: auto;
@@ -470,12 +504,12 @@
     </nav>
 
     <header class="card hero">
-      <h1>Monitor de Sigilo Militar (LAI)</h1>
-      <p class="sub">Recorte dedicado a 4 órgãos: CEX, MD, CMAR e COMAER. O foco é mostrar de forma simples o volume de negativas, os principais motivos e os temas mais sensíveis, com busca no texto dos pedidos.</p>
+      <h1>Monitor do sigilo militar</h1>
+      <p class="sub">No meu mestrado sobre transparência e defesa, eu identifiquei que CEX, MD, CMAR e COMAER são órgãos-chave para monitorar padrões de sigilo. Por isso este recorte foca neles, com números consolidados e navegação pelos textos dos pedidos. Para entender o argumento completo, leia a <a href="https://repositorio.fgv.br/items/e0088610-e3e2-4c40-afad-4461cf6e2df6" target="_blank" rel="noopener noreferrer">dissertação na íntegra</a>.</p>
       <div class="meta-line">
         <span id="updated-line">Atualização: carregando...</span>
         <span class="pill">órgãos: CEX, MD, CMAR, COMAER</span>
-        <span class="pill">fonte: Busca LAI / CGU</span>
+        <span class="pill">fontes: CGU (Fala.BR + BuscaLAI)</span>
       </div>
       <div class="metrics">
         <article class="metric">
@@ -534,6 +568,11 @@
           <button id="btn-search" type="button">Buscar</button>
         </div>
         <p class="search-status" id="search-status">Carregando base de busca...</p>
+        <div class="pager" id="search-pagination" hidden>
+          <button id="btn-page-prev" type="button">Anterior</button>
+          <span class="pager-info" id="search-page-info">Página 1 de 1</span>
+          <button id="btn-page-next" type="button">Próxima</button>
+        </div>
       </div>
       <div class="table-wrap">
         <table>
@@ -570,10 +609,11 @@
 
     <section class="card author-note">
       <h2>Nota do Autor</h2>
-      <p>O autor desta dashboard pesquisou este tema no mestrado:
+      <p>Este monitor nasce do meu mestrado:
         <a href="https://repositorio.fgv.br/items/e0088610-e3e2-4c40-afad-4461cf6e2df6" target="_blank" rel="noopener noreferrer">dissertação no repositório da FGV</a>.
       </p>
-      <p><strong>Por que monitorar sigilo militar importa:</strong> porque decisões de sigilo afetam diretamente o direito de acesso à informação sobre gastos, contratos, políticas de defesa e uso de recursos públicos. Acompanhar padrões de negativas ajuda a separar proteção legítima de interesse público de bloqueios excessivos de transparência, permitindo um debate público mais informado.</p>
+      <p>Em linguagem simples, o que encontrei foi: mesmo com a LAI proibindo sigilo eterno, a abertura real ainda é limitada nesse campo. O estudo mostra que, desde 2013, Exército, Marinha e Aeronáutica concentraram grande parte das desclassificações federais (394,4 mil documentos, 90,4% do total), mas no recorte analisado (2019-2020) foi possível acessar menos de 1% do conteúdo desclassificado.</p>
+      <p>Muitos documentos chegam com tarjas tão fortes que continuam difíceis de entender, inclusive em pontos básicos como motivo do sigilo e autoria da classificação. Por isso monitorar negativas e padrões de resposta é importante: ajuda a distinguir proteção legítima de excesso de opacidade em temas de alto interesse público.</p>
     </section>
   </main>
 
