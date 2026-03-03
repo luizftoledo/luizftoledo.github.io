@@ -379,6 +379,13 @@ def truncate_text(text, limit=280):
     return cleaned[: limit - 3].rstrip() + "..."
 
 
+def build_buscalai_request_link(id_pedido):
+    clean = normalize_text(id_pedido)
+    if not clean:
+        return ""
+    return f"https://buscalai.cgu.gov.br/busca/{clean}"
+
+
 def canonicalize_decision(value):
     text = normalize_text(value)
     if not text:
@@ -534,9 +541,12 @@ def detect_primary_theme(text_series):
 def build_sample_rows(sample_df):
     rows = []
     for rec in sample_df.to_dict(orient="records"):
+        id_pedido = normalize_text(rec.get("id_pedido", ""))
+        request_attachment_link = normalize_text(rec.get("request_link", ""))
+        request_public_link = build_buscalai_request_link(id_pedido)
         rows.append(
             {
-                "id_pedido": rec.get("id_pedido", ""),
+                "id_pedido": id_pedido,
                 "year": int(rec.get("year", 0) or 0),
                 "org": rec.get("org", ""),
                 "decision": rec.get("decision", ""),
@@ -546,7 +556,9 @@ def build_sample_rows(sample_df):
                 "subject": rec.get("subject", "Assunto não informado"),
                 "theme": rec.get("theme", DEFAULT_THEME),
                 "text_excerpt": truncate_text(rec.get("request_text", ""), limit=360),
-                "request_link": normalize_text(rec.get("request_link", "")),
+                "request_public_link": request_public_link,
+                "request_attachment_link": request_attachment_link,
+                "request_link": request_public_link or request_attachment_link,
             }
         )
     return rows
@@ -1215,6 +1227,7 @@ def build_report(year_payloads):
         org_theme_decision_counter[(org, theme)][decision] += int(count)
 
     samples_by_org_theme = defaultdict(list)
+    samples_seen_text = defaultdict(set)
     for row in all_samples:
         org = normalize_text(row.get("org", ""))
         theme = normalize_text(row.get("theme", ""))
@@ -1224,9 +1237,25 @@ def build_report(year_payloads):
         key = (org, theme)
         if len(samples_by_org_theme[key]) >= 2:
             continue
-        if text_excerpt in samples_by_org_theme[key]:
+        if text_excerpt in samples_seen_text[key]:
             continue
-        samples_by_org_theme[key].append(text_excerpt)
+        id_pedido = normalize_text(row.get("id_pedido", ""))
+        request_public_link = normalize_text(
+            row.get("request_public_link", "") or build_buscalai_request_link(id_pedido)
+        )
+        request_attachment_link = normalize_text(row.get("request_attachment_link", ""))
+        if not request_attachment_link:
+            request_attachment_link = normalize_text(row.get("request_link", ""))
+
+        samples_by_org_theme[key].append(
+            {
+                "text_excerpt": text_excerpt,
+                "id_pedido": id_pedido,
+                "request_public_link": request_public_link,
+                "request_attachment_link": request_attachment_link,
+            }
+        )
+        samples_seen_text[key].add(text_excerpt)
 
     org_profiles = {}
     for org_row in top10_plus_pf:
@@ -1602,9 +1631,9 @@ def build_report(year_payloads):
                 f"teto de {MAX_SAMPLE_ROWS_PER_YEAR} pedidos/ano fora do top)."
             ),
             "request_link_rule": (
-                "Cada pedido da amostra pode receber URL do BuscaLAI via chave IdPedido, "
-                "a partir do arquivo PedidosLinkArquivo; quando há múltiplos links, "
-                "prioriza-se 'Anexo Resposta'."
+                "Cada pedido da amostra recebe URL pública do pedido no formato "
+                "https://buscalai.cgu.gov.br/busca/{IdPedido}; quando houver registro "
+                "no arquivo PedidosLinkArquivo, também mantém URL de anexo."
             ),
             "hash_rule": {
                 "modulus": SAMPLE_HASH_MOD,

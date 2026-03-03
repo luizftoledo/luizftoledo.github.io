@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T10:40:00.791770+00:00",
+  "generated_at": "2026-03-03T10:54:04.020881+00:00",
   "source": {
     "portal_url": "https://buscalai.cgu.gov.br/DownloadDados/DownloadDados",
     "download_url_template": "https://dadosabertos-download.cgu.gov.br/FalaBR/Arquivos_FalaBR_Filtrado/Arquivos_csv_{year}.zip",
@@ -4330,8 +4330,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças resultado na baixa da empresa gostaria de saber se a empresa a qual min refiro foi dada baixa aagradeço",
-            "Outros em Economia e Finanças DECISÃO Nº 138 de 30 de Outubro de 2000, da 10ª Região Fiscal Gostaria que vocês me encaminhassem, por gentileza, a íntegra da DECISÃO Nº 138 de 30 de Outubro de 2000, da 10ª Região Fiscal. Obrigado."
+            {
+              "text_excerpt": "Outros em Economia e Finanças resultado na baixa da empresa gostaria de saber se a empresa a qual min refiro foi dada baixa aagradeço",
+              "id_pedido": "1888006",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888006",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças DECISÃO Nº 138 de 30 de Outubro de 2000, da 10ª Região Fiscal Gostaria que vocês me encaminhassem, por gentileza, a íntegra da DECISÃO Nº 138 de 30 de Outubro de 2000, da 10ª Região Fiscal. Obrigado.",
+              "id_pedido": "1888131",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888131",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1155823&idAws=AnexosManifestacao/1888131/3bdbf386-079b-4dc4-92a5-416beb7f08c8&fileName=16853004444201516.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -4357,8 +4367,18 @@
             }
           ],
           "examples": [
-            "Serviços Públicos Informação sobre ressarcimento de plano privado de assistência à saúde pelo MP Gostaria de solicitar a seguinte informação: há algum servidor público do Ministério do Planejamento que receba ressarcimento do Ministério relativo a contratação do plano um privado de assistência a saúde da CASSI – Caixa de Assistência aos Funcionários do Ba...",
-            "Outros em Comércio e serviços Quantidade de orgânicos exportada pelo Brasil, tanto em valor monetário quanto em toneladas, por unidade de federação, empresas exportadoras e compradores. No período de 2006 a 2014. Prezado (a), Venho por meio deste, solicitar informação sobre quantidade de orgânicos exportados, tanto em valor monetário quanto em toneladas,..."
+            {
+              "text_excerpt": "Serviços Públicos Informação sobre ressarcimento de plano privado de assistência à saúde pelo MP Gostaria de solicitar a seguinte informação: há algum servidor público do Ministério do Planejamento que receba ressarcimento do Ministério relativo a contratação do plano um privado de assistência a saúde da CASSI – Caixa de Assistência aos Funcionários do Ba...",
+              "id_pedido": "1888270",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888270",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Comércio e serviços Quantidade de orgânicos exportada pelo Brasil, tanto em valor monetário quanto em toneladas, por unidade de federação, empresas exportadoras e compradores. No período de 2006 a 2014. Prezado (a), Venho por meio deste, solicitar informação sobre quantidade de orgânicos exportados, tanto em valor monetário quanto em toneladas,...",
+              "id_pedido": "1889457",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889457",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4384,8 +4404,18 @@
             }
           ],
           "examples": [
-            "Serviços Públicos Contrato 0000000006/2013-DRF-PONTA GROSSA - PR Prezado (a) Sou aprovado no último concurso público para o cargo de Assistente Técnico-Administrativo do Ministério da Fazenda realizado no ano de 2014, conforme Edital ESAF nº 05, de 28/01/2014, publicado no Diário Oficial da União de 29/01/2014 e com resultado homologado em 02/06/2014. Eu...",
-            "Outros em Economia e Finanças Informações sobre como requerer CNPJ para um condominio residencial? Quero ter informações de como é os trâmites e documentos necessários para inscrever o condominio do edificio de apartamentos residenciais no CNPJ? Para que eu abra uma conta bancária par a pessoa jurídica do condôminio..."
+            {
+              "text_excerpt": "Serviços Públicos Contrato 0000000006/2013-DRF-PONTA GROSSA - PR Prezado (a) Sou aprovado no último concurso público para o cargo de Assistente Técnico-Administrativo do Ministério da Fazenda realizado no ano de 2014, conforme Edital ESAF nº 05, de 28/01/2014, publicado no Diário Oficial da União de 29/01/2014 e com resultado homologado em 02/06/2014. Eu...",
+              "id_pedido": "1889523",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889523",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156318&idAws=AnexosManifestacao/1889523/21825311-69ca-4b52-ba6d-910721e1fedf&fileName=16853004478201501-1.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças Informações sobre como requerer CNPJ para um condominio residencial? Quero ter informações de como é os trâmites e documentos necessários para inscrever o condominio do edificio de apartamentos residenciais no CNPJ? Para que eu abra uma conta bancária par a pessoa jurídica do condôminio...",
+              "id_pedido": "1889746",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889746",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1155113&idAws=AnexosManifestacao/1889746/60a2487d-5d4b-4329-86c0-f15c87ba0db0&fileName=16853004485201502.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -4411,8 +4441,18 @@
             }
           ],
           "examples": [
-            "Serviços Públicos Valor Total do Orçamento de cada Poder (Executivo, Legislativo e Judiciário) para 2015 Valor total dos orçamentos de cada um dos poderes para 2015 e respectivos percentuais sobre o PIB.",
-            "Outros em Economia e Finanças CARNE LEAO 2015 Sou dentista e a partir de 2015 tornou-se obrigatório o carnê leão. Já baixei a plataforma e alimentei os dados, porém estou com as seguintes dúvidas: 1) o código 4012-material escritório pode ser utilizado para gastos de materiais clinica (ex gastos com dental e protético), 2) Os cursos são dedutíveis em qual..."
+            {
+              "text_excerpt": "Serviços Públicos Valor Total do Orçamento de cada Poder (Executivo, Legislativo e Judiciário) para 2015 Valor total dos orçamentos de cada um dos poderes para 2015 e respectivos percentuais sobre o PIB.",
+              "id_pedido": "1888925",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888925",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças CARNE LEAO 2015 Sou dentista e a partir de 2015 tornou-se obrigatório o carnê leão. Já baixei a plataforma e alimentei os dados, porém estou com as seguintes dúvidas: 1) o código 4012-material escritório pode ser utilizado para gastos de materiais clinica (ex gastos com dental e protético), 2) Os cursos são dedutíveis em qual...",
+              "id_pedido": "1889203",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889203",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157705&idAws=AnexosManifestacao/1889203/adb7304d-4815-44a8-9877-791d5c2e7528&fileName=16853004466201578 - 1.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -4438,8 +4478,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças Informação sobre arrecadação de inss Presto serviços numa residência por intermédio de uma cooperativa em serviços de saúde. Soube do aumento que foi imposto aos cooperados, e gostaria de entender melhor, pq pelo que eu li, esse decreto diz no artigo 1º que esse aumento se deve a cooperadores que atendem empresas, por meio de...",
-            "Outros em Economia e Finanças concurso ATA 2014, candidatos da segunda chamada que já assumiram seus cargos, com suas respectivas lotações. gostaria de receber a lista com os candidatos convocados na segunda chamada (portaria nº164 de 29 de maio de 2015)do concurso de ATA DE 2014 que já assumiram seus postos, e suas respectivas lotações."
+            {
+              "text_excerpt": "Outros em Economia e Finanças Informação sobre arrecadação de inss Presto serviços numa residência por intermédio de uma cooperativa em serviços de saúde. Soube do aumento que foi imposto aos cooperados, e gostaria de entender melhor, pq pelo que eu li, esse decreto diz no artigo 1º que esse aumento se deve a cooperadores que atendem empresas, por meio de...",
+              "id_pedido": "1888664",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888664",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1155630&idAws=AnexosManifestacao/1888664/bbfe0de6-8233-4083-99c9-054c74e72690&fileName=16853004459201576.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças concurso ATA 2014, candidatos da segunda chamada que já assumiram seus cargos, com suas respectivas lotações. gostaria de receber a lista com os candidatos convocados na segunda chamada (portaria nº164 de 29 de maio de 2015)do concurso de ATA DE 2014 que já assumiram seus postos, e suas respectivas lotações.",
+              "id_pedido": "1888947",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888947",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1155869&idAws=AnexosManifestacao/1888947/ee4ce8af-f073-4f80-8036-f4ef0a2f612f&fileName=16853004464201589.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -4465,8 +4515,18 @@
             }
           ],
           "examples": [
-            "Proteção e Benefícios ao Trabalhador informação, sobre rescisão Boa noite, eu gostaria de uma informação urgente,pois pedi demissão de uma empresa a mais de meses onde fiquei apenas um dia, e não foi registrada a minha carteira apenas , pois como não gostei da empresa e como ainda estava sem assinar minha carteira pedi demissão no dia seguinte porém o rh...",
-            "Proteção e Benefícios ao Trabalhador NECESSITO DE DECLARAÇÃO DO BANCO DO BRASIL CONSTANDO O Nº DO MEU PASEP NECESSITO DE DECLARAÇÃO DO BANCO DO BRASIL CONSTANDO O Nº DO MEU PASEP PARA FINS DE APOSENTADORIA"
+            {
+              "text_excerpt": "Proteção e Benefícios ao Trabalhador informação, sobre rescisão Boa noite, eu gostaria de uma informação urgente,pois pedi demissão de uma empresa a mais de meses onde fiquei apenas um dia, e não foi registrada a minha carteira apenas , pois como não gostei da empresa e como ainda estava sem assinar minha carteira pedi demissão no dia seguinte porém o rh...",
+              "id_pedido": "1888583",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888583",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Proteção e Benefícios ao Trabalhador NECESSITO DE DECLARAÇÃO DO BANCO DO BRASIL CONSTANDO O Nº DO MEU PASEP NECESSITO DE DECLARAÇÃO DO BANCO DO BRASIL CONSTANDO O Nº DO MEU PASEP PARA FINS DE APOSENTADORIA",
+              "id_pedido": "1891517",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1891517",
+              "request_attachment_link": ""
+            }
           ]
         }
       ]
@@ -4508,8 +4568,18 @@
             }
           ],
           "examples": [
-            "Outros em Energia PETROBRAS DISTRIBUIDORA-QUANTITATIVOS Bom dia, peço o número de servidores que foram dispensados, seja por aposentadorias, demissões ou exonerações por pedido do servidor,no ano de 2014 e 2015, e quantas dessas vagas já foram repostas para o cargo técnico de operações no estado de Pernambuco na subsidiária petrobras distribuidora. Além d...",
-            "Outros em Energia Primeiros CPDs Petrobras - Computadores Prezado(a) senhor(a), Para fins de pesquisa acadêmica na área de História da tecnologia, solicitamos as seguintes informações sobre a criação de Centros de Processamento de Dados da Petrobras nos anos 1960: 1. Data e local (Centros Regionais) onde foram criados os primeiros CPDs (ou locais que tive..."
+            {
+              "text_excerpt": "Outros em Energia PETROBRAS DISTRIBUIDORA-QUANTITATIVOS Bom dia, peço o número de servidores que foram dispensados, seja por aposentadorias, demissões ou exonerações por pedido do servidor,no ano de 2014 e 2015, e quantas dessas vagas já foram repostas para o cargo técnico de operações no estado de Pernambuco na subsidiária petrobras distribuidora. Além d...",
+              "id_pedido": "1887965",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1887965",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Energia Primeiros CPDs Petrobras - Computadores Prezado(a) senhor(a), Para fins de pesquisa acadêmica na área de História da tecnologia, solicitamos as seguintes informações sobre a criação de Centros de Processamento de Dados da Petrobras nos anos 1960: 1. Data e local (Centros Regionais) onde foram criados os primeiros CPDs (ou locais que tive...",
+              "id_pedido": "1891604",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1891604",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4535,8 +4605,18 @@
             }
           ],
           "examples": [
-            "Outros em Energia Acesso ao contrato entre Petrobras Distribuidora S.A. e Telsan Engenharia e Serviços LTDA Solicito a descrição detalhada o objeto a ser contratado, a descrição detalhada dos serviços a serem executados, sua frequência e periodicidade, características e quantitativos previstos de pessoal, materiais e equipamentos a serem fornecidos e util...",
-            "Outros em Energia Acesso ao contrato entre a Petrobras Distribuidora S.A. e Finkler Engenharia LTDA Solicito a descrição detalhada o objeto a ser contratado, a descrição detalhada dos serviços a serem executados, sua frequência e periodicidade, características e quantitativos previstos de pessoal, materiais e equipamentos a serem fornecidos e utilizados,..."
+            {
+              "text_excerpt": "Outros em Energia Acesso ao contrato entre Petrobras Distribuidora S.A. e Telsan Engenharia e Serviços LTDA Solicito a descrição detalhada o objeto a ser contratado, a descrição detalhada dos serviços a serem executados, sua frequência e periodicidade, características e quantitativos previstos de pessoal, materiais e equipamentos a serem fornecidos e util...",
+              "id_pedido": "1913295",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1913295",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1159104&idAws=AnexosManifestacao/1913295/b3760952-21b1-4e30-80fa-30a8cd6bc111&fileName=SIC 5122_CONTRATO 4600173536.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Energia Acesso ao contrato entre a Petrobras Distribuidora S.A. e Finkler Engenharia LTDA Solicito a descrição detalhada o objeto a ser contratado, a descrição detalhada dos serviços a serem executados, sua frequência e periodicidade, características e quantitativos previstos de pessoal, materiais e equipamentos a serem fornecidos e utilizados,...",
+              "id_pedido": "1913321",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1913321",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4562,8 +4642,18 @@
             }
           ],
           "examples": [
-            "Outros em Energia Paradas programadas no E&P Solicito listagem com a relação, mês a mês, das paradas programadas realizadas nas Unidades Estacionárias de Produção nos anos de 2012, 2013, 2014 e no primeiro semestre de 2015. Att.",
-            "Outros em Energia Cadastro do SIREF Minha contadora fez o cadastro do SIREF no dia 31/07/2015 e o mesmo ainda não foi avaliado. Gostaria de saber o porquê? A empresa é: Bordout Soluções Gráficas Ltda Escritório de contabilidade: Auri-Lex Organização e Assessoria Contábil Ltda. e.mail: aurilex@aurilex.com.br Tel: (21) 2221-0490 Responsável: Maria Graça Agu..."
+            {
+              "text_excerpt": "Outros em Energia Paradas programadas no E&P Solicito listagem com a relação, mês a mês, das paradas programadas realizadas nas Unidades Estacionárias de Produção nos anos de 2012, 2013, 2014 e no primeiro semestre de 2015. Att.",
+              "id_pedido": "1923960",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1923960",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1161195&idAws=AnexosManifestacao/1923960/b32f4d67-9b32-405e-bca3-42a474b133a7&fileName=Paradas UEPs_LAI_2012 e 2013.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Energia Cadastro do SIREF Minha contadora fez o cadastro do SIREF no dia 31/07/2015 e o mesmo ainda não foi avaliado. Gostaria de saber o porquê? A empresa é: Bordout Soluções Gráficas Ltda Escritório de contabilidade: Auri-Lex Organização e Assessoria Contábil Ltda. e.mail: aurilex@aurilex.com.br Tel: (21) 2221-0490 Responsável: Maria Graça Agu...",
+              "id_pedido": "1933329",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1933329",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4589,8 +4679,18 @@
             }
           ],
           "examples": [
-            "Outros em Energia DEXPRO - Plano diretor computador 1975 Para subsidiar pesquisa acadêmica na área de História da tecnologia, solicito cópia do(s) seguinte(s) documento(s) sob guarda da Petrobras: - relatório (Plano Diretor) ou documento de pedido de aquisição de computador (conforme anexo) para o Departamento de Exploração e Produção (DEXPRO). O pedido f...",
-            "Outros em Energia Plano diretor CPD Dexpro - Petrobras 1974 ou 1975 Prezado(a) senhor(a), Para subsidiar pesquisa acadêmica na área de História da tecnologia, solicito cópia do(s) seguinte(s) documento(s) sob guarda da Petrobras: - relatório (Plano Diretor) ou documento de pedido de aquisição de computador (conforme anexo) para o Departamento de Exploraçã..."
+            {
+              "text_excerpt": "Outros em Energia DEXPRO - Plano diretor computador 1975 Para subsidiar pesquisa acadêmica na área de História da tecnologia, solicito cópia do(s) seguinte(s) documento(s) sob guarda da Petrobras: - relatório (Plano Diretor) ou documento de pedido de aquisição de computador (conforme anexo) para o Departamento de Exploração e Produção (DEXPRO). O pedido f...",
+              "id_pedido": "1891653",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1891653",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855208&idAws=AnexosManifestacao/1891653/bad55f95-304d-47f3-9123-e041cdb34320&fileName=resolução33.jpg&idTipoAnexo=1&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Energia Plano diretor CPD Dexpro - Petrobras 1974 ou 1975 Prezado(a) senhor(a), Para subsidiar pesquisa acadêmica na área de História da tecnologia, solicito cópia do(s) seguinte(s) documento(s) sob guarda da Petrobras: - relatório (Plano Diretor) ou documento de pedido de aquisição de computador (conforme anexo) para o Departamento de Exploraçã...",
+              "id_pedido": "1891659",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1891659",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855209&idAws=AnexosManifestacao/1891659/c715e856-db98-47e1-b040-9722803d5edb&fileName=resolução33.jpg&idTipoAnexo=1&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -4616,8 +4716,18 @@
             }
           ],
           "examples": [
-            "Outros em Energia QUADRO DETALHADO DE EMPREGADOS NA DIRETORIA DA REDE DE POSTOS E SERVIÇOS BR DISTRIBUIDORA SOLICITO UM QUADRO DEMONSTRATIVO DE EMPREGADOS NA DIRETORIA DA REDE DE POSTOS E SERVIÇOS BR DISTRIBUIDORA. EXEMPLO. SE TIVER 600 EMPREGADOS, QUAIS OS CARGOS DE CADA UM. DIRETORIA DA REDE DE POSTOS E SERVIÇOS - total de 600 TEC DE ADM E CONTROLE JUNI...",
-            "Outros em Energia Informação - número de funcionários (concursados) da Petrobras em Pernambuco O concurso da Petrobras (de 2014.2) ainda está em validade e aprovou 16 técnicos em segurança do trabalho (um para vaga imediata e quinze pra cadastro, sendo quatro destes para cotas), para o polo Pernambuco. Gostaria de saber qual o número de funcionários concu..."
+            {
+              "text_excerpt": "Outros em Energia QUADRO DETALHADO DE EMPREGADOS NA DIRETORIA DA REDE DE POSTOS E SERVIÇOS BR DISTRIBUIDORA SOLICITO UM QUADRO DEMONSTRATIVO DE EMPREGADOS NA DIRETORIA DA REDE DE POSTOS E SERVIÇOS BR DISTRIBUIDORA. EXEMPLO. SE TIVER 600 EMPREGADOS, QUAIS OS CARGOS DE CADA UM. DIRETORIA DA REDE DE POSTOS E SERVIÇOS - total de 600 TEC DE ADM E CONTROLE JUNI...",
+              "id_pedido": "1888028",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888028",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Energia Informação - número de funcionários (concursados) da Petrobras em Pernambuco O concurso da Petrobras (de 2014.2) ainda está em validade e aprovou 16 técnicos em segurança do trabalho (um para vaga imediata e quinze pra cadastro, sendo quatro destes para cotas), para o polo Pernambuco. Gostaria de saber qual o número de funcionários concu...",
+              "id_pedido": "1892702",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1892702",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855241&idAws=AnexosManifestacao/1892702/d2de7ad5-d3b0-491f-b38d-17124b67374b&fileName=orientacao_ordem_convocatoria_cadastros.pdf&idTipoAnexo=1&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -4643,8 +4753,18 @@
             }
           ],
           "examples": [
-            "Outros em Energia gastos com patrocínios esportivos Por gentileza, Por meio da Lei de Acesso à Informação, venho requerer os seguintes dados: - Qual foi o gasto total em investimentos, eventos e patrocínios esportivos nos anos de 2012, 2013 e 2014? - Qual é o gasto estimado em investimentos, eventos e patrocínios esportivos para todo o ano de 2015? - Nos...",
-            "Outros em Energia TRANSPETRO-QUANTITATIVO Bom dia, por gentileza, gostaria que me fosse fornecido o número de funcionários da empresa Transpetro( subsidiária da Petrobras) no cargo de técnico de operações de cado estado seguinte( por favor, não é o somatório de todos os estados e, sim a quantidade específica de funcionários em cada estado e polos): estado..."
+            {
+              "text_excerpt": "Outros em Energia gastos com patrocínios esportivos Por gentileza, Por meio da Lei de Acesso à Informação, venho requerer os seguintes dados: - Qual foi o gasto total em investimentos, eventos e patrocínios esportivos nos anos de 2012, 2013 e 2014? - Qual é o gasto estimado em investimentos, eventos e patrocínios esportivos para todo o ano de 2015? - Nos...",
+              "id_pedido": "1901747",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1901747",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Energia TRANSPETRO-QUANTITATIVO Bom dia, por gentileza, gostaria que me fosse fornecido o número de funcionários da empresa Transpetro( subsidiária da Petrobras) no cargo de técnico de operações de cado estado seguinte( por favor, não é o somatório de todos os estados e, sim a quantidade específica de funcionários em cada estado e polos): estado...",
+              "id_pedido": "1904508",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1904508",
+              "request_attachment_link": ""
+            }
           ]
         }
       ]
@@ -4686,8 +4806,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças órgão que incluiu meu nome no cadin fui informado que meu nome está incluso nesse sistema de restrições, porém desconheço dividas não paga em instituições financeiras públicas ou privadas, e para poder procurar essa entidade, se faz necessário saber que procedeu com tal informação, haja visto que estou financiando um imóvel p...",
-            "Outros em Economia e Finanças fgts quero saber se existe algum residuo no meu nome para sacar,obrigada"
+            {
+              "text_excerpt": "Outros em Economia e Finanças órgão que incluiu meu nome no cadin fui informado que meu nome está incluso nesse sistema de restrições, porém desconheço dividas não paga em instituições financeiras públicas ou privadas, e para poder procurar essa entidade, se faz necessário saber que procedeu com tal informação, haja visto que estou financiando um imóvel p...",
+              "id_pedido": "1887976",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1887976",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças fgts quero saber se existe algum residuo no meu nome para sacar,obrigada",
+              "id_pedido": "1888282",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888282",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4713,8 +4843,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças Previsão da abertura de agências. Prezados, Venho por meio desta solicitar a seguinte informação: Existe previsão para abertura de novas agências, no Polo de Itacoatiara – AM, para o período de 2015 - 2016? Caso haja de alguma agência que está para abrir qual a data prevista para sua inauguração? Atenciosamente,",
-            "Outros em Economia e Finanças Número de exonerações. Prezados, Venho por meio desta solicitar a seguinte informação: Qual o número de exonerações que ocorreram nas agências do Polo de Itacoatiara – AM entre o período de Junho de 2014 a Junho de 2015? Atenciosamente,"
+            {
+              "text_excerpt": "Outros em Economia e Finanças Previsão da abertura de agências. Prezados, Venho por meio desta solicitar a seguinte informação: Existe previsão para abertura de novas agências, no Polo de Itacoatiara – AM, para o período de 2015 - 2016? Caso haja de alguma agência que está para abrir qual a data prevista para sua inauguração? Atenciosamente,",
+              "id_pedido": "1888276",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888276",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças Número de exonerações. Prezados, Venho por meio desta solicitar a seguinte informação: Qual o número de exonerações que ocorreram nas agências do Polo de Itacoatiara – AM entre o período de Junho de 2014 a Junho de 2015? Atenciosamente,",
+              "id_pedido": "1888286",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888286",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4740,8 +4880,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças Desligamento de funcionários Gostaria de obter informações sobre a quantidade de desligamento de funcionários (exonerações, demissões, falecimentos, aposentadorias) de 26/04/2015 até a presente data (08/07/2015) nas cidades pertencentes ao pólo de Balneário Camboriú: Balneário Camboriú, Camboriú, Itajaí, Itapema, Navegantes,...",
-            "Outros em Economia e Finanças Quadro de Pessoal Gostaria de saber quantos empregados saíram da Caixa Econômica Federal por aposentadoria, morte, demissão e exoneração no período de Junho/2014 até Julho/2015 nas seguintes cidades Arroio Grande, Bagé, Camaquã, Canguçu, Dom Pedrito, Jaguarão, Pelotas, Pinheiro Machado, Rio Grande, Santa Vitória do Palmar, Sã..."
+            {
+              "text_excerpt": "Outros em Economia e Finanças Desligamento de funcionários Gostaria de obter informações sobre a quantidade de desligamento de funcionários (exonerações, demissões, falecimentos, aposentadorias) de 26/04/2015 até a presente data (08/07/2015) nas cidades pertencentes ao pólo de Balneário Camboriú: Balneário Camboriú, Camboriú, Itajaí, Itapema, Navegantes,...",
+              "id_pedido": "1897630",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1897630",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças Quadro de Pessoal Gostaria de saber quantos empregados saíram da Caixa Econômica Federal por aposentadoria, morte, demissão e exoneração no período de Junho/2014 até Julho/2015 nas seguintes cidades Arroio Grande, Bagé, Camaquã, Canguçu, Dom Pedrito, Jaguarão, Pelotas, Pinheiro Machado, Rio Grande, Santa Vitória do Palmar, Sã...",
+              "id_pedido": "1897827",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1897827",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4767,8 +4917,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças Política de Integridade Para avaliar as ações adotadas pela empresa no que se refere a gestão da integridade, com objetivo de dar segurança para investidores e cidadãos em geral, gostaria de saber as seguintes questões: 1 - Existe um programa de compliance/integridade formalmente instituído na empresa? 2 - A alta administraçã...",
-            "Outros em Economia e Finanças Quantitativo de cargos vagos TBN Campinas e Região CEF Prezados, Solicito informação acerca do quantitativo de cargos vagos totais e por agência de técnico bancário novo (TBN), no polo de Campinas e Região, desde a data de homologação do último concurso nacional da Caixa Econômica Federal em 17.06.2014 (DOU - SEÇÃO 3 - n. 144..."
+            {
+              "text_excerpt": "Outros em Economia e Finanças Política de Integridade Para avaliar as ações adotadas pela empresa no que se refere a gestão da integridade, com objetivo de dar segurança para investidores e cidadãos em geral, gostaria de saber as seguintes questões: 1 - Existe um programa de compliance/integridade formalmente instituído na empresa? 2 - A alta administraçã...",
+              "id_pedido": "1890771",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890771",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156578&idAws=AnexosManifestacao/1890771/84723612-de9c-42ea-8da8-3f4b10c0325c&fileName=Kleberson.doc&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças Quantitativo de cargos vagos TBN Campinas e Região CEF Prezados, Solicito informação acerca do quantitativo de cargos vagos totais e por agência de técnico bancário novo (TBN), no polo de Campinas e Região, desde a data de homologação do último concurso nacional da Caixa Econômica Federal em 17.06.2014 (DOU - SEÇÃO 3 - n. 144...",
+              "id_pedido": "1890830",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890830",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4794,8 +4954,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças Atualização de endereço fgts Olá, estou residindo temporariamente no exterior e não posso ir pessoalmente a um banco para solicitar a senha de meu Cartão do Cidadão, motivo pelo qual gostaria de saber como obtê-la por meio eletrônico. Não consigo realizar a atualização de endereço para extrato de fgts, para a casa de minha fa...",
-            "Outros em Economia e Finanças SAQUE NO CAIXA Minha solicitação, é saber se procede a seguinte situação que me foi colocada pela Caixa Econômica Federal. Meu cartão foi inutilizado acidentalmente. Estava em outra cidade e estava precisando sacar dinheiro. Fui a uma agência da caixa, com todos os dados do meu cartão, devidamente identificado com minha ident..."
+            {
+              "text_excerpt": "Outros em Economia e Finanças Atualização de endereço fgts Olá, estou residindo temporariamente no exterior e não posso ir pessoalmente a um banco para solicitar a senha de meu Cartão do Cidadão, motivo pelo qual gostaria de saber como obtê-la por meio eletrônico. Não consigo realizar a atualização de endereço para extrato de fgts, para a casa de minha fa...",
+              "id_pedido": "1893586",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1893586",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças SAQUE NO CAIXA Minha solicitação, é saber se procede a seguinte situação que me foi colocada pela Caixa Econômica Federal. Meu cartão foi inutilizado acidentalmente. Estava em outra cidade e estava precisando sacar dinheiro. Fui a uma agência da caixa, com todos os dados do meu cartão, devidamente identificado com minha ident...",
+              "id_pedido": "1894021",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1894021",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4821,8 +4991,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças FOLHA DE PAGAMENTO - ESTRUTURA DE REMUNERAÇÃO Gostaria da informação sobre quantos funcionários CAIXA estão enquadrados em cada uma das referências salariais (201 até 248) da TABELA DE ESTRUTURA SALARIAL UNIFICADA 2008 - ESU - PCS/98 (CARREIRA ADMINISTRATIVA) e da TABELA DA NOVA ESTRUTURA SALARIAL - NES/2013 (CARREIRA PROFISS...",
-            "Outros em Economia e Finanças FOLHA DE PAGAMENTO - ESTRUTURA DE REMUNERAÇÃO Gostaria da informação sobre quantos funcionários CAIXA estão enquadrados em cada uma das referências salariais da tabela CARGOS EFETIVOS 89 E 98, E NES2006, bem como quantos destes funcionários ocupam alguma função gratificada de acordo com a TABELA DE REMUNERAÇÃO DE FUNÇÃO GRATI..."
+            {
+              "text_excerpt": "Outros em Economia e Finanças FOLHA DE PAGAMENTO - ESTRUTURA DE REMUNERAÇÃO Gostaria da informação sobre quantos funcionários CAIXA estão enquadrados em cada uma das referências salariais (201 até 248) da TABELA DE ESTRUTURA SALARIAL UNIFICADA 2008 - ESU - PCS/98 (CARREIRA ADMINISTRATIVA) e da TABELA DA NOVA ESTRUTURA SALARIAL - NES/2013 (CARREIRA PROFISS...",
+              "id_pedido": "1888991",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888991",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças FOLHA DE PAGAMENTO - ESTRUTURA DE REMUNERAÇÃO Gostaria da informação sobre quantos funcionários CAIXA estão enquadrados em cada uma das referências salariais da tabela CARGOS EFETIVOS 89 E 98, E NES2006, bem como quantos destes funcionários ocupam alguma função gratificada de acordo com a TABELA DE REMUNERAÇÃO DE FUNÇÃO GRATI...",
+              "id_pedido": "1889112",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889112",
+              "request_attachment_link": ""
+            }
           ]
         }
       ]
@@ -4864,8 +5044,18 @@
             }
           ],
           "examples": [
-            "Outros em Previdência aposentadoria pedido de aposentadoria",
-            "Outros em Previdência Pensão Gostaria de saber se o INSS mandará carta para os pensionistas que tiverem direito a revisão da pensão por causa da medida provisória anunciada pelo governo no ano passado. Obrigada"
+            {
+              "text_excerpt": "Outros em Previdência aposentadoria pedido de aposentadoria",
+              "id_pedido": "1888056",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888056",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Previdência Pensão Gostaria de saber se o INSS mandará carta para os pensionistas que tiverem direito a revisão da pensão por causa da medida provisória anunciada pelo governo no ano passado. Obrigada",
+              "id_pedido": "1888322",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888322",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4891,8 +5081,18 @@
             }
           ],
           "examples": [
-            "Outros em Previdência Extrato do Tempo de Contribuição CNIS Bom Dia quero receber o extrato de contribuição na previdência social o CNIS. Obrigada!",
-            "Outros em Previdência Acesso as CATs emitidas entre 2010 e 2015 em Joinville/SC Gostaria de obter acesso a todas as CATs emitidas entre 2010 e 2015 no município de Joinville/SC."
+            {
+              "text_excerpt": "Outros em Previdência Extrato do Tempo de Contribuição CNIS Bom Dia quero receber o extrato de contribuição na previdência social o CNIS. Obrigada!",
+              "id_pedido": "1889768",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889768",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Previdência Acesso as CATs emitidas entre 2010 e 2015 em Joinville/SC Gostaria de obter acesso a todas as CATs emitidas entre 2010 e 2015 no município de Joinville/SC.",
+              "id_pedido": "1890340",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890340",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4918,8 +5118,18 @@
             }
           ],
           "examples": [
-            "Outros em Previdência CNIS Solicito o CNIS para que seja apresentado junto a faculdade de ensino superior, conforme solicitada pela mesma.",
-            "Outros em Previdência solicitação de memória de calculo Prezados senhores, venho tentando insistentemente a emissão da carta de concessão/memoria de calculo dos benefícios recebidos de 11/10/2014 até 06/07/2015 que será o ultimo beneficio a receber, e só recebo a informação que os dados não conferem. Esse documento só será possível sua impressão a partir..."
+            {
+              "text_excerpt": "Outros em Previdência CNIS Solicito o CNIS para que seja apresentado junto a faculdade de ensino superior, conforme solicitada pela mesma.",
+              "id_pedido": "1889249",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889249",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Previdência solicitação de memória de calculo Prezados senhores, venho tentando insistentemente a emissão da carta de concessão/memoria de calculo dos benefícios recebidos de 11/10/2014 até 06/07/2015 que será o ultimo beneficio a receber, e só recebo a informação que os dados não conferem. Esse documento só será possível sua impressão a partir...",
+              "id_pedido": "1890814",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890814",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4945,8 +5155,18 @@
             }
           ],
           "examples": [
-            "Outros em Previdência PROCESSOS ADMINISTRATIVOS DISCIPLINARES EM FACE DE PERITO-MEDICO PREVIDENCIARIO Solicito informações sobre todos os processos instaurados de 2013 até a data presente em desfavor dos integrantes da carreira de Perito-Medico do INSS, contendo: 1) n° do processo, 2) relação de servidores envolvidos, 3) fatos apurados, 4) decisão da auto...",
-            "Outros em Previdência Processos disciplinares - Perito Medico Solicito informações sobre todos os processos disciplinares (inclusive sindicâncias) instaurados de 2013 até a data presente em desfavor dos integrantes da carreira de Perito-Medico do INSS, contendo: 1) n° do processo, 2) relação de servidores envolvidos, 3) fatos apurados, 4) decisão da autor..."
+            {
+              "text_excerpt": "Outros em Previdência PROCESSOS ADMINISTRATIVOS DISCIPLINARES EM FACE DE PERITO-MEDICO PREVIDENCIARIO Solicito informações sobre todos os processos instaurados de 2013 até a data presente em desfavor dos integrantes da carreira de Perito-Medico do INSS, contendo: 1) n° do processo, 2) relação de servidores envolvidos, 3) fatos apurados, 4) decisão da auto...",
+              "id_pedido": "1895511",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1895511",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Previdência Processos disciplinares - Perito Medico Solicito informações sobre todos os processos disciplinares (inclusive sindicâncias) instaurados de 2013 até a data presente em desfavor dos integrantes da carreira de Perito-Medico do INSS, contendo: 1) n° do processo, 2) relação de servidores envolvidos, 3) fatos apurados, 4) decisão da autor...",
+              "id_pedido": "1897196",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1897196",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4972,8 +5192,18 @@
             }
           ],
           "examples": [
-            "Outros em Previdência Reembolso do pagamento de inss Gostaria de saber como faço para ser reembolda pois pagava o inss e o sebrae ao mesmo tempo e durante 5 meses paguei o valor de R $86,68 DESDE JÁ AGRADECO",
-            "Outros em Previdência Aposentadoria medida provisória 85/95 - sistema Tenho um agendamento para 14 de julho agora que aguardei para entrar com pedido de aposentadoria, caso a nova medida provisória - no meu caso, por ser mulher, 85 - fosse aprovada e foi.A minha dúvida é que liguei em uma agência da previdência de Campinas, onde mora, e conforme previa, o..."
+            {
+              "text_excerpt": "Outros em Previdência Reembolso do pagamento de inss Gostaria de saber como faço para ser reembolda pois pagava o inss e o sebrae ao mesmo tempo e durante 5 meses paguei o valor de R $86,68 DESDE JÁ AGRADECO",
+              "id_pedido": "1889274",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889274",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Previdência Aposentadoria medida provisória 85/95 - sistema Tenho um agendamento para 14 de julho agora que aguardei para entrar com pedido de aposentadoria, caso a nova medida provisória - no meu caso, por ser mulher, 85 - fosse aprovada e foi.A minha dúvida é que liguei em uma agência da previdência de Campinas, onde mora, e conforme previa, o...",
+              "id_pedido": "1889449",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889449",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -4999,8 +5229,18 @@
             }
           ],
           "examples": [
-            "Outros em Previdência Falta de acesso ao processo de concessão do benefício, cálculo, extrato e falta de informação a respeito do atraso de pagamento Bom dia, Faço uma reclamação e solicitação de acesso à informação dirigida ao INSS, mais especificamente à APSAISP – Agência da Previdência Social de Atendimento Acordos Internacionais – São Paulo Código: 21...",
-            "Outros em Previdência calculo de multa por recolhimento de inss de empregado domestico Prezados(as) Senhores(as) Fui surpreendido com a mudança da data de recolhimento da contribuição de empregado doméstico para o INSS, fato que gerou pagamento de multa. Consultando o INSS fui orientado a procurar a Receita Federal que me orientaria de como proceder. Assi..."
+            {
+              "text_excerpt": "Outros em Previdência Falta de acesso ao processo de concessão do benefício, cálculo, extrato e falta de informação a respeito do atraso de pagamento Bom dia, Faço uma reclamação e solicitação de acesso à informação dirigida ao INSS, mais especificamente à APSAISP – Agência da Previdência Social de Atendimento Acordos Internacionais – São Paulo Código: 21...",
+              "id_pedido": "1889366",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889366",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855113&idAws=AnexosManifestacao/1889366/870441be-ad51-4de7-ae3e-cb18a0fb6b8b&fileName=Pensao 2014.pdf&idTipoAnexo=1&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Previdência calculo de multa por recolhimento de inss de empregado domestico Prezados(as) Senhores(as) Fui surpreendido com a mudança da data de recolhimento da contribuição de empregado doméstico para o INSS, fato que gerou pagamento de multa. Consultando o INSS fui orientado a procurar a Receita Federal que me orientaria de como proceder. Assi...",
+              "id_pedido": "1897325",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1897325",
+              "request_attachment_link": ""
+            }
           ]
         }
       ]
@@ -5042,8 +5282,18 @@
             }
           ],
           "examples": [
-            "Medicamentos e Aparelhos RECLAMAÇÃO. Senhores, os medicamentos que versam sobre o cancer de mama, estão disponiveis de forma gratuita? como obter?",
-            "Outros em Saúde ACESSO A INFORMAÇÃO DESEJO OBTER INFORMAÇÕES REFERENTE A MATERNIDADE NOSSA SENHORA DO ROSÁRIO. POIS A MESMA FOI FECHADA EM TODO SEU ATENDIMENTO(CNES 2613522)SE TORNANDO UNIDADE INTEGRADA DE SAÚDE DA FAMÍLIA,TAIS UNIDADES POSSUI CNES DIFERENTE ALEM DISSO TEM OS MATERIAIS DE URGÊNCIA QUE SE USAVA NO BLOCO CIRÚRGICO QUE NUNCA FUNCIONOU. E EST..."
+            {
+              "text_excerpt": "Medicamentos e Aparelhos RECLAMAÇÃO. Senhores, os medicamentos que versam sobre o cancer de mama, estão disponiveis de forma gratuita? como obter?",
+              "id_pedido": "1888970",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888970",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Saúde ACESSO A INFORMAÇÃO DESEJO OBTER INFORMAÇÕES REFERENTE A MATERNIDADE NOSSA SENHORA DO ROSÁRIO. POIS A MESMA FOI FECHADA EM TODO SEU ATENDIMENTO(CNES 2613522)SE TORNANDO UNIDADE INTEGRADA DE SAÚDE DA FAMÍLIA,TAIS UNIDADES POSSUI CNES DIFERENTE ALEM DISSO TEM OS MATERIAIS DE URGÊNCIA QUE SE USAVA NO BLOCO CIRÚRGICO QUE NUNCA FUNCIONOU. E EST...",
+              "id_pedido": "1889209",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889209",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1158508&idAws=AnexosManifestacao/1889209/5f9b2778-15ad-4853-894c-bdbc5c9f780c&fileName=PROTOCOLO - 00075000580201556 - FICHA_REDUZIDA_CNES_2613522 HOSPITAL E MATERNIDADE M N S ROSARIO.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5069,8 +5319,18 @@
             }
           ],
           "examples": [
-            "Outros em Saúde Estatística de casos de Meningite B na região do ABC paulista - 2013 a 2015 Gostaria de solicitar a estatística de casos de Meningite B na região do ABC Paulista (São Bernardo/São Caetano e Santo André), no período de 2013 a 2015.",
-            "Outros em Saúde Informação sobre as regras atuais para inclusão em lista de espera de transplante hepático para portadores de PAF divulgadas pelo Sistema Nacional de Transplantes (SNT) Prezados, Solicitamos ao Sistema Nacional de Transplantes (SNT) / Ministério da Saúde: 1) o número da portaria ou equivalente que publica os critérios atuais para inclusão..."
+            {
+              "text_excerpt": "Outros em Saúde Estatística de casos de Meningite B na região do ABC paulista - 2013 a 2015 Gostaria de solicitar a estatística de casos de Meningite B na região do ABC Paulista (São Bernardo/São Caetano e Santo André), no período de 2013 a 2015.",
+              "id_pedido": "1888542",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888542",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156781&idAws=AnexosManifestacao/1888542/61e674ee-594f-4c05-b845-bd0f901eed5a&fileName=Dados de DM Sorogrupo B no Municipio de SP.docx&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Saúde Informação sobre as regras atuais para inclusão em lista de espera de transplante hepático para portadores de PAF divulgadas pelo Sistema Nacional de Transplantes (SNT) Prezados, Solicitamos ao Sistema Nacional de Transplantes (SNT) / Ministério da Saúde: 1) o número da portaria ou equivalente que publica os critérios atuais para inclusão...",
+              "id_pedido": "1888682",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888682",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157306&idAws=AnexosManifestacao/1888682/56e6d7f4-c7d4-4aeb-8a9d-8b7cc3f928a0&fileName=PROTOCOLO -25820001955201546 - Portaria 2600.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5096,8 +5356,18 @@
             }
           ],
           "examples": [
-            "Outros em Saúde Dados brutos sobre Doenças Transmitidas por Alimentos Sou doutoranda em Nutrição pela Universidade de Brasília e gostaria de ter acesso ao banco de dados (bruto) sobre Doenças Transmitidas por Alimentos para fins de pesquisa. Se possível, preciso de informações como número de atendimentos, mortes, procedimento de saúde para diagnóstico, al...",
-            "Outros em Saúde DYTZ INFORMÁTICA Peço que me informe quanto o órgão já pagou para a empresa Dytzdata Comercio Servicos e Sistemas Ltda, CNPJ 24.914.376/0001-70, bem como quando isso ocorreu, por qual serviço a empresa foi contratada e quais as pessoas que usufruiram do serviço."
+            {
+              "text_excerpt": "Outros em Saúde Dados brutos sobre Doenças Transmitidas por Alimentos Sou doutoranda em Nutrição pela Universidade de Brasília e gostaria de ter acesso ao banco de dados (bruto) sobre Doenças Transmitidas por Alimentos para fins de pesquisa. Se possível, preciso de informações como número de atendimentos, mortes, procedimento de saúde para diagnóstico, al...",
+              "id_pedido": "1892058",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1892058",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157797&idAws=AnexosManifestacao/1892058/beb93301-2e85-40ee-9b40-10e8885eb0ef&fileName=Doenças Transmitidas por Alimentos.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Saúde DYTZ INFORMÁTICA Peço que me informe quanto o órgão já pagou para a empresa Dytzdata Comercio Servicos e Sistemas Ltda, CNPJ 24.914.376/0001-70, bem como quando isso ocorreu, por qual serviço a empresa foi contratada e quais as pessoas que usufruiram do serviço.",
+              "id_pedido": "1894772",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1894772",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5123,8 +5393,18 @@
             }
           ],
           "examples": [
-            "Defesa e vigilância sanitária incidencia de tuberculose logradouro dos casos de tuberculose nos municípios de Recife, Rio de Janeiro e Porto Alegre no período de 2008 à 2012. Sem identificação de pacientes.",
-            "Atendimento Básico lista de médicos na UBS Guarani Devido a constante falta de médicos e enfermeiros no AMA Vila Guarani localizada na R Terezinha, 123, São Paulo, SP, Solicito a lista de enfermeiras e médicos que trabalham no local e suas referentes escalas de trabalho. Obrigada."
+            {
+              "text_excerpt": "Defesa e vigilância sanitária incidencia de tuberculose logradouro dos casos de tuberculose nos municípios de Recife, Rio de Janeiro e Porto Alegre no período de 2008 à 2012. Sem identificação de pacientes.",
+              "id_pedido": "1894207",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1894207",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157582&idAws=AnexosManifestacao/1894207/ebfaa9f8-bc8a-4094-ab94-a2e1f854fc7f&fileName=Resposta à Demanda 23480010483201595.docx&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Atendimento Básico lista de médicos na UBS Guarani Devido a constante falta de médicos e enfermeiros no AMA Vila Guarani localizada na R Terezinha, 123, São Paulo, SP, Solicito a lista de enfermeiras e médicos que trabalham no local e suas referentes escalas de trabalho. Obrigada.",
+              "id_pedido": "2008658",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/2008658",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5150,8 +5430,18 @@
             }
           ],
           "examples": [
-            "Atendimento Básico Informação sobre o número de Agentes Comunitários de Saúde que Navegantes informa ao Ministério da Saúde Gostaria da informação de quantos Agentes Comunitários de Saúde, o município de Navegantes/SC informa ao Ministério da Saúde, que possui em seu quadro, para a obtenção de recurso ao pagamento dos salários destes servidores públicos",
-            "Outros em Saúde LIBERAÇÃO DE RECURSOS PARA CONSTRUÇÃO DA UPA/JAPERI/RJ Prezados, há anos a construção da UPA de Japeri no Estado do Rio de Janeiro não é concluída. A última desculpa do prefeito é a de que o governo federal só fez a transferência do recurso ao município em junho, após votação do orçamento da União em abril e sua liberação apenas em 25 de m..."
+            {
+              "text_excerpt": "Atendimento Básico Informação sobre o número de Agentes Comunitários de Saúde que Navegantes informa ao Ministério da Saúde Gostaria da informação de quantos Agentes Comunitários de Saúde, o município de Navegantes/SC informa ao Ministério da Saúde, que possui em seu quadro, para a obtenção de recurso ao pagamento dos salários destes servidores públicos",
+              "id_pedido": "1888225",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888225",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Saúde LIBERAÇÃO DE RECURSOS PARA CONSTRUÇÃO DA UPA/JAPERI/RJ Prezados, há anos a construção da UPA de Japeri no Estado do Rio de Janeiro não é concluída. A última desculpa do prefeito é a de que o governo federal só fez a transferência do recurso ao município em junho, após votação do orçamento da União em abril e sua liberação apenas em 25 de m...",
+              "id_pedido": "1888945",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888945",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156810&idAws=AnexosManifestacao/1888945/8f9e4e73-1b52-41ae-9e8f-8faf995948cf&fileName=Resposta à Demanda 25820001957201535_ Nota Técnica 238.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5177,8 +5467,18 @@
             }
           ],
           "examples": [
-            "Outros em Saúde Dúvida - SGTES - Secretaria de Gestão do Trabalho e da Educação na Saúde Prezados, SGTES - Secretaria de Gestão do Trabalho e da Educação na Saúde. - Gostaria de saber se a área de Gestão do Trabalho e Educação Permanente em Saúde conta com algum tipo de profissional específico ou se são apenas incorporados os Gestores de Saúde(p.ex o cole...",
-            "Outros em Saúde Convênio com o estado do Rio de Janeiro e o Instituto de Assistência dos Servidores do Estado do Rio de Janeiro-Iaserj. Saber o que diz a Cláusula Quinta desse instrumento, assinado em 06 de Maio de 2007.Convênio de cooperação. Atenciosamente."
+            {
+              "text_excerpt": "Outros em Saúde Dúvida - SGTES - Secretaria de Gestão do Trabalho e da Educação na Saúde Prezados, SGTES - Secretaria de Gestão do Trabalho e da Educação na Saúde. - Gostaria de saber se a área de Gestão do Trabalho e Educação Permanente em Saúde conta com algum tipo de profissional específico ou se são apenas incorporados os Gestores de Saúde(p.ex o cole...",
+              "id_pedido": "1890589",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890589",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157093&idAws=AnexosManifestacao/1890589/62df8090-5f8a-4bac-a21d-7e9a3ba98935&fileName=NOTA TÉCNCA DEGES nº 34 2015 Vitor Martins.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Saúde Convênio com o estado do Rio de Janeiro e o Instituto de Assistência dos Servidores do Estado do Rio de Janeiro-Iaserj. Saber o que diz a Cláusula Quinta desse instrumento, assinado em 06 de Maio de 2007.Convênio de cooperação. Atenciosamente.",
+              "id_pedido": "1900846",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1900846",
+              "request_attachment_link": ""
+            }
           ]
         }
       ]
@@ -5220,8 +5520,18 @@
             }
           ],
           "examples": [
-            "Acesso à informação como devo proceder pra validar meu diploma de conclusão do nível médio para estudar em faculdades estrangeiras no exterior e se no estado do Amapá ha órgão onde eu possa realizar esse tramite. Eu gostaria de estudar medicina na Bolívia no entanto não sei exatamente como e onde posso fazer o reconhecimento de meus documentos referentes...",
-            "Acesso à informação Programa Mais Alimentos África Prezado (a) Sr.(a), Sou estudante de pós-graduação da UNB e estou fazendo uma pesquisa sobre o Programa Mais Alimentos África. Para dar seguimento ao estudo, cujo programa é o objeto central, necessito de informações complementares e mais aprofundadas, pois as existentes no ambiente virtual não proporcion..."
+            {
+              "text_excerpt": "Acesso à informação como devo proceder pra validar meu diploma de conclusão do nível médio para estudar em faculdades estrangeiras no exterior e se no estado do Amapá ha órgão onde eu possa realizar esse tramite. Eu gostaria de estudar medicina na Bolívia no entanto não sei exatamente como e onde posso fazer o reconhecimento de meus documentos referentes...",
+              "id_pedido": "1893938",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1893938",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Acesso à informação Programa Mais Alimentos África Prezado (a) Sr.(a), Sou estudante de pós-graduação da UNB e estou fazendo uma pesquisa sobre o Programa Mais Alimentos África. Para dar seguimento ao estudo, cujo programa é o objeto central, necessito de informações complementares e mais aprofundadas, pois as existentes no ambiente virtual não proporcion...",
+              "id_pedido": "1896766",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1896766",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5247,8 +5557,18 @@
             }
           ],
           "examples": [
-            "Relações Diplomáticas Informações sobre a Decima Oitava Reunião de Negociação do Grupo de Trabalho Encarregado de Elaborar o Projeto de Declaração Americana sobre os Direitos dos Povos Indígenas Prezados Senhores, Cumprimentando-os, venho solicitar informações sobre a Décima Oitava Reunião de Negociação do Grupo de Trabalho Encarregado de Elaborar o Proje...",
-            "Serviços Públicos Solicita conhecimento sobre cooperação com Timor Leste Solicita conhecer (i) o orçamento do Governo Federal Brasileiro empenhado em manter um servidor da Agência Brasileira de Inteligência no Timor Leste, (ii) os objetivos gerais do projeto de cooperação e (iii) os objetivos específicos da manutenção de um oficial de Inteligência no Timo..."
+            {
+              "text_excerpt": "Relações Diplomáticas Informações sobre a Decima Oitava Reunião de Negociação do Grupo de Trabalho Encarregado de Elaborar o Projeto de Declaração Americana sobre os Direitos dos Povos Indígenas Prezados Senhores, Cumprimentando-os, venho solicitar informações sobre a Décima Oitava Reunião de Negociação do Grupo de Trabalho Encarregado de Elaborar o Proje...",
+              "id_pedido": "1890631",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890631",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1158611&idAws=AnexosManifestacao/1890631/163abe6d-92b8-4a63-8580-bb744d2ddd71&fileName=2015-07-31-LAI-SIC-09200000291201549-resposta.docx&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Serviços Públicos Solicita conhecimento sobre cooperação com Timor Leste Solicita conhecer (i) o orçamento do Governo Federal Brasileiro empenhado em manter um servidor da Agência Brasileira de Inteligência no Timor Leste, (ii) os objetivos gerais do projeto de cooperação e (iii) os objetivos específicos da manutenção de um oficial de Inteligência no Timo...",
+              "id_pedido": "1895997",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1895997",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5274,8 +5594,18 @@
             }
           ],
           "examples": [
-            "Serviços Públicos Oficial de Chancelaria Prezados, boa tarde! Gostaria, por gentileza, de saber quantos cargos vagos de Oficial de Chancelaria existem na estrutura do Ministério. Obrigado! Atenciosamente,",
-            "Acesso à informação GESTÃO DOCUMENTOS ELETRÔNICOS Como é feita a gestão dos emails institucionais do órgão? O órgão segue as diretrizes estabelecidas pelo Conselho Naconal de Arquivos, por meio da Resolução 39, de 29 de abril de 2014, para a gestão dos documentos digitais? Isso se aplica, por exemplo, aos emails oficiais? Se não segue as diretrizes do Con..."
+            {
+              "text_excerpt": "Serviços Públicos Oficial de Chancelaria Prezados, boa tarde! Gostaria, por gentileza, de saber quantos cargos vagos de Oficial de Chancelaria existem na estrutura do Ministério. Obrigado! Atenciosamente,",
+              "id_pedido": "1898607",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1898607",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Acesso à informação GESTÃO DOCUMENTOS ELETRÔNICOS Como é feita a gestão dos emails institucionais do órgão? O órgão segue as diretrizes estabelecidas pelo Conselho Naconal de Arquivos, por meio da Resolução 39, de 29 de abril de 2014, para a gestão dos documentos digitais? Isso se aplica, por exemplo, aos emails oficiais? Se não segue as diretrizes do Con...",
+              "id_pedido": "1901067",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1901067",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1158334&idAws=AnexosManifestacao/1901067/a0dbfd08-3e38-49a3-9492-8baec1ba8ed2&fileName=portaria-csic-1-2015.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5301,8 +5631,18 @@
             }
           ],
           "examples": [
-            "Relações Diplomáticas gasto brasileiro na cooperação internacional pela doação de antirretrovirais gostaria de saber quanto o Brasil gastou em reais ou dolar com a doação de antirretrovirais no contexto da cooperação internacional nos anos de 2013 e 2014.",
-            "Cooperação Internacional Acesso à Declaração de Luanda (2007) e Declaração de Montevidéu (2013) assinadas no âmbito da ZOPACAS Solicito acesso aos documentos: Declaração de Luanda (2007) e Declaração de Montevidéu (2013) assinadas no âmbito da ZOPACAS pelo Brasil. Ambos são declarações finais que encerraram os encontros. Subsidiariamente, solicito quaisqu..."
+            {
+              "text_excerpt": "Relações Diplomáticas gasto brasileiro na cooperação internacional pela doação de antirretrovirais gostaria de saber quanto o Brasil gastou em reais ou dolar com a doação de antirretrovirais no contexto da cooperação internacional nos anos de 2013 e 2014.",
+              "id_pedido": "1905234",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1905234",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1158809&idAws=AnexosManifestacao/1905234/3a244ebc-f426-48a8-9563-531fa1454f7a&fileName=Projetos e Atividades Isoladas com Retrovirais.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Cooperação Internacional Acesso à Declaração de Luanda (2007) e Declaração de Montevidéu (2013) assinadas no âmbito da ZOPACAS Solicito acesso aos documentos: Declaração de Luanda (2007) e Declaração de Montevidéu (2013) assinadas no âmbito da ZOPACAS pelo Brasil. Ambos são declarações finais que encerraram os encontros. Subsidiariamente, solicito quaisqu...",
+              "id_pedido": "1906218",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1906218",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1158785&idAws=AnexosManifestacao/1906218/60fbcada-038e-4c84-9786-af8589c653d8&fileName=Plana de Ação - Luanda 2006.doc&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5328,8 +5668,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças DYTZ INFORMÁTICA Peço que me informe quanto o órgão já pagou para a empresa Dytzdata Comercio Servicos e Sistemas Ltda, CNPJ 24.914.376/0001-70, bem como quando isso ocorreu, por qual serviço a empresa foi contratada e quais as pessoas que usufruiram do serviço.",
-            "Acesso à informação Mensagens sobre Padre Cícero - 1896 a 1915 Eu, Renato Allan Sousa Ribeiro Rodrigues , portador do Registro Geral nº 2005009192052, endereço eletrônico renatoasrrodrigues@gmail.com, residente e domiciliado em Fortaleza-CE e com endereço à rua General Tertuliano Potiguara, 47, apt 201, com fundamento na Lei 12.527/2011 (Lei de Acesso a I..."
+            {
+              "text_excerpt": "Outros em Economia e Finanças DYTZ INFORMÁTICA Peço que me informe quanto o órgão já pagou para a empresa Dytzdata Comercio Servicos e Sistemas Ltda, CNPJ 24.914.376/0001-70, bem como quando isso ocorreu, por qual serviço a empresa foi contratada e quais as pessoas que usufruiram do serviço.",
+              "id_pedido": "1894655",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1894655",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Acesso à informação Mensagens sobre Padre Cícero - 1896 a 1915 Eu, Renato Allan Sousa Ribeiro Rodrigues , portador do Registro Geral nº 2005009192052, endereço eletrônico renatoasrrodrigues@gmail.com, residente e domiciliado em Fortaleza-CE e com endereço à rua General Tertuliano Potiguara, 47, apt 201, com fundamento na Lei 12.527/2011 (Lei de Acesso a I...",
+              "id_pedido": "1919474",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1919474",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5355,8 +5705,18 @@
             }
           ],
           "examples": [
-            "Acesso à informação Cooperação entre Brasil e Moçambique nas áreas de segurança alimentar e nutricional Nos termos da Lei de Acesso à Informação (LAI), lei federal 12.527/2011, solicito dados referentes à cooperação entre Brasil e Moçambique nas áreas afetas à segurança alimentar e nutricional, sendo: - convênios e acordos celebrados entre o Brasil e país...",
-            "Acesso à informação Solicito dados de acesso público sobre projetos de cooperação técnica internacional em saúde, no período de 1990-2015 Prezados Srs., Solicito dados sobre projetos de cooperação técnica internacional em saúde, elaboradas pelo MRE ou por outros ministérios nos casos em que o MRE possua registro, incluindo sub-área dos projetos, título, p..."
+            {
+              "text_excerpt": "Acesso à informação Cooperação entre Brasil e Moçambique nas áreas de segurança alimentar e nutricional Nos termos da Lei de Acesso à Informação (LAI), lei federal 12.527/2011, solicito dados referentes à cooperação entre Brasil e Moçambique nas áreas afetas à segurança alimentar e nutricional, sendo: - convênios e acordos celebrados entre o Brasil e país...",
+              "id_pedido": "1905195",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1905195",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157720&idAws=AnexosManifestacao/1905195/2b4b415a-1ec3-484b-ac15-8ae03e89225b&fileName=Todos Projetos e atividades em execução - maio 2015.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Acesso à informação Solicito dados de acesso público sobre projetos de cooperação técnica internacional em saúde, no período de 1990-2015 Prezados Srs., Solicito dados sobre projetos de cooperação técnica internacional em saúde, elaboradas pelo MRE ou por outros ministérios nos casos em que o MRE possua registro, incluindo sub-área dos projetos, título, p...",
+              "id_pedido": "1913910",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1913910",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157770&idAws=AnexosManifestacao/1913910/c045042f-f88a-4a1f-9dc8-e0e40f62b865&fileName=PROJETOS NA AREA DE SAUDE.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         }
       ]
@@ -5398,8 +5758,18 @@
             }
           ],
           "examples": [
-            "Site do Órgão Cópia dos documentos 48580.001079/2015-00 E 48513.007787/2015-00 48580.001079/2015-00:REVISÃO DA RECEITA FIXA DA UTE MARACANAÚ I EM VIRTUDE DO AUMENTO DA TUSD – TARIFA DE USO DO SISTEMA DE DISTRIBUIÇÃO 48513.007787/2015-00:REQUER A REVISÃO E HOMOLOGAÇÃO DA RECEITA FIXA DA UTE MARACANAÚ I.",
-            "Acesso à informação Cópia do Processo nº 48500.001434-2001 Prezados, Em razão da indisponibilização dos documentos constantes do processo acima, solicito cópia de todos os documentos anexados aos volumes 7 e 8 do processo nº 48500.001434-2001. Grata. Elza."
+            {
+              "text_excerpt": "Site do Órgão Cópia dos documentos 48580.001079/2015-00 E 48513.007787/2015-00 48580.001079/2015-00:REVISÃO DA RECEITA FIXA DA UTE MARACANAÚ I EM VIRTUDE DO AUMENTO DA TUSD – TARIFA DE USO DO SISTEMA DE DISTRIBUIÇÃO 48513.007787/2015-00:REQUER A REVISÃO E HOMOLOGAÇÃO DA RECEITA FIXA DA UTE MARACANAÚ I.",
+              "id_pedido": "1888040",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888040",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1154871&idAws=AnexosManifestacao/1888040/9d635932-8f1b-4009-93a8-b36a6a8c94b3&fileName=48513.007787_2015 e 48580.001079_2015.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Acesso à informação Cópia do Processo nº 48500.001434-2001 Prezados, Em razão da indisponibilização dos documentos constantes do processo acima, solicito cópia de todos os documentos anexados aos volumes 7 e 8 do processo nº 48500.001434-2001. Grata. Elza.",
+              "id_pedido": "1888184",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888184",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5425,8 +5795,18 @@
             }
           ],
           "examples": [
-            "Serviços Públicos Solicitação de acesso a documentos do processo nº Ok Em razão da indisponibilidade no sistema dos documentos em PDF inerentes ao processo nº 48500.002658/2005, solicito o envio dos seguintes documentos: 48512.002456/2015, 48524.006899/2015, 48524.006897/2015, 48524.006904/2015, 48524.006903/2015, 48524.006902/2015, 48512.000997/2015, 485...",
-            "Serviços Públicos Solicitação de cópia de processo Solicito a cópia do processo 48700.004370/2015-40"
+            {
+              "text_excerpt": "Serviços Públicos Solicitação de acesso a documentos do processo nº Ok Em razão da indisponibilidade no sistema dos documentos em PDF inerentes ao processo nº 48500.002658/2005, solicito o envio dos seguintes documentos: 48512.002456/2015, 48524.006899/2015, 48524.006897/2015, 48524.006904/2015, 48524.006903/2015, 48524.006902/2015, 48512.000997/2015, 485...",
+              "id_pedido": "1888216",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888216",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1154939&idAws=AnexosManifestacao/1888216/eea3453c-d032-4854-b5c1-f859a7e493c5&fileName=2658-2005 Vol. 4.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Serviços Públicos Solicitação de cópia de processo Solicito a cópia do processo 48700.004370/2015-40",
+              "id_pedido": "1888329",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888329",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5452,8 +5832,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças CPFL Mococa - Reajuste Tarifário 2014 Cópia do CD-ROM enviado pela CPFL Mococa como Anexo II da CARTA número 77. A CARTA foi registrada na ANEEL sob o número de Documento 48513.043187/2013-00 e está juntada ao processo 48500.006231/2013-45 (VOLUME 1).",
-            "Outros em Economia e Finanças CPFL Mococa - Reajuste Tarifário 2014 Cópia do CD-ROM enviado pela CPFL Mococa como Anexo II da CARTA número 5. A CARTA foi registrada na ANEEL sob o número de Documento 48513.001040/2014-00 e está juntada ao processo 48500.006231/2013-45 (VOLUME 1)."
+            {
+              "text_excerpt": "Outros em Economia e Finanças CPFL Mococa - Reajuste Tarifário 2014 Cópia do CD-ROM enviado pela CPFL Mococa como Anexo II da CARTA número 77. A CARTA foi registrada na ANEEL sob o número de Documento 48513.043187/2013-00 e está juntada ao processo 48500.006231/2013-45 (VOLUME 1).",
+              "id_pedido": "1890187",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890187",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156349&idAws=AnexosManifestacao/1890187/599af323-e0f9-4f08-80b5-67de199949eb&fileName=Prot. 48513.043187-2013.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Economia e Finanças CPFL Mococa - Reajuste Tarifário 2014 Cópia do CD-ROM enviado pela CPFL Mococa como Anexo II da CARTA número 5. A CARTA foi registrada na ANEEL sob o número de Documento 48513.001040/2014-00 e está juntada ao processo 48500.006231/2013-45 (VOLUME 1).",
+              "id_pedido": "1890191",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890191",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156350&idAws=AnexosManifestacao/1890191/b1f804ea-322f-42f4-be9a-d3689e065df3&fileName=2014.01.10_CLFM_Proposta RTA14.xlsx&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5479,8 +5869,18 @@
             }
           ],
           "examples": [
-            "Serviços Públicos Cópia Eletrônica do Processo Administrativo ANEEL n. 48500.000225/2013-84 (Não Disponível no SICNET 2.0) Prezado(a) Senhor(a), Solicito, por gentileza, que seja disponibilizada, em via eletrônica, cópia integral do Processo Administrativo ANEEL n. 48500.000225/2013-84. Ressalto que este processo não está disponível para consulta, visuali...",
-            "Serviços Públicos Cópia Eletrônica do Processo Administrativo ANEEL n. 48500.001572/2013-24 (Não Disponível no SICNET 2.0) Prezado(a) Senhor(a), Peço, por gentileza, que seja disponibilizada, em via eletrônica, a cópia integral do Processo Administrativo ANEEL n. 48500.001572/2013-24. Ressalto que esse processo não está disponível para consulta, visualiza..."
+            {
+              "text_excerpt": "Serviços Públicos Cópia Eletrônica do Processo Administrativo ANEEL n. 48500.000225/2013-84 (Não Disponível no SICNET 2.0) Prezado(a) Senhor(a), Solicito, por gentileza, que seja disponibilizada, em via eletrônica, cópia integral do Processo Administrativo ANEEL n. 48500.000225/2013-84. Ressalto que este processo não está disponível para consulta, visuali...",
+              "id_pedido": "1891104",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1891104",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855182&idAws=AnexosManifestacao/1891104/2543341f-dded-4363-b80c-2c145f24f16b&fileName=adsp20152063_1.pdf&idTipoAnexo=1&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Serviços Públicos Cópia Eletrônica do Processo Administrativo ANEEL n. 48500.001572/2013-24 (Não Disponível no SICNET 2.0) Prezado(a) Senhor(a), Peço, por gentileza, que seja disponibilizada, em via eletrônica, a cópia integral do Processo Administrativo ANEEL n. 48500.001572/2013-24. Ressalto que esse processo não está disponível para consulta, visualiza...",
+              "id_pedido": "1891113",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1891113",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855183&idAws=AnexosManifestacao/1891113/63e80560-a80d-4e13-9eea-2c87ed24cc15&fileName=adsp20152064_1.pdf&idTipoAnexo=1&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5506,8 +5906,18 @@
             }
           ],
           "examples": [
-            "Serviços Públicos DOCUMENTO 48581.001443/2015-00, DOCUMENTO 48581.001435/2015-00, MEMORANDO Nº 00902/2015/PFANEEL/PGF/AGU e Prezados, boa tarde. Gostaria de ter acesso aos documentos citados (dois memorandos e um ofício circular), que são os documentos referentes aos últimos processos da CELESC. Abs e obrigado",
-            "Legislação cópia do Parecer n° 488/2014/PFANEEL/PGE/AGU cópia do Parecer n° 488/2014/PFANEEL/PGE/AGU -"
+            {
+              "text_excerpt": "Serviços Públicos DOCUMENTO 48581.001443/2015-00, DOCUMENTO 48581.001435/2015-00, MEMORANDO Nº 00902/2015/PFANEEL/PGF/AGU e Prezados, boa tarde. Gostaria de ter acesso aos documentos citados (dois memorandos e um ofício circular), que são os documentos referentes aos últimos processos da CELESC. Abs e obrigado",
+              "id_pedido": "1919229",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1919229",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157845&idAws=AnexosManifestacao/1919229/a2dd2324-e8c9-434e-841d-06a203897aec&fileName=Prot. 48581.001435-2015.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Legislação cópia do Parecer n° 488/2014/PFANEEL/PGE/AGU cópia do Parecer n° 488/2014/PFANEEL/PGE/AGU -",
+              "id_pedido": "1962715",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1962715",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1160978&idAws=AnexosManifestacao/1962715/3abc9b33-f79f-4359-a8fb-9e9400339f63&fileName=PARECER 00488-2014-PFANEEL-PGF-AGU.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5533,8 +5943,18 @@
             }
           ],
           "examples": [
-            "Outros em Energia Cópia das Cartas CTA PR nº 133/2012 e CTA DR nº 005/2013 Eletrobras Cópia das Cartas CTA PR nº 133/2012, de 19 de junho de 2012 (Essa carta foi protocolada sob nº ANEEL 48513.020679/2012-00) e Carta CTA DR nº 005/2013 de 14 de janeiro de 2013 (Essa carta foi protocolada na ANEEL em atendimento ao Ofício nº 27/2013-SCT/ANEEL)",
-            "Acesso à informação Esclarecimento sobre posicionamento das PCH Esmeralda e Gamba Estamos desenvolvendo um estudo hidrológico na área da sub-bacia 70 e utilizamos dados do SIGEL, baixados em 14/05/2015. As coordenadas da PCH Gamba (PCH que ainda se encontra em fase de estudo, sem início das obras) levam a um ponto distante do rio mais próximo, como mostra..."
+            {
+              "text_excerpt": "Outros em Energia Cópia das Cartas CTA PR nº 133/2012 e CTA DR nº 005/2013 Eletrobras Cópia das Cartas CTA PR nº 133/2012, de 19 de junho de 2012 (Essa carta foi protocolada sob nº ANEEL 48513.020679/2012-00) e Carta CTA DR nº 005/2013 de 14 de janeiro de 2013 (Essa carta foi protocolada na ANEEL em atendimento ao Ofício nº 27/2013-SCT/ANEEL)",
+              "id_pedido": "1894923",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1894923",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156600&idAws=AnexosManifestacao/1894923/1b50166b-3770-44ce-88ea-acb1564696e4&fileName=48513.020679_2012-00.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Acesso à informação Esclarecimento sobre posicionamento das PCH Esmeralda e Gamba Estamos desenvolvendo um estudo hidrológico na área da sub-bacia 70 e utilizamos dados do SIGEL, baixados em 14/05/2015. As coordenadas da PCH Gamba (PCH que ainda se encontra em fase de estudo, sem início das obras) levam a um ponto distante do rio mais próximo, como mostra...",
+              "id_pedido": "1897227",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1897227",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855375&idAws=AnexosManifestacao/1897227/5f9ff80f-5786-47b1-a20f-1b454b6c6d41&fileName=PCH Gamba.jpg&idTipoAnexo=1&handler=DownloadFile"
+            }
           ]
         }
       ]
@@ -5576,8 +5996,18 @@
             }
           ],
           "examples": [
-            "Defesa e vigilância sanitária Aprovação de indicação para o cosmético Softa-Man Acute Prezados, Solicito informar se o produto Softa-Man acute (Registro 2.0151.0001) está aprovado para a indicação fricção antisséptica das mãos nos termos da RDC 42/2010. Att.,",
-            "Defesa e vigilância sanitária Importa Fácil dos Correios Boa noite gostaria de saber qual desses produtos citados abaixo eu posso importar pelo o Importa Fácil dos correios. Segue abaixo a nomenclatura do produto com a descrição, NCM/SH. 67041100- Perucas completas d/mats.testeis sintéticas. NCM/SH. 67042000- Perucas, barbas, pestanas, sem, de cabelo. NCM..."
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Aprovação de indicação para o cosmético Softa-Man Acute Prezados, Solicito informar se o produto Softa-Man acute (Registro 2.0151.0001) está aprovado para a indicação fricção antisséptica das mãos nos termos da RDC 42/2010. Att.,",
+              "id_pedido": "1890164",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890164",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Importa Fácil dos Correios Boa noite gostaria de saber qual desses produtos citados abaixo eu posso importar pelo o Importa Fácil dos correios. Segue abaixo a nomenclatura do produto com a descrição, NCM/SH. 67041100- Perucas completas d/mats.testeis sintéticas. NCM/SH. 67042000- Perucas, barbas, pestanas, sem, de cabelo. NCM...",
+              "id_pedido": "1890720",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890720",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5603,8 +6033,18 @@
             }
           ],
           "examples": [
-            "Defesa e vigilância sanitária Esclarecimentos para Certificação de Boas Práticas de Fabricação Prezados, De acordo com a RDC n° 39/2013, Capítulo III, Seção I, segue: Art.20 Nos casos de estabelecimentos ou linhas de produção em início de atividades ou inclusão de nova forma farmacêutica em uma linha de produção já existente, o Certificado de Boas Prática...",
-            "Defesa e vigilância sanitária Esclarecimentos sobre Certificação de Boas Práticas de Distribuição e Armazenagem rezados, De acordo com a RDC n° 39/2013, Capítulo III, Seção I, segue: Art.20 Nos casos de estabelecimentos ou linhas de produção em início de atividades ou inclusão de nova forma farmacêutica em uma linha de produção já existente, o Certificado..."
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Esclarecimentos para Certificação de Boas Práticas de Fabricação Prezados, De acordo com a RDC n° 39/2013, Capítulo III, Seção I, segue: Art.20 Nos casos de estabelecimentos ou linhas de produção em início de atividades ou inclusão de nova forma farmacêutica em uma linha de produção já existente, o Certificado de Boas Prática...",
+              "id_pedido": "1903489",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1903489",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Esclarecimentos sobre Certificação de Boas Práticas de Distribuição e Armazenagem rezados, De acordo com a RDC n° 39/2013, Capítulo III, Seção I, segue: Art.20 Nos casos de estabelecimentos ou linhas de produção em início de atividades ou inclusão de nova forma farmacêutica em uma linha de produção já existente, o Certificado...",
+              "id_pedido": "1903827",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1903827",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5630,8 +6070,18 @@
             }
           ],
           "examples": [
-            "Defesa e vigilância sanitária Solicito informaçao quanto ao registro, no Brasil, do medicamento Ibrutinibe que aumenta a sobrevida dos pacientes com leucemia linfocitica cronica.Obrigada. O Ibrutinibe vem sendo utilizado com sucesso nos casos de leucemia linfocitica cronica, nos Estados Unidos e Europa. Aqui, ainda não temos acesso a esse medicamento,o qu...",
-            "Defesa e vigilância sanitária Proposta de decreto para regulamentar a anuência prévia Olá, gostaria de ter acesso à proposta de decreto para regulamentar a anuência prévia (feita com base na RDC 21/2013). A proposta era da diretoria da Anvisa, foi para o Ministério da Saúde e depois para a Casa Civil para ser aprovada. Obrigada!"
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Solicito informaçao quanto ao registro, no Brasil, do medicamento Ibrutinibe que aumenta a sobrevida dos pacientes com leucemia linfocitica cronica.Obrigada. O Ibrutinibe vem sendo utilizado com sucesso nos casos de leucemia linfocitica cronica, nos Estados Unidos e Europa. Aqui, ainda não temos acesso a esse medicamento,o qu...",
+              "id_pedido": "1897976",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1897976",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Proposta de decreto para regulamentar a anuência prévia Olá, gostaria de ter acesso à proposta de decreto para regulamentar a anuência prévia (feita com base na RDC 21/2013). A proposta era da diretoria da Anvisa, foi para o Ministério da Saúde e depois para a Casa Civil para ser aprovada. Obrigada!",
+              "id_pedido": "1899065",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1899065",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5657,8 +6107,18 @@
             }
           ],
           "examples": [
-            "Defesa e vigilância sanitária Certificação de boas práticas de armazenagem A empresa na qual trabalho foi fiscalizada recentemente para obtenção do certificado de boas praticas de armazenagem. O processo ainda esta em tramitação na Anvisa. O problema é que iremos mudar de endereço dentre 30/60 dias. Minha dúvida é se quando mudarmos e for publicada a cert...",
-            "Defesa e vigilância sanitária CBPF EMS S/A - Planta São Bernardo do Campo Prezados, Solicito informar se a empresa EMS S/A (CNPJ 57.507.378/0001-01) possui certificado de boas práticas de fabricação para as plantas de São Bernardo do Campo, situada à Rua Comendador Carlo Mário Gardano N.º 450, Centro, CEP: 09720- 470, São Bernardo do Campo, SP. Caso sim,..."
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Certificação de boas práticas de armazenagem A empresa na qual trabalho foi fiscalizada recentemente para obtenção do certificado de boas praticas de armazenagem. O processo ainda esta em tramitação na Anvisa. O problema é que iremos mudar de endereço dentre 30/60 dias. Minha dúvida é se quando mudarmos e for publicada a cert...",
+              "id_pedido": "1934955",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1934955",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Defesa e vigilância sanitária CBPF EMS S/A - Planta São Bernardo do Campo Prezados, Solicito informar se a empresa EMS S/A (CNPJ 57.507.378/0001-01) possui certificado de boas práticas de fabricação para as plantas de São Bernardo do Campo, situada à Rua Comendador Carlo Mário Gardano N.º 450, Centro, CEP: 09720- 470, São Bernardo do Campo, SP. Caso sim,...",
+              "id_pedido": "1941646",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1941646",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5684,8 +6144,18 @@
             }
           ],
           "examples": [
-            "Defesa e vigilância sanitária Números de Processo através do AIS Prezado (a), Estou com 21 números de Autos de Infração Sanitária, porém não tenho o número do processo deles. Gostaria de obter o número de cada uma desses processos através do número do auto de infração. São eles: 854/2007 31102.2700/0311-11 3070200/00047-09 3070200/00018-10 003255 (55460)...",
-            "Defesa e vigilância sanitária Número de Processos através do AIS Prezado (a), Estou com 21 números de Autos de Infração Sanitária, porém não tenho o número do processo deles. Gostaria de obter o número de cada uma desses processos através do número do auto de infração. São eles: 854/2007 31102.2700/0311-11 3070200/00047-09 3070200/00018-10 003255 (55460)..."
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Números de Processo através do AIS Prezado (a), Estou com 21 números de Autos de Infração Sanitária, porém não tenho o número do processo deles. Gostaria de obter o número de cada uma desses processos através do número do auto de infração. São eles: 854/2007 31102.2700/0311-11 3070200/00047-09 3070200/00018-10 003255 (55460)...",
+              "id_pedido": "1893713",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1893713",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855264&idAws=AnexosManifestacao/1893713/e7bb0778-78a8-41a1-a6cd-2bf1939bad95&fileName=003255 (55460).pdf&idTipoAnexo=1&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Número de Processos através do AIS Prezado (a), Estou com 21 números de Autos de Infração Sanitária, porém não tenho o número do processo deles. Gostaria de obter o número de cada uma desses processos através do número do auto de infração. São eles: 854/2007 31102.2700/0311-11 3070200/00047-09 3070200/00018-10 003255 (55460)...",
+              "id_pedido": "1893728",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1893728",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855270&idAws=AnexosManifestacao/1893728/152b1035-b2e8-4cf9-9e4a-3a06f3e1c2ed&fileName=854-2007.pdf&idTipoAnexo=1&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5711,8 +6181,18 @@
             }
           ],
           "examples": [
-            "Defesa e vigilância sanitária PAD. OPERAÇÃO ARCANUS . SERVIDORES DA ANVISA. Desejo obter cópia do Processo Administrativo Disciplinar,cujo objeto é a apuração de infrações disciplinares cometidas por servidores da Anvisa, no estado do RJ, que está sendo conduzido pela Corregedoria daquela Agência Reguladora. O Processo em questão teve início com o desenca...",
-            "Defesa e vigilância sanitária Normativos internos sobre jornada de trabalho Gostaria de obter os normativos internos vigentes da Anvisa que regulamentam a jornada de trabalho de seus servidores, em especial especialistas, analistas e técnicos de carreira da Agência. Obrigado"
+            {
+              "text_excerpt": "Defesa e vigilância sanitária PAD. OPERAÇÃO ARCANUS . SERVIDORES DA ANVISA. Desejo obter cópia do Processo Administrativo Disciplinar,cujo objeto é a apuração de infrações disciplinares cometidas por servidores da Anvisa, no estado do RJ, que está sendo conduzido pela Corregedoria daquela Agência Reguladora. O Processo em questão teve início com o desenca...",
+              "id_pedido": "1904196",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1904196",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Defesa e vigilância sanitária Normativos internos sobre jornada de trabalho Gostaria de obter os normativos internos vigentes da Anvisa que regulamentam a jornada de trabalho de seus servidores, em especial especialistas, analistas e técnicos de carreira da Agência. Obrigado",
+              "id_pedido": "1904750",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1904750",
+              "request_attachment_link": ""
+            }
           ]
         }
       ]
@@ -5754,8 +6234,18 @@
             }
           ],
           "examples": [
-            "Acesso à informação Acesso AGROFIT PREZADOS, SOLICITO INFORMAÇÃO PARA LIBERAÇÃO DE LOGIN E SENHA NO AGROFIT. JÁ ENVIEI EMAIL PARA agrofit@agricultura.gov.br, MAS O EMAIL VOLTA DIZENDO QUE A CAIXA DO DESTINATÁRIO ESTÁ CHEIA. ATENCIOSAMENTE ANDRÉ LUIZ PEREIRA",
-            "Pesca e Aquicultura Informação pretendo iniciar uma criação de camarão da Malásia na propriedade da minha familia que é em aréa de assentamento, gostaria de saber como o MAPA pode me ajudar, em relação ao financiamento e suporte tecnico. desde já agradeço a atenção ."
+            {
+              "text_excerpt": "Acesso à informação Acesso AGROFIT PREZADOS, SOLICITO INFORMAÇÃO PARA LIBERAÇÃO DE LOGIN E SENHA NO AGROFIT. JÁ ENVIEI EMAIL PARA agrofit@agricultura.gov.br, MAS O EMAIL VOLTA DIZENDO QUE A CAIXA DO DESTINATÁRIO ESTÁ CHEIA. ATENCIOSAMENTE ANDRÉ LUIZ PEREIRA",
+              "id_pedido": "1888102",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888102",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Pesca e Aquicultura Informação pretendo iniciar uma criação de camarão da Malásia na propriedade da minha familia que é em aréa de assentamento, gostaria de saber como o MAPA pode me ajudar, em relação ao financiamento e suporte tecnico. desde já agradeço a atenção .",
+              "id_pedido": "1889775",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889775",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156721&idAws=AnexosManifestacao/1889775/8b1691bd-a6dd-4f64-8d4c-f95e6dcf4706&fileName=NUP 21900.000674 2015-25-TPSB.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5781,8 +6271,18 @@
             }
           ],
           "examples": [
-            "Agricultura Informações da Liberação de recursos de convênio Entro em contato pra obter informação a respeito do Convênio: Número Convênio: 787597/2013 Numero interno no Órgão: 49469/2013 Numero da Proposta 049469/2013 Numero do Processo: 049469/2013 A ultima informação que tenho é que so faltava alguns orçamentos para a CAIXA analisar novamente. Sou Vice...",
-            "Outros em Agropecuária Bulas de agrotóxicos O pedido destina-se a: Secretaria de defesa agropecuária, Departamento de fiscalização de insumos agrícolas, Coordenação-geral de agrotóxicos e afins. Segue a solicitação: BULAS COMPLETAS (MAPA-ANVISA-IBAMA): 1. WISH 500 SC (04815) 2. METARRIZ GR BIOCONTROL (05115) 3. ARREIO (05515) 4. PREVINIL 720 SC (05615) 5...."
+            {
+              "text_excerpt": "Agricultura Informações da Liberação de recursos de convênio Entro em contato pra obter informação a respeito do Convênio: Número Convênio: 787597/2013 Numero interno no Órgão: 49469/2013 Numero da Proposta 049469/2013 Numero do Processo: 049469/2013 A ultima informação que tenho é que so faltava alguns orçamentos para a CAIXA analisar novamente. Sou Vice...",
+              "id_pedido": "1889143",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889143",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Outros em Agropecuária Bulas de agrotóxicos O pedido destina-se a: Secretaria de defesa agropecuária, Departamento de fiscalização de insumos agrícolas, Coordenação-geral de agrotóxicos e afins. Segue a solicitação: BULAS COMPLETAS (MAPA-ANVISA-IBAMA): 1. WISH 500 SC (04815) 2. METARRIZ GR BIOCONTROL (05115) 3. ARREIO (05515) 4. PREVINIL 720 SC (05615) 5....",
+              "id_pedido": "1889397",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889397",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1161463&idAws=AnexosManifestacao/1889397/cdcee233-cb5d-4b00-ad03-95f13532415d&fileName=Bula%20Arreio%2029.05.2015.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5808,8 +6308,18 @@
             }
           ],
           "examples": [
-            "Agricultura Ola Necessito dos dados da Pronaf, CPF de produtores que estao ativos, Olá Necessito de Dados da Pronaf, Produtores que estao ativos. E possivel o fornecimento da base completo do estado do Espirito Santo? Necessito realizar um estudo em cima dessa regiao, No aguardo",
-            "Serviços Públicos DYTZ INFORMÁTICA Peço que me informe quanto o órgão já pagou para a empresa Dytzdata Comercio Servicos e Sistemas Ltda, CNPJ 24.914.376/0001-70, bem como quando isso ocorreu, por qual serviço a empresa foi contratada e quais as pessoas que usufruiram do serviço."
+            {
+              "text_excerpt": "Agricultura Ola Necessito dos dados da Pronaf, CPF de produtores que estao ativos, Olá Necessito de Dados da Pronaf, Produtores que estao ativos. E possivel o fornecimento da base completo do estado do Espirito Santo? Necessito realizar um estudo em cima dessa regiao, No aguardo",
+              "id_pedido": "1888308",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888308",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Serviços Públicos DYTZ INFORMÁTICA Peço que me informe quanto o órgão já pagou para a empresa Dytzdata Comercio Servicos e Sistemas Ltda, CNPJ 24.914.376/0001-70, bem como quando isso ocorreu, por qual serviço a empresa foi contratada e quais as pessoas que usufruiram do serviço.",
+              "id_pedido": "1894760",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1894760",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1155668&idAws=AnexosManifestacao/1894760/e112cfe8-d5c9-4754-aa3d-53bb1d56aa95&fileName=Folha de rosto NUP 00380.000206 2015-05 - TPSB.doc&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5835,8 +6345,18 @@
             }
           ],
           "examples": [
-            "Abastecimento e armazenagem Quantidade de Termos de Cooperação Técnica entre União (MAPA) Superint. Federal de MG e Prefeituras, com objeto a cessão pela Prefeitura ao Ministério de Veterinário para integrar a equipe de Inspeção Sanitária e Industrial de produtos de origem animal. Boa noite. Necessito, com urgência, de informações sobre a quantidade de te...",
-            "Agricultura Relação de servidores LANAGRO/GOIÁS DO MINISTÉRIO DA AGRICULTURA, PECUÁRIA E ABASTECIMENTO RELAÇÃO DOS SERVIDORES NÃO EFETIVOS DO LANAGRO/GOIÁS DO MINISTÉRIO DA AGRICULTURA, PECUÁRIA E ABASTECIMENTO. SOLICITO OS NOMES, BEM COMO DE CADA SERVIDOR RELACIONADO DETALHAMENTO SOBRE: FORMAÇÃO ACADÊMICA, SETOR EM QUE TRABALHA NO LABORATÓRIO OU MESMO FO..."
+            {
+              "text_excerpt": "Abastecimento e armazenagem Quantidade de Termos de Cooperação Técnica entre União (MAPA) Superint. Federal de MG e Prefeituras, com objeto a cessão pela Prefeitura ao Ministério de Veterinário para integrar a equipe de Inspeção Sanitária e Industrial de produtos de origem animal. Boa noite. Necessito, com urgência, de informações sobre a quantidade de te...",
+              "id_pedido": "1890943",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1890943",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1155495&idAws=AnexosManifestacao/1890943/8a4df5a4-02da-4392-a318-7020538f667e&fileName=Demanda 315659.xlsx&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Agricultura Relação de servidores LANAGRO/GOIÁS DO MINISTÉRIO DA AGRICULTURA, PECUÁRIA E ABASTECIMENTO RELAÇÃO DOS SERVIDORES NÃO EFETIVOS DO LANAGRO/GOIÁS DO MINISTÉRIO DA AGRICULTURA, PECUÁRIA E ABASTECIMENTO. SOLICITO OS NOMES, BEM COMO DE CADA SERVIDOR RELACIONADO DETALHAMENTO SOBRE: FORMAÇÃO ACADÊMICA, SETOR EM QUE TRABALHA NO LABORATÓRIO OU MESMO FO...",
+              "id_pedido": "1893902",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1893902",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5862,8 +6382,18 @@
             }
           ],
           "examples": [
-            "Outros em Agropecuária Carimbo de tratamento Fitossanitário Estou com duvidas referente ao padrão do carimbo de identificação do tratamento fitossanitário. Na norma NIMF N.15 indica um modelo de identificação e no folder distribuído pelo Ministério da Agricultura é outro. Na norma indica a obrigatoriedade de conter um hífen entre o código do país e o códi...",
-            "Outros em Cultura Doação de livro para o MDA - Sustentabilidade para todos Olá, Sou estudante de mestrado do Programa de Pós Graduação em Administração da Universidade Federal de Santa Catarina - UFSC e trabalho com Sustentabilidade e planejamento energético. Escrevi um livro em co-autoria com outro profissional da área intitulado Sustentabilidade para to..."
+            {
+              "text_excerpt": "Outros em Agropecuária Carimbo de tratamento Fitossanitário Estou com duvidas referente ao padrão do carimbo de identificação do tratamento fitossanitário. Na norma NIMF N.15 indica um modelo de identificação e no folder distribuído pelo Ministério da Agricultura é outro. Na norma indica a obrigatoriedade de conter um hífen entre o código do país e o códi...",
+              "id_pedido": "1898192",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1898192",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=855394&idAws=AnexosManifestacao/1898192/5587ce66-b050-4a95-9e01-46a54df0e1bd&fileName=NIMF_15_2009_PT - reglamentacion embalajes.pdf&idTipoAnexo=1&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Cultura Doação de livro para o MDA - Sustentabilidade para todos Olá, Sou estudante de mestrado do Programa de Pós Graduação em Administração da Universidade Federal de Santa Catarina - UFSC e trabalho com Sustentabilidade e planejamento energético. Escrevi um livro em co-autoria com outro profissional da área intitulado Sustentabilidade para to...",
+              "id_pedido": "1899725",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1899725",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5889,8 +6419,18 @@
             }
           ],
           "examples": [
-            "Agricultura NUMERO DE AGRICULTORES FAMILIARES QUE UTILIZARAM O PRONAF E VALOR DESTINADO AO MUNICIPIO DE SANTANA DO LIVRAMENTO.RS LINHA DE CRÉDITO DESTINADA PARA AGROINDÚSTRIAS, CUSTEIO, E OUTROS . E DADOS DE INADINPLÊNCIA SE EXISTIREM SÓ EM PERCENTUAIS, ÓRGÃO DESTINADO PARA DAR ASSISTÊNCIA NOS PROJETOS PARA AGROINDÚSTRIAS E ASSISTÊNCIA PARA OBTER O CADAST...",
-            "Abastecimento e armazenagem Informações para proposta de economia e sustentabilidade Boa tarde, Gostaria da conta de água e energia dos últimos 24 meses e quantidade de população fixa e flutuante média diária. Estas informações são para elaboração de relatório de possível economia nestas contas."
+            {
+              "text_excerpt": "Agricultura NUMERO DE AGRICULTORES FAMILIARES QUE UTILIZARAM O PRONAF E VALOR DESTINADO AO MUNICIPIO DE SANTANA DO LIVRAMENTO.RS LINHA DE CRÉDITO DESTINADA PARA AGROINDÚSTRIAS, CUSTEIO, E OUTROS . E DADOS DE INADINPLÊNCIA SE EXISTIREM SÓ EM PERCENTUAIS, ÓRGÃO DESTINADO PARA DAR ASSISTÊNCIA NOS PROJETOS PARA AGROINDÚSTRIAS E ASSISTÊNCIA PARA OBTER O CADAST...",
+              "id_pedido": "1897986",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1897986",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Abastecimento e armazenagem Informações para proposta de economia e sustentabilidade Boa tarde, Gostaria da conta de água e energia dos últimos 24 meses e quantidade de população fixa e flutuante média diária. Estas informações são para elaboração de relatório de possível economia nestas contas.",
+              "id_pedido": "1921821",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1921821",
+              "request_attachment_link": ""
+            }
           ]
         }
       ]
@@ -5932,8 +6472,18 @@
             }
           ],
           "examples": [
-            "Educação Superior Matriculados nos cursos de Engenharia de outros paises Bom dia, tudo bem? Estou elaborando meu Trabalho de Conclusão de Curso e preciso do seguinte material: Base histórica (últimos 25 anos, se for possível) dos matriculados nos cursos de engenharia dos Estados Unidos, Canadá e China. Muito obrigado!",
-            "Educação Superior ESTATÍSTICAS DO CENSO DA EDUCAÇÃO SUPERIOR Prezado(a)s, Solicito as seguintes informações a) Número total de matrículas de estudantes em cursos de Direito do Brasil, por Ufs."
+            {
+              "text_excerpt": "Educação Superior Matriculados nos cursos de Engenharia de outros paises Bom dia, tudo bem? Estou elaborando meu Trabalho de Conclusão de Curso e preciso do seguinte material: Base histórica (últimos 25 anos, se for possível) dos matriculados nos cursos de engenharia dos Estados Unidos, Canadá e China. Muito obrigado!",
+              "id_pedido": "1888393",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888393",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Educação Superior ESTATÍSTICAS DO CENSO DA EDUCAÇÃO SUPERIOR Prezado(a)s, Solicito as seguintes informações a) Número total de matrículas de estudantes em cursos de Direito do Brasil, por Ufs.",
+              "id_pedido": "1889712",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889712",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1155235&idAws=AnexosManifestacao/1889712/579ac0e4-e118-4dad-b25e-1d5862596763&fileName=DIREITO_UF_NIVEIS_2000_2013.xlsx&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -5959,8 +6509,18 @@
             }
           ],
           "examples": [
-            "Educação Superior Solicitação Faculdade/Universidade Particulares Olá, Gostaríamos do dado mais atualizado contendo uma listagem de todas as faculdades/universidades privadas de todos os estados brasileiros. Nesta listagem precisamos da informação sobre o estado, cidade, bairro, quantidade de alunos/matriculas em cada faculdade/universidade. Aguardamos um...",
-            "Educação Básica Ranking nacional de alunos por nota ENEM Bom dia, a fim de buscar os melhores talentos do Brasil para oferecer oportunidades profissionais, gostaria de solicitar um ranking dos melhores estudantes por nota do ENEM nacionalmente nos últimos anos. Muito obrigado"
+            {
+              "text_excerpt": "Educação Superior Solicitação Faculdade/Universidade Particulares Olá, Gostaríamos do dado mais atualizado contendo uma listagem de todas as faculdades/universidades privadas de todos os estados brasileiros. Nesta listagem precisamos da informação sobre o estado, cidade, bairro, quantidade de alunos/matriculas em cada faculdade/universidade. Aguardamos um...",
+              "id_pedido": "1888262",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1888262",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1155234&idAws=AnexosManifestacao/1888262/5482151c-4089-44ae-8b7c-613f266afd08&fileName=MATRICULAS_IES_MUNICIPIO_IES_MUNICIPIO_CURSO_2013.xlsx&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Educação Básica Ranking nacional de alunos por nota ENEM Bom dia, a fim de buscar os melhores talentos do Brasil para oferecer oportunidades profissionais, gostaria de solicitar um ranking dos melhores estudantes por nota do ENEM nacionalmente nos últimos anos. Muito obrigado",
+              "id_pedido": "1889954",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889954",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -5986,8 +6546,18 @@
             }
           ],
           "examples": [
-            "Outros em Economia e Finanças Respostas sobre adoção de Sistemas de Custos no Órgão conforme Lei Complementar 101/2001 Solicito resposta de questionário anexo sobre adoção de sistema de Custos conforme artigo 50 da Lei Complementar 101/2001 § 3º A Administração Pública manterá sistema de custos que permita a avaliação e o acompanhamento da gestão orçament...",
-            "Serviços Públicos Pedido de Atas de reunião - Diretoria Colegiada Solicito as atas de todas as reuniões de Diretoria (alta gestão do Inep) realizadas entre o período de Maio 2016 até a presente data."
+            {
+              "text_excerpt": "Outros em Economia e Finanças Respostas sobre adoção de Sistemas de Custos no Órgão conforme Lei Complementar 101/2001 Solicito resposta de questionário anexo sobre adoção de sistema de Custos conforme artigo 50 da Lei Complementar 101/2001 § 3º A Administração Pública manterá sistema de custos que permita a avaliação e o acompanhamento da gestão orçament...",
+              "id_pedido": "2051899",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/2051899",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=859865&idAws=AnexosManifestacao/2051899/a48dcacc-778e-490d-9543-5e5cea98c2e1&fileName=QUESTIONARIO.docx&idTipoAnexo=1&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Serviços Públicos Pedido de Atas de reunião - Diretoria Colegiada Solicito as atas de todas as reuniões de Diretoria (alta gestão do Inep) realizadas entre o período de Maio 2016 até a presente data.",
+              "id_pedido": "1832757",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1832757",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -6013,8 +6583,18 @@
             }
           ],
           "examples": [
-            "Educação Básica Dados que dizem respeito ao investimento destinado ao ENEM Bom dia, gostaria de algumas informações para finalidade acadêmica. 1- Quanto foi investido no programa nos últimos 5 anos, quanto é previsto para ser investido esse ano e quanto dessa previsão já foi gasto 2- De quanto é a evolução no número de alunos inscritos nesse período (últi...",
-            "Educação Básica Desempenho no Exame Nacional do Ensino Médio (Enem) 2012 da Rede Federal, do Estado da Bahia e do Município de Mortugaba Prezado(a), Por gentileza, informe o desempenho no Exame Nacional do Ensino Médio (Enem) 2012 da Rede Federal, do Estado da Bahia e do Município de Mortugaba. Atenciosamente,"
+            {
+              "text_excerpt": "Educação Básica Dados que dizem respeito ao investimento destinado ao ENEM Bom dia, gostaria de algumas informações para finalidade acadêmica. 1- Quanto foi investido no programa nos últimos 5 anos, quanto é previsto para ser investido esse ano e quanto dessa previsão já foi gasto 2- De quanto é a evolução no número de alunos inscritos nesse período (últi...",
+              "id_pedido": "1989084",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1989084",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1167882&idAws=AnexosManifestacao/1989084/2f3cda00-b175-4039-9e0f-239c120e3e54&fileName=Histórico de gastos com Enem.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Educação Básica Desempenho no Exame Nacional do Ensino Médio (Enem) 2012 da Rede Federal, do Estado da Bahia e do Município de Mortugaba Prezado(a), Por gentileza, informe o desempenho no Exame Nacional do Ensino Médio (Enem) 2012 da Rede Federal, do Estado da Bahia e do Município de Mortugaba. Atenciosamente,",
+              "id_pedido": "2003148",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/2003148",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -6040,8 +6620,18 @@
             }
           ],
           "examples": [
-            "Educação Superior Endereço de todas as faculdades e/ou campus das IES brasileiras. Prezados, Gostaria da lista de todos as faculdades e/ou campus das instituições de ensino superior no Brasil com os respectivos endereços (Rua\\ Avenida\\etc, número, bairro, CEP, Cidade e Estado). Por exemplo, a UNESP tem vários campos espalhados pela cidade de São Paulo e p...",
-            "Educação Superior DADOS ESTATISTICOS DA EDUCAÇÃO SUPERIOR DE 2013.Somos uma Instituição de Ensino beneficente de assistência social e estamos colaborando com o Fórum das Filantrópicas no sentido de reunir informações sobre o setor. Gostaria de saber se é possível você nos encaminhar informações do Censo da Educação Superior do ano de 2013, com os seguinte..."
+            {
+              "text_excerpt": "Educação Superior Endereço de todas as faculdades e/ou campus das IES brasileiras. Prezados, Gostaria da lista de todos as faculdades e/ou campus das instituições de ensino superior no Brasil com os respectivos endereços (Rua\\ Avenida\\etc, número, bairro, CEP, Cidade e Estado). Por exemplo, a UNESP tem vários campos espalhados pela cidade de São Paulo e p...",
+              "id_pedido": "1895816",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1895816",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Educação Superior DADOS ESTATISTICOS DA EDUCAÇÃO SUPERIOR DE 2013.Somos uma Instituição de Ensino beneficente de assistência social e estamos colaborando com o Fórum das Filantrópicas no sentido de reunir informações sobre o setor. Gostaria de saber se é possível você nos encaminhar informações do Censo da Educação Superior do ano de 2013, com os seguinte...",
+              "id_pedido": "1928577",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1928577",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1159301&idAws=AnexosManifestacao/1928577/348c71fc-9435-4075-a55b-1b233264f896&fileName=UNAERP_AGREGADO_CURSOVE_IES_2013.xlsx&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -6067,8 +6657,18 @@
             }
           ],
           "examples": [
-            "Educação Superior Dados do Censo do Ensino Superior Boa tarde, solicito alguns dados do Censo Ensino Superior para elaboração de artigo acadêmico sobre a Eficiência de Universidades Estaduais do Nordeste, os dados necessários seriam: Valor total da Universidades Publicas Região Nordeste em 2014 de: Alunos matriculados, Numero de docentes, Numero de comput...",
-            "Educação Superior Dados do CENSUP 2013 Boa tarde, solicito alguns dados do Censo Ensino Superior para elaboração de artigo acadêmico sobre a Eficiência de Universidades Estaduais do Nordeste, os dados necessários seriam: Valor total da Universidades Publicas Região Nordeste em 2013 de: Alunos matriculados, Numero de docentes, Numero de computadores (se ho..."
+            {
+              "text_excerpt": "Educação Superior Dados do Censo do Ensino Superior Boa tarde, solicito alguns dados do Censo Ensino Superior para elaboração de artigo acadêmico sobre a Eficiência de Universidades Estaduais do Nordeste, os dados necessários seriam: Valor total da Universidades Publicas Região Nordeste em 2014 de: Alunos matriculados, Numero de docentes, Numero de comput...",
+              "id_pedido": "1919353",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1919353",
+              "request_attachment_link": ""
+            },
+            {
+              "text_excerpt": "Educação Superior Dados do CENSUP 2013 Boa tarde, solicito alguns dados do Censo Ensino Superior para elaboração de artigo acadêmico sobre a Eficiência de Universidades Estaduais do Nordeste, os dados necessários seriam: Valor total da Universidades Publicas Região Nordeste em 2013 de: Alunos matriculados, Numero de docentes, Numero de computadores (se ho...",
+              "id_pedido": "1921837",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1921837",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1159459&idAws=AnexosManifestacao/1921837/4b063be6-53b5-4eb8-af35-b6dc56a0583e&fileName=UNIVERSIDADES_PUBLICAS_NORDESTE_2013.xlsx&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         }
       ]
@@ -6110,8 +6710,18 @@
             }
           ],
           "examples": [
-            "Outros em Segurança e Ordem Pública por que estou recebendo e-mail dos senhores sobre um processo investigatório em Epigrafe, sob o numero907617823.M QUERO SABER DO QUE SE TRATA/? RECEBI UMA INTIMAÇÃO para comparecimento em audiência relativa ao procedimento investigatório n° 63901 op de 6/7/2015, do que se trata? como posso comparecer se não sei onde e q...",
-            "Outros em Segurança e Ordem Pública Resultado Operaçao Vulcano Pol. Federal em Corumbá, Cáceres,Ponta Porã e Guaira. A operação vulcano foi efetuada pela Pol.Federal em 2008, nos municípios de Corumbá, Cáceres, Ponta Porã e Guaira."
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública por que estou recebendo e-mail dos senhores sobre um processo investigatório em Epigrafe, sob o numero907617823.M QUERO SABER DO QUE SE TRATA/? RECEBI UMA INTIMAÇÃO para comparecimento em audiência relativa ao procedimento investigatório n° 63901 op de 6/7/2015, do que se trata? como posso comparecer se não sei onde e q...",
+              "id_pedido": "1894347",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1894347",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1155788&idAws=AnexosManifestacao/1894347/342a42d9-2eee-4dfa-afac-8034322ebb1d&fileName=E-MAIL 192-15 - 08850002145201531 - F.A.L. - intimação por e-mail.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública Resultado Operaçao Vulcano Pol. Federal em Corumbá, Cáceres,Ponta Porã e Guaira. A operação vulcano foi efetuada pela Pol.Federal em 2008, nos municípios de Corumbá, Cáceres, Ponta Porã e Guaira.",
+              "id_pedido": "1896738",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1896738",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1159456&idAws=AnexosManifestacao/1896738/17c2b2d0-edd4-4f95-8c10-6ec65a97199d&fileName=E-MAIL 204-15 -16853004631201591 - R.P.S. - inquérito policial - investigação.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -6137,8 +6747,18 @@
             }
           ],
           "examples": [
-            "Outros em Segurança e Ordem Pública Gostaria de solicitar todas os dados de ocorrências ocorridas de 2012 até a data corrente. Gostaria de todos os dados de ocorrencias da policia, entra os anos de 2012 até hoje. Os dados serão utilizados para geração e aplicação de algoritmos para treinamento dos mesmo.",
-            "Outros em Segurança e Ordem Pública pedido de esclarecimento REF.: prot. 08850.001791/2015-81 Em razão de matéria publicada no dia 01 de junho, no portal IG, dando conta de record no registro de armas em 2015, solicitei, fosse informado os dados disponíveis no SINARM/DPF, no seguinte teor: Gostaria de receber a quantidade de armas novas registradas em 201..."
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública Gostaria de solicitar todas os dados de ocorrências ocorridas de 2012 até a data corrente. Gostaria de todos os dados de ocorrencias da policia, entra os anos de 2012 até hoje. Os dados serão utilizados para geração e aplicação de algoritmos para treinamento dos mesmo.",
+              "id_pedido": "1889548",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1889548",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156111&idAws=AnexosManifestacao/1889548/4724de4d-b4ef-4ddb-8531-51a274f91f29&fileName=E-MAIL 190-15 - 08850002106201533 - R.S.O.M. - pedido genérico.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública pedido de esclarecimento REF.: prot. 08850.001791/2015-81 Em razão de matéria publicada no dia 01 de junho, no portal IG, dando conta de record no registro de armas em 2015, solicitei, fosse informado os dados disponíveis no SINARM/DPF, no seguinte teor: Gostaria de receber a quantidade de armas novas registradas em 201...",
+              "id_pedido": "1892136",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1892136",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156409&idAws=AnexosManifestacao/1892136/af7a462d-d515-487f-bacc-af08047d37a4&fileName=e-mail 124 08850002125201560 DARM.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -6164,8 +6784,18 @@
             }
           ],
           "examples": [
-            "Outros em Segurança e Ordem Pública comprovar se esta empresa é credenciada na policia federal A empresa EFASEG se tem autorização para ministrar os cursos de vigilante e se reconhecida para tal, e se ela pode dar certificado de conclusão.",
-            "Outros em Segurança e Ordem Pública Inquéritos relatados pela DRE-SRPF/RJ Prezados, solicito acesso ao número de todos os inquéritos relatados e processos judiciais gerados a partir de inquéritos da Divisão de Repressão a Entorpecentes da Polícia Federal no Rio de Janeiro entre os anos de 2010 e 2015. Também solicito, à parte, a íntegra de todos os relató..."
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública comprovar se esta empresa é credenciada na policia federal A empresa EFASEG se tem autorização para ministrar os cursos de vigilante e se reconhecida para tal, e se ela pode dar certificado de conclusão.",
+              "id_pedido": "1891866",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1891866",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1156180&idAws=AnexosManifestacao/1891866/378533b5-b7b2-4c02-8f3b-1f24e7bbac9b&fileName=e-mail 123 08850002120201537 CGCSP.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública Inquéritos relatados pela DRE-SRPF/RJ Prezados, solicito acesso ao número de todos os inquéritos relatados e processos judiciais gerados a partir de inquéritos da Divisão de Repressão a Entorpecentes da Polícia Federal no Rio de Janeiro entre os anos de 2010 e 2015. Também solicito, à parte, a íntegra de todos os relató...",
+              "id_pedido": "1894038",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1894038",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -6191,8 +6821,18 @@
             }
           ],
           "examples": [
-            "Outros em Segurança e Ordem Pública Registro de armas de fogo para civis Eu, Renato Allan Sousa Ribeiro Rodrigues, portador do Registro Geral nº 2005009192052, endereço eletrônico renatoasrrodrigues@gmail.com, residente e domiciliado em Fortaleza-CE e com endereço à rua General Tertuliano Potiguara, 47, apt 201, com fundamento na Lei 12.527/2011 (Lei de A...",
-            "Outros em Segurança e Ordem Pública Informações sobre passageiros Gostaria de ter acesso às datas de nascimento de todas as pessoas que embarcaram com destino à Alemanha no dia 31/12/2013 e 01/01/2014, partindo dos aeroportos de Santa Catarina e de São Paulo. Não há a necessidade de nomes, ou quaisquer outras informações, somente as datas de nascimento co..."
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública Registro de armas de fogo para civis Eu, Renato Allan Sousa Ribeiro Rodrigues, portador do Registro Geral nº 2005009192052, endereço eletrônico renatoasrrodrigues@gmail.com, residente e domiciliado em Fortaleza-CE e com endereço à rua General Tertuliano Potiguara, 47, apt 201, com fundamento na Lei 12.527/2011 (Lei de A...",
+              "id_pedido": "1935366",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1935366",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1160186&idAws=AnexosManifestacao/1935366/c8f7a981-d29b-4c97-bc75-9f6ee17241c2&fileName=e-mail 143 08850002520201542 DARM.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública Informações sobre passageiros Gostaria de ter acesso às datas de nascimento de todas as pessoas que embarcaram com destino à Alemanha no dia 31/12/2013 e 01/01/2014, partindo dos aeroportos de Santa Catarina e de São Paulo. Não há a necessidade de nomes, ou quaisquer outras informações, somente as datas de nascimento co...",
+              "id_pedido": "1941750",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1941750",
+              "request_attachment_link": ""
+            }
           ]
         },
         {
@@ -6218,8 +6858,18 @@
             }
           ],
           "examples": [
-            "Outros em Segurança e Ordem Pública Despesa de Pessoal completa do DPF de 2002 e 2003 Despesa de Pessoal completa, contendo Ativos, Aposentados e Pensionistas de 2002 e 2003 do DPF, incluindo administrativos. Solicito apenas o total anual, separado por Ativos, Aposentados e Pensionistas.",
-            "Outros em Segurança e Ordem Pública PREVISÃO NO ORÇAMENTO DA REALIZAÇÃO DE CONCURSO Bom dia! prezados, ao cumprimenta-los, em razão de recente alteração quanto a não necessidade de autorização pelo Mpog da realização de concurso, cujo o ato era o ponto de partida para o alinhamento dos estudos, gostaria de saber se já consta na Ploa 2016, ou se será coloc..."
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública Despesa de Pessoal completa do DPF de 2002 e 2003 Despesa de Pessoal completa, contendo Ativos, Aposentados e Pensionistas de 2002 e 2003 do DPF, incluindo administrativos. Solicito apenas o total anual, separado por Ativos, Aposentados e Pensionistas.",
+              "id_pedido": "1913052",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1913052",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1160221&idAws=AnexosManifestacao/1913052/ee1a4046-dcb8-4d29-9897-db51a6363636&fileName=077_2015_08850002342201550.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública PREVISÃO NO ORÇAMENTO DA REALIZAÇÃO DE CONCURSO Bom dia! prezados, ao cumprimenta-los, em razão de recente alteração quanto a não necessidade de autorização pelo Mpog da realização de concurso, cujo o ato era o ponto de partida para o alinhamento dos estudos, gostaria de saber se já consta na Ploa 2016, ou se será coloc...",
+              "id_pedido": "1944071",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1944071",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1162435&idAws=AnexosManifestacao/1944071/8a68e3aa-ab5d-4da0-973d-6e2e088242fd&fileName=081_2015_08850002572201519.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         },
         {
@@ -6245,8 +6895,18 @@
             }
           ],
           "examples": [
-            "Outros em Segurança e Ordem Pública Concurso Publico Boa Tarde , Gostaria de saber o assunto desse processos : 05100202645201565 e se ele está relacionado com a nomeação do cadastro de reserva dos agentes administrativos da policia federal . Agradeço desde já pela resposta.",
-            "Outros em Segurança e Ordem Pública Técnico em Assuntos Educacionais Prezados, Gostaria de saber, por gentileza, quantos cargos de Técnico em Assuntos Educacionais estão vagos no âmbito da PF. Obrigado! Atenciosamente,"
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública Concurso Publico Boa Tarde , Gostaria de saber o assunto desse processos : 05100202645201565 e se ele está relacionado com a nomeação do cadastro de reserva dos agentes administrativos da policia federal . Agradeço desde já pela resposta.",
+              "id_pedido": "1897527",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1897527",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157876&idAws=AnexosManifestacao/1897527/3418bb39-6b55-4774-9338-cb656d972501&fileName=072_2015_08850002203201526.pdf&idTipoAnexo=2&handler=DownloadFile"
+            },
+            {
+              "text_excerpt": "Outros em Segurança e Ordem Pública Técnico em Assuntos Educacionais Prezados, Gostaria de saber, por gentileza, quantos cargos de Técnico em Assuntos Educacionais estão vagos no âmbito da PF. Obrigado! Atenciosamente,",
+              "id_pedido": "1906047",
+              "request_public_link": "https://buscalai.cgu.gov.br/busca/1906047",
+              "request_attachment_link": "https://buscalai.cgu.gov.br/PedidosLai/DetalhePedido?idAnexo=1157881&idAws=AnexosManifestacao/1906047/6e00a7e3-ceb3-4a4b-9791-8c9865d84c53&fileName=070_2015_08850002273201584.pdf&idTipoAnexo=2&handler=DownloadFile"
+            }
           ]
         }
       ]
@@ -6998,7 +7658,7 @@
     "sampling_for_search": {
       "purpose": "Busca rápida no teor dos pedidos dentro do painel.",
       "method": "Regra híbrida: cobertura completa dos pedidos dos órgãos do top 10+PF e, para os demais órgãos, amostragem por hash determinístico do IdPedido (~6.0% por ano, teto de 9000 pedidos/ano fora do top).",
-      "request_link_rule": "Cada pedido da amostra pode receber URL do BuscaLAI via chave IdPedido, a partir do arquivo PedidosLinkArquivo; quando há múltiplos links, prioriza-se 'Anexo Resposta'.",
+      "request_link_rule": "Cada pedido da amostra recebe URL pública do pedido no formato https://buscalai.cgu.gov.br/busca/{IdPedido}; quando houver registro no arquivo PedidosLinkArquivo, também mantém URL de anexo.",
       "hash_rule": {
         "modulus": 1000,
         "keep_if_mod_lt": 60

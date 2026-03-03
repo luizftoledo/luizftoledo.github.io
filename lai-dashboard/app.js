@@ -839,8 +839,32 @@
       const examplesHtml = topThemes.map((item) => {
         const examples = item.examples || [];
         if (!examples.length) return '';
+        const blocks = examples.map((example, idx) => {
+          const text = typeof example === 'string'
+            ? example
+            : (example.text_excerpt || '');
+          const requestPublicLink = typeof example === 'string'
+            ? ''
+            : (example.request_public_link || buildBuscaRequestLink(example.id_pedido || ''));
+          const requestAttachmentLink = typeof example === 'string'
+            ? ''
+            : (example.request_attachment_link || '');
+
+          const links = [
+            requestPublicLink ? `<a href="${esc(requestPublicLink)}" target="_blank" rel="noopener noreferrer">Abrir pedido completo</a>` : '',
+            requestAttachmentLink ? `<a href="${esc(requestAttachmentLink)}" target="_blank" rel="noopener noreferrer">Abrir anexo</a>` : '',
+          ].filter(Boolean).join(' · ');
+
+          return `
+            <details class="org-example"${idx === 0 ? ' open' : ''}>
+              <summary><span class="key-pill">${esc(item.theme)}</span> Exemplo ${idx + 1}</summary>
+              <p class="org-note">${esc(text || '--')}</p>
+              ${links ? `<p class="org-example-links">${links}</p>` : ''}
+            </details>
+          `;
+        }).join('');
         return `
-          <div class="org-note"><strong>${esc(item.theme)}</strong>: ${examples.map((txt) => `“${esc(compactText(txt, 220))}”`).join(' | ')}</div>
+          ${blocks}
         `;
       }).join('');
 
