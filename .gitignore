@@ -8,3 +8,10 @@ datafixers-main/
 .claude/
 .cursor/
 .history/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Local visual test artifacts
+output/playwright/*.png
