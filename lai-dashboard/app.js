@@ -209,6 +209,56 @@
     return `https://buscalai.cgu.gov.br/busca/${encodeURIComponent(id)}`;
   }
 
+  function buildApiRequestLink(idPedido) {
+    const id = (idPedido || '').toString().trim();
+    if (!id) return '';
+    return `https://api-laibr.cgu.gov.br/buscar-pedidos/${encodeURIComponent(id)}`;
+  }
+
+  function isBuscaRequestLink(url) {
+    return /buscalai\.cgu\.gov\.br\/busca\//i.test((url || '').toString());
+  }
+
+  function isApiRequestLink(url) {
+    return /api-laibr\.cgu\.gov\.br\/buscar-pedidos\//i.test((url || '').toString());
+  }
+
+  function resolveRequestLinks(idPedido, requestPublicLink, requestAttachmentLink, requestFallbackLink) {
+    const id = (idPedido || '').toString().trim();
+    const publicRaw = (requestPublicLink || '').toString().trim();
+    const attachmentRaw = (requestAttachmentLink || '').toString().trim();
+    const fallbackRaw = (requestFallbackLink || '').toString().trim();
+
+    let apiLink = buildApiRequestLink(id);
+    let buscaLink = buildBuscaRequestLink(id);
+
+    if (publicRaw) {
+      if (isApiRequestLink(publicRaw)) {
+        apiLink = publicRaw;
+      } else if (isBuscaRequestLink(publicRaw)) {
+        buscaLink = publicRaw;
+      } else if (!apiLink) {
+        apiLink = publicRaw;
+      }
+    }
+
+    if (!apiLink && fallbackRaw && !isBuscaRequestLink(fallbackRaw)) {
+      apiLink = fallbackRaw;
+    }
+    if (!buscaLink && fallbackRaw && isBuscaRequestLink(fallbackRaw)) {
+      buscaLink = fallbackRaw;
+    }
+
+    const publicLink = apiLink || buscaLink || fallbackRaw;
+    return {
+      request_public_link: publicLink,
+      request_api_link: apiLink,
+      request_buscalai_link: buscaLink,
+      request_attachment_link: attachmentRaw,
+      request_link: publicLink || attachmentRaw || fallbackRaw,
+    };
+  }
+
   function renderPartialYearHints() {
     if (!partialYearCtx) {
       if (partialYearPill) partialYearPill.hidden = true;
@@ -403,7 +453,7 @@
           <li><strong>Amostra para busca:</strong> ${(m.sampling_for_search || {}).method ? esc((m.sampling_for_search || {}).method) : '--'}.</li>
           <li><strong>Volume da amostra:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).sample_count || 0))}</strong> pedidos.</li>
           <li><strong>Cobertura completa no top 10+PF:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).top_org_rows_in_search || 0))}</strong> pedidos.</li>
-          <li><strong>Link BuscaLAI:</strong> cada pedido com <code>IdPedido</code> recebe link direto <code>/busca/{id}</code>; quando houver, também aparece link de anexo de resposta.</li>
+          <li><strong>Links de pedido:</strong> o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); o botão <code>BuscaLAI</code> tenta abrir a mesma entrada no portal (<code>/busca/{id}</code>); quando houver, também aparece link de anexo.</li>
         </ul>
       </details>
 
@@ -442,8 +492,8 @@
     addLink('Busca de precedentes recursais (CGU/CMRI)', source.precedentes_url);
     addLink('Painel oficial LAI (Central de Painéis CGU)', 'https://centralpaineis.cgu.gov.br/visualizar/lai');
     addLink('API pública do painel LAI (Central de Painéis CGU)', 'https://centralpaineis.cgu.gov.br/api/publico/visualizar/lai');
-    addLink('Busca direta por pedido no BuscaLAI', 'https://buscalai.cgu.gov.br/busca/{id_pedido}');
     addLink('API pública de detalhe do pedido', 'https://api-laibr.cgu.gov.br/buscar-pedidos/{id_pedido}');
+    addLink('Busca direta por pedido no BuscaLAI', 'https://buscalai.cgu.gov.br/busca/{id_pedido}');
 
     sourcesList.innerHTML = links.length
       ? links.map((item) => (
@@ -999,15 +1049,21 @@
           const text = typeof example === 'string'
             ? example
             : (example.text_excerpt || '');
-          const requestPublicLink = typeof example === 'string'
-            ? ''
-            : (example.request_public_link || buildBuscaRequestLink(example.id_pedido || ''));
-          const requestAttachmentLink = typeof example === 'string'
-            ? ''
-            : (example.request_attachment_link || '');
+          const linkPack = typeof example === 'string'
+            ? resolveRequestLinks('', '', '', '')
+            : resolveRequestLinks(
+              example.id_pedido || '',
+              example.request_public_link || '',
+              example.request_attachment_link || '',
+              example.request_link || '',
+            );
+          const requestPublicLink = linkPack.request_public_link || '';
+          const requestBuscaLink = linkPack.request_buscalai_link || '';
+          const requestAttachmentLink = linkPack.request_attachment_link || '';
 
           const links = [
             requestPublicLink ? `<a href="${esc(requestPublicLink)}" target="_blank" rel="noopener noreferrer">Abrir pedido completo</a>` : '',
+            (requestBuscaLink && requestBuscaLink !== requestPublicLink) ? `<a href="${esc(requestBuscaLink)}" target="_blank" rel="noopener noreferrer">Abrir no BuscaLAI</a>` : '',
             requestAttachmentLink ? `<a href="${esc(requestAttachmentLink)}" target="_blank" rel="noopener noreferrer">Abrir anexo</a>` : '',
           ].filter(Boolean).join(' · ');
 
@@ -1132,9 +1188,13 @@
           <td>${esc(row.decision || '--')}</td>
           <td>${esc(row.theme || '--')}</td>
           <td>${esc(row.subject || '--')}</td>
-          <td>${row.request_public_link
-            ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Pedido</a>${row.request_attachment_link ? ` · <a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : ''}`
-            : (row.request_attachment_link ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : '--')}</td>
+          <td>${[
+            row.request_public_link ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Pedido</a>` : '',
+            (row.request_buscalai_link && row.request_buscalai_link !== row.request_public_link)
+              ? `<a href="${esc(row.request_buscalai_link)}" target="_blank" rel="noopener noreferrer">BuscaLAI</a>`
+              : '',
+            row.request_attachment_link ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : '',
+          ].filter(Boolean).join(' · ') || '--'}</td>
           <td>${esc(row.text_excerpt || '--')}</td>
         </tr>
       `).join('')
@@ -1431,15 +1491,22 @@
           }
         })
         .filter(Boolean)
-        .map((row) => ({
-          ...row,
-          id_pedido: (row.id_pedido || '').toString().trim(),
-          request_public_link: (row.request_public_link || buildBuscaRequestLink(row.id_pedido)).toString().trim(),
-          request_attachment_link: (row.request_attachment_link || row.request_link || '').toString().trim(),
-          request_link: (row.request_public_link || buildBuscaRequestLink(row.id_pedido) || row.request_attachment_link || row.request_link || '').toString().trim(),
-          year: Number(row.year || 0),
-          search_blob: normalizeForSearch(`${row.org || ''} ${row.subject || ''} ${row.text_excerpt || ''} ${row.theme || ''} ${row.decision || ''} ${row.reason || ''}`),
-        }));
+        .map((row) => {
+          const idPedido = (row.id_pedido || '').toString().trim();
+          const linkPack = resolveRequestLinks(
+            idPedido,
+            row.request_public_link || '',
+            row.request_attachment_link || row.request_link || '',
+            row.request_link || '',
+          );
+          return {
+            ...row,
+            ...linkPack,
+            id_pedido: idPedido,
+            year: Number(row.year || 0),
+            search_blob: normalizeForSearch(`${row.org || ''} ${row.subject || ''} ${row.text_excerpt || ''} ${row.theme || ''} ${row.decision || ''} ${row.reason || ''}`),
+          };
+        });
       samplesBySource[sourceId] = parsed;
       requestSamples = parsed;
     } catch (error) {

@@ -388,6 +388,13 @@ def build_buscalai_request_link(id_pedido):
     return f"https://buscalai.cgu.gov.br/busca/{clean}"
 
 
+def build_api_request_link(id_pedido):
+    clean = normalize_text(id_pedido)
+    if not clean:
+        return ""
+    return f"https://api-laibr.cgu.gov.br/buscar-pedidos/{clean}"
+
+
 def canonicalize_decision(value):
     text = normalize_text(value)
     if not text:
@@ -545,7 +552,8 @@ def build_sample_rows(sample_df):
     for rec in sample_df.to_dict(orient="records"):
         id_pedido = normalize_text(rec.get("id_pedido", ""))
         request_attachment_link = normalize_text(rec.get("request_link", ""))
-        request_public_link = build_buscalai_request_link(id_pedido)
+        request_buscalai_link = build_buscalai_request_link(id_pedido)
+        request_public_link = build_api_request_link(id_pedido) or request_buscalai_link
         rows.append(
             {
                 "id_pedido": id_pedido,
@@ -559,8 +567,9 @@ def build_sample_rows(sample_df):
                 "theme": rec.get("theme", DEFAULT_THEME),
                 "text_excerpt": truncate_text(rec.get("request_text", ""), limit=360),
                 "request_public_link": request_public_link,
+                "request_buscalai_link": request_buscalai_link,
                 "request_attachment_link": request_attachment_link,
-                "request_link": request_public_link or request_attachment_link,
+                "request_link": request_public_link or request_attachment_link or request_buscalai_link,
             }
         )
     return rows
@@ -1274,8 +1283,11 @@ def build_report(year_payloads):
         if text_excerpt in samples_seen_text[key]:
             continue
         id_pedido = normalize_text(row.get("id_pedido", ""))
+        request_buscalai_link = normalize_text(
+            row.get("request_buscalai_link", "") or build_buscalai_request_link(id_pedido)
+        )
         request_public_link = normalize_text(
-            row.get("request_public_link", "") or build_buscalai_request_link(id_pedido)
+            row.get("request_public_link", "") or build_api_request_link(id_pedido) or request_buscalai_link
         )
         request_attachment_link = normalize_text(row.get("request_attachment_link", ""))
         if not request_attachment_link:
@@ -1286,6 +1298,7 @@ def build_report(year_payloads):
                 "text_excerpt": text_excerpt,
                 "id_pedido": id_pedido,
                 "request_public_link": request_public_link,
+                "request_buscalai_link": request_buscalai_link,
                 "request_attachment_link": request_attachment_link,
             }
         )
@@ -1608,12 +1621,14 @@ def build_report(year_payloads):
     if "Filtrado" in DOWNLOAD_URL_TEMPLATE:
         source_files.append("PedidosLinkArquivo_csv_YYYY.csv (link do pedido/anexo no BuscaLAI)")
     request_link_rule = (
-        "Cada pedido da amostra recebe URL pública do pedido no formato "
-        "https://buscalai.cgu.gov.br/busca/{IdPedido}; quando houver registro "
-        "no arquivo PedidosLinkArquivo, também mantém URL de anexo."
+        "Cada pedido da amostra recebe URL de detalhe no formato "
+        "https://api-laibr.cgu.gov.br/buscar-pedidos/{IdPedido}; também guarda "
+        "https://buscalai.cgu.gov.br/busca/{IdPedido} como alternativa no portal. "
+        "Quando houver registro no arquivo PedidosLinkArquivo, mantém URL de anexo."
         if "Filtrado" in DOWNLOAD_URL_TEMPLATE
         else (
-            "Cada pedido da amostra recebe URL pública no formato "
+            "Cada pedido da amostra recebe URL de detalhe no formato "
+            "https://api-laibr.cgu.gov.br/buscar-pedidos/{IdPedido}, com opção de portal em "
             "https://buscalai.cgu.gov.br/busca/{IdPedido}. "
             "Nesta fonte não há tabela PedidosLinkArquivo para anexos."
         )

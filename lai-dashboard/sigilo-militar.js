@@ -86,6 +86,56 @@
     return `https://buscalai.cgu.gov.br/busca/${encodeURIComponent(id)}`;
   }
 
+  function buildApiRequestLink(idPedido) {
+    const id = (idPedido || '').toString().trim();
+    if (!id) return '';
+    return `https://api-laibr.cgu.gov.br/buscar-pedidos/${encodeURIComponent(id)}`;
+  }
+
+  function isBuscaRequestLink(url) {
+    return /buscalai\.cgu\.gov\.br\/busca\//i.test((url || '').toString());
+  }
+
+  function isApiRequestLink(url) {
+    return /api-laibr\.cgu\.gov\.br\/buscar-pedidos\//i.test((url || '').toString());
+  }
+
+  function resolveRequestLinks(idPedido, requestPublicLink, requestAttachmentLink, requestFallbackLink) {
+    const id = (idPedido || '').toString().trim();
+    const publicRaw = (requestPublicLink || '').toString().trim();
+    const attachmentRaw = (requestAttachmentLink || '').toString().trim();
+    const fallbackRaw = (requestFallbackLink || '').toString().trim();
+
+    let apiLink = buildApiRequestLink(id);
+    let buscaLink = buildBuscaRequestLink(id);
+
+    if (publicRaw) {
+      if (isApiRequestLink(publicRaw)) {
+        apiLink = publicRaw;
+      } else if (isBuscaRequestLink(publicRaw)) {
+        buscaLink = publicRaw;
+      } else if (!apiLink) {
+        apiLink = publicRaw;
+      }
+    }
+
+    if (!apiLink && fallbackRaw && !isBuscaRequestLink(fallbackRaw)) {
+      apiLink = fallbackRaw;
+    }
+    if (!buscaLink && fallbackRaw && isBuscaRequestLink(fallbackRaw)) {
+      buscaLink = fallbackRaw;
+    }
+
+    const publicLink = apiLink || buscaLink || fallbackRaw;
+    return {
+      request_public_link: publicLink,
+      request_api_link: apiLink,
+      request_buscalai_link: buscaLink,
+      request_attachment_link: attachmentRaw,
+      request_link: publicLink || attachmentRaw || fallbackRaw,
+    };
+  }
+
   function isPublicTextSamplePath(path) {
     const clean = (path || '').toString().toLowerCase();
     return clean.includes('publica') || clean.includes('filtrado');
@@ -433,9 +483,13 @@
           <td>${esc(row.reason || '--')}</td>
           <td>${esc(row.theme || '--')}</td>
           <td>${esc(row.subject || '--')}</td>
-          <td>${row.request_public_link
-            ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Pedido</a>${row.request_attachment_link ? ` · <a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : ''}`
-            : (row.request_attachment_link ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : '--')}</td>
+          <td>${[
+            row.request_public_link ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Pedido</a>` : '',
+            (row.request_buscalai_link && row.request_buscalai_link !== row.request_public_link)
+              ? `<a href="${esc(row.request_buscalai_link)}" target="_blank" rel="noopener noreferrer">BuscaLAI</a>`
+              : '',
+            row.request_attachment_link ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : '',
+          ].filter(Boolean).join(' · ') || '--'}</td>
           <td>${esc(row.text_excerpt || '--')}</td>
         </tr>
       `).join('')
@@ -464,7 +518,7 @@
       `<li>Período coberto: <strong>${start}-${end}</strong>, com dados oficiais da CGU.</li>`,
       '<li>Indicadores de pedidos, negativas e restrições usam a base ampla da CGU (todos os pedidos e recursos do Fala.BR).</li>',
       `<li>A análise textual (“temas”, “motivos” e busca) usa a ${textSourceLabel}, com <strong>${nFmt.format(militaryRows.length)}</strong> pedidos desses 4 órgãos.</li>`,
-      '<li>Link de cada linha: prioridade para o pedido público direto no BuscaLAI (<code>/busca/{id}</code>), com link de anexo quando disponível.</li>',
+      '<li>Link de cada linha: o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); o botão <code>BuscaLAI</code> tenta abrir no portal (<code>/busca/{id}</code>); o botão <code>Anexo</code> aparece quando disponível.</li>',
       '<li>Definições: “com restrição” = <code>Acesso Negado</code> + <code>Acesso Parcialmente Concedido</code>.</li>',
     ].join('');
   }
@@ -589,8 +643,12 @@
       .filter(Boolean)
       .map((row) => {
         const idPedido = (row.id_pedido || '').toString().trim();
-        const requestPublicLink = buildBuscaRequestLink(idPedido);
-        const requestAttachmentLink = (row.request_attachment_link || row.request_link || '').toString().trim();
+        const linkPack = resolveRequestLinks(
+          idPedido,
+          row.request_public_link || '',
+          row.request_attachment_link || row.request_link || '',
+          row.request_link || '',
+        );
         const restricted = Boolean(row.restricted) || RESTRICTED_DECISIONS.has(row.decision);
         const normalized = {
           id_pedido: idPedido,
@@ -602,8 +660,7 @@
           subject: row.subject || 'Assunto não informado',
           theme: row.theme || 'Outros temas',
           text_excerpt: row.text_excerpt || '',
-          request_public_link: requestPublicLink,
-          request_attachment_link: requestAttachmentLink,
+          ...linkPack,
         };
 
         normalized.search_blob = normalizeForSearch(
