@@ -7,9 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./vendor/leaflet.css">
-  <script src="./vendor/leaflet.js"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     :root {
       --bg: #f2efe8;
@@ -148,10 +145,17 @@
       display: flex;
       gap: 0.48rem;
       flex-wrap: wrap;
-      margin-top: 0.05rem;
+      margin-top: 0.2rem;
+      padding: 0.45rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .view-tab {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
       border: 1px solid #2a436e;
       background: rgba(9, 16, 32, 0.86);
       color: #9fb9de;
@@ -203,7 +207,6 @@
 
     .btn-search { background: var(--accent); color: #fff; }
     .btn-export { background: var(--accent-2); color: #fff; }
-    .btn-sheet { background: var(--accent-3); color: #fff; }
 
     .metrics-grid {
       display: grid;
@@ -266,22 +269,9 @@
       font-family: "IBM Plex Mono", monospace;
     }
 
-    .sheets-controls {
-      display: grid;
-      gap: 0.5rem;
-      margin-top: 0.2rem;
-    }
-
-    .sheets-row {
-      display: grid;
-      grid-template-columns: minmax(280px, 1fr) auto auto;
-      gap: 0.55rem;
-      align-items: stretch;
-    }
-
     .story-layout {
       display: grid;
-      grid-template-columns: minmax(290px, 0.78fr) minmax(520px, 1.22fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: 1rem;
       align-items: start;
     }
@@ -330,40 +320,6 @@
       gap: 0.26rem;
       color: #344356;
       font-size: 0.88rem;
-    }
-
-    .map-panel {
-      position: sticky;
-      top: 0.75rem;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      overflow: hidden;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-    }
-
-    #story-map {
-      height: min(68vh, 720px);
-      width: 100%;
-      background: #d9dfe6;
-    }
-
-    .map-caption {
-      padding: 0.68rem 0.8rem 0.74rem;
-      border-top: 1px solid var(--line);
-      background: #f6f1e5;
-    }
-
-    .map-caption h2 {
-      margin: 0;
-      font-size: 1rem;
-    }
-
-    .map-caption p {
-      margin: 0.34rem 0 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.45;
     }
 
     .results-panel,
@@ -422,6 +378,7 @@
 
     .watch-details {
       display: grid;
+      grid-template-columns: 1fr;
       gap: 0.64rem;
     }
 
@@ -450,6 +407,11 @@
     .watch-detail-wrap table {
       min-width: 640px;
       font-size: 0.84rem;
+    }
+
+    .watch-desc {
+      max-width: 460px;
+      line-height: 1.35;
     }
 
     .section-head {
@@ -720,10 +682,6 @@
         grid-template-columns: 1fr;
       }
 
-      .sheets-row {
-        grid-template-columns: 1fr;
-      }
-
       .metrics-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -734,14 +692,6 @@
 
       .watch-cards {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .map-panel {
-        position: static;
-      }
-
-      #story-map {
-        height: 52vh;
       }
 
       .ai-key-row,
@@ -854,8 +804,7 @@
 
     .top-shell,
     .results-panel,
-    .ai-panel,
-    .map-panel {
+    .ai-panel {
       border: 1px solid var(--line);
       background:
         linear-gradient(150deg, rgba(16, 24, 46, 0.88), rgba(7, 13, 25, 0.9)),
@@ -942,11 +891,6 @@
     .btn-export {
       background: linear-gradient(120deg, #18d1ca, #25ffb5);
       color: #04151c;
-    }
-
-    .btn-sheet {
-      background: linear-gradient(120deg, #607eff, #8ca3ff);
-      color: #050a19;
     }
 
     .dataset-tab {
@@ -1146,37 +1090,6 @@
       font-family: "JetBrains Mono", monospace;
     }
 
-    #story-map {
-      background: #060d1d;
-    }
-
-    .leaflet-container {
-      filter: saturate(1.08) contrast(1.07);
-    }
-
-    .leaflet-control-attribution {
-      background: rgba(7, 11, 22, 0.82) !important;
-      color: #9cb7da !important;
-    }
-
-    .leaflet-control-attribution a {
-      color: #6ce9ff !important;
-    }
-
-    .leaflet-control-zoom a {
-      background: rgba(9, 16, 30, 0.94) !important;
-      color: #d8f6ff !important;
-      border: 1px solid #2d4a77 !important;
-    }
-
-    .leaflet-popup-content-wrapper,
-    .leaflet-popup-tip {
-      background: rgba(8, 14, 28, 0.95);
-      color: #dcf6ff;
-      border: 1px solid #2d456f;
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.48);
-    }
-
     .course-popup {
       position: fixed;
       right: 1rem;
@@ -1261,9 +1174,8 @@
 <body>
   <main class="page">
     <nav class="quick-nav" aria-label="Atalhos">
-      <a class="nav-btn" href="https://luizftoledo.github.io/">Voltar ao Portfolio</a>
-      <a class="nav-btn" href="./tendencias.html">Abrir aba de tendências</a>
-      <a class="nav-btn" href="https://datafixers.org/" target="_blank" rel="noopener noreferrer">Ir para DataFixers.org</a>
+      <a class="nav-btn" href="https://luizftoledo.github.io/">luizftoledo.github.io</a>
+      <a class="nav-btn" href="https://datafixers.org/" target="_blank" rel="noopener noreferrer">datafixers.org</a>
     </nav>
 
     <section class="top-shell">
@@ -1286,7 +1198,12 @@
           <button class="dataset-tab active" id="tab-ibama" type="button">IBAMA</button>
           <button class="dataset-tab" id="tab-icmbio" type="button">ICMBio</button>
         </div>
-        <p class="hint" id="dataset-summary">Resultados serao divididos entre IBAMA e ICMBio.</p>
+        <p class="hint" id="dataset-summary">As abas IBAMA/ICMBio mudam o recorte. O painel usa a base inteira; a tabela abaixo mostra uma prévia para leitura rápida.</p>
+        <div class="view-tabs" id="view-tabs" aria-label="Modos da ferramenta">
+          <button class="view-tab active" id="view-story" type="button">Resumo da busca</button>
+          <button class="view-tab" id="view-watch" type="button">Ficar de olho (tendências)</button>
+          <a class="view-tab" href="./tendencias.html">Tendências completas</a>
+        </div>
 
         <div class="metrics-grid">
           <article class="metric">
@@ -1325,34 +1242,31 @@
           </div>
         </div>
 
-        <p class="hint">Para exportar direto para Google Sheets, configure seu Google OAuth Client ID no bloco de resultados.</p>
+        <p class="hint">Use os botões de exportação CSV para baixar o recorte atual da busca.</p>
       </div>
     </section>
 
     <section class="story-layout view-panel" id="story-section">
       <div class="story-steps" id="story-steps"></div>
+    </section>
 
-      <aside class="map-panel">
-        <div id="story-map"></div>
-        <div class="map-caption">
-          <h2 id="map-title">Mapa da busca</h2>
-          <p id="map-description">Execute uma busca para ver os pontos georreferenciados e a narrativa orientada por scroll.</p>
-        </div>
-      </aside>
+    <section class="watch-panel view-panel hidden" id="watch-section">
+      <header class="section-head">
+        <h2>Ficar de olho: alertas e tendências</h2>
+        <span class="badge" id="watch-badge">multa de alto valor: --</span>
+      </header>
+      <div class="watch-body">
+        <p class="hint" id="watch-summary">Sem dados ainda. Faça uma busca para liberar os alertas.</p>
+        <div class="watch-cards" id="watch-cards"></div>
+        <div class="watch-details" id="watch-details"></div>
+      </div>
     </section>
 
     <section class="results-panel">
       <header class="section-head">
-        <h2>Resultados filtrados (amostra paginada)</h2>
+        <h2>Resultados filtrados (prévia da tabela)</h2>
       </header>
-      <div class="sheets-controls">
-        <div class="sheets-row">
-          <input id="google-client-id" type="text" placeholder="Google OAuth Client ID (Web) para exportar direto ao Sheets">
-          <button class="btn-export" id="btn-export-csv-2">Exportar CSV</button>
-          <button class="btn-sheet" id="btn-open-sheets">Exportar para Google Sheets</button>
-        </div>
-        <p class="hint" id="sheets-status">Use CSV para download local ou configure o Client ID para criar uma planilha no Google com o filtro atual.</p>
-      </div>
+      <button class="btn-export" id="btn-export-csv-2">Exportar CSV</button>
       <div class="table-wrap">
         <table>
           <thead>

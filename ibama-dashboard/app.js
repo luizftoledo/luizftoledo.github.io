@@ -3,14 +3,11 @@
     const btnSearch = document.getElementById('btn-search');
     const btnExportCsv = document.getElementById('btn-export-csv');
     const btnExportCsv2 = document.getElementById('btn-export-csv-2');
-    const btnOpenSheets = document.getElementById('btn-open-sheets');
     const tabIbama = document.getElementById('tab-ibama');
     const tabIcmbio = document.getElementById('tab-icmbio');
     const datasetSummary = document.getElementById('dataset-summary');
     const viewStoryBtn = document.getElementById('view-story');
     const viewWatchBtn = document.getElementById('view-watch');
-    const googleClientIdInput = document.getElementById('google-client-id');
-    const sheetsStatus = document.getElementById('sheets-status');
 
     const metricLoadedNow = document.getElementById('metric-loaded-now');
     const metricRange = document.getElementById('metric-range');
@@ -49,13 +46,12 @@
     let searchDataByDataset = { ibama: null, icmbio: null };
     let activeDataset = 'ibama';
     let activeView = 'story';
+    const MAP_ENABLED = false;
     let map = null;
     let mapLayer = null;
     let stepObserver = null;
 
     const GEMINI_STORAGE_KEY = 'ibama_gemini_key';
-    const GOOGLE_CLIENT_ID_STORAGE_KEY = 'ibama_google_client_id';
-    const GOOGLE_SHEETS_SCOPE = 'https://www.googleapis.com/auth/drive.file';
     const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
     const GEMINI_CONTINUE_PROMPT = 'Continue exatamente de onde parou, sem repetir o que ja escreveu.';
     const AI_HISTORY_MAX_ITEMS = 16;
@@ -75,8 +71,6 @@
     const MAP_LIMIT = MOBILE_LIGHT_MODE ? 520 : 1400;
     const EXPORT_MAX_ROWS = MOBILE_LIGHT_MODE ? 150000 : 300000;
 
-    let googleAccessToken = '';
-    let googleTokenExpiresAt = 0;
     let aiConversationHistory = [];
     let aiChatMessages = [];
     let aiLastContextStamp = '';
@@ -197,6 +191,7 @@
     }
 
     function initMap() {
+      if (!MAP_ENABLED) return;
       if (map) return;
       map = L.map('story-map', { preferCanvas: true, zoomControl: true }).setView([-14.2, -51.9], 4);
       L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
@@ -259,10 +254,10 @@
       tabIbama.classList.toggle('active', activeDataset === 'ibama');
       tabIcmbio.classList.toggle('active', activeDataset === 'icmbio');
       if (MOBILE_LIGHT_MODE) {
-        datasetSummary.textContent = `Modo leve mobile ativo: busca carrega um órgão por vez para evitar travamentos. Toque na aba do outro órgão para carregar.`;
+        datasetSummary.textContent = 'Modo leve mobile: a busca carrega um órgão por vez para evitar travamentos. A tabela mostra uma prévia dos maiores valores; use CSV para baixar mais linhas.';
         return;
       }
-      datasetSummary.textContent = `Busca dividida: IBAMA ${numberFmt.format(ibamaTotal || 0)} registros, ICMBio ${numberFmt.format(icmbioTotal || 0)} registros.`;
+      datasetSummary.textContent = `Totais no filtro atual: IBAMA ${numberFmt.format(ibamaTotal || 0)} autos e ICMBio ${numberFmt.format(icmbioTotal || 0)} autos. A tabela é uma prévia dos maiores valores.`;
     }
 
     function getDatasetMeta(dataset) {
@@ -437,6 +432,110 @@
       );
     }
 
+    function detectInfractionType(text) {
+      const normalized = normalizeText(text || '');
+      if (!normalized) return 'Outras infrações ambientais';
+      if (
+        normalized.includes('desmat') ||
+        normalized.includes('supressao de vegetacao') ||
+        normalized.includes('corte raso') ||
+        normalized.includes('vegetacao nativa')
+      ) return 'Desmatamento e vegetação nativa';
+      if (
+        normalized.includes('queimada') ||
+        normalized.includes('incendio') ||
+        normalized.includes('uso de fogo')
+      ) return 'Queimada e uso de fogo';
+      if (
+        normalized.includes('fauna') ||
+        normalized.includes('animal silvestre') ||
+        normalized.includes('caca')
+      ) return 'Fauna silvestre';
+      if (
+        normalized.includes('pesca') ||
+        normalized.includes('defeso') ||
+        normalized.includes('pescado')
+      ) return 'Pesca irregular';
+      if (
+        normalized.includes('garimpo') ||
+        normalized.includes('mineracao') ||
+        normalized.includes('lavra')
+      ) return 'Mineração e garimpo';
+      if (
+        normalized.includes('madeira') ||
+        normalized.includes('carvao') ||
+        normalized.includes('produto florestal')
+      ) return 'Madeira e produtos florestais';
+      if (
+        normalized.includes('licenca') ||
+        normalized.includes('autorizacao') ||
+        normalized.includes('sem autorizacao')
+      ) return 'Atividade sem licença/autorização';
+      if (
+        normalized.includes('poluicao') ||
+        normalized.includes('residuo') ||
+        normalized.includes('efluente')
+      ) return 'Poluição e resíduos';
+      if (
+        normalized.includes('unidade de conservacao') ||
+        normalized.includes('app') ||
+        normalized.includes('area de preservacao')
+      ) return 'Área protegida';
+      return 'Outras infrações ambientais';
+    }
+
+    function compactDescription(text, maxLen = 190) {
+      const clean = (text || '').toString().replace(/\s+/g, ' ').trim();
+      if (!clean) return '';
+      if (clean.length <= maxLen) return clean;
+      return `${clean.slice(0, maxLen - 1).trim()}…`;
+    }
+
+    function upsertInfractionTypeByYear(container, year, typeLabel, fine, description) {
+      if (!year) return;
+      let yearMap = container.get(year);
+      if (!yearMap) {
+        yearMap = new Map();
+        container.set(year, yearMap);
+      }
+      const row = yearMap.get(typeLabel) || {
+        tipo: typeLabel,
+        quantidade: 0,
+        total_multas: 0,
+        exemplo_1: '',
+        exemplo_2: '',
+      };
+      row.quantidade += 1;
+      row.total_multas += fine;
+      const sample = compactDescription(description);
+      if (sample && !row.exemplo_1) {
+        row.exemplo_1 = sample;
+      } else if (sample && row.exemplo_1 !== sample && !row.exemplo_2) {
+        row.exemplo_2 = sample;
+      }
+      yearMap.set(typeLabel, row);
+    }
+
+    function upsertDescriptionByYear(container, year, description, fine) {
+      if (!year) return;
+      const sample = compactDescription(description);
+      if (!sample) return;
+      let yearMap = container.get(year);
+      if (!yearMap) {
+        yearMap = new Map();
+        container.set(year, yearMap);
+      }
+      const row = yearMap.get(sample) || {
+        descricao: sample,
+        tipo: detectInfractionType(sample),
+        quantidade: 0,
+        total_multas: 0,
+      };
+      row.quantidade += 1;
+      row.total_multas += fine;
+      yearMap.set(sample, row);
+    }
+
     function upsertOffenderYearMap(mapObj, name, fine, isBigFine, isDeforestation) {
       const offenderName = (name || '').toString().trim();
       if (!offenderName) return;
@@ -480,6 +579,8 @@
       let latestYearOffenderMap = new Map();
       const bigFineEvents = [];
       const desmatByYearMap = new Map();
+      const infractionTypeByYearMap = new Map();
+      const descriptionByYearMap = new Map();
 
       let totalMatch = 0;
       let totalMultas = 0;
@@ -530,6 +631,10 @@
               watchYear.big_total += fine;
             }
             yearWatchMap.set(year, watchYear);
+
+            const infractionType = detectInfractionType(row.des_auto_infracao || '');
+            upsertInfractionTypeByYear(infractionTypeByYearMap, year, infractionType, fine, row.des_auto_infracao);
+            upsertDescriptionByYear(descriptionByYearMap, year, row.des_auto_infracao, fine);
 
             if (isBigFine && row.nome_infrator) {
               bigFineEvents.push({ ano: year, nome_infrator: row.nome_infrator, valor_multa: fine });
@@ -658,6 +763,18 @@
         .sort((a, b) => (b.desmat_total - a.desmat_total) || (b.desmat_quantidade - a.desmat_quantidade))
         .slice(0, 10);
 
+      const topInfractionTypes = [...(infractionTypeByYearMap.get(targetYear) || new Map()).values()]
+        .sort((a, b) => (b.quantidade - a.quantidade) || (b.total_multas - a.total_multas))
+        .slice(0, 12)
+        .map((row) => ({
+          ...row,
+          exemplo: [row.exemplo_1, row.exemplo_2].filter(Boolean).join(' | '),
+        }));
+
+      const topInfractionDescriptions = [...(descriptionByYearMap.get(targetYear) || new Map()).values()]
+        .sort((a, b) => (b.quantidade - a.quantidade) || (b.total_multas - a.total_multas))
+        .slice(0, 12);
+
       const deltaPct = (current, previous) => {
         const c = Number(current || 0);
         const p = Number(previous || 0);
@@ -701,6 +818,8 @@
           top_current_by_count: topCurrentByCount,
           top_current_by_value: topCurrentByValue,
           new_big_players: newBigPlayers,
+          top_infraction_types: topInfractionTypes,
+          top_infraction_descriptions: topInfractionDescriptions,
           desmat_target: {
             quantidade: targetDesmat.quantidade || 0,
             total_multas: targetDesmat.total_multas || 0,
@@ -751,8 +870,8 @@
     function renderWatchPanel(data) {
       if (!watchBadge || !watchSummary || !watchCards || !watchDetails) return;
       if (!data || !data.watch) {
-        watchBadge.textContent = `multao >= ${moneyFmt.format(WATCH_BIG_FINE_MIN)}`;
-        watchSummary.textContent = `Sem dados para montar o painel de tendencia.`;
+        watchBadge.textContent = `multa de alto valor (>= ${moneyFmt.format(WATCH_BIG_FINE_MIN)})`;
+        watchSummary.textContent = 'Sem dados para montar o painel de tendências.';
         watchCards.innerHTML = '';
         watchDetails.innerHTML = '';
         return;
@@ -767,21 +886,24 @@
       const topByValue = watch.top_current_by_value || [];
       const newPlayers = watch.new_big_players || [];
       const desmatTop = desmat.top_offenders || [];
+      const infractionTypes = watch.top_infraction_types || [];
+      const infractionDescriptions = watch.top_infraction_descriptions || [];
 
-      watchBadge.textContent = `multao >= ${moneyFmt.format(Number(watch.threshold || WATCH_BIG_FINE_MIN))}`;
+      watchBadge.textContent = `multa de alto valor (>= ${moneyFmt.format(Number(watch.threshold || WATCH_BIG_FINE_MIN))})`;
       watchSummary.innerHTML = [
-        `Painel focado em multas altas para <strong>${esc(getDatasetLabel(data.dataset || activeDataset))}</strong>.`,
+        `Painel focado em multas de alto valor para <strong>${esc(getDatasetLabel(data.dataset || activeDataset))}</strong>.`,
+        `Nesta aba, "multa de alto valor" significa auto com valor igual ou maior que <strong>${esc(moneyFmt.format(Number(watch.threshold || WATCH_BIG_FINE_MIN)))}</strong>.`,
         `Ano monitorado: <strong>${esc(targetLabel)}</strong>.`,
-        `Use este bloco para ver quem lidera em volume, valor, desmatamento e novos autuados com multas altas.`,
+        `Aqui você vê quem merece atenção agora: líderes em quantidade e valor, novos nomes, tipos de infração e descrições mais recorrentes.`,
       ].join(' ');
 
       watchCards.innerHTML = [
         {
-          label: 'Multoes no ano monitorado',
+          label: 'Multas de alto valor no ano',
           value: `${numberFmt.format(targetStats.big_quantidade || 0)} autos`,
         },
         {
-          label: 'Valor das multoes',
+          label: 'Valor dessas multas',
           value: moneyFmt.format(targetStats.big_total || 0),
         },
         {
@@ -793,11 +915,11 @@
           value: `Qtde ${formatDeltaLabel(watch.delta_big_count_vs_baseline)} | Valor ${formatDeltaLabel(watch.delta_big_value_vs_baseline)}`,
         },
         {
-          label: 'Autos com perfil de desmatamento',
+          label: 'Autos ligados a desmatamento',
           value: `${numberFmt.format(desmat.quantidade || 0)} autos`,
         },
         {
-          label: 'Valor de desmatamento',
+          label: 'Valor em desmatamento',
           value: moneyFmt.format(desmat.total_multas || 0),
         },
       ].map((card) => `
@@ -807,8 +929,8 @@
         </article>
       `).join('');
 
-      const renderRows = (rows, mapper, emptyLabel) => {
-        if (!rows.length) return `<tr><td colspan="3" class="empty">${esc(emptyLabel)}</td></tr>`;
+      const renderRows = (rows, mapper, emptyLabel, colSpan = 3) => {
+        if (!rows.length) return `<tr><td colspan="${colSpan}" class="empty">${esc(emptyLabel)}</td></tr>`;
         return rows.map(mapper).join('');
       };
 
@@ -860,14 +982,14 @@
           </div>
         </article>
         <article class="watch-detail-card">
-          <h3>Novos autuados com multoes em ${esc(targetLabel)}</h3>
+          <h3>Novos autuados com multa de alto valor em ${esc(targetLabel)}</h3>
           <div class="watch-detail-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Autuado</th>
-                  <th>Multoes no ano</th>
-                  <th>Valor das multoes</th>
+                  <th>Multas de alto valor</th>
+                  <th>Valor total</th>
                 </tr>
               </thead>
               <tbody>
@@ -877,7 +999,7 @@
                     <td>${numberFmt.format(row.big_quantidade || 0)}</td>
                     <td>${esc(moneyFmt.format(row.big_total || 0))}</td>
                   </tr>
-                `, 'Nenhum novo player com multao no recorte atual.')}
+                `, 'Nenhum novo autuado com multa de alto valor no recorte atual.')}
               </tbody>
             </table>
           </div>
@@ -901,6 +1023,56 @@
                     <td>${esc(moneyFmt.format(row.desmat_total || 0))}</td>
                   </tr>
                 `, 'Sem autos com termos de desmatamento neste filtro.')}
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="watch-detail-card">
+          <h3>Tipos de infração mais frequentes em ${esc(targetLabel)}</h3>
+          <div class="watch-detail-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>Autos</th>
+                  <th>Valor total</th>
+                  <th>Exemplo de descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderRows(infractionTypes.slice(0, 10), (row) => `
+                  <tr>
+                    <td>${esc(row.tipo || '-')}</td>
+                    <td>${numberFmt.format(row.quantidade || 0)}</td>
+                    <td>${esc(moneyFmt.format(row.total_multas || 0))}</td>
+                    <td class="watch-desc">${esc(row.exemplo || '-')}</td>
+                  </tr>
+                `, 'Sem classificação disponível para este filtro.', 4)}
+              </tbody>
+            </table>
+          </div>
+        </article>
+        <article class="watch-detail-card">
+          <h3>Descrições de multa mais recorrentes em ${esc(targetLabel)}</h3>
+          <div class="watch-detail-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tipo</th>
+                  <th>Trecho da descrição</th>
+                  <th>Autos</th>
+                  <th>Valor total</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${renderRows(infractionDescriptions.slice(0, 12), (row) => `
+                  <tr>
+                    <td>${esc(row.tipo || '-')}</td>
+                    <td class="watch-desc">${esc(row.descricao || '-')}</td>
+                    <td>${numberFmt.format(row.quantidade || 0)}</td>
+                    <td>${esc(moneyFmt.format(row.total_multas || 0))}</td>
+                  </tr>
+                `, 'Sem descrições recorrentes para este filtro.', 4)}
               </tbody>
             </table>
           </div>
@@ -1084,6 +1256,7 @@
     }
 
     function drawMap(mode) {
+      if (!MAP_ENABLED) return;
       initMap();
       mapLayer.clearLayers();
 
@@ -1132,9 +1305,11 @@
     function activateStep(stepEl, stepData) {
       document.querySelectorAll('.story-step').forEach((el) => el.classList.remove('active'));
       stepEl.classList.add('active');
-      mapTitle.textContent = stepData.mapTitle;
-      mapDescription.textContent = stepData.mapDescription;
-      drawMap(stepData.mode);
+      if (MAP_ENABLED && mapTitle && mapDescription) {
+        mapTitle.textContent = stepData.mapTitle;
+        mapDescription.textContent = stepData.mapDescription;
+        drawMap(stepData.mode);
+      }
     }
 
     function renderStory(data) {
@@ -1207,6 +1382,8 @@
           top_current_by_count: [],
           top_current_by_value: [],
           new_big_players: [],
+          top_infraction_types: [],
+          top_infraction_descriptions: [],
           desmat_target: { quantidade: 0, total_multas: 0, top_offenders: [] },
         },
       };
@@ -1253,18 +1430,22 @@
         const icmbioResultCount = Number(((icmbioData || {}).results || []).length);
         const futures = Number((ibamaData || {}).datas_futuras_ignoradas || 0) + Number((icmbioData || {}).datas_futuras_ignoradas || 0);
 
-        const exportWarnings = [];
-        if ((ibamaData || {}).export_limited) exportWarnings.push(`IBAMA exporta ate ${numberFmt.format(EXPORT_MAX_ROWS)} linhas por busca`);
-        if ((icmbioData || {}).export_limited) exportWarnings.push(`ICMBio exporta ate ${numberFmt.format(EXPORT_MAX_ROWS)} linhas por busca`);
+        const exportLimitedDatasets = [];
+        if ((ibamaData || {}).export_limited) exportLimitedDatasets.push('IBAMA');
+        if ((icmbioData || {}).export_limited) exportLimitedDatasets.push('ICMBio');
+        const exportBaseNote = `A tabela abaixo é uma prévia dos autos de maior valor; o CSV exporta até ${numberFmt.format(EXPORT_MAX_ROWS)} linhas por órgão.`;
+        const exportLimitWarning = exportLimitedDatasets.length
+          ? ` Atenção: ${exportLimitedDatasets.join(' e ')} têm mais resultados do que o limite de exportação.`
+          : '';
 
         if (MOBILE_LIGHT_MODE) {
           const activeData = searchDataByDataset[activeDataset] || emptyDatasetPayload(activeDataset);
           const activeLabel = getDatasetLabel(activeDataset);
           const otherDataset = activeDataset === 'ibama' ? 'icmbio' : 'ibama';
           const otherLoaded = Boolean(searchDataByDataset[otherDataset]);
-          statusLine.textContent = `${activeLabel} ${numberFmt.format(activeData.total_match || 0)} (amostra ${numberFmt.format((activeData.results || []).length)}). Modo leve mobile ativo.${otherLoaded ? '' : ` Para carregar ${getDatasetLabel(otherDataset)}, toque na aba correspondente.`} Datas futuras ignoradas: ${numberFmt.format(futures)}.${warnings.length ? ` Aviso: ${warnings.join(' / ')}.` : ''}${exportWarnings.length ? ` ${exportWarnings.join(' | ')}.` : ''}`;
+          statusLine.textContent = `${activeLabel}: ${numberFmt.format(activeData.total_match || 0)} autos no filtro. Prévia da tabela com ${numberFmt.format((activeData.results || []).length)} linhas. Modo leve mobile ativo.${otherLoaded ? '' : ` Para carregar ${getDatasetLabel(otherDataset)}, toque na aba correspondente.`} Datas futuras ignoradas: ${numberFmt.format(futures)}. ${exportBaseNote}${warnings.length ? ` Aviso: ${warnings.join(' / ')}.` : ''}${exportLimitWarning}`;
         } else {
-          statusLine.textContent = `IBAMA ${numberFmt.format(ibamaCount)} (amostra ${numberFmt.format(ibamaResultCount)}) | ICMBio ${numberFmt.format(icmbioCount)} (amostra ${numberFmt.format(icmbioResultCount)}). Datas futuras ignoradas: ${numberFmt.format(futures)}.${warnings.length ? ` Aviso: ${warnings.join(' / ')}.` : ''}${exportWarnings.length ? ` ${exportWarnings.join(' | ')}.` : ''}`;
+          statusLine.textContent = `IBAMA: ${numberFmt.format(ibamaCount)} autos (prévia ${numberFmt.format(ibamaResultCount)} linhas) | ICMBio: ${numberFmt.format(icmbioCount)} autos (prévia ${numberFmt.format(icmbioResultCount)} linhas). Datas futuras ignoradas: ${numberFmt.format(futures)}. ${exportBaseNote}${warnings.length ? ` Aviso: ${warnings.join(' / ')}.` : ''}${exportLimitWarning}`;
         }
 
         updateDatasetTabs();
@@ -1344,124 +1525,7 @@
         a.remove();
         URL.revokeObjectURL(url);
       } catch (error) {
-        setSheetsStatus(`Falha ao exportar CSV: ${error.message}`, true);
-      }
-    }
-
-    function setSheetsStatus(message, isError = false) {
-      sheetsStatus.textContent = message;
-      sheetsStatus.classList.toggle('error', Boolean(isError));
-    }
-
-    function saveGoogleClientIdLocally() {
-      localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY, googleClientIdInput.value.trim());
-    }
-
-    function restoreGoogleClientId() {
-      const cached = localStorage.getItem(GOOGLE_CLIENT_ID_STORAGE_KEY);
-      if (cached) {
-        googleClientIdInput.value = cached;
-      }
-    }
-
-    async function getGoogleAccessToken() {
-      const clientId = googleClientIdInput.value.trim();
-      if (!clientId) {
-        throw new Error('Informe o Google OAuth Client ID para exportacao direta.');
-      }
-      if (!(window.google && google.accounts && google.accounts.oauth2)) {
-        throw new Error('Biblioteca Google Identity nao carregou. Recarregue a pagina.');
-      }
-      if (googleAccessToken && Date.now() < (googleTokenExpiresAt - 30000)) {
-        return googleAccessToken;
-      }
-
-      return new Promise((resolve, reject) => {
-        let settled = false;
-        const tokenClient = google.accounts.oauth2.initTokenClient({
-          client_id: clientId,
-          scope: GOOGLE_SHEETS_SCOPE,
-          callback: (tokenResponse) => {
-            if (settled) return;
-            settled = true;
-            if (tokenResponse?.error) {
-              reject(new Error(tokenResponse.error));
-              return;
-            }
-            if (!tokenResponse?.access_token) {
-              reject(new Error('Google nao retornou access token.'));
-              return;
-            }
-
-            googleAccessToken = tokenResponse.access_token;
-            const expiresIn = Number(tokenResponse.expires_in || 1800);
-            googleTokenExpiresAt = Date.now() + (Number.isFinite(expiresIn) && expiresIn > 0 ? expiresIn * 1000 : 1800000);
-            resolve(googleAccessToken);
-          },
-          error_callback: (error) => {
-            if (settled) return;
-            settled = true;
-            reject(new Error(error?.type || 'Falha no login Google.'));
-          }
-        });
-        tokenClient.requestAccessToken({ prompt: googleAccessToken ? '' : 'consent' });
-      });
-    }
-
-    async function uploadCsvBlobToGoogleSheets(csvBlob, accessToken) {
-      const boundary = `ibama_${Date.now()}_${Math.random().toString(16).slice(2)}`;
-      const timestamp = new Date().toISOString().slice(0, 19).replace(/[T:-]/g, '');
-      const metadata = {
-        name: `ibama_busca_${timestamp}`,
-        mimeType: 'application/vnd.google-apps.spreadsheet',
-      };
-
-      const multipartBody = new Blob([
-        `--${boundary}\r\n`,
-        'Content-Type: application/json; charset=UTF-8\r\n\r\n',
-        `${JSON.stringify(metadata)}\r\n`,
-        `--${boundary}\r\n`,
-        'Content-Type: text/csv; charset=UTF-8\r\n\r\n',
-        csvBlob,
-        `\r\n--${boundary}--`,
-      ]);
-
-      const resp = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,webViewLink', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': `multipart/related; boundary=${boundary}`,
-        },
-        body: multipartBody,
-      });
-
-      const data = await resp.json();
-      if (!resp.ok) {
-        throw new Error(data?.error?.message || `HTTP ${resp.status}`);
-      }
-      if (!data?.id) {
-        throw new Error('Google nao retornou o ID da planilha.');
-      }
-      return data;
-    }
-
-    async function openGoogleSheetsFlow() {
-      btnOpenSheets.disabled = true;
-      setSheetsStatus('Autenticando no Google...');
-      try {
-        saveGoogleClientIdLocally();
-        const accessToken = await getGoogleAccessToken();
-        setSheetsStatus(`Gerando CSV da busca atual (${getDatasetLabel(activeDataset)})...`);
-        const csvBlob = await fetchExportCsvBlob({ delimiter: 'comma', bom: false });
-        setSheetsStatus('Enviando para Google Sheets...');
-        const createdFile = await uploadCsvBlobToGoogleSheets(csvBlob, accessToken);
-        const sheetUrl = createdFile.webViewLink || `https://docs.google.com/spreadsheets/d/${createdFile.id}/edit`;
-        setSheetsStatus(`Planilha criada com sucesso para ${getDatasetLabel(activeDataset)} (${createdFile.name || createdFile.id}).`);
-        window.open(sheetUrl, '_blank', 'noopener');
-      } catch (error) {
-        setSheetsStatus(`Falha ao exportar para Google Sheets: ${error.message}`, true);
-      } finally {
-        btnOpenSheets.disabled = false;
+        statusLine.textContent = `Falha ao exportar CSV: ${error.message}`;
       }
     }
 
@@ -1820,12 +1884,7 @@
       setViewMode(initialView === 'watch' ? 'watch' : 'story');
       restoreGeminiKey();
       resetAiConversation();
-      restoreGoogleClientId();
       updateDatasetTabs();
-
-      if (googleClientIdInput.value.trim()) {
-        setSheetsStatus('Client ID carregado. Pronto para exportar para Google Sheets.');
-      }
 
       try {
         dashboardMetadata = await fetchJson(DATA_METADATA_FILE);
@@ -1857,7 +1916,6 @@
 
     btnExportCsv.addEventListener('click', exportCsv);
     btnExportCsv2.addEventListener('click', exportCsv);
-    btnOpenSheets.addEventListener('click', openGoogleSheetsFlow);
 
     btnAskAi.addEventListener('click', askGemini);
     btnAiReset.addEventListener('click', () => {
@@ -1872,6 +1930,5 @@
       }
     });
     geminiKeyInput.addEventListener('change', saveGeminiKeyLocally);
-    googleClientIdInput.addEventListener('change', saveGoogleClientIdLocally);
 
     boot();

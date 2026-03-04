@@ -4,7 +4,7 @@ Dashboard estatico com dados de autos de infracao do IBAMA e ICMBio.
 
 ## Arquivos principais
 
-- `index.html`: interface (mapa, scrollytelling, busca, exportacao, IA).
+- `index.html`: interface (scrollytelling, busca, exportacao, IA).
 - `app.js`: logica da busca local e interacoes.
 - `data/metadata.json`: metadados de atualizacao e contagens.
 - `data/ibama_records.jsonl.gz`: base otimizada do IBAMA.
