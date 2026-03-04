@@ -1052,8 +1052,10 @@
     setSpotlight(report);
 
     renderPairsTable(report.top_author_destination_today || []);
-    renderAuthorsTotalTable(report.top_authors_total || []);
-    renderSimpleTable(els.tableDestinationsTotal, report.top_destinations_total || [], 'destination', 'total_empenhado', 2);
+    const topAuthorsYear = report.top_authors_year || report.top_authors_total || [];
+    const topDestinationsYear = report.top_destinations_year || report.top_destinations_total || [];
+    renderAuthorsTotalTable(topAuthorsYear);
+    renderSimpleTable(els.tableDestinationsTotal, topDestinationsYear, 'destination', 'total_empenhado', 2);
 
     renderHistoryChart(report.daily_history || []);
     renderBarChart(

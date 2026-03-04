@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-04T03:27:55.313809+00:00",
+  "generated_at": "2026-03-04T03:55:55.924586+00:00",
   "snapshot_date": "2026-03-03",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -213,6 +213,80 @@
     {
       "destination": "PARÁ (UF)",
       "total_empenhado": 1664858109.38
+    }
+  ],
+  "top_authors_year": [
+    {
+      "author": "GENERAL PAZUELLO",
+      "party": "PL",
+      "total_empenhado": 3300000.0
+    },
+    {
+      "author": "ASTRONAUTA MARCOS PONTES",
+      "party": "PL",
+      "total_empenhado": 1075000.0
+    },
+    {
+      "author": "BRUNO GANEM",
+      "party": "PODE",
+      "total_empenhado": 810817.49
+    },
+    {
+      "author": "BANCADA DO ESPIRITO SANTO",
+      "party": "Bancada",
+      "total_empenhado": 300000.0
+    },
+    {
+      "author": "DELEGADO MATHEUS LAIOLA",
+      "party": "UNIÃO",
+      "total_empenhado": 245000.0
+    },
+    {
+      "author": "RAIMUNDO COSTA",
+      "party": "PODE",
+      "total_empenhado": 200000.0
+    },
+    {
+      "author": "LUCIANO VIEIRA",
+      "party": "PSDB",
+      "total_empenhado": 142360.9
+    },
+    {
+      "author": "RODRIGO DA ZAELI",
+      "party": "PL",
+      "total_empenhado": 117152.0
+    },
+    {
+      "author": "DELEGADO PALUMBO",
+      "party": "MDB",
+      "total_empenhado": 90000.0
+    },
+    {
+      "author": "ROSANA VALLE",
+      "party": "PL",
+      "total_empenhado": 45000.0
+    }
+  ],
+  "top_destinations_year": [
+    {
+      "destination": "Nacional",
+      "total_empenhado": 4692152.0
+    },
+    {
+      "destination": "SÃO PAULO (UF)",
+      "total_empenhado": 945817.49
+    },
+    {
+      "destination": "ESPÍRITO SANTO (UF)",
+      "total_empenhado": 300000.0
+    },
+    {
+      "destination": "PARANÁ (UF)",
+      "total_empenhado": 245000.0
+    },
+    {
+      "destination": "RIO DE JANEIRO (UF)",
+      "total_empenhado": 142360.9
     }
   ],
   "unico_year_summary": {
@@ -542,21 +616,6 @@
           "acao": "21BF - Pesquisa, Desenvolvimento Tecnológico e Inovação em Saúde",
           "dotacao_inicial_emenda": 6500000.0,
           "dotacao_atual_emenda": 6500000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "14680020",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Chico Alencar",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PSOL",
-          "orgao": "44000 - Ministério do Meio Ambiente e Mudança do Clima",
-          "acao": "2000 - Administração da Unidade",
-          "dotacao_inicial_emenda": 500000.0,
-          "dotacao_atual_emenda": 500000.0,
           "empenhado": 0.0,
           "liquidado": 0.0,
           "pago": 0.0
@@ -1147,21 +1206,6 @@
           "pago": 0.0
         },
         {
-          "nro_emenda": "31340006",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Fausto Pinato",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PP",
-          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
-          "acao": "0EC2 - Transferências Especiais",
-          "dotacao_inicial_emenda": 5000000.0,
-          "dotacao_atual_emenda": 5000000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
           "nro_emenda": "33120017",
           "ano": "2026",
           "rp": "6 - Emendas Individuais",
@@ -1262,6 +1306,306 @@
           "acao": "0EC2 - Transferências Especiais",
           "dotacao_inicial_emenda": 11920000.0,
           "dotacao_atual_emenda": 11920000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "36110001",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiza Erundina",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSOL",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E90 - Incremento Temporário ao Custeio dos Serviços de Assistência Hospitalar e Ambulatorial para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 19902007.0,
+          "dotacao_atual_emenda": 19902007.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "36110002",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiza Erundina",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSOL",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8535 - Estruturação de Unidades de Atenção Especializada em Saúde",
+          "dotacao_inicial_emenda": 8000000.0,
+          "dotacao_atual_emenda": 8000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "36110003",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiza Erundina",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSOL",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "21BF - Pesquisa, Desenvolvimento Tecnológico e Inovação em Saúde",
+          "dotacao_inicial_emenda": 2000000.0,
+          "dotacao_atual_emenda": 2000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "36110004",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiza Erundina",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSOL",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "21BF - Pesquisa, Desenvolvimento Tecnológico e Inovação em Saúde",
+          "dotacao_inicial_emenda": 800000.0,
+          "dotacao_atual_emenda": 800000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "36110005",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiza Erundina",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSOL",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "20YD - Educação e Trabalho na Saúde",
+          "dotacao_inicial_emenda": 400000.0,
+          "dotacao_atual_emenda": 400000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "36110006",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiza Erundina",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSOL",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "20RK - Funcionamento de Instituições Federais de Ensino Superior",
+          "dotacao_inicial_emenda": 1000000.0,
+          "dotacao_atual_emenda": 1000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "36110007",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiza Erundina",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSOL",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "0048 - Apoio a Entidades de Ensino Superior Não Federais",
+          "dotacao_inicial_emenda": 250000.0,
+          "dotacao_atual_emenda": 250000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "36110008",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiza Erundina",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSOL",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "20GK - Fomento às Ações de Graduação, Pós-Graduação, Ensino, Pesquisa e Extensão",
+          "dotacao_inicial_emenda": 500000.0,
+          "dotacao_atual_emenda": 500000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "36110009",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiza Erundina",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSOL",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "20RL - Funcionamento das Instituições da Rede Federal de Educação Profissional, Científica e Tecnológica",
+          "dotacao_inicial_emenda": 500000.0,
+          "dotacao_atual_emenda": 500000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560001",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 200000.0,
+          "dotacao_atual_emenda": 200000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560002",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8535 - Estruturação de Unidades de Atenção Especializada em Saúde",
+          "dotacao_inicial_emenda": 518950.0,
+          "dotacao_atual_emenda": 518950.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560003",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "55000 - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+          "acao": "219G - Estruturação da Rede de Serviços e Fortalecimento da Gestão do Sistema Único de Assistência Social (SUAS)",
+          "dotacao_inicial_emenda": 4100000.0,
+          "dotacao_atual_emenda": 4100000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560004",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "51000 - Ministério do Esporte",
+          "acao": "20JP - Desenvolvimento de Atividades e Apoio a Programas, eventos e Projetos de Esporte Amador, Educação, Lazer e Inclusão Social",
+          "dotacao_inicial_emenda": 4240631.0,
+          "dotacao_atual_emenda": 4240631.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560005",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "44000 - Ministério do Meio Ambiente e Mudança do Clima",
+          "acao": "2E87 - Implementação da Agenda Nacional de Proteção, Defesa, Bem-Estar e Direitos Animais",
+          "dotacao_inicial_emenda": 1000000.0,
+          "dotacao_atual_emenda": 1000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560006",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "49000 - Ministério do Desenvolvimento Agrário e Agricultura Familiar",
+          "acao": "210V - Estruturação Produtiva, Promoção e Fortalecimento da Agricultura Familiar e da Agroecologia",
+          "dotacao_inicial_emenda": 400000.0,
+          "dotacao_atual_emenda": 400000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560007",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "55000 - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+          "acao": "2798 - Aquisição e Distribuição de Alimentos da Agricultura Familiar para Promoção da Segurança Alimentar e Nutricional",
+          "dotacao_inicial_emenda": 500000.0,
+          "dotacao_atual_emenda": 500000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560008",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "20GK - Fomento às Ações de Graduação, Pós-Graduação, Ensino, Pesquisa e Extensão",
+          "dotacao_inicial_emenda": 250000.0,
+          "dotacao_atual_emenda": 250000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560009",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "42000 - Ministério da Cultura",
+          "acao": "20ZF - Promoção e Fomento à Cultura Brasileira",
+          "dotacao_inicial_emenda": 3200000.0,
+          "dotacao_atual_emenda": 3200000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560010",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "65000 - Ministério das Mulheres",
+          "acao": "21GG - Promoção da Igualdade de Direitos e da Autonomia Econômica das Mulheres",
+          "dotacao_inicial_emenda": 1000000.0,
+          "dotacao_atual_emenda": 1000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "37560011",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosangela Gomes",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "20GK - Fomento às Ações de Graduação, Pós-Graduação, Ensino, Pesquisa e Extensão",
+          "dotacao_inicial_emenda": 2000000.0,
+          "dotacao_atual_emenda": 2000000.0,
           "empenhado": 0.0,
           "liquidado": 0.0,
           "pago": 0.0
@@ -1382,6 +1726,96 @@
           "acao": "21F0 - Democratização do Acesso à Justiça e à Cidadania",
           "dotacao_inicial_emenda": 1000000.0,
           "dotacao_atual_emenda": 1000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "40360020",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiz Philippe de Orleans e Bragança",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "55000 - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+          "acao": "215I - Consolidação da Implantação do Sistema Nacional de Segurança Alimentar e Nutricional - SISAN",
+          "dotacao_inicial_emenda": 300000.0,
+          "dotacao_atual_emenda": 300000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "40360021",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiz Philippe de Orleans e Bragança",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "44000 - Ministério do Meio Ambiente e Mudança do Clima",
+          "acao": "21F3 - Implementação de Políticas para Biodiversidade, Vegetação Nativa e Áreas Protegidas",
+          "dotacao_inicial_emenda": 300000.0,
+          "dotacao_atual_emenda": 300000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "40360022",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiz Philippe de Orleans e Bragança",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "22000 - Ministério da Agricultura e Pecuária",
+          "acao": "215A - Desenvolvimento das Cadeias Produtivas da Agropecuária",
+          "dotacao_inicial_emenda": 300000.0,
+          "dotacao_atual_emenda": 300000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "40360023",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiz Philippe de Orleans e Bragança",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "22000 - Ministério da Agricultura e Pecuária",
+          "acao": "20ZV - Fomento ao Setor Agropecuário",
+          "dotacao_inicial_emenda": 300000.0,
+          "dotacao_atual_emenda": 300000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "40360024",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiz Philippe de Orleans e Bragança",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "20RG - Reestruturação e Modernização das Instituições da Rede Federal de Educação Profissional, Científica e Tecnológica",
+          "dotacao_inicial_emenda": 285000.0,
+          "dotacao_atual_emenda": 285000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "40360025",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Luiz Philippe de Orleans e Bragança",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "67000 - Ministério da Igualdade Racial",
+          "acao": "21HN - Gestão de Políticas de Ações Afirmativas e de Combate e Superação do Racismo",
+          "dotacao_inicial_emenda": 150000.0,
+          "dotacao_atual_emenda": 150000.0,
           "empenhado": 0.0,
           "liquidado": 0.0,
           "pago": 0.0
@@ -1627,6 +2061,81 @@
           "pago": 0.0
         },
         {
+          "nro_emenda": "41630011",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Natália Bonavides",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PT",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8535 - Estruturação de Unidades de Atenção Especializada em Saúde",
+          "dotacao_inicial_emenda": 8203444.0,
+          "dotacao_atual_emenda": 8203444.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "41710015",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosana Valle",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "55000 - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+          "acao": "2798 - Aquisição e Distribuição de Alimentos da Agricultura Familiar para Promoção da Segurança Alimentar e Nutricional",
+          "dotacao_inicial_emenda": 300000.0,
+          "dotacao_atual_emenda": 300000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "41710016",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosana Valle",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "52000 - Ministério da Defesa",
+          "acao": "2000 - Administração da Unidade",
+          "dotacao_inicial_emenda": 200000.0,
+          "dotacao_atual_emenda": 200000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "41710017",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosana Valle",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "65000 - Ministério das Mulheres",
+          "acao": "21GG - Promoção da Igualdade de Direitos e da Autonomia Econômica das Mulheres",
+          "dotacao_inicial_emenda": 700000.0,
+          "dotacao_atual_emenda": 700000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "41710018",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Rosana Valle",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PL",
+          "orgao": "52000 - Ministério da Defesa",
+          "acao": "2510 - Prestação de Ensino Profissional Marítimo",
+          "dotacao_inicial_emenda": 200000.0,
+          "dotacao_atual_emenda": 200000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
           "nro_emenda": "42910001",
           "ano": "2026",
           "rp": "6 - Emendas Individuais",
@@ -1697,231 +2206,6 @@
           "acao": "20ZH - Preservação do Patrimônio Cultural Brasileiro",
           "dotacao_inicial_emenda": 720400.0,
           "dotacao_atual_emenda": 720400.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43500007",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Delegado Paulo Bilynskyj",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PL",
-          "orgao": "36000 - Ministério da Saúde",
-          "acao": "2E90 - Incremento Temporário ao Custeio dos Serviços de Assistência Hospitalar e Ambulatorial para Cumprimento de Metas",
-          "dotacao_inicial_emenda": 19000000.0,
-          "dotacao_atual_emenda": 19000000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530001",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
-          "acao": "0EC2 - Transferências Especiais",
-          "dotacao_inicial_emenda": 2740000.0,
-          "dotacao_atual_emenda": 2740000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530002",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "36000 - Ministério da Saúde",
-          "acao": "21BF - Pesquisa, Desenvolvimento Tecnológico e Inovação em Saúde",
-          "dotacao_inicial_emenda": 300000.0,
-          "dotacao_atual_emenda": 300000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530003",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "67000 - Ministério da Igualdade Racial",
-          "acao": "21FC - Monitoramento, aperfeiçoamento, articulação e estruturação de políticas de promoção da igualdade racial no âmbito do SINAPIR",
-          "dotacao_inicial_emenda": 850000.0,
-          "dotacao_atual_emenda": 850000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530004",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "40000 - Ministério do Trabalho e Emprego",
-          "acao": "215F - Fomento e Fortalecimento da Economia Solidária, Associativismo e Cooperativismo",
-          "dotacao_inicial_emenda": 2100000.0,
-          "dotacao_atual_emenda": 2100000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530005",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "36000 - Ministério da Saúde",
-          "acao": "8535 - Estruturação de Unidades de Atenção Especializada em Saúde",
-          "dotacao_inicial_emenda": 350000.0,
-          "dotacao_atual_emenda": 350000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530006",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "81000 - Ministério dos Direitos Humanos e da Cidadania",
-          "acao": "21G3 - Promoção e Defesa dos Direitos das Pessoas em Situação de Rua e das Catadoras de Materiais Recicláveis",
-          "dotacao_inicial_emenda": 400000.0,
-          "dotacao_atual_emenda": 400000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530007",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "36000 - Ministério da Saúde",
-          "acao": "6217 - Atenção à Saúde nos Serviços Ambulatoriais e Hospitalares do Ministério da Saúde",
-          "dotacao_inicial_emenda": 1000000.0,
-          "dotacao_atual_emenda": 1000000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530008",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "65000 - Ministério das Mulheres",
-          "acao": "21GJ - Apoio às Iniciativas de Prevenção, Acesso à Justiça e Enfrentamento à Violência Contra as Mulheres",
-          "dotacao_inicial_emenda": 1400000.0,
-          "dotacao_atual_emenda": 1400000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530009",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "42000 - Ministério da Cultura",
-          "acao": "20ZH - Preservação do Patrimônio Cultural Brasileiro",
-          "dotacao_inicial_emenda": 200000.0,
-          "dotacao_atual_emenda": 200000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530010",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "40000 - Ministério do Trabalho e Emprego",
-          "acao": "2B12 - Fomento à Inclusão Produtiva",
-          "dotacao_inicial_emenda": 1000000.0,
-          "dotacao_atual_emenda": 1000000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530011",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "81000 - Ministério dos Direitos Humanos e da Cidadania",
-          "acao": "21G2 - Promoção e Defesa dos Direitos das Pessoas LGBTQIA+",
-          "dotacao_inicial_emenda": 200000.0,
-          "dotacao_atual_emenda": 200000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530012",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "69000 - Ministério do Empreendedorismo, da Microempresa e da Empresa de Pequeno Porte",
-          "acao": "210C - Promoção do Desenvolvimento de Micro e Pequenas Empresas, Microempreendedor Individual, Potencial Empreendedor e Artesanato",
-          "dotacao_inicial_emenda": 1000000.0,
-          "dotacao_atual_emenda": 1000000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530013",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "36000 - Ministério da Saúde",
-          "acao": "2E89 - Incremento Temporário ao Custeio dos Serviços de Atenção Primária à Saúde para Cumprimento de Metas",
-          "dotacao_inicial_emenda": 3100000.0,
-          "dotacao_atual_emenda": 3100000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "43530014",
-          "ano": "2026",
-          "rp": "6 - Emendas Individuais",
-          "autor": "Denise Pessôa",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PT",
-          "orgao": "22000 - Ministério da Agricultura e Pecuária",
-          "acao": "8622 - Promoção do Cooperativismo, Associativismo e Agroindústria para o Desenvolvimento Agropecuário e da Agricultura Familiar",
-          "dotacao_inicial_emenda": 1450000.0,
-          "dotacao_atual_emenda": 1450000.0,
           "empenhado": 0.0,
           "liquidado": 0.0,
           "pago": 0.0
@@ -2282,6 +2566,21 @@
           "acao": "00U2 - Participação da União no Capital da CEAGESP - Companhia de Entrepostos e Armazéns Gerais de São Paulo",
           "dotacao_inicial_emenda": 200000.0,
           "dotacao_atual_emenda": 200000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "44020005",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Juliana Cardoso",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PT",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "20YD - Educação e Trabalho na Saúde",
+          "dotacao_inicial_emenda": 6300000.0,
+          "dotacao_atual_emenda": 6300000.0,
           "empenhado": 0.0,
           "liquidado": 0.0,
           "pago": 0.0
@@ -6157,21 +6456,6 @@
           "pago": 0.0
         },
         {
-          "nro_emenda": "14680020",
-          "ano": "",
-          "rp": "",
-          "autor": "Chico Alencar",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PSOL",
-          "orgao": "44000 - Ministério do Meio Ambiente e Mudança do Clima",
-          "acao": "2000 - Administração da Unidade",
-          "dotacao_inicial_emenda": 500000.0,
-          "dotacao_atual_emenda": 500000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
           "nro_emenda": "23560003",
           "ano": "",
           "rp": "",
@@ -6752,21 +7036,6 @@
           "acao": "20JP - Desenvolvimento de Atividades e Apoio a Programas, eventos e Projetos de Esporte Amador, Educação, Lazer e Inclusão Social",
           "dotacao_inicial_emenda": 4000000.0,
           "dotacao_atual_emenda": 4000000.0,
-          "empenhado": 0.0,
-          "liquidado": 0.0,
-          "pago": 0.0
-        },
-        {
-          "nro_emenda": "31340006",
-          "ano": "",
-          "rp": "",
-          "autor": "Fausto Pinato",
-          "tipo_autor": "Deputado Federal",
-          "partido": "PP",
-          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
-          "acao": "0EC2 - Transferências Especiais",
-          "dotacao_inicial_emenda": 5000000.0,
-          "dotacao_atual_emenda": 5000000.0,
           "empenhado": 0.0,
           "liquidado": 0.0,
           "pago": 0.0
@@ -7627,6 +7896,21 @@
           "pago": 0.0
         },
         {
+          "nro_emenda": "41630011",
+          "ano": "",
+          "rp": "",
+          "autor": "Natália Bonavides",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PT",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8535 - Estruturação de Unidades de Atenção Especializada em Saúde",
+          "dotacao_inicial_emenda": 8203444.0,
+          "dotacao_atual_emenda": 8203444.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
           "nro_emenda": "41710015",
           "ano": "",
           "rp": "",
@@ -8347,6 +8631,21 @@
           "pago": 0.0
         },
         {
+          "nro_emenda": "44020005",
+          "ano": "",
+          "rp": "",
+          "autor": "Juliana Cardoso",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PT",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "20YD - Educação e Trabalho na Saúde",
+          "dotacao_inicial_emenda": 6300000.0,
+          "dotacao_atual_emenda": 6300000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
           "nro_emenda": "44360010",
           "ano": "",
           "rp": "",
@@ -8647,9 +8946,9 @@
           "pago": 0.0
         }
       ],
-      "rows_count": 555,
-      "unique_nro_emendas": 555,
-      "sweep_steps": 59,
+      "rows_count": 570,
+      "unique_nro_emendas": 570,
+      "sweep_steps": 61,
       "sweep_stop_reason": "6 - Emendas Individuais: stable_signature | 7 - Emendas de Bancada Estadual: stable_signature | 8 - Emendas de Comissão: stable_signature",
       "top_authors": [
         {
@@ -8703,6 +9002,16 @@
           "empenhado": 0.0
         },
         {
+          "author": "Luiza Erundina",
+          "party": "PSOL",
+          "empenhado": 0.0
+        },
+        {
+          "author": "Rosangela Gomes",
+          "party": "Nao identificado",
+          "empenhado": 0.0
+        },
+        {
           "author": "Acácio Favacho",
           "party": "MDB",
           "empenhado": 0.0
@@ -8710,6 +9019,11 @@
         {
           "author": "Adolfo Viana",
           "party": "PSDB",
+          "empenhado": 0.0
+        },
+        {
+          "author": "Luiz Philippe de Orleans e Bragança",
+          "party": "PL",
           "empenhado": 0.0
         },
         {
@@ -8723,33 +9037,18 @@
           "empenhado": 0.0
         },
         {
+          "author": "Rosana Valle",
+          "party": "PL",
+          "empenhado": 0.0
+        },
+        {
           "author": "Adail Filho",
           "party": "REPUBLICANOS",
           "empenhado": 0.0
         },
         {
-          "author": "Delegado Paulo Bilynskyj",
-          "party": "PL",
-          "empenhado": 0.0
-        },
-        {
-          "author": "Denise Pessôa",
-          "party": "PT",
-          "empenhado": 0.0
-        },
-        {
           "author": "Fausto Jr.",
           "party": "UNIÃO",
-          "empenhado": 0.0
-        },
-        {
-          "author": "Helena Lima",
-          "party": "MDB",
-          "empenhado": 0.0
-        },
-        {
-          "author": "Julia Zanatta",
-          "party": "PL",
           "empenhado": 0.0
         }
       ],
@@ -8783,11 +9082,19 @@
           "empenhado": 0.0
         },
         {
+          "party": "Nao identificado",
+          "empenhado": 0.0
+        },
+        {
           "party": "MDB",
           "empenhado": 0.0
         },
         {
           "party": "PSDB",
+          "empenhado": 0.0
+        },
+        {
+          "party": "PL",
           "empenhado": 0.0
         },
         {
@@ -8799,15 +9106,7 @@
           "empenhado": 0.0
         },
         {
-          "party": "PL",
-          "empenhado": 0.0
-        },
-        {
           "party": "Comissao",
-          "empenhado": 0.0
-        },
-        {
-          "party": "Nao identificado",
           "empenhado": 0.0
         }
       ],
@@ -8865,11 +9164,15 @@
           "empenhado": 0.0
         },
         {
+          "orgao": "65000 - Ministério das Mulheres",
+          "empenhado": 0.0
+        },
+        {
           "orgao": "30000 - Ministério da Justiça e Segurança Pública",
           "empenhado": 0.0
         },
         {
-          "orgao": "58000 - Ministério da Pesca e Aquicultura",
+          "orgao": "22000 - Ministério da Agricultura e Pecuária",
           "empenhado": 0.0
         },
         {
@@ -8877,19 +9180,15 @@
           "empenhado": 0.0
         },
         {
+          "orgao": "58000 - Ministério da Pesca e Aquicultura",
+          "empenhado": 0.0
+        },
+        {
+          "orgao": "52000 - Ministério da Defesa",
+          "empenhado": 0.0
+        },
+        {
           "orgao": "40000 - Ministério do Trabalho e Emprego",
-          "empenhado": 0.0
-        },
-        {
-          "orgao": "65000 - Ministério das Mulheres",
-          "empenhado": 0.0
-        },
-        {
-          "orgao": "69000 - Ministério do Empreendedorismo, da Microempresa e da Empresa de Pequeno Porte",
-          "empenhado": 0.0
-        },
-        {
-          "orgao": "22000 - Ministério da Agricultura e Pecuária",
           "empenhado": 0.0
         }
       ],
@@ -8897,8 +9196,8 @@
         {
           "rp": "6 - Emendas Individuais",
           "available": true,
-          "rows_count": 346,
-          "sweep_steps": 23,
+          "rows_count": 361,
+          "sweep_steps": 24,
           "sweep_stop_reason": "stable_signature",
           "error": ""
         },
@@ -8914,7 +9213,7 @@
           "rp": "8 - Emendas de Comissão",
           "available": true,
           "rows_count": 22,
-          "sweep_steps": 14,
+          "sweep_steps": 15,
           "sweep_stop_reason": "stable_signature",
           "error": ""
         }

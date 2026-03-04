@@ -1483,6 +1483,8 @@ def build_report(current, previous, headers, source_zip_size, has_previous):
 
     top_authors_total = sort_top(current["author_totals"], 20)
     top_destinations_total = sort_top(current["destination_totals"], 20)
+    top_authors_year = sort_top(current.get("current_year_author_totals", {}), 20)
+    top_destinations_year = sort_top(current.get("current_year_destination_totals", {}), 20)
 
     pair_rows = []
     for key, delta in top_pair_growth:
@@ -1563,6 +1565,21 @@ def build_report(current, previous, headers, source_zip_size, has_previous):
             {"destination": name, "total_empenhado": to_float(value)}
             for name, value in top_destinations_total
         ],
+        "top_authors_year": [
+            {
+                "author": name,
+                "party": (
+                    current.get("current_year_author_party_map", {}).get(name)
+                    or current["author_party_map"].get(name, "Nao identificado")
+                ),
+                "total_empenhado": to_float(value),
+            }
+            for name, value in top_authors_year
+        ],
+        "top_destinations_year": [
+            {"destination": name, "total_empenhado": to_float(value)}
+            for name, value in top_destinations_year
+        ],
         "unico_year_summary": {
             "year": current_year,
             "total_empenhado": to_float(current_year_totals.get("total_empenhado", Decimal("0"))),
@@ -1622,6 +1639,9 @@ def build_current_aggregates(zip_path, party_lookup):
             author_party_map = {}
             destination_totals = defaultdict(lambda: Decimal("0"))
             author_destination_totals = defaultdict(lambda: Decimal("0"))
+            year_author_totals = defaultdict(lambda: Decimal("0"))
+            year_author_party_map = {}
+            year_destination_totals = defaultdict(lambda: Decimal("0"))
 
             for row in reader:
                 rows_processed += 1
@@ -1659,6 +1679,14 @@ def build_current_aggregates(zip_path, party_lookup):
                     author_party_map[author] = party
                 destination_totals[destination] += valor_empenhado
                 author_destination_totals[pair_key] += valor_empenhado
+                if ano_emenda == current_year:
+                    year_author_totals[author] += valor_empenhado
+                    year_destination_totals[destination] += valor_empenhado
+                    if (
+                        author not in year_author_party_map
+                        or year_author_party_map[author] == "Nao identificado"
+                    ):
+                        year_author_party_map[author] = party
 
     return {
         "rows_processed": rows_processed,
@@ -1674,6 +1702,9 @@ def build_current_aggregates(zip_path, party_lookup):
         "author_party_map": author_party_map,
         "destination_totals": destination_totals,
         "author_destination_totals": author_destination_totals,
+        "current_year_author_totals": year_author_totals,
+        "current_year_author_party_map": year_author_party_map,
+        "current_year_destination_totals": year_destination_totals,
     }
 
 
