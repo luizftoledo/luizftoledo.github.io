@@ -29,20 +29,51 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Ensure GCP secret exists
-        run: |
-          if [ -z "${{ secrets.GCP_SA_KEY }}" ]; then
-            echo "Missing secret GCP_SA_KEY."
-            exit 1
-          fi
-
-      - name: Authenticate GCP
-        uses: google-github-actions/auth@v2
-        with:
-          credentials_json: '${{ secrets.GCP_SA_KEY }}'
-
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
+
+      - name: Prepare GCP credentials file
+        env:
+          GCP_SA_KEY_RAW: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          python - <<'PY'
+          import base64
+          import json
+          import os
+          from pathlib import Path
+
+          raw = (os.getenv("GCP_SA_KEY_RAW") or "").strip()
+          if not raw:
+            raise SystemExit("Missing secret GCP_SA_KEY.")
+
+          candidates = [raw]
+          try:
+            decoded = base64.b64decode(raw).decode("utf-8")
+            candidates.append(decoded)
+          except Exception:
+            pass
+
+          parsed = None
+          for candidate in candidates:
+            try:
+              parsed = json.loads(candidate)
+              break
+            except Exception:
+              continue
+
+          if parsed is None:
+            raise SystemExit("GCP_SA_KEY must be raw JSON or base64(JSON).")
+
+          out = Path(os.environ["RUNNER_TEMP"]) / "gcp-key.json"
+          out.write_text(json.dumps(parsed), encoding="utf-8")
+          print(out)
+          PY
+
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-key.json" >> "$GITHUB_ENV"
+
+      - name: Authenticate gcloud with service account
+        run: |
+          gcloud auth activate-service-account --key-file="$GOOGLE_APPLICATION_CREDENTIALS"
 
       - name: Deploy Cloud Run service
         run: |
