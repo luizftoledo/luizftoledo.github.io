@@ -597,8 +597,8 @@
 
     <div class="dashboard-view" id="view-docs" hidden>
       <section class="panel">
-        <h2>Resumo do ano na base do Portal da Transparência</h2>
-        <p class="hint">Esta visão usa os arquivos por documento de despesa. Aqui você acompanha o acumulado do ano, o último dia e o que ainda falta para chegar ao valor autorizado anual (quando a fonte traz esse valor).</p>
+        <h2>Execução diária de emendas parlamentares</h2>
+        <p class="hint">Leitura no estilo da divulgação histórica: valor empenhado até a data, percentual do autorizado no ano e visão rápida por dia/semana.</p>
         <div class="cards">
           <article class="card">
             <div class="label">Valor autorizado anual estimado <span class="help-tip" tabindex="0" data-tip="Valor autorizado é o limite anual aprovado para execução. Em muitos painéis ele aparece como teto.">?</span></div>
@@ -639,6 +639,53 @@
         </div>
         <p class="hint" id="docs-progress-note">Quando não há valor autorizado disponível na fonte, mostramos a comparação com o acumulado do ano.</p>
         <p class="spotlight" id="doc-spotlight">Carregando monitor paralelo...</p>
+      </section>
+
+      <section class="panel">
+        <h2>Leitura rápida por data, semana e acumulado</h2>
+        <div class="charts">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data do empenho</th>
+                  <th>Acumulado até a data</th>
+                  <th>% autorizado</th>
+                </tr>
+              </thead>
+              <tbody id="table-classic-accumulated">
+                <tr><td colspan="3">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Semana</th>
+                  <th>Acumulado (fim da semana)</th>
+                  <th>Na semana</th>
+                </tr>
+              </thead>
+              <tbody id="table-classic-week">
+                <tr><td colspan="3">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Empenhado na data</th>
+              </tr>
+            </thead>
+            <tbody id="table-classic-day">
+              <tr><td colspan="2">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section class="panel">

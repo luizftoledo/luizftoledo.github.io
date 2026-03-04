@@ -57,6 +57,9 @@
     docsModeNote: document.getElementById('docs-mode-note'),
     tableDocsAuthorsDynamic: document.getElementById('table-docs-authors-dynamic'),
     tableDocsDestDay: document.getElementById('table-docs-dest-day'),
+    tableClassicAccumulated: document.getElementById('table-classic-accumulated'),
+    tableClassicWeek: document.getElementById('table-classic-week'),
+    tableClassicDay: document.getElementById('table-classic-day'),
     siopDetailNote: document.getElementById('siop-detail-note'),
     tableSiopAuthors: document.getElementById('table-siop-authors'),
     tableSiopParties: document.getElementById('table-siop-parties'),
@@ -112,6 +115,24 @@
     const d = new Date(rawDate);
     if (Number.isNaN(d.getTime())) return rawDate;
     return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
+  }
+
+  function formatDatePt(dateStr) {
+    if (!dateStr) return '--';
+    const d = new Date(`${dateStr}T00:00:00`);
+    if (Number.isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString('pt-BR');
+  }
+
+  function getIsoWeekLabel(dateStr) {
+    const d = new Date(`${dateStr}T00:00:00`);
+    if (Number.isNaN(d.getTime())) return '--';
+    const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const day = date.getUTCDay() || 7;
+    date.setUTCDate(date.getUTCDate() + 4 - day);
+    const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+    const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+    return `${date.getUTCFullYear()}-S${String(weekNo).padStart(2, '0')}`;
   }
 
   function money(value) {
@@ -710,6 +731,74 @@
     }
   }
 
+  function renderClassicTables(docs, maxYear) {
+    const series = (docs.daily_series || [])
+      .slice()
+      .filter((row) => row && row.date)
+      .sort((a, b) => (a.date < b.date ? -1 : 1));
+
+    if (!series.length) {
+      els.tableClassicAccumulated.innerHTML = '<tr><td colspan="3">Sem dados.</td></tr>';
+      els.tableClassicWeek.innerHTML = '<tr><td colspan="3">Sem dados.</td></tr>';
+      els.tableClassicDay.innerHTML = '<tr><td colspan="2">Sem dados.</td></tr>';
+      return;
+    }
+
+    const latestRows = series.slice(-8).reverse();
+    els.tableClassicAccumulated.innerHTML = latestRows.map((row) => {
+      const accum = toNumber(row.acumulado_empenhado);
+      const pct = maxYear > 0 ? pctFmt.format(accum / maxYear) : '--';
+      return `
+        <tr>
+          <td>${esc(formatDatePt(row.date))}</td>
+          <td>${money(accum)}</td>
+          <td>${pct}</td>
+        </tr>
+      `;
+    }).join('');
+
+    const dayRows = series
+      .slice()
+      .reverse()
+      .filter((row) => toNumber(row.empenhado) > 0)
+      .slice(0, 8);
+    const dayRowsFinal = dayRows.length ? dayRows : latestRows;
+    els.tableClassicDay.innerHTML = dayRowsFinal.map((row) => `
+      <tr>
+        <td>${esc(formatDatePt(row.date))}</td>
+        <td>${money(row.empenhado)}</td>
+      </tr>
+    `).join('');
+
+    const weekMap = new Map();
+    for (const row of series) {
+      const week = getIsoWeekLabel(row.date);
+      if (!weekMap.has(week)) {
+        weekMap.set(week, {
+          week,
+          weekly: 0,
+          accum: 0,
+          dateRef: row.date,
+        });
+      }
+      const item = weekMap.get(week);
+      item.weekly += toNumber(row.empenhado);
+      if ((row.date || '') >= (item.dateRef || '')) {
+        item.dateRef = row.date;
+        item.accum = toNumber(row.acumulado_empenhado);
+      }
+    }
+
+    const weekRows = Array.from(weekMap.values()).slice(-8).reverse();
+    els.tableClassicWeek.innerHTML = weekRows.map((row) => `
+      <tr>
+        <td>${esc(row.week)}</td>
+        <td>${money(row.accum)}</td>
+        <td>${money(row.weekly)}</td>
+      </tr>
+    `).join('');
+  }
+
   function renderApoiamentoDetails(apoiamento) {
     if (!apoiamento.available) {
       els.apoiamentoNote.textContent = 'Não houve arquivo de apoiamento disponível no momento desta atualização.';
@@ -815,6 +904,7 @@
       2
     );
     renderApoiamentoDetails(apoiamento);
+    renderClassicTables(docs, maxYear);
 
     renderDocsDailyChart(docs.daily_series || [], maxYear);
     renderDocsAuthorsDynamic(report);
