@@ -22,13 +22,46 @@ Pipeline:
 2. Rastreia ex-presidentes na Biblioteca da Presidência.
 3. Atualiza incrementalmente apenas URLs novas/incompletas.
 4. Regrava os arquivos em `lulometro-dashboard/data`.
-5. Faz commit automático somente quando há mudança.
+5. Sincroniza a base no BigQuery (quando secrets/vars estiverem configurados).
+6. Faz commit automático somente quando há mudança.
+
+## BigQuery + Looker Studio
+
+Script de sincronização:
+
+- `scripts/sync_lulometro_bigquery.py`
+
+Tabelas criadas/atualizadas no dataset:
+
+- `records` (texto completo, `WRITE_TRUNCATE` a cada atualização)
+- `items` (metadados leves, `WRITE_TRUNCATE`)
+- `pipeline_runs` (histórico de execuções, `WRITE_APPEND`)
+- View `records_light` (sem campo de texto integral)
+- View `records_full_text` (com campo `text`)
+
+Configuração no GitHub (repo settings):
+
+1. Secret `GCP_SA_KEY`: JSON completo da service account.
+2. Variable `BQ_PROJECT_ID`: id do projeto GCP.
+3. Variable `BQ_DATASET`: dataset do BigQuery.
+4. Variable opcional `BQ_LOCATION`: localização do dataset (default `US`).
+
+Com isso, o workflow diário já faz raspagem + publicação no site + upload no BigQuery para consumo no Looker Studio.
 
 ## Build local
 
 ```bash
 cd <repo>
 python3 scripts/build_lulometro_data.py
+```
+
+Sincronizar para BigQuery manualmente:
+
+```bash
+python3 scripts/sync_lulometro_bigquery.py \
+  --project <gcp_project_id> \
+  --dataset <bq_dataset> \
+  --location US
 ```
 
 Modo debug (limita novos fetches):

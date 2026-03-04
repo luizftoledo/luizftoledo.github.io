@@ -13,6 +13,10 @@ jobs:
   build-and-commit:
     runs-on: ubuntu-latest
     timeout-minutes: 180
+    env:
+      BQ_PROJECT_ID: ${{ vars.BQ_PROJECT_ID }}
+      BQ_DATASET: ${{ vars.BQ_DATASET }}
+      BQ_LOCATION: ${{ vars.BQ_LOCATION }}
 
     steps:
       - name: Checkout
@@ -26,12 +30,37 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install requests beautifulsoup4 playwright pypdf pymupdf
+          python -m pip install requests beautifulsoup4 playwright pypdf pymupdf google-cloud-bigquery
           python -m playwright install chromium
 
       - name: Build Lulometro data
         run: |
           python scripts/build_lulometro_data.py --max-details 2500 --max-failures 3
+
+      - name: Write GCP credentials file
+        if: ${{ secrets.GCP_SA_KEY != '' && vars.BQ_PROJECT_ID != '' && vars.BQ_DATASET != '' }}
+        run: |
+          cat > "$RUNNER_TEMP/gcp-key.json" <<'JSON'
+          ${{ secrets.GCP_SA_KEY }}
+          JSON
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-key.json" >> "$GITHUB_ENV"
+
+      - name: Sync Lulometro to BigQuery
+        if: ${{ secrets.GCP_SA_KEY != '' && vars.BQ_PROJECT_ID != '' && vars.BQ_DATASET != '' }}
+        env:
+          PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: python
+        run: |
+          python scripts/sync_lulometro_bigquery.py \
+            --project "$BQ_PROJECT_ID" \
+            --dataset "$BQ_DATASET" \
+            --location "${BQ_LOCATION:-US}" \
+            --workflow-run-id "${{ github.run_id }}" \
+            --commit-sha "${{ github.sha }}"
+
+      - name: BigQuery sync skipped (missing secrets/vars)
+        if: ${{ secrets.GCP_SA_KEY == '' || vars.BQ_PROJECT_ID == '' || vars.BQ_DATASET == '' }}
+        run: |
+          echo "Skipping BigQuery sync. Configure secrets/vars: GCP_SA_KEY, BQ_PROJECT_ID, BQ_DATASET (and optional BQ_LOCATION)."
 
       - name: Commit and push if changed
         run: |
