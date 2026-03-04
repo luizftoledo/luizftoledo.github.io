@@ -1,12 +1,13 @@
-# Lulometro (GitHub Pages)
+# Lulometro (GitHub Pages + BigQuery API)
 
 Dashboard para comparar discursos e entrevistas de presidentes brasileiros por palavra-chave.
 
 ## Entregas
 
 - `index.html`: interface principal do dashboard.
-- `app.js`: busca, filtros, gráficos e tabela.
-- `data/records.jsonl.gz`: base completa com textos integrais.
+- `app.js`: frontend API-first (não baixa corpus completo no navegador).
+- `api-config.json`: URL da API publicada (Cloud Run).
+- `data/records.jsonl.gz`: base completa com textos integrais (backup/export).
 - `data/items.json`: tabela de metadados para consumo rápido.
 - `data/super_tabela.csv`: exportação tabular (data, nome, local, link, etc.).
 - `data/metadata.json`: status da atualização diária.
@@ -24,6 +25,20 @@ Pipeline:
 4. Regrava os arquivos em `lulometro-dashboard/data`.
 5. Sincroniza a base no BigQuery (quando secrets/vars estiverem configurados).
 6. Faz commit automático somente quando há mudança.
+
+## API da dashboard (Cloud Run)
+
+Arquivos:
+
+- `services/lulometro-api/main.py`
+- `services/lulometro-api/requirements.txt`
+- `services/lulometro-api/Dockerfile`
+
+Workflow de deploy:
+
+- `.github/workflows/deploy-lulometro-api.yml`
+
+Esse workflow publica a API no Cloud Run e atualiza automaticamente `lulometro-dashboard/api-config.json` com a URL (`api_base_url`) usada pelo frontend.
 
 ## BigQuery + Looker Studio
 
@@ -45,8 +60,11 @@ Configuração no GitHub (repo settings):
 2. Variable `BQ_PROJECT_ID`: id do projeto GCP.
 3. Variable `BQ_DATASET`: dataset do BigQuery.
 4. Variable opcional `BQ_LOCATION`: localização do dataset (default `US`).
+5. Variable opcional `CLOUD_RUN_REGION`: região do Cloud Run (default `southamerica-east1`).
+6. Variable opcional `LULOMETRO_API_SERVICE`: nome do serviço (default `lulometro-api`).
+7. Variable opcional `LULOMETRO_API_CORS`: origens liberadas em CORS.
 
-Com isso, o workflow diário já faz raspagem + publicação no site + upload no BigQuery para consumo no Looker Studio.
+Com isso, o workflow diário faz raspagem + publicação no site + upload no BigQuery, e o workflow de deploy publica a API para a dashboard consultar direto no BigQuery.
 
 Fallbacks configurados no workflow (quando as variables não existirem):
 

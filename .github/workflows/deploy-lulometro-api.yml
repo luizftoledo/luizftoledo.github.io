@@ -1,0 +1,106 @@
+name: Deploy Lulometro API
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "services/lulometro-api/**"
+      - ".github/workflows/deploy-lulometro-api.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      BQ_PROJECT_ID: ${{ vars.BQ_PROJECT_ID }}
+      BQ_DATASET: ${{ vars.BQ_DATASET }}
+      CLOUD_RUN_REGION: ${{ vars.CLOUD_RUN_REGION }}
+      LULOMETRO_API_SERVICE: ${{ vars.LULOMETRO_API_SERVICE }}
+      LULOMETRO_API_CORS: ${{ vars.LULOMETRO_API_CORS }}
+      BQ_PROJECT_ID_FALLBACK: "militares-376417"
+      BQ_DATASET_FALLBACK: "militares"
+      CLOUD_RUN_REGION_FALLBACK: "southamerica-east1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure GCP secret exists
+        run: |
+          if [ -z "${{ secrets.GCP_SA_KEY }}" ]; then
+            echo "Missing secret GCP_SA_KEY."
+            exit 1
+          fi
+
+      - name: Authenticate GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Deploy Cloud Run service
+        run: |
+          PROJECT_ID="${BQ_PROJECT_ID:-$BQ_PROJECT_ID_FALLBACK}"
+          DATASET_ID="${BQ_DATASET:-$BQ_DATASET_FALLBACK}"
+          REGION_ID="${CLOUD_RUN_REGION:-$CLOUD_RUN_REGION_FALLBACK}"
+          SERVICE_NAME="${LULOMETRO_API_SERVICE:-lulometro-api}"
+          ALLOW_ORIGINS="${LULOMETRO_API_CORS:-https://luizftoledo.github.io,https://datafixers.org,http://127.0.0.1:8000,http://localhost:8000}"
+
+          echo "Deploying $SERVICE_NAME in $PROJECT_ID / $REGION_ID"
+
+          gcloud run deploy "$SERVICE_NAME" \
+            --project "$PROJECT_ID" \
+            --region "$REGION_ID" \
+            --source services/lulometro-api \
+            --allow-unauthenticated \
+            --set-env-vars "BQ_PROJECT_ID=$PROJECT_ID,BQ_DATASET=$DATASET_ID,CORS_ALLOW_ORIGINS=$ALLOW_ORIGINS"
+
+          API_URL="$(gcloud run services describe "$SERVICE_NAME" --project "$PROJECT_ID" --region "$REGION_ID" --format='value(status.url)')"
+          if [ -z "$API_URL" ]; then
+            echo "Failed to resolve Cloud Run URL."
+            exit 1
+          fi
+
+          echo "API_URL=$API_URL" >> "$GITHUB_ENV"
+          echo "SERVICE_NAME=$SERVICE_NAME" >> "$GITHUB_ENV"
+
+      - name: Update dashboard API config
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          import os
+          from pathlib import Path
+
+          path = Path("lulometro-dashboard/api-config.json")
+          current = {}
+          if path.exists():
+            try:
+              current = json.loads(path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+              current = {}
+
+          current["api_base_url"] = os.environ["API_URL"]
+          current["service"] = os.environ.get("SERVICE_NAME", "lulometro-api")
+          current["updated_at"] = dt.datetime.now(dt.timezone.utc).isoformat()
+
+          path.write_text(json.dumps(current, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Commit API config if changed
+        run: |
+          if git diff --quiet -- lulometro-dashboard/api-config.json; then
+            echo "No API config changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lulometro-dashboard/api-config.json
+          git commit -m "chore(lulometro): update api endpoint config"
+          git push
