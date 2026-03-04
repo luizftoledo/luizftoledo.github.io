@@ -280,15 +280,16 @@
     els.kpiAuthorsUp.textContent = nFmt.format(metrics.autores_com_aumento || 0);
     els.kpiDestinationsUp.textContent = nFmt.format(metrics.destinos_com_aumento || 0);
 
-    const totalBase = toNumber(metrics.total_empenhado_atual);
     const totalYear = toNumber(metrics.current_year_total_empenhado || ((report.unico_year_summary || {}).total_empenhado || 0));
+    const maxYearInfo = getMaxYearInfo(report);
+    const maxYear = toNumber(maxYearInfo.value);
 
     setProgress(
       els.snapshotProgressTotalFill,
       els.snapshotProgressTotalText,
-      deltaPositive,
-      totalBase,
-      { noBaseText: 'Sem total disponível' }
+      totalYear,
+      maxYear,
+      { noBaseText: 'Sem valor autorizado anual disponível' }
     );
 
     setProgress(
@@ -296,11 +297,13 @@
       els.snapshotProgressYearText,
       deltaPositive,
       totalYear,
-      { noBaseText: 'Sem total anual disponível' }
+      { noBaseText: 'Sem acumulado anual disponível' }
     );
 
-    if (totalYear > 0) {
-      els.snapshotProgressNote.textContent = 'A barra anual mostra quanto o movimento do dia representa dentro do total já empenhado no ano corrente.';
+    if (maxYear > 0) {
+      els.snapshotProgressNote.textContent = `No ano corrente, já foram empenhados ${money(totalYear)} de ${money(maxYear)} autorizados no recorte parlamentar (RP 6/7/8). A segunda barra mostra o peso do dia dentro desse acumulado anual.`;
+    } else if (totalYear > 0) {
+      els.snapshotProgressNote.textContent = 'A primeira barra depende do valor autorizado anual do SIOP. Como ele não veio nesta atualização, mostramos apenas a relação do dia com o acumulado do ano.';
     } else {
       els.snapshotProgressNote.textContent = 'Sem total anual consistente nesta atualização para comparar o movimento diário.';
     }
@@ -990,7 +993,7 @@
 
     const items = [
       `<li><strong>Base principal (acumulado):</strong> <a href="${esc(source.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Portal da Transparência - Emendas (UNICO)</a>.</li>`,
-      `<li><strong>Referência de valor autorizado anual:</strong> <a href="${esc(siopSnapshot.source_url || '#')}" target="_blank" rel="noopener noreferrer">painel SIOP</a>${siopSnapshot.base_siafi_date ? ` (base SIAFI em ${esc(siopSnapshot.base_siafi_date)})` : ''}.</li>`,
+      `<li><strong>Referência de valor autorizado anual (RP 6/7/8 no ano corrente):</strong> <a href="${esc(siopSnapshot.source_url || '#')}" target="_blank" rel="noopener noreferrer">painel SIOP</a>${siopSnapshot.base_siafi_date ? ` (base SIAFI em ${esc(siopSnapshot.base_siafi_date)})` : ''}.</li>`,
       `<li><strong>Portal da Transparência (documentos por dia):</strong> <a href="${esc(docsSource.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Emendas parlamentares por documento</a>.</li>`,
       `<li><strong>Apoiamento de emendas:</strong> <a href="${esc(apoiamentoSource.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Base oficial de apoiamento</a>. Mostra rede de apoio entre autores.</li>`,
       `<li><strong>Execução do ano corrente:</strong> <a href="${esc(execucao.endpoint_url || '#')}" target="_blank" rel="noopener noreferrer">endpoint de execução no Portal da Transparência</a>.</li>`,

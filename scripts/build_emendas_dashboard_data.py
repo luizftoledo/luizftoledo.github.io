@@ -54,6 +54,11 @@ SIOP_PANEL_URL = (
     "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm"
     "?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true"
 )
+SIOP_DEFAULT_RP_FILTERS = (
+    "6 - Emendas Individuais",
+    "7 - Emendas de Bancada Estadual",
+    "8 - Emendas de Comissão",
+)
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
@@ -394,43 +399,247 @@ def navigate_siop_to_emendas(driver, wait):
     time.sleep(6)
 
 
-def open_siop_step2_group(driver, wait, group_label="Por Partido"):
+def _try_click_xpath_candidates(driver, xpaths):
     from selenium.webdriver.common.by import By
-    from selenium.webdriver.support import expected_conditions as EC
 
-    wait.until(
-        EC.element_to_be_clickable((By.XPATH, "//td[contains(., 'Passo 2 - Visualize os Resultados')]"))
-    ).click()
-    time.sleep(6)
+    for xp in xpaths:
+        nodes = driver.find_elements(By.XPATH, xp)
+        for node in nodes:
+            try:
+                node.click()
+                return True
+            except Exception:
+                try:
+                    driver.execute_script("arguments[0].click();", node)
+                    return True
+                except Exception:
+                    continue
+    return False
 
-    # Alguns ambientes ignoram clique nativo; usamos fallback JS.
+
+def open_siop_step2_group(driver, wait, group_label="Por Partido", attempts=8):
+    from selenium.webdriver.common.by import By
+
+    tab_candidates = [
+        "//td[contains(., 'Passo 2 - Visualize os Resultados')]",
+        "//*[normalize-space(text())='Passo 2 - Visualize os Resultados']",
+    ]
     group_candidates = [
         f"//td[normalize-space(text())='{group_label}']",
         f"//*[normalize-space(text())='{group_label}']",
     ]
-    clicked_group = False
-    for xp in group_candidates:
-        nodes = driver.find_elements(By.XPATH, xp)
-        if not nodes:
-            continue
-        for node in nodes:
-            try:
-                node.click()
-                clicked_group = True
-                break
-            except Exception:
-                try:
-                    driver.execute_script("arguments[0].click();", node)
-                    clicked_group = True
-                    break
-                except Exception:
-                    continue
-        if clicked_group:
-            break
 
-    if not clicked_group:
-        raise RuntimeError(f"não foi possível abrir '{group_label}' no SIOP")
-    time.sleep(5)
+    for _ in range(max(1, attempts)):
+        _try_click_xpath_candidates(driver, tab_candidates)
+        time.sleep(1.2)
+        clicked_group = _try_click_xpath_candidates(driver, group_candidates)
+        time.sleep(1.4)
+        if not clicked_group:
+            continue
+
+        grid_ready = driver.find_elements(
+            By.XPATH,
+            "//div[contains(@class,'QvFrame') and @objtype='Grid' and contains(.,'Nro. Emenda')]",
+        )
+        if grid_ready:
+            return
+
+    raise RuntimeError(f"não foi possível abrir '{group_label}' no SIOP")
+
+
+def open_siop_step1_filters(driver, wait, attempts=6):
+    candidates = [
+        "//td[contains(., 'Passo 1 - Selecione os Filtros')]",
+        "//*[normalize-space(text())='Passo 1 - Selecione os Filtros']",
+    ]
+
+    for _ in range(max(1, attempts)):
+        clicked = _try_click_xpath_candidates(driver, candidates)
+        if not clicked:
+            time.sleep(0.8)
+            continue
+        try:
+            wait.until(
+                lambda drv: drv.execute_script(
+                    """
+                    return !![...document.querySelectorAll('div.QvCaption')]
+                      .find((el) => (el.getAttribute('title') || '').trim() === 'Ano');
+                    """
+                )
+            )
+            time.sleep(0.9)
+            return
+        except Exception:
+            time.sleep(0.8)
+
+    raise RuntimeError("não foi possível abrir 'Passo 1 - Selecione os Filtros' no SIOP")
+
+
+def clear_siop_filters(driver):
+    from selenium.webdriver.common.by import By
+
+    try:
+        clear_btn = driver.find_element(By.XPATH, "//*[@title='Limpar todos os filtros desbloqueados.']")
+        try:
+            clear_btn.click()
+        except Exception:
+            driver.execute_script("arguments[0].click();", clear_btn)
+        time.sleep(1.1)
+        return True
+    except Exception:
+        return False
+
+
+def click_siop_filter_value(driver, caption_title, option_value, max_attempts=8):
+    from selenium.common.exceptions import (
+        ElementClickInterceptedException,
+        NoSuchElementException,
+        StaleElementReferenceException,
+    )
+    from selenium.webdriver.common.action_chains import ActionChains
+    from selenium.webdriver.common.by import By
+
+    frame_xpath = (
+        "//div[contains(@class,'QvFrame')]"
+        f"[.//div[contains(@class,'QvCaption') and normalize-space(@title)='{caption_title}']]"
+    )
+    option_xpath = (
+        ".//div[contains(@class,'QvOptional') and "
+        f"(@title='{option_value}' or normalize-space(.)='{option_value}')]"
+    )
+    fallback_xpath = f".//*[normalize-space(text())='{option_value}']"
+
+    for _ in range(max(1, max_attempts)):
+        try:
+            frame = driver.find_element(By.XPATH, frame_xpath)
+            nodes = frame.find_elements(By.XPATH, option_xpath)
+            if not nodes:
+                nodes = frame.find_elements(By.XPATH, fallback_xpath)
+            if not nodes:
+                time.sleep(0.5)
+                continue
+
+            node = nodes[0]
+            ActionChains(driver).move_to_element(node).pause(0.05).click(node).perform()
+            time.sleep(0.75)
+            return True
+        except (
+            ElementClickInterceptedException,
+            NoSuchElementException,
+            StaleElementReferenceException,
+        ):
+            time.sleep(0.55)
+        except Exception:
+            time.sleep(0.55)
+    return False
+
+
+def normalize_loose_text(value):
+    text = normalize_text(value)
+    text = unicodedata.normalize("NFKD", text)
+    text = "".join(ch for ch in text if not unicodedata.combining(ch))
+    text = text.lower()
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def siop_selection_confirmed(driver, year, rp_label):
+    from selenium.webdriver.common.by import By
+
+    body_text = driver.find_element(By.TAG_NAME, "body").text
+    normalized = normalize_loose_text(body_text)
+    year_token = normalize_loose_text(f"Emenda Parlamentar - Ano {year}")
+    rp_token = normalize_loose_text(f"Emenda Parlamentar - Resultado Primário {rp_label}")
+    return year_token in normalized and rp_token in normalized
+
+
+def apply_siop_single_rp_filter(driver, wait, year, rp_label, retries=8):
+    for _ in range(max(1, retries)):
+        open_siop_step1_filters(driver, wait)
+        clear_siop_filters(driver)
+
+        year_ok = click_siop_filter_value(driver, "Ano", str(year))
+        rp_ok = click_siop_filter_value(driver, "Resultado Primário (RP)", rp_label)
+        if year_ok and rp_ok and siop_selection_confirmed(driver, year, rp_label):
+            return True
+        time.sleep(0.8)
+    return False
+
+
+def extract_siop_totals_from_grid(driver):
+    totals = driver.execute_script(
+        """
+        function parsePx(v){
+          const m = String(v || '').match(/(-?[0-9\\.]+)px/i);
+          return m ? parseFloat(m[1]) : null;
+        }
+
+        const frame = [...document.querySelectorAll('.QvFrame[objtype="Grid"]')]
+          .find((f) => getComputedStyle(f).display !== 'none' && (f.innerText || '').includes('Nro. Emenda'));
+        if(!frame){
+          return { error: 'grid de emendas não encontrado', totals: {} };
+        }
+
+        const topCells = [];
+        for(const el of frame.querySelectorAll('[title]')){
+          const title = (el.getAttribute('title') || '').trim();
+          if(!title || title === 'Resize column') continue;
+          const left = parsePx(el.style.left);
+          const top = parsePx(el.style.top);
+          const height = parsePx(el.style.height);
+          if(left === null || top === null || height === null) continue;
+          if(top !== 0 || height !== 39) continue;
+          topCells.push({title, left});
+        }
+
+        const cols = [
+          'Dotação Inicial Emenda',
+          'Dotação Atual Emenda',
+          'Empenhado',
+          'Liquidado',
+          'Pago',
+        ];
+        const out = {};
+        for(const col of cols){
+          const header = topCells.find((cell) => cell.title === col);
+          if(!header){
+            out[col] = '';
+            continue;
+          }
+          const valueCell = topCells.find((cell) =>
+            Math.abs(cell.left - header.left) <= 1 &&
+            cell.title !== col &&
+            /^[0-9\\.,]+$/.test(cell.title)
+          );
+          out[col] = valueCell ? valueCell.title : '';
+        }
+
+        return { error: '', totals: out };
+        """
+    )
+
+    if not totals or totals.get("error"):
+        raise RuntimeError((totals or {}).get("error") or "falha ao extrair totais do grid SIOP")
+
+    raw = totals.get("totals", {})
+    return {
+        "dotacao_inicial_emenda": parse_brl_number(raw.get("Dotação Inicial Emenda", "")),
+        "dotacao_atual_emenda": parse_brl_number(raw.get("Dotação Atual Emenda", "")),
+        "empenhado": parse_brl_number(raw.get("Empenhado", "")),
+        "liquidado": parse_brl_number(raw.get("Liquidado", "")),
+        "pago": parse_brl_number(raw.get("Pago", "")),
+    }
+
+
+def extract_siop_totals_with_retry(driver, wait, group_label="Por Partido", attempts=6):
+    last_error = ""
+    for _ in range(max(1, attempts)):
+        try:
+            open_siop_step2_group(driver, wait, group_label=group_label)
+            return extract_siop_totals_from_grid(driver)
+        except Exception as exc:
+            last_error = normalize_text(str(exc))[:220]
+            time.sleep(1.0)
+    raise RuntimeError(last_error or "falha ao extrair totais do grid SIOP")
 
 
 def extract_siop_visible_chunk(driver):
@@ -539,7 +748,78 @@ def extract_siop_visible_chunk(driver):
     return driver.execute_script(js)
 
 
-def extract_siop_snapshot():
+def sweep_siop_rows_current_filter(driver, wait, max_steps=90, drag_offset=40):
+    from selenium.webdriver.common.action_chains import ActionChains
+    from selenium.webdriver.common.by import By
+
+    rows_by_key = {}
+    signatures = []
+    stop_reason = "max_steps"
+
+    for _ in range(max_steps):
+        chunk = extract_siop_visible_chunk(driver)
+        if chunk.get("error"):
+            stop_reason = f"chunk_error:{chunk.get('error')}"
+            break
+
+        nros = [normalize_text(nro) for nro in chunk.get("nros", []) if normalize_text(nro)]
+        signature = (
+            nros[0] if nros else "",
+            nros[-1] if nros else "",
+            len(nros),
+        )
+        signatures.append(signature)
+
+        for row in chunk.get("rows", []):
+            nro = normalize_text(row.get("Nro. Emenda", ""))
+            if not re.fullmatch(r"\d{8}", nro):
+                continue
+            rp_key = normalize_text(row.get("RP", "")) or "rp_nao_informado"
+            rows_by_key[f"{rp_key}::{nro}"] = row
+
+        if len(signatures) >= 9 and len(set(signatures[-9:])) == 1:
+            stop_reason = "stable_signature"
+            break
+
+        try:
+            frame = wait.until(
+                lambda drv: drv.find_element(
+                    By.XPATH,
+                    "//div[contains(@class,'QvFrame') and @objtype='Grid' and contains(.,'Nro. Emenda')]",
+                )
+            )
+            thumb = frame.find_element(
+                By.XPATH,
+                ".//div[contains(@class,'TouchScrollbar') and "
+                "contains(@style,'background-color: rgb(192, 192, 192)') and not(.//span)]",
+            )
+            ActionChains(driver).click_and_hold(thumb).move_by_offset(0, drag_offset).release().perform()
+            time.sleep(0.45)
+        except Exception:
+            stop_reason = "scrollbar_move_failed"
+            break
+
+    return rows_by_key, len(signatures), stop_reason
+
+
+def sweep_siop_rows_with_retry(driver, wait, group_label="Por Partido", attempts=5):
+    last_reason = ""
+    for _ in range(max(1, attempts)):
+        try:
+            open_siop_step2_group(driver, wait, group_label=group_label)
+            rows, steps, reason = sweep_siop_rows_current_filter(driver, wait)
+            if reason.startswith("chunk_error:") and not rows:
+                last_reason = reason
+                time.sleep(1.0)
+                continue
+            return rows, steps, reason
+        except Exception as exc:
+            last_reason = normalize_text(str(exc))[:220]
+            time.sleep(1.0)
+    return {}, 0, last_reason or "falha ao varrer grid SIOP"
+
+
+def extract_siop_snapshot(year, rp_filters):
     """
     Extrai snapshot agregado diretamente no SIOP:
     Dotação Inicial, Dotação Atual (autorizado), Empenhado, Liquidado e Pago.
@@ -549,7 +829,9 @@ def extract_siop_snapshot():
         "source_url": SIOP_PANEL_URL,
         "last_update": "",
         "base_siafi_date": "",
+        "filters": {"year": int(year), "rp": list(rp_filters)},
         "totals": {},
+        "per_rp": [],
         "error": "",
     }
 
@@ -573,35 +855,62 @@ def extract_siop_snapshot():
         driver = webdriver.Chrome(options=options)
         wait = WebDriverWait(driver, 40)
         navigate_siop_to_emendas(driver, wait)
-        open_siop_step2_group(driver, wait, group_label="Por Partido")
-
         body_text = driver.find_element("tag name", "body").text
-        body_flat = " ".join(body_text.split())
         last_update, base_siafi_date = parse_siop_dates_from_text(body_text)
         result["last_update"] = last_update
         result["base_siafi_date"] = base_siafi_date
 
-        m_totals = re.search(
-            (
-                r"Dotação Inicial Emenda\s*Dotação Atual Emenda\s*Empenhado\s*Liquidado\s*Pago\s*"
-                r"([0-9\.,]+)\s*([0-9\.,]+)\s*([0-9\.,]+)\s*([0-9\.,]+)\s*([0-9\.,]+)"
-            ),
-            body_flat,
-            flags=re.IGNORECASE,
-        )
-        if not m_totals:
-            raise RuntimeError("não encontrou bloco de totais no SIOP")
-
-        dotacao_inicial, dotacao_atual, empenhado, liquidado, pago = m_totals.groups()
-        result["totals"] = {
-            "dotacao_inicial_emenda": parse_brl_number(dotacao_inicial),
-            "dotacao_atual_emenda": parse_brl_number(dotacao_atual),
-            "empenhado": parse_brl_number(empenhado),
-            "liquidado": parse_brl_number(liquidado),
-            "pago": parse_brl_number(pago),
+        aggregate = {
+            "dotacao_inicial_emenda": 0.0,
+            "dotacao_atual_emenda": 0.0,
+            "empenhado": 0.0,
+            "liquidado": 0.0,
+            "pago": 0.0,
         }
-        result["available"] = True
-        result["error"] = ""
+        per_rp = []
+        errors = []
+
+        for rp_label in rp_filters:
+            if not apply_siop_single_rp_filter(driver, wait, year=year, rp_label=rp_label):
+                per_rp.append(
+                    {
+                        "rp": rp_label,
+                        "available": False,
+                        "totals": {},
+                        "error": "filtro não confirmado",
+                    }
+                )
+                errors.append(f"{rp_label}: filtro não confirmado")
+                continue
+
+            try:
+                rp_totals = extract_siop_totals_with_retry(driver, wait, group_label="Por Partido")
+                per_rp.append({"rp": rp_label, "available": True, "totals": rp_totals, "error": ""})
+                for key in aggregate:
+                    aggregate[key] += to_float(rp_totals.get(key, 0))
+            except Exception as exc:
+                per_rp.append(
+                    {
+                        "rp": rp_label,
+                        "available": False,
+                        "totals": {},
+                        "error": normalize_text(str(exc))[:220],
+                    }
+                )
+                errors.append(f"{rp_label}: {normalize_text(str(exc))[:120]}")
+
+        result["per_rp"] = per_rp
+        if per_rp and all(item.get("available") for item in per_rp):
+            result["totals"] = {k: to_float(v) for k, v in aggregate.items()}
+            result["available"] = True
+            result["error"] = ""
+        else:
+            result["totals"] = {}
+            result["available"] = False
+            if errors:
+                result["error"] = " ; ".join(errors)[:500]
+            else:
+                result["error"] = "falha ao confirmar os filtros RP no SIOP"
     except Exception as exc:
         result["error"] = normalize_text(str(exc))[:500]
     finally:
@@ -613,7 +922,7 @@ def extract_siop_snapshot():
     return result
 
 
-def extract_siop_details(party_lookup):
+def extract_siop_details(party_lookup, year, rp_filters):
     """
     Coleta linhas detalhadas do grid de emendas no SIOP (Passo 2 / Por Partido),
     varrendo a barra vertical e consolidando por Nro. Emenda.
@@ -622,6 +931,7 @@ def extract_siop_details(party_lookup):
         "available": False,
         "source_url": SIOP_PANEL_URL,
         "group_selected": "Por Partido",
+        "filters": {"year": int(year), "rp": list(rp_filters)},
         "last_update": "",
         "base_siafi_date": "",
         "rows": [],
@@ -632,12 +942,12 @@ def extract_siop_details(party_lookup):
         "top_authors": [],
         "top_parties": [],
         "top_orgaos": [],
+        "per_rp": [],
         "error": "",
     }
 
     try:
         from selenium import webdriver
-        from selenium.webdriver.common.action_chains import ActionChains
         from selenium.webdriver.common.by import By
         from selenium.webdriver.chrome.options import Options
         from selenium.webdriver.support.ui import WebDriverWait
@@ -657,65 +967,111 @@ def extract_siop_details(party_lookup):
         driver = webdriver.Chrome(options=options)
         wait = WebDriverWait(driver, 50)
         navigate_siop_to_emendas(driver, wait)
-        open_siop_step2_group(driver, wait, group_label="Por Partido")
 
         body_text = driver.find_element(By.TAG_NAME, "body").text
         last_update, base_siafi_date = parse_siop_dates_from_text(body_text)
         result["last_update"] = last_update
         result["base_siafi_date"] = base_siafi_date
 
-        rows_by_nro = {}
-        signatures = []
-        stop_reason = "max_steps"
-        max_steps = 90
-        drag_offset = 40
+        rows_by_key = {}
+        per_rp = []
+        sweep_steps_total = 0
+        sweep_reasons = []
+        errors = []
 
-        for step in range(max_steps):
-            chunk = extract_siop_visible_chunk(driver)
-            if chunk.get("error"):
-                stop_reason = f"chunk_error:{chunk.get('error')}"
-                break
-
-            nros = [normalize_text(nro) for nro in chunk.get("nros", []) if normalize_text(nro)]
-            signature = (
-                nros[0] if nros else "",
-                nros[-1] if nros else "",
-                len(nros),
-            )
-            signatures.append(signature)
-
-            for row in chunk.get("rows", []):
-                nro = normalize_text(row.get("Nro. Emenda", ""))
-                if not re.fullmatch(r"\d{8}", nro):
-                    continue
-                rows_by_nro[nro] = row
-
-            # Repetição indica fim útil da rolagem.
-            if len(signatures) >= 9 and len(set(signatures[-9:])) == 1:
-                stop_reason = "stable_signature"
-                break
-
-            frame = wait.until(
-                lambda drv: drv.find_element(
-                    By.XPATH,
-                    "//div[contains(@class,'QvFrame') and @objtype='Grid' and contains(.,'Nro. Emenda')]",
+        for rp_label in rp_filters:
+            if not apply_siop_single_rp_filter(driver, wait, year=year, rp_label=rp_label):
+                per_rp.append(
+                    {
+                        "rp": rp_label,
+                        "available": False,
+                        "rows_count": 0,
+                        "sweep_steps": 0,
+                        "sweep_stop_reason": "filtro não confirmado",
+                        "error": "filtro não confirmado",
+                    }
                 )
-            )
-            thumb = frame.find_element(
-                By.XPATH,
-                ".//div[contains(@class,'TouchScrollbar') and contains(@style,'background-color: rgb(192, 192, 192)') and not(.//span)]",
-            )
-            ActionChains(driver).click_and_hold(thumb).move_by_offset(0, drag_offset).release().perform()
-            time.sleep(0.45)
+                errors.append(f"{rp_label}: filtro não confirmado")
+                continue
 
-        result["sweep_steps"] = len(signatures)
-        result["sweep_stop_reason"] = stop_reason
+            try:
+                rp_rows, rp_steps, rp_reason = sweep_siop_rows_with_retry(
+                    driver,
+                    wait,
+                    group_label="Por Partido",
+                )
+                failed_rp = (not rp_rows) and (
+                    rp_reason.startswith("chunk_error:")
+                    or rp_reason.startswith("falha")
+                    or rp_reason.startswith("não")
+                )
+                if failed_rp:
+                    per_rp.append(
+                        {
+                            "rp": rp_label,
+                            "available": False,
+                            "rows_count": 0,
+                            "sweep_steps": rp_steps,
+                            "sweep_stop_reason": rp_reason,
+                            "error": rp_reason,
+                        }
+                    )
+                    errors.append(f"{rp_label}: {rp_reason}")
+                    continue
+                for key, row in rp_rows.items():
+                    rows_by_key[key] = row
+                per_rp.append(
+                    {
+                        "rp": rp_label,
+                        "available": True,
+                        "rows_count": len(rp_rows),
+                        "sweep_steps": rp_steps,
+                        "sweep_stop_reason": rp_reason,
+                        "error": "",
+                    }
+                )
+                sweep_steps_total += rp_steps
+                sweep_reasons.append(f"{rp_label}: {rp_reason}")
+            except Exception as exc:
+                message = normalize_text(str(exc))[:220]
+                per_rp.append(
+                    {
+                        "rp": rp_label,
+                        "available": False,
+                        "rows_count": 0,
+                        "sweep_steps": 0,
+                        "sweep_stop_reason": message,
+                        "error": message,
+                    }
+                )
+                errors.append(f"{rp_label}: {message}")
+
+        result["per_rp"] = per_rp
+        result["sweep_steps"] = sweep_steps_total
+        result["sweep_stop_reason"] = " | ".join(sweep_reasons)[:500]
+
+        if not per_rp or not all(item.get("available") for item in per_rp):
+            result["available"] = False
+            result["error"] = " ; ".join(errors)[:500] if errors else "falha ao confirmar filtros RP no SIOP"
+            return result
 
         author_totals = defaultdict(lambda: Decimal("0"))
         party_totals = defaultdict(lambda: Decimal("0"))
         orgao_totals = defaultdict(lambda: Decimal("0"))
         cleaned_rows = []
-        for nro, row in sorted(rows_by_nro.items()):
+        target_year = str(year)
+        target_rps = {normalize_text(label) for label in rp_filters}
+        for _, row in sorted(rows_by_key.items()):
+            nro = normalize_text(row.get("Nro. Emenda", ""))
+            if not re.fullmatch(r"\d{8}", nro):
+                continue
+            ano_row = normalize_text(row.get("Ano", ""))
+            rp_row = normalize_text(row.get("RP", ""))
+            if target_year and ano_row and ano_row != target_year:
+                continue
+            if target_rps and rp_row and rp_row not in target_rps:
+                continue
+
             author = normalize_text(row.get("Autor", "")) or "Autor não informado"
             orgao = normalize_text(row.get("Órgão", "")) or "Órgão não informado"
             party_raw = normalize_text(row.get("Partido", ""))
@@ -730,8 +1086,8 @@ def extract_siop_details(party_lookup):
             cleaned_rows.append(
                 {
                     "nro_emenda": nro,
-                    "ano": normalize_text(row.get("Ano", "")),
-                    "rp": normalize_text(row.get("RP", "")),
+                    "ano": ano_row,
+                    "rp": rp_row,
                     "autor": author,
                     "tipo_autor": normalize_text(row.get("Tipo Autor", "")),
                     "partido": party,
@@ -1423,9 +1779,10 @@ def build_dashboard(force=False):
         has_previous = bool(previous.get("snapshot_date")) and bool(previous.get("author_totals"))
         report = build_report(current, previous, headers, zip_path.stat().st_size, has_previous)
         current_year = int((report.get("unico_year_summary") or {}).get("year") or dt.date.today().year)
+        siop_rp_filters = list(SIOP_DEFAULT_RP_FILTERS)
         execucao_ano_corrente = fetch_execucao_ano_corrente(current_year)
-        siop_snapshot = extract_siop_snapshot()
-        siop_details = extract_siop_details(party_lookup)
+        siop_snapshot = extract_siop_snapshot(current_year, siop_rp_filters)
+        siop_details = extract_siop_details(party_lookup, current_year, siop_rp_filters)
         documents_monitor = build_documents_monitor(current_year, party_lookup)
         apoiamento_monitor = build_apoiamento_monitor(current_year)
         report["parallel_monitor"] = {
