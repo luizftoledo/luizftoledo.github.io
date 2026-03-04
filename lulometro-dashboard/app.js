@@ -410,6 +410,7 @@
     const timelineEntries = [...timeline.entries()].sort((a, b) => a[0].localeCompare(b[0]));
     const timelineLabels = timelineEntries.map(([k]) => formatMonthKey(k));
     const timelineValues = timelineEntries.map(([, v]) => v);
+    const timelineHasSeries = timelineValues.length > 1;
 
     const titleSuffix = hasTerm ? ` (termo: ${termRaw})` : ' (contagem de documentos)';
 
@@ -423,8 +424,9 @@
           borderColor: '#b8612d',
           backgroundColor: 'rgba(184,97,45,0.18)',
           tension: 0.2,
-          fill: true,
-          pointRadius: 2,
+          fill: false,
+          pointRadius: timelineHasSeries ? 2 : 4,
+          pointHoverRadius: timelineHasSeries ? 4 : 6,
         }],
       },
       options: {
@@ -436,7 +438,14 @@
         },
         scales: {
           y: { beginAtZero: true },
-          x: { ticks: { maxRotation: 70, minRotation: 0 } },
+          x: {
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 14,
+              maxRotation: 60,
+              minRotation: 0,
+            },
+          },
         },
       },
     });
@@ -455,6 +464,10 @@
           data: presEntries.map(([, v]) => v),
           backgroundColor: '#2b6f62',
           borderRadius: 6,
+          barPercentage: 0.55,
+          categoryPercentage: 0.72,
+          maxBarThickness: 34,
+          minBarLength: 2,
         }],
       },
       options: {
@@ -465,7 +478,7 @@
           legend: { display: false },
           title: { display: true, text: 'Top presidentes' },
         },
-        scales: { x: { beginAtZero: true } },
+        scales: { x: { beginAtZero: true, grace: '8%' } },
       },
     });
     state.charts.push(presidentChart);
@@ -483,19 +496,21 @@
           data: mandateEntries.map(([, v]) => v),
           backgroundColor: '#274c7f',
           borderRadius: 6,
+          barPercentage: 0.55,
+          categoryPercentage: 0.72,
+          maxBarThickness: 34,
+          minBarLength: 2,
         }],
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        indexAxis: 'y',
         plugins: {
           legend: { display: false },
           title: { display: true, text: 'Top mandatos' },
         },
-        scales: {
-          y: { beginAtZero: true },
-          x: { ticks: { maxRotation: 65, minRotation: 0 } },
-        },
+        scales: { x: { beginAtZero: true, grace: '8%' } },
       },
     });
     state.charts.push(mandateChart);
