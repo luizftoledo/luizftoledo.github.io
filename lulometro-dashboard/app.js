@@ -53,6 +53,7 @@
     chartMandates: document.getElementById('chart-mandates'),
     methodologyNote: document.getElementById('methodology-note'),
     wordcloudRange: document.getElementById('wordcloud-range'),
+    wordcloudApply: document.getElementById('wordcloud-apply'),
     wordcloudContext: document.getElementById('wordcloud-context'),
     wordcloudCloud: document.getElementById('wordcloud-cloud'),
     wordcloudTableBody: document.getElementById('wordcloud-table-body'),
@@ -71,6 +72,10 @@
     recordsLoaded: false,
     coverage: null,
     lightMode: false,
+    wordcloudCache: new Map(),
+    wordcloudRequestId: 0,
+    wordcloudCurrentKey: '',
+    wordcloudLastParams: null,
   };
 
   function foldText(value) {
@@ -295,6 +300,9 @@
     if (els.wordcloudRange) {
       els.wordcloudRange.disabled = disabled;
     }
+    if (els.wordcloudApply) {
+      els.wordcloudApply.disabled = disabled;
+    }
   }
 
   function setDeferredSearchState() {
@@ -422,6 +430,7 @@
       setControlsDisabled(false);
       els.btnSearch.textContent = 'Buscar';
       applySearch();
+      await requestWordcloudUpdate(true);
       setLoadProgress(true, 100, 'Carregamento concluído.');
       setTimeout(() => setLoadProgress(false, 0, ''), 700);
       return true;
@@ -493,57 +502,56 @@
     return true;
   }
 
-  function renderWordInsights(filters) {
-    if (!els.wordcloudCloud || !els.wordcloudTableBody || !els.wordcloudContext) return;
-    if (!state.coverage || state.coverage.latestEpochDay === null) {
-      els.wordcloudContext.textContent = 'Sem datas válidas para calcular termos recentes.';
-      els.wordcloudCloud.innerHTML = '<span class="hint">Sem termos disponíveis.</span>';
-      els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Sem dados.</td></tr>';
-      return;
-    }
-
+  function getWordcloudParams(filters) {
     const rangeDays = Number(els.wordcloudRange ? els.wordcloudRange.value : 30) || 30;
-    const anchorDay = state.coverage.latestEpochDay;
-    const cutoffDay = anchorDay - (rangeDays - 1);
-    const byWord = new Map();
-    let docsInWindow = 0;
+    const latestEpochDay = state.coverage ? state.coverage.latestEpochDay : null;
+    const anchorDay = latestEpochDay;
+    const cutoffDay = latestEpochDay === null ? null : latestEpochDay - (rangeDays - 1);
+    return {
+      rangeDays,
+      filters,
+      anchorDay,
+      cutoffDay,
+    };
+  }
 
-    for (const rec of state.records) {
-      if (!recordMatchesBaseFilters(rec, filters)) continue;
-      const day = getRecordEpochDay(rec);
-      if (day === null || day < cutoffDay || day > anchorDay) continue;
-      docsInWindow += 1;
+  function buildWordcloudCacheKey(params) {
+    return [
+      `r:${params.rangeDays}`,
+      `a:${params.anchorDay ?? 'na'}`,
+      `t:${params.filters.typeFilter}`,
+      `p:${params.filters.presidentFilter}`,
+      `m:${params.filters.mandateFilter}`,
+    ].join('|');
+  }
 
-      if (!rec._searchText) {
-        rec._searchText = normalizeSearchText(rec.text || '');
-      }
-      if (!rec._searchText) continue;
+  function renderWordInsightsPlaceholder(message) {
+    if (els.wordcloudContext) els.wordcloudContext.textContent = message;
+    if (els.wordcloudCloud) els.wordcloudCloud.innerHTML = '<span class="hint">Aguardando atualização...</span>';
+    if (els.wordcloudTableBody) els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Sem dados.</td></tr>';
+  }
 
-      const tokens = rec._searchText.split(' ');
-      for (const token of tokens) {
-        if (!isRelevantWordToken(token)) continue;
-        byWord.set(token, (byWord.get(token) || 0) + 1);
-      }
-    }
+  function renderWordInsightsResult(params, result) {
+    if (!els.wordcloudCloud || !els.wordcloudTableBody || !els.wordcloudContext) return;
+    const selectedPresident = params.filters.presidentFilter === 'todos'
+      ? 'todos os presidentes'
+      : params.filters.presidentFilter;
+    const selectedType = params.filters.typeFilter === 'ambos'
+      ? 'discursos + entrevistas'
+      : params.filters.typeFilter;
 
-    const sortedWords = [...byWord.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt-BR'));
-    const topCloud = sortedWords.slice(0, 60);
-    const topTable = sortedWords.slice(0, 10);
-
-    const selectedPresident = filters.presidentFilter === 'todos' ? 'todos os presidentes' : filters.presidentFilter;
-    const selectedType = filters.typeFilter === 'ambos' ? 'discursos + entrevistas' : filters.typeFilter;
-    els.wordcloudContext.textContent = `Janela: ${rangeDays} dias | Base analisada: ${nFmt.format(docsInWindow)} documentos | Filtro atual: ${selectedType}; ${selectedPresident}.`;
+    els.wordcloudContext.textContent = `Janela: ${params.rangeDays} dias | Base analisada: ${nFmt.format(result.docsInWindow)} documentos | Filtro atual: ${selectedType}; ${selectedPresident}.`;
 
     els.wordcloudCloud.innerHTML = '';
-    if (!topCloud.length) {
+    if (!result.topCloud.length) {
       els.wordcloudCloud.innerHTML = '<span class="hint">Sem termos suficientes no período selecionado.</span>';
     } else {
-      const counts = topCloud.map(([, count]) => count);
+      const counts = result.topCloud.map(([, count]) => count);
       const min = Math.min(...counts);
       const max = Math.max(...counts);
       const spread = Math.max(1, max - min);
 
-      for (const [word, count] of topCloud) {
+      for (const [word, count] of result.topCloud) {
         const ratio = (count - min) / spread;
         const size = 0.86 + ratio * 1.9;
         const span = document.createElement('span');
@@ -558,16 +566,109 @@
     }
 
     els.wordcloudTableBody.innerHTML = '';
-    if (!topTable.length) {
+    if (!result.topTable.length) {
       els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Sem dados no período.</td></tr>';
       return;
     }
 
-    topTable.forEach(([word, count], idx) => {
+    result.topTable.forEach(([word, count], idx) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `<td>${idx + 1}</td><td>${esc(word)}</td><td>${nFmt.format(count)}</td>`;
       els.wordcloudTableBody.appendChild(tr);
     });
+  }
+
+  async function computeWordInsights(params, requestId) {
+    const byWord = new Map();
+    let docsInWindow = 0;
+    let processed = 0;
+    const total = state.records.length || 1;
+
+    for (const rec of state.records) {
+      if (requestId !== state.wordcloudRequestId) return null;
+      processed += 1;
+      if (!recordMatchesBaseFilters(rec, params.filters)) continue;
+      const day = getRecordEpochDay(rec);
+      if (day === null || day < params.cutoffDay || day > params.anchorDay) continue;
+      docsInWindow += 1;
+
+      if (!rec._searchText) {
+        rec._searchText = normalizeSearchText(rec.text || '');
+      }
+      if (!rec._searchText) continue;
+
+      const tokens = rec._searchText.split(' ');
+      for (const token of tokens) {
+        if (!isRelevantWordToken(token)) continue;
+        byWord.set(token, (byWord.get(token) || 0) + 1);
+      }
+
+      if (processed % 180 === 0) {
+        const pct = Math.round((processed / total) * 100);
+        if (els.wordcloudContext) {
+          els.wordcloudContext.textContent = `Calculando nuvem... ${pct}%`;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
+    }
+
+    const sortedWords = [...byWord.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt-BR'));
+    return {
+      docsInWindow,
+      topCloud: sortedWords.slice(0, 60),
+      topTable: sortedWords.slice(0, 10),
+    };
+  }
+
+  function markWordcloudDirty(params, reasonText) {
+    const key = buildWordcloudCacheKey(params);
+    if (key === state.wordcloudCurrentKey) return;
+    const msg = reasonText || 'Filtros alterados. Clique em "Atualizar Nuvem" para recalcular os termos.';
+    if (els.wordcloudContext) els.wordcloudContext.textContent = msg;
+    if (els.wordcloudApply) els.wordcloudApply.disabled = false;
+  }
+
+  async function requestWordcloudUpdate(force = false) {
+    if (!els.wordcloudCloud || !els.wordcloudTableBody || !els.wordcloudContext) return;
+    if (!state.coverage || state.coverage.latestEpochDay === null) {
+      renderWordInsightsPlaceholder('Sem datas válidas para calcular termos recentes.');
+      return;
+    }
+
+    const params = getWordcloudParams(getActiveFilters());
+    state.wordcloudLastParams = params;
+    const key = buildWordcloudCacheKey(params);
+
+    if (!force && state.wordcloudCache.has(key)) {
+      const cached = state.wordcloudCache.get(key);
+      state.wordcloudCurrentKey = key;
+      renderWordInsightsResult(params, cached);
+      return;
+    }
+
+    state.wordcloudRequestId += 1;
+    const requestId = state.wordcloudRequestId;
+    if (els.wordcloudApply) {
+      els.wordcloudApply.disabled = true;
+      els.wordcloudApply.textContent = 'Atualizando...';
+    }
+    if (els.wordcloudContext) {
+      els.wordcloudContext.textContent = 'Calculando nuvem...';
+    }
+
+    try {
+      const result = await computeWordInsights(params, requestId);
+      if (!result || requestId !== state.wordcloudRequestId) return;
+
+      state.wordcloudCache.set(key, result);
+      state.wordcloudCurrentKey = key;
+      renderWordInsightsResult(params, result);
+    } finally {
+      if (els.wordcloudApply) {
+        els.wordcloudApply.disabled = false;
+        els.wordcloudApply.textContent = 'Atualizar Nuvem';
+      }
+    }
   }
 
   function applySearch() {
@@ -648,7 +749,7 @@
 
     renderCharts({ hasTerm, timeline, byPresident, byMandate, termRaw });
     renderTable(results, hasTerm);
-    renderWordInsights(filters);
+    markWordcloudDirty(getWordcloudParams(filters));
 
     const sampleDocs = nFmt.format(results.length);
     const totalDocs = nFmt.format(state.coverage ? state.coverage.totalFilled : state.records.length);
@@ -874,7 +975,16 @@
     if (els.wordcloudRange) {
       els.wordcloudRange.addEventListener('change', () => {
         if (!state.recordsLoaded) return;
-        renderWordInsights(getActiveFilters());
+        markWordcloudDirty(
+          getWordcloudParams(getActiveFilters()),
+          'Período alterado. Clique em "Atualizar Nuvem" para aplicar.'
+        );
+      });
+    }
+    if (els.wordcloudApply) {
+      els.wordcloudApply.addEventListener('click', () => {
+        if (!state.recordsLoaded) return;
+        requestWordcloudUpdate();
       });
     }
   }

@@ -247,6 +247,21 @@
       align-content: start;
     }
 
+    .chart-frame {
+      position: relative;
+      width: 100%;
+      height: clamp(240px, 34vh, 340px);
+      max-height: 340px;
+      min-height: 220px;
+      overflow: hidden;
+    }
+
+    .chart-frame canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+
     .panel h2 {
       margin: 0;
       font-size: 1rem;
@@ -425,6 +440,10 @@
       .page {
         width: min(1280px, 97vw);
       }
+      .chart-frame {
+        height: clamp(210px, 38vh, 280px);
+        max-height: 280px;
+      }
     }
   </style>
 </head>
@@ -487,14 +506,17 @@
     <section class="word-insights" aria-label="Termos mais usados recentemente">
       <div class="word-insights-head">
         <h2>Termos Mais Usados Recentemente</h2>
-        <select id="wordcloud-range" aria-label="Janela temporal da nuvem de palavras">
-          <option value="7">Ultimos 7 dias</option>
-          <option value="15">Ultimos 15 dias</option>
-          <option value="30" selected>Ultimos 30 dias</option>
-          <option value="90">Ultimos 3 meses</option>
-          <option value="180">Ultimos 6 meses</option>
-          <option value="365">Ultimo ano</option>
-        </select>
+        <div style="display:flex; gap:0.45rem; align-items:center; flex-wrap:wrap;">
+          <select id="wordcloud-range" aria-label="Janela temporal da nuvem de palavras">
+            <option value="7">Ultimos 7 dias</option>
+            <option value="15">Ultimos 15 dias</option>
+            <option value="30" selected>Ultimos 30 dias</option>
+            <option value="90">Ultimos 3 meses</option>
+            <option value="180">Ultimos 6 meses</option>
+            <option value="365">Ultimo ano</option>
+          </select>
+          <button id="wordcloud-apply" type="button" style="min-height:42px; background:#2b6f62; color:#fff;">Atualizar Nuvem</button>
+        </div>
       </div>
       <p class="hint" id="wordcloud-context">Carregando termos mais frequentes...</p>
       <div class="word-insights-grid">
@@ -539,13 +561,17 @@
       <article class="panel">
         <h2>Linha do Tempo de Citacoes</h2>
         <p class="panel-note">Soma de citacoes por mes no periodo filtrado.</p>
-        <canvas id="chart-timeline" height="220"></canvas>
+        <div class="chart-frame">
+          <canvas id="chart-timeline"></canvas>
+        </div>
       </article>
 
       <article class="panel">
         <h2>Comparacao Entre Presidentes</h2>
         <p class="panel-note">Top 12 presidentes/mandatos com maior volume de citacoes.</p>
-        <canvas id="chart-presidents" height="220"></canvas>
+        <div class="chart-frame">
+          <canvas id="chart-presidents"></canvas>
+        </div>
       </article>
     </section>
 
@@ -553,7 +579,9 @@
       <article class="panel">
         <h2>Comparacao Entre Mandatos</h2>
         <p class="panel-note">Volume total de citacoes por mandato no filtro atual.</p>
-        <canvas id="chart-mandates" height="220"></canvas>
+        <div class="chart-frame">
+          <canvas id="chart-mandates"></canvas>
+        </div>
       </article>
 
       <article class="panel">
