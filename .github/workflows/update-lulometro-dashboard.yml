@@ -20,6 +20,7 @@ jobs:
       BQ_PROJECT_ID_FALLBACK: "militares-376417"
       BQ_DATASET_FALLBACK: "militares"
       BQ_LOCATION_FALLBACK: "US"
+      GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
 
     steps:
       - name: Checkout
@@ -41,15 +42,13 @@ jobs:
           python scripts/build_lulometro_data.py --max-details 2500 --max-failures 3
 
       - name: Write GCP credentials file
-        if: ${{ secrets.GCP_SA_KEY != '' }}
+        if: ${{ env.GCP_SA_KEY != '' }}
         run: |
-          cat > "$RUNNER_TEMP/gcp-key.json" <<'JSON'
-          ${{ secrets.GCP_SA_KEY }}
-          JSON
+          printf '%s' "$GCP_SA_KEY" > "$RUNNER_TEMP/gcp-key.json"
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-key.json" >> "$GITHUB_ENV"
 
       - name: Sync Lulometro to BigQuery
-        if: ${{ secrets.GCP_SA_KEY != '' }}
+        if: ${{ env.GCP_SA_KEY != '' }}
         env:
           PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: python
         run: |
@@ -64,7 +63,7 @@ jobs:
             --commit-sha "${{ github.sha }}"
 
       - name: BigQuery sync skipped (missing secret)
-        if: ${{ secrets.GCP_SA_KEY == '' }}
+        if: ${{ env.GCP_SA_KEY == '' }}
         run: |
           echo "Skipping BigQuery sync. Configure at least secret GCP_SA_KEY."
 
