@@ -53,7 +53,9 @@
   const reasonModeYearly = document.getElementById('reason-mode-yearly');
   const reasonYearFilter = document.getElementById('reason-year-filter');
   const tableOrgTop = document.getElementById('table-org-top');
-  const tablePersonalTop = document.getElementById('table-personal-top');
+  const sigilo100YearFilter = document.getElementById('sigilo100-year-filter');
+  const sigilo100Note = document.getElementById('sigilo100-note');
+  const tableSigilo100Ranking = document.getElementById('table-sigilo100-ranking');
 
   const orgCards = document.getElementById('org-cards');
 
@@ -97,6 +99,7 @@
   let activeSourceId = '';
   let reasonTableMode = 'global';
   let reasonSelectedYear = '';
+  let sigilo100SelectedYear = 'geral';
   let lastSearchResults = [];
   let partialYearCtx = null;
 
@@ -1020,6 +1023,49 @@
         },
       },
     }));
+
+    const sigiloContext = getSigilo100Context();
+    renderSigilo100YearOptions(sigiloContext);
+    renderSigilo100Note(sigiloContext);
+    const sigiloRows = (sigiloContext.rows || []).slice(0, 10);
+
+    pushChart(new Chart(document.getElementById('chart-sigilo100'), {
+      type: 'bar',
+      data: {
+        labels: sigiloRows.map((row) => shortOrgName(row.org)),
+        datasets: [
+          {
+            label: '% do total de pedidos',
+            data: sigiloRows.map((row) => Number(row.personal_rate_in_total || 0) * 100),
+            backgroundColor: 'rgba(141,95,44,0.82)',
+            borderRadius: 6,
+            yAxisID: 'y',
+          },
+          {
+            type: 'line',
+            label: 'Restrições por informação pessoal (qtde)',
+            data: sigiloRows.map((row) => Number(row.personal_restricted_total || 0)),
+            borderColor: '#2f6f9f',
+            backgroundColor: 'rgba(47,111,159,0.14)',
+            yAxisID: 'y1',
+            tension: 0.2,
+            pointRadius: 2,
+          },
+        ],
+      },
+      options: {
+        ...commonOptions,
+        scales: {
+          y: { beginAtZero: true, ticks: { callback: (v) => `${v.toFixed(1)}%` } },
+          y1: {
+            beginAtZero: true,
+            position: 'right',
+            grid: { drawOnChartArea: false },
+            ticks: { callback: (v) => nFmt.format(v) },
+          },
+        },
+      },
+    }));
   }
 
   function getReasonYears() {
@@ -1137,6 +1183,68 @@
     tableReasonsNote.innerHTML = 'Ranking geral da série histórica completa, com participação dentro das restrições e também no total de pedidos.';
   }
 
+  function getSigilo100Context() {
+    const personalInfo = reportData.personal_info || {};
+    const byYearMap = new Map();
+    const byYear = personalInfo.org_ranking_by_year || [];
+    byYear.forEach((item) => {
+      const year = Number(item?.year || 0);
+      if (!Number.isFinite(year) || year <= 0) return;
+      byYearMap.set(String(year), (item?.rows || []));
+    });
+    const years = [...byYearMap.keys()].map((year) => Number(year)).sort((a, b) => b - a);
+
+    if (sigilo100SelectedYear !== 'geral' && !byYearMap.has(sigilo100SelectedYear)) {
+      sigilo100SelectedYear = years.length ? String(years[0]) : 'geral';
+    }
+
+    const selectedYearNum = sigilo100SelectedYear === 'geral'
+      ? null
+      : Number(sigilo100SelectedYear);
+    const rows = selectedYearNum
+      ? (byYearMap.get(String(selectedYearNum)) || [])
+      : (personalInfo.org_ranking_overall || []);
+
+    const yearSeries = selectedYearNum
+      ? (reportData.series || []).find((row) => Number(row.year) === selectedYearNum)
+      : null;
+    const selectedLabel = selectedYearNum
+      ? ((partialYearCtx && Number(partialYearCtx.year) === selectedYearNum) ? `${selectedYearNum}*` : String(selectedYearNum))
+      : 'série histórica completa';
+
+    return {
+      minRequests: Number(personalInfo.sigilo100_min_requests || 0),
+      years,
+      selectedYearNum,
+      selectedLabel,
+      rows,
+      yearSeries,
+    };
+  }
+
+  function renderSigilo100YearOptions(context) {
+    if (!sigilo100YearFilter) return;
+    const options = ['<option value="geral">Ranking: série histórica completa</option>'];
+    options.push(...context.years.map((year) => {
+      const label = (partialYearCtx && Number(partialYearCtx.year) === Number(year)) ? `${year}*` : String(year);
+      return `<option value="${year}">Ranking: ano ${label}</option>`;
+    }));
+    sigilo100YearFilter.innerHTML = options.join('');
+    sigilo100YearFilter.value = context.selectedYearNum ? String(context.selectedYearNum) : 'geral';
+  }
+
+  function renderSigilo100Note(context) {
+    if (!sigilo100Note) return;
+    const minRule = context.minRequests > 0
+      ? ` com mínimo de ${nFmt.format(context.minRequests)} pedidos no recorte`
+      : '';
+    if (context.selectedYearNum && context.yearSeries) {
+      sigilo100Note.innerHTML = `Ano <strong>${esc(context.selectedLabel)}</strong>: ranking por <strong>restrições por informação pessoal ÷ total de pedidos</strong>${minRule}. Total do ano: <strong>${nFmt.format(context.yearSeries.total_requests || 0)}</strong> pedidos e <strong>${nFmt.format(context.yearSeries.denied_total || 0)}</strong> negados.`;
+      return;
+    }
+    sigilo100Note.innerHTML = `Série histórica completa: ranking por <strong>restrições por informação pessoal ÷ total de pedidos</strong>${minRule}. Total da série: <strong>${nFmt.format((reportData.overall || {}).total_requests || 0)}</strong> pedidos e <strong>${nFmt.format((reportData.overall || {}).denied_total || 0)}</strong> negados.`;
+  }
+
   function renderTables() {
     if (tableYearly) {
       tableYearly.innerHTML = (reportData.series || []).map((row) => `
@@ -1169,15 +1277,26 @@
     `).join('');
     }
 
-    if (tablePersonalTop) {
-      tablePersonalTop.innerHTML = (((reportData.personal_info || {}).top_orgs) || []).slice(0, 20).map((row) => `
-      <tr>
-        <td>${esc(row.org)}</td>
-        <td>${nFmt.format(row.personal_restricted_total || 0)}</td>
-        <td>${nFmt.format(row.restricted_total || 0)}</td>
-        <td>${pFmt.format(row.share_in_org_restricted || 0)}</td>
-      </tr>
-    `).join('');
+    if (tableSigilo100Ranking) {
+      const sigiloContext = getSigilo100Context();
+      renderSigilo100YearOptions(sigiloContext);
+      renderSigilo100Note(sigiloContext);
+      const rows = (sigiloContext.rows || []).slice(0, 25);
+      if (!rows.length) {
+        tableSigilo100Ranking.innerHTML = '<tr><td colspan="7">Sem dados suficientes para o recorte selecionado.</td></tr>';
+      } else {
+        tableSigilo100Ranking.innerHTML = rows.map((row, index) => `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${esc(row.org)}</td>
+            <td>${nFmt.format(row.total_requests || 0)}</td>
+            <td>${nFmt.format(row.denied_total || 0)}</td>
+            <td>${nFmt.format(row.personal_restricted_total || 0)}</td>
+            <td>${pFmt.format(row.personal_rate_in_total || 0)}</td>
+            <td>${pFmt.format(row.personal_rate_in_restricted || 0)}</td>
+          </tr>
+        `).join('');
+      }
     }
   }
 
@@ -1829,6 +1948,13 @@
         reasonSelectedYear = reasonYearFilter.value || '';
         updateReasonModeButtons();
         renderReasonsTable();
+      });
+    }
+    if (sigilo100YearFilter) {
+      sigilo100YearFilter.addEventListener('change', () => {
+        sigilo100SelectedYear = sigilo100YearFilter.value || 'geral';
+        renderCharts();
+        renderTables();
       });
     }
 

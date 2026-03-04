@@ -394,6 +394,7 @@
     }
 
     .tables,
+    .sigilo100-block,
     .orgs,
     .search-panel,
     .learn-more,
@@ -401,6 +402,23 @@
       padding: 1rem 1.1rem;
       display: grid;
       gap: 0.7rem;
+    }
+
+    .sigilo100-controls {
+      display: grid;
+      gap: 0.38rem;
+      align-content: start;
+    }
+
+    .sigilo100-rank-card {
+      height: auto;
+      min-height: 340px;
+      grid-template-rows: auto auto 1fr;
+    }
+
+    .sigilo100-rank-card canvas {
+      height: 210px !important;
+      max-height: 210px;
     }
 
     .table-card {
@@ -1201,11 +1219,45 @@
           <h3>Órgãos que mais negam (top 10)</h3>
           <canvas id="chart-org-top"></canvas>
         </article>
+      </div>
+    </section>
+
+    <section class="card sigilo100-block">
+      <h2>Bloco Sigilo dos 100 anos <span class="table-inline-note">(informação pessoal)</span></h2>
+      <p class="section-note">Este bloco reúne tudo sobre negativas por informação pessoal (o chamado <a href="https://www.youtube.com/watch?v=BAUB6kCcs8k" target="_blank" rel="noopener noreferrer">“sigilo dos 100 anos”</a>): evolução no tempo e ranking proporcional por órgão.</p>
+      <div class="chart-grid">
         <article class="chart-card">
-          <h3>Negativas por informação pessoal <span class="table-inline-note">(o chamado <a href="https://www.youtube.com/watch?v=BAUB6kCcs8k" target="_blank" rel="noopener noreferrer">"sigilo dos 100 anos"</a>)</span></h3>
+          <h3>Evolução anual de negativas por informação pessoal</h3>
           <canvas id="chart-personal"></canvas>
         </article>
+        <article class="chart-card sigilo100-rank-card">
+          <h3>Ranking proporcional por órgão</h3>
+          <div class="sigilo100-controls">
+            <select id="sigilo100-year-filter" aria-label="Selecionar ano para ranking de sigilo"></select>
+            <p class="table-note table-note-tight" id="sigilo100-note"></p>
+          </div>
+          <canvas id="chart-sigilo100"></canvas>
+        </article>
       </div>
+      <article class="table-card">
+        <h3>Órgãos com maior proporção de negativas por informação pessoal</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Posição</th>
+                <th>Órgão</th>
+                <th>Pedidos recebidos</th>
+                <th>Negados (total)</th>
+                <th>Restrições por informação pessoal</th>
+                <th>% pessoal no total de pedidos</th>
+                <th>% pessoal dentro das restrições</th>
+              </tr>
+            </thead>
+            <tbody id="table-sigilo100-ranking"></tbody>
+          </table>
+        </div>
+      </article>
     </section>
 
     <section class="card tables">
@@ -1277,22 +1329,6 @@
         </div>
       </article>
 
-      <article class="table-card">
-        <h3>Negativas por informação pessoal: órgãos com mais casos</h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Órgão</th>
-                <th>Pessoais (qtde)</th>
-                <th>Com restrição</th>
-                <th>% pessoal dentro das restrições</th>
-              </tr>
-            </thead>
-            <tbody id="table-personal-top"></tbody>
-          </table>
-        </div>
-      </article>
     </section>
 
     <section class="card search-panel">

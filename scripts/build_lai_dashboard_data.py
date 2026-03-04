@@ -36,6 +36,7 @@ USER_AGENT = (
 DOWNLOAD_TIMEOUT = 300
 START_YEAR_DEFAULT = 2015
 MIN_REQUESTS_TOP_DENIAL_RATE_CURRENT_YEAR = 200
+MIN_REQUESTS_SIGILO100_RANKING = 200
 REQUEST_INDEX_SCHEMA_VERSION = 2
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -1356,6 +1357,97 @@ def build_report(year_payloads):
         for item in yearly_series
     ]
 
+    personal_org_ranking_overall = sorted(
+        [
+            {
+                **row,
+                "personal_rate_in_denied": (
+                    row["personal_restricted_total"] / row["denied_total"]
+                    if row["denied_total"]
+                    else 0.0
+                ),
+            }
+            for row in org_stats.values()
+            if row["total_requests"] >= MIN_REQUESTS_SIGILO100_RANKING
+            and row["personal_restricted_total"] > 0
+        ],
+        key=lambda row: (
+            row["personal_rate_in_total"],
+            row["personal_restricted_total"],
+            row["denied_total"],
+            row["total_requests"],
+        ),
+        reverse=True,
+    )[:60]
+
+    personal_org_ranking_by_year = []
+    for payload in year_payloads:
+        year = int(payload["year"])
+        year_org_total = {
+            normalize_text(org): int(count)
+            for org, count in (payload.get("org_total", {}) or {}).items()
+            if normalize_text(org)
+        }
+        year_org_denied = {
+            normalize_text(org): int(count)
+            for org, count in (payload.get("org_denied", {}) or {}).items()
+            if normalize_text(org)
+        }
+        year_org_restricted = {
+            normalize_text(org): int(count)
+            for org, count in (payload.get("org_restricted", {}) or {}).items()
+            if normalize_text(org)
+        }
+        year_org_personal = {
+            normalize_text(org): int(count)
+            for org, count in (payload.get("org_personal", {}) or {}).items()
+            if normalize_text(org)
+        }
+
+        ranking_rows = []
+        for org, total_requests in year_org_total.items():
+            denied_total = int(year_org_denied.get(org, 0))
+            restricted_total = int(year_org_restricted.get(org, 0))
+            personal_total = int(year_org_personal.get(org, 0))
+            if total_requests < MIN_REQUESTS_SIGILO100_RANKING or personal_total <= 0:
+                continue
+            ranking_rows.append(
+                {
+                    "org": org,
+                    "total_requests": total_requests,
+                    "denied_total": denied_total,
+                    "restricted_total": restricted_total,
+                    "personal_restricted_total": personal_total,
+                    "personal_rate_in_total": (
+                        (personal_total / total_requests) if total_requests else 0.0
+                    ),
+                    "personal_rate_in_denied": (
+                        (personal_total / denied_total) if denied_total else 0.0
+                    ),
+                    "personal_rate_in_restricted": (
+                        (personal_total / restricted_total) if restricted_total else 0.0
+                    ),
+                }
+            )
+
+        ranking_rows = sorted(
+            ranking_rows,
+            key=lambda row: (
+                row["personal_rate_in_total"],
+                row["personal_restricted_total"],
+                row["denied_total"],
+                row["total_requests"],
+            ),
+            reverse=True,
+        )[:60]
+
+        personal_org_ranking_by_year.append(
+            {
+                "year": year,
+                "rows": ranking_rows,
+            }
+        )
+
     personal_top_orgs = sorted(
         [
             {
@@ -1724,6 +1816,11 @@ def build_report(year_payloads):
                 "Ranking de menor taxa de negativa considera apenas órgãos com "
                 "pelo menos 1.500 pedidos na série."
             ),
+            "sigilo100_proportional": (
+                "Ranking proporcional de informação pessoal ordena por "
+                "casos de informação pessoal dividido pelo total de pedidos, "
+                f"com mínimo de {MIN_REQUESTS_SIGILO100_RANKING} pedidos no recorte."
+            ),
             "pf_rule": (
                 "A Polícia Federal é incluída no bloco principal mesmo fora do top 10."
             ),
@@ -1802,6 +1899,9 @@ def build_report(year_payloads):
         "personal_info": {
             "series": personal_series,
             "top_orgs": personal_top_orgs,
+            "sigilo100_min_requests": MIN_REQUESTS_SIGILO100_RANKING,
+            "org_ranking_overall": personal_org_ranking_overall,
+            "org_ranking_by_year": personal_org_ranking_by_year,
         },
         "monitoring": monitoring,
         "search_dashboard": {

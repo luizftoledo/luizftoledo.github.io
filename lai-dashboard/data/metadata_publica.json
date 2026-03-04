@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-04T22:44:06.910524+00:00",
+  "updated_at": "2026-03-04T23:26:23.055056+00:00",
   "years_covered": [
     2015,
     2016,
@@ -45,6 +45,6 @@
     ]
   },
   "sample_count": 62365,
-  "years_refreshed_in_run": 6,
+  "years_refreshed_in_run": 1,
   "build_notes": "Cache anual incremental: anos anteriores ficam congelados; ano corrente é reprocessado a cada execução."
 }
