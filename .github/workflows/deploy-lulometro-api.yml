@@ -125,7 +125,7 @@ jobs:
             --region "$REGION_ID" \
             --source services/lulometro-api \
             --allow-unauthenticated \
-            --set-env-vars "BQ_PROJECT_ID=$PROJECT_ID,BQ_DATASET=$DATASET_ID,CORS_ALLOW_ORIGINS=$ALLOW_ORIGINS"
+            --set-env-vars "^##^BQ_PROJECT_ID=$PROJECT_ID##BQ_DATASET=$DATASET_ID##CORS_ALLOW_ORIGINS=$ALLOW_ORIGINS"
 
           API_URL="$(gcloud run services describe "$SERVICE_NAME" --project "$PROJECT_ID" --region "$REGION_ID" --format='value(status.url)')"
           if [ -z "$API_URL" ]; then
