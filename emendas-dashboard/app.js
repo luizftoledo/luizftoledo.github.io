@@ -680,7 +680,7 @@
     }
 
     const chartRows = enriched.slice(0, 10);
-    const labels = chartRows.map((row) => shortLabel(row.author, 18));
+    const labels = chartRows.map((row) => shortLabel(row.author, 30));
     const shares = chartRows.map((row) => row.share * 100);
     const amounts = chartRows.map((row) => row.empenhado);
 
@@ -694,33 +694,32 @@
             data: shares,
             backgroundColor: 'rgba(63, 107, 123, 0.68)',
             borderRadius: 6,
-            maxBarThickness: 24,
+            maxBarThickness: 22,
           },
         ],
       },
       options: {
+        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
         scales: {
           x: {
+            beginAtZero: true,
             ticks: {
-              maxRotation: 30,
-              minRotation: 20,
-              autoSkip: false,
+              callback: (value) => `${Number(value).toFixed(1)}%`,
             },
           },
           y: {
             ticks: {
-              callback: (value) => `${value.toFixed(1)}%`,
+              autoSkip: false,
             },
-            beginAtZero: true,
           },
         },
         plugins: {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: (ctx) => `${ctx.parsed.y.toFixed(1)}% (${money(amounts[ctx.dataIndex] || 0)})`,
+              label: (ctx) => `${ctx.parsed.x.toFixed(1)}% (${money(amounts[ctx.dataIndex] || 0)})`,
             },
           },
         },

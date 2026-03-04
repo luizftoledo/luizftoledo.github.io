@@ -305,6 +305,7 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.7rem;
+      align-items: start;
     }
 
     .chart-box {
@@ -318,6 +319,14 @@
     .chart-box canvas {
       width: 100%;
       height: 238px !important;
+    }
+
+    .chart-box-authors-share {
+      min-height: 360px;
+    }
+
+    .chart-box-authors-share canvas {
+      height: 338px !important;
     }
 
     .table-wrap {
@@ -439,6 +448,12 @@
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .charts { grid-template-columns: 1fr; }
       .progress-grid { grid-template-columns: 1fr; }
+      .chart-box-authors-share {
+        min-height: 320px;
+      }
+      .chart-box-authors-share canvas {
+        height: 296px !important;
+      }
     }
 
     @media (max-width: 640px) {
@@ -721,7 +736,7 @@
               </tbody>
             </table>
           </div>
-          <div class="chart-box">
+          <div class="chart-box chart-box-authors-share">
             <canvas id="chart-docs-authors-share"></canvas>
           </div>
         </div>
