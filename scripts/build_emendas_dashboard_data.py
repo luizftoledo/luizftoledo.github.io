@@ -71,6 +71,7 @@ STATE_DIR = DATA_DIR / "state"
 REPORT_FILE = DATA_DIR / "report_data.json"
 META_FILE = DATA_DIR / "metadata.json"
 HISTORY_FILE = DATA_DIR / "daily_history.json"
+SIOP_HISTORY_FILE = DATA_DIR / "siop_daily_history.json"
 STATE_FILE = STATE_DIR / "latest_aggregates.json.gz"
 
 
@@ -1612,6 +1613,73 @@ def update_history(report):
     return history
 
 
+def update_siop_history(report):
+    history = load_json(SIOP_HISTORY_FILE, [])
+    snapshot_date = report.get("snapshot_date", "")
+    siop_snapshot = (((report.get("parallel_monitor") or {}).get("siop_snapshot")) or {})
+
+    if not (snapshot_date and siop_snapshot.get("available")):
+        report["siop_daily_history"] = history
+        return history
+
+    totals = siop_snapshot.get("totals", {}) if isinstance(siop_snapshot, dict) else {}
+    history = [row for row in history if row.get("date") != snapshot_date]
+    history.append(
+        {
+            "date": snapshot_date,
+            "last_update": siop_snapshot.get("last_update", ""),
+            "base_siafi_date": siop_snapshot.get("base_siafi_date", ""),
+            "dotacao_inicial_emenda": to_float(totals.get("dotacao_inicial_emenda", 0)),
+            "dotacao_atual_emenda": to_float(totals.get("dotacao_atual_emenda", 0)),
+            "empenhado": to_float(totals.get("empenhado", 0)),
+            "liquidado": to_float(totals.get("liquidado", 0)),
+            "pago": to_float(totals.get("pago", 0)),
+        }
+    )
+    history.sort(key=lambda row: row.get("date", ""))
+    if len(history) > 730:
+        history = history[-730:]
+    SIOP_HISTORY_FILE.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
+    report["siop_daily_history"] = history
+    return history
+
+
+def apply_siop_fallback_from_previous(report):
+    previous_report = load_json(REPORT_FILE, {})
+    previous_parallel = previous_report.get("parallel_monitor", {}) if isinstance(previous_report, dict) else {}
+    previous_snapshot = previous_parallel.get("siop_snapshot", {}) if isinstance(previous_parallel, dict) else {}
+    previous_details = previous_parallel.get("siop_details", {}) if isinstance(previous_parallel, dict) else {}
+
+    parallel = report.get("parallel_monitor", {})
+    current_snapshot = parallel.get("siop_snapshot", {}) if isinstance(parallel, dict) else {}
+    current_details = parallel.get("siop_details", {}) if isinstance(parallel, dict) else {}
+
+    if (
+        isinstance(current_snapshot, dict)
+        and not current_snapshot.get("available")
+        and isinstance(previous_snapshot, dict)
+        and previous_snapshot.get("available")
+    ):
+        fallback_snapshot = dict(previous_snapshot)
+        fallback_snapshot["fallback_from_previous"] = True
+        fallback_snapshot["error"] = normalize_text(current_snapshot.get("error")) or ""
+        parallel["siop_snapshot"] = fallback_snapshot
+
+    if (
+        isinstance(current_details, dict)
+        and not current_details.get("available")
+        and isinstance(previous_details, dict)
+        and previous_details.get("available")
+    ):
+        fallback_details = dict(previous_details)
+        fallback_details["fallback_from_previous"] = True
+        fallback_details["error"] = normalize_text(current_details.get("error")) or ""
+        parallel["siop_details"] = fallback_details
+
+    report["parallel_monitor"] = parallel
+    return report
+
+
 def build_current_aggregates(zip_path, party_lookup):
     current_year = dt.date.today().year
     with zipfile.ZipFile(zip_path) as zf:
@@ -1717,6 +1785,8 @@ def write_metadata(report):
     siop_snapshot = parallel.get("siop_snapshot", {})
     siop_details = parallel.get("siop_details", {})
     siop_totals = siop_snapshot.get("totals", {}) if isinstance(siop_snapshot, dict) else {}
+    siop_history = report.get("siop_daily_history", [])
+    siop_history_last_date = siop_history[-1].get("date", "") if siop_history else ""
     metadata = {
         "updated_at": report["generated_at"],
         "snapshot_date": report["snapshot_date"],
@@ -1738,16 +1808,20 @@ def write_metadata(report):
         "apoiamento_source_url": ((apoiamento.get("source") or {}).get("download_url")) or "",
         "apoiamento_last_modified": ((apoiamento.get("source") or {}).get("last_modified")) or "",
         "siop_snapshot_available": bool(siop_snapshot.get("available")),
+        "siop_snapshot_fallback_from_previous": bool(siop_snapshot.get("fallback_from_previous")),
         "siop_snapshot_last_update": siop_snapshot.get("last_update", ""),
         "siop_base_siafi_date": siop_snapshot.get("base_siafi_date", ""),
         "siop_dotacao_atual_emenda": siop_totals.get("dotacao_atual_emenda", 0),
         "siop_dotacao_inicial_emenda": siop_totals.get("dotacao_inicial_emenda", 0),
         "siop_snapshot_error": siop_snapshot.get("error", ""),
         "siop_details_available": bool(siop_details.get("available")),
+        "siop_details_fallback_from_previous": bool(siop_details.get("fallback_from_previous")),
         "siop_details_rows_count": siop_details.get("rows_count", 0),
         "siop_details_unique_nro_emendas": siop_details.get("unique_nro_emendas", 0),
         "siop_details_sweep_steps": siop_details.get("sweep_steps", 0),
         "siop_details_error": siop_details.get("error", ""),
+        "siop_history_days": len(siop_history),
+        "siop_history_last_date": siop_history_last_date,
     }
     META_FILE.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
     return metadata
@@ -1825,7 +1899,9 @@ def build_dashboard(force=False):
             "apoiamento": apoiamento_monitor,
             "party_lookup": party_lookup_meta,
         }
+        apply_siop_fallback_from_previous(report)
         update_history(report)
+        update_siop_history(report)
         save_report(report)
         write_metadata(report)
         save_state_from_current(current, report)
