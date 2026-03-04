@@ -48,6 +48,7 @@
   const tableReasonsHead = document.getElementById('table-reasons-head');
   const tableReasons = document.getElementById('table-reasons');
   const tableReasonsNote = document.getElementById('table-reasons-note');
+  const tableReasonsContext = document.getElementById('table-reasons-context');
   const reasonModeGlobal = document.getElementById('reason-mode-global');
   const reasonModeYearly = document.getElementById('reason-mode-yearly');
   const reasonYearFilter = document.getElementById('reason-year-filter');
@@ -488,9 +489,32 @@
     const topRateRows = (monitoring.top_denial_rate_current_year || []).slice(0, 5);
     const minRequestsTopRate = Number(monitoring.top_denial_rate_min_requests || 0);
     const topRateHtml = topRateRows.length
-      ? `<ol>${topRateRows.map((row) => `
-          <li><strong>${esc(row.org)}</strong>: <strong>${pFmt.format(row.denied_rate || 0)}</strong> de negativas no ano vigente, com <strong>${nFmt.format(row.denied_total || 0)}</strong> negados em <strong>${nFmt.format(row.total_requests || 0)}</strong> pedidos.</li>
-        `).join('')}</ol>`
+      ? `
+        <div class="alert-table-wrap">
+          <table class="alert-mini-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Órgão</th>
+                <th>Taxa</th>
+                <th>Negados</th>
+                <th>Pedidos</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${topRateRows.map((row, index) => `
+                <tr>
+                  <td>${index + 1}</td>
+                  <td>${esc(row.org || '--')}</td>
+                  <td><span class="alert-rate-pill">${pFmt.format(row.denied_rate || 0)}</span></td>
+                  <td>${nFmt.format(row.denied_total || 0)}</td>
+                  <td>${nFmt.format(row.total_requests || 0)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `
       : '<p>Sem dados suficientes para montar o ranking proporcional neste momento.</p>';
 
     const themeWorsening = (monitoring.theme_worsening || []).slice(0, 5);
@@ -1076,14 +1100,21 @@
         <th>Motivo</th>
         <th>Quantidade</th>
         <th>% das restrições do ano</th>
+        <th>% do total de pedidos do ano</th>
       `;
 
       const yearSeries = (reportData.series || []).find((row) => Number(row.year || 0) === selectedYear);
       const restrictedTotal = Number((yearSeries || {}).restricted_total || 0);
+      const totalRequests = Number((yearSeries || {}).total_requests || 0);
+      const deniedRate = Number((yearSeries || {}).denied_rate || 0);
+      const restrictedRate = Number((yearSeries || {}).restricted_rate || 0);
       const yearLabel = (partialYearCtx && Number(partialYearCtx.year) === selectedYear) ? `${selectedYear}*` : String(selectedYear);
+      if (tableReasonsContext) {
+        tableReasonsContext.innerHTML = `No recorte de <strong>${esc(yearLabel)}</strong>, a taxa de <strong>negado</strong> é <strong>${pFmt.format(deniedRate)}</strong> e a taxa de <strong>pedidos com restrição</strong> é <strong>${pFmt.format(restrictedRate)}</strong>.`;
+      }
 
       if (!yearRows.length) {
-        tableReasons.innerHTML = '<tr><td colspan="4">Sem dados de motivos para o ano selecionado.</td></tr>';
+        tableReasons.innerHTML = '<tr><td colspan="5">Sem dados de motivos para o ano selecionado.</td></tr>';
         tableReasonsNote.textContent = `Sem dados de motivo para ${yearLabel}.`;
         return;
       }
@@ -1094,9 +1125,10 @@
           <td>${esc(row.reason)}</td>
           <td>${nFmt.format(row.count || 0)}</td>
           <td>${restrictedTotal ? pFmt.format((row.count || 0) / restrictedTotal) : '--'}</td>
+          <td>${totalRequests ? pFmt.format((row.count || 0) / totalRequests) : '--'}</td>
         </tr>
       `).join('');
-      tableReasonsNote.innerHTML = `Ano selecionado: <strong>${esc(yearLabel)}</strong>. A linha destacada mostra o motivo nº 1 do ano.`;
+      tableReasonsNote.innerHTML = `Ano selecionado: <strong>${esc(yearLabel)}</strong>. A linha destacada mostra o motivo nº 1. Na tabela, você tem duas camadas: participação <strong>dentro das restrições</strong> e participação <strong>no total de pedidos</strong>.`;
       return;
     }
 
@@ -1105,17 +1137,23 @@
       <th>Motivo</th>
       <th>Quantidade</th>
       <th>% do total com restrição</th>
+      <th>% do total de pedidos</th>
     `;
     const totalRestricted = Number((reportData.overall || {}).restricted_total || 0);
+    const totalRequests = Number((reportData.overall || {}).total_requests || 0);
+    if (tableReasonsContext) {
+      tableReasonsContext.innerHTML = `Na série histórica completa, a taxa de <strong>negado</strong> é <strong>${pFmt.format((reportData.overall || {}).denied_rate || 0)}</strong> e a taxa de <strong>pedidos com restrição</strong> é <strong>${pFmt.format((reportData.overall || {}).restricted_rate || 0)}</strong>.`;
+    }
     tableReasons.innerHTML = (reportData.top_reasons || []).slice(0, 15).map((row, index) => `
       <tr>
         <td>${index + 1}</td>
         <td>${esc(row.reason)}</td>
         <td>${nFmt.format(row.count || 0)}</td>
         <td>${totalRestricted ? pFmt.format((row.count || 0) / totalRestricted) : '--'}</td>
+        <td>${totalRequests ? pFmt.format((row.count || 0) / totalRequests) : '--'}</td>
       </tr>
     `).join('');
-    tableReasonsNote.innerHTML = 'Ranking geral da série histórica completa.';
+    tableReasonsNote.innerHTML = 'Ranking geral da série histórica completa, com participação dentro das restrições e também no total de pedidos.';
   }
 
   function renderTables() {

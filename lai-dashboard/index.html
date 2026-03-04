@@ -248,6 +248,65 @@
       gap: 0.24rem;
     }
 
+    .alert-table-wrap {
+      border: 1px solid #e3ddd0;
+      border-radius: 10px;
+      overflow: auto;
+      background: #fff;
+    }
+
+    .alert-mini-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.79rem;
+    }
+
+    .alert-mini-table th,
+    .alert-mini-table td {
+      border-bottom: 1px solid #f0ece4;
+      padding: 0.42rem 0.5rem;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .alert-mini-table th {
+      background: #f7f4ee;
+      color: #5a5348;
+      font-size: 0.73rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 700;
+      position: static;
+    }
+
+    .alert-mini-table td:nth-child(2) {
+      white-space: normal;
+      min-width: 180px;
+      line-height: 1.35;
+    }
+
+    .alert-mini-table td:nth-child(1),
+    .alert-mini-table td:nth-child(3),
+    .alert-mini-table td:nth-child(4),
+    .alert-mini-table td:nth-child(5) {
+      text-align: right;
+      font-family: "JetBrains Mono", monospace;
+      color: #2f2b25;
+    }
+
+    .alert-rate-pill {
+      display: inline-block;
+      min-width: 58px;
+      text-align: center;
+      border-radius: 999px;
+      border: 1px solid #d5c7b3;
+      background: #efe4d2;
+      color: #5d3f1e;
+      padding: 0.12rem 0.4rem;
+      font-weight: 700;
+      font-family: "Merriweather", serif;
+    }
+
     .narrative-list {
       margin: 0.68rem 0 0;
       padding-left: 1rem;
@@ -389,6 +448,70 @@
       font-size: 0.8rem;
       line-height: 1.4;
       color: #5f5a52;
+    }
+
+    .table-note-tight {
+      margin: 0.46rem 0.74rem 0.3rem;
+    }
+
+    .table-note-legend {
+      margin-top: 0.24rem;
+      border-top: 1px dashed #ddd7cc;
+      padding-top: 0.44rem;
+      color: #585147;
+    }
+
+    .help-tip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      margin-left: 0.4rem;
+      vertical-align: middle;
+    }
+
+    .help-tip-btn {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 1px solid #cfc7b8;
+      background: #f5f2eb;
+      color: #5a4e3f;
+      font-size: 0.73rem;
+      font-weight: 800;
+      line-height: 1;
+      cursor: help;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .help-tip-pop {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      z-index: 4;
+      width: min(320px, 86vw);
+      border: 1px solid #d6cfbf;
+      border-radius: 10px;
+      background: #fffdf9;
+      box-shadow: 0 8px 24px rgba(30, 27, 24, 0.16);
+      padding: 0.52rem 0.58rem;
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: #4f473d;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-4px);
+      transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+      pointer-events: none;
+    }
+
+    .help-tip:hover .help-tip-pop,
+    .help-tip:focus-within .help-tip-pop {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
     }
 
     table {
@@ -1042,12 +1165,19 @@
       </article>
 
       <article class="table-card">
-        <h3>Motivos mais frequentes de negativa/restrição</h3>
+        <h3>
+          Motivos mais frequentes de negativa/restrição
+          <span class="help-tip">
+            <button class="help-tip-btn" type="button" aria-label="Explicação sobre negativas e restrições" title="Negado: recusa total. Com restrição: negado + parcial.">?</button>
+            <span class="help-tip-pop">Negado: o órgão recusou totalmente o acesso. Com restrição: soma de pedidos negados e parcialmente concedidos.</span>
+          </span>
+        </h3>
         <div class="table-toggle-row" role="tablist" aria-label="Modo da tabela de motivos">
           <button class="table-toggle active" id="reason-mode-global" type="button" role="tab" aria-selected="true">Top geral</button>
           <button class="table-toggle" id="reason-mode-yearly" type="button" role="tab" aria-selected="false">Ano específico</button>
           <select id="reason-year-filter" aria-label="Selecionar ano para motivos" hidden></select>
         </div>
+        <p class="table-note table-note-tight" id="table-reasons-context"></p>
         <div class="table-wrap">
           <table>
             <thead>
@@ -1057,6 +1187,7 @@
           </table>
         </div>
         <p class="table-note" id="table-reasons-note"></p>
+        <p class="table-note table-note-legend">Leitura para leigos: “negado” é recusa total. “com restrição” é a soma de recusa total + resposta parcial.</p>
       </article>
 
       <article class="table-card">
