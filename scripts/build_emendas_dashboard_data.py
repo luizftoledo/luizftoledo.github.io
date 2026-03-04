@@ -1615,18 +1615,18 @@ def update_history(report):
 
 def update_siop_history(report):
     history = load_json(SIOP_HISTORY_FILE, [])
-    snapshot_date = report.get("snapshot_date", "")
+    history_date = normalize_text(report.get("run_date")) or dt.date.today().isoformat()
     siop_snapshot = (((report.get("parallel_monitor") or {}).get("siop_snapshot")) or {})
 
-    if not (snapshot_date and siop_snapshot.get("available")):
+    if not (history_date and siop_snapshot.get("available")):
         report["siop_daily_history"] = history
         return history
 
     totals = siop_snapshot.get("totals", {}) if isinstance(siop_snapshot, dict) else {}
-    history = [row for row in history if row.get("date") != snapshot_date]
+    history = [row for row in history if row.get("date") != history_date]
     history.append(
         {
-            "date": snapshot_date,
+            "date": history_date,
             "last_update": siop_snapshot.get("last_update", ""),
             "base_siafi_date": siop_snapshot.get("base_siafi_date", ""),
             "dotacao_inicial_emenda": to_float(totals.get("dotacao_inicial_emenda", 0)),
@@ -1858,14 +1858,49 @@ def should_skip_build(headers, metadata, force):
     return False
 
 
+def build_parallel_monitor_payload(report, party_lookup, party_lookup_meta):
+    current_year = int((report.get("unico_year_summary") or {}).get("year") or dt.date.today().year)
+    siop_rp_filters = list(SIOP_DEFAULT_RP_FILTERS)
+    execucao_ano_corrente = fetch_execucao_ano_corrente(current_year)
+    siop_snapshot = extract_siop_snapshot(current_year, siop_rp_filters)
+    siop_details = extract_siop_details(party_lookup, current_year, siop_rp_filters)
+    documents_monitor = build_documents_monitor(current_year, party_lookup)
+    apoiamento_monitor = build_apoiamento_monitor(current_year)
+    return {
+        "year": current_year,
+        "execucao_ano_corrente": execucao_ano_corrente,
+        "siop_snapshot": siop_snapshot,
+        "siop_details": siop_details,
+        "documents": documents_monitor,
+        "apoiamento": apoiamento_monitor,
+        "party_lookup": party_lookup_meta,
+    }
+
+
 def build_dashboard(force=False):
     ensure_dirs()
     headers = fetch_headers(DOWNLOAD_URL)
     metadata = load_json(META_FILE, {})
+    run_date = dt.date.today().isoformat()
 
     if should_skip_build(headers, metadata, force):
-        print("[skip] Fonte sem atualização detectada (etag/last-modified).")
-        return False
+        report = load_json(REPORT_FILE, {})
+        if not report:
+            print("[skip] Fonte sem atualização detectada e sem report local para refresh.")
+            return False
+
+        run_ts = now_iso()
+        party_lookup, party_lookup_meta = fetch_party_lookup()
+        report["run_date"] = run_date
+        report["generated_at"] = run_ts
+        report["updated_at"] = run_ts
+        report["parallel_monitor"] = build_parallel_monitor_payload(report, party_lookup, party_lookup_meta)
+        apply_siop_fallback_from_previous(report)
+        update_siop_history(report)
+        save_report(report)
+        write_metadata(report)
+        print("[ok] Refresh diário SIOP concluído (fonte principal sem mudança).")
+        return True
 
     with tempfile.TemporaryDirectory() as tmpdir:
         tmpdir_path = Path(tmpdir)
@@ -1883,22 +1918,8 @@ def build_dashboard(force=False):
         previous = load_state()
         has_previous = bool(previous.get("snapshot_date")) and bool(previous.get("author_totals"))
         report = build_report(current, previous, headers, zip_path.stat().st_size, has_previous)
-        current_year = int((report.get("unico_year_summary") or {}).get("year") or dt.date.today().year)
-        siop_rp_filters = list(SIOP_DEFAULT_RP_FILTERS)
-        execucao_ano_corrente = fetch_execucao_ano_corrente(current_year)
-        siop_snapshot = extract_siop_snapshot(current_year, siop_rp_filters)
-        siop_details = extract_siop_details(party_lookup, current_year, siop_rp_filters)
-        documents_monitor = build_documents_monitor(current_year, party_lookup)
-        apoiamento_monitor = build_apoiamento_monitor(current_year)
-        report["parallel_monitor"] = {
-            "year": current_year,
-            "execucao_ano_corrente": execucao_ano_corrente,
-            "siop_snapshot": siop_snapshot,
-            "siop_details": siop_details,
-            "documents": documents_monitor,
-            "apoiamento": apoiamento_monitor,
-            "party_lookup": party_lookup_meta,
-        }
+        report["run_date"] = run_date
+        report["parallel_monitor"] = build_parallel_monitor_payload(report, party_lookup, party_lookup_meta)
         apply_siop_fallback_from_previous(report)
         update_history(report)
         update_siop_history(report)
