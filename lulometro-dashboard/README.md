@@ -48,6 +48,14 @@ Configuração no GitHub (repo settings):
 
 Com isso, o workflow diário já faz raspagem + publicação no site + upload no BigQuery para consumo no Looker Studio.
 
+Fallbacks configurados no workflow (quando as variables não existirem):
+
+- `BQ_PROJECT_ID`: `militares-376417`
+- `BQ_DATASET`: `militares`
+- `BQ_LOCATION`: `US`
+
+Ou seja, com o secret `GCP_SA_KEY` já definido, o upload ao BigQuery pode rodar mesmo sem criar variables no GitHub.
+
 ## Build local
 
 ```bash

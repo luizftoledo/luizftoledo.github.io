@@ -17,6 +17,9 @@ jobs:
       BQ_PROJECT_ID: ${{ vars.BQ_PROJECT_ID }}
       BQ_DATASET: ${{ vars.BQ_DATASET }}
       BQ_LOCATION: ${{ vars.BQ_LOCATION }}
+      BQ_PROJECT_ID_FALLBACK: "militares-376417"
+      BQ_DATASET_FALLBACK: "militares"
+      BQ_LOCATION_FALLBACK: "US"
 
     steps:
       - name: Checkout
@@ -38,7 +41,7 @@ jobs:
           python scripts/build_lulometro_data.py --max-details 2500 --max-failures 3
 
       - name: Write GCP credentials file
-        if: ${{ secrets.GCP_SA_KEY != '' && vars.BQ_PROJECT_ID != '' && vars.BQ_DATASET != '' }}
+        if: ${{ secrets.GCP_SA_KEY != '' }}
         run: |
           cat > "$RUNNER_TEMP/gcp-key.json" <<'JSON'
           ${{ secrets.GCP_SA_KEY }}
@@ -46,21 +49,24 @@ jobs:
           echo "GOOGLE_APPLICATION_CREDENTIALS=$RUNNER_TEMP/gcp-key.json" >> "$GITHUB_ENV"
 
       - name: Sync Lulometro to BigQuery
-        if: ${{ secrets.GCP_SA_KEY != '' && vars.BQ_PROJECT_ID != '' && vars.BQ_DATASET != '' }}
+        if: ${{ secrets.GCP_SA_KEY != '' }}
         env:
           PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION: python
         run: |
+          PROJECT_ID="${BQ_PROJECT_ID:-$BQ_PROJECT_ID_FALLBACK}"
+          DATASET_ID="${BQ_DATASET:-$BQ_DATASET_FALLBACK}"
+          LOCATION_ID="${BQ_LOCATION:-$BQ_LOCATION_FALLBACK}"
           python scripts/sync_lulometro_bigquery.py \
-            --project "$BQ_PROJECT_ID" \
-            --dataset "$BQ_DATASET" \
-            --location "${BQ_LOCATION:-US}" \
+            --project "$PROJECT_ID" \
+            --dataset "$DATASET_ID" \
+            --location "$LOCATION_ID" \
             --workflow-run-id "${{ github.run_id }}" \
             --commit-sha "${{ github.sha }}"
 
-      - name: BigQuery sync skipped (missing secrets/vars)
-        if: ${{ secrets.GCP_SA_KEY == '' || vars.BQ_PROJECT_ID == '' || vars.BQ_DATASET == '' }}
+      - name: BigQuery sync skipped (missing secret)
+        if: ${{ secrets.GCP_SA_KEY == '' }}
         run: |
-          echo "Skipping BigQuery sync. Configure secrets/vars: GCP_SA_KEY, BQ_PROJECT_ID, BQ_DATASET (and optional BQ_LOCATION)."
+          echo "Skipping BigQuery sync. Configure at least secret GCP_SA_KEY."
 
       - name: Commit and push if changed
         run: |
