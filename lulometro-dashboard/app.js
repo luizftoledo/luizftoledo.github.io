@@ -43,6 +43,7 @@
     btnSearch: document.getElementById('btn-search'),
     btnClear: document.getElementById('btn-clear'),
     searchHint: document.getElementById('search-hint'),
+    activeFilters: document.getElementById('active-filters'),
     loadRequiredBanner: document.getElementById('load-required-banner'),
     loadRequiredTitle: document.getElementById('load-required-title'),
     loadRequiredText: document.getElementById('load-required-text'),
@@ -309,6 +310,22 @@
     }
   }
 
+  function selectedText(selectEl, fallback) {
+    if (!selectEl || !selectEl.options || typeof selectEl.selectedIndex !== 'number') return fallback;
+    const opt = selectEl.options[selectEl.selectedIndex];
+    return (opt && opt.textContent ? opt.textContent.trim() : '') || fallback;
+  }
+
+  function updateActiveFiltersBanner(filters, termRaw, resultCount) {
+    if (!els.activeFilters) return;
+    const typeText = selectedText(els.typeSelect, 'Entrevista + Discurso');
+    const presText = selectedText(els.presidentSelect, 'Presidente: todos');
+    const mandateText = selectedText(els.mandateSelect, 'Mandato: todos');
+    const termText = termRaw ? `"${termRaw}"` : 'sem termo';
+    const resultText = Number.isFinite(resultCount) ? ` | Resultado atual: ${nFmt.format(resultCount)} documentos` : '';
+    els.activeFilters.textContent = `Filtros ativos agora -> ${typeText} | ${presText} | ${mandateText} | Termo: ${termText}${resultText}`;
+  }
+
   function parseJsonlTextChunk(buffer, out, flushTail = false) {
     let cursor = 0;
     let linesSeen = 0;
@@ -472,6 +489,7 @@
     if (els.methodologyMandateBody) {
       els.methodologyMandateBody.innerHTML = '<tr><td colspan="7">Carregue a base para ver a cobertura por mandato.</td></tr>';
     }
+    updateActiveFiltersBanner(getActiveFilters(), '', null);
   }
 
   function shouldUseLightMode(metadata) {
@@ -682,10 +700,7 @@
         els.btnSearch.textContent = 'Buscar';
         setLoadRequiredBanner(false);
         await applySearch();
-        markWordcloudDirty(
-          getWordcloudParams(getActiveFilters()),
-          'Base carregada. Clique em "Atualizar Nuvem" para calcular os termos mais usados.'
-        );
+        await requestWordcloudUpdate(true);
         setLoadProgress(true, 100, 'Carregamento concluído.');
         setTimeout(() => setLoadProgress(false, 0, ''), 700);
         return true;
@@ -846,6 +861,9 @@
     const selectedPresident = params.filters.presidentFilter === 'todos'
       ? 'todos os presidentes'
       : params.filters.presidentFilter;
+    const selectedMandate = params.filters.mandateFilter === 'todos'
+      ? 'todos os mandatos'
+      : params.filters.mandateFilter;
     const selectedType = params.filters.typeFilter === 'ambos'
       ? 'discursos + entrevistas'
       : params.filters.typeFilter;
@@ -854,7 +872,7 @@
       els.wordcloudColLabel.textContent = params.phraseMode === '1' ? 'Palavra' : 'Expressao';
     }
 
-    els.wordcloudContext.textContent = `Janela: ${params.rangeDays} dias | Base analisada: ${nFmt.format(result.docsInWindow)} documentos | Modo: ${modeLabel} | Filtro atual: ${selectedType}; ${selectedPresident}.`;
+    els.wordcloudContext.textContent = `Janela: ${params.rangeDays} dias | Base analisada: ${nFmt.format(result.docsInWindow)} documentos | Modo: ${modeLabel} | Filtro atual: ${selectedType}; ${selectedPresident}; ${selectedMandate}.`;
 
     els.wordcloudCloud.innerHTML = '';
     if (!result.topCloud.length) {
@@ -930,14 +948,6 @@
     };
   }
 
-  function markWordcloudDirty(params, reasonText) {
-    const key = buildWordcloudCacheKey(params);
-    if (key === state.wordcloudCurrentKey) return;
-    const msg = reasonText || 'Filtros alterados. Clique em "Atualizar Nuvem" para recalcular os termos.';
-    if (els.wordcloudContext) els.wordcloudContext.textContent = msg;
-    if (els.wordcloudApply) els.wordcloudApply.disabled = false;
-  }
-
   async function requestWordcloudUpdate(force = false) {
     if (!els.wordcloudCloud || !els.wordcloudTableBody || !els.wordcloudContext) return;
     if (!state.coverage || state.coverage.wordcloudAnchorEpochDay === null) {
@@ -989,6 +999,7 @@
     const termRaw = (els.termInput.value || '').trim();
     const query = normalizeQueryTerm(termRaw);
     const filters = getActiveFilters();
+    updateActiveFiltersBanner(filters, termRaw, null);
     const hasTerm = query.wordsCount > 0;
     const termRegex = hasTerm ? buildTermRegex(query.words) : null;
     const results = [];
@@ -1076,7 +1087,8 @@
     renderCharts({ hasTerm, timeline, byPresident, byMandate, termRaw });
     renderTable(results, hasTerm);
     renderUsageExamples({ hasTerm, termRaw, query, results });
-    markWordcloudDirty(getWordcloudParams(filters));
+    updateActiveFiltersBanner(filters, termRaw, results.length);
+    requestWordcloudUpdate();
 
     const sampleDocs = nFmt.format(results.length);
     const totalDocs = nFmt.format(state.coverage ? state.coverage.totalFilled : state.records.length);
@@ -1381,19 +1393,13 @@
     if (els.wordcloudRange) {
       els.wordcloudRange.addEventListener('change', () => {
         if (!state.recordsLoaded) return;
-        markWordcloudDirty(
-          getWordcloudParams(getActiveFilters()),
-          'Período alterado. Clique em "Atualizar Nuvem" para aplicar.'
-        );
+        requestWordcloudUpdate(true);
       });
     }
     if (els.wordcloudPhraseSize) {
       els.wordcloudPhraseSize.addEventListener('change', () => {
         if (!state.recordsLoaded) return;
-        markWordcloudDirty(
-          getWordcloudParams(getActiveFilters()),
-          'Modo de termos alterado. Clique em "Atualizar Nuvem" para recalcular.'
-        );
+        requestWordcloudUpdate(true);
       });
     }
     if (els.wordcloudApply) {
@@ -1422,6 +1428,7 @@
       updateMethodologyNote();
 
       setupEvents();
+      updateActiveFiltersBanner(getActiveFilters(), '', null);
       if (state.lightMode) {
         setDeferredSearchState();
         return;

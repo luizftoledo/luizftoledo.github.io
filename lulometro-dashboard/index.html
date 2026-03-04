@@ -451,6 +451,16 @@
       margin: 0;
     }
 
+    .active-filters {
+      border: 1px solid #d8d2c3;
+      background: #fffdfa;
+      border-radius: 10px;
+      padding: 0.45rem 0.55rem;
+      color: #4f4b44;
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
     .load-progress-wrap {
       border: 1px solid var(--line);
       border-radius: 12px;
@@ -632,6 +642,7 @@
       <p class="hint" id="search-hint">
         Passo obrigatório: clique em "1) Carregar Base Completa". Depois disso a busca ignora maiúsculas/minúsculas e acentos.
       </p>
+      <p class="active-filters" id="active-filters">Filtros ativos: aguardando carregamento da base...</p>
 
       <div class="load-progress-wrap" id="load-progress-wrap" hidden aria-live="polite">
         <div class="load-progress-meta">
@@ -822,6 +833,6 @@
   </main>
 
   <script src="./vendor/pako.min.js"></script>
-  <script src="./app.js?v=20260304i"></script>
+  <script src="./app.js?v=20260304j"></script>
 </body>
 </html>
