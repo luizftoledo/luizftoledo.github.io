@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T11:11:23.092692+00:00",
+  "generated_at": "2026-03-04T22:40:30.638838+00:00",
   "source": {
     "source_id": "ampla",
     "source_label": "Todos os pedidos e recursos (Fala.BR/CGU)",
@@ -25,13 +25,13 @@
     ]
   },
   "overall": {
-    "total_requests": 1638610,
-    "denied_total": 128743,
-    "restricted_total": 215398,
-    "personal_restricted_total": 43482,
-    "denied_rate": 0.07856842079567439,
-    "restricted_rate": 0.13145165719725865,
-    "personal_share_in_restricted": 0.20186816962088786
+    "total_requests": 1639154,
+    "denied_total": 128800,
+    "restricted_total": 215520,
+    "personal_restricted_total": 43509,
+    "denied_rate": 0.0785771196605078,
+    "restricted_rate": 0.1314824598542907,
+    "personal_share_in_restricted": 0.2018791759465479
   },
   "series": [
     {
@@ -176,13 +176,13 @@
     },
     {
       "year": 2026,
-      "total_requests": 24452,
-      "denied_total": 1847,
-      "restricted_total": 3009,
-      "personal_restricted_total": 234,
-      "denied_rate": 0.07553574349746442,
-      "restricted_rate": 0.12305741861606413,
-      "personal_share_in_restricted": 0.07776669990029911
+      "total_requests": 24996,
+      "denied_total": 1904,
+      "restricted_total": 3131,
+      "personal_restricted_total": 261,
+      "denied_rate": 0.076172187550008,
+      "restricted_rate": 0.12526004160665707,
+      "personal_share_in_restricted": 0.08335994889811561
     }
   ],
   "monthly_series": [
@@ -2206,37 +2206,37 @@
       "year": 2026,
       "month": 1,
       "month_label": "janeiro",
-      "total_requests": 12113,
-      "denied_total": 1116,
-      "restricted_total": 1915,
-      "personal_restricted_total": 165,
-      "denied_rate": 0.09213241971435647,
-      "restricted_rate": 0.15809460909766368,
-      "personal_share_in_restricted": 0.08616187989556136
+      "total_requests": 12115,
+      "denied_total": 1123,
+      "restricted_total": 1933,
+      "personal_restricted_total": 175,
+      "denied_rate": 0.09269500619067272,
+      "restricted_rate": 0.15955427156417665,
+      "personal_share_in_restricted": 0.09053285049146405
     },
     {
       "year": 2026,
       "month": 2,
       "month_label": "fevereiro",
-      "total_requests": 11362,
-      "denied_total": 727,
-      "restricted_total": 1089,
-      "personal_restricted_total": 68,
-      "denied_rate": 0.06398521387079739,
-      "restricted_rate": 0.09584580179545854,
-      "personal_share_in_restricted": 0.06244260789715335
+      "total_requests": 11349,
+      "denied_total": 763,
+      "restricted_total": 1176,
+      "personal_restricted_total": 84,
+      "denied_rate": 0.06723059300378888,
+      "restricted_rate": 0.10362146444620672,
+      "personal_share_in_restricted": 0.07142857142857142
     },
     {
       "year": 2026,
       "month": 3,
       "month_label": "março",
-      "total_requests": 805,
-      "denied_total": 4,
-      "restricted_total": 5,
-      "personal_restricted_total": 1,
-      "denied_rate": 0.004968944099378882,
-      "restricted_rate": 0.006211180124223602,
-      "personal_share_in_restricted": 0.2
+      "total_requests": 1359,
+      "denied_total": 18,
+      "restricted_total": 22,
+      "personal_restricted_total": 2,
+      "denied_rate": 0.013245033112582781,
+      "restricted_rate": 0.016188373804267846,
+      "personal_share_in_restricted": 0.09090909090909091
     },
     {
       "year": 2026,
@@ -3107,56 +3107,56 @@
     {
       "year": 2026,
       "reason": "Dados pessoais",
-      "count": 143,
-      "share_in_restricted": 0.04752409438351612
+      "count": 157,
+      "share_in_restricted": 0.05014372404982434
     },
     {
       "year": 2026,
       "reason": "Informação sigilosa de acordo com legislação específica",
-      "count": 849,
-      "share_in_restricted": 0.28215353938185445
+      "count": 866,
+      "share_in_restricted": 0.2765889492175024
     },
     {
       "year": 2026,
       "reason": "Pedido genérico",
-      "count": 180,
-      "share_in_restricted": 0.05982053838484546
+      "count": 187,
+      "share_in_restricted": 0.05972532737144682
     },
     {
       "year": 2026,
       "reason": "Parte da informação é de competência de outro órgão/entidade",
-      "count": 242,
-      "share_in_restricted": 0.08042539049518112
+      "count": 258,
+      "share_in_restricted": 0.08240178856595337
     },
     {
       "year": 2026,
       "reason": "Parte da informação é inexistente",
-      "count": 215,
-      "share_in_restricted": 0.0714523097374543
+      "count": 227,
+      "share_in_restricted": 0.07250079846694348
     },
     {
       "year": 2026,
       "reason": "Parte da informação contém dados pessoais",
-      "count": 91,
-      "share_in_restricted": 0.030242605516782983
+      "count": 104,
+      "share_in_restricted": 0.03321622484829128
     },
     {
       "year": 2026,
       "reason": "Pedido desproporcional ou desarrazoado",
-      "count": 186,
-      "share_in_restricted": 0.06181455633100698
+      "count": 189,
+      "share_in_restricted": 0.06036410092622165
     },
     {
       "year": 2026,
       "reason": "Informação classificada conforme artigos 23 e 24 da Lei nº 12.527/2011",
-      "count": 61,
-      "share_in_restricted": 0.020272515785975408
+      "count": 62,
+      "share_in_restricted": 0.019801980198019802
     },
     {
       "year": 2026,
       "reason": "Outros motivos",
-      "count": 1042,
-      "share_in_restricted": 0.34629444998338316
+      "count": 1081,
+      "share_in_restricted": 0.34525710635579687
     }
   ],
   "theme_series": [
@@ -3947,50 +3947,50 @@
     {
       "year": 2026,
       "theme": "Outros temas",
-      "count": 19631,
-      "share_in_year": 0.8028382136430557,
-      "restricted_count": 2571,
-      "restricted_rate_in_theme": 0.13096632876572767
+      "count": 20068,
+      "share_in_year": 0.8028484557529205,
+      "restricted_count": 2666,
+      "restricted_rate_in_theme": 0.1328483157265298
     },
     {
       "year": 2026,
       "theme": "Educação e pesquisa",
-      "count": 2017,
-      "share_in_year": 0.08248814002944545,
-      "restricted_count": 136,
-      "restricted_rate_in_theme": 0.06742687159147248
+      "count": 2058,
+      "share_in_year": 0.08233317330772924,
+      "restricted_count": 149,
+      "restricted_rate_in_theme": 0.07240038872691934
     },
     {
       "year": 2026,
       "theme": "Obras, infraestrutura e transportes",
-      "count": 298,
-      "share_in_year": 0.012187142156060853,
+      "count": 301,
+      "share_in_year": 0.012041926708273323,
       "restricted_count": 34,
-      "restricted_rate_in_theme": 0.11409395973154363
+      "restricted_rate_in_theme": 0.11295681063122924
     },
     {
       "year": 2026,
       "theme": "Saúde e medicamentos",
-      "count": 539,
-      "share_in_year": 0.02204318665139866,
-      "restricted_count": 46,
-      "restricted_rate_in_theme": 0.08534322820037106
+      "count": 567,
+      "share_in_year": 0.022683629380700912,
+      "restricted_count": 50,
+      "restricted_rate_in_theme": 0.08818342151675485
     },
     {
       "year": 2026,
       "theme": "Previdência e benefícios sociais",
-      "count": 488,
-      "share_in_year": 0.019957467691804353,
-      "restricted_count": 35,
-      "restricted_rate_in_theme": 0.07172131147540983
+      "count": 500,
+      "share_in_year": 0.020003200512081935,
+      "restricted_count": 42,
+      "restricted_rate_in_theme": 0.084
     },
     {
       "year": 2026,
       "theme": "Servidores, salários e concursos",
-      "count": 1479,
-      "share_in_year": 0.06048584982823491,
-      "restricted_count": 127,
-      "restricted_rate_in_theme": 0.08586883029073698
+      "count": 1502,
+      "share_in_year": 0.06008961433829413,
+      "restricted_count": 130,
+      "restricted_rate_in_theme": 0.08655126498002663
     },
     {
       "year": 2026,
@@ -4004,101 +4004,101 @@
   "top_reasons": [
     {
       "reason": "Dados pessoais",
-      "count": 29432
+      "count": 29446
     },
     {
       "reason": "Informação sigilosa de acordo com legislação específica",
-      "count": 23746
+      "count": 23763
     },
     {
       "reason": "Pedido genérico",
-      "count": 19212
+      "count": 19219
     },
     {
       "reason": "Parte da informação é de competência de outro órgão/entidade",
-      "count": 15768
+      "count": 15784
     },
     {
       "reason": "Parte da informação é inexistente",
-      "count": 15266
+      "count": 15278
     },
     {
       "reason": "Parte da informação contém dados pessoais",
-      "count": 14050
+      "count": 14063
     },
     {
       "reason": "Pedido desproporcional ou desarrazoado",
-      "count": 11880
+      "count": 11883
     },
     {
       "reason": "Informação classificada conforme artigos 23 e 24 da Lei nº 12.527/2011",
-      "count": 11542
+      "count": 11543
     },
     {
       "reason": "Pedido incompreensível",
-      "count": 11274
+      "count": 11279
     },
     {
       "reason": "Pedido exige tratamento adicional de dados",
-      "count": 11181
+      "count": 11182
     },
     {
       "reason": "Processo decisório em curso",
-      "count": 10476
+      "count": 10485
     },
     {
       "reason": "Parte da informação é sigilosa de acordo com legislação específica",
-      "count": 10294
+      "count": 10304
     },
     {
       "reason": "Parte da informação demandará mais tempo para produção",
-      "count": 9030
+      "count": 9034
     },
     {
       "reason": "Parte da informação classificada conforme artigos 23 e 24 da Lei nº 12.527/2011",
-      "count": 5945
+      "count": 5946
     },
     {
       "reason": "Parte da informação está relacionada a processo decisório em curso",
-      "count": 4628
+      "count": 4631
     }
   ],
   "top_themes": [
     {
       "theme": "Outros temas",
-      "count": 1252987,
-      "restricted_count": 176535,
-      "restricted_rate_in_theme": 0.14089132608718208
+      "count": 1253433,
+      "restricted_count": 176630,
+      "restricted_rate_in_theme": 0.1409169855907735
     },
     {
       "theme": "Educação e pesquisa",
-      "count": 163797,
-      "restricted_count": 13815,
-      "restricted_rate_in_theme": 0.0843422040696716
+      "count": 163838,
+      "restricted_count": 13828,
+      "restricted_rate_in_theme": 0.08440044434136158
     },
     {
       "theme": "Obras, infraestrutura e transportes",
-      "count": 59800,
+      "count": 59803,
       "restricted_count": 5940,
-      "restricted_rate_in_theme": 0.09933110367892976
+      "restricted_rate_in_theme": 0.09932612076317242
     },
     {
       "theme": "Saúde e medicamentos",
-      "count": 59576,
-      "restricted_count": 7370,
-      "restricted_rate_in_theme": 0.12370753323485968
+      "count": 59604,
+      "restricted_count": 7374,
+      "restricted_rate_in_theme": 0.12371652909200725
     },
     {
       "theme": "Previdência e benefícios sociais",
-      "count": 51110,
-      "restricted_count": 4751,
-      "restricted_rate_in_theme": 0.09295636861670906
+      "count": 51122,
+      "restricted_count": 4758,
+      "restricted_rate_in_theme": 0.0930714760768358
     },
     {
       "theme": "Servidores, salários e concursos",
-      "count": 23940,
-      "restricted_count": 2120,
-      "restricted_rate_in_theme": 0.0885547201336675
+      "count": 23963,
+      "restricted_count": 2123,
+      "restricted_rate_in_theme": 0.0885949171639611
     },
     {
       "theme": "Contratos, licitações e fornecedores",
@@ -4108,9 +4108,9 @@
     },
     {
       "theme": "Dados pessoais e vida privada",
-      "count": 4334,
+      "count": 4322,
       "restricted_count": 1718,
-      "restricted_rate_in_theme": 0.39640055376095984
+      "restricted_rate_in_theme": 0.3975011568718186
     },
     {
       "theme": "Processos administrativos e sanções",
@@ -4120,15 +4120,15 @@
     },
     {
       "theme": "Segurança pública e polícia",
-      "count": 3179,
+      "count": 3181,
       "restricted_count": 679,
-      "restricted_rate_in_theme": 0.21358917898710286
+      "restricted_rate_in_theme": 0.21345488839987425
     },
     {
       "theme": "Gastos públicos e orçamento",
-      "count": 2959,
+      "count": 2960,
       "restricted_count": 275,
-      "restricted_rate_in_theme": 0.09293680297397769
+      "restricted_rate_in_theme": 0.0929054054054054
     },
     {
       "theme": "Meio ambiente e território",
@@ -4140,453 +4140,453 @@
   "org_ranking": [
     {
       "org": "MF - Ministério da Fazenda",
-      "total_requests": 117191,
-      "denied_total": 13382,
-      "restricted_total": 17658,
+      "total_requests": 117219,
+      "denied_total": 13383,
+      "restricted_total": 17660,
       "personal_restricted_total": 3064,
-      "denied_rate": 0.11418965620226809,
-      "restricted_rate": 0.15067709977728666,
-      "personal_rate_in_total": 0.026145352458806562,
-      "personal_rate_in_restricted": 0.17351908483406955
+      "denied_rate": 0.11417091085916106,
+      "restricted_rate": 0.1506581697506377,
+      "personal_rate_in_total": 0.02613910714133374,
+      "personal_rate_in_restricted": 0.17349943374858437
     },
     {
       "org": "INSS – Instituto Nacional do Seguro Social",
-      "total_requests": 92457,
-      "denied_total": 9559,
-      "restricted_total": 19828,
+      "total_requests": 92473,
+      "denied_total": 9560,
+      "restricted_total": 19829,
       "personal_restricted_total": 12331,
-      "denied_rate": 0.10338860226916297,
-      "restricted_rate": 0.21445645002541722,
-      "personal_rate_in_total": 0.13337010718496164,
-      "personal_rate_in_restricted": 0.6218983256001613
+      "denied_rate": 0.10338152758102365,
+      "restricted_rate": 0.21443015799206255,
+      "personal_rate_in_total": 0.13334703102527223,
+      "personal_rate_in_restricted": 0.6218669625296284
     },
     {
       "org": "CEF – Caixa Econômica Federal",
-      "total_requests": 45476,
-      "denied_total": 7731,
-      "restricted_total": 10958,
+      "total_requests": 45487,
+      "denied_total": 7732,
+      "restricted_total": 10960,
       "personal_restricted_total": 3288,
-      "denied_rate": 0.17000175916967192,
-      "restricted_rate": 0.24096226581053742,
-      "personal_rate_in_total": 0.0723018735157006,
-      "personal_rate_in_restricted": 0.30005475451724767
+      "denied_rate": 0.16998263240046607,
+      "restricted_rate": 0.24094796315430783,
+      "personal_rate_in_total": 0.07228438894629234,
+      "personal_rate_in_restricted": 0.3
     },
     {
       "org": "BB – Banco do Brasil S.A.",
-      "total_requests": 16101,
-      "denied_total": 6500,
-      "restricted_total": 7096,
+      "total_requests": 16108,
+      "denied_total": 6501,
+      "restricted_total": 7098,
       "personal_restricted_total": 261,
-      "denied_rate": 0.40370163343891685,
-      "restricted_rate": 0.4407179678280852,
-      "personal_rate_in_total": 0.01621017328116266,
-      "personal_rate_in_restricted": 0.03678128523111612
+      "denied_rate": 0.40358827911596723,
+      "restricted_rate": 0.4406506083933449,
+      "personal_rate_in_total": 0.0162031288800596,
+      "personal_rate_in_restricted": 0.036770921386306
     },
     {
       "org": "BACEN – Banco Central do Brasil",
-      "total_requests": 36230,
+      "total_requests": 36252,
       "denied_total": 5341,
       "restricted_total": 6224,
       "personal_restricted_total": 3831,
-      "denied_rate": 0.1474192658018217,
-      "restricted_rate": 0.17179133314932377,
-      "personal_rate_in_total": 0.10574109853712393,
+      "denied_rate": 0.14732980249365552,
+      "restricted_rate": 0.171687079333554,
+      "personal_rate_in_total": 0.10567692816948031,
       "personal_rate_in_restricted": 0.6155205655526992
     },
     {
       "org": "PETROBRAS – Petróleo Brasileiro S.A.",
-      "total_requests": 33698,
-      "denied_total": 4679,
-      "restricted_total": 6062,
+      "total_requests": 33709,
+      "denied_total": 4681,
+      "restricted_total": 6065,
       "personal_restricted_total": 219,
-      "denied_rate": 0.13885097038399905,
-      "restricted_rate": 0.17989198171998338,
-      "personal_rate_in_total": 0.006498902011988842,
-      "personal_rate_in_restricted": 0.03612669086110195
+      "denied_rate": 0.13886499154528464,
+      "restricted_rate": 0.179922275950043,
+      "personal_rate_in_total": 0.006496781275030407,
+      "personal_rate_in_restricted": 0.036108821104699096
     },
     {
       "org": "PF – Polícia Federal",
-      "total_requests": 26438,
-      "denied_total": 4461,
-      "restricted_total": 6788,
-      "personal_restricted_total": 2293,
-      "denied_rate": 0.1687343974582041,
-      "restricted_rate": 0.256751645358953,
-      "personal_rate_in_total": 0.0867312202133293,
-      "personal_rate_in_restricted": 0.33780200353565115
+      "total_requests": 26448,
+      "denied_total": 4466,
+      "restricted_total": 6793,
+      "personal_restricted_total": 2294,
+      "denied_rate": 0.16885964912280702,
+      "restricted_rate": 0.2568436176648518,
+      "personal_rate_in_total": 0.0867362371445856,
+      "personal_rate_in_restricted": 0.3377005741204181
     },
     {
       "org": "ANEEL – Agência Nacional de Energia Elétrica",
-      "total_requests": 48956,
-      "denied_total": 3872,
-      "restricted_total": 5366,
-      "personal_restricted_total": 866,
-      "denied_rate": 0.07909142903832013,
-      "restricted_rate": 0.10960862815589509,
-      "personal_rate_in_total": 0.017689353705368085,
-      "personal_rate_in_restricted": 0.1613865076407007
+      "total_requests": 48979,
+      "denied_total": 3877,
+      "restricted_total": 5371,
+      "personal_restricted_total": 867,
+      "denied_rate": 0.07915637313950877,
+      "restricted_rate": 0.1096592417158374,
+      "personal_rate_in_total": 0.017701463892688705,
+      "personal_rate_in_restricted": 0.16142245391919569
     },
     {
       "org": "MS – Ministério da Saúde",
-      "total_requests": 56205,
+      "total_requests": 56218,
       "denied_total": 3582,
-      "restricted_total": 8855,
-      "personal_restricted_total": 1328,
-      "denied_rate": 0.06373098478783026,
-      "restricted_rate": 0.15754826083088694,
-      "personal_rate_in_total": 0.02362779112178632,
-      "personal_rate_in_restricted": 0.14997176736307172
+      "restricted_total": 8859,
+      "personal_restricted_total": 1330,
+      "denied_rate": 0.06371624746522467,
+      "restricted_rate": 0.15758298054004055,
+      "personal_rate_in_total": 0.023657903162688107,
+      "personal_rate_in_restricted": 0.15012981149113896
     },
     {
       "org": "INEP – Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira",
-      "total_requests": 43627,
-      "denied_total": 3291,
-      "restricted_total": 4703,
-      "personal_restricted_total": 1271,
-      "denied_rate": 0.07543493708024847,
-      "restricted_rate": 0.10780021546290142,
-      "personal_rate_in_total": 0.029133334861439018,
-      "personal_rate_in_restricted": 0.27025302998086326
+      "total_requests": 43648,
+      "denied_total": 3297,
+      "restricted_total": 4710,
+      "personal_restricted_total": 1277,
+      "denied_rate": 0.07553610703812316,
+      "restricted_rate": 0.10790872434017595,
+      "personal_rate_in_total": 0.029256781524926685,
+      "personal_rate_in_restricted": 0.2711252653927813
     },
     {
       "org": "CEX – Comando do Exército",
-      "total_requests": 17282,
+      "total_requests": 17288,
       "denied_total": 3176,
       "restricted_total": 3708,
       "personal_restricted_total": 908,
-      "denied_rate": 0.18377502603865292,
-      "restricted_rate": 0.21455850017359102,
-      "personal_rate_in_total": 0.05254021525286425,
+      "denied_rate": 0.18371124479407683,
+      "restricted_rate": 0.2144840351689033,
+      "personal_rate_in_total": 0.05252198056455345,
       "personal_rate_in_restricted": 0.24487594390507011
     },
     {
       "org": "ANVISA – Agência Nacional de Vigilância Sanitária",
-      "total_requests": 50493,
-      "denied_total": 2607,
-      "restricted_total": 6118,
-      "personal_restricted_total": 235,
-      "denied_rate": 0.051630919137306164,
-      "restricted_rate": 0.12116531004297626,
-      "personal_rate_in_total": 0.004654110470758323,
-      "personal_rate_in_restricted": 0.03841124550506701
+      "total_requests": 50519,
+      "denied_total": 2613,
+      "restricted_total": 6133,
+      "personal_restricted_total": 239,
+      "denied_rate": 0.05172311407589224,
+      "restricted_rate": 0.12139986935608385,
+      "personal_rate_in_total": 0.00473089332726301,
+      "personal_rate_in_restricted": 0.0389695092124572
     },
     {
       "org": "MRE – Ministério das Relações Exteriores",
-      "total_requests": 13444,
+      "total_requests": 13449,
       "denied_total": 2272,
       "restricted_total": 3445,
       "personal_restricted_total": 211,
-      "denied_rate": 0.16899732222552813,
-      "restricted_rate": 0.25624814043439453,
-      "personal_rate_in_total": 0.015694733710205296,
+      "denied_rate": 0.16893449327087515,
+      "restricted_rate": 0.2561528738196148,
+      "personal_rate_in_total": 0.015688898802884974,
       "personal_rate_in_restricted": 0.06124818577648766
     },
     {
       "org": "ANTAQ – Agência Nacional de Transportes Aquaviários",
-      "total_requests": 16758,
+      "total_requests": 16766,
       "denied_total": 2052,
       "restricted_total": 2592,
       "personal_restricted_total": 57,
-      "denied_rate": 0.12244897959183673,
-      "restricted_rate": 0.15467239527389903,
-      "personal_rate_in_total": 0.003401360544217687,
+      "denied_rate": 0.12239055230824288,
+      "restricted_rate": 0.1545985923893594,
+      "personal_rate_in_total": 0.0033997375641178574,
       "personal_rate_in_restricted": 0.02199074074074074
     },
     {
       "org": "MAPA - Ministério da Agricultura e Pecuária",
-      "total_requests": 29570,
+      "total_requests": 29584,
       "denied_total": 1979,
       "restricted_total": 3011,
       "personal_restricted_total": 209,
-      "denied_rate": 0.0669259384511329,
-      "restricted_rate": 0.1018261751775448,
-      "personal_rate_in_total": 0.007067974298275279,
+      "denied_rate": 0.06689426717144402,
+      "restricted_rate": 0.10177798810167658,
+      "personal_rate_in_total": 0.007064629529475392,
       "personal_rate_in_restricted": 0.06941215543008968
     },
     {
       "org": "CGU – Controladoria-Geral da União",
-      "total_requests": 19088,
-      "denied_total": 1889,
-      "restricted_total": 3688,
+      "total_requests": 19094,
+      "denied_total": 1890,
+      "restricted_total": 3690,
       "personal_restricted_total": 523,
-      "denied_rate": 0.09896269907795474,
-      "restricted_rate": 0.19321039396479464,
-      "personal_rate_in_total": 0.027399413243922883,
-      "personal_rate_in_restricted": 0.14181127982646421
+      "denied_rate": 0.09898397402325337,
+      "restricted_rate": 0.19325442547397087,
+      "personal_rate_in_total": 0.027390803393736254,
+      "personal_rate_in_restricted": 0.14173441734417344
     },
     {
       "org": "INCRA – Instituto Nacional de Colonização e Reforma Agrária",
-      "total_requests": 17926,
+      "total_requests": 17931,
       "denied_total": 1671,
       "restricted_total": 3463,
       "personal_restricted_total": 333,
-      "denied_rate": 0.0932165569563762,
-      "restricted_rate": 0.1931830860203057,
-      "personal_rate_in_total": 0.018576369519134217,
+      "denied_rate": 0.09319056382800736,
+      "restricted_rate": 0.19312921755618762,
+      "personal_rate_in_total": 0.018571189559979922,
       "personal_rate_in_restricted": 0.09615939936471268
     },
     {
       "org": "MEC – Ministério da Educação",
-      "total_requests": 37918,
-      "denied_total": 1623,
-      "restricted_total": 3752,
-      "personal_restricted_total": 275,
-      "denied_rate": 0.042802890447808425,
-      "restricted_rate": 0.09895036658051586,
-      "personal_rate_in_total": 0.0072524922200538,
-      "personal_rate_in_restricted": 0.07329424307036247
+      "total_requests": 37939,
+      "denied_total": 1627,
+      "restricted_total": 3765,
+      "personal_restricted_total": 279,
+      "denied_rate": 0.04288463059121221,
+      "restricted_rate": 0.09923825087640686,
+      "personal_rate_in_total": 0.007353910224307441,
+      "personal_rate_in_restricted": 0.07410358565737052
     },
     {
       "org": "MGI - Ministério da Gestão e da Inovação em Serviços Públicos",
-      "total_requests": 17483,
-      "denied_total": 1620,
-      "restricted_total": 2979,
+      "total_requests": 17494,
+      "denied_total": 1621,
+      "restricted_total": 2980,
       "personal_restricted_total": 386,
-      "denied_rate": 0.09266144254418578,
-      "restricted_rate": 0.17039409712291942,
-      "personal_rate_in_total": 0.022078590630898585,
-      "personal_rate_in_restricted": 0.12957368244377307
+      "denied_rate": 0.09266034068823596,
+      "restricted_rate": 0.17034411798330856,
+      "personal_rate_in_total": 0.022064707899851377,
+      "personal_rate_in_restricted": 0.12953020134228188
     },
     {
       "org": "ECT – Empresa Brasileira de Correios e Telégrafos",
-      "total_requests": 21419,
+      "total_requests": 21421,
       "denied_total": 1422,
       "restricted_total": 2453,
       "personal_restricted_total": 276,
-      "denied_rate": 0.06638965404547365,
-      "restricted_rate": 0.11452448760446332,
-      "personal_rate_in_total": 0.012885755637518091,
+      "denied_rate": 0.06638345548760562,
+      "restricted_rate": 0.11451379487418888,
+      "personal_rate_in_total": 0.012884552541898138,
       "personal_rate_in_restricted": 0.11251528740317979
     },
     {
       "org": "MDS - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
-      "total_requests": 50014,
+      "total_requests": 50016,
       "denied_total": 1400,
       "restricted_total": 3197,
       "personal_restricted_total": 173,
-      "denied_rate": 0.027992162194585515,
-      "restricted_rate": 0.06392210181149278,
-      "personal_rate_in_total": 0.0034590314711880673,
+      "denied_rate": 0.02799104286628279,
+      "restricted_rate": 0.06391954574536149,
+      "personal_rate_in_total": 0.003458893154190659,
       "personal_rate_in_restricted": 0.05411323115420707
     },
     {
       "org": "CC-PR – Casa Civil da Presidência da República",
-      "total_requests": 8905,
+      "total_requests": 8914,
       "denied_total": 1388,
-      "restricted_total": 2467,
-      "personal_restricted_total": 104,
-      "denied_rate": 0.15586749017405951,
-      "restricted_rate": 0.27703537338573836,
-      "personal_rate_in_total": 0.01167883211678832,
-      "personal_rate_in_restricted": 0.04215646534252128
+      "restricted_total": 2473,
+      "personal_restricted_total": 105,
+      "denied_rate": 0.15571011891406775,
+      "restricted_rate": 0.27742876374242764,
+      "personal_rate_in_total": 0.011779223693067085,
+      "personal_rate_in_restricted": 0.042458552365547915
     },
     {
       "org": "MME – Ministério de Minas e Energia",
-      "total_requests": 13208,
-      "denied_total": 1335,
-      "restricted_total": 2097,
+      "total_requests": 13210,
+      "denied_total": 1336,
+      "restricted_total": 2098,
       "personal_restricted_total": 138,
-      "denied_rate": 0.10107510599636584,
-      "restricted_rate": 0.15876741368867353,
-      "personal_rate_in_total": 0.010448213204118716,
-      "personal_rate_in_restricted": 0.06580829756795423
+      "denied_rate": 0.10113550340651022,
+      "restricted_rate": 0.15881907645722937,
+      "personal_rate_in_total": 0.01044663133989402,
+      "personal_rate_in_restricted": 0.0657769304099142
     },
     {
       "org": "MTE - Ministério do Trabalho e Emprego",
-      "total_requests": 8033,
+      "total_requests": 8034,
       "denied_total": 1328,
       "restricted_total": 1942,
       "personal_restricted_total": 749,
-      "denied_rate": 0.16531806299016558,
-      "restricted_rate": 0.24175276982447405,
-      "personal_rate_in_total": 0.0932403834183991,
+      "denied_rate": 0.1652974856858352,
+      "restricted_rate": 0.2417226786158825,
+      "personal_rate_in_total": 0.09322877769479711,
       "personal_rate_in_restricted": 0.38568486096807414
     },
     {
       "org": "AGU – Advocacia-Geral da União",
-      "total_requests": 9568,
+      "total_requests": 9575,
       "denied_total": 1313,
       "restricted_total": 1565,
       "personal_restricted_total": 31,
-      "denied_rate": 0.13722826086956522,
-      "restricted_rate": 0.1635660535117057,
-      "personal_rate_in_total": 0.0032399665551839465,
+      "denied_rate": 0.1371279373368146,
+      "restricted_rate": 0.16344647519582245,
+      "personal_rate_in_total": 0.003237597911227154,
       "personal_rate_in_restricted": 0.019808306709265176
     },
     {
       "org": "DNIT – Departamento Nacional de Infraestrutura de Transportes",
-      "total_requests": 25001,
+      "total_requests": 25014,
       "denied_total": 1270,
       "restricted_total": 1665,
       "personal_restricted_total": 401,
-      "denied_rate": 0.05079796808127675,
-      "restricted_rate": 0.06659733610655574,
-      "personal_rate_in_total": 0.016039358425662974,
+      "denied_rate": 0.0507715679219637,
+      "restricted_rate": 0.06656272487407051,
+      "personal_rate_in_total": 0.016031022627328695,
       "personal_rate_in_restricted": 0.24084084084084084
     },
     {
       "org": "PRF – Polícia Rodoviária Federal",
-      "total_requests": 10333,
+      "total_requests": 10335,
       "denied_total": 1191,
       "restricted_total": 1805,
       "personal_restricted_total": 589,
-      "denied_rate": 0.11526178263814962,
-      "restricted_rate": 0.17468305429207392,
-      "personal_rate_in_total": 0.05700183876899255,
+      "denied_rate": 0.11523947750362845,
+      "restricted_rate": 0.17464925012094823,
+      "personal_rate_in_total": 0.05699080793420416,
       "personal_rate_in_restricted": 0.3263157894736842
     },
     {
       "org": "GSI-PR – Gabinete de Segurança Institucional da Presidência da República",
-      "total_requests": 3851,
-      "denied_total": 1184,
-      "restricted_total": 1514,
+      "total_requests": 3852,
+      "denied_total": 1185,
+      "restricted_total": 1515,
       "personal_restricted_total": 172,
-      "denied_rate": 0.3074526097117632,
-      "restricted_rate": 0.3931446377564269,
-      "personal_rate_in_total": 0.04466372370812776,
-      "personal_rate_in_restricted": 0.11360634081902246
+      "denied_rate": 0.3076323987538941,
+      "restricted_rate": 0.39330218068535827,
+      "personal_rate_in_total": 0.0446521287642783,
+      "personal_rate_in_restricted": 0.11353135313531353
     },
     {
       "org": "MT - Ministério dos Transportes",
-      "total_requests": 14626,
-      "denied_total": 1098,
-      "restricted_total": 1678,
-      "personal_restricted_total": 374,
-      "denied_rate": 0.07507178996307945,
-      "restricted_rate": 0.1147271981402981,
-      "personal_rate_in_total": 0.02557090113496513,
-      "personal_rate_in_restricted": 0.22288438617401668
+      "total_requests": 14567,
+      "denied_total": 1099,
+      "restricted_total": 1682,
+      "personal_restricted_total": 375,
+      "denied_rate": 0.07544449783757809,
+      "restricted_rate": 0.11546646529827692,
+      "personal_rate_in_total": 0.02574311800645294,
+      "personal_rate_in_restricted": 0.22294887039239
     },
     {
       "org": "IBGE – Fundação Instituto Brasileiro de Geografia e Estatística",
-      "total_requests": 15243,
+      "total_requests": 15248,
       "denied_total": 1056,
       "restricted_total": 2826,
       "personal_restricted_total": 347,
-      "denied_rate": 0.0692777012399134,
-      "restricted_rate": 0.18539657547726826,
-      "personal_rate_in_total": 0.022764547661221546,
+      "denied_rate": 0.06925498426023086,
+      "restricted_rate": 0.1853357817418678,
+      "personal_rate_in_total": 0.022757082896117525,
       "personal_rate_in_restricted": 0.12278839348903044
     },
     {
       "org": "FUNAI – Fundação Nacional dos Povos Indígenas",
-      "total_requests": 17324,
-      "denied_total": 1027,
-      "restricted_total": 1593,
+      "total_requests": 17335,
+      "denied_total": 1028,
+      "restricted_total": 1594,
       "personal_restricted_total": 348,
-      "denied_rate": 0.05928192103440314,
-      "restricted_rate": 0.09195335950126991,
-      "personal_rate_in_total": 0.020087739552066497,
-      "personal_rate_in_restricted": 0.2184557438794727
+      "denied_rate": 0.05930199019325065,
+      "restricted_rate": 0.09195269685607153,
+      "personal_rate_in_total": 0.02007499278915489,
+      "personal_rate_in_restricted": 0.21831869510664995
     },
     {
       "org": "MJSP – Ministério da Justiça e Segurança Pública",
-      "total_requests": 18204,
+      "total_requests": 18212,
       "denied_total": 1018,
       "restricted_total": 1562,
       "personal_restricted_total": 182,
-      "denied_rate": 0.055921775433970554,
-      "restricted_rate": 0.08580531751263458,
-      "personal_rate_in_total": 0.00999780268072951,
+      "denied_rate": 0.05589721063035361,
+      "restricted_rate": 0.08576762574126949,
+      "personal_rate_in_total": 0.009993410937843181,
       "personal_rate_in_restricted": 0.11651728553137004
     },
     {
       "org": "MCTI – Ministério da Ciência, Tecnologia, Inovações",
-      "total_requests": 12688,
+      "total_requests": 12687,
       "denied_total": 998,
       "restricted_total": 1590,
       "personal_restricted_total": 147,
-      "denied_rate": 0.07865699873896595,
-      "restricted_rate": 0.12531525851197983,
-      "personal_rate_in_total": 0.011585750315258513,
+      "denied_rate": 0.07866319854969654,
+      "restricted_rate": 0.1253251359659494,
+      "personal_rate_in_total": 0.011586663513833058,
       "personal_rate_in_restricted": 0.09245283018867924
     },
     {
       "org": "FNDE – Fundo Nacional de Desenvolvimento da Educação",
-      "total_requests": 14551,
+      "total_requests": 14553,
       "denied_total": 972,
       "restricted_total": 1388,
       "personal_restricted_total": 70,
-      "denied_rate": 0.06679953267816645,
-      "restricted_rate": 0.09538863308363686,
-      "personal_rate_in_total": 0.00481066593361281,
+      "denied_rate": 0.06679035250463822,
+      "restricted_rate": 0.09537552394695252,
+      "personal_rate_in_total": 0.00481000481000481,
       "personal_rate_in_restricted": 0.05043227665706052
     },
     {
       "org": "ANP – Agência Nacional do Petróleo, Gás Natural e Biocombustíveis",
-      "total_requests": 9978,
+      "total_requests": 9982,
       "denied_total": 962,
       "restricted_total": 2372,
       "personal_restricted_total": 65,
-      "denied_rate": 0.09641210663459611,
-      "restricted_rate": 0.2377229905792744,
-      "personal_rate_in_total": 0.0065143315293646024,
+      "denied_rate": 0.0963734722500501,
+      "restricted_rate": 0.23762772991384493,
+      "personal_rate_in_total": 0.006511721097976358,
       "personal_rate_in_restricted": 0.02740303541315346
     },
     {
       "org": "ANTT – Agência Nacional de Transportes Terrestres",
-      "total_requests": 9508,
+      "total_requests": 9511,
       "denied_total": 804,
       "restricted_total": 1095,
       "personal_restricted_total": 51,
-      "denied_rate": 0.08456037021455616,
-      "restricted_rate": 0.11516617585191417,
-      "personal_rate_in_total": 0.005363904080774085,
+      "denied_rate": 0.0845336978235727,
+      "restricted_rate": 0.11512984964777626,
+      "personal_rate_in_total": 0.00536221217537588,
       "personal_rate_in_restricted": 0.04657534246575343
     },
     {
       "org": "CMAR – Comando da Marinha",
-      "total_requests": 6816,
+      "total_requests": 6815,
       "denied_total": 765,
       "restricted_total": 1140,
       "personal_restricted_total": 312,
-      "denied_rate": 0.11223591549295775,
-      "restricted_rate": 0.16725352112676056,
-      "personal_rate_in_total": 0.045774647887323945,
+      "denied_rate": 0.11225238444607484,
+      "restricted_rate": 0.1672780630961115,
+      "personal_rate_in_total": 0.045781364636830524,
       "personal_rate_in_restricted": 0.2736842105263158
     },
     {
       "org": "SGPR – Secretaria-Geral da Presidência da República",
-      "total_requests": 7454,
+      "total_requests": 7455,
       "denied_total": 648,
       "restricted_total": 1409,
       "personal_restricted_total": 73,
-      "denied_rate": 0.08693319023343171,
-      "restricted_rate": 0.18902602629460694,
-      "personal_rate_in_total": 0.009793399517037832,
+      "denied_rate": 0.0869215291750503,
+      "restricted_rate": 0.18900067069081153,
+      "personal_rate_in_total": 0.009792085848423877,
       "personal_rate_in_restricted": 0.051809794180269694
     },
     {
       "org": "TRANSPETRO - Petrobras Transporte S.A",
-      "total_requests": 3340,
+      "total_requests": 3341,
       "denied_total": 640,
       "restricted_total": 858,
       "personal_restricted_total": 12,
-      "denied_rate": 0.19161676646706588,
-      "restricted_rate": 0.2568862275449102,
-      "personal_rate_in_total": 0.003592814371257485,
+      "denied_rate": 0.19155941334929663,
+      "restricted_rate": 0.25680933852140075,
+      "personal_rate_in_total": 0.0035917390002993114,
       "personal_rate_in_restricted": 0.013986013986013986
     },
     {
       "org": "SUSEP – Superintendência de Seguros Privados",
-      "total_requests": 31836,
+      "total_requests": 31841,
       "denied_total": 628,
       "restricted_total": 964,
       "personal_restricted_total": 37,
-      "denied_rate": 0.01972609624324664,
-      "restricted_rate": 0.030280185953009173,
-      "personal_rate_in_total": 0.001162206307325041,
+      "denied_rate": 0.019722998649539903,
+      "restricted_rate": 0.030275431048019847,
+      "personal_rate_in_total": 0.0011620238057849942,
       "personal_rate_in_restricted": 0.038381742738589214
     },
     {
       "org": "IBAMA – Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis",
-      "total_requests": 23817,
+      "total_requests": 23828,
       "denied_total": 556,
       "restricted_total": 1023,
       "personal_restricted_total": 43,
-      "denied_rate": 0.02334466977369106,
-      "restricted_rate": 0.04295251291094596,
-      "personal_rate_in_total": 0.0018054330940084813,
+      "denied_rate": 0.02333389289911029,
+      "restricted_rate": 0.042932684237032066,
+      "personal_rate_in_total": 0.0018045996306865872,
       "personal_rate_in_restricted": 0.042033235581622676
     },
     {
@@ -4602,69 +4602,80 @@
     },
     {
       "org": "COMAER – Comando da Aeronáutica",
-      "total_requests": 8522,
-      "denied_total": 505,
-      "restricted_total": 890,
+      "total_requests": 8525,
+      "denied_total": 506,
+      "restricted_total": 891,
       "personal_restricted_total": 289,
-      "denied_rate": 0.0592583900492842,
-      "restricted_rate": 0.1044355785026989,
-      "personal_rate_in_total": 0.03391222717671908,
-      "personal_rate_in_restricted": 0.32471910112359553
+      "denied_rate": 0.05935483870967742,
+      "restricted_rate": 0.10451612903225807,
+      "personal_rate_in_total": 0.03390029325513196,
+      "personal_rate_in_restricted": 0.32435465768799104
     },
     {
       "org": "ANS – Agência Nacional de Saúde Suplementar",
-      "total_requests": 9618,
+      "total_requests": 9619,
       "denied_total": 493,
       "restricted_total": 957,
       "personal_restricted_total": 49,
-      "denied_rate": 0.05125805780827615,
-      "restricted_rate": 0.09950093574547723,
-      "personal_rate_in_total": 0.005094614264919942,
+      "denied_rate": 0.051252728973905815,
+      "restricted_rate": 0.09949059153758187,
+      "personal_rate_in_total": 0.005094084624181308,
       "personal_rate_in_restricted": 0.051201671891327065
     },
     {
       "org": "MPS - Ministério da Previdência Social",
-      "total_requests": 2219,
+      "total_requests": 2225,
       "denied_total": 456,
       "restricted_total": 594,
       "personal_restricted_total": 320,
-      "denied_rate": 0.20549797205948625,
-      "restricted_rate": 0.26768814781433076,
-      "personal_rate_in_total": 0.14420910319963948,
+      "denied_rate": 0.2049438202247191,
+      "restricted_rate": 0.2669662921348315,
+      "personal_rate_in_total": 0.14382022471910114,
       "personal_rate_in_restricted": 0.5387205387205387
     },
     {
       "org": "Autoridade Portuária de Santos S.A.",
       "total_requests": 5359,
-      "denied_total": 449,
-      "restricted_total": 619,
+      "denied_total": 450,
+      "restricted_total": 620,
       "personal_restricted_total": 224,
-      "denied_rate": 0.08378428811345401,
-      "restricted_rate": 0.11550662437021833,
+      "denied_rate": 0.08397089009143496,
+      "restricted_rate": 0.11569322634819929,
       "personal_rate_in_total": 0.04179884306773652,
-      "personal_rate_in_restricted": 0.36187399030694667
+      "personal_rate_in_restricted": 0.36129032258064514
     },
     {
       "org": "CAPES – Coordenação de Aperfeiçoamento de Pessoal de Nível Superior",
-      "total_requests": 7337,
+      "total_requests": 7341,
       "denied_total": 439,
-      "restricted_total": 743,
+      "restricted_total": 745,
       "personal_restricted_total": 139,
-      "denied_rate": 0.05983371950388442,
-      "restricted_rate": 0.10126754804415974,
-      "personal_rate_in_total": 0.018945072918086413,
-      "personal_rate_in_restricted": 0.18707940780619112
+      "denied_rate": 0.059801117014030784,
+      "restricted_rate": 0.10148481133360578,
+      "personal_rate_in_total": 0.018934750034055307,
+      "personal_rate_in_restricted": 0.1865771812080537
     },
     {
       "org": "CVM – Comissão de Valores Mobiliários",
-      "total_requests": 4594,
+      "total_requests": 4598,
       "denied_total": 433,
-      "restricted_total": 1003,
+      "restricted_total": 1005,
       "personal_restricted_total": 29,
-      "denied_rate": 0.09425337396604266,
-      "restricted_rate": 0.21832825424466695,
-      "personal_rate_in_total": 0.006312581628210709,
-      "personal_rate_in_restricted": 0.028913260219341975
+      "denied_rate": 0.09417137886037408,
+      "restricted_rate": 0.21857329273597217,
+      "personal_rate_in_total": 0.006307090039147456,
+      "personal_rate_in_restricted": 0.028855721393034824
+    },
+    {
+      "org": "ANAC – Agência Nacional de Aviação Civil",
+      "total_requests": 7073,
+      "denied_total": 415,
+      "restricted_total": 704,
+      "personal_restricted_total": 40,
+      "denied_rate": 0.05867383005796692,
+      "restricted_rate": 0.09953343701399689,
+      "personal_rate_in_total": 0.005655308921249823,
+      "personal_rate_in_restricted": 0.056818181818181816
     },
     {
       "org": "BNB – Banco do Nordeste do Brasil S.A.",
@@ -4678,125 +4689,114 @@
       "personal_rate_in_restricted": 0.012307692307692308
     },
     {
-      "org": "ANAC – Agência Nacional de Aviação Civil",
-      "total_requests": 7067,
-      "denied_total": 414,
-      "restricted_total": 699,
-      "personal_restricted_total": 40,
-      "denied_rate": 0.05858214235177586,
-      "restricted_rate": 0.09891042875336069,
-      "personal_rate_in_total": 0.005660110372152257,
-      "personal_rate_in_restricted": 0.05722460658082976
-    },
-    {
       "org": "MD – Ministério da Defesa",
-      "total_requests": 6103,
+      "total_requests": 6104,
       "denied_total": 413,
       "restricted_total": 1009,
       "personal_restricted_total": 64,
-      "denied_rate": 0.0676716368998853,
-      "restricted_rate": 0.16532852695395708,
-      "personal_rate_in_total": 0.010486645911846632,
+      "denied_rate": 0.0676605504587156,
+      "restricted_rate": 0.16530144167758848,
+      "personal_rate_in_total": 0.010484927916120577,
       "personal_rate_in_restricted": 0.06342913776015857
     },
     {
       "org": "BNDES – Banco Nacional de Desenvolvimento Econômico e Social",
-      "total_requests": 8619,
+      "total_requests": 8621,
       "denied_total": 405,
       "restricted_total": 1366,
       "personal_restricted_total": 128,
-      "denied_rate": 0.04698920988513749,
-      "restricted_rate": 0.15848706346443903,
-      "personal_rate_in_total": 0.014850910778512588,
+      "denied_rate": 0.04697830878088389,
+      "restricted_rate": 0.15845029578935158,
+      "personal_rate_in_total": 0.014847465491242315,
       "personal_rate_in_restricted": 0.09370424597364568
     },
     {
       "org": "UFRJ – Universidade Federal do Rio de Janeiro",
-      "total_requests": 5117,
+      "total_requests": 5118,
       "denied_total": 403,
       "restricted_total": 572,
       "personal_restricted_total": 80,
-      "denied_rate": 0.07875708422904046,
-      "restricted_rate": 0.1117842485831542,
-      "personal_rate_in_total": 0.015634160641000587,
+      "denied_rate": 0.07874169597499023,
+      "restricted_rate": 0.11176240719030871,
+      "personal_rate_in_total": 0.015631105900742476,
       "personal_rate_in_restricted": 0.13986013986013987
     },
     {
       "org": "UNB – Fundação Universidade de Brasília",
-      "total_requests": 6499,
+      "total_requests": 6500,
       "denied_total": 390,
       "restricted_total": 750,
       "personal_restricted_total": 191,
-      "denied_rate": 0.06000923218956763,
-      "restricted_rate": 0.11540236959532235,
-      "personal_rate_in_total": 0.029389136790275428,
+      "denied_rate": 0.06,
+      "restricted_rate": 0.11538461538461539,
+      "personal_rate_in_total": 0.029384615384615384,
       "personal_rate_in_restricted": 0.25466666666666665
     },
     {
       "org": "ANM - Agência Nacional de Mineração",
-      "total_requests": 6942,
+      "total_requests": 6941,
       "denied_total": 344,
       "restricted_total": 542,
       "personal_restricted_total": 10,
-      "denied_rate": 0.049553442811869776,
-      "restricted_rate": 0.07807548256986459,
-      "personal_rate_in_total": 0.0014405070584845865,
+      "denied_rate": 0.04956058204869615,
+      "restricted_rate": 0.07808673101858522,
+      "personal_rate_in_total": 0.0014407145944388417,
       "personal_rate_in_restricted": 0.01845018450184502
     },
     {
       "org": "MDHC - Ministério dos Direitos Humanos e da Cidadania",
-      "total_requests": 6747,
+      "total_requests": 6749,
       "denied_total": 341,
       "restricted_total": 924,
       "personal_restricted_total": 87,
-      "denied_rate": 0.05054098117681933,
-      "restricted_rate": 0.13694975544686527,
-      "personal_rate_in_total": 0.012894619831036016,
+      "denied_rate": 0.050526003852422584,
+      "restricted_rate": 0.13690917172914505,
+      "personal_rate_in_total": 0.012890798636835087,
       "personal_rate_in_restricted": 0.09415584415584416
     },
     {
       "org": "FINEP – Financiadora de Estudos e Projetos",
-      "total_requests": 2497,
+      "total_requests": 2499,
       "denied_total": 341,
       "restricted_total": 470,
       "personal_restricted_total": 14,
-      "denied_rate": 0.13656387665198239,
-      "restricted_rate": 0.18822587104525432,
-      "personal_rate_in_total": 0.005606728073688426,
+      "denied_rate": 0.1364545818327331,
+      "restricted_rate": 0.1880752300920368,
+      "personal_rate_in_total": 0.0056022408963585435,
       "personal_rate_in_restricted": 0.029787234042553193
     },
     {
       "org": "FIOCRUZ – Fundação Oswaldo Cruz",
-      "total_requests": 3133,
+      "total_requests": 3134,
       "denied_total": 336,
       "restricted_total": 560,
       "personal_restricted_total": 73,
-      "denied_rate": 0.10724545164379189,
-      "restricted_rate": 0.17874241940631982,
-      "personal_rate_in_total": 0.023300351101180977,
+      "denied_rate": 0.10721123165283983,
+      "restricted_rate": 0.17868538608806636,
+      "personal_rate_in_total": 0.023292916400765796,
       "personal_rate_in_restricted": 0.13035714285714287
     },
     {
       "org": "MDIC - Ministério do Desenvolvimento, Indústria, Comércio e Serviços",
-      "total_requests": 2220,
-      "denied_total": 333,
-      "restricted_total": 601,
+      "total_requests": 2221,
+      "denied_total": 335,
+      "restricted_total": 604,
       "personal_restricted_total": 16,
-      "denied_rate": 0.15,
-      "restricted_rate": 0.27072072072072073,
-      "personal_rate_in_total": 0.007207207207207207,
-      "personal_rate_in_restricted": 0.026622296173044926
+      "denied_rate": 0.15083295812696984,
+      "restricted_rate": 0.2719495722647456,
+      "personal_rate_in_total": 0.007203962179198559,
+      "personal_rate_in_restricted": 0.026490066225165563
     },
     {
       "org": "ANATEL – Agência Nacional de Telecomunicações",
-      "total_requests": 13163,
-      "denied_total": 323,
-      "restricted_total": 742,
+      "total_requests": 13167,
+      "denied_total": 324,
+      "restricted_total": 747,
       "personal_restricted_total": 45,
-      "denied_rate": 0.024538479070120793,
-      "restricted_rate": 0.056370128390184605,
-      "personal_rate_in_total": 0.003418673554660792,
-      "personal_rate_in_restricted": 0.06064690026954178
+      "denied_rate": 0.02460697197539303,
+      "restricted_rate": 0.05673274094326726,
+      "personal_rate_in_total": 0.003417634996582365,
+      "personal_rate_in_restricted": 0.060240963855421686
     }
   ],
   "org_lowest_denial_high_volume": [
@@ -4824,35 +4824,35 @@
     },
     {
       "org": "IFPE – Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco",
-      "total_requests": 2490,
+      "total_requests": 2491,
       "denied_total": 26,
       "restricted_total": 121,
       "personal_restricted_total": 5,
-      "denied_rate": 0.010441767068273093,
-      "restricted_rate": 0.048594377510040164,
-      "personal_rate_in_total": 0.002008032128514056,
+      "denied_rate": 0.010437575270975512,
+      "restricted_rate": 0.048574869530309116,
+      "personal_rate_in_total": 0.002007226013649137,
       "personal_rate_in_restricted": 0.04132231404958678
     },
     {
       "org": "UFFS – Universidade Federal da Fronteira Sul",
-      "total_requests": 1551,
+      "total_requests": 1552,
       "denied_total": 17,
       "restricted_total": 41,
       "personal_restricted_total": 8,
-      "denied_rate": 0.01096067053513862,
-      "restricted_rate": 0.026434558349451968,
-      "personal_rate_in_total": 0.0051579626047711154,
+      "denied_rate": 0.01095360824742268,
+      "restricted_rate": 0.026417525773195876,
+      "personal_rate_in_total": 0.005154639175257732,
       "personal_rate_in_restricted": 0.1951219512195122
     },
     {
       "org": "UNIVASF – Fundação Universidade Federal do Vale do São Francisco",
-      "total_requests": 2187,
+      "total_requests": 2188,
       "denied_total": 27,
       "restricted_total": 60,
       "personal_restricted_total": 6,
-      "denied_rate": 0.012345679012345678,
-      "restricted_rate": 0.027434842249657063,
-      "personal_rate_in_total": 0.0027434842249657062,
+      "denied_rate": 0.012340036563071298,
+      "restricted_rate": 0.027422303473491772,
+      "personal_rate_in_total": 0.002742230347349177,
       "personal_rate_in_restricted": 0.1
     },
     {
@@ -4868,46 +4868,46 @@
     },
     {
       "org": "ANA – Agência Nacional de Águas",
-      "total_requests": 5318,
+      "total_requests": 5320,
       "denied_total": 81,
       "restricted_total": 117,
       "personal_restricted_total": 11,
-      "denied_rate": 0.015231289958631064,
-      "restricted_rate": 0.022000752162467094,
-      "personal_rate_in_total": 0.002068446784505453,
+      "denied_rate": 0.015225563909774436,
+      "restricted_rate": 0.02199248120300752,
+      "personal_rate_in_total": 0.0020676691729323306,
       "personal_rate_in_restricted": 0.09401709401709402
     },
     {
       "org": "IFES – Instituto Federal de Educação, Ciência e Tecnologia do Espírito Santo",
-      "total_requests": 1759,
+      "total_requests": 1762,
       "denied_total": 27,
       "restricted_total": 62,
       "personal_restricted_total": 10,
-      "denied_rate": 0.015349630471859011,
-      "restricted_rate": 0.03524729960204662,
-      "personal_rate_in_total": 0.005685048322910745,
+      "denied_rate": 0.01532349602724177,
+      "restricted_rate": 0.03518728717366629,
+      "personal_rate_in_total": 0.0056753688989784334,
       "personal_rate_in_restricted": 0.16129032258064516
     },
     {
       "org": "INMETRO – Instituto Nacional de Metrologia, Qualidade e Tecnologia",
-      "total_requests": 3935,
+      "total_requests": 3932,
       "denied_total": 62,
       "restricted_total": 132,
       "personal_restricted_total": 6,
-      "denied_rate": 0.015756035578144853,
-      "restricted_rate": 0.03354510800508259,
-      "personal_rate_in_total": 0.0015247776365946632,
+      "denied_rate": 0.015768056968463885,
+      "restricted_rate": 0.0335707019328586,
+      "personal_rate_in_total": 0.001525940996948118,
       "personal_rate_in_restricted": 0.045454545454545456
     },
     {
       "org": "UFS – Fundação Universidade Federal de Sergipe",
-      "total_requests": 2507,
+      "total_requests": 2510,
       "denied_total": 40,
       "restricted_total": 122,
       "personal_restricted_total": 28,
-      "denied_rate": 0.015955325089748704,
-      "restricted_rate": 0.048663741523733546,
-      "personal_rate_in_total": 0.011168727562824093,
+      "denied_rate": 0.01593625498007968,
+      "restricted_rate": 0.04860557768924303,
+      "personal_rate_in_total": 0.011155378486055778,
       "personal_rate_in_restricted": 0.22950819672131148
     },
     {
@@ -4923,159 +4923,159 @@
     },
     {
       "org": "EBSERH – sede - Empresa Brasileira de Serviços Hospitalares",
-      "total_requests": 3458,
+      "total_requests": 3456,
       "denied_total": 60,
       "restricted_total": 191,
       "personal_restricted_total": 9,
-      "denied_rate": 0.01735106998264893,
-      "restricted_rate": 0.05523423944476576,
-      "personal_rate_in_total": 0.0026026604973973396,
+      "denied_rate": 0.017361111111111112,
+      "restricted_rate": 0.055266203703703706,
+      "personal_rate_in_total": 0.0026041666666666665,
       "personal_rate_in_restricted": 0.04712041884816754
     },
     {
       "org": "IFG – Instituto Federal de Educação, Ciência e Tecnologia de Goiás",
-      "total_requests": 2333,
+      "total_requests": 2335,
       "denied_total": 41,
       "restricted_total": 88,
       "personal_restricted_total": 15,
-      "denied_rate": 0.017573939134162022,
-      "restricted_rate": 0.03771967423917703,
-      "personal_rate_in_total": 0.006429489927132447,
+      "denied_rate": 0.017558886509635975,
+      "restricted_rate": 0.037687366167023555,
+      "personal_rate_in_total": 0.006423982869379015,
       "personal_rate_in_restricted": 0.17045454545454544
     },
     {
       "org": "UFSCar – Fundação Universidade Federal de São Carlos",
-      "total_requests": 2138,
+      "total_requests": 2139,
       "denied_total": 38,
       "restricted_total": 103,
       "personal_restricted_total": 42,
-      "denied_rate": 0.01777362020579981,
-      "restricted_rate": 0.04817586529466791,
-      "personal_rate_in_total": 0.019644527595884004,
+      "denied_rate": 0.017765310892940627,
+      "restricted_rate": 0.04815334268349696,
+      "personal_rate_in_total": 0.019635343618513323,
       "personal_rate_in_restricted": 0.4077669902912621
     },
     {
       "org": "IPEA - Instituto de Pesquisa Econômica Aplicada",
-      "total_requests": 1569,
+      "total_requests": 1572,
       "denied_total": 28,
       "restricted_total": 190,
       "personal_restricted_total": 7,
-      "denied_rate": 0.017845761631612493,
-      "restricted_rate": 0.12109623964308477,
-      "personal_rate_in_total": 0.004461440407903123,
+      "denied_rate": 0.017811704834605598,
+      "restricted_rate": 0.12086513994910941,
+      "personal_rate_in_total": 0.004452926208651399,
       "personal_rate_in_restricted": 0.03684210526315789
     }
   ],
   "org_top10_plus_pf": [
     {
       "org": "MF - Ministério da Fazenda",
-      "total_requests": 117191,
-      "denied_total": 13382,
-      "restricted_total": 17658,
+      "total_requests": 117219,
+      "denied_total": 13383,
+      "restricted_total": 17660,
       "personal_restricted_total": 3064,
-      "denied_rate": 0.11418965620226809,
-      "restricted_rate": 0.15067709977728666,
-      "personal_rate_in_total": 0.026145352458806562,
-      "personal_rate_in_restricted": 0.17351908483406955
+      "denied_rate": 0.11417091085916106,
+      "restricted_rate": 0.1506581697506377,
+      "personal_rate_in_total": 0.02613910714133374,
+      "personal_rate_in_restricted": 0.17349943374858437
     },
     {
       "org": "INSS – Instituto Nacional do Seguro Social",
-      "total_requests": 92457,
-      "denied_total": 9559,
-      "restricted_total": 19828,
+      "total_requests": 92473,
+      "denied_total": 9560,
+      "restricted_total": 19829,
       "personal_restricted_total": 12331,
-      "denied_rate": 0.10338860226916297,
-      "restricted_rate": 0.21445645002541722,
-      "personal_rate_in_total": 0.13337010718496164,
-      "personal_rate_in_restricted": 0.6218983256001613
+      "denied_rate": 0.10338152758102365,
+      "restricted_rate": 0.21443015799206255,
+      "personal_rate_in_total": 0.13334703102527223,
+      "personal_rate_in_restricted": 0.6218669625296284
     },
     {
       "org": "CEF – Caixa Econômica Federal",
-      "total_requests": 45476,
-      "denied_total": 7731,
-      "restricted_total": 10958,
+      "total_requests": 45487,
+      "denied_total": 7732,
+      "restricted_total": 10960,
       "personal_restricted_total": 3288,
-      "denied_rate": 0.17000175916967192,
-      "restricted_rate": 0.24096226581053742,
-      "personal_rate_in_total": 0.0723018735157006,
-      "personal_rate_in_restricted": 0.30005475451724767
+      "denied_rate": 0.16998263240046607,
+      "restricted_rate": 0.24094796315430783,
+      "personal_rate_in_total": 0.07228438894629234,
+      "personal_rate_in_restricted": 0.3
     },
     {
       "org": "BB – Banco do Brasil S.A.",
-      "total_requests": 16101,
-      "denied_total": 6500,
-      "restricted_total": 7096,
+      "total_requests": 16108,
+      "denied_total": 6501,
+      "restricted_total": 7098,
       "personal_restricted_total": 261,
-      "denied_rate": 0.40370163343891685,
-      "restricted_rate": 0.4407179678280852,
-      "personal_rate_in_total": 0.01621017328116266,
-      "personal_rate_in_restricted": 0.03678128523111612
+      "denied_rate": 0.40358827911596723,
+      "restricted_rate": 0.4406506083933449,
+      "personal_rate_in_total": 0.0162031288800596,
+      "personal_rate_in_restricted": 0.036770921386306
     },
     {
       "org": "BACEN – Banco Central do Brasil",
-      "total_requests": 36230,
+      "total_requests": 36252,
       "denied_total": 5341,
       "restricted_total": 6224,
       "personal_restricted_total": 3831,
-      "denied_rate": 0.1474192658018217,
-      "restricted_rate": 0.17179133314932377,
-      "personal_rate_in_total": 0.10574109853712393,
+      "denied_rate": 0.14732980249365552,
+      "restricted_rate": 0.171687079333554,
+      "personal_rate_in_total": 0.10567692816948031,
       "personal_rate_in_restricted": 0.6155205655526992
     },
     {
       "org": "PETROBRAS – Petróleo Brasileiro S.A.",
-      "total_requests": 33698,
-      "denied_total": 4679,
-      "restricted_total": 6062,
+      "total_requests": 33709,
+      "denied_total": 4681,
+      "restricted_total": 6065,
       "personal_restricted_total": 219,
-      "denied_rate": 0.13885097038399905,
-      "restricted_rate": 0.17989198171998338,
-      "personal_rate_in_total": 0.006498902011988842,
-      "personal_rate_in_restricted": 0.03612669086110195
+      "denied_rate": 0.13886499154528464,
+      "restricted_rate": 0.179922275950043,
+      "personal_rate_in_total": 0.006496781275030407,
+      "personal_rate_in_restricted": 0.036108821104699096
     },
     {
       "org": "PF – Polícia Federal",
-      "total_requests": 26438,
-      "denied_total": 4461,
-      "restricted_total": 6788,
-      "personal_restricted_total": 2293,
-      "denied_rate": 0.1687343974582041,
-      "restricted_rate": 0.256751645358953,
-      "personal_rate_in_total": 0.0867312202133293,
-      "personal_rate_in_restricted": 0.33780200353565115
+      "total_requests": 26448,
+      "denied_total": 4466,
+      "restricted_total": 6793,
+      "personal_restricted_total": 2294,
+      "denied_rate": 0.16885964912280702,
+      "restricted_rate": 0.2568436176648518,
+      "personal_rate_in_total": 0.0867362371445856,
+      "personal_rate_in_restricted": 0.3377005741204181
     },
     {
       "org": "ANEEL – Agência Nacional de Energia Elétrica",
-      "total_requests": 48956,
-      "denied_total": 3872,
-      "restricted_total": 5366,
-      "personal_restricted_total": 866,
-      "denied_rate": 0.07909142903832013,
-      "restricted_rate": 0.10960862815589509,
-      "personal_rate_in_total": 0.017689353705368085,
-      "personal_rate_in_restricted": 0.1613865076407007
+      "total_requests": 48979,
+      "denied_total": 3877,
+      "restricted_total": 5371,
+      "personal_restricted_total": 867,
+      "denied_rate": 0.07915637313950877,
+      "restricted_rate": 0.1096592417158374,
+      "personal_rate_in_total": 0.017701463892688705,
+      "personal_rate_in_restricted": 0.16142245391919569
     },
     {
       "org": "MS – Ministério da Saúde",
-      "total_requests": 56205,
+      "total_requests": 56218,
       "denied_total": 3582,
-      "restricted_total": 8855,
-      "personal_restricted_total": 1328,
-      "denied_rate": 0.06373098478783026,
-      "restricted_rate": 0.15754826083088694,
-      "personal_rate_in_total": 0.02362779112178632,
-      "personal_rate_in_restricted": 0.14997176736307172
+      "restricted_total": 8859,
+      "personal_restricted_total": 1330,
+      "denied_rate": 0.06371624746522467,
+      "restricted_rate": 0.15758298054004055,
+      "personal_rate_in_total": 0.023657903162688107,
+      "personal_rate_in_restricted": 0.15012981149113896
     },
     {
       "org": "INEP – Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira",
-      "total_requests": 43627,
-      "denied_total": 3291,
-      "restricted_total": 4703,
-      "personal_restricted_total": 1271,
-      "denied_rate": 0.07543493708024847,
-      "restricted_rate": 0.10780021546290142,
-      "personal_rate_in_total": 0.029133334861439018,
-      "personal_rate_in_restricted": 0.27025302998086326
+      "total_requests": 43648,
+      "denied_total": 3297,
+      "restricted_total": 4710,
+      "personal_restricted_total": 1277,
+      "denied_rate": 0.07553610703812316,
+      "restricted_rate": 0.10790872434017595,
+      "personal_rate_in_total": 0.029256781524926685,
+      "personal_rate_in_restricted": 0.2711252653927813
     }
   ],
   "org_profiles": {
@@ -5083,50 +5083,52 @@
       "org": "MF - Ministério da Fazenda",
       "summary": {
         "org": "MF - Ministério da Fazenda",
-        "total_requests": 117191,
-        "denied_total": 13382,
-        "restricted_total": 17658,
+        "total_requests": 117219,
+        "denied_total": 13383,
+        "restricted_total": 17660,
         "personal_restricted_total": 3064,
-        "denied_rate": 0.11418965620226809,
-        "restricted_rate": 0.15067709977728666,
-        "personal_rate_in_total": 0.026145352458806562,
-        "personal_rate_in_restricted": 0.17351908483406955
+        "denied_rate": 0.11417091085916106,
+        "restricted_rate": 0.1506581697506377,
+        "personal_rate_in_total": 0.02613910714133374,
+        "personal_rate_in_restricted": 0.17349943374858437
       },
       "top_themes": [
         {
           "theme": "Outros temas",
-          "total_requests": 107057,
-          "restricted_total": 15792,
-          "restricted_rate": 0.14751020484414845,
+          "total_requests": 107085,
+          "restricted_total": 15794,
+          "restricted_rate": 0.14749031143484148,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 57512,
-              "share_in_theme": 0.5372091502657463
+              "count": 57522,
+              "share_in_theme": 0.5371620675164589
             },
             {
               "decision": "Não se trata de solicitação de informação",
-              "count": 25717,
-              "share_in_theme": 0.24021782788607937
+              "count": 25719,
+              "share_in_theme": 0.24017369379464912
             },
             {
               "decision": "Acesso Negado",
-              "count": 12071,
-              "share_in_theme": 0.11275301941956155
+              "count": 12072,
+              "share_in_theme": 0.11273287575290657
             }
           ],
           "examples": [
             {
-              "text_excerpt": "Serviços Públicos",
-              "id_pedido": "1346819",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1346819",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1346819"
+              "text_excerpt": "Outros em Comércio e serviços",
+              "id_pedido": "1347379",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347379",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1347379",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347379"
             },
             {
-              "text_excerpt": "Outros em Comércio e serviços",
-              "id_pedido": "1346874",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1346874",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1346874"
+              "text_excerpt": "Outros em Economia e Finanças",
+              "id_pedido": "1347624",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347624",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1347624",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347624"
             }
           ]
         },
@@ -5155,15 +5157,17 @@
           "examples": [
             {
               "text_excerpt": "Proteção e Benefícios ao Trabalhador",
-              "id_pedido": "1347414",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347414",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347414"
+              "id_pedido": "1347980",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347980",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1347980",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347980"
             },
             {
-              "text_excerpt": "Benefícios e serviços",
-              "id_pedido": "2341877",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2341877",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2341877"
+              "text_excerpt": "Auxílio",
+              "id_pedido": "2460803",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2460803",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2460803",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2460803"
             }
           ]
         },
@@ -5192,15 +5196,17 @@
           "examples": [
             {
               "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "2449218",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2449218",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2449218"
+              "id_pedido": "2912275",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2912275",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2912275",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2912275"
             },
             {
-              "text_excerpt": "Frequência de Servidores",
-              "id_pedido": "2737238",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2737238",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2737238"
+              "text_excerpt": "Conduta ética e irregularidades de servidores",
+              "id_pedido": "3627335",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3627335",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3627335",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3627335"
             }
           ]
         },
@@ -5229,9 +5235,10 @@
           "examples": [
             {
               "text_excerpt": "Orçamento",
-              "id_pedido": "2342423",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2342423",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2342423"
+              "id_pedido": "3316013",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3316013",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3316013",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3316013"
             }
           ]
         },
@@ -5260,9 +5267,10 @@
           "examples": [
             {
               "text_excerpt": "Dados Pessoais - LGPD",
-              "id_pedido": "2425563",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2425563",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2425563"
+              "id_pedido": "2725881",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2725881",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2725881",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2725881"
             }
           ]
         },
@@ -5292,8 +5300,9 @@
             {
               "text_excerpt": "Licitações",
               "id_pedido": "2592418",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2592418",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2592418"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2592418",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2592418",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2592418"
             }
           ]
         }
@@ -5303,118 +5312,123 @@
       "org": "INSS – Instituto Nacional do Seguro Social",
       "summary": {
         "org": "INSS – Instituto Nacional do Seguro Social",
-        "total_requests": 92457,
-        "denied_total": 9559,
-        "restricted_total": 19828,
+        "total_requests": 92473,
+        "denied_total": 9560,
+        "restricted_total": 19829,
         "personal_restricted_total": 12331,
-        "denied_rate": 0.10338860226916297,
-        "restricted_rate": 0.21445645002541722,
-        "personal_rate_in_total": 0.13337010718496164,
-        "personal_rate_in_restricted": 0.6218983256001613
+        "denied_rate": 0.10338152758102365,
+        "restricted_rate": 0.21443015799206255,
+        "personal_rate_in_total": 0.13334703102527223,
+        "personal_rate_in_restricted": 0.6218669625296284
       },
       "top_themes": [
         {
           "theme": "Outros temas",
-          "total_requests": 84368,
-          "restricted_total": 18923,
-          "restricted_rate": 0.22429120045514886,
+          "total_requests": 84385,
+          "restricted_total": 18924,
+          "restricted_rate": 0.2242578657344315,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 54900,
-              "share_in_theme": 0.6507206523800493
+              "count": 54911,
+              "share_in_theme": 0.650719914676779
             },
             {
               "decision": "Acesso Parcialmente Concedido",
               "count": 9794,
-              "share_in_theme": 0.11608666793096908
+              "share_in_theme": 0.11606328138887242
             },
             {
               "decision": "Acesso Negado",
-              "count": 9129,
-              "share_in_theme": 0.10820453252417979
+              "count": 9130,
+              "share_in_theme": 0.10819458434555905
             }
           ],
           "examples": [
             {
-              "text_excerpt": "Direitos Humanos",
-              "id_pedido": "1346858",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1346858",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1346858"
+              "text_excerpt": "Serviços Públicos",
+              "id_pedido": "1347460",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347460",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1347460",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347460"
             },
             {
               "text_excerpt": "Outros em Previdência",
-              "id_pedido": "1347245",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347245",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347245"
+              "id_pedido": "1347817",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347817",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1347817",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347817"
             }
           ]
         },
         {
           "theme": "Previdência e benefícios sociais",
-          "total_requests": 7821,
+          "total_requests": 7822,
           "restricted_total": 861,
-          "restricted_rate": 0.11008822401227465,
+          "restricted_rate": 0.11007414983380209,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
               "count": 6259,
-              "share_in_theme": 0.8002812939521801
+              "share_in_theme": 0.8001789823574533
             },
             {
               "decision": "Acesso Parcialmente Concedido",
               "count": 460,
-              "share_in_theme": 0.05881600818309679
+              "share_in_theme": 0.05880848887752493
             },
             {
               "decision": "Não se trata de solicitação de informação",
               "count": 456,
-              "share_in_theme": 0.05830456463367856
+              "share_in_theme": 0.05829711071337254
             }
           ],
           "examples": [
             {
-              "text_excerpt": "Proteção e Benefícios ao Trabalhador",
-              "id_pedido": "1366784",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1366784",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1366784"
+              "text_excerpt": "Benefícios e serviços",
+              "id_pedido": "2343412",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2343412",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2343412",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2343412"
             },
             {
-              "text_excerpt": "Benefícios e serviços",
-              "id_pedido": "2342531",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2342531",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2342531"
+              "text_excerpt": "Aposentadoria",
+              "id_pedido": "2349430",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2349430",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2349430",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2349430"
             }
           ]
         },
         {
           "theme": "Dados pessoais e vida privada",
-          "total_requests": 120,
+          "total_requests": 118,
           "restricted_total": 26,
-          "restricted_rate": 0.21666666666666667,
+          "restricted_rate": 0.22033898305084745,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
               "count": 81,
-              "share_in_theme": 0.675
+              "share_in_theme": 0.6864406779661016
             },
             {
               "decision": "Acesso Negado",
               "count": 17,
-              "share_in_theme": 0.14166666666666666
+              "share_in_theme": 0.1440677966101695
             },
             {
               "decision": "Acesso Parcialmente Concedido",
               "count": 9,
-              "share_in_theme": 0.075
+              "share_in_theme": 0.07627118644067797
             }
           ],
           "examples": [
             {
               "text_excerpt": "Dados Pessoais - LGPD",
-              "id_pedido": "2381132",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2381132",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2381132"
+              "id_pedido": "2411254",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2411254",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2411254",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2411254"
             }
           ]
         },
@@ -5443,15 +5457,17 @@
           "examples": [
             {
               "text_excerpt": "Conduta ética e irregularidades de servidores",
-              "id_pedido": "2345145",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2345145",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2345145"
+              "id_pedido": "2651294",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2651294",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2651294",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2651294"
             },
             {
               "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "2532850",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2532850",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2532850"
+              "id_pedido": "9859179",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/9859179",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/9859179",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/9859179"
             }
           ]
         },
@@ -5481,14 +5497,16 @@
             {
               "text_excerpt": "Outros em Saúde",
               "id_pedido": "1352157",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1352157",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1352157"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1352157",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1352157",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1352157"
             },
             {
               "text_excerpt": "Assistência Hospitalar e Ambulatorial",
-              "id_pedido": "2708376",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2708376",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2708376"
+              "id_pedido": "3351936",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3351936",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3351936",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3351936"
             }
           ]
         },
@@ -5517,9 +5535,10 @@
           "examples": [
             {
               "text_excerpt": "Licitações",
-              "id_pedido": "2557794",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2557794",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2557794"
+              "id_pedido": "3235796",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3235796",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3235796",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3235796"
             }
           ]
         }
@@ -5529,87 +5548,91 @@
       "org": "CEF – Caixa Econômica Federal",
       "summary": {
         "org": "CEF – Caixa Econômica Federal",
-        "total_requests": 45476,
-        "denied_total": 7731,
-        "restricted_total": 10958,
+        "total_requests": 45487,
+        "denied_total": 7732,
+        "restricted_total": 10960,
         "personal_restricted_total": 3288,
-        "denied_rate": 0.17000175916967192,
-        "restricted_rate": 0.24096226581053742,
-        "personal_rate_in_total": 0.0723018735157006,
-        "personal_rate_in_restricted": 0.30005475451724767
+        "denied_rate": 0.16998263240046607,
+        "restricted_rate": 0.24094796315430783,
+        "personal_rate_in_total": 0.07228438894629234,
+        "personal_rate_in_restricted": 0.3
       },
       "top_themes": [
         {
           "theme": "Outros temas",
-          "total_requests": 40547,
-          "restricted_total": 10208,
-          "restricted_rate": 0.2517572200162774,
+          "total_requests": 40555,
+          "restricted_total": 10210,
+          "restricted_rate": 0.2517568733818272,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 17714,
-              "share_in_theme": 0.43687572446790146
+              "count": 17722,
+              "share_in_theme": 0.4369868080384663
             },
             {
               "decision": "Não se trata de solicitação de informação",
               "count": 11890,
-              "share_in_theme": 0.29323994376895945
+              "share_in_theme": 0.2931820983849094
             },
             {
               "decision": "Acesso Negado",
-              "count": 7097,
-              "share_in_theme": 0.17503144498976497
+              "count": 7098,
+              "share_in_theme": 0.17502157563802243
             }
           ],
           "examples": [
             {
               "text_excerpt": "Outros em Economia e Finanças",
               "id_pedido": "1346822",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1346822",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1346822"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1346822",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1346822",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1346822"
             },
             {
               "text_excerpt": "Bancos",
               "id_pedido": "1347696",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347696",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347696"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347696",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1347696",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347696"
             }
           ]
         },
         {
           "theme": "Previdência e benefícios sociais",
-          "total_requests": 4213,
+          "total_requests": 4214,
           "restricted_total": 626,
-          "restricted_rate": 0.14858770472347496,
+          "restricted_rate": 0.14855244423350736,
           "top_decisions": [
             {
               "decision": "Não se trata de solicitação de informação",
               "count": 2350,
-              "share_in_theme": 0.5577972940897223
+              "share_in_theme": 0.5576649264356905
             },
             {
               "decision": "Acesso Concedido",
-              "count": 1227,
-              "share_in_theme": 0.291241395680038
+              "count": 1228,
+              "share_in_theme": 0.29140958709065024
             },
             {
               "decision": "Acesso Negado",
               "count": 579,
-              "share_in_theme": 0.13743175884168052
+              "share_in_theme": 0.13739914570479356
             }
           ],
           "examples": [
             {
               "text_excerpt": "Proteção e Benefícios ao Trabalhador",
               "id_pedido": "1352970",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1352970",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1352970"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1352970",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1352970",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1352970"
             },
             {
-              "text_excerpt": "Auxílio",
-              "id_pedido": "2346047",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2346047",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2346047"
+              "text_excerpt": "Fraude em auxílio emergencial - coronavírus",
+              "id_pedido": "2451118",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2451118",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2451118",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2451118"
             }
           ]
         },
@@ -5637,16 +5660,18 @@
           ],
           "examples": [
             {
-              "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "2376796",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2376796",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2376796"
-            },
-            {
               "text_excerpt": "Conduta ética e irregularidades de servidores",
               "id_pedido": "2579580",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2579580",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2579580"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2579580",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2579580",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2579580"
+            },
+            {
+              "text_excerpt": "Concursos e processos seletivos",
+              "id_pedido": "2661815",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2661815",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2661815",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2661815"
             }
           ]
         },
@@ -5675,40 +5700,42 @@
           "examples": [
             {
               "text_excerpt": "Licitações",
-              "id_pedido": "2540937",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2540937",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2540937"
+              "id_pedido": "2900153",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2900153",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2900153",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2900153"
             }
           ]
         },
         {
           "theme": "Dados pessoais e vida privada",
-          "total_requests": 100,
+          "total_requests": 102,
           "restricted_total": 8,
-          "restricted_rate": 0.08,
+          "restricted_rate": 0.0784313725490196,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 62,
-              "share_in_theme": 0.62
+              "count": 63,
+              "share_in_theme": 0.6176470588235294
             },
             {
               "decision": "Não se trata de solicitação de informação",
               "count": 29,
-              "share_in_theme": 0.29
+              "share_in_theme": 0.28431372549019607
             },
             {
               "decision": "Acesso Negado",
               "count": 6,
-              "share_in_theme": 0.06
+              "share_in_theme": 0.058823529411764705
             }
           ],
           "examples": [
             {
               "text_excerpt": "Dados Pessoais - LGPD",
-              "id_pedido": "2494281",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2494281",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2494281"
+              "id_pedido": "3911518",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3911518",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3911518",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3911518"
             }
           ]
         },
@@ -5736,16 +5763,18 @@
           ],
           "examples": [
             {
-              "text_excerpt": "Transporte Rodoviário",
-              "id_pedido": "2126358",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2126358",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2126358"
+              "text_excerpt": "Infraestrutura Urbana",
+              "id_pedido": "2232734",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2232734",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2232734",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2232734"
             },
             {
-              "text_excerpt": "Infraestrutura Urbana",
-              "id_pedido": "2074275",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2074275",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2074275"
+              "text_excerpt": "Infraestrutura e Fomento",
+              "id_pedido": "4587220",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4587220",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/4587220",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4587220"
             }
           ]
         }
@@ -5755,50 +5784,52 @@
       "org": "BB – Banco do Brasil S.A.",
       "summary": {
         "org": "BB – Banco do Brasil S.A.",
-        "total_requests": 16101,
-        "denied_total": 6500,
-        "restricted_total": 7096,
+        "total_requests": 16108,
+        "denied_total": 6501,
+        "restricted_total": 7098,
         "personal_restricted_total": 261,
-        "denied_rate": 0.40370163343891685,
-        "restricted_rate": 0.4407179678280852,
-        "personal_rate_in_total": 0.01621017328116266,
-        "personal_rate_in_restricted": 0.03678128523111612
+        "denied_rate": 0.40358827911596723,
+        "restricted_rate": 0.4406506083933449,
+        "personal_rate_in_total": 0.0162031288800596,
+        "personal_rate_in_restricted": 0.036770921386306
       },
       "top_themes": [
         {
           "theme": "Outros temas",
-          "total_requests": 15405,
-          "restricted_total": 6854,
-          "restricted_rate": 0.44492048036351833,
+          "total_requests": 15412,
+          "restricted_total": 6855,
+          "restricted_rate": 0.44478328575136256,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 6770,
-              "share_in_theme": 0.4394677052904901
+              "count": 6772,
+              "share_in_theme": 0.439397871788217
             },
             {
               "decision": "Acesso Negado",
-              "count": 6271,
-              "share_in_theme": 0.40707562479714376
+              "count": 6272,
+              "share_in_theme": 0.4069556189981832
             },
             {
               "decision": "Não se trata de solicitação de informação",
               "count": 603,
-              "share_in_theme": 0.03914313534566699
+              "share_in_theme": 0.03912535686478069
             }
           ],
           "examples": [
             {
               "text_excerpt": "Outros em Economia e Finanças",
-              "id_pedido": "1348394",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1348394",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1348394"
+              "id_pedido": "1346864",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1346864",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1346864",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1346864"
             },
             {
               "text_excerpt": "Outros em Trabalho",
-              "id_pedido": "1401586",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1401586",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1401586"
+              "id_pedido": "1401600",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1401600",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1401600",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1401600"
             }
           ]
         },
@@ -5827,23 +5858,25 @@
           "examples": [
             {
               "text_excerpt": "Proteção e Benefícios ao Trabalhador",
-              "id_pedido": "1767638",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1767638",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1767638"
+              "id_pedido": "1491379",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1491379",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1491379",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1491379"
             },
             {
-              "text_excerpt": "Aposentadoria",
-              "id_pedido": "6077696",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/6077696",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/6077696"
+              "text_excerpt": "Benefícios Sociais",
+              "id_pedido": "2489550",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2489550",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2489550",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2489550"
             }
           ]
         },
         {
           "theme": "Servidores, salários e concursos",
           "total_requests": 95,
-          "restricted_total": 13,
-          "restricted_rate": 0.1368421052631579,
+          "restricted_total": 14,
+          "restricted_rate": 0.14736842105263157,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
@@ -5864,9 +5897,10 @@
           "examples": [
             {
               "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "5689412",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/5689412",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/5689412"
+              "id_pedido": "3334899",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3334899",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3334899",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3334899"
             }
           ]
         },
@@ -5894,10 +5928,18 @@
           ],
           "examples": [
             {
+              "text_excerpt": "Exame Nacional do Ensino Médio - Enem",
+              "id_pedido": "2189055",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2189055",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2189055",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2189055"
+            },
+            {
               "text_excerpt": "Bolsas",
-              "id_pedido": "2181791",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2181791",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2181791"
+              "id_pedido": "1721983",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1721983",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1721983",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1721983"
             }
           ]
         },
@@ -5923,7 +5965,15 @@
               "share_in_theme": 0.0375
             }
           ],
-          "examples": []
+          "examples": [
+            {
+              "text_excerpt": "Licitações",
+              "id_pedido": "2744808",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2744808",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2744808",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2744808"
+            }
+          ]
         },
         {
           "theme": "Dados pessoais e vida privada",
@@ -5950,9 +6000,10 @@
           "examples": [
             {
               "text_excerpt": "Dados Pessoais - LGPD",
-              "id_pedido": "2714231",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2714231",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2714231"
+              "id_pedido": "2342665",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2342665",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2342665",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2342665"
             }
           ]
         }
@@ -5962,50 +6013,52 @@
       "org": "BACEN – Banco Central do Brasil",
       "summary": {
         "org": "BACEN – Banco Central do Brasil",
-        "total_requests": 36230,
+        "total_requests": 36252,
         "denied_total": 5341,
         "restricted_total": 6224,
         "personal_restricted_total": 3831,
-        "denied_rate": 0.1474192658018217,
-        "restricted_rate": 0.17179133314932377,
-        "personal_rate_in_total": 0.10574109853712393,
+        "denied_rate": 0.14732980249365552,
+        "restricted_rate": 0.171687079333554,
+        "personal_rate_in_total": 0.10567692816948031,
         "personal_rate_in_restricted": 0.6155205655526992
       },
       "top_themes": [
         {
           "theme": "Outros temas",
-          "total_requests": 35825,
+          "total_requests": 35848,
           "restricted_total": 6203,
-          "restricted_rate": 0.17314724354501046,
+          "restricted_rate": 0.173036152644499,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 25263,
-              "share_in_theme": 0.7051779483600837
+              "count": 25274,
+              "share_in_theme": 0.7050323588484714
             },
             {
               "decision": "Acesso Negado",
               "count": 5325,
-              "share_in_theme": 0.14863921842288905
+              "share_in_theme": 0.14854385181879046
             },
             {
               "decision": "Informação Inexistente",
-              "count": 1685,
-              "share_in_theme": 0.047034193998604326
+              "count": 1686,
+              "share_in_theme": 0.04703191251952689
             }
           ],
           "examples": [
             {
               "text_excerpt": "Outros em Economia e Finanças",
-              "id_pedido": "1346811",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1346811",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1346811"
+              "id_pedido": "1346790",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1346790",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1346790",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1346790"
             },
             {
               "text_excerpt": "Bancos",
-              "id_pedido": "1549778",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1549778",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1549778"
+              "id_pedido": "1387681",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1387681",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1387681",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1387681"
             }
           ]
         },
@@ -6033,53 +6086,50 @@
           ],
           "examples": [
             {
-              "text_excerpt": "Proteção e Benefícios ao Trabalhador",
-              "id_pedido": "3962999",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/3962999",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/3962999"
-            },
-            {
-              "text_excerpt": "Fraude em auxílio emergencial - coronavírus",
-              "id_pedido": "4136878",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/4136878",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/4136878"
+              "text_excerpt": "Benefícios e serviços",
+              "id_pedido": "2435946",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2435946",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2435946",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2435946"
             }
           ]
         },
         {
           "theme": "Servidores, salários e concursos",
-          "total_requests": 84,
+          "total_requests": 83,
           "restricted_total": 9,
-          "restricted_rate": 0.10714285714285714,
+          "restricted_rate": 0.10843373493975904,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
               "count": 62,
-              "share_in_theme": 0.7380952380952381
+              "share_in_theme": 0.7469879518072289
             },
             {
               "decision": "Acesso Negado",
               "count": 8,
-              "share_in_theme": 0.09523809523809523
+              "share_in_theme": 0.0963855421686747
             },
             {
-              "decision": "Sem decisão registrada",
-              "count": 5,
-              "share_in_theme": 0.05952380952380952
+              "decision": "Não se trata de solicitação de informação",
+              "count": 4,
+              "share_in_theme": 0.04819277108433735
             }
           ],
           "examples": [
             {
               "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "3701229",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/3701229",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/3701229"
+              "id_pedido": "4307275",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4307275",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/4307275",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4307275"
             },
             {
               "text_excerpt": "Conduta ética e irregularidades de servidores",
-              "id_pedido": "8622874",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/8622874",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/8622874"
+              "id_pedido": "7914273",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/7914273",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/7914273",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/7914273"
             }
           ]
         },
@@ -6108,9 +6158,10 @@
           "examples": [
             {
               "text_excerpt": "Dados Pessoais - LGPD",
-              "id_pedido": "4136754",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/4136754",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/4136754"
+              "id_pedido": "4911514",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4911514",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/4911514",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4911514"
             }
           ]
         },
@@ -6136,14 +6187,7 @@
               "share_in_theme": 0.03333333333333333
             }
           ],
-          "examples": [
-            {
-              "text_excerpt": "Licitações",
-              "id_pedido": "3603734",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/3603734",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/3603734"
-            }
-          ]
+          "examples": []
         },
         {
           "theme": "Gastos públicos e orçamento",
@@ -6162,14 +6206,7 @@
               "share_in_theme": 0.3333333333333333
             }
           ],
-          "examples": [
-            {
-              "text_excerpt": "Orçamento",
-              "id_pedido": "3246715",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/3246715",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/3246715"
-            }
-          ]
+          "examples": []
         }
       ]
     },
@@ -6177,50 +6214,52 @@
       "org": "PETROBRAS – Petróleo Brasileiro S.A.",
       "summary": {
         "org": "PETROBRAS – Petróleo Brasileiro S.A.",
-        "total_requests": 33698,
-        "denied_total": 4679,
-        "restricted_total": 6062,
+        "total_requests": 33709,
+        "denied_total": 4681,
+        "restricted_total": 6065,
         "personal_restricted_total": 219,
-        "denied_rate": 0.13885097038399905,
-        "restricted_rate": 0.17989198171998338,
-        "personal_rate_in_total": 0.006498902011988842,
-        "personal_rate_in_restricted": 0.03612669086110195
+        "denied_rate": 0.13886499154528464,
+        "restricted_rate": 0.179922275950043,
+        "personal_rate_in_total": 0.006496781275030407,
+        "personal_rate_in_restricted": 0.036108821104699096
       },
       "top_themes": [
         {
           "theme": "Outros temas",
-          "total_requests": 27835,
-          "restricted_total": 4829,
-          "restricted_rate": 0.1734866175678103,
+          "total_requests": 27846,
+          "restricted_total": 4831,
+          "restricted_rate": 0.17348990878402643,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 19838,
-              "share_in_theme": 0.712699838333034
+              "count": 19845,
+              "share_in_theme": 0.7126696832579186
             },
             {
               "decision": "Acesso Negado",
-              "count": 3604,
-              "share_in_theme": 0.12947727680977186
+              "count": 3605,
+              "share_in_theme": 0.12946204122674712
             },
             {
               "decision": "Acesso Parcialmente Concedido",
-              "count": 1225,
-              "share_in_theme": 0.04400934075803844
+              "count": 1226,
+              "share_in_theme": 0.044027867557279325
             }
           ],
           "examples": [
             {
               "text_excerpt": "Outros em Energia",
-              "id_pedido": "1346842",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1346842",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1346842"
+              "id_pedido": "1421090",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1421090",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1421090",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1421090"
             },
             {
-              "text_excerpt": "Outros em Comércio e serviços",
-              "id_pedido": "1347529",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347529",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347529"
+              "text_excerpt": "Produção Industrial",
+              "id_pedido": "1428884",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1428884",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1428884",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1428884"
             }
           ]
         },
@@ -6249,9 +6288,10 @@
           "examples": [
             {
               "text_excerpt": "Licitações",
-              "id_pedido": "2339232",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2339232",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2339232"
+              "id_pedido": "2339457",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2339457",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2339457",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2339457"
             }
           ]
         },
@@ -6263,8 +6303,8 @@
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 232,
-              "share_in_theme": 0.6304347826086957
+              "count": 237,
+              "share_in_theme": 0.6440217391304348
             },
             {
               "decision": "Acesso Negado",
@@ -6279,16 +6319,18 @@
           ],
           "examples": [
             {
-              "text_excerpt": "Outros em Educação",
-              "id_pedido": "2416898",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2416898",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2416898"
+              "text_excerpt": "Universidades e Institutos",
+              "id_pedido": "4210330",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4210330",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/4210330",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4210330"
             },
             {
-              "text_excerpt": "Universidades e Institutos",
-              "id_pedido": "2437453",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2437453",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2437453"
+              "text_excerpt": "Educação de Jovens e Adultos (EJA)",
+              "id_pedido": "6183762",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/6183762",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/6183762",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/6183762"
             }
           ]
         },
@@ -6300,8 +6342,8 @@
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 110,
-              "share_in_theme": 0.6111111111111112
+              "count": 112,
+              "share_in_theme": 0.6222222222222222
             },
             {
               "decision": "Acesso Negado",
@@ -6316,16 +6358,18 @@
           ],
           "examples": [
             {
-              "text_excerpt": "Frequência de Servidores",
-              "id_pedido": "2413156",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2413156",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2413156"
+              "text_excerpt": "Concursos e processos seletivos",
+              "id_pedido": "3835963",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3835963",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3835963",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3835963"
             },
             {
-              "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "2772039",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2772039",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2772039"
+              "text_excerpt": "Conduta ética e irregularidades de servidores",
+              "id_pedido": "7120038",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/7120038",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/7120038",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/7120038"
             }
           ]
         },
@@ -6354,9 +6398,10 @@
           "examples": [
             {
               "text_excerpt": "Dados Pessoais - LGPD",
-              "id_pedido": "2638113",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2638113",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2638113"
+              "id_pedido": "2938774",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2938774",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2938774",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2938774"
             }
           ]
         },
@@ -6384,16 +6429,18 @@
           ],
           "examples": [
             {
-              "text_excerpt": "Transporte Aéreo",
-              "id_pedido": "2404022",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2404022",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2404022"
+              "text_excerpt": "Transporte Hidroviário",
+              "id_pedido": "2822149",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2822149",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2822149",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2822149"
             },
             {
-              "text_excerpt": "Outros em Transporte",
-              "id_pedido": "2450891",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2450891",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2450891"
+              "text_excerpt": "Transporte Rodoviário",
+              "id_pedido": "3311049",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3311049",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3311049",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3311049"
             }
           ]
         }
@@ -6403,50 +6450,52 @@
       "org": "PF – Polícia Federal",
       "summary": {
         "org": "PF – Polícia Federal",
-        "total_requests": 26438,
-        "denied_total": 4461,
-        "restricted_total": 6788,
-        "personal_restricted_total": 2293,
-        "denied_rate": 0.1687343974582041,
-        "restricted_rate": 0.256751645358953,
-        "personal_rate_in_total": 0.0867312202133293,
-        "personal_rate_in_restricted": 0.33780200353565115
+        "total_requests": 26448,
+        "denied_total": 4466,
+        "restricted_total": 6793,
+        "personal_restricted_total": 2294,
+        "denied_rate": 0.16885964912280702,
+        "restricted_rate": 0.2568436176648518,
+        "personal_rate_in_total": 0.0867362371445856,
+        "personal_rate_in_restricted": 0.3377005741204181
       },
       "top_themes": [
         {
           "theme": "Outros temas",
-          "total_requests": 22927,
-          "restricted_total": 6139,
-          "restricted_rate": 0.26776289963798144,
+          "total_requests": 22937,
+          "restricted_total": 6144,
+          "restricted_rate": 0.2678641496272398,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 13599,
-              "share_in_theme": 0.5931434553146945
+              "count": 13604,
+              "share_in_theme": 0.5931028469285434
             },
             {
               "decision": "Acesso Negado",
-              "count": 4206,
-              "share_in_theme": 0.18345182535874732
+              "count": 4211,
+              "share_in_theme": 0.18358983302088328
             },
             {
               "decision": "Acesso Parcialmente Concedido",
               "count": 1933,
-              "share_in_theme": 0.0843110742792341
+              "share_in_theme": 0.08427431660635654
             }
           ],
           "examples": [
             {
               "text_excerpt": "Direitos Humanos",
               "id_pedido": "1347463",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347463",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347463"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347463",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1347463",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347463"
             },
             {
-              "text_excerpt": "Outros em Relações Internacionais",
-              "id_pedido": "1347511",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347511",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347511"
+              "text_excerpt": "Outros em Segurança e Ordem Pública",
+              "id_pedido": "1347801",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347801",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1347801",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347801"
             }
           ]
         },
@@ -6475,15 +6524,17 @@
           "examples": [
             {
               "text_excerpt": "Armamento",
-              "id_pedido": "1493481",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1493481",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1493481"
+              "id_pedido": "1509822",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1509822",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1509822",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1509822"
             },
             {
               "text_excerpt": "Denúncia Crime",
-              "id_pedido": "1652564",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1652564",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1652564"
+              "id_pedido": "4361672",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4361672",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/4361672",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4361672"
             }
           ]
         },
@@ -6512,15 +6563,17 @@
           "examples": [
             {
               "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "1493633",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1493633",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1493633"
+              "id_pedido": "1507972",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1507972",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1507972",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1507972"
             },
             {
               "text_excerpt": "Frequência de Servidores",
               "id_pedido": "2170632",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2170632",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2170632"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2170632",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2170632",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2170632"
             }
           ]
         },
@@ -6549,9 +6602,10 @@
           "examples": [
             {
               "text_excerpt": "Licitações",
-              "id_pedido": "1494251",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1494251",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1494251"
+              "id_pedido": "1805134",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1805134",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1805134",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1805134"
             }
           ]
         },
@@ -6580,9 +6634,10 @@
           "examples": [
             {
               "text_excerpt": "Dados Pessoais - LGPD",
-              "id_pedido": "3249063",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/3249063",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/3249063"
+              "id_pedido": "5167967",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/5167967",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/5167967",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/5167967"
             }
           ]
         },
@@ -6612,14 +6667,16 @@
             {
               "text_excerpt": "Educação Superior",
               "id_pedido": "1401883",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1401883",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1401883"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1401883",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1401883",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1401883"
             },
             {
               "text_excerpt": "Outros em Educação",
-              "id_pedido": "1450512",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1450512",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1450512"
+              "id_pedido": "2129700",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2129700",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2129700",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2129700"
             }
           ]
         }
@@ -6629,50 +6686,52 @@
       "org": "ANEEL – Agência Nacional de Energia Elétrica",
       "summary": {
         "org": "ANEEL – Agência Nacional de Energia Elétrica",
-        "total_requests": 48956,
-        "denied_total": 3872,
-        "restricted_total": 5366,
-        "personal_restricted_total": 866,
-        "denied_rate": 0.07909142903832013,
-        "restricted_rate": 0.10960862815589509,
-        "personal_rate_in_total": 0.017689353705368085,
-        "personal_rate_in_restricted": 0.1613865076407007
+        "total_requests": 48979,
+        "denied_total": 3877,
+        "restricted_total": 5371,
+        "personal_restricted_total": 867,
+        "denied_rate": 0.07915637313950877,
+        "restricted_rate": 0.1096592417158374,
+        "personal_rate_in_total": 0.017701463892688705,
+        "personal_rate_in_restricted": 0.16142245391919569
       },
       "top_themes": [
         {
           "theme": "Outros temas",
-          "total_requests": 48718,
-          "restricted_total": 5348,
-          "restricted_rate": 0.10977462128987232,
+          "total_requests": 48741,
+          "restricted_total": 5353,
+          "restricted_rate": 0.10982540366426623,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 38220,
-              "share_in_theme": 0.7845149636684593
+              "count": 38235,
+              "share_in_theme": 0.7844525143103342
             },
             {
               "decision": "Acesso Negado",
-              "count": 3864,
-              "share_in_theme": 0.07931360072252555
+              "count": 3869,
+              "share_in_theme": 0.07937875710387558
             },
             {
               "decision": "Não se trata de solicitação de informação",
               "count": 2400,
-              "share_in_theme": 0.04926310603883575
+              "share_in_theme": 0.04923985966639995
             }
           ],
           "examples": [
             {
               "text_excerpt": "Serviços Públicos",
-              "id_pedido": "1347292",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347292",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347292"
+              "id_pedido": "1358501",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1358501",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1358501",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1358501"
             },
             {
-              "text_excerpt": "Outros em Energia",
-              "id_pedido": "1347657",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347657",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347657"
+              "text_excerpt": "Telecomunicações",
+              "id_pedido": "1362296",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1362296",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1362296",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1362296"
             }
           ]
         },
@@ -6701,15 +6760,10 @@
           "examples": [
             {
               "text_excerpt": "Proteção e Benefícios ao Trabalhador",
-              "id_pedido": "1356676",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1356676",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1356676"
-            },
-            {
-              "text_excerpt": "Auxílio",
-              "id_pedido": "2361557",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2361557",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2361557"
+              "id_pedido": "2103649",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2103649",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2103649",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2103649"
             }
           ]
         },
@@ -6738,9 +6792,10 @@
           "examples": [
             {
               "text_excerpt": "Licitações",
-              "id_pedido": "2402690",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2402690",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2402690"
+              "id_pedido": "4797030",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4797030",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/4797030",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4797030"
             }
           ]
         },
@@ -6768,16 +6823,11 @@
           ],
           "examples": [
             {
-              "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "3155286",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/3155286",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/3155286"
-            },
-            {
               "text_excerpt": "Conduta ética e irregularidades de servidores",
-              "id_pedido": "3724821",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/3724821",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/3724821"
+              "id_pedido": "5271474",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/5271474",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/5271474",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/5271474"
             }
           ]
         },
@@ -6806,15 +6856,17 @@
           "examples": [
             {
               "text_excerpt": "Educação Superior",
-              "id_pedido": "1374977",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1374977",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1374977"
+              "id_pedido": "1374979",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1374979",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1374979",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1374979"
             },
             {
               "text_excerpt": "Educação Básica",
               "id_pedido": "1483255",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1483255",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1483255"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1483255",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1483255",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1483255"
             }
           ]
         },
@@ -6842,16 +6894,11 @@
           ],
           "examples": [
             {
-              "text_excerpt": "Transporte Rodoviário",
-              "id_pedido": "1951535",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1951535",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1951535"
-            },
-            {
-              "text_excerpt": "Infraestrutura Urbana",
-              "id_pedido": "2510812",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2510812",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2510812"
+              "text_excerpt": "Infraestrutura e Fomento",
+              "id_pedido": "4812931",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4812931",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/4812931",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/4812931"
             }
           ]
         }
@@ -6861,87 +6908,91 @@
       "org": "MS – Ministério da Saúde",
       "summary": {
         "org": "MS – Ministério da Saúde",
-        "total_requests": 56205,
+        "total_requests": 56218,
         "denied_total": 3582,
-        "restricted_total": 8855,
-        "personal_restricted_total": 1328,
-        "denied_rate": 0.06373098478783026,
-        "restricted_rate": 0.15754826083088694,
-        "personal_rate_in_total": 0.02362779112178632,
-        "personal_rate_in_restricted": 0.14997176736307172
+        "restricted_total": 8859,
+        "personal_restricted_total": 1330,
+        "denied_rate": 0.06371624746522467,
+        "restricted_rate": 0.15758298054004055,
+        "personal_rate_in_total": 0.023657903162688107,
+        "personal_rate_in_restricted": 0.15012981149113896
       },
       "top_themes": [
         {
           "theme": "Saúde e medicamentos",
-          "total_requests": 34455,
-          "restricted_total": 4557,
-          "restricted_rate": 0.1322594688724423,
+          "total_requests": 34463,
+          "restricted_total": 4558,
+          "restricted_rate": 0.13225778371006586,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 27270,
-              "share_in_theme": 0.7914671310404876
+              "count": 27276,
+              "share_in_theme": 0.7914575051504512
             },
             {
               "decision": "Acesso Parcialmente Concedido",
-              "count": 2715,
-              "share_in_theme": 0.07879843273835438
+              "count": 2716,
+              "share_in_theme": 0.07880915764733191
             },
             {
               "decision": "Acesso Negado",
               "count": 1842,
-              "share_in_theme": 0.05346103613408794
+              "share_in_theme": 0.05344862606273395
             }
           ],
           "examples": [
             {
-              "text_excerpt": "Outros em Saúde",
-              "id_pedido": "1346797",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1346797",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1346797"
+              "text_excerpt": "Medicamentos e Aparelhos",
+              "id_pedido": "1348862",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1348862",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1348862",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1348862"
             },
             {
-              "text_excerpt": "Medicamentos e Aparelhos",
-              "id_pedido": "1347751",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347751",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347751"
+              "text_excerpt": "Outros em Saúde",
+              "id_pedido": "1385709",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1385709",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1385709",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1385709"
             }
           ]
         },
         {
           "theme": "Outros temas",
-          "total_requests": 20729,
-          "restricted_total": 4118,
-          "restricted_rate": 0.1986588836895171,
+          "total_requests": 20732,
+          "restricted_total": 4121,
+          "restricted_rate": 0.19877484082577657,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 14357,
-              "share_in_theme": 0.6926045636547832
+              "count": 14364,
+              "share_in_theme": 0.6928419834072931
             },
             {
               "decision": "Acesso Parcialmente Concedido",
-              "count": 2449,
-              "share_in_theme": 0.11814366346664094
+              "count": 2452,
+              "share_in_theme": 0.11827127146440286
             },
             {
               "decision": "Acesso Negado",
               "count": 1669,
-              "share_in_theme": 0.08051522022287616
+              "share_in_theme": 0.08050356936137372
             }
           ],
           "examples": [
             {
-              "text_excerpt": "Atendimento Básico",
-              "id_pedido": "1347301",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1347301",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1347301"
+              "text_excerpt": "Direitos Humanos",
+              "id_pedido": "1429251",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1429251",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1429251",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1429251"
             },
             {
-              "text_excerpt": "Emprego",
-              "id_pedido": "1348483",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1348483",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1348483"
+              "text_excerpt": "Atendimento Básico",
+              "id_pedido": "1604571",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1604571",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1604571",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1604571"
             }
           ]
         },
@@ -6970,9 +7021,10 @@
           "examples": [
             {
               "text_excerpt": "Licitações",
-              "id_pedido": "2392619",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2392619",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2392619"
+              "id_pedido": "2627279",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2627279",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2627279",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2627279"
             }
           ]
         },
@@ -7001,9 +7053,10 @@
           "examples": [
             {
               "text_excerpt": "Orçamento",
-              "id_pedido": "2404012",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2404012",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2404012"
+              "id_pedido": "2584933",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2584933",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2584933",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2584933"
             }
           ]
         },
@@ -7031,53 +7084,57 @@
           ],
           "examples": [
             {
-              "text_excerpt": "Proteção e Benefícios ao Trabalhador",
-              "id_pedido": "1358180",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1358180",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1358180"
-            },
-            {
               "text_excerpt": "Aposentadoria",
               "id_pedido": "2481336",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2481336",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2481336"
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2481336",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2481336",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2481336"
+            },
+            {
+              "text_excerpt": "Benefícios Sociais",
+              "id_pedido": "3018005",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3018005",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3018005",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3018005"
             }
           ]
         },
         {
           "theme": "Servidores, salários e concursos",
-          "total_requests": 153,
+          "total_requests": 155,
           "restricted_total": 18,
-          "restricted_rate": 0.11764705882352941,
+          "restricted_rate": 0.11612903225806452,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
               "count": 114,
-              "share_in_theme": 0.7450980392156863
+              "share_in_theme": 0.7354838709677419
             },
             {
               "decision": "Acesso Parcialmente Concedido",
               "count": 15,
-              "share_in_theme": 0.09803921568627451
+              "share_in_theme": 0.0967741935483871
             },
             {
-              "decision": "Órgão não tem competência para responder sobre o assunto",
-              "count": 7,
-              "share_in_theme": 0.0457516339869281
+              "decision": "Sem decisão registrada",
+              "count": 9,
+              "share_in_theme": 0.05806451612903226
             }
           ],
           "examples": [
             {
               "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "2458237",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2458237",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2458237"
+              "id_pedido": "3164521",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3164521",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3164521",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3164521"
             },
             {
               "text_excerpt": "Frequência de Servidores",
-              "id_pedido": "2477683",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2477683",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2477683"
+              "id_pedido": "3489775",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3489775",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3489775",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3489775"
             }
           ]
         }
@@ -7087,50 +7144,52 @@
       "org": "INEP – Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira",
       "summary": {
         "org": "INEP – Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira",
-        "total_requests": 43627,
-        "denied_total": 3291,
-        "restricted_total": 4703,
-        "personal_restricted_total": 1271,
-        "denied_rate": 0.07543493708024847,
-        "restricted_rate": 0.10780021546290142,
-        "personal_rate_in_total": 0.029133334861439018,
-        "personal_rate_in_restricted": 0.27025302998086326
+        "total_requests": 43648,
+        "denied_total": 3297,
+        "restricted_total": 4710,
+        "personal_restricted_total": 1277,
+        "denied_rate": 0.07553610703812316,
+        "restricted_rate": 0.10790872434017595,
+        "personal_rate_in_total": 0.029256781524926685,
+        "personal_rate_in_restricted": 0.2711252653927813
       },
       "top_themes": [
         {
           "theme": "Educação e pesquisa",
-          "total_requests": 37873,
-          "restricted_total": 4054,
-          "restricted_rate": 0.10704195601087846,
+          "total_requests": 37897,
+          "restricted_total": 4061,
+          "restricted_rate": 0.10715887801145209,
           "top_decisions": [
             {
               "decision": "Acesso Concedido",
-              "count": 32283,
-              "share_in_theme": 0.8524014469410925
+              "count": 32342,
+              "share_in_theme": 0.8534184763965486
             },
             {
               "decision": "Acesso Negado",
-              "count": 2848,
-              "share_in_theme": 0.075198690359887
+              "count": 2854,
+              "share_in_theme": 0.07530939124468955
             },
             {
               "decision": "Acesso Parcialmente Concedido",
-              "count": 1206,
-              "share_in_theme": 0.03184326565099147
+              "count": 1207,
+              "share_in_theme": 0.03184948676676254
             }
           ],
           "examples": [
             {
               "text_excerpt": "Exame Nacional do Ensino Médio - Enem",
-              "id_pedido": "1346881",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1346881",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1346881"
+              "id_pedido": "1347470",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347470",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1347470",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1347470"
             },
             {
-              "text_excerpt": "Educação Superior",
-              "id_pedido": "1348347",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1348347",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1348347"
+              "text_excerpt": "Educação Básica",
+              "id_pedido": "1349942",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1349942",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1349942",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1349942"
             }
           ]
         },
@@ -7158,47 +7217,18 @@
           ],
           "examples": [
             {
+              "text_excerpt": "Site do Órgão",
+              "id_pedido": "1417534",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1417534",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1417534",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1417534"
+            },
+            {
               "text_excerpt": "Conduta Docente",
-              "id_pedido": "1352696",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1352696",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1352696"
-            },
-            {
-              "text_excerpt": "Emprego",
-              "id_pedido": "1356275",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/1356275",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/1356275"
-            }
-          ]
-        },
-        {
-          "theme": "Dados pessoais e vida privada",
-          "total_requests": 57,
-          "restricted_total": 13,
-          "restricted_rate": 0.22807017543859648,
-          "top_decisions": [
-            {
-              "decision": "Acesso Concedido",
-              "count": 31,
-              "share_in_theme": 0.543859649122807
-            },
-            {
-              "decision": "Acesso Negado",
-              "count": 12,
-              "share_in_theme": 0.21052631578947367
-            },
-            {
-              "decision": "Sem decisão registrada",
-              "count": 11,
-              "share_in_theme": 0.19298245614035087
-            }
-          ],
-          "examples": [
-            {
-              "text_excerpt": "Dados Pessoais - LGPD",
-              "id_pedido": "2414409",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2414409",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2414409"
+              "id_pedido": "1418218",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1418218",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/1418218",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/1418218"
             }
           ]
         },
@@ -7227,15 +7257,42 @@
           "examples": [
             {
               "text_excerpt": "Concursos e processos seletivos",
-              "id_pedido": "2802078",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2802078",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2802078"
+              "id_pedido": "3044134",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3044134",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/3044134",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/3044134"
+            }
+          ]
+        },
+        {
+          "theme": "Dados pessoais e vida privada",
+          "total_requests": 54,
+          "restricted_total": 13,
+          "restricted_rate": 0.24074074074074073,
+          "top_decisions": [
+            {
+              "decision": "Acesso Concedido",
+              "count": 31,
+              "share_in_theme": 0.5740740740740741
             },
             {
-              "text_excerpt": "Conduta ética e irregularidades de servidores",
-              "id_pedido": "2850460",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2850460",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2850460"
+              "decision": "Acesso Negado",
+              "count": 12,
+              "share_in_theme": 0.2222222222222222
+            },
+            {
+              "decision": "Sem decisão registrada",
+              "count": 8,
+              "share_in_theme": 0.14814814814814814
+            }
+          ],
+          "examples": [
+            {
+              "text_excerpt": "Dados Pessoais - LGPD",
+              "id_pedido": "2727912",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2727912",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/2727912",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/2727912"
             }
           ]
         },
@@ -7264,9 +7321,10 @@
           "examples": [
             {
               "text_excerpt": "Licitações",
-              "id_pedido": "2342427",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2342427",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2342427"
+              "id_pedido": "8669261",
+              "request_public_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/8669261",
+              "request_buscalai_link": "https://buscalai.cgu.gov.br/busca/8669261",
+              "request_attachment_link": "https://api-laibr.cgu.gov.br/buscar-pedidos/8669261"
             }
           ]
         },
@@ -7292,20 +7350,7 @@
               "share_in_theme": 0.1
             }
           ],
-          "examples": [
-            {
-              "text_excerpt": "Benefícios e serviços",
-              "id_pedido": "2452355",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2452355",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2452355"
-            },
-            {
-              "text_excerpt": "Benefícios Sociais",
-              "id_pedido": "2452360",
-              "request_public_link": "https://buscalai.cgu.gov.br/busca/2452360",
-              "request_attachment_link": "https://buscalai.cgu.gov.br/busca/2452360"
-            }
-          ]
+          "examples": []
         }
       ]
     }
@@ -7384,248 +7429,248 @@
       },
       {
         "year": 2026,
-        "count": 234,
-        "share_in_restricted": 0.07776669990029911
+        "count": 261,
+        "share_in_restricted": 0.08335994889811561
       }
     ],
     "top_orgs": [
       {
         "org": "INSS – Instituto Nacional do Seguro Social",
-        "total_requests": 92457,
-        "denied_total": 9559,
-        "restricted_total": 19828,
+        "total_requests": 92473,
+        "denied_total": 9560,
+        "restricted_total": 19829,
         "personal_restricted_total": 12331,
-        "denied_rate": 0.10338860226916297,
-        "restricted_rate": 0.21445645002541722,
-        "personal_rate_in_total": 0.13337010718496164,
-        "personal_rate_in_restricted": 0.6218983256001613,
-        "share_in_org_restricted": 0.6218983256001613
+        "denied_rate": 0.10338152758102365,
+        "restricted_rate": 0.21443015799206255,
+        "personal_rate_in_total": 0.13334703102527223,
+        "personal_rate_in_restricted": 0.6218669625296284,
+        "share_in_org_restricted": 0.6218669625296284
       },
       {
         "org": "BACEN – Banco Central do Brasil",
-        "total_requests": 36230,
+        "total_requests": 36252,
         "denied_total": 5341,
         "restricted_total": 6224,
         "personal_restricted_total": 3831,
-        "denied_rate": 0.1474192658018217,
-        "restricted_rate": 0.17179133314932377,
-        "personal_rate_in_total": 0.10574109853712393,
+        "denied_rate": 0.14732980249365552,
+        "restricted_rate": 0.171687079333554,
+        "personal_rate_in_total": 0.10567692816948031,
         "personal_rate_in_restricted": 0.6155205655526992,
         "share_in_org_restricted": 0.6155205655526992
       },
       {
         "org": "CEF – Caixa Econômica Federal",
-        "total_requests": 45476,
-        "denied_total": 7731,
-        "restricted_total": 10958,
+        "total_requests": 45487,
+        "denied_total": 7732,
+        "restricted_total": 10960,
         "personal_restricted_total": 3288,
-        "denied_rate": 0.17000175916967192,
-        "restricted_rate": 0.24096226581053742,
-        "personal_rate_in_total": 0.0723018735157006,
-        "personal_rate_in_restricted": 0.30005475451724767,
-        "share_in_org_restricted": 0.30005475451724767
+        "denied_rate": 0.16998263240046607,
+        "restricted_rate": 0.24094796315430783,
+        "personal_rate_in_total": 0.07228438894629234,
+        "personal_rate_in_restricted": 0.3,
+        "share_in_org_restricted": 0.3
       },
       {
         "org": "MF - Ministério da Fazenda",
-        "total_requests": 117191,
-        "denied_total": 13382,
-        "restricted_total": 17658,
+        "total_requests": 117219,
+        "denied_total": 13383,
+        "restricted_total": 17660,
         "personal_restricted_total": 3064,
-        "denied_rate": 0.11418965620226809,
-        "restricted_rate": 0.15067709977728666,
-        "personal_rate_in_total": 0.026145352458806562,
-        "personal_rate_in_restricted": 0.17351908483406955,
-        "share_in_org_restricted": 0.17351908483406955
+        "denied_rate": 0.11417091085916106,
+        "restricted_rate": 0.1506581697506377,
+        "personal_rate_in_total": 0.02613910714133374,
+        "personal_rate_in_restricted": 0.17349943374858437,
+        "share_in_org_restricted": 0.17349943374858437
       },
       {
         "org": "PF – Polícia Federal",
-        "total_requests": 26438,
-        "denied_total": 4461,
-        "restricted_total": 6788,
-        "personal_restricted_total": 2293,
-        "denied_rate": 0.1687343974582041,
-        "restricted_rate": 0.256751645358953,
-        "personal_rate_in_total": 0.0867312202133293,
-        "personal_rate_in_restricted": 0.33780200353565115,
-        "share_in_org_restricted": 0.33780200353565115
+        "total_requests": 26448,
+        "denied_total": 4466,
+        "restricted_total": 6793,
+        "personal_restricted_total": 2294,
+        "denied_rate": 0.16885964912280702,
+        "restricted_rate": 0.2568436176648518,
+        "personal_rate_in_total": 0.0867362371445856,
+        "personal_rate_in_restricted": 0.3377005741204181,
+        "share_in_org_restricted": 0.3377005741204181
       },
       {
         "org": "MS – Ministério da Saúde",
-        "total_requests": 56205,
+        "total_requests": 56218,
         "denied_total": 3582,
-        "restricted_total": 8855,
-        "personal_restricted_total": 1328,
-        "denied_rate": 0.06373098478783026,
-        "restricted_rate": 0.15754826083088694,
-        "personal_rate_in_total": 0.02362779112178632,
-        "personal_rate_in_restricted": 0.14997176736307172,
-        "share_in_org_restricted": 0.14997176736307172
+        "restricted_total": 8859,
+        "personal_restricted_total": 1330,
+        "denied_rate": 0.06371624746522467,
+        "restricted_rate": 0.15758298054004055,
+        "personal_rate_in_total": 0.023657903162688107,
+        "personal_rate_in_restricted": 0.15012981149113896,
+        "share_in_org_restricted": 0.15012981149113896
       },
       {
         "org": "INEP – Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira",
-        "total_requests": 43627,
-        "denied_total": 3291,
-        "restricted_total": 4703,
-        "personal_restricted_total": 1271,
-        "denied_rate": 0.07543493708024847,
-        "restricted_rate": 0.10780021546290142,
-        "personal_rate_in_total": 0.029133334861439018,
-        "personal_rate_in_restricted": 0.27025302998086326,
-        "share_in_org_restricted": 0.27025302998086326
+        "total_requests": 43648,
+        "denied_total": 3297,
+        "restricted_total": 4710,
+        "personal_restricted_total": 1277,
+        "denied_rate": 0.07553610703812316,
+        "restricted_rate": 0.10790872434017595,
+        "personal_rate_in_total": 0.029256781524926685,
+        "personal_rate_in_restricted": 0.2711252653927813,
+        "share_in_org_restricted": 0.2711252653927813
       },
       {
         "org": "CEX – Comando do Exército",
-        "total_requests": 17282,
+        "total_requests": 17288,
         "denied_total": 3176,
         "restricted_total": 3708,
         "personal_restricted_total": 908,
-        "denied_rate": 0.18377502603865292,
-        "restricted_rate": 0.21455850017359102,
-        "personal_rate_in_total": 0.05254021525286425,
+        "denied_rate": 0.18371124479407683,
+        "restricted_rate": 0.2144840351689033,
+        "personal_rate_in_total": 0.05252198056455345,
         "personal_rate_in_restricted": 0.24487594390507011,
         "share_in_org_restricted": 0.24487594390507011
       },
       {
         "org": "ANEEL – Agência Nacional de Energia Elétrica",
-        "total_requests": 48956,
-        "denied_total": 3872,
-        "restricted_total": 5366,
-        "personal_restricted_total": 866,
-        "denied_rate": 0.07909142903832013,
-        "restricted_rate": 0.10960862815589509,
-        "personal_rate_in_total": 0.017689353705368085,
-        "personal_rate_in_restricted": 0.1613865076407007,
-        "share_in_org_restricted": 0.1613865076407007
+        "total_requests": 48979,
+        "denied_total": 3877,
+        "restricted_total": 5371,
+        "personal_restricted_total": 867,
+        "denied_rate": 0.07915637313950877,
+        "restricted_rate": 0.1096592417158374,
+        "personal_rate_in_total": 0.017701463892688705,
+        "personal_rate_in_restricted": 0.16142245391919569,
+        "share_in_org_restricted": 0.16142245391919569
       },
       {
         "org": "MTE - Ministério do Trabalho e Emprego",
-        "total_requests": 8033,
+        "total_requests": 8034,
         "denied_total": 1328,
         "restricted_total": 1942,
         "personal_restricted_total": 749,
-        "denied_rate": 0.16531806299016558,
-        "restricted_rate": 0.24175276982447405,
-        "personal_rate_in_total": 0.0932403834183991,
+        "denied_rate": 0.1652974856858352,
+        "restricted_rate": 0.2417226786158825,
+        "personal_rate_in_total": 0.09322877769479711,
         "personal_rate_in_restricted": 0.38568486096807414,
         "share_in_org_restricted": 0.38568486096807414
       },
       {
         "org": "PRF – Polícia Rodoviária Federal",
-        "total_requests": 10333,
+        "total_requests": 10335,
         "denied_total": 1191,
         "restricted_total": 1805,
         "personal_restricted_total": 589,
-        "denied_rate": 0.11526178263814962,
-        "restricted_rate": 0.17468305429207392,
-        "personal_rate_in_total": 0.05700183876899255,
+        "denied_rate": 0.11523947750362845,
+        "restricted_rate": 0.17464925012094823,
+        "personal_rate_in_total": 0.05699080793420416,
         "personal_rate_in_restricted": 0.3263157894736842,
         "share_in_org_restricted": 0.3263157894736842
       },
       {
         "org": "CGU – Controladoria-Geral da União",
-        "total_requests": 19088,
-        "denied_total": 1889,
-        "restricted_total": 3688,
+        "total_requests": 19094,
+        "denied_total": 1890,
+        "restricted_total": 3690,
         "personal_restricted_total": 523,
-        "denied_rate": 0.09896269907795474,
-        "restricted_rate": 0.19321039396479464,
-        "personal_rate_in_total": 0.027399413243922883,
-        "personal_rate_in_restricted": 0.14181127982646421,
-        "share_in_org_restricted": 0.14181127982646421
+        "denied_rate": 0.09898397402325337,
+        "restricted_rate": 0.19325442547397087,
+        "personal_rate_in_total": 0.027390803393736254,
+        "personal_rate_in_restricted": 0.14173441734417344,
+        "share_in_org_restricted": 0.14173441734417344
       },
       {
         "org": "DNIT – Departamento Nacional de Infraestrutura de Transportes",
-        "total_requests": 25001,
+        "total_requests": 25014,
         "denied_total": 1270,
         "restricted_total": 1665,
         "personal_restricted_total": 401,
-        "denied_rate": 0.05079796808127675,
-        "restricted_rate": 0.06659733610655574,
-        "personal_rate_in_total": 0.016039358425662974,
+        "denied_rate": 0.0507715679219637,
+        "restricted_rate": 0.06656272487407051,
+        "personal_rate_in_total": 0.016031022627328695,
         "personal_rate_in_restricted": 0.24084084084084084,
         "share_in_org_restricted": 0.24084084084084084
       },
       {
         "org": "MGI - Ministério da Gestão e da Inovação em Serviços Públicos",
-        "total_requests": 17483,
-        "denied_total": 1620,
-        "restricted_total": 2979,
+        "total_requests": 17494,
+        "denied_total": 1621,
+        "restricted_total": 2980,
         "personal_restricted_total": 386,
-        "denied_rate": 0.09266144254418578,
-        "restricted_rate": 0.17039409712291942,
-        "personal_rate_in_total": 0.022078590630898585,
-        "personal_rate_in_restricted": 0.12957368244377307,
-        "share_in_org_restricted": 0.12957368244377307
+        "denied_rate": 0.09266034068823596,
+        "restricted_rate": 0.17034411798330856,
+        "personal_rate_in_total": 0.022064707899851377,
+        "personal_rate_in_restricted": 0.12953020134228188,
+        "share_in_org_restricted": 0.12953020134228188
       },
       {
         "org": "MT - Ministério dos Transportes",
-        "total_requests": 14626,
-        "denied_total": 1098,
-        "restricted_total": 1678,
-        "personal_restricted_total": 374,
-        "denied_rate": 0.07507178996307945,
-        "restricted_rate": 0.1147271981402981,
-        "personal_rate_in_total": 0.02557090113496513,
-        "personal_rate_in_restricted": 0.22288438617401668,
-        "share_in_org_restricted": 0.22288438617401668
+        "total_requests": 14567,
+        "denied_total": 1099,
+        "restricted_total": 1682,
+        "personal_restricted_total": 375,
+        "denied_rate": 0.07544449783757809,
+        "restricted_rate": 0.11546646529827692,
+        "personal_rate_in_total": 0.02574311800645294,
+        "personal_rate_in_restricted": 0.22294887039239,
+        "share_in_org_restricted": 0.22294887039239
       },
       {
         "org": "FUNAI – Fundação Nacional dos Povos Indígenas",
-        "total_requests": 17324,
-        "denied_total": 1027,
-        "restricted_total": 1593,
+        "total_requests": 17335,
+        "denied_total": 1028,
+        "restricted_total": 1594,
         "personal_restricted_total": 348,
-        "denied_rate": 0.05928192103440314,
-        "restricted_rate": 0.09195335950126991,
-        "personal_rate_in_total": 0.020087739552066497,
-        "personal_rate_in_restricted": 0.2184557438794727,
-        "share_in_org_restricted": 0.2184557438794727
+        "denied_rate": 0.05930199019325065,
+        "restricted_rate": 0.09195269685607153,
+        "personal_rate_in_total": 0.02007499278915489,
+        "personal_rate_in_restricted": 0.21831869510664995,
+        "share_in_org_restricted": 0.21831869510664995
       },
       {
         "org": "IBGE – Fundação Instituto Brasileiro de Geografia e Estatística",
-        "total_requests": 15243,
+        "total_requests": 15248,
         "denied_total": 1056,
         "restricted_total": 2826,
         "personal_restricted_total": 347,
-        "denied_rate": 0.0692777012399134,
-        "restricted_rate": 0.18539657547726826,
-        "personal_rate_in_total": 0.022764547661221546,
+        "denied_rate": 0.06925498426023086,
+        "restricted_rate": 0.1853357817418678,
+        "personal_rate_in_total": 0.022757082896117525,
         "personal_rate_in_restricted": 0.12278839348903044,
         "share_in_org_restricted": 0.12278839348903044
       },
       {
         "org": "INCRA – Instituto Nacional de Colonização e Reforma Agrária",
-        "total_requests": 17926,
+        "total_requests": 17931,
         "denied_total": 1671,
         "restricted_total": 3463,
         "personal_restricted_total": 333,
-        "denied_rate": 0.0932165569563762,
-        "restricted_rate": 0.1931830860203057,
-        "personal_rate_in_total": 0.018576369519134217,
+        "denied_rate": 0.09319056382800736,
+        "restricted_rate": 0.19312921755618762,
+        "personal_rate_in_total": 0.018571189559979922,
         "personal_rate_in_restricted": 0.09615939936471268,
         "share_in_org_restricted": 0.09615939936471268
       },
       {
         "org": "MPS - Ministério da Previdência Social",
-        "total_requests": 2219,
+        "total_requests": 2225,
         "denied_total": 456,
         "restricted_total": 594,
         "personal_restricted_total": 320,
-        "denied_rate": 0.20549797205948625,
-        "restricted_rate": 0.26768814781433076,
-        "personal_rate_in_total": 0.14420910319963948,
+        "denied_rate": 0.2049438202247191,
+        "restricted_rate": 0.2669662921348315,
+        "personal_rate_in_total": 0.14382022471910114,
         "personal_rate_in_restricted": 0.5387205387205387,
         "share_in_org_restricted": 0.5387205387205387
       },
       {
         "org": "CMAR – Comando da Marinha",
-        "total_requests": 6816,
+        "total_requests": 6815,
         "denied_total": 765,
         "restricted_total": 1140,
         "personal_restricted_total": 312,
-        "denied_rate": 0.11223591549295775,
-        "restricted_rate": 0.16725352112676056,
-        "personal_rate_in_total": 0.045774647887323945,
+        "denied_rate": 0.11225238444607484,
+        "restricted_rate": 0.1672780630961115,
+        "personal_rate_in_total": 0.045781364636830524,
         "personal_rate_in_restricted": 0.2736842105263158,
         "share_in_org_restricted": 0.2736842105263158
       }
@@ -7642,12 +7687,12 @@
       2025
     ],
     "current_ytd": {
-      "total_requests": 24280,
-      "denied_total": 1847,
-      "restricted_total": 3009,
-      "personal_restricted_total": 234,
-      "denied_rate": 0.07607084019769357,
-      "restricted_rate": 0.12392915980230643
+      "total_requests": 24823,
+      "denied_total": 1904,
+      "restricted_total": 3131,
+      "personal_restricted_total": 261,
+      "denied_rate": 0.0767030576481489,
+      "restricted_rate": 0.12613302179430366
     },
     "baseline_ytd_avg": {
       "years": [
@@ -7662,40 +7707,40 @@
       "denied_rate_avg": 0.073623669602155,
       "restricted_rate_avg": 0.14034687313524227
     },
-    "denied_rate_delta_pp": 0.24471705955385753,
-    "restricted_rate_delta_pp": -1.6417713332935846,
+    "denied_rate_delta_pp": 0.30793880459939055,
+    "restricted_rate_delta_pp": -1.421385134093861,
     "denied_rate_status": "estável",
     "restricted_rate_status": "melhorando",
     "top_denial_rate_current_year": [
       {
         "org": "BB – Banco do Brasil S.A.",
-        "total_requests": 656,
-        "denied_total": 574,
-        "denied_rate": 0.875
+        "total_requests": 663,
+        "denied_total": 575,
+        "denied_rate": 0.8672699849170438
       },
       {
         "org": "MRE – Ministério das Relações Exteriores",
-        "total_requests": 322,
+        "total_requests": 327,
         "denied_total": 96,
-        "denied_rate": 0.2981366459627329
-      },
-      {
-        "org": "ANEEL – Agência Nacional de Energia Elétrica",
-        "total_requests": 690,
-        "denied_total": 102,
-        "denied_rate": 0.14782608695652175
+        "denied_rate": 0.29357798165137616
       },
       {
         "org": "PF – Polícia Federal",
-        "total_requests": 403,
-        "denied_total": 59,
-        "denied_rate": 0.14640198511166252
+        "total_requests": 413,
+        "denied_total": 64,
+        "denied_rate": 0.1549636803874092
+      },
+      {
+        "org": "ANEEL – Agência Nacional de Energia Elétrica",
+        "total_requests": 713,
+        "denied_total": 107,
+        "denied_rate": 0.15007012622720897
       },
       {
         "org": "MF - Ministério da Fazenda",
-        "total_requests": 527,
-        "denied_total": 68,
-        "denied_rate": 0.12903225806451613
+        "total_requests": 555,
+        "denied_total": 69,
+        "denied_rate": 0.12432432432432433
       }
     ],
     "top_denial_rate_min_requests": 200,
@@ -7703,18 +7748,19 @@
     "theme_worsening": [
       {
         "theme": "Obras, infraestrutura e transportes",
-        "current_restricted_rate": 0.11409395973154363,
+        "current_restricted_rate": 0.11295681063122924,
         "baseline_restricted_rate_avg": 0.09645669291338581,
-        "delta_pp": 1.7637266818157817,
-        "current_total_requests": 298,
+        "delta_pp": 1.6500117717843432,
+        "current_total_requests": 301,
         "current_restricted_total": 34
       }
     ]
   },
   "search_dashboard": {
     "sample_file": "./data/request_samples.jsonl.gz",
-    "sample_count": 622743,
-    "sample_method": "cobertura completa do top 10+PF + amostra hash para os demais órgãos (~6% e até 9000 por ano fora do top)",
+    "sample_count": 128800,
+    "sample_method": "cobertura total dos pedidos negados (sem amostragem)",
+    "decision_scope": "Acesso Negado",
     "top_orgs_covered": [
       "MF - Ministério da Fazenda",
       "INSS – Instituto Nacional do Seguro Social",
@@ -7727,14 +7773,14 @@
       "MS – Ministério da Saúde",
       "INEP – Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira"
     ],
-    "top_org_rows_in_search": 467269,
+    "top_org_rows_in_search": 62420,
     "presets": [
       {
         "id": "dados-pessoais",
         "label": "Negativas por dados pessoais",
         "filters": {
           "theme": "Dados pessoais e vida privada",
-          "decision_group": "restricao",
+          "decision_group": "negado",
           "year": "",
           "org": ""
         }
@@ -7744,7 +7790,7 @@
         "label": "Contratos e licitações",
         "filters": {
           "theme": "Contratos, licitações e fornecedores",
-          "decision_group": "todos",
+          "decision_group": "negado",
           "year": "",
           "org": ""
         }
@@ -7754,7 +7800,7 @@
         "label": "Servidores e concursos",
         "filters": {
           "theme": "Servidores, salários e concursos",
-          "decision_group": "todos",
+          "decision_group": "negado",
           "year": "",
           "org": ""
         }
@@ -7764,7 +7810,7 @@
         "label": "INSS e benefícios",
         "filters": {
           "theme": "Previdência e benefícios sociais",
-          "decision_group": "todos",
+          "decision_group": "negado",
           "year": "",
           "org": ""
         }
@@ -7774,7 +7820,7 @@
         "label": "Gastos públicos negados",
         "filters": {
           "theme": "Gastos públicos e orçamento",
-          "decision_group": "restricao",
+          "decision_group": "negado",
           "year": "",
           "org": ""
         }
@@ -8020,15 +8066,23 @@
       ]
     },
     "sampling_for_search": {
-      "purpose": "Busca rápida no teor dos pedidos dentro do painel.",
-      "method": "Regra híbrida: cobertura completa dos pedidos dos órgãos do top 10+PF e, para os demais órgãos, amostragem por hash determinístico do IdPedido (~6.0% por ano, teto de 9000 pedidos/ano fora do top).",
-      "request_link_rule": "Cada pedido da amostra recebe URL pública no formato https://buscalai.cgu.gov.br/busca/{IdPedido}. Nesta fonte não há tabela PedidosLinkArquivo para anexos.",
-      "hash_rule": {
-        "modulus": 1000,
-        "keep_if_mod_lt": 60
+      "purpose": "Busca textual completa de pedidos negados no painel.",
+      "method": "Cobertura total de pedidos com decisão canônica 'Acesso Negado' em todos os órgãos e anos da série.",
+      "decision_scope": "Somente pedidos com decisão canônica 'Acesso Negado'.",
+      "text_fields_stored": {
+        "request": [
+          "AssuntoPedido",
+          "ResumoSolicitacao (quando disponível)",
+          "DetalhamentoSolicitacao (quando disponível)"
+        ],
+        "response": [
+          "Resposta (quando disponível)",
+          "DetalhamentoDecisao (quando disponível)"
+        ]
       },
-      "sample_count": 622743,
-      "top_org_rows_in_search": 467269,
+      "request_link_rule": "Cada pedido negado recebe URL de detalhe no formato https://api-laibr.cgu.gov.br/buscar-pedidos/{IdPedido}, com opção de portal em https://buscalai.cgu.gov.br/busca/{IdPedido}. Nesta fonte não há tabela PedidosLinkArquivo para anexos.",
+      "sample_count": 128800,
+      "top_org_rows_in_search": 62420,
       "top_orgs_covered": [
         "MF - Ministério da Fazenda",
         "INSS – Instituto Nacional do Seguro Social",

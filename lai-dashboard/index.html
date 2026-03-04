@@ -777,6 +777,46 @@
       line-height: 1.4;
     }
 
+    .search-panel .table-wrap table {
+      table-layout: fixed;
+    }
+
+    .search-panel .table-wrap td {
+      vertical-align: top;
+    }
+
+    .search-panel .table-wrap details {
+      margin-top: 0.24rem;
+    }
+
+    .search-panel .table-wrap details summary {
+      cursor: pointer;
+      color: #4f4a44;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      list-style: none;
+    }
+
+    .search-panel .table-wrap details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .search-panel .table-wrap details summary::before {
+      content: "▸ ";
+      color: #6e675e;
+    }
+
+    .search-panel .table-wrap details[open] summary::before {
+      content: "▾ ";
+    }
+
+    .search-panel .table-wrap details p {
+      margin: 0.28rem 0 0;
+      color: #4a443d;
+      line-height: 1.45;
+      white-space: normal;
+    }
+
     .ai-row {
       display: grid;
       gap: 0.58rem;
@@ -1260,7 +1300,7 @@
     </section>
 
     <section class="card search-panel">
-      <h2>Pesquisar dentro dos pedidos (filtros prontos)</h2>
+      <h2>Pesquisar dentro dos pedidos negados (filtros prontos)</h2>
       <div class="search-controls">
         <div class="filter-row">
           <select id="search-year"></select>
@@ -1274,18 +1314,17 @@
         <p class="search-status" id="search-status">Carregando base para busca...</p>
       </div>
       <article class="table-card">
-        <h3>Resultados da busca no teor dos pedidos</h3>
+        <h3>Resultados da busca em pedidos negados</h3>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Ano</th>
                 <th>Órgão</th>
-                <th>Decisão</th>
-                <th>Tema</th>
-                <th>Assunto</th>
-                <th>Link do pedido</th>
-                <th>Trecho do pedido</th>
+                <th>Motivo e tema</th>
+                <th>Links</th>
+                <th>Texto do pedido</th>
+                <th>Texto da resposta</th>
               </tr>
             </thead>
             <tbody id="table-search-results"></tbody>

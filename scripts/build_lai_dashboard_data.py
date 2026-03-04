@@ -36,6 +36,7 @@ USER_AGENT = (
 DOWNLOAD_TIMEOUT = 300
 START_YEAR_DEFAULT = 2015
 MIN_REQUESTS_TOP_DENIAL_RATE_CURRENT_YEAR = 200
+REQUEST_INDEX_SCHEMA_VERSION = 2
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 DASH_DIR = ROOT_DIR / "lai-dashboard"
@@ -262,7 +263,7 @@ SEARCH_PRESETS = [
         "label": "Negativas por dados pessoais",
         "filters": {
             "theme": "Dados pessoais e vida privada",
-            "decision_group": "restricao",
+            "decision_group": "negado",
             "year": "",
             "org": "",
         },
@@ -272,7 +273,7 @@ SEARCH_PRESETS = [
         "label": "Contratos e licitações",
         "filters": {
             "theme": "Contratos, licitações e fornecedores",
-            "decision_group": "todos",
+            "decision_group": "negado",
             "year": "",
             "org": "",
         },
@@ -282,7 +283,7 @@ SEARCH_PRESETS = [
         "label": "Servidores e concursos",
         "filters": {
             "theme": "Servidores, salários e concursos",
-            "decision_group": "todos",
+            "decision_group": "negado",
             "year": "",
             "org": "",
         },
@@ -292,7 +293,7 @@ SEARCH_PRESETS = [
         "label": "INSS e benefícios",
         "filters": {
             "theme": "Previdência e benefícios sociais",
-            "decision_group": "todos",
+            "decision_group": "negado",
             "year": "",
             "org": "",
         },
@@ -302,16 +303,12 @@ SEARCH_PRESETS = [
         "label": "Gastos públicos negados",
         "filters": {
             "theme": "Gastos públicos e orçamento",
-            "decision_group": "restricao",
+            "decision_group": "negado",
             "year": "",
             "org": "",
         },
     },
 ]
-
-SAMPLE_HASH_MOD = 1000
-SAMPLE_HASH_KEEP = 60
-MAX_SAMPLE_ROWS_PER_YEAR = 9000
 
 REASON_NORMALIZATION = {
     "dados pessoais": "Dados pessoais",
@@ -379,6 +376,15 @@ def truncate_text(text, limit=280):
     if len(cleaned) <= limit:
         return cleaned
     return cleaned[: limit - 3].rstrip() + "..."
+
+
+def combine_text_fields(*values):
+    parts = []
+    for value in values:
+        text = normalize_text(value)
+        if text:
+            parts.append(text)
+    return " ".join(parts)
 
 
 def build_buscalai_request_link(id_pedido):
@@ -553,20 +559,35 @@ def build_sample_rows(sample_df):
         id_pedido = normalize_text(rec.get("id_pedido", ""))
         request_attachment_link = normalize_text(rec.get("request_link", ""))
         request_buscalai_link = build_buscalai_request_link(id_pedido)
-        request_public_link = build_api_request_link(id_pedido) or request_buscalai_link
+        request_api_link = build_api_request_link(id_pedido)
+        request_public_link = request_api_link or request_buscalai_link
+        request_subject = normalize_text(rec.get("subject", "Assunto não informado"))
+        request_summary = normalize_text(rec.get("request_summary", ""))
+        request_detail = normalize_text(rec.get("request_detail", ""))
+        request_text = combine_text_fields(request_subject, request_summary, request_detail)
+        response_text = normalize_text(rec.get("response_text", ""))
+        response_detail = normalize_text(rec.get("response_detail", ""))
+        response_joined = combine_text_fields(response_text, response_detail)
         rows.append(
             {
                 "id_pedido": id_pedido,
                 "year": int(rec.get("year", 0) or 0),
                 "org": rec.get("org", ""),
                 "decision": rec.get("decision", ""),
-                "decision_group": rec.get("decision_group", "outros"),
+                "decision_group": rec.get("decision_group", "negado"),
                 "restricted": bool(rec.get("restricted", False)),
                 "reason": rec.get("reason", ""),
-                "subject": rec.get("subject", "Assunto não informado"),
+                "reason_raw": normalize_text(rec.get("reason_raw", "")),
+                "subject": request_subject or "Assunto não informado",
                 "theme": rec.get("theme", DEFAULT_THEME),
-                "text_excerpt": truncate_text(rec.get("request_text", ""), limit=360),
+                "request_summary": request_summary,
+                "request_detail": request_detail,
+                "request_text": request_text,
+                "text_excerpt": truncate_text(request_text, limit=420),
+                "response_text": response_joined,
+                "response_excerpt": truncate_text(response_joined, limit=420),
                 "request_public_link": request_public_link,
+                "request_api_link": request_api_link,
                 "request_buscalai_link": request_buscalai_link,
                 "request_attachment_link": request_attachment_link,
                 "request_link": request_public_link or request_attachment_link or request_buscalai_link,
@@ -629,10 +650,9 @@ def load_request_links(zip_path):
     return {pid: payload["url"] for pid, payload in links.items()}
 
 
-def process_year_zip(year, zip_path, source_url, priority_orgs=None):
+def process_year_zip(year, zip_path, source_url):
     pedidos_member = find_pedidos_member(zip_path)
     request_links = load_request_links(zip_path)
-    priority_orgs = set(priority_orgs or [])
 
     wanted_cols = [
         "IdPedido",
@@ -641,8 +661,10 @@ def process_year_zip(year, zip_path, source_url, priority_orgs=None):
         "AssuntoPedido",
         "ResumoSolicitacao",
         "DetalhamentoSolicitacao",
+        "Resposta",
         "Decisao",
         "EspecificacaoDecisao",
+        "DetalhamentoDecisao",
         "MotivoNegativaAcesso",
     ]
 
@@ -689,7 +711,6 @@ def process_year_zip(year, zip_path, source_url, priority_orgs=None):
     org_theme_decision = Counter()
 
     request_samples = []
-    sampled_hash_count = 0
 
     with zipfile.ZipFile(zip_path) as zf:
         with zf.open(pedidos_member) as handle:
@@ -745,6 +766,18 @@ def process_year_zip(year, zip_path, source_url, priority_orgs=None):
                     motivo_fallback = pd.Series([""] * len(chunk), index=chunk.index, dtype="object")
                 reason_raw = reason_source.where(reason_source != "", motivo_fallback)
                 reason = reason_raw.map(canonicalize_reason)
+
+                if "Resposta" in chunk.columns:
+                    resposta = chunk["Resposta"].fillna("").astype(str).map(normalize_text)
+                else:
+                    resposta = pd.Series([""] * len(chunk), index=chunk.index, dtype="object")
+
+                if "DetalhamentoDecisao" in chunk.columns:
+                    detalhamento_decisao = (
+                        chunk["DetalhamentoDecisao"].fillna("").astype(str).map(normalize_text)
+                    )
+                else:
+                    detalhamento_decisao = pd.Series([""] * len(chunk), index=chunk.index, dtype="object")
 
                 data_registro = chunk["DataRegistro"].fillna("").astype(str).map(normalize_text)
                 data_registro_dt = pd.to_datetime(data_registro, dayfirst=True, errors="coerce")
@@ -832,48 +865,29 @@ def process_year_zip(year, zip_path, source_url, priority_orgs=None):
                     for (org_name, theme_name, decision_name), count in triples.items():
                         org_theme_decision[f"{org_name}|||{theme_name}|||{decision_name}"] += int(count)
 
-                hash_values = pd.util.hash_pandas_object(
-                    id_pedido.where(id_pedido != "", request_text), index=False
-                ).astype("uint64")
-                hash_mask = (hash_values % SAMPLE_HASH_MOD) < SAMPLE_HASH_KEEP
-                text_mask = request_text.ne("")
-                priority_mask = org.isin(priority_orgs) & text_mask
-
-                hash_mask = hash_mask & text_mask & (~priority_mask)
-
                 base_df = pd.DataFrame(
                     {
                         "id_pedido": id_pedido,
                         "year": year,
                         "org": org,
                         "decision": decision,
+                        "decision_group": pd.Series(["negado"] * len(chunk), index=chunk.index),
                         "reason": reason,
+                        "reason_raw": reason_raw,
                         "subject": subject,
                         "theme": primary_theme,
+                        "request_summary": resumo,
+                        "request_detail": detalhamento,
                         "request_text": request_text,
+                        "response_text": resposta,
+                        "response_detail": detalhamento_decisao,
                         "request_link": id_pedido.map(request_links).fillna(""),
                         "restricted": restricted_mask,
                     }
                 )
 
-                priority_df = base_df[priority_mask]
-
-                hash_remaining = max(0, MAX_SAMPLE_ROWS_PER_YEAR - sampled_hash_count)
-                hash_df = base_df[hash_mask]
-                if hash_remaining <= 0:
-                    hash_df = hash_df.iloc[0:0]
-                elif len(hash_df) > hash_remaining:
-                    hash_df = hash_df.iloc[:hash_remaining]
-
-                selected_df = pd.concat([priority_df, hash_df], ignore_index=True)
-                sampled_hash_count += len(hash_df)
-
+                selected_df = base_df[denied_mask]
                 if not selected_df.empty:
-                    selected_df["decision_group"] = selected_df["decision"].map(
-                        lambda d: "restricao"
-                        if d in DECISION_RESTRICTED
-                        else ("concedido" if d == "Acesso Concedido" else "outros")
-                    )
                     rows = build_sample_rows(selected_df)
                     request_samples.extend(rows)
 
@@ -914,14 +928,21 @@ def process_year_zip(year, zip_path, source_url, priority_orgs=None):
         "org_theme_total": dict(org_theme_total),
         "org_theme_restricted": dict(org_theme_restricted),
         "org_theme_decision": dict(org_theme_decision),
+        "request_index_schema_version": REQUEST_INDEX_SCHEMA_VERSION,
         "request_samples": request_samples,
     }
 
 
-def maybe_process_year(year, force=False, priority_orgs=None):
+def maybe_process_year(year, force=False):
     cache = load_year_cache(year)
     current_year = dt.date.today().year
-    should_refresh = force or cache is None or year >= current_year
+    cache_version = int((cache or {}).get("request_index_schema_version", 0)) if cache else 0
+    should_refresh = (
+        force
+        or cache is None
+        or year >= current_year
+        or cache_version != REQUEST_INDEX_SCHEMA_VERSION
+    )
 
     if not should_refresh and cache is not None:
         print(f"[cache] {year}: usando cache anual")
@@ -946,7 +967,6 @@ def maybe_process_year(year, force=False, priority_orgs=None):
             year=year,
             zip_path=zip_path,
             source_url=url,
-            priority_orgs=priority_orgs,
         )
         save_year_cache(payload)
         return payload, True
@@ -1025,18 +1045,6 @@ def month_label_pt(month_num):
         12: "dezembro",
     }
     return labels.get(int(month_num), str(month_num))
-
-
-def load_priority_orgs_from_previous_report():
-    if not REPORT_FILE.exists():
-        return set()
-    try:
-        report = json.loads(REPORT_FILE.read_text(encoding="utf-8"))
-    except Exception:
-        return set()
-    top = report.get("org_top10_plus_pf", []) or report.get("org_top5_plus_pf", [])
-    names = {normalize_text(item.get("org", "")) for item in top if normalize_text(item.get("org", ""))}
-    return names
 
 
 def build_report(year_payloads):
@@ -1621,13 +1629,13 @@ def build_report(year_payloads):
     if "Filtrado" in DOWNLOAD_URL_TEMPLATE:
         source_files.append("PedidosLinkArquivo_csv_YYYY.csv (link do pedido/anexo no BuscaLAI)")
     request_link_rule = (
-        "Cada pedido da amostra recebe URL de detalhe no formato "
+        "Cada pedido negado recebe URL de detalhe no formato "
         "https://api-laibr.cgu.gov.br/buscar-pedidos/{IdPedido}; também guarda "
         "https://buscalai.cgu.gov.br/busca/{IdPedido} como alternativa no portal. "
         "Quando houver registro no arquivo PedidosLinkArquivo, mantém URL de anexo."
         if "Filtrado" in DOWNLOAD_URL_TEMPLATE
         else (
-            "Cada pedido da amostra recebe URL de detalhe no formato "
+            "Cada pedido negado recebe URL de detalhe no formato "
             "https://api-laibr.cgu.gov.br/buscar-pedidos/{IdPedido}, com opção de portal em "
             "https://buscalai.cgu.gov.br/busca/{IdPedido}. "
             "Nesta fonte não há tabela PedidosLinkArquivo para anexos."
@@ -1685,18 +1693,24 @@ def build_report(year_payloads):
             ],
         },
         "sampling_for_search": {
-            "purpose": "Busca rápida no teor dos pedidos dentro do painel.",
+            "purpose": "Busca textual completa de pedidos negados no painel.",
             "method": (
-                "Regra híbrida: cobertura completa dos pedidos dos órgãos do top 10+PF "
-                "e, para os demais órgãos, amostragem por hash determinístico do IdPedido "
-                f"(~{SAMPLE_HASH_KEEP / SAMPLE_HASH_MOD:.1%} por ano, "
-                f"teto de {MAX_SAMPLE_ROWS_PER_YEAR} pedidos/ano fora do top)."
+                "Cobertura total de pedidos com decisão canônica 'Acesso Negado' "
+                "em todos os órgãos e anos da série."
             ),
-            "request_link_rule": request_link_rule,
-            "hash_rule": {
-                "modulus": SAMPLE_HASH_MOD,
-                "keep_if_mod_lt": SAMPLE_HASH_KEEP,
+            "decision_scope": "Somente pedidos com decisão canônica 'Acesso Negado'.",
+            "text_fields_stored": {
+                "request": [
+                    "AssuntoPedido",
+                    "ResumoSolicitacao (quando disponível)",
+                    "DetalhamentoSolicitacao (quando disponível)",
+                ],
+                "response": [
+                    "Resposta (quando disponível)",
+                    "DetalhamentoDecisao (quando disponível)",
+                ],
             },
+            "request_link_rule": request_link_rule,
             "sample_count": sample_count,
             "top_org_rows_in_search": top_org_rows_in_search,
             "top_orgs_covered": top_org_names,
@@ -1794,9 +1808,9 @@ def build_report(year_payloads):
             "sample_file": sample_file_rel,
             "sample_count": sample_count,
             "sample_method": (
-                "cobertura completa do top 10+PF + amostra hash para os demais órgãos "
-                f"(~6% e até {MAX_SAMPLE_ROWS_PER_YEAR} por ano fora do top)"
+                "cobertura total dos pedidos negados (sem amostragem)"
             ),
+            "decision_scope": "Acesso Negado",
             "top_orgs_covered": top_org_names,
             "top_org_rows_in_search": top_org_rows_in_search,
             "presets": SEARCH_PRESETS,
@@ -1821,12 +1835,9 @@ def run(force=False, start_year=START_YEAR_DEFAULT, end_year=None):
 
     current_year = dt.date.today().year
     final_end_year = end_year if end_year is not None else current_year
-    priority_orgs = load_priority_orgs_from_previous_report()
 
     years = list(range(int(start_year), int(final_end_year) + 1))
     print(f"[info] anos avaliados: {years[0]}-{years[-1]}")
-    if priority_orgs:
-        print(f"[info] cobertura completa na busca para top órgãos (base anterior): {len(priority_orgs)}")
 
     year_payloads = []
     refreshed = 0
@@ -1835,7 +1846,6 @@ def run(force=False, start_year=START_YEAR_DEFAULT, end_year=None):
         payload, was_refreshed = maybe_process_year(
             year,
             force=force,
-            priority_orgs=priority_orgs,
         )
         if payload is None:
             continue
@@ -1859,7 +1869,7 @@ def run(force=False, start_year=START_YEAR_DEFAULT, end_year=None):
 
     print(f"[ok] relatório salvo em: {REPORT_FILE}")
     print(f"[ok] metadata salva em: {METADATA_FILE}")
-    print(f"[ok] amostra de pedidos salva em: {SAMPLES_FILE} ({len(samples)} linhas)")
+    print(f"[ok] base de pedidos negados salva em: {SAMPLES_FILE} ({len(samples)} linhas)")
     print(f"[ok] anos processados/reutilizados: {len(year_payloads)}")
     print(f"[ok] anos atualizados nesta execução: {refreshed}")
 

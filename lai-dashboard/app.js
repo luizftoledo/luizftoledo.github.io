@@ -137,6 +137,7 @@
 
   function isSearchRowUseful(row) {
     if (!row) return false;
+    if (normalizeForSearch(row.decision_group || '') === 'negado') return true;
     const text = (row.text_excerpt || '').toString().trim();
     const hasText = text.length >= 16 && !isPlaceholderText(text);
     const hasSubject = !isPlaceholderText(row.subject || '');
@@ -209,7 +210,7 @@
     searchTheme.innerHTML = '<option value="">Tema detectado: todos</option>';
     renderSearchDecisionOptions();
     presetRow.innerHTML = '<span class="search-status">Filtros prontos ficam ativos depois de carregar a base textual.</span>';
-    tableSearchResults.innerHTML = '<tr><td colspan="7">Modo leve no mobile: toque em <strong>Carregar pedidos</strong> para abrir a busca detalhada.</td></tr>';
+    tableSearchResults.innerHTML = '<tr><td colspan="6">Modo leve no mobile: toque em <strong>Carregar pedidos</strong> para abrir a busca detalhada.</td></tr>';
     searchStatus.textContent = 'Modo leve no mobile ativo. A tabela de pedidos será carregada sob demanda para evitar travamentos.';
     searchStatus.classList.remove('error');
     setSearchControlsDisabled(true);
@@ -226,7 +227,7 @@
     searchBtn.disabled = true;
     searchBtn.textContent = 'Carregando...';
     searchStatus.classList.remove('error');
-    searchStatus.textContent = 'Carregando amostra textual de pedidos...';
+    searchStatus.textContent = 'Carregando base textual de pedidos negados...';
     try {
       await loadRequestSamples(sourceId);
       if (!samplesLoadedBySource[sourceId]) return false;
@@ -254,10 +255,10 @@
 
   function describeSource(sourceId, sourceLabel) {
     if (sourceId === 'ampla') {
-      return `${sourceLabel || 'Base ampla'}: inclui todos os pedidos e recursos do Fala.BR (escopo mais completo), porém sem detalhamento textual completo do pedido em todos os casos.`;
+      return `${sourceLabel || 'Base ampla'}: inclui todos os pedidos e recursos do Fala.BR (escopo mais completo); na busca textual desta página, o recorte usa pedidos com decisão “Acesso Negado”.`;
     }
     if (sourceId === 'publica') {
-      return `${sourceLabel || 'Base pública'}: inclui os pedidos marcados como públicos no BuscaLAI; é menor, mas permite leitura mais rica do conteúdo do pedido e dos anexos.`;
+      return `${sourceLabel || 'Base pública'}: inclui os pedidos marcados como públicos no BuscaLAI e permite leitura mais rica de texto do pedido, resposta e anexos quando disponíveis.`;
     }
     return sourceLabel || 'Fonte de dados da análise.';
   }
@@ -331,14 +332,15 @@
     }
   }
 
-  function resolveRequestLinks(idPedido, requestPublicLink, requestAttachmentLink, requestFallbackLink) {
+  function resolveRequestLinks(idPedido, requestPublicLink, requestAttachmentLink, requestFallbackLink, requestBuscaLink = '') {
     const id = (idPedido || '').toString().trim();
     const publicRaw = (requestPublicLink || '').toString().trim();
     const attachmentRaw = (requestAttachmentLink || '').toString().trim();
     const fallbackRaw = (requestFallbackLink || '').toString().trim();
+    const buscaRaw = (requestBuscaLink || '').toString().trim();
 
     let apiLink = buildApiRequestLink(id);
-    let buscaLink = '';
+    let buscaLink = buildBuscaRequestLink(id);
     let externalPublicLink = '';
     const acceptAttachmentLink = (url) => {
       if (!isHttpUrl(url)) return '';
@@ -365,11 +367,15 @@
     if (fallbackRaw) {
       if (!apiLink && isApiRequestLink(fallbackRaw)) {
         apiLink = fallbackRaw;
-      } else if (!buscaLink && isBuscaRequestLink(fallbackRaw)) {
+      } else if (isBuscaRequestLink(fallbackRaw)) {
         buscaLink = fallbackRaw;
       } else if (!externalPublicLink && isHttpUrl(fallbackRaw) && !/buscalai\.cgu\.gov\.br|api-laibr\.cgu\.gov\.br/i.test(fallbackRaw)) {
         externalPublicLink = fallbackRaw;
       }
+    }
+
+    if (buscaRaw && isBuscaRequestLink(buscaRaw)) {
+      buscaLink = buscaRaw;
     }
 
     const publicLink = apiLink || buscaLink || externalPublicLink;
@@ -601,12 +607,11 @@
       </details>
 
       <details class="methodology-details">
-        <summary>Amostragem e links na tabela de pedidos</summary>
+        <summary>Base da tabela de pedidos e links</summary>
         <ul>
-          <li><strong>Amostra para busca:</strong> ${samplingMethod ? esc(samplingMethod) : '--'}.</li>
-          <li><strong>Volume da amostra:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).sample_count || 0))}</strong> pedidos.</li>
-          <li><strong>Cobertura completa no top 10:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).top_org_rows_in_search || 0))}</strong> pedidos.</li>
-          <li><strong>Links de pedido:</strong> o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); quando existir, também aparece link de <code>Anexo</code>. Em parte dos pedidos antigos, a página pública pode não estar mais disponível.</li>
+          <li><strong>Escopo da busca textual:</strong> ${samplingMethod ? esc(samplingMethod) : '--'}.</li>
+          <li><strong>Volume carregado:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).sample_count || 0))}</strong> pedidos negados.</li>
+          <li><strong>Links de pedido:</strong> a tabela tenta mostrar <code>Original</code> (API), <code>BuscaLAI</code> e <code>Anexo</code> quando disponíveis. Em parte dos pedidos antigos, o link público pode ter sido removido da origem.</li>
         </ul>
       </details>
 
@@ -1239,6 +1244,7 @@
               example.request_public_link || '',
               example.request_attachment_link || '',
               example.request_link || '',
+              example.request_buscalai_link || '',
             );
           const requestPublicLink = linkPack.request_public_link || '';
           const requestAttachmentLink = linkPack.request_attachment_link || '';
@@ -1284,11 +1290,10 @@
 
   function renderSearchDecisionOptions() {
     searchDecisionGroup.innerHTML = [
-      '<option value="todos">Decisão: todas</option>',
-      '<option value="restricao">Decisão: com restrição (negado + parcial)</option>',
-      '<option value="concedido">Decisão: acesso concedido</option>',
-      '<option value="outros">Decisão: outros resultados</option>',
+      '<option value="negado">Decisão: apenas acesso negado</option>',
     ].join('');
+    searchDecisionGroup.value = 'negado';
+    searchDecisionGroup.disabled = true;
   }
 
   function renderSearchFilters() {
@@ -1311,6 +1316,7 @@
       btn.addEventListener('click', () => applyPreset(btn.getAttribute('data-preset-id')));
     });
     setSearchControlsDisabled(false);
+    searchDecisionGroup.disabled = true;
     searchBtn.textContent = 'Buscar';
   }
 
@@ -1322,22 +1328,30 @@
     const filters = preset.filters || {};
     searchYear.value = filters.year || '';
     searchOrg.value = filters.org || '';
-    searchDecisionGroup.value = filters.decision_group || 'todos';
+    searchDecisionGroup.value = filters.decision_group || 'negado';
     searchTheme.value = filters.theme || '';
     runRequestSearch();
   }
 
+  function renderExpandableText(fullText, fallbackText = '', limit = 260) {
+    const full = (fullText || fallbackText || '').toString().replace(/\s+/g, ' ').trim();
+    if (!full) return '--';
+    const short = compactText(full, limit);
+    if (short === full) return esc(full);
+    return `<details><summary>${esc(short)}</summary><p>${esc(full)}</p></details>`;
+  }
+
   function runRequestSearch() {
     if (!samplesLoadedBySource[activeSourceId]) {
-      tableSearchResults.innerHTML = '<tr><td colspan="7">A busca detalhada ainda não foi carregada neste aparelho. Toque em <strong>Carregar pedidos</strong>.</td></tr>';
-      searchStatus.textContent = 'Modo leve no mobile: a base textual dos pedidos é carregada sob demanda.';
+      tableSearchResults.innerHTML = '<tr><td colspan="6">A base de pedidos negados ainda não foi carregada neste aparelho. Toque em <strong>Carregar pedidos</strong>.</td></tr>';
+      searchStatus.textContent = 'Modo leve no mobile: a base textual é carregada sob demanda.';
       searchStatus.classList.remove('error');
       return;
     }
 
     const year = searchYear.value;
     const org = searchOrg.value;
-    const decisionGroup = searchDecisionGroup.value || 'todos';
+    const decisionGroup = searchDecisionGroup.value || 'negado';
     const theme = searchTheme.value;
 
     const queryRaw = searchQuery.value.trim();
@@ -1377,22 +1391,33 @@
         <tr>
           <td>${row.year || '--'}</td>
           <td>${esc(row.org || '--')}</td>
-          <td>${esc(row.decision || '--')}</td>
-          <td>${esc(row.theme || '--')}</td>
-          <td>${esc(row.subject || '--')}</td>
           <td>${[
-            row.request_public_link ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Pedido</a>` : '',
-            (row.request_attachment_link && row.request_attachment_link !== row.request_public_link)
+            row.reason ? `<span class="key-pill">${esc(row.reason)}</span>` : '',
+            row.theme ? `<span class="mini-tag">${esc(row.theme)}</span>` : '',
+          ].filter(Boolean).join(' ') || '--'}</td>
+          <td>${[
+            row.request_public_link ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Original</a>` : '',
+            (row.request_buscalai_link && row.request_buscalai_link !== row.request_public_link)
+              ? `<a href="${esc(row.request_buscalai_link)}" target="_blank" rel="noopener noreferrer">BuscaLAI</a>`
+              : '',
+            (row.request_api_link && row.request_api_link !== row.request_public_link)
+              ? `<a href="${esc(row.request_api_link)}" target="_blank" rel="noopener noreferrer">API</a>`
+              : '',
+            (row.request_attachment_link && row.request_attachment_link !== row.request_public_link && row.request_attachment_link !== row.request_buscalai_link && row.request_attachment_link !== row.request_api_link)
               ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>`
               : '',
           ].filter(Boolean).join(' · ') || '--'}</td>
-          <td>${esc(row.text_excerpt || '--')}</td>
+          <td>
+            <div><strong>${esc(row.subject || '--')}</strong></div>
+            ${renderExpandableText(row.request_text || row.text_excerpt || '', row.text_excerpt || '')}
+          </td>
+          <td>${renderExpandableText(row.response_text || row.response_excerpt || '', row.response_excerpt || '')}</td>
         </tr>
       `).join('')
-      : '<tr><td colspan="7">Nenhum resultado para esse filtro.</td></tr>';
+      : '<tr><td colspan="6">Nenhum resultado para esse filtro.</td></tr>';
 
     const notice = sampleLoadNotice ? ` ${esc(sampleLoadNotice)}` : '';
-    searchStatus.innerHTML = `Busca em <strong>${nFmt.format(requestSamples.length)}</strong> pedidos carregados desta fonte. Resultado atual: <strong>${nFmt.format(filtered.length)}</strong> registros${filtered.length > shown.length ? ` (mostrando ${nFmt.format(shown.length)}).` : '.'}${notice}`;
+    searchStatus.innerHTML = `Busca em <strong>${nFmt.format(requestSamples.length)}</strong> pedidos negados carregados desta fonte. Resultado atual: <strong>${nFmt.format(filtered.length)}</strong> registros${filtered.length > shown.length ? ` (mostrando ${nFmt.format(shown.length)}).` : '.'}${notice}`;
   }
 
   function saveGeminiKey() {
@@ -1478,7 +1503,7 @@
       aiOrg: aiOrgFilter.value || '',
       searchYear: searchYear.value || '',
       searchOrg: searchOrg.value || '',
-      searchDecision: searchDecisionGroup.value || 'todos',
+      searchDecision: searchDecisionGroup.value || 'negado',
       searchTheme: searchTheme.value || '',
       searchQuery: normalizeForSearch(searchQuery.value || ''),
       updated: (metadata || {}).updated_at || reportData.generated_at || '',
@@ -1522,11 +1547,11 @@
       filtros_busca_atual: {
         year: searchYear.value || '',
         org: searchOrg.value || '',
-        decision_group: searchDecisionGroup.value || 'todos',
+        decision_group: searchDecisionGroup.value || 'negado',
         theme: searchTheme.value || '',
         query: searchQuery.value.trim() || '',
       },
-      resultados_busca_amostra: lastSearchResults.slice(0, 40).map((row) => ({
+      resultados_busca: lastSearchResults.slice(0, 40).map((row) => ({
         year: row.year,
         org: row.org,
         decision: row.decision,
@@ -1534,8 +1559,9 @@
         subject: row.subject,
         request_link: row.request_link,
         text_excerpt: row.text_excerpt,
+        response_excerpt: row.response_excerpt || '',
       })),
-      aviso_amostra: (reportData.search_dashboard || {}).sample_method || '',
+      aviso_base: (reportData.search_dashboard || {}).sample_method || '',
     };
   }
 
@@ -1696,13 +1722,19 @@
             row.request_public_link || '',
             row.request_attachment_link || row.request_link || '',
             row.request_link || '',
+            row.request_buscalai_link || '',
           );
+          const reqText = (row.request_text || row.text_excerpt || '');
+          const respText = (row.response_text || row.response_excerpt || '');
           return {
             ...row,
             ...linkPack,
             id_pedido: idPedido,
             year: Number(row.year || 0),
-            search_blob: normalizeForSearch(`${row.org || ''} ${row.subject || ''} ${row.text_excerpt || ''} ${row.theme || ''} ${row.decision || ''} ${row.reason || ''}`),
+            decision_group: (row.decision_group || (normalizeForSearch(row.decision || '') === 'acesso negado' ? 'negado' : 'outros')),
+            request_text: reqText,
+            response_text: respText,
+            search_blob: normalizeForSearch(`${row.org || ''} ${row.subject || ''} ${reqText} ${row.text_excerpt || ''} ${respText} ${row.response_excerpt || ''} ${row.theme || ''} ${row.decision || ''} ${row.reason || ''}`),
           };
         })();
         if (!isSearchRowUseful(normalizedRow)) continue;
@@ -1721,7 +1753,7 @@
       requestSamples = [];
       samplesLoadedBySource[sourceId] = false;
       sampleLoadNotice = '';
-      searchStatus.textContent = `Não foi possível carregar a amostra de pedidos desta fonte: ${error.message}`;
+      searchStatus.textContent = `Não foi possível carregar a base de pedidos desta fonte: ${error.message}`;
       searchStatus.classList.add('error');
     }
   }
