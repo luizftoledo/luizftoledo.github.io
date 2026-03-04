@@ -8,6 +8,23 @@
     return { smallScreen, lowRam, saveData, deviceMemory };
   })();
   const LIGHT_MODE_RECORDS_THRESHOLD = 5000;
+  const WORD_MIN_LEN = 3;
+  const PT_STOPWORDS = new Set([
+    'a', 'ao', 'aos', 'aquela', 'aquelas', 'aquele', 'aqueles', 'aquilo', 'as', 'ate', 'com', 'como',
+    'contra', 'da', 'das', 'de', 'dela', 'delas', 'dele', 'deles', 'depois', 'do', 'dos', 'e', 'ela',
+    'elas', 'ele', 'eles', 'em', 'entre', 'era', 'eram', 'essa', 'essas', 'esse', 'esses', 'esta',
+    'estao', 'estar', 'estas', 'estava', 'estavam', 'este', 'estes', 'eu', 'foi', 'foram', 'ha', 'isso',
+    'isto', 'ja', 'la', 'lhe', 'lhes', 'mais', 'mas', 'me', 'mesmo', 'mesmos', 'meu', 'meus', 'minha',
+    'minhas', 'muito', 'na', 'nao', 'nas', 'nem', 'no', 'nos', 'nossa', 'nossas', 'nosso', 'nossos',
+    'num', 'numa', 'o', 'os', 'ou', 'para', 'pela', 'pelas', 'pelo', 'pelos', 'por', 'porque', 'quando',
+    'que', 'quem', 'se', 'sem', 'sera', 'serao', 'seu', 'seus', 'sim', 'sob', 'sobre', 'sua', 'suas',
+    'tambem', 'te', 'tem', 'tendo', 'tenho', 'ter', 'teve', 'ti', 'tu', 'tua', 'tuas', 'um', 'uma',
+    'umas', 'uns', 'vos', 'voces', 'ainda', 'cada', 'durante', 'entao', 'essa', 'esse', 'fazer', 'fez',
+    'for', 'fora', 'foram', 'fosse', 'fui', 'havia', 'isso', 'nesse', 'nessa', 'neste', 'nesta', 'nosso',
+    'nunca', 'onde', 'outra', 'outro', 'outros', 'outras', 'pode', 'podem', 'pois', 'qual', 'quais',
+    'qualquer', 'quase', 'seja', 'sejam', 'sendo', 'ser', 'seria', 'seriam', 'sido', 'sobre', 'somente',
+    'tanto', 'toda', 'todas', 'todo', 'todos', 'trata', 'vamos', 'vai', 'vem', 'vindo'
+  ]);
 
   const els = {
     statusUpdated: document.getElementById('status-updated'),
@@ -35,6 +52,10 @@
     chartPresidents: document.getElementById('chart-presidents'),
     chartMandates: document.getElementById('chart-mandates'),
     methodologyNote: document.getElementById('methodology-note'),
+    wordcloudRange: document.getElementById('wordcloud-range'),
+    wordcloudContext: document.getElementById('wordcloud-context'),
+    wordcloudCloud: document.getElementById('wordcloud-cloud'),
+    wordcloudTableBody: document.getElementById('wordcloud-table-body'),
   };
 
   const state = {
@@ -61,6 +82,60 @@
     return rec._hasText;
   }
 
+  function normalizeSearchText(value) {
+    return foldText(value)
+      .replace(/[^a-z0-9]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function normalizeQueryTerm(raw) {
+    const normalized = normalizeSearchText(raw || '');
+    const words = normalized ? normalized.split(' ').filter(Boolean) : [];
+    return {
+      normalized,
+      words,
+      wordsCount: words.length,
+      isPhrase: words.length > 1,
+    };
+  }
+
+  function escapeRegExp(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function buildTermRegex(words) {
+    if (!words || !words.length) return null;
+    const pattern = words.map((w) => escapeRegExp(w)).join('\\s+');
+    return new RegExp(`(?:^|\\s)(${pattern})(?=\\s|$)`, 'g');
+  }
+
+  function countTermMatches(searchText, regex) {
+    if (!regex || !searchText) return 0;
+    regex.lastIndex = 0;
+    let count = 0;
+    while (regex.exec(searchText)) {
+      count += 1;
+    }
+    return count;
+  }
+
+  function getRecordEpochDay(rec) {
+    if (typeof rec._epochDay === 'number' || rec._epochDay === null) return rec._epochDay;
+    const dateIso = (rec.date || '').trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateIso)) {
+      rec._epochDay = null;
+      return rec._epochDay;
+    }
+    const [y, m, d] = dateIso.split('-').map((x) => Number(x));
+    if (!y || !m || !d) {
+      rec._epochDay = null;
+      return rec._epochDay;
+    }
+    rec._epochDay = Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+    return rec._epochDay;
+  }
+
   function esc(value) {
     return (value || '').toString()
       .replace(/&/g, '&amp;')
@@ -68,19 +143,6 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
-  }
-
-  function countOccurrences(haystack, needle) {
-    if (!needle) return 0;
-    let count = 0;
-    let pos = 0;
-    while (true) {
-      const found = haystack.indexOf(needle, pos);
-      if (found === -1) break;
-      count += 1;
-      pos = found + Math.max(1, needle.length);
-    }
-    return count;
   }
 
   function formatDateIso(dateIso) {
@@ -149,6 +211,9 @@
       if (!el) return;
       el.disabled = disabled;
     });
+    if (els.wordcloudRange) {
+      els.wordcloudRange.disabled = disabled;
+    }
   }
 
   function setDeferredSearchState() {
@@ -159,6 +224,15 @@
     els.summaryText.textContent = 'Modo leve ativo para evitar travamentos neste dispositivo. Toque em "Carregar base" para ativar a busca completa.';
     els.tableCount.textContent = '0 linhas';
     els.resultsBody.innerHTML = '<tr><td colspan="8">Modo leve ativo. Toque em <strong>Carregar base</strong> para carregar os documentos completos.</td></tr>';
+    if (els.wordcloudContext) {
+      els.wordcloudContext.textContent = 'Nuvem de palavras será calculada após carregar a base completa.';
+    }
+    if (els.wordcloudCloud) {
+      els.wordcloudCloud.innerHTML = '<span class="hint">Modo leve ativo.</span>';
+    }
+    if (els.wordcloudTableBody) {
+      els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Carregue a base para ver o top 10.</td></tr>';
+    }
   }
 
   function shouldUseLightMode(metadata) {
@@ -177,11 +251,16 @@
     const byMandate = new Map();
     let totalDocs = 0;
     let totalFilled = 0;
+    let latestEpochDay = null;
 
     for (const rec of state.records) {
       totalDocs += 1;
       const hasText = hasExtractedText(rec);
       if (hasText) totalFilled += 1;
+      const epochDay = getRecordEpochDay(rec);
+      if (epochDay !== null && (latestEpochDay === null || epochDay > latestEpochDay)) {
+        latestEpochDay = epochDay;
+      }
 
       const president = (rec.president || '').trim();
       if (president) {
@@ -213,6 +292,7 @@
     state.coverage = {
       totalDocs,
       totalFilled,
+      latestEpochDay,
       byPresident,
       byMandate,
       hiddenPresidents,
@@ -238,7 +318,7 @@
       ? ' Em dispositivos móveis ou conexão restrita, quando a base está grande, o painel abre em modo leve e só carrega o texto integral sob demanda.'
       : '';
 
-    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}.${mobileStrategy}`;
+    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}. Em entrevistas, parte das menções pode vir do interlocutor (pergunta), não apenas do presidente.${mobileStrategy}`;
   }
 
   async function ensureRecordsReady() {
@@ -301,16 +381,114 @@
     }
   }
 
+  function getActiveFilters() {
+    return {
+      typeFilter: els.typeSelect.value,
+      presidentFilter: els.presidentSelect.value,
+      mandateFilter: els.mandateSelect.value,
+    };
+  }
+
+  function recordMatchesBaseFilters(rec, filters) {
+    if (!hasExtractedText(rec)) return false;
+    if (filters.typeFilter !== 'ambos' && rec.type !== filters.typeFilter) return false;
+    if (filters.presidentFilter !== 'todos' && rec.president !== filters.presidentFilter) return false;
+    if (filters.mandateFilter !== 'todos' && rec.mandate !== filters.mandateFilter) return false;
+    return true;
+  }
+
+  function isRelevantWordToken(token) {
+    if (!token || token.length < WORD_MIN_LEN) return false;
+    if (/^\d+$/.test(token)) return false;
+    if (PT_STOPWORDS.has(token)) return false;
+    return true;
+  }
+
+  function renderWordInsights(filters) {
+    if (!els.wordcloudCloud || !els.wordcloudTableBody || !els.wordcloudContext) return;
+    if (!state.coverage || state.coverage.latestEpochDay === null) {
+      els.wordcloudContext.textContent = 'Sem datas válidas para calcular termos recentes.';
+      els.wordcloudCloud.innerHTML = '<span class="hint">Sem termos disponíveis.</span>';
+      els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Sem dados.</td></tr>';
+      return;
+    }
+
+    const rangeDays = Number(els.wordcloudRange ? els.wordcloudRange.value : 30) || 30;
+    const anchorDay = state.coverage.latestEpochDay;
+    const cutoffDay = anchorDay - (rangeDays - 1);
+    const byWord = new Map();
+    let docsInWindow = 0;
+
+    for (const rec of state.records) {
+      if (!recordMatchesBaseFilters(rec, filters)) continue;
+      const day = getRecordEpochDay(rec);
+      if (day === null || day < cutoffDay || day > anchorDay) continue;
+      docsInWindow += 1;
+
+      if (!rec._searchText) {
+        rec._searchText = normalizeSearchText(rec.text || '');
+      }
+      if (!rec._searchText) continue;
+
+      const tokens = rec._searchText.split(' ');
+      for (const token of tokens) {
+        if (!isRelevantWordToken(token)) continue;
+        byWord.set(token, (byWord.get(token) || 0) + 1);
+      }
+    }
+
+    const sortedWords = [...byWord.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt-BR'));
+    const topCloud = sortedWords.slice(0, 60);
+    const topTable = sortedWords.slice(0, 10);
+
+    const selectedPresident = filters.presidentFilter === 'todos' ? 'todos os presidentes' : filters.presidentFilter;
+    const selectedType = filters.typeFilter === 'ambos' ? 'discursos + entrevistas' : filters.typeFilter;
+    els.wordcloudContext.textContent = `Janela: ${rangeDays} dias | Base analisada: ${nFmt.format(docsInWindow)} documentos | Filtro atual: ${selectedType}; ${selectedPresident}.`;
+
+    els.wordcloudCloud.innerHTML = '';
+    if (!topCloud.length) {
+      els.wordcloudCloud.innerHTML = '<span class="hint">Sem termos suficientes no período selecionado.</span>';
+    } else {
+      const counts = topCloud.map(([, count]) => count);
+      const min = Math.min(...counts);
+      const max = Math.max(...counts);
+      const spread = Math.max(1, max - min);
+
+      for (const [word, count] of topCloud) {
+        const ratio = (count - min) / spread;
+        const size = 0.86 + ratio * 1.9;
+        const span = document.createElement('span');
+        span.className = 'word-chip';
+        span.textContent = word;
+        span.style.fontSize = `${size.toFixed(2)}rem`;
+        span.style.fontWeight = `${540 + Math.round(ratio * 240)}`;
+        span.style.opacity = `${0.68 + ratio * 0.32}`;
+        span.title = `${word}: ${nFmt.format(count)} ocorrências`;
+        els.wordcloudCloud.appendChild(span);
+      }
+    }
+
+    els.wordcloudTableBody.innerHTML = '';
+    if (!topTable.length) {
+      els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Sem dados no período.</td></tr>';
+      return;
+    }
+
+    topTable.forEach(([word, count], idx) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${idx + 1}</td><td>${esc(word)}</td><td>${nFmt.format(count)}</td>`;
+      els.wordcloudTableBody.appendChild(tr);
+    });
+  }
+
   function applySearch() {
     if (!state.ready) return;
 
     const termRaw = (els.termInput.value || '').trim();
-    const term = foldText(termRaw);
-    const typeFilter = els.typeSelect.value;
-    const presidentFilter = els.presidentSelect.value;
-    const mandateFilter = els.mandateSelect.value;
-
-    const hasTerm = term.length > 0;
+    const query = normalizeQueryTerm(termRaw);
+    const filters = getActiveFilters();
+    const hasTerm = query.wordsCount > 0;
+    const termRegex = hasTerm ? buildTermRegex(query.words) : null;
     const results = [];
 
     const timeline = new Map();
@@ -320,23 +498,28 @@
     let totalMentions = 0;
     let earliestDate = '';
     let latestDate = '';
+    const docsByType = { entrevista: 0, discurso: 0 };
+    const mentionsByType = { entrevista: 0, discurso: 0 };
 
     for (const rec of state.records) {
-      if (!hasExtractedText(rec)) continue;
-      if (typeFilter !== 'ambos' && rec.type !== typeFilter) continue;
-      if (presidentFilter !== 'todos' && rec.president !== presidentFilter) continue;
-      if (mandateFilter !== 'todos' && rec.mandate !== mandateFilter) continue;
+      if (!recordMatchesBaseFilters(rec, filters)) continue;
 
       let mentions = 0;
       if (hasTerm) {
-        if (!rec._foldedText) {
-          rec._foldedText = foldText(rec.text || '');
+        if (!rec._searchText) {
+          rec._searchText = normalizeSearchText(rec.text || '');
         }
-        mentions = countOccurrences(rec._foldedText, term);
+        mentions = countTermMatches(rec._searchText, termRegex);
         if (mentions <= 0) continue;
       }
 
       results.push({ rec, mentions });
+      if (rec.type === 'entrevista') docsByType.entrevista += 1;
+      else docsByType.discurso += 1;
+      if (hasTerm) {
+        if (rec.type === 'entrevista') mentionsByType.entrevista += mentions;
+        else mentionsByType.discurso += mentions;
+      }
 
       const value = hasTerm ? mentions : 1;
       totalMentions += value;
@@ -376,15 +559,25 @@
 
     renderCharts({ hasTerm, timeline, byPresident, byMandate, termRaw });
     renderTable(results, hasTerm);
+    renderWordInsights(filters);
 
     const sampleDocs = nFmt.format(results.length);
     const totalDocs = nFmt.format(state.coverage ? state.coverage.totalFilled : state.records.length);
     if (hasTerm) {
-      els.summaryText.textContent = `Busca por "${termRaw}" em ${sampleDocs} documentos, dentro de um universo de ${totalDocs}.`; 
-      els.searchHint.textContent = `Termo atual: "${termRaw}". Busca sem distinção de maiúsculas/minúsculas e sem sensibilidade a acentos.`;
+      const mentionsFmt = nFmt.format(totalMentions);
+      const docsEntFmt = nFmt.format(docsByType.entrevista);
+      const docsDisFmt = nFmt.format(docsByType.discurso);
+      const mentEntFmt = nFmt.format(mentionsByType.entrevista);
+      const mentDisFmt = nFmt.format(mentionsByType.discurso);
+      els.summaryText.textContent = `Busca por "${termRaw}" em ${sampleDocs} documentos (${docsEntFmt} entrevistas; ${docsDisFmt} discursos), com ${mentionsFmt} ocorrências no total (${mentEntFmt} em entrevistas; ${mentDisFmt} em discursos), dentro de ${totalDocs} documentos com texto.`;
+      if (query.isPhrase) {
+        els.searchHint.textContent = `Expressão atual: "${termRaw}" (${query.wordsCount} palavras). Busca sem distinção de maiúsculas/minúsculas e sem sensibilidade a acentos.`;
+      } else {
+        els.searchHint.textContent = `Termo atual: "${termRaw}". Busca sem distinção de maiúsculas/minúsculas e sem sensibilidade a acentos.`;
+      }
     } else {
       els.summaryText.textContent = `Sem termo aplicado. Mostrando ${sampleDocs} documentos filtrados de ${totalDocs} no total.`;
-      els.searchHint.textContent = 'A busca ignora maiusculas/minusculas e acentos automaticamente.';
+      els.searchHint.textContent = 'A busca ignora maiúsculas/minúsculas e acentos automaticamente. Você pode buscar palavra única ou expressão curta (2-3 palavras).';
     }
   }
 
@@ -589,6 +782,12 @@
       if (!state.recordsLoaded) return;
       applySearch();
     });
+    if (els.wordcloudRange) {
+      els.wordcloudRange.addEventListener('change', () => {
+        if (!state.recordsLoaded) return;
+        renderWordInsights(getActiveFilters());
+      });
+    }
   }
 
   async function init() {

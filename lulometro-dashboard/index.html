@@ -141,6 +141,71 @@
       gap: 0.55rem;
     }
 
+    .word-insights {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: 0.72rem;
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .word-insights-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .word-insights-head h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .word-insights-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 0.9fr;
+      gap: 0.58rem;
+    }
+
+    .word-cloud-box {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fdfcf8;
+      padding: 0.58rem;
+      min-height: 220px;
+    }
+
+    .word-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.34rem 0.52rem;
+      align-items: flex-start;
+      align-content: flex-start;
+      min-height: 160px;
+    }
+
+    .word-chip {
+      color: #254344;
+      line-height: 1.2;
+      user-select: none;
+      cursor: default;
+    }
+
+    .word-table {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .word-table table {
+      min-width: 0;
+      width: 100%;
+      font-size: 0.83rem;
+    }
+
     .metric {
       border: 1px solid var(--line);
       border-radius: 14px;
@@ -290,6 +355,9 @@
       .metrics {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+      .word-insights-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 700px) {
@@ -347,8 +415,40 @@
       </div>
 
       <p class="hint" id="search-hint">
-        A busca ignora maiusculas/minusculas e acentos automaticamente.
+        A busca ignora maiusculas/minusculas e acentos automaticamente. Voce pode buscar palavras ou expressoes curtas (ex.: bolsa familia).
       </p>
+    </section>
+
+    <section class="word-insights" aria-label="Termos mais usados recentemente">
+      <div class="word-insights-head">
+        <h2>Termos Mais Usados Recentemente</h2>
+        <select id="wordcloud-range" aria-label="Janela temporal da nuvem de palavras">
+          <option value="7">Ultimos 7 dias</option>
+          <option value="15">Ultimos 15 dias</option>
+          <option value="30" selected>Ultimos 30 dias</option>
+          <option value="90">Ultimos 3 meses</option>
+          <option value="180">Ultimos 6 meses</option>
+          <option value="365">Ultimo ano</option>
+        </select>
+      </div>
+      <p class="hint" id="wordcloud-context">Carregando termos mais frequentes...</p>
+      <div class="word-insights-grid">
+        <div class="word-cloud-box">
+          <div class="word-cloud" id="wordcloud-cloud"></div>
+        </div>
+        <div class="word-table">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Termo</th>
+                <th>Ocorrencias</th>
+              </tr>
+            </thead>
+            <tbody id="wordcloud-table-body"></tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <section class="metrics" aria-label="Metricas da busca">
