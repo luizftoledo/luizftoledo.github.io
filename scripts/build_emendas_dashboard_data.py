@@ -239,6 +239,19 @@ def resolve_party(author_name, party_lookup):
     return party_lookup.get(name) or "Nao identificado"
 
 
+def classify_supporter_group(supporter_name):
+    name = normalize_person_name(supporter_name)
+    if not name:
+        return "Nao identificado"
+    if "BANCADA" in name:
+        return "Bancada"
+    if name.startswith("COM ") or name.startswith("COM.") or "COMISSAO" in name:
+        return "Comissao"
+    if "RELATOR" in name:
+        return "Relatoria"
+    return "Parlamentar"
+
+
 def fetch_party_lookup():
     lookup = {}
     metadata = {"camara_mapeados": 0, "senado_mapeados": 0}
@@ -989,6 +1002,11 @@ def build_apoiamento_monitor(current_year):
     supporters_empenhado = defaultdict(lambda: Decimal("0"))
     supporters_pago = defaultdict(lambda: Decimal("0"))
     supporters_authors = defaultdict(set)
+    supporters_author_empenhado = defaultdict(lambda: defaultdict(lambda: Decimal("0")))
+    supporters_group_empenhado = defaultdict(lambda: Decimal("0"))
+    author_supported_empenhado = defaultdict(lambda: Decimal("0"))
+    total_empenhado = Decimal("0")
+    total_pago = Decimal("0")
     rows_processed = 0
 
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1013,26 +1031,58 @@ def build_apoiamento_monitor(current_year):
                         valor_pago = parse_currency(get_col(row, "valor_pago"))
                         if valor_empenhado > 0:
                             supporters_empenhado[apoiador] += valor_empenhado
+                            supporters_author_empenhado[apoiador][author] += valor_empenhado
+                            supporters_group_empenhado[classify_supporter_group(apoiador)] += valor_empenhado
+                            author_supported_empenhado[author] += valor_empenhado
+                            total_empenhado += valor_empenhado
                         if valor_pago > 0:
                             supporters_pago[apoiador] += valor_pago
+                            total_pago += valor_pago
                         supporters_authors[apoiador].add(author)
 
     top_supporters = []
     for apoiador, value in sort_top(supporters_empenhado, 20):
+        supporter_authors = supporters_author_empenhado.get(apoiador, {})
+        top_supported_authors = [
+            {"author": author, "empenhado": to_float(author_value)}
+            for author, author_value in sort_top(supporter_authors, 3)
+        ]
         top_supporters.append(
             {
                 "supporter": apoiador,
+                "group": classify_supporter_group(apoiador),
                 "empenhado": to_float(value),
                 "pago": to_float(supporters_pago.get(apoiador, Decimal("0"))),
                 "authors_count": len(supporters_authors.get(apoiador, set())),
+                "share_empenhado": safe_share(value, total_empenhado),
+                "top_supported_authors": top_supported_authors,
             }
         )
+
+    top_supported_authors = [
+        {"author": author, "empenhado": to_float(value)}
+        for author, value in sort_top(author_supported_empenhado, 20)
+    ]
+    top_supporter_groups = [
+        {"group": group, "empenhado": to_float(value)}
+        for group, value in sort_top(supporters_group_empenhado, 20)
+    ]
+    top1_value = top_supporters[0]["empenhado"] if top_supporters else 0.0
+    top5_value = sum(item["empenhado"] for item in top_supporters[:5]) if top_supporters else 0.0
 
     return {
         "available": True,
         "year": selected_year,
         "rows_processed": rows_processed,
         "top_supporters": top_supporters,
+        "top_supported_authors": top_supported_authors,
+        "top_supporter_groups": top_supporter_groups,
+        "totals": {
+            "total_empenhado": to_float(total_empenhado),
+            "total_pago": to_float(total_pago),
+            "top1_share": safe_share(top1_value, to_float(total_empenhado) if total_empenhado else 0),
+            "top5_share": safe_share(top5_value, to_float(total_empenhado) if total_empenhado else 0),
+        },
         "source": {
             "requested_url": requested_url,
             "download_url": headers.get("final_url") or fallback_url,

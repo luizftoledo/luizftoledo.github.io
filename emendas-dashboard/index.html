@@ -359,6 +359,56 @@
       line-height: 1.45;
     }
 
+    .help-tip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      margin-left: 0.26rem;
+      border-radius: 999px;
+      border: 1px solid #b8b1a4;
+      background: #f5f2eb;
+      color: #665f52;
+      font-size: 0.68rem;
+      font-weight: 700;
+      line-height: 1;
+      cursor: help;
+      position: relative;
+      vertical-align: middle;
+    }
+
+    .help-tip::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 8px);
+      transform: translateX(-50%);
+      width: min(280px, 78vw);
+      border: 1px solid #d3ccb9;
+      border-radius: 10px;
+      background: #fffdf8;
+      color: #4d483f;
+      padding: 0.48rem 0.56rem;
+      font-size: 0.76rem;
+      font-weight: 500;
+      line-height: 1.4;
+      box-shadow: 0 10px 22px rgba(37, 33, 28, 0.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 120ms ease;
+      z-index: 8;
+    }
+
+    .help-tip:hover::after,
+    .help-tip:focus-visible::after {
+      opacity: 1;
+    }
+
+    .table-wide {
+      min-width: 980px;
+    }
+
     .spotlight {
       border: 1px solid #e8d9cc;
       background: var(--accent-soft);
@@ -409,7 +459,7 @@
     <section class="hero">
       <div>
         <h1>Monitor diário de emendas: quanto foi empenhado hoje, por quem e para onde</h1>
-        <p class="sub">Este painel acompanha mudanças diárias no valor empenhado das emendas parlamentares usando a base oficial aberta. A leitura é simples: quando o valor acumulado de um autor ou destino sobe em relação ao último snapshot, isso entra como movimento do dia.</p>
+        <p class="sub">Este painel acompanha mudanças diárias no valor empenhado das emendas parlamentares usando base oficial aberta. A leitura é simples: quando o valor acumulado de um autor ou de uma localidade de aplicação sobe em relação ao último snapshot, isso entra como movimento do dia.</p>
       </div>
       <div class="status">
         <span class="pill" id="status-update">Atualizado: --</span>
@@ -437,7 +487,7 @@
           <div class="value" id="kpi-authors-up">--</div>
         </article>
         <article class="card">
-          <div class="label" id="label-kpi-destinations">Destinos com aumento hoje</div>
+          <div class="label" id="label-kpi-destinations">Localidades com aumento hoje</div>
           <div class="value" id="kpi-destinations-up">--</div>
         </article>
       </div>
@@ -491,14 +541,14 @@
       </section>
 
       <section class="panel">
-        <h2>Pares autor -> destino com maior aumento no dia</h2>
+        <h2>Pares autor -> localidade de aplicação com maior aumento no dia</h2>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>Autor</th>
                 <th>Partido</th>
-                <th>Destino do recurso</th>
+                <th>Localidade de aplicação do recurso</th>
                 <th>Aumento no dia</th>
                 <th>Total acumulado do par</th>
               </tr>
@@ -532,7 +582,7 @@
             <table>
               <thead>
                 <tr>
-                  <th>Destino</th>
+                  <th>Localidade de aplicação</th>
                   <th>Total empenhado acumulado</th>
                 </tr>
               </thead>
@@ -548,10 +598,10 @@
     <div class="dashboard-view" id="view-docs" hidden>
       <section class="panel">
         <h2>Resumo do ano na base do Portal da Transparência</h2>
-        <p class="hint">Esta visão usa os arquivos por documento de despesa. Aqui você acompanha o acumulado do ano, o último dia e o que ainda falta para chegar ao teto anual (quando a fonte traz esse teto).</p>
+        <p class="hint">Esta visão usa os arquivos por documento de despesa. Aqui você acompanha o acumulado do ano, o último dia e o que ainda falta para chegar ao valor autorizado anual (quando a fonte traz esse valor).</p>
         <div class="cards">
           <article class="card">
-            <div class="label">Teto anual estimado</div>
+            <div class="label">Valor autorizado anual estimado <span class="help-tip" tabindex="0" data-tip="Valor autorizado é o limite anual aprovado para execução. Em muitos painéis ele aparece como teto.">?</span></div>
             <div class="value" id="doc-kpi-max-year">--</div>
           </article>
           <article class="card">
@@ -570,7 +620,7 @@
         <div class="progress-grid">
           <article class="progress-item">
             <div class="progress-head">
-              <span>Empenhado acumulado / teto anual</span>
+              <span>Empenhado acumulado / valor autorizado anual <span class="help-tip" tabindex="0" data-tip="Mostra quanto do limite anual autorizado já foi comprometido em empenhos.">?</span></span>
               <strong id="docs-progress-year-text">--</strong>
             </div>
             <div class="progress-track">
@@ -587,7 +637,7 @@
             </div>
           </article>
         </div>
-        <p class="hint" id="docs-progress-note">Quando não há teto disponível na fonte, mostramos a comparação com o acumulado do ano.</p>
+        <p class="hint" id="docs-progress-note">Quando não há valor autorizado disponível na fonte, mostramos a comparação com o acumulado do ano.</p>
         <p class="spotlight" id="doc-spotlight">Carregando monitor paralelo...</p>
       </section>
 
@@ -601,7 +651,7 @@
 
       <section class="panel">
         <div class="panel-head">
-          <h2>Quem mais empenhou (pessoa/partido/bancada)</h2>
+          <h2>Quem mais empenhou (pessoa/partido/bancada) <span class="help-tip" tabindex="0" data-tip="No gráfico da direita, cada barra mostra a participação de cada autor no total do recorte escolhido: dia ou ano.">?</span></h2>
           <div class="mini-toggle">
             <button id="docs-mode-day" type="button">No dia</button>
             <button class="active" id="docs-mode-year" type="button">No ano</button>
@@ -631,12 +681,12 @@
       </section>
 
       <section class="panel">
-        <h2>Para onde foi o empenho no último dia disponível</h2>
+        <h2>Para quais localidades de aplicação foi o empenho no último dia <span class="help-tip" tabindex="0" data-tip="Localidade de aplicação é o campo que indica para onde o recurso foi direcionado: município, estado, órgão ou unidade executora.">?</span></h2>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Destino</th>
+                <th>Localidade de aplicação</th>
                 <th>Empenhado no dia</th>
               </tr>
             </thead>
@@ -695,23 +745,53 @@
       </section>
 
       <section class="panel">
-        <h2>Apoiamento de emendas (fonte complementar)</h2>
+        <h2>Apoiamento de emendas (fonte complementar) <span class="help-tip" tabindex="0" data-tip="Apoiamento mostra quando um parlamentar ou grupo assina apoio à emenda de outro autor. É uma relação política de apoio, não um gasto adicional separado.">?</span></h2>
         <p class="hint" id="apoiamento-note">Carregando fonte de apoiamento...</p>
-        <p class="hint" id="apoiamento-explain">Apoiamento indica quando um parlamentar apoia emenda de outro. Isso ajuda a entender articulações políticas, não é gasto extra separado.</p>
+        <p class="hint" id="apoiamento-explain">Apoiamento indica quem apoiou emenda de quem. Isso ajuda a entender articulações políticas e concentração de apoios.</p>
         <div class="table-wrap">
-          <table>
+          <table class="table-wide">
             <thead>
               <tr>
                 <th>Apoiador</th>
+                <th>Grupo</th>
                 <th>Empenhado</th>
-                <th>Pago</th>
-                <th>Autores diferentes apoiados</th>
+                <th>% do total apoiado</th>
+                <th>Autores apoiados</th>
+                <th>Principais autores apoiados</th>
               </tr>
             </thead>
             <tbody id="table-apoiamento-top">
-              <tr><td colspan="4">Carregando...</td></tr>
+              <tr><td colspan="6">Carregando...</td></tr>
             </tbody>
           </table>
+        </div>
+        <div class="charts">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autores mais apoiados</th>
+                  <th>Empenhado com apoio</th>
+                </tr>
+              </thead>
+              <tbody id="table-apoiamento-authors">
+                <tr><td colspan="2">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Grupo de apoiador</th>
+                  <th>Empenhado com apoio</th>
+                </tr>
+              </thead>
+              <tbody id="table-apoiamento-groups">
+                <tr><td colspan="2">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
     </div>

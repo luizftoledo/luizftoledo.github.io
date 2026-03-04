@@ -62,6 +62,8 @@
     tableSiopParties: document.getElementById('table-siop-parties'),
     tableSiopOrgaos: document.getElementById('table-siop-orgaos'),
     tableApoiamentoTop: document.getElementById('table-apoiamento-top'),
+    tableApoiamentoAuthors: document.getElementById('table-apoiamento-authors'),
+    tableApoiamentoGroups: document.getElementById('table-apoiamento-groups'),
     apoiamentoNote: document.getElementById('apoiamento-note'),
     apoiamentoExplain: document.getElementById('apoiamento-explain'),
 
@@ -91,6 +93,11 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
+  }
+
+  function helpIcon(text) {
+    const safe = esc(text).replace(/\s+/g, ' ').trim();
+    return `<span class="help-tip" tabindex="0" data-tip="${safe}" aria-label="${safe}">?</span>`;
   }
 
   function formatIsoDateTime(iso) {
@@ -211,10 +218,26 @@
     els.viewDocs.hidden = isSnapshot;
     els.tabViewSnapshot.classList.toggle('active', isSnapshot);
     els.tabViewDocs.classList.toggle('active', !isSnapshot);
+    const targetHash = isSnapshot ? '#snapshot' : '#docs';
+    if (window.location.hash !== targetHash) {
+      window.history.replaceState({}, '', `${window.location.pathname}${window.location.search}${targetHash}`);
+    }
 
     if (state.report) {
       renderHeaderForView(state.report, state.metadata || {});
     }
+  }
+
+  function getInitialView() {
+    const hash = (window.location.hash || '').toLowerCase();
+    if (hash.includes('docs') || hash.includes('portal')) return 'docs';
+    if (hash.includes('snapshot') || hash.includes('siga')) return 'snapshot';
+
+    const viewParam = new URLSearchParams(window.location.search).get('view');
+    if ((viewParam || '').toLowerCase() === 'docs') return 'docs';
+    if ((viewParam || '').toLowerCase() === 'snapshot') return 'snapshot';
+
+    return 'snapshot';
   }
 
   function setSnapshotKpis(report) {
@@ -222,9 +245,9 @@
     const deltaNet = toNumber(metrics.delta_liquido_desde_snapshot_anterior);
     const deltaPositive = toNumber(metrics.delta_positivo_desde_snapshot_anterior);
 
-    els.kpiLabelNet.textContent = 'Variação líquida no dia';
-    els.kpiLabelAuthors.textContent = 'Autores com aumento hoje';
-    els.kpiLabelDestinations.textContent = 'Destinos com aumento hoje';
+    els.kpiLabelNet.innerHTML = `Variação líquida no dia ${helpIcon('Soma das altas e quedas do dia. Se o valor estiver negativo, houve mais queda que alta no conjunto.')}`;
+    els.kpiLabelAuthors.innerHTML = `Autores com aumento hoje ${helpIcon('Quantidade de autores que tiveram aumento de empenho no dia comparado ao snapshot anterior.')}`;
+    els.kpiLabelDestinations.innerHTML = `Localidades com aumento hoje ${helpIcon('Localidade de aplicação é para onde o recurso foi direcionado: município, estado, órgão ou projeto.')}`;
 
     els.kpiDayMain.textContent = money(deltaPositive);
     els.kpiDayMainNote.textContent = 'Comparação com o snapshot anterior da base Siga Brasil.';
@@ -272,9 +295,9 @@
     const maxYearInfo = getMaxYearInfo(report);
     const maxYear = toNumber(maxYearInfo.value);
 
-    els.kpiLabelNet.textContent = 'Empenhado no ano (acum.)';
-    els.kpiLabelAuthors.textContent = 'Autores com empenho no último dia';
-    els.kpiLabelDestinations.textContent = 'Destinos com empenho no último dia';
+    els.kpiLabelNet.innerHTML = `Empenhado no ano (acum.) ${helpIcon('Valor total já empenhado no ano na fonte por documento.')}`;
+    els.kpiLabelAuthors.innerHTML = `Autores com empenho no último dia ${helpIcon('Quantidade de autores que apareceram com empenho no último dia disponível nessa fonte.')}`;
+    els.kpiLabelDestinations.innerHTML = `Localidades com empenho no último dia ${helpIcon('Localidades de aplicação que receberam empenho no último dia disponível.')}`;
 
     els.kpiDayMain.textContent = money(committedLastDay);
     els.kpiDayMainNote.textContent = `Fonte Portal da Transparência por documento. Último dia com dados: ${docs.date_max || '--'}.`;
@@ -297,15 +320,15 @@
         els.docsProgressYearText,
         committedYear,
         maxYear,
-        { noBaseText: 'Sem teto disponível' }
+        { noBaseText: 'Sem valor autorizado disponível' }
       );
       const sourceLabel = maxYearInfo.sourceLabel || 'fonte não identificada';
-      els.docsProgressNote.textContent = `Teto anual considerado: ${money(maxYear)} (${sourceLabel}).`;
+      els.docsProgressNote.textContent = `Valor autorizado anual considerado: ${money(maxYear)} (${sourceLabel}).`;
     } else {
       els.docKpiMaxYear.textContent = 'não disponível';
       els.docsProgressYearFill.style.width = '0%';
-      els.docsProgressYearText.textContent = `Sem teto anual divulgado (já empenhado ${money(committedYear)})`;
-      els.docsProgressNote.textContent = 'Esta fonte não trouxe teto anual explícito nesta atualização. Mostramos apenas o acumulado já empenhado.';
+      els.docsProgressYearText.textContent = `Sem valor autorizado anual divulgado (já empenhado ${money(committedYear)})`;
+      els.docsProgressNote.textContent = 'Esta fonte não trouxe valor autorizado anual explícito nesta atualização. Mostramos apenas o acumulado já empenhado.';
     }
 
     setProgress(
@@ -339,7 +362,7 @@
       <strong>${money(delta)}</strong> de aumento positivo em empenhos.
       Quem mais cresceu no dia foi <strong>${esc(topAuthor.author)}</strong>
       (${esc(topAuthor.party || 'sem partido mapeado')}, ${money(topAuthor.delta_empenhado)}),
-      e o principal destino foi <strong>${esc(topDestination.destination)}</strong>
+      e a principal localidade de aplicação foi <strong>${esc(topDestination.destination)}</strong>
       (${money(topDestination.delta_empenhado)}).
     `;
   }
@@ -521,7 +544,7 @@
     if (percentual.length) {
       datasets.push({
         type: 'line',
-        label: '% do teto anual já empenhado',
+        label: '% do valor autorizado anual já empenhado',
         data: percentual,
         yAxisID: 'y2',
         borderColor: '#2f7d59',
@@ -633,7 +656,7 @@
     }
 
     const chartRows = enriched.slice(0, 10);
-    const labels = chartRows.map((row) => shortLabel(row.author, 24));
+    const labels = chartRows.map((row) => shortLabel(row.author, 18));
     const shares = chartRows.map((row) => row.share * 100);
     const amounts = chartRows.map((row) => row.empenhado);
 
@@ -654,19 +677,26 @@
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        indexAxis: 'y',
         scales: {
           x: {
             ticks: {
+              maxRotation: 30,
+              minRotation: 20,
+              autoSkip: false,
+            },
+          },
+          y: {
+            ticks: {
               callback: (value) => `${value.toFixed(1)}%`,
             },
+            beginAtZero: true,
           },
         },
         plugins: {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: (ctx) => `${ctx.parsed.x.toFixed(1)}% (${money(amounts[ctx.dataIndex] || 0)})`,
+              label: (ctx) => `${ctx.parsed.y.toFixed(1)}% (${money(amounts[ctx.dataIndex] || 0)})`,
             },
           },
         },
@@ -678,6 +708,77 @@
     } else {
       els.docsModeNote.textContent = `Modo no dia: ranking do último dia disponível (${docs.date_max || '--'}).`;
     }
+  }
+
+  function renderApoiamentoDetails(apoiamento) {
+    if (!apoiamento.available) {
+      els.apoiamentoNote.textContent = 'Não houve arquivo de apoiamento disponível no momento desta atualização.';
+      els.apoiamentoExplain.textContent = 'Sem essa fonte, não é possível mostrar quais parlamentares apoiaram emendas de outros autores nesta rodada.';
+      els.tableApoiamentoTop.innerHTML = '<tr><td colspan="6">Sem dados de apoiamento disponíveis.</td></tr>';
+      els.tableApoiamentoAuthors.innerHTML = '<tr><td colspan="2">Sem dados de apoiamento disponíveis.</td></tr>';
+      els.tableApoiamentoGroups.innerHTML = '<tr><td colspan="2">Sem dados de apoiamento disponíveis.</td></tr>';
+      return;
+    }
+
+    const source = apoiamento.source || {};
+    const totals = apoiamento.totals || {};
+    const totalEmpenhado = toNumber(totals.total_empenhado);
+    const totalPago = toNumber(totals.total_pago);
+    const top1Share = toNumber(totals.top1_share);
+    const top5Share = toNumber(totals.top5_share);
+
+    els.apoiamentoNote.innerHTML = `Base de apoiamento disponível para <strong>${apoiamento.year}</strong>. Última atualização da fonte: <strong>${esc(formatHeaderDate(source.last_modified || ''))}</strong>. <a href="${esc(source.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Abrir fonte oficial</a>.`;
+    els.apoiamentoExplain.innerHTML = `
+      Valor empenhado com apoiamento: <strong>${money(totalEmpenhado)}</strong> (pago: <strong>${money(totalPago)}</strong>).
+      Concentração: o maior apoiador responde por <strong>${pctFmt.format(top1Share)}</strong> e os 5 maiores respondem por <strong>${pctFmt.format(top5Share)}</strong>.
+      <br>Leitura prática: apoiamento indica quem assinou apoio para emenda de outro autor; não é novo gasto separado, é rede política de apoio.
+    `;
+
+    renderDocsTable(
+      els.tableApoiamentoTop,
+      (apoiamento.top_supporters || []).slice(0, 20),
+      (row) => {
+        const topAuthors = (row.top_supported_authors || [])
+          .slice(0, 3)
+          .map((item) => `${esc(item.author)} (${money(item.empenhado)})`)
+          .join('<br>');
+        return `
+          <tr>
+            <td>${esc(row.supporter)}</td>
+            <td>${esc(row.group || '--')}</td>
+            <td>${money(row.empenhado)}</td>
+            <td>${pctFmt.format(toNumber(row.share_empenhado))}</td>
+            <td>${nFmt.format(row.authors_count || 0)}</td>
+            <td>${topAuthors || '--'}</td>
+          </tr>
+        `;
+      },
+      6
+    );
+
+    renderDocsTable(
+      els.tableApoiamentoAuthors,
+      (apoiamento.top_supported_authors || []).slice(0, 20),
+      (row) => `
+        <tr>
+          <td>${esc(row.author)}</td>
+          <td>${money(row.empenhado)}</td>
+        </tr>
+      `,
+      2
+    );
+
+    renderDocsTable(
+      els.tableApoiamentoGroups,
+      (apoiamento.top_supporter_groups || []).slice(0, 20),
+      (row) => `
+        <tr>
+          <td>${esc(row.group)}</td>
+          <td>${money(row.empenhado)}</td>
+        </tr>
+      `,
+      2
+    );
   }
 
   function renderParallelMonitor(report) {
@@ -698,8 +799,8 @@
       Série diária de <strong>${esc(minDate)}</strong> até <strong>${esc(maxDate)}</strong>.
       Registros processados na fonte de documentos: <strong>${nFmt.format(rowsValid)}</strong>.
       ${maxYear && maxYear > 0
-        ? `Do teto anual de <strong>${money(maxYear)}</strong>, já foram empenhados <strong>${money(committedYear)}</strong> e faltam <strong>${money(remaining)}</strong>.`
-        : 'A fonte desta atualização não trouxe teto anual explícito para calcular quanto falta.'}
+        ? `Do valor autorizado anual de <strong>${money(maxYear)}</strong>, já foram empenhados <strong>${money(committedYear)}</strong> e faltam <strong>${money(remaining)}</strong>.`
+        : 'A fonte desta atualização não trouxe valor autorizado anual explícito para calcular quanto falta.'}
     `;
 
     renderDocsTable(
@@ -713,29 +814,7 @@
       `,
       2
     );
-
-    if (apoiamento.available) {
-      const source = apoiamento.source || {};
-      els.apoiamentoNote.innerHTML = `Base de apoiamento disponível para <strong>${apoiamento.year}</strong>. Última atualização da fonte: <strong>${esc(formatHeaderDate(source.last_modified || ''))}</strong>. <a href="${esc(source.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Abrir fonte oficial</a>.`;
-      els.apoiamentoExplain.innerHTML = 'Apoiamento mostra quem apoiou emenda de quem. Isso ajuda a entender articulação política entre parlamentares e bancadas, sem duplicar o valor do gasto.';
-      renderDocsTable(
-        els.tableApoiamentoTop,
-        (apoiamento.top_supporters || []).slice(0, 20),
-        (row) => `
-          <tr>
-            <td>${esc(row.supporter)}</td>
-            <td>${money(row.empenhado)}</td>
-            <td>${money(row.pago)}</td>
-            <td>${nFmt.format(row.authors_count || 0)}</td>
-          </tr>
-        `,
-        4
-      );
-    } else {
-      els.apoiamentoNote.textContent = 'Não houve arquivo de apoiamento disponível no momento desta atualização.';
-      els.apoiamentoExplain.textContent = 'Sem essa fonte, não é possível mostrar quais parlamentares apoiaram emendas de outros autores nesta rodada.';
-      els.tableApoiamentoTop.innerHTML = '<tr><td colspan="4">Sem dados de apoiamento disponíveis.</td></tr>';
-    }
+    renderApoiamentoDetails(apoiamento);
 
     renderDocsDailyChart(docs.daily_series || [], maxYear);
     renderDocsAuthorsDynamic(report);
@@ -821,14 +900,14 @@
 
     const items = [
       `<li><strong>Base principal (acumulado):</strong> <a href="${esc(source.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Portal da Transparência - Emendas (UNICO)</a>.</li>`,
-      `<li><strong>Referência de teto/autorizado:</strong> <a href="${esc(siopSnapshot.source_url || '#')}" target="_blank" rel="noopener noreferrer">painel SIOP</a>${siopSnapshot.base_siafi_date ? ` (base SIAFI em ${esc(siopSnapshot.base_siafi_date)})` : ''}.</li>`,
+      `<li><strong>Referência de valor autorizado anual:</strong> <a href="${esc(siopSnapshot.source_url || '#')}" target="_blank" rel="noopener noreferrer">painel SIOP</a>${siopSnapshot.base_siafi_date ? ` (base SIAFI em ${esc(siopSnapshot.base_siafi_date)})` : ''}.</li>`,
       `<li><strong>Portal da Transparência (documentos por dia):</strong> <a href="${esc(docsSource.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Emendas parlamentares por documento</a>.</li>`,
       `<li><strong>Apoiamento de emendas:</strong> <a href="${esc(apoiamentoSource.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Base oficial de apoiamento</a>. Mostra rede de apoio entre autores.</li>`,
       `<li><strong>Execução do ano corrente:</strong> <a href="${esc(execucao.endpoint_url || '#')}" target="_blank" rel="noopener noreferrer">endpoint de execução no Portal da Transparência</a>.</li>`,
       `<li><strong>Regra principal do painel:</strong> “Empenhado no dia” = variação positiva no acumulado entre snapshots consecutivos da mesma fonte.</li>`,
       `<li><strong>Leitura rápida do dia (Siga Brasil):</strong> total positivo de ${money(dayTotal)}.`
       + (topAuthor ? ` Autor líder: ${esc(topAuthor.author)} (${pctFmt.format(authorShare)} do total do dia).` : '')
-      + (topDestination ? ` Destino líder: ${esc(topDestination.destination)} (${pctFmt.format(destinationShare)} do total do dia).` : '')
+      + (topDestination ? ` Localidade líder: ${esc(topDestination.destination)} (${pctFmt.format(destinationShare)} do total do dia).` : '')
       + '</li>',
       `<li><strong>Detalhamento direto do SIOP:</strong> ${siopDetails.available ? `${nFmt.format(toNumber(siopDetails.unique_nro_emendas))} emendas únicas coletadas no recorte atual.` : 'indisponível nesta atualização.'}</li>`,
     ];
@@ -897,7 +976,7 @@
       report.top_destinations_today || [],
       'destination',
       'delta_empenhado',
-      'Aumento por destino',
+      'Aumento por localidade de aplicação',
       'rgba(63, 107, 123, 0.72)'
     );
 
@@ -925,7 +1004,7 @@
       });
     }
 
-    setActiveView('snapshot');
+    setActiveView(getInitialView());
   }
 
   boot();

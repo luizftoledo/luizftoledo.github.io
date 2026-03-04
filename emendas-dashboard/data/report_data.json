@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T23:56:15.499514+00:00",
+  "generated_at": "2026-03-04T00:11:45.866731+00:00",
   "snapshot_date": "2026-03-03",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -898,6 +898,36 @@
           "pago": 0.0
         },
         {
+          "nro_emenda": "39810011",
+          "ano": "2022",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Felício Laterça",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "55000 - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+          "acao": "20JP - Desenvolvimento de Atividades e Apoio a Projetos e Eventos de Esporte, Educação, Lazer e Inclusão Social",
+          "dotacao_inicial_emenda": 200000.0,
+          "dotacao_atual_emenda": 200000.0,
+          "empenhado": 199999.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "39830003",
+          "ano": "2022",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Felício Laterça",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "53000 - Ministério da Integração e do Desenvolvimento Regional",
+          "acao": "",
+          "dotacao_inicial_emenda": 0.0,
+          "dotacao_atual_emenda": 0.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
           "nro_emenda": "41090018",
           "ano": "2020",
           "rp": "6 - Emendas Individuais",
@@ -988,9 +1018,9 @@
           "pago": 0.0
         }
       ],
-      "rows_count": 48,
-      "unique_nro_emendas": 48,
-      "sweep_steps": 26,
+      "rows_count": 50,
+      "unique_nro_emendas": 50,
+      "sweep_steps": 28,
       "sweep_stop_reason": "stable_signature",
       "top_authors": [
         {
@@ -1034,6 +1064,11 @@
           "empenhado": 250000.0
         },
         {
+          "author": "Felício Laterça",
+          "party": "Nao identificado",
+          "empenhado": 199999.0
+        },
+        {
           "author": "Cristovam Buarque",
           "party": "Nao identificado",
           "empenhado": 0.0
@@ -1062,7 +1097,7 @@
       "top_parties": [
         {
           "party": "Nao identificado",
-          "empenhado": 20895797.0
+          "empenhado": 21095796.0
         },
         {
           "party": "PCdoB",
@@ -1120,7 +1155,7 @@
         },
         {
           "orgao": "55000 - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
-          "empenhado": 0.0
+          "empenhado": 199999.0
         },
         {
           "orgao": "54000 - Ministério do Turismo",
@@ -1781,125 +1816,507 @@
       "top_supporters": [
         {
           "supporter": "DOUTOR LUIZINHO",
+          "group": "Parlamentar",
           "empenhado": 618850242.33,
           "pago": 437566293.0,
-          "authors_count": 7
+          "authors_count": 7,
+          "share_empenhado": 0.02450048286697454,
+          "top_supported_authors": [
+            {
+              "author": "COM. DA SAUDE",
+              "empenhado": 436258705.0
+            },
+            {
+              "author": "COM. ESPORTE",
+              "empenhado": 71135892.55
+            },
+            {
+              "author": "COM. DE INTEGRACAO NACIONAL E DES. REGIONAL",
+              "empenhado": 62637273.36
+            }
+          ]
         },
         {
           "supporter": "PEDRO LUCAS FERNANDES",
+          "group": "Parlamentar",
           "empenhado": 454076461.56,
           "pago": 264152342.0,
-          "authors_count": 7
+          "authors_count": 7,
+          "share_empenhado": 0.017977035162595578,
+          "top_supported_authors": [
+            {
+              "author": "COM. DA SAUDE",
+              "empenhado": 263570698.0
+            },
+            {
+              "author": "COM. DE INTEGRACAO NACIONAL E DES. REGIONAL",
+              "empenhado": 105156634.09
+            },
+            {
+              "author": "COM. TURISMO",
+              "empenhado": 45132650.0
+            }
+          ]
         },
         {
           "supporter": "GILBERTO ABRAMO",
+          "group": "Parlamentar",
           "empenhado": 367680187.68,
           "pago": 260371514.27,
-          "authors_count": 8
+          "authors_count": 8,
+          "share_empenhado": 0.014556578510598939,
+          "top_supported_authors": [
+            {
+              "author": "COM. DA SAUDE",
+              "empenhado": 255046966.0
+            },
+            {
+              "author": "COM. TURISMO",
+              "empenhado": 40348786.12
+            },
+            {
+              "author": "COM. ESPORTE",
+              "empenhado": 29352740.87
+            }
+          ]
         },
         {
           "supporter": "JULIO ARCOVERDE",
+          "group": "Parlamentar",
           "empenhado": 303500947.72,
           "pago": 172247035.95,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.012015701475251607,
+          "top_supported_authors": [
+            {
+              "author": "COM. DA SAUDE",
+              "empenhado": 164853066.0
+            },
+            {
+              "author": "COM. DE INTEGRACAO NACIONAL E DES. REGIONAL",
+              "empenhado": 65256659.76
+            },
+            {
+              "author": "COM. TURISMO",
+              "empenhado": 51780517.32
+            }
+          ]
         },
         {
           "supporter": "MARCOS PEREIRA",
+          "group": "Parlamentar",
           "empenhado": 251290825.81,
           "pago": 124920735.04,
-          "authors_count": 6
+          "authors_count": 6,
+          "share_empenhado": 0.009948685725976856,
+          "top_supported_authors": [
+            {
+              "author": "COM. DA SAUDE",
+              "empenhado": 124870696.0
+            },
+            {
+              "author": "COM. DE INTEGRACAO NACIONAL E DES. REGIONAL",
+              "empenhado": 58620904.55
+            },
+            {
+              "author": "COM. DESENV. URBANO",
+              "empenhado": 41691289.0
+            }
+          ]
         },
         {
           "supporter": "EFRAIM FILHO",
+          "group": "Parlamentar",
           "empenhado": 233551915.04,
           "pago": 70086947.73,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.009246396464906452,
+          "top_supported_authors": [
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 90495054.41
+            },
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 58611413.34
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 58471448.0
+            }
+          ]
         },
         {
           "supporter": "SOSTENES CAVALCANTE",
+          "group": "Parlamentar",
           "empenhado": 231102655.43,
           "pago": 165611782.42,
-          "authors_count": 6
+          "authors_count": 6,
+          "share_empenhado": 0.009149429478377297,
+          "top_supported_authors": [
+            {
+              "author": "COM. DA SAUDE",
+              "empenhado": 160002807.0
+            },
+            {
+              "author": "COM. TURISMO",
+              "empenhado": 39885021.9
+            },
+            {
+              "author": "COM. DESENV. URBANO",
+              "empenhado": 12251030.0
+            }
+          ]
         },
         {
           "supporter": "MARCELO CASTRO",
+          "group": "Parlamentar",
           "empenhado": 217600016.17,
           "pago": 74458610.26,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.008614855587603642,
+          "top_supported_authors": [
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 74392495.62
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 60090817.0
+            },
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 58116704.26
+            }
+          ]
         },
         {
           "supporter": "ROGERIO CARVALHO",
+          "group": "Parlamentar",
           "empenhado": 193466967.96,
           "pago": 80820582.07,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.0076594203405060375,
+          "top_supported_authors": [
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 74306999.0
+            },
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 61893264.7
+            },
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 56779704.26
+            }
+          ]
         },
         {
           "supporter": "PLINIO VALERIO",
+          "group": "Parlamentar",
           "empenhado": 188936577.65,
           "pago": 66019714.64,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.0074800607110212785,
+          "top_supported_authors": [
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 64128615.51
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 51461519.0
+            },
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 48346443.85
+            }
+          ]
         },
         {
           "supporter": "HUGO MOTTA",
+          "group": "Parlamentar",
           "empenhado": 184009990.53,
           "pago": 62845655.0,
-          "authors_count": 7
+          "authors_count": 7,
+          "share_empenhado": 0.007285015520650564,
+          "top_supported_authors": [
+            {
+              "author": "COM. DA SAUDE",
+              "empenhado": 62117085.0
+            },
+            {
+              "author": "COM. DE INTEGRACAO NACIONAL E DES. REGIONAL",
+              "empenhado": 54334698.77
+            },
+            {
+              "author": "COM. DESENV. URBANO",
+              "empenhado": 45731730.0
+            }
+          ]
         },
         {
           "supporter": "OMAR AZIZ",
+          "group": "Parlamentar",
           "empenhado": 177916777.24,
           "pago": 84433340.07,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.007043783219836727,
+          "top_supported_authors": [
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 77037496.0
+            },
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 50151568.7
+            },
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 49513400.54
+            }
+          ]
         },
         {
           "supporter": "EDUARDO BRAGA",
+          "group": "Parlamentar",
           "empenhado": 171085875.35,
           "pago": 69049360.15,
-          "authors_count": 4
+          "authors_count": 4,
+          "share_empenhado": 0.006773345586829088,
+          "top_supported_authors": [
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 65615139.65
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 61083149.0
+            },
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 44387586.7
+            }
+          ]
         },
         {
           "supporter": "CHICO RODRIGUES",
+          "group": "Parlamentar",
           "empenhado": 166418149.16,
           "pago": 52804826.68,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.006588548785077428,
+          "top_supported_authors": [
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 53477359.51
+            },
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 49426008.36
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 38514782.0
+            }
+          ]
         },
         {
           "supporter": "PROFESSORA DORINHA SEABRA",
+          "group": "Parlamentar",
           "empenhado": 166063490.34,
           "pago": 64210028.83,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.006574507726758835,
+          "top_supported_authors": [
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 60407940.26
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 57193389.0
+            },
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 47021936.08
+            }
+          ]
         },
         {
           "supporter": "CID GOMES",
+          "group": "Parlamentar",
           "empenhado": 161667950.08,
           "pago": 61462396.13,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.006400486854720782,
+          "top_supported_authors": [
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 60171894.07
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 55227074.0
+            },
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 44270334.01
+            }
+          ]
         },
         {
           "supporter": "EDUARDO GOMES",
+          "group": "Parlamentar",
           "empenhado": 160600133.16,
           "pago": 50900887.15,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.006358211634701437,
+          "top_supported_authors": [
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 50954008.36
+            },
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 47624413.51
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 37021712.0
+            }
+          ]
         },
         {
           "supporter": "LAERCIO OLIVEIRA",
+          "group": "Parlamentar",
           "empenhado": 157713444.15,
           "pago": 49022265.43,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.0062439266756045405,
+          "top_supported_authors": [
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 49426007.37
+            },
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 48515699.49
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 34771738.0
+            }
+          ]
         },
         {
           "supporter": "MECIAS DE JESUS",
+          "group": "Parlamentar",
           "empenhado": 153312675.42,
           "pago": 58097520.71,
-          "authors_count": 4
+          "authors_count": 4,
+          "share_empenhado": 0.00606969880673447,
+          "top_supported_authors": [
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 58918357.82
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 51498548.0
+            },
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 42895769.6
+            }
+          ]
         },
         {
           "supporter": "ELIZIANE GAMA",
+          "group": "Parlamentar",
           "empenhado": 149533528.56,
           "pago": 47626603.15,
-          "authors_count": 5
+          "authors_count": 5,
+          "share_empenhado": 0.005920081150374506,
+          "top_supported_authors": [
+            {
+              "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+              "empenhado": 49426008.36
+            },
+            {
+              "author": "COM. DESENV REGIONAL E TURISMO",
+              "empenhado": 38632892.91
+            },
+            {
+              "author": "COM. ASSUNTOS SOCIAIS",
+              "empenhado": 33747428.0
+            }
+          ]
         }
       ],
+      "top_supported_authors": [
+        {
+          "author": "COM. DA SAUDE",
+          "empenhado": 7594827585.0
+        },
+        {
+          "author": "COM. AGRICULTURA E REFORMA AGRARIA",
+          "empenhado": 3840820124.54
+        },
+        {
+          "author": "COM. DE INTEGRACAO NACIONAL E DES. REGIONAL",
+          "empenhado": 3518076370.57
+        },
+        {
+          "author": "COM. ASSUNTOS SOCIAIS",
+          "empenhado": 2554246783.0
+        },
+        {
+          "author": "COM. DESENV REGIONAL E TURISMO",
+          "empenhado": 2508917837.96
+        },
+        {
+          "author": "COM. TURISMO",
+          "empenhado": 1873601157.1
+        },
+        {
+          "author": "COM. ESPORTE",
+          "empenhado": 1626513840.82
+        },
+        {
+          "author": "COM. DESENV. URBANO",
+          "empenhado": 1112672106.83
+        },
+        {
+          "author": "COM. AGRICULTURA PEC ABAST D. RURAL",
+          "empenhado": 626436438.67
+        },
+        {
+          "author": "Sem informação",
+          "empenhado": 2383500.0
+        },
+        {
+          "author": "MURILO GALDINO",
+          "empenhado": 200000.0
+        }
+      ],
+      "top_supporter_groups": [
+        {
+          "group": "Parlamentar",
+          "empenhado": 25252252356.49
+        },
+        {
+          "group": "Comissao",
+          "empenhado": 6443388.0
+        }
+      ],
+      "totals": {
+        "total_empenhado": 25258695744.49,
+        "total_pago": 11075452179.56,
+        "top1_share": 0.02450048286697454,
+        "top5_share": 0.07899848374139752
+      },
       "source": {
         "requested_url": "https://portaldatransparencia.gov.br/download-de-dados/apoiamento-emendas-parlamentares-documentos/2025",
         "download_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares-apoiamento/2025_ApoiamentoEmendasParlamentares.zip",
