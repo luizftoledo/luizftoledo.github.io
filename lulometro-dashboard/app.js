@@ -9,6 +9,7 @@
   })();
   const LIGHT_MODE_RECORDS_THRESHOLD = 5000;
   const WORD_MIN_LEN = 3;
+  const WORDCLOUD_MAX_FUTURE_SKEW_DAYS = 7;
   const EXAMPLE_MANDATES_LIMIT = 3;
   const EXAMPLES_PER_MANDATE = 2;
   const EXAMPLE_SNIPPET_RADIUS = 150;
@@ -205,6 +206,11 @@
     }
     rec._epochDay = Math.floor(Date.UTC(y, m - 1, d) / 86400000);
     return rec._epochDay;
+  }
+
+  function getUtcTodayEpochDay() {
+    const now = new Date();
+    return Math.floor(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) / 86400000);
   }
 
   function esc(value) {
@@ -442,6 +448,9 @@
     let totalDocs = 0;
     let totalFilled = 0;
     let latestEpochDay = null;
+    let wordcloudAnchorEpochDay = null;
+    let futureOutlierDates = 0;
+    const maxAcceptedAnchorDay = getUtcTodayEpochDay() + WORDCLOUD_MAX_FUTURE_SKEW_DAYS;
 
     for (const rec of state.records) {
       totalDocs += 1;
@@ -450,6 +459,15 @@
       const epochDay = getRecordEpochDay(rec);
       if (epochDay !== null && (latestEpochDay === null || epochDay > latestEpochDay)) {
         latestEpochDay = epochDay;
+      }
+      if (epochDay !== null) {
+        if (epochDay <= maxAcceptedAnchorDay) {
+          if (wordcloudAnchorEpochDay === null || epochDay > wordcloudAnchorEpochDay) {
+            wordcloudAnchorEpochDay = epochDay;
+          }
+        } else {
+          futureOutlierDates += 1;
+        }
       }
 
       const president = (rec.president || '').trim();
@@ -483,6 +501,8 @@
       totalDocs,
       totalFilled,
       latestEpochDay,
+      wordcloudAnchorEpochDay: wordcloudAnchorEpochDay ?? latestEpochDay,
+      futureOutlierDates,
       byPresident,
       byMandate,
       hiddenPresidents,
@@ -504,11 +524,14 @@
     const hiddenMandateCount = state.coverage.hiddenMandates.length;
     const hiddenPresPreview = state.coverage.hiddenPresidents.slice(0, 6).join('; ');
     const hiddenSuffix = hiddenPresCount > 6 ? '...' : '';
+    const futureDatesNote = state.coverage.futureOutlierDates > 0
+      ? ` Para a nuvem de termos por período, ${nFmt.format(state.coverage.futureOutlierDates)} documento(s) com data muito à frente foram ignorados para evitar distorção temporal.`
+      : '';
     const progressiveStrategy = state.lightMode
       ? ' Para evitar travamentos em bases grandes, o painel abre em modo progressivo e só carrega o texto integral sob demanda.'
       : '';
 
-    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}. Em entrevistas, parte das menções pode vir do interlocutor (pergunta), não apenas do presidente.${progressiveStrategy}`;
+    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}. Em entrevistas, parte das menções pode vir do interlocutor (pergunta), não apenas do presidente.${futureDatesNote}${progressiveStrategy}`;
   }
 
   async function ensureRecordsReady() {
@@ -625,7 +648,7 @@
 
   function getWordcloudParams(filters) {
     const rangeDays = Number(els.wordcloudRange ? els.wordcloudRange.value : 30) || 30;
-    const latestEpochDay = state.coverage ? state.coverage.latestEpochDay : null;
+    const latestEpochDay = state.coverage ? state.coverage.wordcloudAnchorEpochDay : null;
     const anchorDay = latestEpochDay;
     const cutoffDay = latestEpochDay === null ? null : latestEpochDay - (rangeDays - 1);
     return {
@@ -749,7 +772,7 @@
 
   async function requestWordcloudUpdate(force = false) {
     if (!els.wordcloudCloud || !els.wordcloudTableBody || !els.wordcloudContext) return;
-    if (!state.coverage || state.coverage.latestEpochDay === null) {
+    if (!state.coverage || state.coverage.wordcloudAnchorEpochDay === null) {
       renderWordInsightsPlaceholder('Sem datas válidas para calcular termos recentes.');
       return;
     }
