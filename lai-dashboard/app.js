@@ -1488,8 +1488,11 @@
   function maybeResetAiHistoryOnContextChange() {
     const stamp = computeAiContextStamp();
     if (aiContextStamp && aiContextStamp !== stamp) {
+      const hadHistory = aiHistory.length > 0;
       aiHistory = [];
-      pushAiMessage('assistant', 'Contexto atualizado. Vou responder com base no novo recorte.');
+      if (hadHistory && aiStatus) {
+        aiStatus.textContent = 'Contexto atualizado. A próxima resposta vai usar o novo recorte.';
+      }
     }
     aiContextStamp = stamp;
   }

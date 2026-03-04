@@ -100,6 +100,36 @@
       max-width: 90ch;
     }
 
+    .hero-learn-anchor {
+      margin: -0.15rem 0 0;
+    }
+
+    .hero-learn-anchor a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.34rem;
+      border: 1px solid #d5cebf;
+      border-radius: 999px;
+      background: #f7f4ee;
+      color: #4f4538;
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.25;
+      padding: 0.34rem 0.7rem;
+      text-decoration: none;
+    }
+
+    .hero-learn-anchor a::before {
+      content: "↳";
+      font-weight: 700;
+      color: #6a5a46;
+    }
+
+    .hero-learn-anchor a:hover {
+      background: #f1ece1;
+      text-decoration: none;
+    }
+
     .update-line {
       display: flex;
       flex-wrap: wrap;
@@ -366,6 +396,7 @@
     .tables,
     .orgs,
     .search-panel,
+    .learn-more,
     .ai-panel {
       padding: 1rem 1.1rem;
       display: grid;
@@ -1060,6 +1091,7 @@
     <header class="card hero">
       <h1>Transparência no governo federal: por que pedidos de informação são negados?</h1>
       <p class="sub">Este painel analisa os pedidos feitos pela Lei de Acesso à Informação (LAI). O texto oficial da lei é a <a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm" target="_blank" rel="noopener noreferrer">Lei nº 12.527/2011</a>. Se você quiser uma explicação prática e simples de como usar a LAI, veja meu <a href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank" rel="noopener noreferrer">curso na Udemy</a>.</p>
+      <p class="hero-learn-anchor"><a href="#aprenda-mais-transparencia">Aprenda mais sobre transparência e como pedir informações ao governo</a></p>
       <div class="source-switch">
         <label class="label" for="source-select">Fonte da análise</label>
         <select id="source-select">
@@ -1191,17 +1223,6 @@
       </article>
 
       <article class="table-card">
-        <h3>Quando usar (ou não) a LAI: guia rápido em vídeo</h3>
-        <div class="video-embed">
-          <p>Dois vídeos diretos ao ponto para ajudar a decidir quando a LAI é o melhor caminho e como evitar pedidos que costumam ser negados.</p>
-          <div class="video-grid">
-            <iframe src="https://www.youtube.com/embed/FNOqGj7eQ34" title="Quando usar ou não a LAI - vídeo 1" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            <iframe src="https://www.youtube.com/embed/y5O3tkyL-Ac" title="Quando usar ou não a LAI - vídeo 2" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          </div>
-        </div>
-      </article>
-
-      <article class="table-card">
         <h3>Top órgãos que mais negam</h3>
         <div class="table-wrap">
           <table>
@@ -1286,6 +1307,20 @@
       <ul class="sources-list" id="sources-list">
         <li>Carregando links...</li>
       </ul>
+    </section>
+
+    <section class="card learn-more" id="aprenda-mais-transparencia">
+      <h2>Aprenda mais sobre transparência e como pedir informações ao governo</h2>
+      <article class="table-card">
+        <h3>Quando usar (ou não) a LAI: guia rápido em vídeo</h3>
+        <div class="video-embed">
+          <p>Dois vídeos diretos ao ponto para ajudar a decidir quando a LAI é o melhor caminho e como evitar pedidos que costumam ser negados.</p>
+          <div class="video-grid">
+            <iframe src="https://www.youtube.com/embed/FNOqGj7eQ34" title="Quando usar ou não a LAI - vídeo 1" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/y5O3tkyL-Ac" title="Quando usar ou não a LAI - vídeo 2" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+      </article>
     </section>
 
     <footer class="card ai-panel">
