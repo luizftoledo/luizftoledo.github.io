@@ -141,6 +141,84 @@
       gap: 0.55rem;
     }
 
+    .usage-examples {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: 0.72rem;
+      display: grid;
+      gap: 0.58rem;
+    }
+
+    .usage-examples h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.55rem;
+    }
+
+    .example-card {
+      border: 1px solid #e4dfd2;
+      border-radius: 12px;
+      background: #fdfcf8;
+      padding: 0.56rem;
+      display: grid;
+      gap: 0.34rem;
+      align-content: start;
+    }
+
+    .example-kicker {
+      font-size: 0.73rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    .example-title {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.32;
+      color: #1f2d3c;
+    }
+
+    .example-meta {
+      margin: 0;
+      font-size: 0.79rem;
+      color: #5a5650;
+    }
+
+    .example-snippet {
+      margin: 0;
+      font-size: 0.86rem;
+      line-height: 1.45;
+      color: #2f3a3a;
+      word-break: break-word;
+    }
+
+    .example-snippet mark {
+      background: #ffe2a8;
+      color: #2b1f06;
+      padding: 0 0.08rem;
+      border-radius: 0.18rem;
+      font-weight: 700;
+    }
+
+    .example-link {
+      color: var(--accent-3);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+
+    .example-link:hover {
+      text-decoration: underline;
+    }
+
     .word-insights {
       border: 1px solid var(--line);
       border-radius: 16px;
@@ -428,6 +506,9 @@
       .word-insights-grid {
         grid-template-columns: 1fr;
       }
+      .examples-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 700px) {
@@ -557,6 +638,12 @@
       </article>
     </section>
 
+    <section class="usage-examples" aria-label="Exemplos de uso do termo">
+      <h2>Exemplos De Uso (3 Ultimos Mandatos)</h2>
+      <p class="hint" id="examples-hint">Digite um termo e clique em Buscar para ver trechos reais com destaque.</p>
+      <div class="examples-grid" id="examples-grid"></div>
+    </section>
+
     <section class="panels">
       <article class="panel">
         <h2>Linha do Tempo de Citacoes</h2>
@@ -622,6 +709,6 @@
     </section>
   </main>
 
-  <script src="./app.js"></script>
+  <script src="./app.js?v=20260304c"></script>
 </body>
 </html>

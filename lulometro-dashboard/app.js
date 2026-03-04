@@ -9,6 +9,9 @@
   })();
   const LIGHT_MODE_RECORDS_THRESHOLD = 5000;
   const WORD_MIN_LEN = 3;
+  const EXAMPLE_MANDATES_LIMIT = 3;
+  const EXAMPLES_PER_MANDATE = 2;
+  const EXAMPLE_SNIPPET_RADIUS = 150;
   const PT_STOPWORDS = new Set([
     'a', 'ao', 'aos', 'aquela', 'aquelas', 'aquele', 'aqueles', 'aquilo', 'as', 'ate', 'com', 'como',
     'contra', 'da', 'das', 'de', 'dela', 'delas', 'dele', 'deles', 'depois', 'do', 'dos', 'e', 'ela',
@@ -47,6 +50,8 @@
     summaryText: document.getElementById('summary-text'),
     tableCount: document.getElementById('table-count'),
     resultsBody: document.getElementById('results-body'),
+    examplesGrid: document.getElementById('examples-grid'),
+    examplesHint: document.getElementById('examples-hint'),
 
     chartTimeline: document.getElementById('chart-timeline'),
     chartPresidents: document.getElementById('chart-presidents'),
@@ -76,6 +81,8 @@
     wordcloudRequestId: 0,
     wordcloudCurrentKey: '',
     wordcloudLastParams: null,
+    recordsLoadPromise: null,
+    searchRequestId: 0,
   };
 
   function foldText(value) {
@@ -128,6 +135,57 @@
       count += 1;
     }
     return count;
+  }
+
+  function buildSnippetRegex(words) {
+    if (!words || !words.length) return null;
+    const pattern = words.map((w) => escapeRegExp(w)).join('[^a-z0-9]+');
+    return new RegExp(`(^|[^a-z0-9])(${pattern})(?=$|[^a-z0-9])`);
+  }
+
+  function extractMandateSortYear(mandate) {
+    if (!mandate) return 0;
+    const years = (mandate.match(/\d{4}/g) || []).map((x) => Number(x)).filter((x) => Number.isFinite(x));
+    return years.length ? Math.max(...years) : 0;
+  }
+
+  function buildHighlightedSnippet(text, queryWords) {
+    const rawText = (text || '').toString();
+    if (!rawText.trim()) return null;
+
+    const snippetRegex = buildSnippetRegex(queryWords);
+    const folded = foldText(rawText);
+    const match = snippetRegex ? snippetRegex.exec(folded) : null;
+
+    if (!match || typeof match.index !== 'number') {
+      const fallback = rawText.slice(0, EXAMPLE_SNIPPET_RADIUS + 120).replace(/\s+/g, ' ').trim();
+      if (!fallback) return null;
+      return `${esc(fallback)}${rawText.length > fallback.length ? '...' : ''}`;
+    }
+
+    const termStart = match.index + (match[1] ? match[1].length : 0);
+    const termEnd = termStart + (match[2] ? match[2].length : 0);
+
+    let start = Math.max(0, termStart - EXAMPLE_SNIPPET_RADIUS);
+    let end = Math.min(rawText.length, termEnd + EXAMPLE_SNIPPET_RADIUS);
+
+    const leftBreak = rawText.lastIndexOf(' ', start);
+    if (leftBreak >= 0 && leftBreak > start - 40) start = leftBreak + 1;
+
+    const rightBreak = rawText.indexOf(' ', end);
+    if (rightBreak >= 0 && rightBreak < end + 40) end = rightBreak;
+
+    const snippet = rawText.slice(start, end).replace(/\n/g, ' ');
+    const relStart = Math.max(0, termStart - start);
+    const relEnd = Math.min(snippet.length, termEnd - start);
+
+    const before = esc(snippet.slice(0, relStart).replace(/\s+/g, ' '));
+    const hit = esc(snippet.slice(relStart, relEnd).replace(/\s+/g, ' '));
+    const after = esc(snippet.slice(relEnd).replace(/\s+/g, ' '));
+
+    const prefix = start > 0 ? '... ' : '';
+    const suffix = end < rawText.length ? ' ...' : '';
+    return `${prefix}${before}<mark>${hit}</mark>${after}${suffix}`;
   }
 
   function getRecordEpochDay(rec) {
@@ -194,6 +252,16 @@
       const chart = state.charts.pop();
       chart.destroy();
     }
+  }
+
+  function clampChartCanvasSize() {
+    [els.chartTimeline, els.chartPresidents, els.chartMandates].forEach((canvas) => {
+      if (!canvas) return;
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+      canvas.removeAttribute('width');
+      canvas.removeAttribute('height');
+    });
   }
 
   async function fetchJson(url) {
@@ -268,23 +336,32 @@
 
     emitProgress(78, 'Descompactando base...');
     const inflated = pako.ungzip(gzData, { to: 'string' });
-    const lines = inflated.split('\n');
-    const out = [];
-    const totalLines = lines.length || 1;
+    gzData = null;
 
-    for (let idx = 0; idx < lines.length; idx += 1) {
-      const line = lines[idx];
-      const trimmed = line.trim();
-      if (!trimmed) continue;
-      try {
-        out.push(JSON.parse(trimmed));
-      } catch (err) {
-        // Ignore malformed rows.
+    const out = [];
+    let lineStart = 0;
+    let linesSeen = 0;
+
+    for (let idx = 0; idx <= inflated.length; idx += 1) {
+      const charCode = idx < inflated.length ? inflated.charCodeAt(idx) : 10;
+      if (charCode !== 10) continue;
+
+      const trimmed = inflated.slice(lineStart, idx).trim();
+      lineStart = idx + 1;
+      linesSeen += 1;
+
+      if (trimmed) {
+        try {
+          out.push(JSON.parse(trimmed));
+        } catch (err) {
+          // Ignore malformed rows.
+        }
       }
 
-      if (idx > 0 && idx % 2500 === 0) {
-        const pct = 78 + (idx / totalLines) * 21;
+      if (linesSeen % 800 === 0) {
+        const pct = 78 + (idx / Math.max(1, inflated.length)) * 21;
         emitProgress(pct, `Indexando documentos: ${nFmt.format(out.length)} itens`);
+        await new Promise((resolve) => setTimeout(resolve, 0));
       }
     }
 
@@ -310,10 +387,10 @@
     setControlsDisabled(true);
     els.btnSearch.disabled = false;
     els.btnSearch.textContent = 'Carregar base';
-    els.searchHint.textContent = 'Modo leve ativado: a base completa será carregada apenas sob demanda.';
-    els.summaryText.textContent = 'Modo leve ativo para evitar travamentos neste dispositivo. Toque em "Carregar base" para ativar a busca completa.';
+    els.searchHint.textContent = 'Modo progressivo: a base textual completa só carrega quando você clicar em "Carregar base".';
+    els.summaryText.textContent = 'Para evitar travamentos, o Lulometro abre em modo progressivo. Clique em "Carregar base" para liberar busca textual completa.';
     els.tableCount.textContent = '0 linhas';
-    els.resultsBody.innerHTML = '<tr><td colspan="8">Modo leve ativo. Toque em <strong>Carregar base</strong> para carregar os documentos completos.</td></tr>';
+    els.resultsBody.innerHTML = '<tr><td colspan="8">Modo progressivo ativo. Clique em <strong>Carregar base</strong> para iniciar a busca textual completa.</td></tr>';
     if (els.wordcloudContext) {
       els.wordcloudContext.textContent = 'Nuvem de palavras será calculada após carregar a base completa.';
     }
@@ -323,6 +400,12 @@
     if (els.wordcloudTableBody) {
       els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Carregue a base para ver o top 10.</td></tr>';
     }
+    if (els.examplesHint) {
+      els.examplesHint.textContent = 'Carregue a base e busque um termo para ver exemplos reais dos 3 últimos mandatos.';
+    }
+    if (els.examplesGrid) {
+      els.examplesGrid.innerHTML = '';
+    }
   }
 
   function shouldUseLightMode(metadata) {
@@ -330,10 +413,8 @@
     const largeDataset = totalRecords >= LIGHT_MODE_RECORDS_THRESHOLD;
 
     if (DEVICE_PROFILE.saveData) return true;
-    if (!largeDataset) return false;
-    if (DEVICE_PROFILE.smallScreen) return true;
-    if (DEVICE_PROFILE.lowRam) return true;
-    return false;
+    if (largeDataset) return true;
+    return DEVICE_PROFILE.smallScreen || DEVICE_PROFILE.lowRam;
   }
 
   function computeCoverage() {
@@ -404,47 +485,57 @@
     const hiddenMandateCount = state.coverage.hiddenMandates.length;
     const hiddenPresPreview = state.coverage.hiddenPresidents.slice(0, 6).join('; ');
     const hiddenSuffix = hiddenPresCount > 6 ? '...' : '';
-    const mobileStrategy = state.lightMode
-      ? ' Em dispositivos móveis ou conexão restrita, quando a base está grande, o painel abre em modo leve e só carrega o texto integral sob demanda.'
+    const progressiveStrategy = state.lightMode
+      ? ' Para evitar travamentos em bases grandes, o painel abre em modo progressivo e só carrega o texto integral sob demanda.'
       : '';
 
-    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}. Em entrevistas, parte das menções pode vir do interlocutor (pergunta), não apenas do presidente.${mobileStrategy}`;
+    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}. Em entrevistas, parte das menções pode vir do interlocutor (pergunta), não apenas do presidente.${progressiveStrategy}`;
   }
 
   async function ensureRecordsReady() {
     if (state.recordsLoaded) return true;
-    els.btnSearch.disabled = true;
-    els.btnSearch.textContent = 'Carregando...';
-    els.searchHint.textContent = 'Carregando base completa de discursos e entrevistas...';
-    setLoadProgress(true, 1, 'Preparando carregamento da base...');
-    try {
-      const records = await fetchJsonlGz('./data/records.jsonl.gz', ({ percent, text }) => {
-        setLoadProgress(true, percent, text);
-      });
-      state.records = records;
-      state.recordsLoaded = true;
-      state.ready = true;
-      computeCoverage();
-      updateMethodologyNote();
-      populateFilterOptions();
-      setControlsDisabled(false);
-      els.btnSearch.textContent = 'Buscar';
-      applySearch();
-      await requestWordcloudUpdate(true);
-      setLoadProgress(true, 100, 'Carregamento concluído.');
-      setTimeout(() => setLoadProgress(false, 0, ''), 700);
-      return true;
-    } catch (error) {
-      els.summaryText.textContent = 'Falha ao carregar a base do Lulometro.';
-      els.searchHint.textContent = `Erro ao carregar base: ${error.message}`;
-      els.resultsBody.innerHTML = '<tr><td colspan="8">Nao foi possivel carregar os dados completos.</td></tr>';
-      els.btnSearch.textContent = 'Carregar base';
-      setLoadProgress(true, 100, 'Erro no carregamento.');
-      setTimeout(() => setLoadProgress(false, 0, ''), 1700);
-      return false;
-    } finally {
-      els.btnSearch.disabled = false;
-    }
+    if (state.recordsLoadPromise) return state.recordsLoadPromise;
+
+    state.recordsLoadPromise = (async () => {
+      els.btnSearch.disabled = true;
+      els.btnSearch.textContent = 'Carregando...';
+      els.searchHint.textContent = 'Carregando base completa de discursos e entrevistas...';
+      setLoadProgress(true, 1, 'Preparando carregamento da base...');
+      try {
+        const records = await fetchJsonlGz('./data/records.jsonl.gz', ({ percent, text }) => {
+          setLoadProgress(true, percent, text);
+        });
+        state.records = records;
+        state.recordsLoaded = true;
+        state.ready = true;
+        computeCoverage();
+        updateMethodologyNote();
+        populateFilterOptions();
+        setControlsDisabled(false);
+        els.btnSearch.textContent = 'Buscar';
+        await applySearch();
+        markWordcloudDirty(
+          getWordcloudParams(getActiveFilters()),
+          'Base carregada. Clique em "Atualizar Nuvem" para calcular os termos mais usados.'
+        );
+        setLoadProgress(true, 100, 'Carregamento concluído.');
+        setTimeout(() => setLoadProgress(false, 0, ''), 700);
+        return true;
+      } catch (error) {
+        els.summaryText.textContent = 'Falha ao carregar a base do Lulometro.';
+        els.searchHint.textContent = `Erro ao carregar base: ${error.message}`;
+        els.resultsBody.innerHTML = '<tr><td colspan="8">Nao foi possivel carregar os dados completos.</td></tr>';
+        els.btnSearch.textContent = 'Carregar base';
+        setLoadProgress(true, 100, 'Erro no carregamento.');
+        setTimeout(() => setLoadProgress(false, 0, ''), 1700);
+        return false;
+      } finally {
+        state.recordsLoadPromise = null;
+        els.btnSearch.disabled = false;
+      }
+    })();
+
+    return state.recordsLoadPromise;
   }
 
   function populateFilterOptions() {
@@ -592,12 +683,10 @@
       if (day === null || day < params.cutoffDay || day > params.anchorDay) continue;
       docsInWindow += 1;
 
-      if (!rec._searchText) {
-        rec._searchText = normalizeSearchText(rec.text || '');
-      }
-      if (!rec._searchText) continue;
+      const searchText = normalizeSearchText(rec.text || '');
+      if (!searchText) continue;
 
-      const tokens = rec._searchText.split(' ');
+      const tokens = searchText.split(' ');
       for (const token of tokens) {
         if (!isRelevantWordToken(token)) continue;
         byWord.set(token, (byWord.get(token) || 0) + 1);
@@ -671,8 +760,10 @@
     }
   }
 
-  function applySearch() {
+  async function applySearch() {
     if (!state.ready) return;
+    const requestId = state.searchRequestId + 1;
+    state.searchRequestId = requestId;
 
     const termRaw = (els.termInput.value || '').trim();
     const query = normalizeQueryTerm(termRaw);
@@ -691,15 +782,26 @@
     const docsByType = { entrevista: 0, discurso: 0 };
     const mentionsByType = { entrevista: 0, discurso: 0 };
 
-    for (const rec of state.records) {
+    if (hasTerm) {
+      els.searchHint.textContent = 'Buscando termo na base textual...';
+    }
+
+    for (let idx = 0; idx < state.records.length; idx += 1) {
+      if (requestId !== state.searchRequestId) return;
+      const rec = state.records[idx];
+      if (idx > 0 && idx % 140 === 0) {
+        if (hasTerm) {
+          const pct = Math.round((idx / Math.max(1, state.records.length)) * 100);
+          els.searchHint.textContent = `Buscando termo na base textual... ${pct}%`;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
       if (!recordMatchesBaseFilters(rec, filters)) continue;
 
       let mentions = 0;
       if (hasTerm) {
-        if (!rec._searchText) {
-          rec._searchText = normalizeSearchText(rec.text || '');
-        }
-        mentions = countTermMatches(rec._searchText, termRegex);
+        const searchText = normalizeSearchText(rec.text || '');
+        mentions = countTermMatches(searchText, termRegex);
         if (mentions <= 0) continue;
       }
 
@@ -729,7 +831,10 @@
         if (!earliestDate || rec.date < earliestDate) earliestDate = rec.date;
         if (!latestDate || rec.date > latestDate) latestDate = rec.date;
       }
+
     }
+
+    if (requestId !== state.searchRequestId) return;
 
     if (hasTerm) {
       results.sort((a, b) => b.mentions - a.mentions || (b.rec.date || '').localeCompare(a.rec.date || ''));
@@ -749,6 +854,7 @@
 
     renderCharts({ hasTerm, timeline, byPresident, byMandate, termRaw });
     renderTable(results, hasTerm);
+    renderUsageExamples({ hasTerm, termRaw, query, results });
     markWordcloudDirty(getWordcloudParams(filters));
 
     const sampleDocs = nFmt.format(results.length);
@@ -771,6 +877,76 @@
     }
   }
 
+  function renderUsageExamples({ hasTerm, termRaw, query, results }) {
+    if (!els.examplesGrid || !els.examplesHint) return;
+    els.examplesGrid.innerHTML = '';
+
+    if (!hasTerm) {
+      els.examplesHint.textContent = 'Digite um termo e clique em Buscar para ver exemplos reais dos 3 últimos mandatos.';
+      return;
+    }
+
+    if (!results.length) {
+      els.examplesHint.textContent = `Nenhum trecho encontrado para "${termRaw}" no filtro atual.`;
+      return;
+    }
+
+    const byMandate = new Map();
+    for (const row of results) {
+      const mandate = row.rec.mandate || 'Mandato nao identificado';
+      if (!byMandate.has(mandate)) {
+        byMandate.set(mandate, {
+          mandate,
+          latestDate: row.rec.date || '',
+          rows: [],
+        });
+      }
+      const entry = byMandate.get(mandate);
+      if ((row.rec.date || '') > entry.latestDate) {
+        entry.latestDate = row.rec.date || '';
+      }
+      entry.rows.push(row);
+    }
+
+    const recentMandates = [...byMandate.values()]
+      .sort((a, b) => {
+        const byDate = (b.latestDate || '').localeCompare(a.latestDate || '');
+        if (byDate !== 0) return byDate;
+        const byYear = extractMandateSortYear(b.mandate) - extractMandateSortYear(a.mandate);
+        if (byYear !== 0) return byYear;
+        return a.mandate.localeCompare(b.mandate, 'pt-BR');
+      })
+      .slice(0, EXAMPLE_MANDATES_LIMIT);
+
+    if (!recentMandates.length) {
+      els.examplesHint.textContent = `Sem exemplos disponíveis para "${termRaw}".`;
+      return;
+    }
+
+    els.examplesHint.textContent = `Mostrando até ${EXAMPLES_PER_MANDATE} exemplos por mandato entre os ${recentMandates.length} mandatos mais recentes com a busca "${termRaw}".`;
+
+    for (const bucket of recentMandates) {
+      const picks = bucket.rows
+        .sort((a, b) => (b.rec.date || '').localeCompare(a.rec.date || '') || b.mentions - a.mentions)
+        .slice(0, EXAMPLES_PER_MANDATE);
+
+      for (const { rec, mentions } of picks) {
+        const snippetHtml = buildHighlightedSnippet(rec.text || '', query.words)
+          || 'Trecho não disponível para este documento.';
+        const card = document.createElement('article');
+        card.className = 'example-card';
+        card.innerHTML = `
+          <div class="example-kicker">${esc(rec.mandate || 'Mandato nao identificado')}</div>
+          <h3 class="example-title">${esc(rec.title || 'Sem titulo')}</h3>
+          <p class="example-meta">${esc(rec.president || '--')} | ${esc(rec.type || '--')} | ${esc(formatDateIso(rec.date))} | ${nFmt.format(mentions)} ocorrências</p>
+          <p class="example-snippet">${snippetHtml}</p>
+          <a class="example-link" href="${esc(rec.url || '#')}" target="_blank" rel="noopener noreferrer">Ver documento original</a>
+        `;
+        els.examplesGrid.appendChild(card);
+      }
+    }
+  }
+
   function renderMetrics({ hasTerm, totalMentions, results, earliestDate, latestDate, presidentsCount }) {
     els.metricMentions.textContent = nFmt.format(totalMentions);
     els.metricDocs.textContent = nFmt.format(results.length);
@@ -789,6 +965,7 @@
 
   function renderCharts({ hasTerm, timeline, byPresident, byMandate, termRaw }) {
     destroyCharts();
+    clampChartCanvasSize();
 
     const timelineEntries = [...timeline.entries()].sort((a, b) => a[0].localeCompare(b[0]));
     const timelineLabels = timelineEntries.map(([k]) => formatMonthKey(k));
@@ -813,6 +990,8 @@
         }],
       },
       options: {
+        animation: false,
+        responsiveAnimationDuration: 0,
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
@@ -854,6 +1033,8 @@
         }],
       },
       options: {
+        animation: false,
+        responsiveAnimationDuration: 0,
         responsive: true,
         maintainAspectRatio: false,
         indexAxis: 'y',
@@ -886,6 +1067,8 @@
         }],
       },
       options: {
+        animation: false,
+        responsiveAnimationDuration: 0,
         responsive: true,
         maintainAspectRatio: false,
         indexAxis: 'y',
@@ -897,6 +1080,10 @@
       },
     });
     state.charts.push(mandateChart);
+
+    window.requestAnimationFrame(() => {
+      state.charts.forEach((chart) => chart.resize());
+    });
   }
 
   function renderTable(results, hasTerm) {
@@ -935,8 +1122,8 @@
   function setupEvents() {
     els.btnSearch.addEventListener('click', async () => {
       if (!state.recordsLoaded) {
-        const ready = await ensureRecordsReady();
-        if (!ready) return;
+        await ensureRecordsReady();
+        return;
       }
       applySearch();
     });
@@ -952,9 +1139,7 @@
     els.termInput.addEventListener('keydown', (ev) => {
       if (ev.key !== 'Enter') return;
       if (!state.recordsLoaded) {
-        ensureRecordsReady().then((ready) => {
-          if (ready) applySearch();
-        });
+        ensureRecordsReady();
         return;
       }
       applySearch();
