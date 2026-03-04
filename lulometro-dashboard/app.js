@@ -8,6 +8,7 @@
     return { smallScreen, lowRam, saveData, deviceMemory };
   })();
   const LIGHT_MODE_RECORDS_THRESHOLD = 5000;
+  const DATA_FETCH_TIMEOUT_MS = 180000;
   const WORD_MIN_LEN = 3;
   const WORDCLOUD_MAX_FUTURE_SKEW_DAYS = 7;
   const EXAMPLE_MANDATES_LIMIT = 3;
@@ -304,84 +305,109 @@
     }
   }
 
-  async function fetchJsonlGz(url, onProgress) {
+  function parseJsonlTextChunk(buffer, out) {
+    let consumedUntil = 0;
+    let linesSeen = 0;
+    for (let idx = 0; idx <= buffer.length; idx += 1) {
+      const charCode = idx < buffer.length ? buffer.charCodeAt(idx) : -1;
+      if (charCode !== 10 && charCode !== -1) continue;
+      const line = buffer.slice(consumedUntil, idx).trim();
+      consumedUntil = idx + 1;
+      linesSeen += 1;
+      if (!line) continue;
+      try {
+        out.push(JSON.parse(line));
+      } catch (err) {
+        // Ignore malformed rows.
+      }
+    }
+    return {
+      remainder: consumedUntil >= buffer.length ? '' : buffer.slice(consumedUntil),
+      linesSeen,
+    };
+  }
+
+  async function fetchJsonlGz(url, onProgress, expectedRecords = 0) {
     const emitProgress = (percent, text) => {
       if (typeof onProgress === 'function') onProgress({ percent, text });
     };
 
     emitProgress(2, 'Iniciando download da base...');
-    const resp = await fetch(url, { cache: 'no-store' });
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), DATA_FETCH_TIMEOUT_MS);
+    const resp = await fetch(url, { cache: 'no-store', signal: controller.signal });
+    window.clearTimeout(timeoutId);
     if (!resp.ok) {
       throw new Error(`Falha no fetch de ${url}: ${resp.status}`);
     }
 
+    const out = [];
     const totalBytes = Number(resp.headers.get('content-length') || 0);
-    let gzData;
 
-    if (resp.body && typeof resp.body.getReader === 'function') {
-      const reader = resp.body.getReader();
-      const chunks = [];
-      let received = 0;
+    const supportsNativeGzip = typeof DecompressionStream !== 'undefined'
+      && resp.body
+      && typeof resp.body.pipeThrough === 'function';
+
+    if (supportsNativeGzip) {
+      emitProgress(12, totalBytes > 0 ? `Baixando base (${formatBytes(totalBytes)})...` : 'Baixando base...');
+      emitProgress(24, 'Descompactando e indexando em streaming...');
+
+      const decompressedStream = resp.body.pipeThrough(new DecompressionStream('gzip'));
+      const reader = decompressedStream.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = '';
+      let loopCount = 0;
+      let parsedLines = 0;
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         if (!value) continue;
-        chunks.push(value);
-        received += value.byteLength;
 
-        let pctDownload;
-        if (totalBytes > 0) {
-          pctDownload = Math.min(72, (received / totalBytes) * 72);
-          emitProgress(pctDownload, `Baixando base: ${formatBytes(received)} de ${formatBytes(totalBytes)}`);
-        } else {
-          pctDownload = Math.min(72, 8 + Math.log10(received + 10) * 14);
-          emitProgress(pctDownload, `Baixando base: ${formatBytes(received)}`);
+        textBuffer += decoder.decode(value, { stream: true });
+        const parsed = parseJsonlTextChunk(textBuffer, out);
+        textBuffer = parsed.remainder;
+        parsedLines += parsed.linesSeen;
+        loopCount += 1;
+
+        if (loopCount % 4 === 0) {
+          const ratio = expectedRecords > 0 ? Math.min(1, out.length / expectedRecords) : Math.min(0.98, Math.log10(parsedLines + 10) / 5);
+          const pct = 24 + ratio * 74;
+          emitProgress(pct, `Indexando documentos: ${nFmt.format(out.length)} itens`);
+          await new Promise((resolve) => setTimeout(resolve, 0));
         }
       }
 
-      const merged = new Uint8Array(received);
-      let offset = 0;
-      for (const chunk of chunks) {
-        merged.set(chunk, offset);
-        offset += chunk.byteLength;
+      textBuffer += decoder.decode();
+      if (textBuffer.trim()) {
+        const parsed = parseJsonlTextChunk(`${textBuffer}\n`, out);
+        parsedLines += parsed.linesSeen;
       }
-      gzData = merged;
-    } else {
-      emitProgress(45, 'Baixando base...');
-      const buf = await resp.arrayBuffer();
-      gzData = new Uint8Array(buf);
-      emitProgress(72, `Download concluído (${formatBytes(gzData.byteLength)}).`);
+
+      emitProgress(100, `Base pronta: ${nFmt.format(out.length)} documentos`);
+      return out;
     }
 
-    emitProgress(78, 'Descompactando base...');
-    const inflated = pako.ungzip(gzData, { to: 'string' });
-    gzData = null;
+    // Fallback para navegadores sem DecompressionStream.
+    const hasPako = typeof window !== 'undefined' && window.pako && typeof window.pako.ungzip === 'function';
+    if (!hasPako) {
+      throw new Error('Seu navegador não suportou descompactação da base. Tente usar Chrome, Edge ou Safari atualizado.');
+    }
 
-    const out = [];
-    let lineStart = 0;
-    let linesSeen = 0;
+    emitProgress(18, 'Baixando base...');
+    const buf = await resp.arrayBuffer();
+    const gzData = new Uint8Array(buf);
+    emitProgress(70, `Download concluído (${formatBytes(gzData.byteLength)}).`);
+    emitProgress(80, 'Descompactando base...');
+    const inflated = window.pako.ungzip(gzData, { to: 'string' });
 
-    for (let idx = 0; idx <= inflated.length; idx += 1) {
-      const charCode = idx < inflated.length ? inflated.charCodeAt(idx) : 10;
-      if (charCode !== 10) continue;
-
-      const trimmed = inflated.slice(lineStart, idx).trim();
-      lineStart = idx + 1;
-      linesSeen += 1;
-
-      if (trimmed) {
-        try {
-          out.push(JSON.parse(trimmed));
-        } catch (err) {
-          // Ignore malformed rows.
-        }
-      }
-
-      if (linesSeen % 800 === 0) {
-        const pct = 78 + (idx / Math.max(1, inflated.length)) * 21;
-        emitProgress(pct, `Indexando documentos: ${nFmt.format(out.length)} itens`);
-        await new Promise((resolve) => setTimeout(resolve, 0));
+    let textBuffer = inflated;
+    const parsed = parseJsonlTextChunk(`${textBuffer}\n`, out);
+    if (parsed.remainder.trim()) {
+      try {
+        out.push(JSON.parse(parsed.remainder.trim()));
+      } catch (err) {
+        // Ignore malformed tail.
       }
     }
 
@@ -551,7 +577,7 @@
       try {
         const records = await fetchJsonlGz('./data/records.jsonl.gz', ({ percent, text }) => {
           setLoadProgress(true, percent, text);
-        });
+        }, Number(state.metadata && state.metadata.total_records) || 0);
         state.records = records;
         state.recordsLoaded = true;
         state.ready = true;
