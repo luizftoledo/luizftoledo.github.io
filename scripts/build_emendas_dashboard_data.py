@@ -9,6 +9,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+import time
 import unicodedata
 import urllib.error
 import urllib.request
@@ -49,6 +50,10 @@ CAMARA_DEPUTADOS_URL = (
     "?itens=700&ordem=ASC&ordenarPor=nome"
 )
 SENADO_LISTA_URL = "https://legis.senado.leg.br/dadosabertos/senador/lista/atual"
+SIOP_PANEL_URL = (
+    "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm"
+    "?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true"
+)
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
@@ -336,6 +341,427 @@ def fetch_execucao_ano_corrente(year):
         "stages": stages,
         "stage_values": stage_values,
     }
+
+
+def parse_siop_dates_from_text(body_text):
+    last_update = ""
+    base_siafi_date = ""
+    m_last = re.search(
+        r"Última atualização realizada em\s*(\d{1,2}/\d{1,2}/\d{4}(?:\s+\d{1,2}:\d{2}:\d{2})?)",
+        body_text or "",
+        flags=re.IGNORECASE,
+    )
+    if m_last:
+        last_update = normalize_text(m_last.group(1))
+
+    m_siafi = re.search(
+        r"Dados referentes à Base SIAFI de\s*(\d{1,2}/\d{1,2}/\d{4})",
+        body_text or "",
+        flags=re.IGNORECASE,
+    )
+    if m_siafi:
+        base_siafi_date = normalize_text(m_siafi.group(1))
+    return last_update, base_siafi_date
+
+
+def navigate_siop_to_emendas(driver, wait):
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support import expected_conditions as EC
+
+    driver.get(SIOP_PANEL_URL)
+
+    # Entrar na home do painel.
+    wait.until(
+        EC.element_to_be_clickable((By.XPATH, "/html/body/div[5]/div/div[10]/div[2]/table/tbody/tr/td"))
+    ).click()
+    time.sleep(6)
+
+    # Tile textual (mais estável que clique por coordenada).
+    wait.until(EC.element_to_be_clickable((By.XPATH, "//td[contains(@title,'Emendas Parlamentares')]"))).click()
+    time.sleep(6)
+
+
+def open_siop_step2_group(driver, wait, group_label="Por Partido"):
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support import expected_conditions as EC
+
+    wait.until(
+        EC.element_to_be_clickable((By.XPATH, "//td[contains(., 'Passo 2 - Visualize os Resultados')]"))
+    ).click()
+    time.sleep(6)
+
+    # Alguns ambientes ignoram clique nativo; usamos fallback JS.
+    group_candidates = [
+        f"//td[normalize-space(text())='{group_label}']",
+        f"//*[normalize-space(text())='{group_label}']",
+    ]
+    clicked_group = False
+    for xp in group_candidates:
+        nodes = driver.find_elements(By.XPATH, xp)
+        if not nodes:
+            continue
+        for node in nodes:
+            try:
+                node.click()
+                clicked_group = True
+                break
+            except Exception:
+                try:
+                    driver.execute_script("arguments[0].click();", node)
+                    clicked_group = True
+                    break
+                except Exception:
+                    continue
+        if clicked_group:
+            break
+
+    if not clicked_group:
+        raise RuntimeError(f"não foi possível abrir '{group_label}' no SIOP")
+    time.sleep(5)
+
+
+def extract_siop_visible_chunk(driver):
+    js = """
+        function parsePx(v){
+          const m = String(v || "").match(/(-?[0-9\\.]+)px/i);
+          return m ? parseFloat(m[1]) : null;
+        }
+
+        function collectHeaders(pageEl){
+          const out = [];
+          for(const el of pageEl.children){
+            const title = (el.getAttribute("title") || "").trim();
+            if(!title || title === "Resize column" || title === "Total") continue;
+            const left = parsePx(el.style.left);
+            const top = parsePx(el.style.top);
+            const width = parsePx(el.style.width);
+            const height = parsePx(el.style.height);
+            if(left === null || top !== 0 || height !== 39 || width === null) continue;
+            out.push({name: title, left, width});
+          }
+          out.sort((a, b) => a.left - b.left);
+          return out;
+        }
+
+        function collectCells(pageEl){
+          const out = [];
+          for(const el of pageEl.children){
+            const title = (el.getAttribute("title") || "").trim();
+            if(!title || title === "Resize column") continue;
+            const left = parsePx(el.style.left);
+            const top = parsePx(el.style.top);
+            const width = parsePx(el.style.width);
+            const height = parsePx(el.style.height);
+            if(left === null || top === null || width === null || height === null) continue;
+            out.push({title, left, top, width, height});
+          }
+          return out;
+        }
+
+        function nearestCol(left, headers){
+          let best = null;
+          for(const h of headers){
+            if(best === null || Math.abs(left - h.left) < Math.abs(left - best.left)){
+              best = h;
+            }
+          }
+          return best ? best.name : "";
+        }
+
+        const frame = [...document.querySelectorAll('.QvFrame[objtype="Grid"]')]
+          .find((f) => getComputedStyle(f).display !== "none" && (f.innerText || "").includes("Nro. Emenda"));
+        if(!frame){
+          return { error: "grid de emendas não encontrado" };
+        }
+
+        const pages = [...frame.querySelectorAll('div[page="0"]')];
+        const headLeft = pages[0];
+        const dataLeft = pages[1];
+        const headRight = pages[3];
+        const dataRight = pages[4];
+        if(!headLeft || !dataLeft || !headRight || !dataRight){
+          return { error: "estrutura de páginas do grid incompleta", pages_count: pages.length };
+        }
+
+        const headersLeft = collectHeaders(headLeft);
+        const headersRight = collectHeaders(headRight);
+        const rowHeight = 39;
+        const rows = {};
+
+        function ingest(cells, headers){
+          for(const cell of cells){
+            if(cell.top <= 0) continue; // ignora linha total do topo
+            const start = Math.max(0, Math.round((cell.top - 39) / rowHeight));
+            const span = Math.max(1, Math.round(cell.height / rowHeight));
+            const col = nearestCol(cell.left, headers);
+            if(!col) continue;
+            for(let i = 0; i < span; i++){
+              const idx = start + i;
+              if(!rows[idx]) rows[idx] = {_row: idx};
+              if(!rows[idx][col] || rows[idx][col] === ""){
+                rows[idx][col] = cell.title;
+              }
+            }
+          }
+        }
+
+        ingest(collectCells(dataLeft), headersLeft);
+        ingest(collectCells(dataRight), headersRight);
+
+        const rowsOut = Object.keys(rows)
+          .map((k) => rows[k])
+          .sort((a, b) => a._row - b._row);
+        const nros = rowsOut
+          .map((row) => (row["Nro. Emenda"] || "").trim())
+          .filter((value) => /^\\d{8}$/.test(value));
+        return {
+          error: "",
+          frame_id: frame.id,
+          headers_left: headersLeft.map((h) => h.name),
+          headers_right: headersRight.map((h) => h.name),
+          rows: rowsOut,
+          nros: [...new Set(nros)],
+        };
+    """
+    return driver.execute_script(js)
+
+
+def extract_siop_snapshot():
+    """
+    Extrai snapshot agregado diretamente no SIOP:
+    Dotação Inicial, Dotação Atual (autorizado), Empenhado, Liquidado e Pago.
+    """
+    result = {
+        "available": False,
+        "source_url": SIOP_PANEL_URL,
+        "last_update": "",
+        "base_siafi_date": "",
+        "totals": {},
+        "error": "",
+    }
+
+    try:
+        from selenium import webdriver
+        from selenium.webdriver.chrome.options import Options
+        from selenium.webdriver.support.ui import WebDriverWait
+    except Exception as exc:
+        result["error"] = f"selenium indisponível: {exc}"
+        return result
+
+    driver = None
+    try:
+        options = Options()
+        options.add_argument("--headless=new")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--ignore-certificate-errors")
+        options.add_argument("--window-size=1800,2400")
+
+        driver = webdriver.Chrome(options=options)
+        wait = WebDriverWait(driver, 40)
+        navigate_siop_to_emendas(driver, wait)
+        open_siop_step2_group(driver, wait, group_label="Por Partido")
+
+        body_text = driver.find_element("tag name", "body").text
+        body_flat = " ".join(body_text.split())
+        last_update, base_siafi_date = parse_siop_dates_from_text(body_text)
+        result["last_update"] = last_update
+        result["base_siafi_date"] = base_siafi_date
+
+        m_totals = re.search(
+            (
+                r"Dotação Inicial Emenda\s*Dotação Atual Emenda\s*Empenhado\s*Liquidado\s*Pago\s*"
+                r"([0-9\.,]+)\s*([0-9\.,]+)\s*([0-9\.,]+)\s*([0-9\.,]+)\s*([0-9\.,]+)"
+            ),
+            body_flat,
+            flags=re.IGNORECASE,
+        )
+        if not m_totals:
+            raise RuntimeError("não encontrou bloco de totais no SIOP")
+
+        dotacao_inicial, dotacao_atual, empenhado, liquidado, pago = m_totals.groups()
+        result["totals"] = {
+            "dotacao_inicial_emenda": parse_brl_number(dotacao_inicial),
+            "dotacao_atual_emenda": parse_brl_number(dotacao_atual),
+            "empenhado": parse_brl_number(empenhado),
+            "liquidado": parse_brl_number(liquidado),
+            "pago": parse_brl_number(pago),
+        }
+        result["available"] = True
+        result["error"] = ""
+    except Exception as exc:
+        result["error"] = normalize_text(str(exc))[:500]
+    finally:
+        if driver is not None:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+    return result
+
+
+def extract_siop_details(party_lookup):
+    """
+    Coleta linhas detalhadas do grid de emendas no SIOP (Passo 2 / Por Partido),
+    varrendo a barra vertical e consolidando por Nro. Emenda.
+    """
+    result = {
+        "available": False,
+        "source_url": SIOP_PANEL_URL,
+        "group_selected": "Por Partido",
+        "last_update": "",
+        "base_siafi_date": "",
+        "rows": [],
+        "rows_count": 0,
+        "unique_nro_emendas": 0,
+        "sweep_steps": 0,
+        "sweep_stop_reason": "",
+        "top_authors": [],
+        "top_parties": [],
+        "top_orgaos": [],
+        "error": "",
+    }
+
+    try:
+        from selenium import webdriver
+        from selenium.webdriver.common.action_chains import ActionChains
+        from selenium.webdriver.common.by import By
+        from selenium.webdriver.chrome.options import Options
+        from selenium.webdriver.support.ui import WebDriverWait
+    except Exception as exc:
+        result["error"] = f"selenium indisponível: {exc}"
+        return result
+
+    driver = None
+    try:
+        options = Options()
+        options.add_argument("--headless=new")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--ignore-certificate-errors")
+        options.add_argument("--window-size=1800,2400")
+
+        driver = webdriver.Chrome(options=options)
+        wait = WebDriverWait(driver, 50)
+        navigate_siop_to_emendas(driver, wait)
+        open_siop_step2_group(driver, wait, group_label="Por Partido")
+
+        body_text = driver.find_element(By.TAG_NAME, "body").text
+        last_update, base_siafi_date = parse_siop_dates_from_text(body_text)
+        result["last_update"] = last_update
+        result["base_siafi_date"] = base_siafi_date
+
+        rows_by_nro = {}
+        signatures = []
+        stop_reason = "max_steps"
+        max_steps = 90
+        drag_offset = 40
+
+        for step in range(max_steps):
+            chunk = extract_siop_visible_chunk(driver)
+            if chunk.get("error"):
+                stop_reason = f"chunk_error:{chunk.get('error')}"
+                break
+
+            nros = [normalize_text(nro) for nro in chunk.get("nros", []) if normalize_text(nro)]
+            signature = (
+                nros[0] if nros else "",
+                nros[-1] if nros else "",
+                len(nros),
+            )
+            signatures.append(signature)
+
+            for row in chunk.get("rows", []):
+                nro = normalize_text(row.get("Nro. Emenda", ""))
+                if not re.fullmatch(r"\d{8}", nro):
+                    continue
+                rows_by_nro[nro] = row
+
+            # Repetição indica fim útil da rolagem.
+            if len(signatures) >= 9 and len(set(signatures[-9:])) == 1:
+                stop_reason = "stable_signature"
+                break
+
+            frame = wait.until(
+                lambda drv: drv.find_element(
+                    By.XPATH,
+                    "//div[contains(@class,'QvFrame') and @objtype='Grid' and contains(.,'Nro. Emenda')]",
+                )
+            )
+            thumb = frame.find_element(
+                By.XPATH,
+                ".//div[contains(@class,'TouchScrollbar') and contains(@style,'background-color: rgb(192, 192, 192)') and not(.//span)]",
+            )
+            ActionChains(driver).click_and_hold(thumb).move_by_offset(0, drag_offset).release().perform()
+            time.sleep(0.45)
+
+        result["sweep_steps"] = len(signatures)
+        result["sweep_stop_reason"] = stop_reason
+
+        author_totals = defaultdict(lambda: Decimal("0"))
+        party_totals = defaultdict(lambda: Decimal("0"))
+        orgao_totals = defaultdict(lambda: Decimal("0"))
+        cleaned_rows = []
+        for nro, row in sorted(rows_by_nro.items()):
+            author = normalize_text(row.get("Autor", "")) or "Autor não informado"
+            orgao = normalize_text(row.get("Órgão", "")) or "Órgão não informado"
+            party_raw = normalize_text(row.get("Partido", ""))
+            party = party_raw or resolve_party(author, party_lookup)
+
+            dotacao_inicial = parse_currency(row.get("Dotação Inicial Emenda", ""))
+            dotacao_atual = parse_currency(row.get("Dotação Atual Emenda", ""))
+            empenhado = parse_currency(row.get("Empenhado", ""))
+            liquidado = parse_currency(row.get("Liquidado", ""))
+            pago = parse_currency(row.get("Pago", ""))
+
+            cleaned_rows.append(
+                {
+                    "nro_emenda": nro,
+                    "ano": normalize_text(row.get("Ano", "")),
+                    "rp": normalize_text(row.get("RP", "")),
+                    "autor": author,
+                    "tipo_autor": normalize_text(row.get("Tipo Autor", "")),
+                    "partido": party,
+                    "orgao": orgao,
+                    "acao": normalize_text(row.get("Ação", "")),
+                    "dotacao_inicial_emenda": to_float(dotacao_inicial),
+                    "dotacao_atual_emenda": to_float(dotacao_atual),
+                    "empenhado": to_float(empenhado),
+                    "liquidado": to_float(liquidado),
+                    "pago": to_float(pago),
+                }
+            )
+
+            author_totals[author] += empenhado
+            party_totals[party] += empenhado
+            orgao_totals[orgao] += empenhado
+
+        result["rows"] = cleaned_rows
+        result["rows_count"] = len(cleaned_rows)
+        result["unique_nro_emendas"] = len(cleaned_rows)
+        result["top_authors"] = [
+            {"author": name, "party": resolve_party(name, party_lookup), "empenhado": to_float(value)}
+            for name, value in sort_top(author_totals, 20)
+        ]
+        result["top_parties"] = [
+            {"party": name, "empenhado": to_float(value)}
+            for name, value in sort_top(party_totals, 20)
+        ]
+        result["top_orgaos"] = [
+            {"orgao": name, "empenhado": to_float(value)}
+            for name, value in sort_top(orgao_totals, 20)
+        ]
+        result["available"] = True
+        result["error"] = ""
+    except Exception as exc:
+        result["error"] = normalize_text(str(exc))[:500]
+    finally:
+        if driver is not None:
+            try:
+                driver.quit()
+            except Exception:
+                pass
+    return result
 
 
 def build_documents_monitor(year, party_lookup):
@@ -851,6 +1277,9 @@ def write_metadata(report):
     parallel = report.get("parallel_monitor", {})
     documents = parallel.get("documents", {})
     apoiamento = parallel.get("apoiamento", {})
+    siop_snapshot = parallel.get("siop_snapshot", {})
+    siop_details = parallel.get("siop_details", {})
+    siop_totals = siop_snapshot.get("totals", {}) if isinstance(siop_snapshot, dict) else {}
     metadata = {
         "updated_at": report["generated_at"],
         "snapshot_date": report["snapshot_date"],
@@ -871,6 +1300,17 @@ def write_metadata(report):
         "documents_last_modified": ((documents.get("source") or {}).get("last_modified")) or "",
         "apoiamento_source_url": ((apoiamento.get("source") or {}).get("download_url")) or "",
         "apoiamento_last_modified": ((apoiamento.get("source") or {}).get("last_modified")) or "",
+        "siop_snapshot_available": bool(siop_snapshot.get("available")),
+        "siop_snapshot_last_update": siop_snapshot.get("last_update", ""),
+        "siop_base_siafi_date": siop_snapshot.get("base_siafi_date", ""),
+        "siop_dotacao_atual_emenda": siop_totals.get("dotacao_atual_emenda", 0),
+        "siop_dotacao_inicial_emenda": siop_totals.get("dotacao_inicial_emenda", 0),
+        "siop_snapshot_error": siop_snapshot.get("error", ""),
+        "siop_details_available": bool(siop_details.get("available")),
+        "siop_details_rows_count": siop_details.get("rows_count", 0),
+        "siop_details_unique_nro_emendas": siop_details.get("unique_nro_emendas", 0),
+        "siop_details_sweep_steps": siop_details.get("sweep_steps", 0),
+        "siop_details_error": siop_details.get("error", ""),
     }
     META_FILE.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
     return metadata
@@ -934,11 +1374,15 @@ def build_dashboard(force=False):
         report = build_report(current, previous, headers, zip_path.stat().st_size, has_previous)
         current_year = int((report.get("unico_year_summary") or {}).get("year") or dt.date.today().year)
         execucao_ano_corrente = fetch_execucao_ano_corrente(current_year)
+        siop_snapshot = extract_siop_snapshot()
+        siop_details = extract_siop_details(party_lookup)
         documents_monitor = build_documents_monitor(current_year, party_lookup)
         apoiamento_monitor = build_apoiamento_monitor(current_year)
         report["parallel_monitor"] = {
             "year": current_year,
             "execucao_ano_corrente": execucao_ano_corrente,
+            "siop_snapshot": siop_snapshot,
+            "siop_details": siop_details,
             "documents": documents_monitor,
             "apoiamento": apoiamento_monitor,
             "party_lookup": party_lookup_meta,

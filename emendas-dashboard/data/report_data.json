@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03T20:05:41.451382+00:00",
+  "generated_at": "2026-03-03T23:56:15.499514+00:00",
   "snapshot_date": "2026-03-03",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -229,7 +229,7 @@
       "stages": [
         {
           "stage": "Empenhado",
-          "value": 6325330.39
+          "value": 10379324.65
         },
         {
           "stage": "Liquidado",
@@ -241,10 +241,901 @@
         }
       ],
       "stage_values": {
-        "empenhado": 6325330.39,
+        "empenhado": 10379324.65,
         "liquidado": 0.0,
         "pago": 0.0
       }
+    },
+    "siop_snapshot": {
+      "available": true,
+      "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
+      "last_update": "",
+      "base_siafi_date": "2/3/2026",
+      "totals": {
+        "dotacao_inicial_emenda": 289568730563.0,
+        "dotacao_atual_emenda": 337413639021.0,
+        "empenhado": 267368023818.0,
+        "liquidado": 150691942190.0,
+        "pago": 149054077064.0
+      },
+      "error": ""
+    },
+    "siop_details": {
+      "available": true,
+      "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
+      "group_selected": "Por Partido",
+      "last_update": "",
+      "base_siafi_date": "2/3/2026",
+      "rows": [
+        {
+          "nro_emenda": "13390002",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E90 - Incremento Temporário ao Custeio dos Serviços de Assistência Hospitalar e Ambulatorial para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 300000.0,
+          "dotacao_atual_emenda": 300000.0,
+          "empenhado": 300000.0,
+          "liquidado": 300000.0,
+          "pago": 300000.0
+        },
+        {
+          "nro_emenda": "13390003",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8581 - Estruturação da Rede de Serviços de Atenção Primária à Saúde",
+          "dotacao_inicial_emenda": 500000.0,
+          "dotacao_atual_emenda": 500000.0,
+          "empenhado": 500000.0,
+          "liquidado": 500000.0,
+          "pago": 500000.0
+        },
+        {
+          "nro_emenda": "13390004",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E89 - Incremento Temporário ao Custeio dos Serviços de Atenção Primária à Saúde para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 6200000.0,
+          "dotacao_atual_emenda": 5900000.0,
+          "empenhado": 5900000.0,
+          "liquidado": 5900000.0,
+          "pago": 5900000.0
+        },
+        {
+          "nro_emenda": "13390005",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "20YD - Educação e Trabalho na Saúde",
+          "dotacao_inicial_emenda": 300000.0,
+          "dotacao_atual_emenda": 300000.0,
+          "empenhado": 300000.0,
+          "liquidado": 27000.0,
+          "pago": 27000.0
+        },
+        {
+          "nro_emenda": "13390006",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "21BF - Pesquisa, Desenvolvimento Tecnológico e Inovação em Saúde",
+          "dotacao_inicial_emenda": 200000.0,
+          "dotacao_atual_emenda": 200000.0,
+          "empenhado": 200000.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "13390007",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8535 - Estruturação de Unidades de Atenção Especializada em Saúde",
+          "dotacao_inicial_emenda": 1600000.0,
+          "dotacao_atual_emenda": 1200000.0,
+          "empenhado": 1200000.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "13390008",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "6148 - Assistência Médica Qualificada e Gratuita a Todos os Níveis da População e Desenvolvimento de Atividades Educacionais e de Pesquisa no Campo da Saúde – Rede SARAH de Hospitais de Reabilitação",
+          "dotacao_inicial_emenda": 200000.0,
+          "dotacao_atual_emenda": 200000.0,
+          "empenhado": 200000.0,
+          "liquidado": 200000.0,
+          "pago": 200000.0
+        },
+        {
+          "nro_emenda": "13390009",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "20GK - Fomento às Ações de Graduação, Pós-Graduação, Ensino, Pesquisa e Extensão",
+          "dotacao_inicial_emenda": 200000.0,
+          "dotacao_atual_emenda": 200000.0,
+          "empenhado": 200000.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "13390010",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "22000 - Ministério da Agricultura e Pecuária",
+          "acao": "8593 - Apoio ao Desenvolvimento da Produção Agropecuária Sustentável",
+          "dotacao_inicial_emenda": 1500000.0,
+          "dotacao_atual_emenda": 1500000.0,
+          "empenhado": 1500000.0,
+          "liquidado": 67500.0,
+          "pago": 67500.0
+        },
+        {
+          "nro_emenda": "13390011",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "20RL - Funcionamento das Instituições da Rede Federal de Educação Profissional, Científica e Tecnológica",
+          "dotacao_inicial_emenda": 400000.0,
+          "dotacao_atual_emenda": 400000.0,
+          "empenhado": 400000.0,
+          "liquidado": 324703.0,
+          "pago": 324703.0
+        },
+        {
+          "nro_emenda": "13390012",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "219V - Apoio ao Funcionamento das Instituições Federais de Educação Superior",
+          "dotacao_inicial_emenda": 300000.0,
+          "dotacao_atual_emenda": 0.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "13390013",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "53000 - Ministério da Integração e do Desenvolvimento Regional",
+          "acao": "00SX - Apoio a Projetos de Desenvolvimento Sustentável Local Integrado",
+          "dotacao_inicial_emenda": 1850000.0,
+          "dotacao_atual_emenda": 1850000.0,
+          "empenhado": 1849939.0,
+          "liquidado": 172113.0,
+          "pago": 171354.0
+        },
+        {
+          "nro_emenda": "13390014",
+          "ano": "2024",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Daniel Almeida",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PCdoB",
+          "orgao": "26000 - Ministério da Educação",
+          "acao": "219V - Apoio ao Funcionamento das Instituições Federais de Educação Superior",
+          "dotacao_inicial_emenda": 300000.0,
+          "dotacao_atual_emenda": 0.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "19550009",
+          "ano": "2019",
+          "rp": "6 - Emendas Individuais",
+          "autor": "João Campos",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "81000 - Ministério dos Direitos Humanos e da Cidadania",
+          "acao": "14XS - Implementação da Casa da Mulher Brasileira e de Centros de Atendimento às Mulheres",
+          "dotacao_inicial_emenda": 0.0,
+          "dotacao_atual_emenda": 830000.0,
+          "empenhado": 830000.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "19550019",
+          "ano": "2019",
+          "rp": "6 - Emendas Individuais",
+          "autor": "João Campos",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "55000 - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+          "acao": "",
+          "dotacao_inicial_emenda": 0.0,
+          "dotacao_atual_emenda": 0.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "20690022",
+          "ano": "2018",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Cristovam Buarque",
+          "tipo_autor": "Senador",
+          "partido": "Nao identificado",
+          "orgao": "54000 - Ministério do Turismo",
+          "acao": "10V0 - Apoio a Projetos de Infraestrutura Turística",
+          "dotacao_inicial_emenda": 200000.0,
+          "dotacao_atual_emenda": 200000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "20910002",
+          "ano": "2015",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Flexa Ribeiro",
+          "tipo_autor": "Senador",
+          "partido": "Nao identificado",
+          "orgao": "12000 - Justiça Federal",
+          "acao": "",
+          "dotacao_inicial_emenda": 0.0,
+          "dotacao_atual_emenda": 0.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "27410017",
+          "ano": "2018",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Erivelton Santana",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "53000 - Ministério da Integração e do Desenvolvimento Regional",
+          "acao": "7K66 - Apoio a Projetos de Desenvolvimento Sustentável Local Integrado",
+          "dotacao_inicial_emenda": 1500000.0,
+          "dotacao_atual_emenda": 1000000.0,
+          "empenhado": 1000000.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "27410024",
+          "ano": "2018",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Erivelton Santana",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "Órgão não informado",
+          "acao": "",
+          "dotacao_inicial_emenda": 0.0,
+          "dotacao_atual_emenda": 0.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "27430014",
+          "ano": "2015",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Fernando Torres",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "51000 - Ministério do Esporte",
+          "acao": "5450 - Implantação e Modernização de Infraestrutura para Esporte Educacional, Recreativo e de Lazer",
+          "dotacao_inicial_emenda": 250000.0,
+          "dotacao_atual_emenda": 250000.0,
+          "empenhado": 250000.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "29080016",
+          "ano": "2016",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Eduardo Amorim",
+          "tipo_autor": "Senador",
+          "partido": "Nao identificado",
+          "orgao": "42000 - Ministério da Cultura",
+          "acao": "20ZH - Preservação do Patrimônio Cultural Brasileiro",
+          "dotacao_inicial_emenda": 250000.0,
+          "dotacao_atual_emenda": 250000.0,
+          "empenhado": 250000.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "30860001",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dulce Miranda",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E89 - Incremento Temporário ao Custeio dos Serviços de Atenção Primária à Saúde para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 1629209.0,
+          "dotacao_atual_emenda": 1000000.0,
+          "empenhado": 1000000.0,
+          "liquidado": 1000000.0,
+          "pago": 1000000.0
+        },
+        {
+          "nro_emenda": "30860002",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dulce Miranda",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E89 - Incremento Temporário ao Custeio dos Serviços de Atenção Primária à Saúde para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 488762.0,
+          "dotacao_atual_emenda": 488762.0,
+          "empenhado": 488762.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "30860003",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dulce Miranda",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E89 - Incremento Temporário ao Custeio dos Serviços de Atenção Primária à Saúde para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 1303367.0,
+          "dotacao_atual_emenda": 1000000.0,
+          "empenhado": 1000000.0,
+          "liquidado": 1000000.0,
+          "pago": 1000000.0
+        },
+        {
+          "nro_emenda": "30860004",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dulce Miranda",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 3258415.0,
+          "dotacao_atual_emenda": 3258415.0,
+          "empenhado": 3258415.0,
+          "liquidado": 3258415.0,
+          "pago": 3258415.0
+        },
+        {
+          "nro_emenda": "30860005",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dulce Miranda",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 1629209.0,
+          "dotacao_atual_emenda": 2150000.0,
+          "empenhado": 2150000.0,
+          "liquidado": 2150000.0,
+          "pago": 2150000.0
+        },
+        {
+          "nro_emenda": "30860006",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dulce Miranda",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E89 - Incremento Temporário ao Custeio dos Serviços de Atenção Primária à Saúde para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 651683.0,
+          "dotacao_atual_emenda": 1500000.0,
+          "empenhado": 1500000.0,
+          "liquidado": 651683.0,
+          "pago": 651683.0
+        },
+        {
+          "nro_emenda": "30860007",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dulce Miranda",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 2769655.0,
+          "dotacao_atual_emenda": 2769655.0,
+          "empenhado": 2769655.0,
+          "liquidado": 2769655.0,
+          "pago": 2769655.0
+        },
+        {
+          "nro_emenda": "30860008",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dulce Miranda",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 2443813.0,
+          "dotacao_atual_emenda": 2443813.0,
+          "empenhado": 2443813.0,
+          "liquidado": 2443813.0,
+          "pago": 2443813.0
+        },
+        {
+          "nro_emenda": "38970001",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Acácio Favacho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "MDB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8581 - Estruturação da Rede de Serviços de Atenção Primária à Saúde",
+          "dotacao_inicial_emenda": 1000000.0,
+          "dotacao_atual_emenda": 1000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "38970002",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Acácio Favacho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "MDB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E89 - Incremento Temporário ao Custeio dos Serviços de Atenção Primária à Saúde para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 9182007.0,
+          "dotacao_atual_emenda": 9182007.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "38970003",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Acácio Favacho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "MDB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E90 - Incremento Temporário ao Custeio dos Serviços de Assistência Hospitalar e Ambulatorial para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 10000000.0,
+          "dotacao_atual_emenda": 10000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "38970004",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Acácio Favacho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "MDB",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 5400000.0,
+          "dotacao_atual_emenda": 5400000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "38970005",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Acácio Favacho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "MDB",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 14170000.0,
+          "dotacao_atual_emenda": 14170000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "38970006",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Acácio Favacho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "MDB",
+          "orgao": "81000 - Ministério dos Direitos Humanos e da Cidadania",
+          "acao": "21FZ - Promoção e Defesa dos Direitos da Pessoa Idosa",
+          "dotacao_inicial_emenda": 500000.0,
+          "dotacao_atual_emenda": 500000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "38980001",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Adolfo Viana",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSDB",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8535 - Estruturação de Unidades de Atenção Especializada em Saúde",
+          "dotacao_inicial_emenda": 500000.0,
+          "dotacao_atual_emenda": 500000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "38980002",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Adolfo Viana",
+          "tipo_autor": "Deputado Federal",
+          "partido": "PSDB",
+          "orgao": "30000 - Ministério da Justiça e Segurança Pública",
+          "acao": "21F0 - Democratização do Acesso à Justiça e à Cidadania",
+          "dotacao_inicial_emenda": 1000000.0,
+          "dotacao_atual_emenda": 1000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "39670006",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dra. Vanda Milani",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 2322802.0,
+          "dotacao_atual_emenda": 3110802.0,
+          "empenhado": 788000.0,
+          "liquidado": 788000.0,
+          "pago": 788000.0
+        },
+        {
+          "nro_emenda": "39670007",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dra. Vanda Milani",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8581 - Estruturação da Rede de Serviços de Atenção Primária à Saúde",
+          "dotacao_inicial_emenda": 0.0,
+          "dotacao_atual_emenda": 718592.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "39670008",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dra. Vanda Milani",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 164549.0,
+          "dotacao_atual_emenda": 164549.0,
+          "empenhado": 164549.0,
+          "liquidado": 164549.0,
+          "pago": 164549.0
+        },
+        {
+          "nro_emenda": "39670009",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dra. Vanda Milani",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 162920.0,
+          "dotacao_atual_emenda": 162920.0,
+          "empenhado": 162920.0,
+          "liquidado": 162920.0,
+          "pago": 162920.0
+        },
+        {
+          "nro_emenda": "39670010",
+          "ano": "2023",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Dra. Vanda Milani",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "30000 - Ministério da Justiça e Segurança Pública",
+          "acao": "2723 - Policiamento, Fiscalização, Combate à Criminalidade e Corrupção",
+          "dotacao_inicial_emenda": 0.0,
+          "dotacao_atual_emenda": 1140446.0,
+          "empenhado": 1139726.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "41090018",
+          "ano": "2020",
+          "rp": "6 - Emendas Individuais",
+          "autor": "José Ricardo",
+          "tipo_autor": "Deputado Federal",
+          "partido": "Nao identificado",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "8535 - Estruturação de Unidades de Atenção Especializada em Saúde",
+          "dotacao_inicial_emenda": 1700000.0,
+          "dotacao_atual_emenda": 1700000.0,
+          "empenhado": 1699957.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "42910001",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Adail Filho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "REPUBLICANOS",
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "acao": "0EC2 - Transferências Especiais",
+          "dotacao_inicial_emenda": 10405603.0,
+          "dotacao_atual_emenda": 10405603.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "42910002",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Adail Filho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "REPUBLICANOS",
+          "orgao": "55000 - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+          "acao": "219G - Estruturação da Rede de Serviços e Fortalecimento da Gestão do Sistema Único de Assistência Social (SUAS)",
+          "dotacao_inicial_emenda": 9000000.0,
+          "dotacao_atual_emenda": 9000000.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "42910003",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Adail Filho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "REPUBLICANOS",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E90 - Incremento Temporário ao Custeio dos Serviços de Assistência Hospitalar e Ambulatorial para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 10063002.0,
+          "dotacao_atual_emenda": 10063002.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "42910004",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Adail Filho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "REPUBLICANOS",
+          "orgao": "36000 - Ministério da Saúde",
+          "acao": "2E89 - Incremento Temporário ao Custeio dos Serviços de Atenção Primária à Saúde para Cumprimento de Metas",
+          "dotacao_inicial_emenda": 10063002.0,
+          "dotacao_atual_emenda": 10063002.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        },
+        {
+          "nro_emenda": "42910005",
+          "ano": "2026",
+          "rp": "6 - Emendas Individuais",
+          "autor": "Adail Filho",
+          "tipo_autor": "Deputado Federal",
+          "partido": "REPUBLICANOS",
+          "orgao": "42000 - Ministério da Cultura",
+          "acao": "20ZH - Preservação do Patrimônio Cultural Brasileiro",
+          "dotacao_inicial_emenda": 720400.0,
+          "dotacao_atual_emenda": 720400.0,
+          "empenhado": 0.0,
+          "liquidado": 0.0,
+          "pago": 0.0
+        }
+      ],
+      "rows_count": 48,
+      "unique_nro_emendas": 48,
+      "sweep_steps": 26,
+      "sweep_stop_reason": "stable_signature",
+      "top_authors": [
+        {
+          "author": "Dulce Miranda",
+          "party": "Nao identificado",
+          "empenhado": 14610645.0
+        },
+        {
+          "author": "Daniel Almeida",
+          "party": "PCdoB",
+          "empenhado": 12549939.0
+        },
+        {
+          "author": "Dra. Vanda Milani",
+          "party": "Nao identificado",
+          "empenhado": 2255195.0
+        },
+        {
+          "author": "José Ricardo",
+          "party": "Nao identificado",
+          "empenhado": 1699957.0
+        },
+        {
+          "author": "Erivelton Santana",
+          "party": "Nao identificado",
+          "empenhado": 1000000.0
+        },
+        {
+          "author": "João Campos",
+          "party": "Nao identificado",
+          "empenhado": 830000.0
+        },
+        {
+          "author": "Fernando Torres",
+          "party": "Nao identificado",
+          "empenhado": 250000.0
+        },
+        {
+          "author": "Eduardo Amorim",
+          "party": "Nao identificado",
+          "empenhado": 250000.0
+        },
+        {
+          "author": "Cristovam Buarque",
+          "party": "Nao identificado",
+          "empenhado": 0.0
+        },
+        {
+          "author": "Flexa Ribeiro",
+          "party": "Nao identificado",
+          "empenhado": 0.0
+        },
+        {
+          "author": "Acácio Favacho",
+          "party": "MDB",
+          "empenhado": 0.0
+        },
+        {
+          "author": "Adolfo Viana",
+          "party": "PSDB",
+          "empenhado": 0.0
+        },
+        {
+          "author": "Adail Filho",
+          "party": "REPUBLICANOS",
+          "empenhado": 0.0
+        }
+      ],
+      "top_parties": [
+        {
+          "party": "Nao identificado",
+          "empenhado": 20895797.0
+        },
+        {
+          "party": "PCdoB",
+          "empenhado": 12549939.0
+        },
+        {
+          "party": "MDB",
+          "empenhado": 0.0
+        },
+        {
+          "party": "PSDB",
+          "empenhado": 0.0
+        },
+        {
+          "party": "REPUBLICANOS",
+          "empenhado": 0.0
+        }
+      ],
+      "top_orgaos": [
+        {
+          "orgao": "36000 - Ministério da Saúde",
+          "empenhado": 14288719.0
+        },
+        {
+          "orgao": "73000 - Transferências a Estados, Distrito Federal e Municípios",
+          "empenhado": 11737352.0
+        },
+        {
+          "orgao": "53000 - Ministério da Integração e do Desenvolvimento Regional",
+          "empenhado": 2849939.0
+        },
+        {
+          "orgao": "22000 - Ministério da Agricultura e Pecuária",
+          "empenhado": 1500000.0
+        },
+        {
+          "orgao": "30000 - Ministério da Justiça e Segurança Pública",
+          "empenhado": 1139726.0
+        },
+        {
+          "orgao": "81000 - Ministério dos Direitos Humanos e da Cidadania",
+          "empenhado": 830000.0
+        },
+        {
+          "orgao": "26000 - Ministério da Educação",
+          "empenhado": 600000.0
+        },
+        {
+          "orgao": "51000 - Ministério do Esporte",
+          "empenhado": 250000.0
+        },
+        {
+          "orgao": "42000 - Ministério da Cultura",
+          "empenhado": 250000.0
+        },
+        {
+          "orgao": "55000 - Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+          "empenhado": 0.0
+        },
+        {
+          "orgao": "54000 - Ministério do Turismo",
+          "empenhado": 0.0
+        },
+        {
+          "orgao": "12000 - Justiça Federal",
+          "empenhado": 0.0
+        },
+        {
+          "orgao": "Órgão não informado",
+          "empenhado": 0.0
+        }
+      ],
+      "error": ""
     },
     "documents": {
       "year": 2026,

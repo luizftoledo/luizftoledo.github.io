@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-03T20:05:41.451382+00:00",
+  "updated_at": "2026-03-03T23:56:15.499514+00:00",
   "snapshot_date": "2026-03-03",
   "source_requested_url": "https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO",
   "source_download_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares/EmendasParlamentares.zip",
@@ -17,5 +17,16 @@
   "documents_source_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares-documentos/2026_EmendasParlamentaresPorDocumento.zip",
   "documents_last_modified": "Fri, 27 Feb 2026 09:51:33 GMT",
   "apoiamento_source_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares-apoiamento/2025_ApoiamentoEmendasParlamentares.zip",
-  "apoiamento_last_modified": "Fri, 27 Feb 2026 09:51:32 GMT"
+  "apoiamento_last_modified": "Fri, 27 Feb 2026 09:51:32 GMT",
+  "siop_snapshot_available": true,
+  "siop_snapshot_last_update": "",
+  "siop_base_siafi_date": "2/3/2026",
+  "siop_dotacao_atual_emenda": 337413639021.0,
+  "siop_dotacao_inicial_emenda": 289568730563.0,
+  "siop_snapshot_error": "",
+  "siop_details_available": true,
+  "siop_details_rows_count": 48,
+  "siop_details_unique_nro_emendas": 48,
+  "siop_details_sweep_steps": 26,
+  "siop_details_error": ""
 }

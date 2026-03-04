@@ -57,6 +57,10 @@
     docsModeNote: document.getElementById('docs-mode-note'),
     tableDocsAuthorsDynamic: document.getElementById('table-docs-authors-dynamic'),
     tableDocsDestDay: document.getElementById('table-docs-dest-day'),
+    siopDetailNote: document.getElementById('siop-detail-note'),
+    tableSiopAuthors: document.getElementById('table-siop-authors'),
+    tableSiopParties: document.getElementById('table-siop-parties'),
+    tableSiopOrgaos: document.getElementById('table-siop-orgaos'),
     tableApoiamentoTop: document.getElementById('table-apoiamento-top'),
     apoiamentoNote: document.getElementById('apoiamento-note'),
     apoiamentoExplain: document.getElementById('apoiamento-explain'),
@@ -171,14 +175,32 @@
     textEl.textContent = `${money(num)} / ${money(den)} (${pctFmt.format(ratio)})`;
   }
 
-  function getEstimatedMaxYear(report) {
-    const stageValues = (((report.parallel_monitor || {}).execucao_ano_corrente || {}).stage_values) || {};
+  function getMaxYearInfo(report) {
+    const parallel = report.parallel_monitor || {};
+    const siop = parallel.siop_snapshot || {};
+    const siopTotals = siop.totals || {};
+    const dotacaoAtual = toNumber(siopTotals.dotacao_atual_emenda);
+    if (dotacaoAtual > 0) {
+      const baseDate = (siop.base_siafi_date || '').trim();
+      return {
+        value: dotacaoAtual,
+        sourceLabel: baseDate
+          ? `Dotação Atual da base SIOP (SIAFI em ${baseDate})`
+          : 'Dotação Atual da base SIOP',
+      };
+    }
+
+    const stageValues = (parallel.execucao_ano_corrente || {}).stage_values || {};
     const empenhado = toNumber(stageValues.empenhado);
     const aEmpenhar = toNumber(stageValues.a_empenhar);
     if (aEmpenhar > 0) {
-      return empenhado + aEmpenhar;
+      return {
+        value: empenhado + aEmpenhar,
+        sourceLabel: 'estimativa do endpoint de execução no Portal da Transparência',
+      };
     }
-    return null;
+
+    return { value: 0, sourceLabel: '' };
   }
 
   function setActiveView(viewId) {
@@ -247,7 +269,8 @@
     const committedYear = toNumber(totals.total_empenhado_year);
     const committedLastDay = toNumber(totals.total_empenhado_last_day);
     const paidYear = toNumber(totals.total_pago_year);
-    const maxYear = getEstimatedMaxYear(report);
+    const maxYearInfo = getMaxYearInfo(report);
+    const maxYear = toNumber(maxYearInfo.value);
 
     els.kpiLabelNet.textContent = 'Empenhado no ano (acum.)';
     els.kpiLabelAuthors.textContent = 'Autores com empenho no último dia';
@@ -276,7 +299,8 @@
         maxYear,
         { noBaseText: 'Sem teto disponível' }
       );
-      els.docsProgressNote.textContent = `Teto estimado com base no endpoint de execução do ano: ${money(maxYear)}.`;
+      const sourceLabel = maxYearInfo.sourceLabel || 'fonte não identificada';
+      els.docsProgressNote.textContent = `Teto anual considerado: ${money(maxYear)} (${sourceLabel}).`;
     } else {
       els.docKpiMaxYear.textContent = 'não disponível';
       els.docsProgressYearFill.style.width = '0%';
@@ -665,7 +689,8 @@
     const minDate = docs.date_min || '--';
     const rowsValid = toNumber(docs.rows_valid_year);
     const totals = docs.totals || {};
-    const maxYear = getEstimatedMaxYear(report);
+    const maxYearInfo = getMaxYearInfo(report);
+    const maxYear = toNumber(maxYearInfo.value);
     const committedYear = toNumber(totals.total_empenhado_year);
 
     const remaining = (maxYear && maxYear > 0) ? Math.max(maxYear - committedYear, 0) : null;
@@ -673,7 +698,7 @@
       Série diária de <strong>${esc(minDate)}</strong> até <strong>${esc(maxDate)}</strong>.
       Registros processados na fonte de documentos: <strong>${nFmt.format(rowsValid)}</strong>.
       ${maxYear && maxYear > 0
-        ? `Do teto anual estimado de <strong>${money(maxYear)}</strong>, já foram empenhados <strong>${money(committedYear)}</strong> e faltam <strong>${money(remaining)}</strong>.`
+        ? `Do teto anual de <strong>${money(maxYear)}</strong>, já foram empenhados <strong>${money(committedYear)}</strong> e faltam <strong>${money(remaining)}</strong>.`
         : 'A fonte desta atualização não trouxe teto anual explícito para calcular quanto falta.'}
     `;
 
@@ -714,6 +739,69 @@
 
     renderDocsDailyChart(docs.daily_series || [], maxYear);
     renderDocsAuthorsDynamic(report);
+    renderSiopDetails(report);
+  }
+
+  function renderSiopDetails(report) {
+    const siop = ((report.parallel_monitor || {}).siop_details) || {};
+    if (!siop.available) {
+      const errorMsg = (siop.error || '').trim();
+      els.siopDetailNote.textContent = errorMsg
+        ? `Não foi possível carregar o detalhamento direto do SIOP nesta atualização (${errorMsg}).`
+        : 'Não foi possível carregar o detalhamento direto do SIOP nesta atualização.';
+      els.tableSiopAuthors.innerHTML = '<tr><td colspan="3">Sem dados disponíveis.</td></tr>';
+      els.tableSiopParties.innerHTML = '<tr><td colspan="2">Sem dados disponíveis.</td></tr>';
+      els.tableSiopOrgaos.innerHTML = '<tr><td colspan="2">Sem dados disponíveis.</td></tr>';
+      return;
+    }
+
+    const baseDate = siop.base_siafi_date || '--';
+    const lastUpdate = siop.last_update || '--';
+    const rowsCount = toNumber(siop.rows_count);
+    const uniqueNros = toNumber(siop.unique_nro_emendas);
+    const steps = toNumber(siop.sweep_steps);
+    els.siopDetailNote.innerHTML =
+      `Extração direta do SIOP concluída com <strong>${nFmt.format(rowsCount)}</strong> linhas` +
+      ` (<strong>${nFmt.format(uniqueNros)}</strong> emendas únicas), base SIAFI em <strong>${esc(baseDate)}</strong>` +
+      `${lastUpdate !== '--' ? ` e atualização do painel em <strong>${esc(lastUpdate)}</strong>` : ''}. ` +
+      `Varredura vertical em <strong>${nFmt.format(steps)}</strong> passos.`;
+
+    renderDocsTable(
+      els.tableSiopAuthors,
+      (siop.top_authors || []).slice(0, 20),
+      (row) => `
+        <tr>
+          <td>${esc(row.author || '--')}</td>
+          <td>${esc(classifyGroup(row.party || ''))}</td>
+          <td>${money(row.empenhado)}</td>
+        </tr>
+      `,
+      3
+    );
+
+    renderDocsTable(
+      els.tableSiopParties,
+      (siop.top_parties || []).slice(0, 20),
+      (row) => `
+        <tr>
+          <td>${esc(classifyGroup(row.party || ''))}</td>
+          <td>${money(row.empenhado)}</td>
+        </tr>
+      `,
+      2
+    );
+
+    renderDocsTable(
+      els.tableSiopOrgaos,
+      (siop.top_orgaos || []).slice(0, 20),
+      (row) => `
+        <tr>
+          <td>${esc(row.orgao || '--')}</td>
+          <td>${money(row.empenhado)}</td>
+        </tr>
+      `,
+      2
+    );
   }
 
   function renderSources(report) {
@@ -725,12 +813,15 @@
     const destinationShare = topDestination ? toNumber(topDestination.share_in_day) : 0;
 
     const parallel = report.parallel_monitor || {};
+    const siopSnapshot = parallel.siop_snapshot || {};
+    const siopDetails = parallel.siop_details || {};
     const docsSource = ((parallel.documents || {}).source) || {};
     const apoiamentoSource = ((parallel.apoiamento || {}).source) || {};
     const execucao = parallel.execucao_ano_corrente || {};
 
     const items = [
-      `<li><strong>Siga Brasil (snapshot consolidado):</strong> <a href="${esc(source.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Portal da Transparência - Emendas (UNICO)</a>.</li>`,
+      `<li><strong>Base principal (acumulado):</strong> <a href="${esc(source.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Portal da Transparência - Emendas (UNICO)</a>.</li>`,
+      `<li><strong>Referência de teto/autorizado:</strong> <a href="${esc(siopSnapshot.source_url || '#')}" target="_blank" rel="noopener noreferrer">painel SIOP</a>${siopSnapshot.base_siafi_date ? ` (base SIAFI em ${esc(siopSnapshot.base_siafi_date)})` : ''}.</li>`,
       `<li><strong>Portal da Transparência (documentos por dia):</strong> <a href="${esc(docsSource.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Emendas parlamentares por documento</a>.</li>`,
       `<li><strong>Apoiamento de emendas:</strong> <a href="${esc(apoiamentoSource.requested_url || '#')}" target="_blank" rel="noopener noreferrer">Base oficial de apoiamento</a>. Mostra rede de apoio entre autores.</li>`,
       `<li><strong>Execução do ano corrente:</strong> <a href="${esc(execucao.endpoint_url || '#')}" target="_blank" rel="noopener noreferrer">endpoint de execução no Portal da Transparência</a>.</li>`,
@@ -739,6 +830,7 @@
       + (topAuthor ? ` Autor líder: ${esc(topAuthor.author)} (${pctFmt.format(authorShare)} do total do dia).` : '')
       + (topDestination ? ` Destino líder: ${esc(topDestination.destination)} (${pctFmt.format(destinationShare)} do total do dia).` : '')
       + '</li>',
+      `<li><strong>Detalhamento direto do SIOP:</strong> ${siopDetails.available ? `${nFmt.format(toNumber(siopDetails.unique_nro_emendas))} emendas únicas coletadas no recorte atual.` : 'indisponível nesta atualização.'}</li>`,
     ];
 
     els.sourcesList.innerHTML = items.join('');
@@ -753,8 +845,10 @@
     if (state.activeView === 'snapshot') {
       setSnapshotKpis(report);
       const source = report.source || {};
-      els.statusSource.textContent = `Fonte ativa: Siga Brasil (${formatHeaderDate(source.last_modified || metadata.source_last_modified || '')})`;
-      els.sourceUpdatedLine.textContent = `Última atualização desta fonte: ${formatHeaderDate(source.last_modified || metadata.source_last_modified || '')}`;
+      const siop = (((report.parallel_monitor || {}).siop_snapshot) || {});
+      const siopDate = siop.last_update || siop.base_siafi_date || '';
+      els.statusSource.textContent = `Fonte ativa: Siga Brasil + SIOP (${formatHeaderDate(source.last_modified || metadata.source_last_modified || '')})`;
+      els.sourceUpdatedLine.textContent = `Última atualização desta fonte: UNICO em ${formatHeaderDate(source.last_modified || metadata.source_last_modified || '')}${siopDate ? `; SIOP/SIAFI em ${esc(siopDate)}` : ''}.`;
     } else {
       setDocsKpis(report);
       const docsSource = (((report.parallel_monitor || {}).documents || {}).source) || {};
