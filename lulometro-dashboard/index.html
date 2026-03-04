@@ -520,6 +520,34 @@
       font-size: 1rem;
     }
 
+    .methodology h3 {
+      margin: 0;
+      font-size: 0.92rem;
+      color: #4f4b44;
+    }
+
+    .methodology-block {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.52rem;
+      display: grid;
+      gap: 0.4rem;
+      background: #fffdfa;
+    }
+
+    .methodology-table {
+      min-width: 860px;
+      font-size: 0.82rem;
+    }
+
+    .methodology-table-wrap {
+      max-height: 290px;
+      overflow: auto;
+      border: 1px solid #e7e2d6;
+      border-radius: 10px;
+      background: #fff;
+    }
+
     @media (max-width: 1120px) {
       .controls {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -748,10 +776,52 @@
       <p class="hint" id="methodology-note">
         Carregando cobertura da base e detalhes metodologicos...
       </p>
+      <article class="methodology-block" aria-label="Cobertura por presidente">
+        <h3>Cobertura por presidente</h3>
+        <div class="methodology-table-wrap">
+          <table class="methodology-table">
+            <thead>
+              <tr>
+                <th>Presidente</th>
+                <th>Discursos</th>
+                <th>Entrevistas</th>
+                <th>Discursos no buscador</th>
+                <th>Entrevistas no buscador</th>
+                <th>Total no buscador</th>
+                <th>Cobertura</th>
+              </tr>
+            </thead>
+            <tbody id="methodology-president-body">
+              <tr><td colspan="7">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+      <article class="methodology-block" aria-label="Cobertura por mandato">
+        <h3>Cobertura por mandato</h3>
+        <div class="methodology-table-wrap">
+          <table class="methodology-table">
+            <thead>
+              <tr>
+                <th>Mandato</th>
+                <th>Discursos</th>
+                <th>Entrevistas</th>
+                <th>Discursos no buscador</th>
+                <th>Entrevistas no buscador</th>
+                <th>Total no buscador</th>
+                <th>Cobertura</th>
+              </tr>
+            </thead>
+            <tbody id="methodology-mandate-body">
+              <tr><td colspan="7">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
     </section>
   </main>
 
   <script src="./vendor/pako.min.js"></script>
-  <script src="./app.js?v=20260304h"></script>
+  <script src="./app.js?v=20260304i"></script>
 </body>
 </html>

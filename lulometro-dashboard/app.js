@@ -62,6 +62,8 @@
     chartPresidents: document.getElementById('chart-presidents'),
     chartMandates: document.getElementById('chart-mandates'),
     methodologyNote: document.getElementById('methodology-note'),
+    methodologyPresidentBody: document.getElementById('methodology-president-body'),
+    methodologyMandateBody: document.getElementById('methodology-mandate-body'),
     wordcloudRange: document.getElementById('wordcloud-range'),
     wordcloudPhraseSize: document.getElementById('wordcloud-phrase-size'),
     wordcloudApply: document.getElementById('wordcloud-apply'),
@@ -307,14 +309,15 @@
     }
   }
 
-  function parseJsonlTextChunk(buffer, out) {
-    let consumedUntil = 0;
+  function parseJsonlTextChunk(buffer, out, flushTail = false) {
+    let cursor = 0;
     let linesSeen = 0;
-    for (let idx = 0; idx <= buffer.length; idx += 1) {
-      const charCode = idx < buffer.length ? buffer.charCodeAt(idx) : -1;
-      if (charCode !== 10 && charCode !== -1) continue;
-      const line = buffer.slice(consumedUntil, idx).trim();
-      consumedUntil = idx + 1;
+
+    while (true) {
+      const idx = buffer.indexOf('\n', cursor);
+      if (idx < 0) break;
+      const line = buffer.slice(cursor, idx).trim();
+      cursor = idx + 1;
       linesSeen += 1;
       if (!line) continue;
       try {
@@ -323,10 +326,21 @@
         // Ignore malformed rows.
       }
     }
-    return {
-      remainder: consumedUntil >= buffer.length ? '' : buffer.slice(consumedUntil),
-      linesSeen,
-    };
+
+    if (flushTail) {
+      const tail = buffer.slice(cursor).trim();
+      if (tail) {
+        try {
+          out.push(JSON.parse(tail));
+          linesSeen += 1;
+        } catch (err) {
+          // Ignore malformed tail row.
+        }
+      }
+      return { remainder: '', linesSeen };
+    }
+
+    return { remainder: buffer.slice(cursor), linesSeen };
   }
 
   async function fetchJsonlGz(url, onProgress, expectedRecords = 0) {
@@ -367,7 +381,7 @@
         if (!value) continue;
 
         textBuffer += decoder.decode(value, { stream: true });
-        const parsed = parseJsonlTextChunk(textBuffer, out);
+        const parsed = parseJsonlTextChunk(textBuffer, out, false);
         textBuffer = parsed.remainder;
         parsedLines += parsed.linesSeen;
         loopCount += 1;
@@ -381,10 +395,8 @@
       }
 
       textBuffer += decoder.decode();
-      if (textBuffer.trim()) {
-        const parsed = parseJsonlTextChunk(`${textBuffer}\n`, out);
-        parsedLines += parsed.linesSeen;
-      }
+      const parsedTail = parseJsonlTextChunk(textBuffer, out, true);
+      parsedLines += parsedTail.linesSeen;
 
       emitProgress(100, `Base pronta: ${nFmt.format(out.length)} documentos`);
       return out;
@@ -403,15 +415,7 @@
     emitProgress(80, 'Descompactando base...');
     const inflated = window.pako.ungzip(gzData, { to: 'string' });
 
-    let textBuffer = inflated;
-    const parsed = parseJsonlTextChunk(`${textBuffer}\n`, out);
-    if (parsed.remainder.trim()) {
-      try {
-        out.push(JSON.parse(parsed.remainder.trim()));
-      } catch (err) {
-        // Ignore malformed tail.
-      }
-    }
+    parseJsonlTextChunk(inflated, out, true);
 
     emitProgress(100, `Base pronta: ${nFmt.format(out.length)} documentos`);
     return out;
@@ -462,6 +466,12 @@
     if (els.examplesGrid) {
       els.examplesGrid.innerHTML = '';
     }
+    if (els.methodologyPresidentBody) {
+      els.methodologyPresidentBody.innerHTML = '<tr><td colspan="7">Carregue a base para ver a cobertura por presidente.</td></tr>';
+    }
+    if (els.methodologyMandateBody) {
+      els.methodologyMandateBody.innerHTML = '<tr><td colspan="7">Carregue a base para ver a cobertura por mandato.</td></tr>';
+    }
   }
 
   function shouldUseLightMode(metadata) {
@@ -471,6 +481,87 @@
     if (DEVICE_PROFILE.saveData) return true;
     if (largeDataset) return true;
     return DEVICE_PROFILE.smallScreen || DEVICE_PROFILE.lowRam;
+  }
+
+  function createCoverageStats() {
+    return {
+      total: 0,
+      filled: 0,
+      discurso_total: 0,
+      discurso_filled: 0,
+      entrevista_total: 0,
+      entrevista_filled: 0,
+    };
+  }
+
+  function updateCoverageStats(stats, recType, hasText) {
+    stats.total += 1;
+    if (recType === 'entrevista') {
+      stats.entrevista_total += 1;
+      if (hasText) stats.entrevista_filled += 1;
+    } else {
+      stats.discurso_total += 1;
+      if (hasText) stats.discurso_filled += 1;
+    }
+    if (hasText) stats.filled += 1;
+  }
+
+  function renderCoverageRows(targetBody, rows, emptyText) {
+    if (!targetBody) return;
+    if (!rows.length) {
+      targetBody.innerHTML = `<tr><td colspan="7">${esc(emptyText)}</td></tr>`;
+      return;
+    }
+
+    targetBody.innerHTML = '';
+    for (const row of rows) {
+      const coveragePct = row.total ? ((row.filled * 100) / row.total).toFixed(1).replace('.', ',') : '0,0';
+      const tr = document.createElement('tr');
+      tr.innerHTML = [
+        `<td>${esc(row.name)}</td>`,
+        `<td>${nFmt.format(row.discurso_total)}</td>`,
+        `<td>${nFmt.format(row.entrevista_total)}</td>`,
+        `<td>${nFmt.format(row.discurso_filled)}</td>`,
+        `<td>${nFmt.format(row.entrevista_filled)}</td>`,
+        `<td>${nFmt.format(row.filled)}</td>`,
+        `<td>${coveragePct}%</td>`,
+      ].join('');
+      targetBody.appendChild(tr);
+    }
+  }
+
+  function updateMethodologyBreakdowns() {
+    if (!state.coverage || !state.coverage.totalDocs) {
+      renderCoverageRows(
+        els.methodologyPresidentBody,
+        [],
+        'Carregue a base para ver a cobertura por presidente.'
+      );
+      renderCoverageRows(
+        els.methodologyMandateBody,
+        [],
+        'Carregue a base para ver a cobertura por mandato.'
+      );
+      return;
+    }
+
+    const presRows = [...state.coverage.byPresident.entries()]
+      .map(([name, stats]) => ({ name, ...stats }))
+      .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name, 'pt-BR'));
+    const mandateRows = [...state.coverage.byMandate.entries()]
+      .map(([name, stats]) => ({ name, ...stats }))
+      .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name, 'pt-BR'));
+
+    renderCoverageRows(
+      els.methodologyPresidentBody,
+      presRows,
+      'Sem dados por presidente.'
+    );
+    renderCoverageRows(
+      els.methodologyMandateBody,
+      mandateRows,
+      'Sem dados por mandato.'
+    );
   }
 
   function computeCoverage() {
@@ -501,21 +592,17 @@
         }
       }
 
-      const president = (rec.president || '').trim();
-      if (president) {
-        const stats = byPresident.get(president) || { total: 0, filled: 0 };
-        stats.total += 1;
-        if (hasText) stats.filled += 1;
-        byPresident.set(president, stats);
-      }
+      const recType = rec.type === 'entrevista' ? 'entrevista' : 'discurso';
+      const president = (rec.president || '').trim() || 'Nao identificado';
+      const mandate = (rec.mandate || '').trim() || 'Mandato nao identificado';
 
-      const mandate = (rec.mandate || '').trim();
-      if (mandate) {
-        const stats = byMandate.get(mandate) || { total: 0, filled: 0 };
-        stats.total += 1;
-        if (hasText) stats.filled += 1;
-        byMandate.set(mandate, stats);
-      }
+      const pStats = byPresident.get(president) || createCoverageStats();
+      updateCoverageStats(pStats, recType, hasText);
+      byPresident.set(president, pStats);
+
+      const mStats = byMandate.get(mandate) || createCoverageStats();
+      updateCoverageStats(mStats, recType, hasText);
+      byMandate.set(mandate, mStats);
     }
 
     const hiddenPresidents = [...byPresident.entries()]
@@ -545,6 +632,7 @@
     if (!els.methodologyNote) return;
     if (!state.coverage || !state.coverage.totalDocs) {
       els.methodologyNote.textContent = 'A busca usa extração textual automatizada (HTML e anexos PDF/TXT). Parte do acervo histórico da Biblioteca da Presidência é mais difícil de raspar por páginas antigas, links /view, anexos fora do ar e limitações anti-bot.';
+      updateMethodologyBreakdowns();
       return;
     }
 
@@ -562,7 +650,8 @@
       ? ' Para evitar travamentos em bases grandes, o painel abre em modo progressivo e só carrega o texto integral sob demanda.'
       : '';
 
-    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}. Em entrevistas, parte das menções pode vir do interlocutor (pergunta), não apenas do presidente.${futureDatesNote}${progressiveStrategy}`;
+    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). As tabelas abaixo mostram, para cada presidente e cada mandato, quantos discursos e entrevistas existem no acervo bruto e quantos entraram no buscador (texto recuperado). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}. Em entrevistas, parte das menções pode vir do interlocutor (pergunta), não apenas do presidente.${futureDatesNote}${progressiveStrategy}`;
+    updateMethodologyBreakdowns();
   }
 
   async function ensureRecordsReady() {
