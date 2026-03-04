@@ -32,6 +32,7 @@
     chartTimeline: document.getElementById('chart-timeline'),
     chartPresidents: document.getElementById('chart-presidents'),
     chartMandates: document.getElementById('chart-mandates'),
+    methodologyNote: document.getElementById('methodology-note'),
   };
 
   const state = {
@@ -40,6 +41,7 @@
     charts: [],
     ready: false,
     recordsLoaded: false,
+    coverage: null,
   };
 
   function foldText(value) {
@@ -48,6 +50,12 @@
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .toLowerCase();
+  }
+
+  function hasExtractedText(rec) {
+    if (typeof rec._hasText === 'boolean') return rec._hasText;
+    rec._hasText = Boolean((rec.text || '').trim());
+    return rec._hasText;
   }
 
   function esc(value) {
@@ -150,6 +158,72 @@
     els.resultsBody.innerHTML = '<tr><td colspan="8">Modo leve ativo. Toque em <strong>Carregar base</strong> para carregar os documentos completos.</td></tr>';
   }
 
+  function computeCoverage() {
+    const byPresident = new Map();
+    const byMandate = new Map();
+    let totalDocs = 0;
+    let totalFilled = 0;
+
+    for (const rec of state.records) {
+      totalDocs += 1;
+      const hasText = hasExtractedText(rec);
+      if (hasText) totalFilled += 1;
+
+      const president = (rec.president || '').trim();
+      if (president) {
+        const stats = byPresident.get(president) || { total: 0, filled: 0 };
+        stats.total += 1;
+        if (hasText) stats.filled += 1;
+        byPresident.set(president, stats);
+      }
+
+      const mandate = (rec.mandate || '').trim();
+      if (mandate) {
+        const stats = byMandate.get(mandate) || { total: 0, filled: 0 };
+        stats.total += 1;
+        if (hasText) stats.filled += 1;
+        byMandate.set(mandate, stats);
+      }
+    }
+
+    const hiddenPresidents = [...byPresident.entries()]
+      .filter(([, stats]) => stats.filled === 0)
+      .map(([name]) => name)
+      .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+    const hiddenMandates = [...byMandate.entries()]
+      .filter(([, stats]) => stats.filled === 0)
+      .map(([name]) => name)
+      .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+    state.coverage = {
+      totalDocs,
+      totalFilled,
+      byPresident,
+      byMandate,
+      hiddenPresidents,
+      hiddenMandates,
+    };
+  }
+
+  function updateMethodologyNote() {
+    if (!els.methodologyNote) return;
+    if (!state.coverage || !state.coverage.totalDocs) {
+      els.methodologyNote.textContent = 'A busca usa extração textual automatizada (HTML e anexos PDF/TXT). Parte do acervo histórico da Biblioteca da Presidência é mais difícil de raspar por páginas antigas, links /view, anexos fora do ar e limitações anti-bot.';
+      return;
+    }
+
+    const totalDocs = state.coverage.totalDocs;
+    const totalFilled = state.coverage.totalFilled;
+    const pct = totalDocs ? ((totalFilled * 100) / totalDocs).toFixed(2).replace('.', ',') : '0,00';
+    const hiddenPresCount = state.coverage.hiddenPresidents.length;
+    const hiddenMandateCount = state.coverage.hiddenMandates.length;
+    const hiddenPresPreview = state.coverage.hiddenPresidents.slice(0, 6).join('; ');
+    const hiddenSuffix = hiddenPresCount > 6 ? '...' : '';
+
+    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}.`;
+  }
+
   async function ensureRecordsReady() {
     if (state.recordsLoaded) return true;
     els.btnSearch.disabled = true;
@@ -160,6 +234,8 @@
       state.records = records;
       state.recordsLoaded = true;
       state.ready = true;
+      computeCoverage();
+      updateMethodologyNote();
       populateFilterOptions();
       setControlsDisabled(false);
       els.btnSearch.textContent = 'Buscar';
@@ -177,39 +253,33 @@
   }
 
   function populateFilterOptions() {
-    const byPresident = new Map();
-    const byMandate = new Map();
+    if (!state.coverage) return;
     els.presidentSelect.innerHTML = '<option value="todos">Presidente: todos</option>';
     els.mandateSelect.innerHTML = '<option value="todos">Mandato: todos</option>';
 
-    for (const rec of state.records) {
-      const p = (rec.president || '').trim();
-      const m = (rec.mandate || '').trim();
-      if (p) byPresident.set(p, (byPresident.get(p) || 0) + 1);
-      if (m) byMandate.set(m, (byMandate.get(m) || 0) + 1);
-    }
+    const presidentOptions = [...state.coverage.byPresident.entries()]
+      .filter(([, stats]) => stats.filled > 0)
+      .sort((a, b) => b[1].filled - a[1].filled || a[0].localeCompare(b[0], 'pt-BR'));
 
-    const presidentOptions = [...byPresident.entries()]
-      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt-BR'));
-
-    const mandateOptions = [...byMandate.entries()]
+    const mandateOptions = [...state.coverage.byMandate.entries()]
+      .filter(([, stats]) => stats.filled > 0)
       .sort((a, b) => {
         const ya = Number((a[0].match(/(\d{4})/) || [0, 0])[1]);
         const yb = Number((b[0].match(/(\d{4})/) || [0, 0])[1]);
         return yb - ya || a[0].localeCompare(b[0], 'pt-BR');
       });
 
-    for (const [name, qty] of presidentOptions) {
+    for (const [name, stats] of presidentOptions) {
       const opt = document.createElement('option');
       opt.value = name;
-      opt.textContent = `${name} (${nFmt.format(qty)})`;
+      opt.textContent = `${name} (${nFmt.format(stats.filled)} com texto)`;
       els.presidentSelect.appendChild(opt);
     }
 
-    for (const [name, qty] of mandateOptions) {
+    for (const [name, stats] of mandateOptions) {
       const opt = document.createElement('option');
       opt.value = name;
-      opt.textContent = `${name} (${nFmt.format(qty)})`;
+      opt.textContent = `${name} (${nFmt.format(stats.filled)} com texto)`;
       els.mandateSelect.appendChild(opt);
     }
   }
@@ -235,6 +305,7 @@
     let latestDate = '';
 
     for (const rec of state.records) {
+      if (!hasExtractedText(rec)) continue;
       if (typeFilter !== 'ambos' && rec.type !== typeFilter) continue;
       if (presidentFilter !== 'todos' && rec.president !== presidentFilter) continue;
       if (mandateFilter !== 'todos' && rec.mandate !== mandateFilter) continue;
@@ -290,7 +361,7 @@
     renderTable(results, hasTerm);
 
     const sampleDocs = nFmt.format(results.length);
-    const totalDocs = nFmt.format(state.records.length);
+    const totalDocs = nFmt.format(state.coverage ? state.coverage.totalFilled : state.records.length);
     if (hasTerm) {
       els.summaryText.textContent = `Busca por "${termRaw}" em ${sampleDocs} documentos, dentro de um universo de ${totalDocs}.`; 
       els.searchHint.textContent = `Termo atual: "${termRaw}". Busca sem distinção de maiúsculas/minúsculas e sem sensibilidade a acentos.`;
@@ -502,6 +573,7 @@
       els.statusUpdated.textContent = `Atualizado em ${generatedAt}`;
       els.statusTotalDocs.textContent = `Documentos: ${nFmt.format(total)}`;
       els.statusSources.textContent = `Fontes: ${sourceCount}`;
+      updateMethodologyNote();
 
       setupEvents();
       if (MOBILE_LIGHT_MODE) {

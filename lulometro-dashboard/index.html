@@ -266,6 +266,20 @@
       margin: 0;
     }
 
+    .methodology {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: 0.78rem;
+      display: grid;
+      gap: 0.42rem;
+    }
+
+    .methodology h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
     @media (max-width: 1120px) {
       .controls {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -405,6 +419,13 @@
           <tbody id="results-body"></tbody>
         </table>
       </div>
+    </section>
+
+    <section class="methodology" aria-label="Nota metodologica">
+      <h2>Nota metodologica</h2>
+      <p class="hint" id="methodology-note">
+        Carregando cobertura da base e detalhes metodologicos...
+      </p>
     </section>
   </main>
 
