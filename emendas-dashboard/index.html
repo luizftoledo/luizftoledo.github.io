@@ -132,6 +132,38 @@
       line-height: 1.45;
     }
 
+    .compare-alert {
+      border: 1px solid #d8ccb9;
+      border-radius: 12px;
+      background: #f8f2ea;
+      padding: 0.62rem 0.7rem;
+      display: flex;
+      gap: 0.6rem;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .compare-alert p {
+      margin: 0;
+      color: #5f4d3f;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      flex: 1 1 380px;
+    }
+
+    .compare-alert button {
+      border: 1px solid #c49b7a;
+      border-radius: 999px;
+      background: #fff9f2;
+      color: #5e4734;
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-height: 32px;
+      padding: 0.28rem 0.64rem;
+      cursor: pointer;
+    }
+
     .kpi-main {
       border: 1px solid #dfccb7;
       border-radius: 14px;
@@ -483,10 +515,14 @@
       </div>
       <div class="source-switch">
         <span class="source-label">Escolha a fonte dos dados:</span>
-        <button class="view-tab active" id="tab-view-snapshot" type="button">Versão com dados do Siga Brasil</button>
-        <button class="view-tab" id="tab-view-docs" type="button">Versão com dados do portal da transparência do governo federal</button>
+        <button class="view-tab active" id="tab-view-docs" type="button">Portal da Transparência (principal)</button>
+        <button class="view-tab" id="tab-view-snapshot" type="button">Comparar com SIOP/Siga Brasil</button>
       </div>
       <p class="source-updated" id="source-updated-line">Última atualização desta fonte: --</p>
+      <article class="compare-alert" id="compare-alert" hidden>
+        <p id="compare-alert-text">Comparativo de atualização entre fontes.</p>
+        <button id="compare-alert-action" type="button">Ver comparação no SIOP</button>
+      </article>
       <article class="kpi-main">
         <div class="label">Empenhado no dia</div>
         <div class="value good" id="kpi-day-main">--</div>
@@ -753,53 +789,6 @@
               </tr>
             </thead>
             <tbody id="table-docs-dest-day">
-              <tr><td colspan="2">Carregando...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel">
-        <h2>Detalhamento direto do SIOP (autores, partidos e órgãos)</h2>
-        <p class="hint" id="siop-detail-note">Carregando detalhamento direto do SIOP...</p>
-        <div class="charts">
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Autor</th>
-                  <th>Grupo político</th>
-                  <th>Empenhado</th>
-                </tr>
-              </thead>
-              <tbody id="table-siop-authors">
-                <tr><td colspan="3">Carregando...</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Partido/bancada</th>
-                  <th>Empenhado</th>
-                </tr>
-              </thead>
-              <tbody id="table-siop-parties">
-                <tr><td colspan="2">Carregando...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Órgão</th>
-                <th>Empenhado</th>
-              </tr>
-            </thead>
-            <tbody id="table-siop-orgaos">
               <tr><td colspan="2">Carregando...</td></tr>
             </tbody>
           </table>

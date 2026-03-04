@@ -15,6 +15,9 @@
     statusSnapshot: document.getElementById('status-snapshot'),
     statusSource: document.getElementById('status-source'),
     sourceUpdatedLine: document.getElementById('source-updated-line'),
+    compareAlert: document.getElementById('compare-alert'),
+    compareAlertText: document.getElementById('compare-alert-text'),
+    compareAlertAction: document.getElementById('compare-alert-action'),
 
     tabViewSnapshot: document.getElementById('tab-view-snapshot'),
     tabViewDocs: document.getElementById('tab-view-docs'),
@@ -60,10 +63,6 @@
     tableClassicAccumulated: document.getElementById('table-classic-accumulated'),
     tableClassicWeek: document.getElementById('table-classic-week'),
     tableClassicDay: document.getElementById('table-classic-day'),
-    siopDetailNote: document.getElementById('siop-detail-note'),
-    tableSiopAuthors: document.getElementById('table-siop-authors'),
-    tableSiopParties: document.getElementById('table-siop-parties'),
-    tableSiopOrgaos: document.getElementById('table-siop-orgaos'),
     tableApoiamentoTop: document.getElementById('table-apoiamento-top'),
     tableApoiamentoAuthors: document.getElementById('table-apoiamento-authors'),
     tableApoiamentoGroups: document.getElementById('table-apoiamento-groups'),
@@ -82,7 +81,7 @@
   const state = {
     report: null,
     metadata: null,
-    activeView: 'snapshot',
+    activeView: 'docs',
     docsMode: 'year',
   };
 
@@ -122,6 +121,33 @@
     const d = new Date(`${dateStr}T00:00:00`);
     if (Number.isNaN(d.getTime())) return dateStr;
     return d.toLocaleDateString('pt-BR');
+  }
+
+  function parseLooseDate(rawDate) {
+    const raw = (rawDate || '').toString().trim();
+    if (!raw) return null;
+
+    const mBr = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:\s+(\d{1,2}):(\d{2}):(\d{2}))?$/);
+    if (mBr) {
+      const dd = String(mBr[1]).padStart(2, '0');
+      const mm = String(mBr[2]).padStart(2, '0');
+      const yyyy = mBr[3];
+      const hh = String(mBr[4] || '0').padStart(2, '0');
+      const mi = String(mBr[5] || '0').padStart(2, '0');
+      const ss = String(mBr[6] || '0').padStart(2, '0');
+      const d = new Date(`${yyyy}-${mm}-${dd}T${hh}:${mi}:${ss}`);
+      if (!Number.isNaN(d.getTime())) return d;
+    }
+
+    const mIso = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (mIso) {
+      const d = new Date(`${mIso[1]}-${mIso[2]}-${mIso[3]}T00:00:00`);
+      if (!Number.isNaN(d.getTime())) return d;
+    }
+
+    const fallback = new Date(raw);
+    if (!Number.isNaN(fallback.getTime())) return fallback;
+    return null;
   }
 
   function getIsoWeekLabel(dateStr) {
@@ -258,7 +284,7 @@
     if ((viewParam || '').toLowerCase() === 'docs') return 'docs';
     if ((viewParam || '').toLowerCase() === 'snapshot') return 'snapshot';
 
-    return 'snapshot';
+    return 'docs';
   }
 
   function setSnapshotKpis(report) {
@@ -365,30 +391,75 @@
   }
 
   function setSpotlight(report) {
-    const topAuthor = (report.top_authors_today || [])[0];
-    const topDestination = (report.top_destinations_today || [])[0];
-    const delta = toNumber((report.metrics || {}).delta_positivo_desde_snapshot_anterior);
-    const rows = toNumber((report.metrics || {}).total_linhas_csv);
-    const baseline = Boolean((report.metrics || {}).baseline_initialized);
+    const docs = (((report.parallel_monitor || {}).documents) || {});
+    const totals = docs.totals || {};
+    const topAuthor = ((docs.top_authors_year || [])[0]) || null;
+    const topDestination = ((docs.top_destinations_last_day || [])[0]) || null;
+    const committedYear = toNumber(totals.total_empenhado_year);
+    const lastDay = toNumber(totals.total_empenhado_last_day);
+    const dateMax = docs.date_max || '--';
 
-    if (baseline) {
-      els.spotlight.innerHTML = `Primeira carga do monitor concluída. Este snapshot serve como linha de base para calcular o movimento diário a partir da próxima atualização. Base processada: <strong>${nFmt.format(rows)}</strong> linhas.`;
+    if (!committedYear && !lastDay) {
+      els.spotlight.innerHTML = 'A base principal ainda não trouxe totais consolidados para esta atualização.';
       return;
     }
 
-    if (!topAuthor || !topDestination) {
-      els.spotlight.innerHTML = `Hoje não houve variação positiva identificada. Base processada: <strong>${nFmt.format(rows)}</strong> linhas.`;
+    els.spotlight.innerHTML =
+      `Na base principal do Portal da Transparência (documentos), até <strong>${esc(dateMax)}</strong> ` +
+      `foram empenhados <strong>${money(committedYear)}</strong> no ano, com ` +
+      `<strong>${money(lastDay)}</strong> no último dia disponível.` +
+      (topAuthor
+        ? ` Maior autor no ano: <strong>${esc(topAuthor.author)}</strong> (${money(topAuthor.empenhado)}).`
+        : '') +
+      (topDestination
+        ? ` Maior destino no último dia: <strong>${esc(topDestination.destination)}</strong> (${money(topDestination.empenhado)}).`
+        : '');
+  }
+
+  function renderComparisonAlert(report, metadata) {
+    if (!els.compareAlert || !els.compareAlertText || !els.compareAlertAction) return;
+
+    const parallel = report.parallel_monitor || {};
+    const docs = parallel.documents || {};
+    const docsTotals = docs.totals || {};
+    const docsCommitted = toNumber(docsTotals.total_empenhado_year);
+    const docsDate = parseLooseDate(docs.date_max || ((docs.source || {}).last_modified || metadata.documents_last_modified || ''));
+
+    const siop = parallel.siop_snapshot || {};
+    const siopTotals = siop.totals || {};
+    const siopCommitted = toNumber(siopTotals.empenhado);
+    const siopDateRaw = siop.last_update || siop.base_siafi_date || metadata.siop_base_siafi_date || '';
+    const siopDate = parseLooseDate(siopDateRaw);
+
+    const maxBase = Math.max(docsCommitted, siopCommitted, 0);
+    const diffRatio = maxBase > 0 ? Math.abs(docsCommitted - siopCommitted) / maxBase : 0;
+    const dayMs = 24 * 60 * 60 * 1000;
+    const daysAhead = (docsDate && siopDate) ? Math.floor((siopDate.getTime() - docsDate.getTime()) / dayMs) : 0;
+    const siopNewer = daysAhead >= 1;
+    const largeDifference = diffRatio >= 0.2;
+
+    if (!siop.available || (!siopNewer && !largeDifference)) {
+      els.compareAlert.hidden = true;
       return;
     }
 
-    els.spotlight.innerHTML = `
-      No snapshot de <strong>${esc(report.snapshot_date || '--')}</strong>, o monitor identificou
-      <strong>${money(delta)}</strong> de aumento positivo em empenhos.
-      Quem mais cresceu no dia foi <strong>${esc(topAuthor.author)}</strong>
-      (${esc(topAuthor.party || 'sem partido mapeado')}, ${money(topAuthor.delta_empenhado)}),
-      e a principal localidade de aplicação foi <strong>${esc(topDestination.destination)}</strong>
-      (${money(topDestination.delta_empenhado)}).
-    `;
+    const chunks = ['Painel principal: Portal da Transparência (documentos).'];
+    if (largeDifference) {
+      chunks.push(
+        `No ano, Portal mostra ${money(docsCommitted)} e SIOP mostra ${money(siopCommitted)} ` +
+        `(diferença de ${pctFmt.format(diffRatio)}).`
+      );
+    }
+    if (siopNewer) {
+      chunks.push(
+        `SIOP está mais atualizado no recorte de data: ${esc(siopDateRaw || '--')} ` +
+        `vs último dia do Portal em ${esc(docs.date_max || '--')}.`
+      );
+    }
+    chunks.push('Se precisar conferir, abra o comparativo SIOP.');
+
+    els.compareAlertText.innerHTML = chunks.join(' ');
+    els.compareAlert.hidden = false;
   }
 
   function renderPairsTable(rows) {
@@ -910,7 +981,6 @@
 
     renderDocsDailyChart(docs.daily_series || [], maxYear);
     renderDocsAuthorsDynamic(report);
-    renderSiopDetails(report);
   }
 
   function renderSiopDetails(report) {
@@ -1001,7 +1071,7 @@
       + (topAuthor ? ` Autor líder: ${esc(topAuthor.author)} (${pctFmt.format(authorShare)} do total do dia).` : '')
       + (topDestination ? ` Localidade líder: ${esc(topDestination.destination)} (${pctFmt.format(destinationShare)} do total do dia).` : '')
       + '</li>',
-      `<li><strong>Detalhamento direto do SIOP:</strong> ${siopDetails.available ? `${nFmt.format(toNumber(siopDetails.unique_nro_emendas))} emendas únicas coletadas no recorte atual.` : 'indisponível nesta atualização.'}</li>`,
+      `<li><strong>Comparativo SIOP:</strong> ${siopDetails.available ? `${nFmt.format(toNumber(siopDetails.unique_nro_emendas))} emendas únicas no recorte atual.` : 'indisponível nesta atualização.'} Abra a aba de comparação quando precisar desse detalhe.</li>`,
     ];
 
     els.sourcesList.innerHTML = items.join('');
@@ -1018,7 +1088,7 @@
       const source = report.source || {};
       const siop = (((report.parallel_monitor || {}).siop_snapshot) || {});
       const siopDate = siop.last_update || siop.base_siafi_date || '';
-      els.statusSource.textContent = `Fonte ativa: Siga Brasil + SIOP (${formatHeaderDate(source.last_modified || metadata.source_last_modified || '')})`;
+      els.statusSource.textContent = `Fonte ativa: Comparativo SIOP + Siga Brasil (${formatHeaderDate(source.last_modified || metadata.source_last_modified || '')})`;
       els.sourceUpdatedLine.textContent = `Última atualização desta fonte: UNICO em ${formatHeaderDate(source.last_modified || metadata.source_last_modified || '')}${siopDate ? `; SIOP/SIAFI em ${esc(siopDate)}` : ''}.`;
     } else {
       setDocsKpis(report);
@@ -1049,6 +1119,7 @@
 
     setStatus(report, state.metadata);
     setSpotlight(report);
+    renderComparisonAlert(report, state.metadata);
 
     renderPairsTable(report.top_author_destination_today || []);
     const topAuthorsYear = report.top_authors_year || report.top_authors_total || [];
@@ -1079,6 +1150,9 @@
 
     els.tabViewSnapshot.addEventListener('click', () => setActiveView('snapshot'));
     els.tabViewDocs.addEventListener('click', () => setActiveView('docs'));
+    if (els.compareAlertAction) {
+      els.compareAlertAction.addEventListener('click', () => setActiveView('snapshot'));
+    }
 
     if (els.docsModeDay) {
       els.docsModeDay.addEventListener('click', () => {
