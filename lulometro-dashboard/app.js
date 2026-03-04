@@ -1,11 +1,13 @@
 (function () {
   const nFmt = new Intl.NumberFormat('pt-BR');
-  const MOBILE_LIGHT_MODE = (() => {
+  const DEVICE_PROFILE = (() => {
     const smallScreen = window.matchMedia ? window.matchMedia('(max-width: 820px)').matches : false;
-    const lowRam = Number.isFinite(Number(navigator.deviceMemory)) && Number(navigator.deviceMemory) <= 4;
+    const deviceMemory = Number(navigator.deviceMemory);
+    const lowRam = Number.isFinite(deviceMemory) && deviceMemory <= 4;
     const saveData = Boolean(navigator.connection && navigator.connection.saveData);
-    return smallScreen || lowRam || saveData;
+    return { smallScreen, lowRam, saveData, deviceMemory };
   })();
+  const LIGHT_MODE_RECORDS_THRESHOLD = 5000;
 
   const els = {
     statusUpdated: document.getElementById('status-updated'),
@@ -42,6 +44,7 @@
     ready: false,
     recordsLoaded: false,
     coverage: null,
+    lightMode: false,
   };
 
   function foldText(value) {
@@ -152,10 +155,21 @@
     setControlsDisabled(true);
     els.btnSearch.disabled = false;
     els.btnSearch.textContent = 'Carregar base';
-    els.searchHint.textContent = 'Modo leve no mobile: a base completa será carregada sob demanda.';
-    els.summaryText.textContent = 'Painel aberto em modo leve para evitar travamentos. Toque em "Carregar base" para ativar a busca completa.';
+    els.searchHint.textContent = 'Modo leve ativado: a base completa será carregada apenas sob demanda.';
+    els.summaryText.textContent = 'Modo leve ativo para evitar travamentos neste dispositivo. Toque em "Carregar base" para ativar a busca completa.';
     els.tableCount.textContent = '0 linhas';
     els.resultsBody.innerHTML = '<tr><td colspan="8">Modo leve ativo. Toque em <strong>Carregar base</strong> para carregar os documentos completos.</td></tr>';
+  }
+
+  function shouldUseLightMode(metadata) {
+    const totalRecords = Number(metadata && metadata.total_records) || 0;
+    const largeDataset = totalRecords >= LIGHT_MODE_RECORDS_THRESHOLD;
+
+    if (DEVICE_PROFILE.saveData) return true;
+    if (!largeDataset) return false;
+    if (DEVICE_PROFILE.smallScreen) return true;
+    if (DEVICE_PROFILE.lowRam) return true;
+    return false;
   }
 
   function computeCoverage() {
@@ -220,8 +234,11 @@
     const hiddenMandateCount = state.coverage.hiddenMandates.length;
     const hiddenPresPreview = state.coverage.hiddenPresidents.slice(0, 6).join('; ');
     const hiddenSuffix = hiddenPresCount > 6 ? '...' : '';
+    const mobileStrategy = state.lightMode
+      ? ' Em dispositivos móveis ou conexão restrita, quando a base está grande, o painel abre em modo leve e só carrega o texto integral sob demanda.'
+      : '';
 
-    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}.`;
+    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}.${mobileStrategy}`;
   }
 
   async function ensureRecordsReady() {
@@ -563,6 +580,7 @@
     try {
       const metadata = await fetchJson('./data/metadata.json').catch(() => ({}));
       state.metadata = metadata;
+      state.lightMode = shouldUseLightMode(metadata);
 
       const generatedAt = metadata.generated_at ? formatDateTimeIso(metadata.generated_at) : '--';
       const total = metadata.total_records || state.records.length;
@@ -576,7 +594,7 @@
       updateMethodologyNote();
 
       setupEvents();
-      if (MOBILE_LIGHT_MODE) {
+      if (state.lightMode) {
         setDeferredSearchState();
         return;
       }
