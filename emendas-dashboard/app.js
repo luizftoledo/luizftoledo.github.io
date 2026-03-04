@@ -950,7 +950,6 @@
 
     const maxDate = docs.date_max || '--';
     const minDate = docs.date_min || '--';
-    const rowsValid = toNumber(docs.rows_valid_year);
     const totals = docs.totals || {};
     const maxYearInfo = getMaxYearInfo(report);
     const maxYear = toNumber(maxYearInfo.value);
@@ -959,7 +958,6 @@
     const remaining = (maxYear && maxYear > 0) ? Math.max(maxYear - committedYear, 0) : null;
     els.docSpotlight.innerHTML = `
       Série diária de <strong>${esc(minDate)}</strong> até <strong>${esc(maxDate)}</strong>.
-      Registros processados na fonte de documentos: <strong>${nFmt.format(rowsValid)}</strong>.
       ${maxYear && maxYear > 0
         ? `Do valor autorizado anual de <strong>${money(maxYear)}</strong>, já foram empenhados <strong>${money(committedYear)}</strong> e faltam <strong>${money(remaining)}</strong>.`
         : 'A fonte desta atualização não trouxe valor autorizado anual explícito para calcular quanto falta.'}
