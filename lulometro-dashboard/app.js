@@ -56,6 +56,11 @@
     wordcloudContext: document.getElementById('wordcloud-context'),
     wordcloudCloud: document.getElementById('wordcloud-cloud'),
     wordcloudTableBody: document.getElementById('wordcloud-table-body'),
+    loadProgressWrap: document.getElementById('load-progress-wrap'),
+    loadProgressText: document.getElementById('load-progress-text'),
+    loadProgressPct: document.getElementById('load-progress-pct'),
+    loadProgressFill: document.getElementById('load-progress-fill'),
+    loadProgressBar: document.querySelector('.load-progress-bar'),
   };
 
   const state = {
@@ -159,6 +164,15 @@
     return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
   }
 
+  function formatBytes(numBytes) {
+    const bytes = Number(numBytes);
+    if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
+    const units = ['B', 'KB', 'MB', 'GB'];
+    const idx = Math.min(units.length - 1, Math.floor(Math.log(bytes) / Math.log(1024)));
+    const value = bytes / (1024 ** idx);
+    return `${value.toFixed(value >= 10 ? 0 : 1)} ${units[idx]}`;
+  }
+
   function monthKey(dateIso) {
     if (!dateIso || !/^\d{4}-\d{2}-\d{2}$/.test(dateIso)) return '';
     return dateIso.slice(0, 7);
@@ -185,16 +199,76 @@
     return resp.json();
   }
 
-  async function fetchJsonlGz(url) {
+  function setLoadProgress(visible, percent = 0, text = '') {
+    if (!els.loadProgressWrap || !els.loadProgressFill || !els.loadProgressPct || !els.loadProgressText) return;
+    const pct = Math.max(0, Math.min(100, Number(percent) || 0));
+    els.loadProgressWrap.hidden = !visible;
+    els.loadProgressFill.style.width = `${pct}%`;
+    els.loadProgressPct.textContent = `${Math.round(pct)}%`;
+    if (text) els.loadProgressText.textContent = text;
+    if (els.loadProgressBar) {
+      els.loadProgressBar.setAttribute('aria-valuenow', String(Math.round(pct)));
+    }
+  }
+
+  async function fetchJsonlGz(url, onProgress) {
+    const emitProgress = (percent, text) => {
+      if (typeof onProgress === 'function') onProgress({ percent, text });
+    };
+
+    emitProgress(2, 'Iniciando download da base...');
     const resp = await fetch(url, { cache: 'no-store' });
     if (!resp.ok) {
       throw new Error(`Falha no fetch de ${url}: ${resp.status}`);
     }
-    const buf = await resp.arrayBuffer();
-    const inflated = pako.ungzip(new Uint8Array(buf), { to: 'string' });
+
+    const totalBytes = Number(resp.headers.get('content-length') || 0);
+    let gzData;
+
+    if (resp.body && typeof resp.body.getReader === 'function') {
+      const reader = resp.body.getReader();
+      const chunks = [];
+      let received = 0;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (!value) continue;
+        chunks.push(value);
+        received += value.byteLength;
+
+        let pctDownload;
+        if (totalBytes > 0) {
+          pctDownload = Math.min(72, (received / totalBytes) * 72);
+          emitProgress(pctDownload, `Baixando base: ${formatBytes(received)} de ${formatBytes(totalBytes)}`);
+        } else {
+          pctDownload = Math.min(72, 8 + Math.log10(received + 10) * 14);
+          emitProgress(pctDownload, `Baixando base: ${formatBytes(received)}`);
+        }
+      }
+
+      const merged = new Uint8Array(received);
+      let offset = 0;
+      for (const chunk of chunks) {
+        merged.set(chunk, offset);
+        offset += chunk.byteLength;
+      }
+      gzData = merged;
+    } else {
+      emitProgress(45, 'Baixando base...');
+      const buf = await resp.arrayBuffer();
+      gzData = new Uint8Array(buf);
+      emitProgress(72, `Download concluído (${formatBytes(gzData.byteLength)}).`);
+    }
+
+    emitProgress(78, 'Descompactando base...');
+    const inflated = pako.ungzip(gzData, { to: 'string' });
     const lines = inflated.split('\n');
     const out = [];
-    for (const line of lines) {
+    const totalLines = lines.length || 1;
+
+    for (let idx = 0; idx < lines.length; idx += 1) {
+      const line = lines[idx];
       const trimmed = line.trim();
       if (!trimmed) continue;
       try {
@@ -202,7 +276,14 @@
       } catch (err) {
         // Ignore malformed rows.
       }
+
+      if (idx > 0 && idx % 2500 === 0) {
+        const pct = 78 + (idx / totalLines) * 21;
+        emitProgress(pct, `Indexando documentos: ${nFmt.format(out.length)} itens`);
+      }
     }
+
+    emitProgress(100, `Base pronta: ${nFmt.format(out.length)} documentos`);
     return out;
   }
 
@@ -217,6 +298,7 @@
   }
 
   function setDeferredSearchState() {
+    setLoadProgress(false, 0, '');
     setControlsDisabled(true);
     els.btnSearch.disabled = false;
     els.btnSearch.textContent = 'Carregar base';
@@ -326,8 +408,11 @@
     els.btnSearch.disabled = true;
     els.btnSearch.textContent = 'Carregando...';
     els.searchHint.textContent = 'Carregando base completa de discursos e entrevistas...';
+    setLoadProgress(true, 1, 'Preparando carregamento da base...');
     try {
-      const records = await fetchJsonlGz('./data/records.jsonl.gz');
+      const records = await fetchJsonlGz('./data/records.jsonl.gz', ({ percent, text }) => {
+        setLoadProgress(true, percent, text);
+      });
       state.records = records;
       state.recordsLoaded = true;
       state.ready = true;
@@ -337,12 +422,16 @@
       setControlsDisabled(false);
       els.btnSearch.textContent = 'Buscar';
       applySearch();
+      setLoadProgress(true, 100, 'Carregamento concluído.');
+      setTimeout(() => setLoadProgress(false, 0, ''), 700);
       return true;
     } catch (error) {
       els.summaryText.textContent = 'Falha ao carregar a base do Lulometro.';
       els.searchHint.textContent = `Erro ao carregar base: ${error.message}`;
       els.resultsBody.innerHTML = '<tr><td colspan="8">Nao foi possivel carregar os dados completos.</td></tr>';
       els.btnSearch.textContent = 'Carregar base';
+      setLoadProgress(true, 100, 'Erro no carregamento.');
+      setTimeout(() => setLoadProgress(false, 0, ''), 1700);
       return false;
     } finally {
       els.btnSearch.disabled = false;
