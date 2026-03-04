@@ -54,6 +54,13 @@
   let textSamplePathUsed = '';
   let searchCurrentPage = 1;
   const SEARCH_PAGE_SIZE = 25;
+  const MOBILE_LIGHT_MODE = (() => {
+    const smallScreen = window.matchMedia ? window.matchMedia('(max-width: 820px)').matches : false;
+    const lowRam = Number.isFinite(Number(navigator.deviceMemory)) && Number(navigator.deviceMemory) <= 4;
+    const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+    return smallScreen || lowRam || saveData;
+  })();
+  let militaryRowsLoaded = false;
 
   function esc(text) {
     return (text || '').toString()
@@ -80,24 +87,95 @@
     return `${clean.slice(0, limit - 1).trim()}…`;
   }
 
+  function setSearchControlsDisabled(disabled) {
+    [searchOrg, searchYear, searchDecision, searchTheme, searchQuery].forEach((el) => {
+      if (!el) return;
+      el.disabled = disabled;
+    });
+  }
+
+  function setDeferredSearchState() {
+    setSearchControlsDisabled(true);
+    searchBtn.disabled = false;
+    searchBtn.textContent = 'Carregar pedidos';
+    searchStatus.textContent = 'Modo leve no mobile: a base textual é carregada só quando você tocar em "Carregar pedidos".';
+    searchStatus.classList.remove('error');
+    tableSearchResults.innerHTML = '<tr><td colspan="8">Modo leve ativo. Toque em <strong>Carregar pedidos</strong> para liberar busca e filtros detalhados.</td></tr>';
+    renderPagination(0, 0);
+  }
+
+  async function ensureMilitaryRowsReady() {
+    if (militaryRowsLoaded) return true;
+    searchBtn.disabled = true;
+    searchBtn.textContent = 'Carregando...';
+    searchStatus.classList.remove('error');
+    searchStatus.textContent = 'Carregando base textual dos pedidos...';
+    try {
+      await loadMilitaryRows();
+      buildOrgAnalysisFromSample();
+      renderMetricsAndAlerts();
+      renderOrgCards();
+      renderSearchFilters();
+      setSearchControlsDisabled(false);
+      searchBtn.textContent = 'Buscar';
+      renderMethodology();
+      runSearch({ resetPage: true });
+      return true;
+    } catch (error) {
+      searchStatus.textContent = `Falha ao carregar base textual: ${error.message}`;
+      searchStatus.classList.add('error');
+      searchBtn.textContent = 'Carregar pedidos';
+      return false;
+    } finally {
+      searchBtn.disabled = false;
+    }
+  }
+
   function buildBuscaRequestLink(idPedido) {
     const id = (idPedido || '').toString().trim();
+    if (!/^\d+$/.test(id)) return '';
     if (!id) return '';
     return `https://buscalai.cgu.gov.br/busca/${encodeURIComponent(id)}`;
   }
 
   function buildApiRequestLink(idPedido) {
     const id = (idPedido || '').toString().trim();
+    if (!/^\d+$/.test(id)) return '';
     if (!id) return '';
     return `https://api-laibr.cgu.gov.br/buscar-pedidos/${encodeURIComponent(id)}`;
   }
 
   function isBuscaRequestLink(url) {
-    return /buscalai\.cgu\.gov\.br\/busca\//i.test((url || '').toString());
+    const raw = (url || '').toString().trim();
+    const match = raw.match(/buscalai\.cgu\.gov\.br\/busca\/([^/?#]+)/i);
+    if (!match) return false;
+    try {
+      return /^\d+$/.test(decodeURIComponent(match[1] || '').trim());
+    } catch (error) {
+      return false;
+    }
   }
 
   function isApiRequestLink(url) {
-    return /api-laibr\.cgu\.gov\.br\/buscar-pedidos\//i.test((url || '').toString());
+    const raw = (url || '').toString().trim();
+    const match = raw.match(/api-laibr\.cgu\.gov\.br\/buscar-pedidos\/([^/?#]+)/i);
+    if (!match) return false;
+    try {
+      return /^\d+$/.test(decodeURIComponent(match[1] || '').trim());
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function isHttpUrl(url) {
+    const raw = (url || '').toString().trim();
+    if (!raw) return false;
+    try {
+      const parsed = new URL(raw);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch (error) {
+      return false;
+    }
   }
 
   function resolveRequestLinks(idPedido, requestPublicLink, requestAttachmentLink, requestFallbackLink) {
@@ -107,32 +185,50 @@
     const fallbackRaw = (requestFallbackLink || '').toString().trim();
 
     let apiLink = buildApiRequestLink(id);
-    let buscaLink = buildBuscaRequestLink(id);
+    let buscaLink = '';
+    let externalPublicLink = '';
+    const acceptAttachmentLink = (url) => {
+      if (!isHttpUrl(url)) return '';
+      if (/buscalai\.cgu\.gov\.br\/busca\//i.test(url)) {
+        return isBuscaRequestLink(url) ? url : '';
+      }
+      if (/api-laibr\.cgu\.gov\.br\/buscar-pedidos\//i.test(url)) {
+        return isApiRequestLink(url) ? url : '';
+      }
+      return url;
+    };
+    let attachmentLink = acceptAttachmentLink(attachmentRaw);
 
     if (publicRaw) {
       if (isApiRequestLink(publicRaw)) {
         apiLink = publicRaw;
       } else if (isBuscaRequestLink(publicRaw)) {
         buscaLink = publicRaw;
-      } else if (!apiLink) {
-        apiLink = publicRaw;
+      } else if (!externalPublicLink && isHttpUrl(publicRaw) && !/buscalai\.cgu\.gov\.br|api-laibr\.cgu\.gov\.br/i.test(publicRaw)) {
+        externalPublicLink = publicRaw;
       }
     }
 
-    if (!apiLink && fallbackRaw && !isBuscaRequestLink(fallbackRaw)) {
-      apiLink = fallbackRaw;
-    }
-    if (!buscaLink && fallbackRaw && isBuscaRequestLink(fallbackRaw)) {
-      buscaLink = fallbackRaw;
+    if (fallbackRaw) {
+      if (!apiLink && isApiRequestLink(fallbackRaw)) {
+        apiLink = fallbackRaw;
+      } else if (!buscaLink && isBuscaRequestLink(fallbackRaw)) {
+        buscaLink = fallbackRaw;
+      } else if (!externalPublicLink && isHttpUrl(fallbackRaw) && !/buscalai\.cgu\.gov\.br|api-laibr\.cgu\.gov\.br/i.test(fallbackRaw)) {
+        externalPublicLink = fallbackRaw;
+      }
     }
 
-    const publicLink = apiLink || buscaLink || fallbackRaw;
+    const publicLink = apiLink || buscaLink || externalPublicLink;
+    if (!attachmentLink) {
+      attachmentLink = acceptAttachmentLink(fallbackRaw);
+    }
     return {
       request_public_link: publicLink,
       request_api_link: apiLink,
       request_buscalai_link: buscaLink,
-      request_attachment_link: attachmentRaw,
-      request_link: publicLink || attachmentRaw || fallbackRaw,
+      request_attachment_link: attachmentLink,
+      request_link: publicLink || attachmentLink,
     };
   }
 
@@ -301,15 +397,15 @@
       reasonCounter.set(row.reason, (reasonCounter.get(row.reason) || 0) + 1);
     });
     const topReason = [...reasonCounter.entries()].sort((a, b) => b[1] - a[1])[0];
-    const textBaseLabel = isPublicTextSamplePath(textSamplePathUsed)
-      ? 'base pública textual (BuscaLAI)'
-      : 'base textual carregada';
+    const textBaseLabel = militaryRowsLoaded
+      ? (isPublicTextSamplePath(textSamplePathUsed) ? 'base pública textual (BuscaLAI)' : 'base textual carregada')
+      : 'base textual ainda não carregada (modo leve)';
 
     alertList.innerHTML = [
       `<li><strong>Maior taxa de negativa:</strong> ${esc(maxDeniedRate.org)} (${pFmt.format(maxDeniedRate.denied_rate)}).</li>`,
       `<li><strong>Maior taxa de restrição:</strong> ${esc(maxRestrictedRate.org)} (${pFmt.format(maxRestrictedRate.restricted_rate)}).</li>`,
       `<li><strong>Maior volume absoluto de negativas:</strong> ${esc(maxDeniedTotal.org)} (${nFmt.format(maxDeniedTotal.denied_total)} negativas).</li>`,
-      `<li><strong>Motivo mais frequente no recorte textual:</strong> ${esc(topReason ? topReason[0] : 'Sem dado suficiente')}.</li>`,
+      `<li><strong>Motivo mais frequente no recorte textual:</strong> ${esc(militaryRowsLoaded ? (topReason ? topReason[0] : 'Sem dado suficiente') : 'carregue a base textual para ver este item')}.</li>`,
       `<li><strong>Base pesquisável deste monitor:</strong> ${nFmt.format(militaryRows.length)} pedidos com texto (${textBaseLabel}), filtrados para os 4 órgãos.</li>`,
     ].join('');
   }
@@ -431,6 +527,9 @@
       '<option value="outros">Outros</option>',
     ].join('');
     searchTheme.innerHTML = `<option value="">Tema: todos</option>${themes.map((theme) => `<option value="${esc(theme)}">${esc(theme)}</option>`).join('')}`;
+    if (militaryRowsLoaded) {
+      searchBtn.textContent = 'Buscar';
+    }
   }
 
   function renderPagination(totalRows, shownRows) {
@@ -443,6 +542,14 @@
   }
 
   function runSearch({ resetPage = true } = {}) {
+    if (!militaryRowsLoaded) {
+      tableSearchResults.innerHTML = '<tr><td colspan="8">A base textual ainda não foi carregada neste aparelho. Toque em <strong>Carregar pedidos</strong>.</td></tr>';
+      searchStatus.textContent = 'Modo leve no mobile: carregue a base textual quando quiser usar filtros detalhados.';
+      searchStatus.classList.remove('error');
+      renderPagination(0, 0);
+      return;
+    }
+
     const org = searchOrg.value;
     const year = searchYear.value;
     const decision = searchDecision.value;
@@ -509,16 +616,18 @@
     const years = source.years_covered || [];
     const start = years.length ? Math.min(...years) : '--';
     const end = years.length ? Math.max(...years) : '--';
-    const textSourceLabel = isPublicTextSamplePath(textSamplePathUsed)
-      ? 'base pública do BuscaLAI (pedidos com texto)'
-      : 'base textual disponível no build atual';
+    const textSourceLabel = militaryRowsLoaded
+      ? (isPublicTextSamplePath(textSamplePathUsed)
+        ? 'base pública do BuscaLAI (pedidos com texto)'
+        : 'base textual disponível no build atual')
+      : 'base textual sob demanda no modo leve mobile';
 
     methodList.innerHTML = [
       `<li>Recorte institucional fixo: <strong>CEX</strong>, <strong>MD</strong>, <strong>CMAR</strong> e <strong>COMAER</strong>.</li>`,
       `<li>Período coberto: <strong>${start}-${end}</strong>, com dados oficiais da CGU.</li>`,
       '<li>Indicadores de pedidos, negativas e restrições usam a base ampla da CGU (todos os pedidos e recursos do Fala.BR).</li>',
-      `<li>A análise textual (“temas”, “motivos” e busca) usa a ${textSourceLabel}, com <strong>${nFmt.format(militaryRows.length)}</strong> pedidos desses 4 órgãos.</li>`,
-      '<li>Link de cada linha: o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); o botão <code>BuscaLAI</code> tenta abrir no portal (<code>/busca/{id}</code>); o botão <code>Anexo</code> aparece quando disponível.</li>',
+      `<li>A análise textual (“temas”, “motivos” e busca) usa a ${textSourceLabel}, com <strong>${nFmt.format(militaryRows.length)}</strong> pedidos desses 4 órgãos${militaryRowsLoaded ? '' : ' (carregue a base para ativar essa parte no mobile)'}. Esse total é menor porque depende apenas do que está público com texto navegável.</li>`,
+      '<li>Link de cada linha: o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); o botão <code>BuscaLAI</code> só aparece quando há URL pública válida no dado de origem; o botão <code>Anexo</code> aparece quando disponível.</li>',
       '<li>Definições: “com restrição” = <code>Acesso Negado</code> + <code>Acesso Parcialmente Concedido</code>.</li>',
     ].join('');
   }
@@ -568,13 +677,28 @@
   }
 
   function bindEvents() {
-    searchBtn.addEventListener('click', () => runSearch({ resetPage: true }));
+    searchBtn.addEventListener('click', async () => {
+      if (!militaryRowsLoaded) {
+        const ready = await ensureMilitaryRowsReady();
+        if (!ready) return;
+      }
+      runSearch({ resetPage: true });
+    });
     [searchOrg, searchYear, searchDecision, searchTheme].forEach((el) => {
-      el.addEventListener('change', () => runSearch({ resetPage: true }));
+      el.addEventListener('change', () => {
+        if (!militaryRowsLoaded) return;
+        runSearch({ resetPage: true });
+      });
     });
     searchQuery.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
+        if (!militaryRowsLoaded) {
+          ensureMilitaryRowsReady().then((ready) => {
+            if (ready) runSearch({ resetPage: true });
+          });
+          return;
+        }
         runSearch({ resetPage: true });
       }
     });
@@ -593,6 +717,7 @@
   }
 
   async function loadMilitaryRows() {
+    militaryRowsLoaded = false;
     let sourceIndex = null;
     try {
       sourceIndex = await fetchJson(SOURCE_INDEX_FILE);
@@ -669,6 +794,7 @@
         return normalized;
       })
       .filter((row) => TARGET_ORG_SET.has(row.org));
+    militaryRowsLoaded = true;
   }
 
   async function boot() {
@@ -679,22 +805,42 @@
         fetchJson(METRICS_DATA_FILE),
         fetchJson(METRICS_METADATA_FILE).catch(() => null),
       ]);
-      await loadMilitaryRows();
     } catch (error) {
       alertList.innerHTML = `<li>Falha ao carregar dados: ${esc(error.message)}</li>`;
       return;
     }
 
     buildOrgStats();
-    buildOrgAnalysisFromSample();
     renderHeader();
-    renderMetricsAndAlerts();
     renderCharts();
-    renderOrgCards();
     renderSearchFilters();
+    renderSourcesFooter();
+
+    if (MOBILE_LIGHT_MODE) {
+      militaryRows = [];
+      militaryRowsLoaded = false;
+      buildOrgAnalysisFromSample();
+      renderMetricsAndAlerts();
+      renderOrgCards();
+      setDeferredSearchState();
+      renderMethodology();
+      return;
+    }
+
+    try {
+      await loadMilitaryRows();
+    } catch (error) {
+      searchStatus.textContent = `Falha ao carregar base textual: ${error.message}`;
+      searchStatus.classList.add('error');
+    }
+    buildOrgAnalysisFromSample();
+    renderSearchFilters();
+    renderMetricsAndAlerts();
+    renderOrgCards();
+    setSearchControlsDisabled(false);
+    searchBtn.textContent = 'Buscar';
     runSearch();
     renderMethodology();
-    renderSourcesFooter();
   }
 
   boot();

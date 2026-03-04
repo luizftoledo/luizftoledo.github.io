@@ -65,7 +65,8 @@
     const MOBILE_LIGHT_MODE = (() => {
       const smallScreen = window.matchMedia ? window.matchMedia('(max-width: 900px)').matches : false;
       const lowRam = Number.isFinite(Number(navigator.deviceMemory)) && Number(navigator.deviceMemory) <= 4;
-      return smallScreen || lowRam;
+      const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+      return smallScreen || lowRam || saveData;
     })();
     const SEARCH_LIMIT = MOBILE_LIGHT_MODE ? 80 : 120;
     const MAP_LIMIT = MOBILE_LIGHT_MODE ? 520 : 1400;
@@ -1461,6 +1462,9 @@
         updateDatasetTabs();
       } finally {
         btnSearch.disabled = false;
+        if (MOBILE_LIGHT_MODE && (searchDataByDataset.ibama || searchDataByDataset.icmbio)) {
+          btnSearch.textContent = 'Atualizar busca';
+        }
       }
     }
 
@@ -1892,6 +1896,12 @@
         setBaseStats(stats);
       } catch (error) {
         statusLine.textContent = `Erro ao carregar metadata local: ${error.message}`;
+      }
+
+      if (MOBILE_LIGHT_MODE) {
+        btnSearch.textContent = 'Carregar dados';
+        statusLine.textContent = 'Modo leve mobile ativo. Os dados completos só serão carregados quando você tocar em "Carregar dados".';
+        return;
       }
 
       await runSearch();

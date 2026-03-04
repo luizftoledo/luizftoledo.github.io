@@ -356,6 +356,17 @@
       box-shadow: 0 0 0 2px rgba(47, 111, 159, 0.12);
     }
 
+    #reason-year-filter {
+      min-height: 34px;
+      border: 1px solid #d8d3c8;
+      border-radius: 10px;
+      background: #fff;
+      color: #4d4943;
+      padding: 0.24rem 0.54rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
     .table-inline-note {
       font-size: 0.78rem;
       color: #5a544d;
@@ -406,6 +417,10 @@
     }
 
     tbody tr:nth-child(even) { background: #fdfcfb; }
+
+    tbody tr.reason-top-row {
+      background: #f6efe1 !important;
+    }
 
     .video-embed {
       padding: 0.56rem 0.7rem 0.72rem;
@@ -988,7 +1003,7 @@
           <canvas id="chart-reasons"></canvas>
         </article>
         <article class="chart-card">
-          <h3>Órgãos que mais negam (top 10 + PF)</h3>
+          <h3>Órgãos que mais negam (top 10)</h3>
           <canvas id="chart-org-top"></canvas>
         </article>
         <article class="chart-card">
@@ -996,14 +1011,14 @@
           <canvas id="chart-org-low"></canvas>
         </article>
         <article class="chart-card">
-          <h3>Foco: negativas por informação pessoal</h3>
+          <h3>Negativas por informação pessoal <span class="table-inline-note">(o chamado <a href="https://www.youtube.com/watch?v=BAUB6kCcs8k" target="_blank" rel="noopener noreferrer">"sigilo dos 100 anos"</a>)</span></h3>
           <canvas id="chart-personal"></canvas>
         </article>
       </div>
     </section>
 
     <section class="card tables">
-      <h2>Tabelas de exemplo (dados reais)</h2>
+      <h2>Tabelas detalhadas</h2>
       <article class="table-card">
         <h3>Série histórica anual</h3>
         <div class="table-wrap">
@@ -1030,7 +1045,8 @@
         <h3>Motivos mais frequentes de negativa/restrição</h3>
         <div class="table-toggle-row" role="tablist" aria-label="Modo da tabela de motivos">
           <button class="table-toggle active" id="reason-mode-global" type="button" role="tab" aria-selected="true">Top geral</button>
-          <button class="table-toggle" id="reason-mode-yearly" type="button" role="tab" aria-selected="false">Como foi em cada ano</button>
+          <button class="table-toggle" id="reason-mode-yearly" type="button" role="tab" aria-selected="false">Ano específico</button>
+          <select id="reason-year-filter" aria-label="Selecionar ano para motivos" hidden></select>
         </div>
         <div class="table-wrap">
           <table>
@@ -1041,27 +1057,6 @@
           </table>
         </div>
         <p class="table-note" id="table-reasons-note"></p>
-      </article>
-
-      <article class="table-card">
-        <h3>Informação pessoal em série histórica <span class="table-inline-note">(o chamado <a href="https://www.youtube.com/watch?v=BAUB6kCcs8k" target="_blank" rel="noopener noreferrer">"Sigilo dos 100 anos"</a>)</span></h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Ano</th>
-                <th>Casos (qtde)</th>
-                <th>% das restrições no ano</th>
-                <th>Variação vs ano anterior</th>
-              </tr>
-            </thead>
-            <tbody id="table-personal-yearly"></tbody>
-          </table>
-        </div>
-        <div class="video-embed">
-          <p>Vídeo curto para contextualizar o tema em linguagem simples.</p>
-          <iframe src="https://www.youtube.com/embed/BAUB6kCcs8k" title="Explicação sobre Sigilo dos 100 anos" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
       </article>
 
       <article class="table-card">
@@ -1076,7 +1071,7 @@
       </article>
 
       <article class="table-card">
-        <h3>Top órgãos que mais negam (com PF incluída)</h3>
+        <h3>Top órgãos que mais negam</h3>
         <div class="table-wrap">
           <table>
             <thead>
@@ -1112,13 +1107,8 @@
       </article>
     </section>
 
-    <section class="card orgs">
-      <h2>O que os cidadãos mais pedem (análise de texto do pedido) e como isso costuma ser respondido</h2>
-      <div class="org-grid" id="org-cards"></div>
-    </section>
-
     <section class="card search-panel">
-      <h2>Pesquisar dentro dos pedidos (amostra inteligente com filtros prontos)</h2>
+      <h2>Pesquisar dentro dos pedidos (filtros prontos)</h2>
       <div class="search-controls">
         <div class="filter-row">
           <select id="search-year"></select>
@@ -1129,7 +1119,7 @@
           <button class="btn-ai-secondary" id="btn-search-requests" type="button">Buscar</button>
         </div>
         <div class="preset-row" id="preset-row"></div>
-        <p class="search-status" id="search-status">Carregando amostra para busca...</p>
+        <p class="search-status" id="search-status">Carregando base para busca...</p>
       </div>
       <article class="table-card">
         <h3>Resultados da busca no teor dos pedidos</h3>
@@ -1160,7 +1150,7 @@
     </section>
 
     <section class="card sources-footer">
-      <h2>Fontes usadas (links no rodapé)</h2>
+      <h2>Fontes usadas</h2>
       <p>Lista completa de links públicos usados neste monitoramento.</p>
       <ul class="sources-list" id="sources-list">
         <li>Carregando links...</li>
@@ -1168,7 +1158,7 @@
     </section>
 
     <footer class="card ai-panel">
-      <h2>IA para entender negativas e montar pedidos melhores</h2>
+      <h2>Evite negativas com ajuda da IA</h2>
       <div class="ai-row ai-key-row">
         <input id="gemini-key" type="password" placeholder="Cole sua Gemini API key (fica só no seu navegador)">
         <select id="ai-year-filter"></select>
@@ -1183,9 +1173,11 @@
         <button class="btn-ai-secondary" id="btn-ai-reset" type="button">Nova conversa</button>
       </div>
       <p class="ai-note">
-        O chat usa o contexto dos dados desta página e orienta em linguagem simples: motivo provável da negativa, argumentos possíveis no recurso, e um modelo curto de pedido melhor formulado.
-        Para precedentes recursais oficiais (CGU/CMRI), consulte também
-        <a href="https://www.gov.br/cgu/pt-br/acesso-a-informacao/dados-abertos/arquivos/busca-de-precedentes" target="_blank" rel="noopener noreferrer">Busca de Precedentes</a>.
+        Este chat usa os dados da página para responder suas dúvidas e sugerir caminhos práticos para pedido e recurso.
+        Para funcionar, use a sua própria Gemini API key. Você cria essa chave no
+        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a>:
+        entre com sua conta Google, clique em "Create API key" e cole a chave aqui.
+        Ela fica salva só no seu navegador.
       </p>
       <p class="ai-note error" id="ai-status"></p>
     </footer>
@@ -1212,7 +1204,8 @@
       const safeSet = () => {
         try { sessionStorage.setItem(key, '1'); } catch {}
       };
-      if (safeGet() !== '1') popup.classList.add('show');
+      const isMobile = window.matchMedia && window.matchMedia('(max-width: 820px)').matches;
+      if (!isMobile && safeGet() !== '1') popup.classList.add('show');
       if (closeBtn) {
         closeBtn.addEventListener('click', () => {
           popup.classList.remove('show');

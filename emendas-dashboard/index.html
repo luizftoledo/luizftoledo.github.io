@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Monitor de Emendas - Empenhado do Dia</title>
+  <title>Monitor diário de emendas parlamentares</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -509,6 +509,22 @@
       color: #264f8a;
     }
 
+    .footnote-note {
+      margin-top: 0.35rem;
+      padding: 0.52rem 0.58rem;
+      border: 1px solid #ddd5c8;
+      border-radius: 10px;
+      background: #faf8f2;
+    }
+
+    .context-links {
+      margin-top: 0.18rem;
+    }
+
+    .context-links li + li {
+      margin-top: 0.22rem;
+    }
+
     @media (max-width: 980px) {
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .charts { grid-template-columns: 1fr; }
@@ -544,7 +560,7 @@
 
     <section class="hero">
       <div>
-        <h1>Monitor diário de emendas: quanto foi empenhado hoje, por quem e para onde</h1>
+        <h1>Monitor diário de emendas parlamentares</h1>
         <p class="sub">Este painel acompanha mudanças diárias no valor empenhado das emendas parlamentares usando base oficial aberta. A leitura é simples: quando o valor acumulado de um autor ou de uma localidade de aplicação sobe em relação ao último snapshot, isso entra como movimento do dia.</p>
       </div>
       <div class="status">
@@ -887,10 +903,24 @@
     </div>
 
     <section class="panel">
-      <h2>Metodologia e fontes</h2>
-      <p class="hint">Definição usada neste painel: <strong>“Empenhado no dia”</strong> é a variação positiva do valor empenhado acumulado entre o snapshot atual e o snapshot anterior da base oficial.</p>
+      <h2>Metodologia, nota de rodapé e contexto</h2>
+      <p class="hint">Como este painel foi montado (linguagem simples): usamos dados oficiais abertos, atualizados por rotina automática. O painel principal usa a base de documentos do Portal da Transparência; a aba comparativa usa SIOP/Siga Brasil para conferir ritmo e teto anual.</p>
+      <p class="hint">Leitura dos termos: <strong>autorizado</strong> = teto previsto no orçamento; <strong>empenhado</strong> = valor já reservado para pagamento; <strong>pago</strong> = valor efetivamente desembolsado.</p>
+      <p class="hint">Definição usada aqui: <strong>“Empenhado no dia”</strong> é a variação positiva do valor empenhado acumulado entre o snapshot atual e o snapshot anterior da mesma fonte.</p>
       <ul class="source-list" id="sources-list">
         <li>Carregando fontes...</li>
+      </ul>
+      <p class="hint footnote-note"><strong>Nota de rodapé:</strong> os valores podem divergir entre fontes no curto prazo por diferença de data de atualização, regras de classificação (RP/tipo de emenda) e estágio da execução. Por isso o painel destaca o Portal como base principal e mostra alerta quando o SIOP estiver mais atualizado ou muito diferente.</p>
+      <h2>Leituras de contexto</h2>
+      <p class="hint">Para entender por que acompanhar esses dados: emendas afetam serviços públicos, disputa de prioridades e relação entre Executivo e Legislativo. A liberação costuma ocorrer em ondas ao longo do ano e pode acelerar em momentos de negociação política.</p>
+      <p class="hint"><strong>O que observar no painel:</strong> 1) picos de empenho em poucos dias; 2) concentração em poucos autores ou localidades; 3) avanço (ou atraso) do % do teto autorizado; 4) diferença de ritmo entre as duas fontes.</p>
+      <ul class="source-list context-links">
+        <li><a href="https://portaldatransparencia.gov.br/entenda-a-gestao-publica/emendas-parlamentares" target="_blank" rel="noopener noreferrer">Portal da Transparência (CGU): o que são emendas, quais são obrigatórias e como consultar</a></li>
+        <li><a href="https://www.camara.leg.br/assessoria-de-imprensa/1230786-camara-cria-guia-que-ajuda-cidadao-a-entender-e-fiscalizar-recursos-das-emendas/" target="_blank" rel="noopener noreferrer">Câmara dos Deputados: guia para acompanhar e fiscalizar emendas</a></li>
+        <li><a href="https://www12.senado.leg.br/noticias/materias/2025/02/28/maioria-do-stf-valida-plano-para-emendas-parlamentares" target="_blank" rel="noopener noreferrer">Senado Notícias: validação no STF do plano de transparência e rastreabilidade</a></li>
+        <li><a href="https://www.poder360.com.br/poder-governo/lula-reservou-r-9-bi-de-emendas-em-pior-momento-com-congresso/" target="_blank" rel="noopener noreferrer">Poder360: aceleração de empenhos em momento de tensão com o Congresso</a></li>
+        <li><a href="https://www.jota.info/stf/do-supremo/liberacao-parcial-das-emendas-deve-arrastar-crise-para-2025-e-planalto-tera-de-agir" target="_blank" rel="noopener noreferrer">JOTA: liberação parcial de emendas e impacto na negociação entre poderes</a></li>
+        <li><a href="https://www.ipea.gov.br/portal/categorias/45-todas-as-noticias/noticias/16161-expansao-das-emendas-parlamentares-transforma-o-orcamento-do-sus" target="_blank" rel="noopener noreferrer">Ipea: expansão das emendas e efeitos no financiamento de políticas públicas</a></li>
       </ul>
     </section>
   </main>

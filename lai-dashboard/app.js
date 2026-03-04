@@ -50,8 +50,8 @@
   const tableReasonsNote = document.getElementById('table-reasons-note');
   const reasonModeGlobal = document.getElementById('reason-mode-global');
   const reasonModeYearly = document.getElementById('reason-mode-yearly');
+  const reasonYearFilter = document.getElementById('reason-year-filter');
   const tableOrgTop = document.getElementById('table-org-top');
-  const tablePersonalYearly = document.getElementById('table-personal-yearly');
   const tablePersonalTop = document.getElementById('table-personal-top');
 
   const orgCards = document.getElementById('org-cards');
@@ -79,6 +79,12 @@
 
   const chartInstances = [];
   const MOBILE_SAMPLE_LIMIT = 25000;
+  const MOBILE_LIGHT_MODE = (() => {
+    const smallScreen = window.matchMedia ? window.matchMedia('(max-width: 820px)').matches : false;
+    const lowRam = Number.isFinite(Number(navigator.deviceMemory)) && Number(navigator.deviceMemory) <= 4;
+    const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+    return smallScreen || lowRam || saveData;
+  })();
 
   let reportData = null;
   let metadata = null;
@@ -86,8 +92,10 @@
   let sourceCatalog = {};
   let sourceDataMap = {};
   let samplesBySource = {};
+  let samplesLoadedBySource = {};
   let activeSourceId = '';
   let reasonTableMode = 'global';
+  let reasonSelectedYear = '';
   let lastSearchResults = [];
   let partialYearCtx = null;
 
@@ -113,6 +121,28 @@
       .toLowerCase()
       .replace(/\s+/g, ' ')
       .trim();
+  }
+
+  function isPlaceholderText(value) {
+    const normalized = normalizeForSearch(value);
+    return !normalized
+      || normalized === '--'
+      || normalized === 'assunto nao informado'
+      || normalized === 'motivo nao informado'
+      || normalized === 'sem decisao registrada'
+      || normalized === 'sem motivo registrado'
+      || normalized === 'outros temas';
+  }
+
+  function isSearchRowUseful(row) {
+    if (!row) return false;
+    const text = (row.text_excerpt || '').toString().trim();
+    const hasText = text.length >= 16 && !isPlaceholderText(text);
+    const hasSubject = !isPlaceholderText(row.subject || '');
+    const hasDecision = !isPlaceholderText(row.decision || '');
+    const hasReason = !isPlaceholderText(row.reason || '');
+    const hasTheme = !isPlaceholderText(row.theme || '');
+    return hasText || hasSubject || hasDecision || hasReason || hasTheme;
   }
 
   function formatDateTime(iso) {
@@ -161,6 +191,54 @@
     if (!name) return '';
     if (name.length <= 40) return name;
     return `${name.slice(0, 39)}...`;
+  }
+
+  function setSearchControlsDisabled(disabled) {
+    [searchYear, searchOrg, searchDecisionGroup, searchTheme, searchQuery].forEach((el) => {
+      if (!el) return;
+      el.disabled = disabled;
+    });
+  }
+
+  function setSearchDeferredState() {
+    requestSamples = [];
+    lastSearchResults = [];
+    searchYear.innerHTML = '<option value="">Ano: todos</option>';
+    searchOrg.innerHTML = '<option value="">Órgão: todos</option>';
+    searchTheme.innerHTML = '<option value="">Tema detectado: todos</option>';
+    renderSearchDecisionOptions();
+    presetRow.innerHTML = '<span class="search-status">Filtros prontos ficam ativos depois de carregar a base textual.</span>';
+    tableSearchResults.innerHTML = '<tr><td colspan="7">Modo leve no mobile: toque em <strong>Carregar pedidos</strong> para abrir a busca detalhada.</td></tr>';
+    searchStatus.textContent = 'Modo leve no mobile ativo. A tabela de pedidos será carregada sob demanda para evitar travamentos.';
+    searchStatus.classList.remove('error');
+    setSearchControlsDisabled(true);
+    searchBtn.disabled = false;
+    searchBtn.textContent = 'Carregar pedidos';
+  }
+
+  async function ensureRequestSamplesReady(sourceId) {
+    if (samplesLoadedBySource[sourceId]) {
+      requestSamples = samplesBySource[sourceId] || [];
+      return true;
+    }
+
+    searchBtn.disabled = true;
+    searchBtn.textContent = 'Carregando...';
+    searchStatus.classList.remove('error');
+    searchStatus.textContent = 'Carregando amostra textual de pedidos...';
+    try {
+      await loadRequestSamples(sourceId);
+      if (!samplesLoadedBySource[sourceId]) return false;
+      renderSearchFilters();
+      setSearchControlsDisabled(false);
+      searchBtn.textContent = 'Buscar';
+      return true;
+    } finally {
+      searchBtn.disabled = false;
+      if (!samplesLoadedBySource[sourceId]) {
+        searchBtn.textContent = 'Carregar pedidos';
+      }
+    }
   }
 
   function compactText(text, limit = 220) {
@@ -259,7 +337,7 @@
     const fallbackRaw = (requestFallbackLink || '').toString().trim();
 
     let apiLink = buildApiRequestLink(id);
-    let buscaLink = buildBuscaRequestLink(id);
+    let buscaLink = '';
     let externalPublicLink = '';
     const acceptAttachmentLink = (url) => {
       if (!isHttpUrl(url)) return '';
@@ -284,16 +362,16 @@
     }
 
     if (fallbackRaw) {
-      if (!buscaLink && isBuscaRequestLink(fallbackRaw)) {
-        buscaLink = fallbackRaw;
-      } else if (!apiLink && isApiRequestLink(fallbackRaw)) {
+      if (!apiLink && isApiRequestLink(fallbackRaw)) {
         apiLink = fallbackRaw;
+      } else if (!buscaLink && isBuscaRequestLink(fallbackRaw)) {
+        buscaLink = fallbackRaw;
       } else if (!externalPublicLink && isHttpUrl(fallbackRaw) && !/buscalai\.cgu\.gov\.br|api-laibr\.cgu\.gov\.br/i.test(fallbackRaw)) {
         externalPublicLink = fallbackRaw;
       }
     }
 
-    const publicLink = buscaLink || apiLink || externalPublicLink;
+    const publicLink = apiLink || buscaLink || externalPublicLink;
     if (!attachmentLink) {
       attachmentLink = acceptAttachmentLink(fallbackRaw);
     }
@@ -455,6 +533,8 @@
     const comparisonRule = (((m.monitoring_rules || {}).government_diagnosis) || '').trim();
     const topRateRule = (((m.monitoring_rules || {}).top_denial_rate_current_year) || '').trim();
     const themeRule = (((m.monitoring_rules || {}).theme_worsening) || '').trim();
+    const samplingMethodRaw = (((m.sampling_for_search || {}).method) || '').toString();
+    const samplingMethod = samplingMethodRaw.replace(/top\s*10\+pf/gi, 'top 10');
 
     methodologyContent.innerHTML = `
       ${sourceScope ? `<p><strong>Escopo desta fonte:</strong> ${esc(sourceScope)}.</p>` : ''}
@@ -499,10 +579,10 @@
       <details class="methodology-details">
         <summary>Amostragem e links na tabela de pedidos</summary>
         <ul>
-          <li><strong>Amostra para busca:</strong> ${(m.sampling_for_search || {}).method ? esc((m.sampling_for_search || {}).method) : '--'}.</li>
+          <li><strong>Amostra para busca:</strong> ${samplingMethod ? esc(samplingMethod) : '--'}.</li>
           <li><strong>Volume da amostra:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).sample_count || 0))}</strong> pedidos.</li>
-          <li><strong>Cobertura completa no top 10+PF:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).top_org_rows_in_search || 0))}</strong> pedidos.</li>
-          <li><strong>Links de pedido:</strong> o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); o botão <code>BuscaLAI</code> tenta abrir a mesma entrada no portal (<code>/busca/{id}</code>); quando houver, também aparece link de anexo.</li>
+          <li><strong>Cobertura completa no top 10:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).top_org_rows_in_search || 0))}</strong> pedidos.</li>
+          <li><strong>Links de pedido:</strong> o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); o botão <code>BuscaLAI</code> só aparece quando existe URL pública válida no dado original; quando houver, também aparece link de anexo.</li>
         </ul>
       </details>
 
@@ -937,6 +1017,33 @@
     }));
   }
 
+  function getReasonYears() {
+    return [...new Set((reportData.reason_series || []).map((row) => Number(row.year || 0)).filter(Number.isFinite))]
+      .sort((a, b) => b - a);
+  }
+
+  function renderReasonYearOptions() {
+    if (!reasonYearFilter) return;
+    const years = getReasonYears();
+    if (!years.length) {
+      reasonYearFilter.innerHTML = '';
+      reasonYearFilter.hidden = true;
+      reasonSelectedYear = '';
+      return;
+    }
+
+    const selectedNum = Number(reasonSelectedYear);
+    if (!Number.isFinite(selectedNum) || !years.includes(selectedNum)) {
+      reasonSelectedYear = String(years[0]);
+    }
+
+    reasonYearFilter.innerHTML = years.map((year) => {
+      const label = (partialYearCtx && Number(partialYearCtx.year) === year) ? `${year}*` : String(year);
+      return `<option value="${year}">${label}</option>`;
+    }).join('');
+    reasonYearFilter.value = reasonSelectedYear;
+  }
+
   function updateReasonModeButtons() {
     if (!reasonModeGlobal || !reasonModeYearly) return;
     const globalActive = reasonTableMode === 'global';
@@ -944,72 +1051,76 @@
     reasonModeGlobal.setAttribute('aria-selected', globalActive ? 'true' : 'false');
     reasonModeYearly.classList.toggle('active', !globalActive);
     reasonModeYearly.setAttribute('aria-selected', globalActive ? 'false' : 'true');
+    if (reasonYearFilter) {
+      renderReasonYearOptions();
+      reasonYearFilter.hidden = globalActive;
+      reasonYearFilter.disabled = globalActive;
+    }
   }
 
   function renderReasonsTable() {
     if (!tableReasons || !tableReasonsHead || !tableReasonsNote) return;
 
-    if (reasonTableMode === 'yearly') {
-      tableReasonsHead.innerHTML = `
-        <th>Ano</th>
-        <th>Motivo principal</th>
-        <th>Quantidade</th>
-        <th>% das restrições no ano</th>
-      `;
-
-      const reasonByYear = new Map();
-      (reportData.reason_series || []).forEach((row) => {
-        const year = Number(row.year || 0);
-        if (!Number.isFinite(year)) return;
-        if (!reasonByYear.has(year)) reasonByYear.set(year, []);
-        reasonByYear.get(year).push({
+    if (reasonTableMode === 'year') {
+      const selectedYear = Number(reasonSelectedYear || 0);
+      const yearRows = (reportData.reason_series || [])
+        .filter((row) => Number(row.year || 0) === selectedYear)
+        .map((row) => ({
           reason: row.reason || 'Motivo não informado',
           count: Number(row.count || 0),
-        });
-      });
+        }))
+        .sort((a, b) => b.count - a.count);
 
-      const yearlyRows = [...(reportData.series || [])]
-        .sort((a, b) => Number(b.year || 0) - Number(a.year || 0))
-        .map((yearRow) => {
-          const year = Number(yearRow.year || 0);
-          const restrictedTotal = Number(yearRow.restricted_total || 0);
-          const reasons = [...(reasonByYear.get(year) || [])]
-            .sort((a, b) => Number(b.count || 0) - Number(a.count || 0));
-          const top = reasons[0] || { reason: 'Sem motivo registrado', count: 0 };
-          const yearLabel = (partialYearCtx && Number(partialYearCtx.year) === year) ? `${year}*` : String(year);
-          return `
-            <tr>
-              <td>${esc(yearLabel)}</td>
-              <td>${esc(top.reason)}</td>
-              <td>${nFmt.format(top.count || 0)}</td>
-              <td>${restrictedTotal ? pFmt.format((top.count || 0) / restrictedTotal) : '--'}</td>
-            </tr>
-          `;
-        });
+      tableReasonsHead.innerHTML = `
+        <th>Posição</th>
+        <th>Motivo</th>
+        <th>Quantidade</th>
+        <th>% das restrições do ano</th>
+      `;
 
-      tableReasons.innerHTML = yearlyRows.join('');
-      tableReasonsNote.innerHTML = 'Mostra o motivo mais frequente de negativa/restrição em cada ano. A porcentagem usa como base o total de casos com restrição daquele ano.';
+      const yearSeries = (reportData.series || []).find((row) => Number(row.year || 0) === selectedYear);
+      const restrictedTotal = Number((yearSeries || {}).restricted_total || 0);
+      const yearLabel = (partialYearCtx && Number(partialYearCtx.year) === selectedYear) ? `${selectedYear}*` : String(selectedYear);
+
+      if (!yearRows.length) {
+        tableReasons.innerHTML = '<tr><td colspan="4">Sem dados de motivos para o ano selecionado.</td></tr>';
+        tableReasonsNote.textContent = `Sem dados de motivo para ${yearLabel}.`;
+        return;
+      }
+
+      tableReasons.innerHTML = yearRows.slice(0, 20).map((row, index) => `
+        <tr class="${index === 0 ? 'reason-top-row' : ''}">
+          <td>${index + 1}</td>
+          <td>${esc(row.reason)}</td>
+          <td>${nFmt.format(row.count || 0)}</td>
+          <td>${restrictedTotal ? pFmt.format((row.count || 0) / restrictedTotal) : '--'}</td>
+        </tr>
+      `).join('');
+      tableReasonsNote.innerHTML = `Ano selecionado: <strong>${esc(yearLabel)}</strong>. A linha destacada mostra o motivo nº 1 do ano.`;
       return;
     }
 
     tableReasonsHead.innerHTML = `
+      <th>Posição</th>
       <th>Motivo</th>
       <th>Quantidade</th>
       <th>% do total com restrição</th>
     `;
     const totalRestricted = Number((reportData.overall || {}).restricted_total || 0);
-    tableReasons.innerHTML = (reportData.top_reasons || []).slice(0, 15).map((row) => `
+    tableReasons.innerHTML = (reportData.top_reasons || []).slice(0, 15).map((row, index) => `
       <tr>
+        <td>${index + 1}</td>
         <td>${esc(row.reason)}</td>
         <td>${nFmt.format(row.count || 0)}</td>
         <td>${totalRestricted ? pFmt.format((row.count || 0) / totalRestricted) : '--'}</td>
       </tr>
     `).join('');
-    tableReasonsNote.innerHTML = 'Ranking geral da série histórica completa, independente de ano.';
+    tableReasonsNote.innerHTML = 'Ranking geral da série histórica completa.';
   }
 
   function renderTables() {
-    tableYearly.innerHTML = (reportData.series || []).map((row) => `
+    if (tableYearly) {
+      tableYearly.innerHTML = (reportData.series || []).map((row) => `
       <tr>
         <td>${(partialYearCtx && Number(row.year) === Number(partialYearCtx.year)) ? `${row.year}*` : row.year}</td>
         <td>${nFmt.format(row.total_requests)}</td>
@@ -1021,11 +1132,13 @@
         <td>${pFmt.format(row.personal_share_in_restricted)}</td>
       </tr>
     `).join('');
+    }
 
     renderReasonsTable();
 
     const top = reportData.org_top10_plus_pf || reportData.org_top5_plus_pf || [];
-    tableOrgTop.innerHTML = top.map((row) => `
+    if (tableOrgTop) {
+      tableOrgTop.innerHTML = top.map((row) => `
       <tr>
         <td>${esc(row.org)}</td>
         <td>${nFmt.format(row.total_requests)}</td>
@@ -1035,33 +1148,10 @@
         <td>${pFmt.format(row.restricted_rate)}</td>
       </tr>
     `).join('');
+    }
 
-    const personalSeries = (((reportData.personal_info || {}).series) || []);
-    tablePersonalYearly.innerHTML = personalSeries.map((row, index) => {
-      const prev = index > 0 ? personalSeries[index - 1] : null;
-      const count = Number(row.count || 0);
-      const prevCount = Number((prev || {}).count || 0);
-      const deltaCount = prev ? (count - prevCount) : 0;
-      const deltaPct = prev
-        ? (prevCount > 0 ? deltaCount / prevCount : null)
-        : null;
-      const deltaLabel = !prev
-        ? '--'
-        : (deltaPct === null
-          ? `${deltaCount > 0 ? '+' : ''}${nFmt.format(deltaCount)} (base anterior = 0)`
-          : `${deltaCount > 0 ? '+' : ''}${nFmt.format(deltaCount)} (${(deltaPct >= 0 ? '+' : '')}${(deltaPct * 100).toFixed(1)}%)`);
-
-      return `
-        <tr>
-          <td>${(partialYearCtx && Number(row.year) === Number(partialYearCtx.year)) ? `${row.year}*` : row.year}</td>
-          <td>${nFmt.format(count)}</td>
-          <td>${pFmt.format(row.share_in_restricted || 0)}</td>
-          <td>${esc(deltaLabel)}</td>
-        </tr>
-      `;
-    }).join('');
-
-    tablePersonalTop.innerHTML = (((reportData.personal_info || {}).top_orgs) || []).slice(0, 20).map((row) => `
+    if (tablePersonalTop) {
+      tablePersonalTop.innerHTML = (((reportData.personal_info || {}).top_orgs) || []).slice(0, 20).map((row) => `
       <tr>
         <td>${esc(row.org)}</td>
         <td>${nFmt.format(row.personal_restricted_total || 0)}</td>
@@ -1069,9 +1159,11 @@
         <td>${pFmt.format(row.share_in_org_restricted || 0)}</td>
       </tr>
     `).join('');
+    }
   }
 
   function renderOrgCards() {
+    if (!orgCards) return;
     const selected = reportData.org_top10_plus_pf || reportData.org_top5_plus_pf || [];
     const profiles = reportData.org_profiles || {};
 
@@ -1182,6 +1274,8 @@
     presetRow.querySelectorAll('[data-preset-id]').forEach((btn) => {
       btn.addEventListener('click', () => applyPreset(btn.getAttribute('data-preset-id')));
     });
+    setSearchControlsDisabled(false);
+    searchBtn.textContent = 'Buscar';
   }
 
   function applyPreset(presetId) {
@@ -1198,6 +1292,13 @@
   }
 
   function runRequestSearch() {
+    if (!samplesLoadedBySource[activeSourceId]) {
+      tableSearchResults.innerHTML = '<tr><td colspan="7">A busca detalhada ainda não foi carregada neste aparelho. Toque em <strong>Carregar pedidos</strong>.</td></tr>';
+      searchStatus.textContent = 'Modo leve no mobile: a base textual dos pedidos é carregada sob demanda.';
+      searchStatus.classList.remove('error');
+      return;
+    }
+
     const year = searchYear.value;
     const org = searchOrg.value;
     const decisionGroup = searchDecisionGroup.value || 'todos';
@@ -1257,9 +1358,8 @@
       `).join('')
       : '<tr><td colspan="7">Nenhum resultado para esse filtro.</td></tr>';
 
-    const sampleInfo = reportData.search_dashboard || {};
     const notice = sampleLoadNotice ? ` ${esc(sampleLoadNotice)}` : '';
-    searchStatus.innerHTML = `Busca em <strong>${nFmt.format(sampleInfo.sample_count || requestSamples.length)}</strong> pedidos da amostra (${esc(sampleInfo.sample_method || 'amostragem')}). Resultado atual: <strong>${nFmt.format(filtered.length)}</strong> registros${filtered.length > shown.length ? ` (mostrando ${nFmt.format(shown.length)}).` : '.'}${notice}`;
+    searchStatus.innerHTML = `Busca em <strong>${nFmt.format(requestSamples.length)}</strong> pedidos carregados desta fonte. Resultado atual: <strong>${nFmt.format(filtered.length)}</strong> registros${filtered.length > shown.length ? ` (mostrando ${nFmt.format(shown.length)}).` : '.'}${notice}`;
   }
 
   function saveGeminiKey() {
@@ -1527,7 +1627,7 @@
   }
 
   async function loadRequestSamples(sourceId) {
-    if (samplesBySource[sourceId]) {
+    if (samplesLoadedBySource[sourceId]) {
       requestSamples = samplesBySource[sourceId];
       return;
     }
@@ -1553,7 +1653,7 @@
           row = null;
         }
         if (!row) continue;
-        parsed.push((() => {
+        const normalizedRow = (() => {
           const idPedido = (row.id_pedido || '').toString().trim();
           const linkPack = resolveRequestLinks(
             idPedido,
@@ -1568,19 +1668,22 @@
             year: Number(row.year || 0),
             search_blob: normalizeForSearch(`${row.org || ''} ${row.subject || ''} ${row.text_excerpt || ''} ${row.theme || ''} ${row.decision || ''} ${row.reason || ''}`),
           };
-        })());
+        })();
+        if (!isSearchRowUseful(normalizedRow)) continue;
+        parsed.push(normalizedRow);
         parsedCount += 1;
         if (parsedCount >= maxRows) break;
       }
 
       samplesBySource[sourceId] = parsed;
+      samplesLoadedBySource[sourceId] = true;
       requestSamples = parsed;
       sampleLoadNotice = (isMobileMode && Number.isFinite(maxRows) && parsedCount >= maxRows)
         ? `Modo leve no mobile: primeiros ${nFmt.format(maxRows)} pedidos para estabilidade.`
         : '';
     } catch (error) {
       requestSamples = [];
-      samplesBySource[sourceId] = [];
+      samplesLoadedBySource[sourceId] = false;
       sampleLoadNotice = '';
       searchStatus.textContent = `Não foi possível carregar a amostra de pedidos desta fonte: ${error.message}`;
       searchStatus.classList.add('error');
@@ -1599,6 +1702,7 @@
     sourceCatalog = catalog;
     sourceDataMap = {};
     samplesBySource = {};
+    samplesLoadedBySource = {};
 
     const entries = Object.entries(catalog);
     for (const [id, rawCfg] of entries) {
@@ -1643,16 +1747,21 @@
     renderCharts();
     updateReasonModeButtons();
     renderTables();
-    renderOrgCards();
     renderMethodology();
     renderSourcesFooter();
 
     restoreGeminiKey();
     populateAiFilters();
     resetAiConversation('Pronto. Descreva seu caso e eu te ajudo com leitura da negativa e rascunho de pedido/recurso.');
+    if (MOBILE_LIGHT_MODE && !samplesLoadedBySource[sourceId]) {
+      setSearchDeferredState();
+      return;
+    }
 
     await loadRequestSamples(sourceId);
     renderSearchFilters();
+    setSearchControlsDisabled(false);
+    searchBtn.textContent = 'Buscar';
     runRequestSearch();
   }
 
@@ -1666,7 +1775,14 @@
     }
     if (reasonModeYearly) {
       reasonModeYearly.addEventListener('click', () => {
-        reasonTableMode = 'yearly';
+        reasonTableMode = 'year';
+        updateReasonModeButtons();
+        renderReasonsTable();
+      });
+    }
+    if (reasonYearFilter) {
+      reasonYearFilter.addEventListener('change', () => {
+        reasonSelectedYear = reasonYearFilter.value || '';
         updateReasonModeButtons();
         renderReasonsTable();
       });
@@ -1678,13 +1794,28 @@
       });
     }
 
-    searchBtn.addEventListener('click', runRequestSearch);
+    searchBtn.addEventListener('click', async () => {
+      if (!samplesLoadedBySource[activeSourceId]) {
+        const ready = await ensureRequestSamplesReady(activeSourceId);
+        if (!ready) return;
+      }
+      runRequestSearch();
+    });
     [searchYear, searchOrg, searchDecisionGroup, searchTheme].forEach((el) => {
-      el.addEventListener('change', runRequestSearch);
+      el.addEventListener('change', () => {
+        if (!samplesLoadedBySource[activeSourceId]) return;
+        runRequestSearch();
+      });
     });
     searchQuery.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
         event.preventDefault();
+        if (!samplesLoadedBySource[activeSourceId]) {
+          ensureRequestSamplesReady(activeSourceId).then((ready) => {
+            if (ready) runRequestSearch();
+          });
+          return;
+        }
         runRequestSearch();
       }
     });

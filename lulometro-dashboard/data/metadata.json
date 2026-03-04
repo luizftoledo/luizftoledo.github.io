@@ -1,0 +1,175 @@
+{
+  "project": "Lulometro",
+  "title": "Lulometro: analise de discurso de presidentes brasileiros",
+  "generated_at": "2026-03-04T15:16:16.876187+00:00",
+  "timezone": "America/Cuiaba",
+  "total_records": 9363,
+  "candidate_urls": 9363,
+  "new_urls": 0,
+  "detail_fetched": 500,
+  "sources": {
+    "biblioteca": 8432,
+    "planalto": 931
+  },
+  "types": {
+    "discurso": 7900,
+    "entrevista": 1463
+  },
+  "top_presidents": [
+    [
+      "Luiz Inacio Lula da Silva",
+      3872
+    ],
+    [
+      "Dilma Rousseff",
+      1136
+    ],
+    [
+      "Jair Bolsonaro",
+      694
+    ],
+    [
+      "Michel Temer",
+      607
+    ],
+    [
+      "Jose Sarney",
+      582
+    ],
+    [
+      "Joao Baptista Figueiredo",
+      546
+    ],
+    [
+      "Ernesto Geisel",
+      392
+    ],
+    [
+      "Juscelino Kubitschek",
+      390
+    ],
+    [
+      "Humberto Castelo Branco",
+      248
+    ],
+    [
+      "Getulio Vargas",
+      237
+    ],
+    [
+      "Fernando Collor de Mello",
+      170
+    ],
+    [
+      "Emilio Garrastazu Medici",
+      99
+    ],
+    [
+      "Joao Goulart",
+      97
+    ],
+    [
+      "Fernando Henrique Cardoso",
+      81
+    ],
+    [
+      "Itamar Franco",
+      78
+    ],
+    [
+      "Artur da Costa e Silva",
+      54
+    ],
+    [
+      "Cafe Filho",
+      46
+    ],
+    [
+      "Eurico Gaspar Dutra",
+      34
+    ]
+  ],
+  "top_mandates": [
+    [
+      "Lula 2 (2007-2010)",
+      1795
+    ],
+    [
+      "Lula 1 (2003-2006)",
+      1146
+    ],
+    [
+      "Lula 3 (2023-)",
+      931
+    ],
+    [
+      "Bolsonaro (2019-2022)",
+      686
+    ],
+    [
+      "Dilma 1 (2011-2014)",
+      615
+    ],
+    [
+      "Temer (2016-2018)",
+      577
+    ],
+    [
+      "Sarney (1985-1990)",
+      519
+    ],
+    [
+      "Figueiredo (1979-1985)",
+      483
+    ],
+    [
+      "Geisel (1974-1979)",
+      365
+    ],
+    [
+      "Dilma (2011-2016)",
+      354
+    ],
+    [
+      "Juscelino (1956-1961)",
+      316
+    ],
+    [
+      "Vargas 1 (1930-1945)",
+      193
+    ],
+    [
+      "Dilma 2 (2015-2016)",
+      165
+    ],
+    [
+      "Collor (1990-1992)",
+      145
+    ],
+    [
+      "Castelo Branco (1964-1967)",
+      144
+    ],
+    [
+      "Humberto Castelo Branco (1964)",
+      104
+    ],
+    [
+      "Medici (1969-1974)",
+      89
+    ],
+    [
+      "Itamar (1992-1994)",
+      74
+    ],
+    [
+      "Juscelino Kubitschek (1956)",
+      74
+    ],
+    [
+      "Joao Goulart (1961-1964)",
+      66
+    ]
+  ],
+  "duration_seconds": 727.12
+}

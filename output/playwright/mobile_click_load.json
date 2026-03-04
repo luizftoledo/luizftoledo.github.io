@@ -1,0 +1,21 @@
+[
+  {
+    "page": "lai_click_load",
+    "ok": false,
+    "error": "Page.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator(\"#btn-search-requests\")\n    - locator resolved to <button type=\"button\" class=\"btn-ai-secondary\" id=\"btn-search-requests\">Carregar pedidos</button>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - <select disabled id=\"search-theme\">…</select> intercepts pointer events\n  - retrying click action\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - <aside aria-live=\"polite\" id=\"course-popup-lai\" class=\"course-popup show\">…</aside> intercepts pointer events\n  - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is visible, enabled and stable\n      - scrolling into view if needed\n      - done scrolling\n      - <select disabled id=\"search-theme\">…</select> intercepts pointer events\n    - retrying click action\n      - waiting 100ms\n    14 × waiting for element to be visible, enabled and stable\n       - element is visible, enabled and stable\n       - scrolling into view if needed\n       - done scrolling\n       - <select disabled id=\"search-theme\">…</select> intercepts pointer events\n     - retrying click action\n       - waiting 500ms\n       - waiting for element to be visible, enabled and stable\n       - element is visible, enabled and stable\n       - scrolling into view if needed\n       - done scrolling\n       - <p class=\"title\">Curso de LAI</p> from <aside aria-live=\"polite\" id=\"course-popup-lai\" class=\"course-popup show\">…</aside> subtree intercepts pointer events\n     - retrying click action\n       - waiting 500ms\n       - waiting for element to be visible, enabled and stable\n       - element is visible, enabled and stable\n       - scrolling into view if needed\n       - done scrolling\n       - <select disabled id=\"search-theme\">…</select> intercepts pointer events\n     - retrying click action\n       - waiting 500ms\n       - waiting for element to be visible, enabled and stable\n       - element is visible, enabled and stable\n       - scrolling into view if needed\n       - done scrolling\n       - <select disabled id=\"search-theme\">…</select> intercepts pointer events\n     - retrying click action\n       - waiting 500ms\n"
+  },
+  {
+    "page": "militar_click_load",
+    "ok": true,
+    "btn_text": "Buscar",
+    "status": "Base textual deste monitor: 1.186 pedidos (base pública textual (BuscaLAI)) filtrados para CEX, MD, CMAR e COMAER. Resultado atual: 1.186 (mostrando 1-25).",
+    "row_count": 25
+  },
+  {
+    "page": "lulometro_click_load",
+    "ok": true,
+    "btn_text": "Buscar",
+    "summary": "Sem termo aplicado. Mostrando 9.363 documentos filtrados de 9.363 no total.",
+    "rows": 600
+  }
+]
