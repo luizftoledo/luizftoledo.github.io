@@ -63,10 +63,12 @@
     chartMandates: document.getElementById('chart-mandates'),
     methodologyNote: document.getElementById('methodology-note'),
     wordcloudRange: document.getElementById('wordcloud-range'),
+    wordcloudPhraseSize: document.getElementById('wordcloud-phrase-size'),
     wordcloudApply: document.getElementById('wordcloud-apply'),
     wordcloudContext: document.getElementById('wordcloud-context'),
     wordcloudCloud: document.getElementById('wordcloud-cloud'),
     wordcloudTableBody: document.getElementById('wordcloud-table-body'),
+    wordcloudColLabel: document.getElementById('wordcloud-col-label'),
     loadProgressWrap: document.getElementById('load-progress-wrap'),
     loadProgressText: document.getElementById('load-progress-text'),
     loadProgressPct: document.getElementById('load-progress-pct'),
@@ -423,6 +425,9 @@
     if (els.wordcloudRange) {
       els.wordcloudRange.disabled = disabled;
     }
+    if (els.wordcloudPhraseSize) {
+      els.wordcloudPhraseSize.disabled = disabled;
+    }
     if (els.wordcloudApply) {
       els.wordcloudApply.disabled = disabled;
     }
@@ -443,7 +448,7 @@
     els.tableCount.textContent = '0 linhas';
     els.resultsBody.innerHTML = '<tr><td colspan="8">Modo progressivo ativo. Clique em <strong>Carregar base</strong> para iniciar a busca textual completa.</td></tr>';
     if (els.wordcloudContext) {
-      els.wordcloudContext.textContent = 'Nuvem de palavras será calculada após carregar a base completa.';
+      els.wordcloudContext.textContent = 'Nuvem de termos será calculada após carregar a base completa.';
     }
     if (els.wordcloudCloud) {
       els.wordcloudCloud.innerHTML = '<span class="hint">Carregue a base para habilitar a nuvem.</span>';
@@ -672,13 +677,58 @@
     return true;
   }
 
+  function getWordcloudPhraseSizes(mode) {
+    if (mode === '1') return [1];
+    if (mode === '2') return [2];
+    if (mode === '3') return [3];
+    return [2, 3];
+  }
+
+  function getWordcloudPhraseModeLabel(mode) {
+    if (mode === '1') return 'palavras isoladas';
+    if (mode === '2') return 'frases de 2 palavras';
+    if (mode === '3') return 'frases de 3 palavras';
+    return 'frases de 2 e 3 palavras';
+  }
+
+  function countTermUnits(tokens, phraseSizes, byTerm) {
+    if (!tokens || !tokens.length) return;
+
+    if (phraseSizes.includes(1)) {
+      for (const token of tokens) {
+        if (!isRelevantWordToken(token)) continue;
+        byTerm.set(token, (byTerm.get(token) || 0) + 1);
+      }
+    }
+
+    for (const size of phraseSizes) {
+      if (size <= 1 || tokens.length < size) continue;
+      for (let i = 0; i <= tokens.length - size; i += 1) {
+        const chunk = tokens.slice(i, i + size);
+        if (chunk.some((tok) => !tok || tok.length < 2 || /^\d+$/.test(tok))) continue;
+
+        const first = chunk[0];
+        const last = chunk[chunk.length - 1];
+        if (!isRelevantWordToken(first) || !isRelevantWordToken(last)) continue;
+
+        const relevantCount = chunk.reduce((acc, tok) => acc + (isRelevantWordToken(tok) ? 1 : 0), 0);
+        if (relevantCount < 2) continue;
+
+        const phrase = chunk.join(' ');
+        byTerm.set(phrase, (byTerm.get(phrase) || 0) + 1);
+      }
+    }
+  }
+
   function getWordcloudParams(filters) {
     const rangeDays = Number(els.wordcloudRange ? els.wordcloudRange.value : 30) || 30;
+    const phraseMode = (els.wordcloudPhraseSize && els.wordcloudPhraseSize.value) || '2-3';
     const latestEpochDay = state.coverage ? state.coverage.wordcloudAnchorEpochDay : null;
     const anchorDay = latestEpochDay;
     const cutoffDay = latestEpochDay === null ? null : latestEpochDay - (rangeDays - 1);
     return {
       rangeDays,
+      phraseMode,
       filters,
       anchorDay,
       cutoffDay,
@@ -688,6 +738,7 @@
   function buildWordcloudCacheKey(params) {
     return [
       `r:${params.rangeDays}`,
+      `pm:${params.phraseMode}`,
       `a:${params.anchorDay ?? 'na'}`,
       `t:${params.filters.typeFilter}`,
       `p:${params.filters.presidentFilter}`,
@@ -709,8 +760,12 @@
     const selectedType = params.filters.typeFilter === 'ambos'
       ? 'discursos + entrevistas'
       : params.filters.typeFilter;
+    const modeLabel = getWordcloudPhraseModeLabel(params.phraseMode);
+    if (els.wordcloudColLabel) {
+      els.wordcloudColLabel.textContent = params.phraseMode === '1' ? 'Palavra' : 'Expressao';
+    }
 
-    els.wordcloudContext.textContent = `Janela: ${params.rangeDays} dias | Base analisada: ${nFmt.format(result.docsInWindow)} documentos | Filtro atual: ${selectedType}; ${selectedPresident}.`;
+    els.wordcloudContext.textContent = `Janela: ${params.rangeDays} dias | Base analisada: ${nFmt.format(result.docsInWindow)} documentos | Modo: ${modeLabel} | Filtro atual: ${selectedType}; ${selectedPresident}.`;
 
     els.wordcloudCloud.innerHTML = '';
     if (!result.topCloud.length) {
@@ -749,10 +804,11 @@
   }
 
   async function computeWordInsights(params, requestId) {
-    const byWord = new Map();
+    const byTerm = new Map();
     let docsInWindow = 0;
     let processed = 0;
     const total = state.records.length || 1;
+    const phraseSizes = getWordcloudPhraseSizes(params.phraseMode);
 
     for (const rec of state.records) {
       if (requestId !== state.wordcloudRequestId) return null;
@@ -765,11 +821,8 @@
       const searchText = normalizeSearchText(rec.text || '');
       if (!searchText) continue;
 
-      const tokens = searchText.split(' ');
-      for (const token of tokens) {
-        if (!isRelevantWordToken(token)) continue;
-        byWord.set(token, (byWord.get(token) || 0) + 1);
-      }
+      const tokens = searchText.split(' ').filter(Boolean);
+      countTermUnits(tokens, phraseSizes, byTerm);
 
       if (processed % 180 === 0) {
         const pct = Math.round((processed / total) * 100);
@@ -780,7 +833,7 @@
       }
     }
 
-    const sortedWords = [...byWord.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt-BR'));
+    const sortedWords = [...byTerm.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt-BR'));
     return {
       docsInWindow,
       topCloud: sortedWords.slice(0, 60),
@@ -1242,6 +1295,15 @@
         markWordcloudDirty(
           getWordcloudParams(getActiveFilters()),
           'Período alterado. Clique em "Atualizar Nuvem" para aplicar.'
+        );
+      });
+    }
+    if (els.wordcloudPhraseSize) {
+      els.wordcloudPhraseSize.addEventListener('change', () => {
+        if (!state.recordsLoaded) return;
+        markWordcloudDirty(
+          getWordcloudParams(getActiveFilters()),
+          'Modo de termos alterado. Clique em "Atualizar Nuvem" para recalcular.'
         );
       });
     }

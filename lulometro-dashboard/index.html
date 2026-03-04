@@ -628,9 +628,19 @@
             <option value="180">Ultimos 6 meses</option>
             <option value="365">Ultimo ano</option>
           </select>
+          <select id="wordcloud-phrase-size" aria-label="Tamanho dos termos da nuvem">
+            <option value="2-3" selected>Frases (2 e 3 palavras)</option>
+            <option value="2">Frases de 2 palavras</option>
+            <option value="3">Frases de 3 palavras</option>
+            <option value="1">Palavras isoladas (modo amplo)</option>
+          </select>
           <button id="wordcloud-apply" type="button" style="min-height:42px; background:#2b6f62; color:#fff;">Atualizar Nuvem</button>
         </div>
       </div>
+      <p class="hint">
+        Para evitar termos genéricos, o padrão mostra frases de 2 e 3 palavras.
+        Exemplos: <strong>saude publica</strong>, <strong>meio ambiente</strong>, <strong>combate ao desmatamento</strong>.
+      </p>
       <p class="hint" id="wordcloud-context">Carregando termos mais frequentes...</p>
       <div class="word-insights-grid">
         <div class="word-cloud-box">
@@ -641,7 +651,7 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Termo</th>
+                <th id="wordcloud-col-label">Termo</th>
                 <th>Ocorrencias</th>
               </tr>
             </thead>
@@ -742,6 +752,6 @@
   </main>
 
   <script src="./vendor/pako.min.js"></script>
-  <script src="./app.js?v=20260304g"></script>
+  <script src="./app.js?v=20260304h"></script>
 </body>
 </html>
