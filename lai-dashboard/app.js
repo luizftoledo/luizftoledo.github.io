@@ -933,30 +933,6 @@
       },
     }));
 
-    const lowOrg = (reportData.org_lowest_denial_high_volume || []).slice(0, 10);
-    pushChart(new Chart(document.getElementById('chart-org-low'), {
-      type: 'bar',
-      data: {
-        labels: lowOrg.map((row) => shortOrgName(row.org)),
-        datasets: [
-          {
-            label: 'Taxa de negado',
-            data: lowOrg.map((row) => row.denied_rate * 100),
-            backgroundColor: 'rgba(63,143,109,0.88)',
-            borderRadius: 6,
-          },
-        ],
-      },
-      options: {
-        ...commonOptions,
-        indexAxis: 'y',
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { beginAtZero: true, ticks: { callback: (v) => `${v.toFixed(1)}%` } },
-        },
-      },
-    }));
-
     const personalSeries = (reportData.personal_info || {}).series || [];
     const personalLabels = personalSeries.map((row) => (
       (partialYearCtx && Number(row.year) === partialYear) ? `${row.year}*` : String(row.year)
