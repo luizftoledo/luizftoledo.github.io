@@ -582,7 +582,7 @@
           <li><strong>Amostra para busca:</strong> ${samplingMethod ? esc(samplingMethod) : '--'}.</li>
           <li><strong>Volume da amostra:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).sample_count || 0))}</strong> pedidos.</li>
           <li><strong>Cobertura completa no top 10:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).top_org_rows_in_search || 0))}</strong> pedidos.</li>
-          <li><strong>Links de pedido:</strong> o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); o botão <code>BuscaLAI</code> só aparece quando existe URL pública válida no dado original; quando houver, também aparece link de anexo.</li>
+          <li><strong>Links de pedido:</strong> o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); quando existir, também aparece link de <code>Anexo</code>. Em parte dos pedidos antigos, a página pública pode não estar mais disponível.</li>
         </ul>
       </details>
 
@@ -1203,13 +1203,11 @@
               example.request_link || '',
             );
           const requestPublicLink = linkPack.request_public_link || '';
-          const requestBuscaLink = linkPack.request_buscalai_link || '';
           const requestAttachmentLink = linkPack.request_attachment_link || '';
 
           const links = [
             requestPublicLink ? `<a href="${esc(requestPublicLink)}" target="_blank" rel="noopener noreferrer">Abrir pedido completo</a>` : '',
-            (requestBuscaLink && requestBuscaLink !== requestPublicLink) ? `<a href="${esc(requestBuscaLink)}" target="_blank" rel="noopener noreferrer">Abrir no BuscaLAI</a>` : '',
-            (requestAttachmentLink && requestAttachmentLink !== requestPublicLink && requestAttachmentLink !== requestBuscaLink)
+            (requestAttachmentLink && requestAttachmentLink !== requestPublicLink)
               ? `<a href="${esc(requestAttachmentLink)}" target="_blank" rel="noopener noreferrer">Abrir anexo</a>`
               : '',
           ].filter(Boolean).join(' · ');
@@ -1346,10 +1344,7 @@
           <td>${esc(row.subject || '--')}</td>
           <td>${[
             row.request_public_link ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Pedido</a>` : '',
-            (row.request_buscalai_link && row.request_buscalai_link !== row.request_public_link)
-              ? `<a href="${esc(row.request_buscalai_link)}" target="_blank" rel="noopener noreferrer">BuscaLAI</a>`
-              : '',
-            (row.request_attachment_link && row.request_attachment_link !== row.request_public_link && row.request_attachment_link !== row.request_buscalai_link)
+            (row.request_attachment_link && row.request_attachment_link !== row.request_public_link)
               ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>`
               : '',
           ].filter(Boolean).join(' · ') || '--'}</td>

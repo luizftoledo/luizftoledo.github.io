@@ -592,10 +592,9 @@
           <td>${esc(row.subject || '--')}</td>
           <td>${[
             row.request_public_link ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Pedido</a>` : '',
-            (row.request_buscalai_link && row.request_buscalai_link !== row.request_public_link)
-              ? `<a href="${esc(row.request_buscalai_link)}" target="_blank" rel="noopener noreferrer">BuscaLAI</a>`
+            (row.request_attachment_link && row.request_attachment_link !== row.request_public_link)
+              ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>`
               : '',
-            row.request_attachment_link ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>` : '',
           ].filter(Boolean).join(' · ') || '--'}</td>
           <td>${esc(row.text_excerpt || '--')}</td>
         </tr>
@@ -627,7 +626,7 @@
       `<li>Período coberto: <strong>${start}-${end}</strong>, com dados oficiais da CGU.</li>`,
       '<li>Indicadores de pedidos, negativas e restrições usam a base ampla da CGU (todos os pedidos e recursos do Fala.BR).</li>',
       `<li>A análise textual (“temas”, “motivos” e busca) usa a ${textSourceLabel}, com <strong>${nFmt.format(militaryRows.length)}</strong> pedidos desses 4 órgãos${militaryRowsLoaded ? '' : ' (carregue a base para ativar essa parte no mobile)'}. Esse total é menor porque depende apenas do que está público com texto navegável.</li>`,
-      '<li>Link de cada linha: o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); o botão <code>BuscaLAI</code> só aparece quando há URL pública válida no dado de origem; o botão <code>Anexo</code> aparece quando disponível.</li>',
+      '<li>Link de cada linha: o botão <code>Pedido</code> abre o detalhe via API pública da CGU (<code>/buscar-pedidos/{id}</code>); o botão <code>Anexo</code> aparece quando disponível. Em parte dos pedidos antigos, o conteúdo público pode não estar mais acessível.</li>',
       '<li>Definições: “com restrição” = <code>Acesso Negado</code> + <code>Acesso Parcialmente Concedido</code>.</li>',
     ].join('');
   }
