@@ -41,6 +41,9 @@
     btnSearch: document.getElementById('btn-search'),
     btnClear: document.getElementById('btn-clear'),
     searchHint: document.getElementById('search-hint'),
+    loadRequiredBanner: document.getElementById('load-required-banner'),
+    loadRequiredTitle: document.getElementById('load-required-title'),
+    loadRequiredText: document.getElementById('load-required-text'),
 
     metricMentions: document.getElementById('metric-mentions'),
     metricDocs: document.getElementById('metric-docs'),
@@ -284,6 +287,17 @@
     }
   }
 
+  function setLoadRequiredBanner(visible, titleText, bodyText) {
+    if (!els.loadRequiredBanner) return;
+    els.loadRequiredBanner.hidden = !visible;
+    if (typeof titleText === 'string' && els.loadRequiredTitle) {
+      els.loadRequiredTitle.textContent = titleText;
+    }
+    if (typeof bodyText === 'string' && els.loadRequiredText) {
+      els.loadRequiredText.textContent = bodyText;
+    }
+  }
+
   async function fetchJsonlGz(url, onProgress) {
     const emitProgress = (percent, text) => {
       if (typeof onProgress === 'function') onProgress({ percent, text });
@@ -386,16 +400,21 @@
     setLoadProgress(false, 0, '');
     setControlsDisabled(true);
     els.btnSearch.disabled = false;
-    els.btnSearch.textContent = 'Carregar base';
-    els.searchHint.textContent = 'Modo progressivo: a base textual completa só carrega quando você clicar em "Carregar base".';
-    els.summaryText.textContent = 'Para evitar travamentos, o Lulometro abre em modo progressivo. Clique em "Carregar base" para liberar busca textual completa.';
+    els.btnSearch.textContent = '1) Carregar Base Completa';
+    setLoadRequiredBanner(
+      true,
+      'Passo 1 obrigatório: clique em "1) Carregar Base Completa".',
+      'Sem esse passo a busca fica desativada para evitar travamento no seu navegador.'
+    );
+    els.searchHint.textContent = 'Passo obrigatório: clique primeiro em "1) Carregar Base Completa". Depois use os filtros e o termo.';
+    els.summaryText.textContent = 'Busca textual ainda indisponível. Clique em "1) Carregar Base Completa" para liberar consultas.';
     els.tableCount.textContent = '0 linhas';
     els.resultsBody.innerHTML = '<tr><td colspan="8">Modo progressivo ativo. Clique em <strong>Carregar base</strong> para iniciar a busca textual completa.</td></tr>';
     if (els.wordcloudContext) {
       els.wordcloudContext.textContent = 'Nuvem de palavras será calculada após carregar a base completa.';
     }
     if (els.wordcloudCloud) {
-      els.wordcloudCloud.innerHTML = '<span class="hint">Modo leve ativo.</span>';
+      els.wordcloudCloud.innerHTML = '<span class="hint">Carregue a base para habilitar a nuvem.</span>';
     }
     if (els.wordcloudTableBody) {
       els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Carregue a base para ver o top 10.</td></tr>';
@@ -499,6 +518,11 @@
     state.recordsLoadPromise = (async () => {
       els.btnSearch.disabled = true;
       els.btnSearch.textContent = 'Carregando...';
+      setLoadRequiredBanner(
+        true,
+        'Carregando base textual completa...',
+        'Aguarde alguns segundos. Quando concluir, a busca será liberada automaticamente.'
+      );
       els.searchHint.textContent = 'Carregando base completa de discursos e entrevistas...';
       setLoadProgress(true, 1, 'Preparando carregamento da base...');
       try {
@@ -513,6 +537,7 @@
         populateFilterOptions();
         setControlsDisabled(false);
         els.btnSearch.textContent = 'Buscar';
+        setLoadRequiredBanner(false);
         await applySearch();
         markWordcloudDirty(
           getWordcloudParams(getActiveFilters()),
@@ -525,7 +550,12 @@
         els.summaryText.textContent = 'Falha ao carregar a base do Lulometro.';
         els.searchHint.textContent = `Erro ao carregar base: ${error.message}`;
         els.resultsBody.innerHTML = '<tr><td colspan="8">Nao foi possivel carregar os dados completos.</td></tr>';
-        els.btnSearch.textContent = 'Carregar base';
+        els.btnSearch.textContent = '1) Carregar Base Completa';
+        setLoadRequiredBanner(
+          true,
+          'Falha no carregamento da base.',
+          'Tente novamente clicando em "1) Carregar Base Completa".'
+        );
         setLoadProgress(true, 100, 'Erro no carregamento.');
         setTimeout(() => setLoadProgress(false, 0, ''), 1700);
         return false;

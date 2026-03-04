@@ -135,6 +135,34 @@
     #btn-search { background: var(--accent); color: #fff; }
     #btn-clear { background: #d8d1c1; color: #3a352f; }
 
+    .load-required-banner {
+      border: 1px solid #d4b07a;
+      border-radius: 12px;
+      background: #fff6e8;
+      padding: 0.58rem 0.7rem;
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .load-required-banner[hidden] {
+      display: none;
+    }
+
+    .load-required-title {
+      margin: 0;
+      font-size: 0.93rem;
+      line-height: 1.3;
+      color: #6f3d0a;
+      font-weight: 700;
+    }
+
+    .load-required-text {
+      margin: 0;
+      font-size: 0.83rem;
+      line-height: 1.4;
+      color: #6f614f;
+    }
+
     .metrics {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -552,6 +580,11 @@
         <span class="status-pill" id="status-sources">Fontes: --</span>
       </div>
 
+      <section class="load-required-banner" id="load-required-banner" aria-live="polite">
+        <p class="load-required-title" id="load-required-title">Passo 1 obrigatório: clique em "1) Carregar Base Completa".</p>
+        <p class="load-required-text" id="load-required-text">A busca só funciona depois do carregamento para evitar travamentos.</p>
+      </section>
+
       <div class="controls">
         <input id="term-input" type="text" placeholder="Ex.: amazonia, corrupcao, saude publica" aria-label="Termo de busca">
         <select id="type-select" aria-label="Tipo de conteudo">
@@ -565,12 +598,12 @@
         <select id="mandate-select" aria-label="Mandato">
           <option value="todos">Todos os mandatos</option>
         </select>
-        <button id="btn-search" type="button">Buscar</button>
+        <button id="btn-search" type="button">1) Carregar Base Completa</button>
         <button id="btn-clear" type="button">Limpar</button>
       </div>
 
       <p class="hint" id="search-hint">
-        A busca ignora maiusculas/minusculas e acentos automaticamente. Voce pode buscar palavras ou expressoes curtas (ex.: bolsa familia).
+        Passo obrigatório: clique em "1) Carregar Base Completa". Depois disso a busca ignora maiúsculas/minúsculas e acentos.
       </p>
 
       <div class="load-progress-wrap" id="load-progress-wrap" hidden aria-live="polite">
@@ -709,6 +742,6 @@
     </section>
   </main>
 
-  <script src="./app.js?v=20260304c"></script>
+  <script src="./app.js?v=20260304d"></script>
 </body>
 </html>
