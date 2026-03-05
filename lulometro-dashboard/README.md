@@ -2,6 +2,8 @@
 
 Dashboard para comparar discursos e entrevistas de presidentes brasileiros por palavra-chave.
 
+Escopo atual do acervo publicado: apenas `Lula 3 (2023-)` e `Bolsonaro (2019-2022)`.
+
 ## Entregas
 
 - `index.html`: interface principal do dashboard.

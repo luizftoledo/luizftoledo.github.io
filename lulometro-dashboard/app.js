@@ -478,7 +478,7 @@
       els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Carregue a base para ver o top 10.</td></tr>';
     }
     if (els.examplesHint) {
-      els.examplesHint.textContent = 'Carregue a base e busque um termo para ver exemplos reais dos 3 últimos mandatos.';
+      els.examplesHint.textContent = 'Carregue a base e busque um termo para ver exemplos reais dos mandatos disponíveis.';
     }
     if (els.examplesGrid) {
       els.examplesGrid.innerHTML = '';
@@ -1115,7 +1115,7 @@
     els.examplesGrid.innerHTML = '';
 
     if (!hasTerm) {
-      els.examplesHint.textContent = 'Digite um termo e clique em Buscar para ver exemplos reais dos 3 últimos mandatos.';
+      els.examplesHint.textContent = 'Digite um termo e clique em Buscar para ver exemplos reais dos mandatos disponíveis.';
       return;
     }
 

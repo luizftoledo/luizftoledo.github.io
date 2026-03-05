@@ -11,7 +11,7 @@ Outputs:
 
 The scraper covers:
 - Current Planalto pages (Lula): interviews and speeches.
-- Biblioteca de ex-presidentes pages (multiple mandates).
+- Biblioteca de ex-presidentes pages (Bolsonaro only).
 
 Incremental mode:
 - Existing records are loaded from records.jsonl.gz.
@@ -205,6 +205,12 @@ MANDATE_RULES = {
         ("1951-01-31", "1954-08-24", "Vargas 2 (1951-1954)"),
     ],
 }
+
+TARGET_MANDATES = {
+    "Lula 3 (2023-)",
+    "Bolsonaro (2019-2022)",
+}
+TARGET_BIBLIOTECA_SLUGS = {"bolsonaro"}
 
 
 @dataclass
@@ -899,6 +905,37 @@ def mandate_from_date(slug: str, president: str, date_iso: str, url: str) -> str
     return f"{president} (mandato nao identificado)"
 
 
+def normalize_target_mandate(
+    source: str,
+    president_slug: str,
+    mandate: str,
+) -> str:
+    current = normalize_space(mandate)
+    if source == "planalto" and president_slug == "luiz-inacio-lula-da-silva":
+        return "Lula 3 (2023-)"
+    return current
+
+
+def is_target_mandate(mandate: str) -> bool:
+    return normalize_space(mandate) in TARGET_MANDATES
+
+
+def should_keep_candidate_scope(url: str, source: str, president_slug: str, mandate: str) -> bool:
+    src = normalize_space(source).lower()
+    slug = normalize_space(president_slug).lower()
+    low_url = (url or "").lower()
+
+    if is_target_mandate(mandate):
+        return True
+    if slug == "bolsonaro" or "/presidencia/ex-presidentes/bolsonaro/" in low_url:
+        return True
+    if src == "planalto" or "gov.br/planalto" in low_url:
+        return True
+    if slug == "luiz-inacio-lula-da-silva":
+        return True
+    return False
+
+
 def write_json(path: Path, payload: dict):
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -1227,6 +1264,8 @@ def discover_biblioteca_categories(fetcher: Fetcher, errors: List[dict]) -> List
 
     for pres_page in president_pages:
         pres_slug = infer_president_slug(pres_page)
+        if pres_slug not in TARGET_BIBLIOTECA_SLUGS:
+            continue
         pres_name = president_name(pres_slug)
         try:
             html, final_url, _ = fetcher.fetch_html(pres_page)
@@ -1466,6 +1505,19 @@ def main() -> int:
                 rec["title"] = hint["title_hint"]
             existing_records[url] = rec
 
+        # Keep only URLs that belong to Lula 3 / Bolsonaro scope.
+        scoped_candidates: Dict[str, dict] = {}
+        for url, hint in candidate_by_url.items():
+            prev = existing_records.get(url, {})
+            if should_keep_candidate_scope(
+                url=url,
+                source=hint.get("source") or prev.get("source", ""),
+                president_slug=hint.get("president_slug") or prev.get("president_slug", ""),
+                mandate=prev.get("mandate", ""),
+            ):
+                scoped_candidates[url] = hint
+        candidate_by_url = scoped_candidates
+
         needs_detail = []
         new_urls = []
 
@@ -1583,8 +1635,9 @@ def main() -> int:
                 save_records(checkpoint_records)
                 print(f"Checkpoint saved at detail {idx}/{len(needs_detail)}", flush=True)
 
-        # Normalize all records and keep fallback fields coherent.
+        # Normalize all records, keep fallback fields coherent and restrict to target mandates.
         normalized = []
+        filtered_out = 0
         for url, rec in existing_records.items():
             rec["url"] = canonical_article_url(rec.get("url") or url)
             rec["source"] = rec.get("source") or (
@@ -1597,7 +1650,11 @@ def main() -> int:
                 slug = "luiz-inacio-lula-da-silva"
             rec["president_slug"] = slug
             rec["president"] = rec.get("president") or president_name(slug)
-            rec["mandate"] = mandate_from_date(slug, rec["president"], rec.get("date", ""), rec["url"])
+            rec["mandate"] = normalize_target_mandate(
+                rec["source"],
+                slug,
+                mandate_from_date(slug, rec["president"], rec.get("date", ""), rec["url"]),
+            )
             rec["title"] = normalize_space(rec.get("title", ""))
             rec["location"] = normalize_space(rec.get("location", ""))
             rec["description"] = normalize_space(rec.get("description", ""))
@@ -1609,6 +1666,9 @@ def main() -> int:
             rec["id"] = rec.get("id") or hashlib.sha1(rec["url"].encode("utf-8")).hexdigest()[:20]
             rec["fetch_failures"] = int(rec.get("fetch_failures") or 0)
             rec["last_error"] = normalize_space(rec.get("last_error", ""))
+            if not is_target_mandate(rec["mandate"]):
+                filtered_out += 1
+                continue
             normalized.append(rec)
 
         records_sorted = sort_records(normalized)
@@ -1628,7 +1688,9 @@ def main() -> int:
             "title": "Lulometro: analise de discurso de presidentes brasileiros",
             "generated_at": now_iso(),
             "timezone": "America/Cuiaba",
+            "scope_mandates": sorted(TARGET_MANDATES),
             "total_records": len(records_sorted),
+            "excluded_records": filtered_out,
             "candidate_urls": len(candidate_by_url),
             "new_urls": len(new_urls),
             "detail_fetched": fetched_ok,
@@ -1643,6 +1705,8 @@ def main() -> int:
         sources_payload = {
             "planalto_listings": PLANALTO_LISTINGS,
             "biblioteca_root": BIBLIOTECA_ROOT,
+            "scope_mandates": sorted(TARGET_MANDATES),
+            "target_biblioteca_slugs": sorted(TARGET_BIBLIOTECA_SLUGS),
             "biblioteca_categories": [
                 {
                     "url": cat.url,
