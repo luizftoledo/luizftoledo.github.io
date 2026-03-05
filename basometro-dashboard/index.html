@@ -4,6 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Basômetro da Câmara - apoio ao governo</title>
+  <meta name="description" content="Monitor do alinhamento de deputados à orientação do governo em votações nominais da Câmara, com série mensal, rankings e exportação CSV.">
+  <meta property="og:title" content="Basômetro da Câmara - apoio ao governo">
+  <meta property="og:description" content="Acompanhe alinhamento por governo, partido e deputado nas votações nominais da Câmara.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://luizftoledo.github.io/basometro-dashboard/">
+  <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -126,6 +132,23 @@
       font-family: inherit;
     }
 
+    .btn-export {
+      border: 1px solid #2c6f90;
+      border-radius: 9px;
+      background: #e9f4fb;
+      color: #164663;
+      font-size: 0.82rem;
+      min-height: 34px;
+      padding: 0.2rem 0.58rem;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-export:hover {
+      background: #dbedf8;
+    }
+
     .kpis {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -184,6 +207,13 @@
       line-height: 1.5;
     }
 
+    .context-note {
+      border: 1px solid #ddd6c6;
+      border-radius: 10px;
+      background: #faf6eb;
+      padding: 0.5rem 0.62rem;
+    }
+
     .tables {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -219,6 +249,20 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: #605b52;
+    }
+
+    tr.row-defeat td {
+      background: #fff2ef;
+    }
+
+    .vote-link {
+      color: #0f6aa6;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .vote-link:hover {
+      text-decoration: underline;
     }
 
     .chip {
@@ -282,7 +326,9 @@
         <input id="filter-min-party" type="number" min="1" step="1" value="120">
         <label for="filter-min-deputy">Mínimo de votos por deputado</label>
         <input id="filter-min-deputy" type="number" min="1" step="1" value="60">
+        <button class="btn-export" id="btn-export-current" type="button">Exportar CSV do recorte</button>
       </div>
+      <p class="hint" id="filter-help">Use os filtros e depois exporte o CSV para abrir no Excel/Sheets com o mesmo recorte mostrado na tela.</p>
     </section>
 
     <section class="panel">
@@ -383,6 +429,7 @@
         </article>
       </div>
       <div class="chart-box"><canvas id="chart-parties"></canvas></div>
+      <p class="hint context-note" id="party-context-note">Contexto partidário carregando...</p>
     </section>
 
     <section class="panel">
@@ -408,7 +455,7 @@
 
     <section class="panel">
       <h2>Votações recentes (com orientação do Governo)</h2>
-      <p class="hint">Amostra das votações mais novas no recorte selecionado.</p>
+      <p class="hint">Amostra das votações mais novas no recorte selecionado. Clique no resumo para abrir o registro original da votação na Câmara.</p>
       <div class="table-wrap">
         <table>
           <thead>

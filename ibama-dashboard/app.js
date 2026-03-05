@@ -20,6 +20,11 @@
     const loadStatusFill = document.getElementById('load-status-fill');
     const loadStatusIbama = document.getElementById('load-status-ibama');
     const loadStatusIcmbio = document.getElementById('load-status-icmbio');
+    const noteValueContext = document.getElementById('note-value-context');
+    const noteStatusContext = document.getElementById('note-status-context');
+    const noteDescriptionContext = document.getElementById('note-description-context');
+    const noteGeoContext = document.getElementById('note-geo-context');
+    const noteOutlierContext = document.getElementById('note-outlier-context');
 
     const storyStepsEl = document.getElementById('story-steps');
     const mapTitle = document.getElementById('map-title');
@@ -108,8 +113,7 @@
     }
 
     function getLoadPhaseLabel(phase) {
-      if (phase === 'fetching') return 'baixando e descompactando';
-      if (phase === 'parsing') return 'lendo registros';
+      if (phase === 'fetching' || phase === 'parsing') return 'carregando';
       if (phase === 'ready') return 'pronto';
       if (phase === 'error') return 'erro';
       return 'aguardando';
@@ -138,19 +142,19 @@
         : averagePercent;
 
       if (inProgress) {
-        loadStatusLabel.textContent = 'Carregando base local...';
+        loadStatusLabel.textContent = 'Carregando dados para busca...';
         loadStatusSummary.textContent = `${displayPercent}%`;
       } else if (hasErrors) {
-        loadStatusLabel.textContent = 'Falha em parte da base local';
+        loadStatusLabel.textContent = 'Falha parcial ao carregar dados';
         loadStatusSummary.textContent = 'erro';
       } else if (loadedCount === 2) {
-        loadStatusLabel.textContent = 'Base local pronta para busca e chat';
+        loadStatusLabel.textContent = 'Dados prontos para pesquisar';
         loadStatusSummary.textContent = '100%';
       } else if (loadedCount === 1) {
-        loadStatusLabel.textContent = 'Base do órgão ativo pronta (o outro órgão carrega ao abrir a aba dele)';
+        loadStatusLabel.textContent = 'Órgão ativo pronto (a outra aba carrega quando você abrir)';
         loadStatusSummary.textContent = `${displayPercent}%`;
       } else {
-        loadStatusLabel.textContent = 'Base local ainda não carregada';
+        loadStatusLabel.textContent = 'Clique em Buscar para carregar os dados';
         loadStatusSummary.textContent = `${displayPercent}%`;
       }
 
@@ -162,17 +166,12 @@
         const phase = getLoadPhaseLabel(state.phase);
         const rows = Number(state.rows || 0);
         if (state.phase === 'error') {
-          return `${label}: erro (${state.error || 'falha ao carregar'})`;
-        }
-        if (state.phase === 'parsing') {
-          const totalLines = Number(state.totalLines || 0);
-          const linesText = totalLines > 0 ? `${numberFmt.format(totalLines)} linhas` : 'linhas em processamento';
-          return `${label}: ${phase} (${state.percent}% • ${numberFmt.format(rows)} registros válidos • ${linesText})`;
+          return `${label}: indisponível (${state.error || 'falha ao carregar'})`;
         }
         if (state.phase === 'ready') {
-          return `${label}: pronto (${numberFmt.format(rows)} registros)`;
+          return `${label}: pronto (${numberFmt.format(rows)} autos)`;
         }
-        if (state.phase === 'fetching') {
+        if (state.phase === 'fetching' || state.phase === 'parsing') {
           return `${label}: ${phase} (${state.percent}%)`;
         }
         return `${label}: aguardando`;
@@ -590,6 +589,9 @@
       let hasPositiveFine = false;
       let dateMin = '';
       let dateMax = '';
+      let geoValidCount = 0;
+      let outlierOldBigCount = 0;
+      let outlierOldBigMax = 0;
 
       for (let i = 0; i < records.length; i += 1) {
         const row = records[i];
@@ -640,6 +642,10 @@
             if (isBigFine && row.nome_infrator) {
               bigFineEvents.push({ ano: year, nome_infrator: row.nome_infrator, valor_multa: fine });
             }
+            if (Number(year) < 2000 && fine >= 1000000000) {
+              outlierOldBigCount += 1;
+              if (fine > outlierOldBigMax) outlierOldBigMax = fine;
+            }
 
             if (!latestYearSeen || year > latestYearSeen) {
               latestYearSeen = year;
@@ -688,6 +694,7 @@
 
         upsertTopRow(topResults, row, SEARCH_LIMIT);
         if (Number.isFinite(row.num_latitude_auto) && Number.isFinite(row.num_longitude_auto)) {
+          geoValidCount += 1;
           upsertTopRow(topMapPoints, row, MAP_LIMIT);
         }
       }
@@ -797,6 +804,9 @@
           data_inicial: dateMin || '',
           data_final: dateMax || '',
         },
+        geo_valid_count: geoValidCount,
+        outlier_old_big_count: outlierOldBigCount,
+        outlier_old_big_max: outlierOldBigMax,
         top_states: topStates,
         top_offenders: topOffenders,
         timeline,
@@ -836,6 +846,7 @@
         storyStepsEl.innerHTML = `<article class="story-step active"><h3>Sem dados</h3><p class="empty">Ainda nao ha resultado para ${esc(getDatasetLabel(activeDataset))}.</p></article>`;
         resultsBody.innerHTML = `<tr><td colspan="6" class="empty">Nenhum dado para ${esc(getDatasetLabel(activeDataset))}.</td></tr>`;
         renderWatchPanel(null);
+        updateMethodologyNotes(null);
         return;
       }
 
@@ -848,6 +859,7 @@
       renderResultTable(currentSearchData.results || []);
       renderStory(currentSearchData);
       renderWatchPanel(currentSearchData);
+      updateMethodologyNotes(currentSearchData);
     }
 
     async function setActiveDataset(dataset) {
@@ -1120,7 +1132,9 @@
         return '<p class="empty">Sem dados suficientes para este bloco.</p>';
       }
       return `<ul>${items.slice(0, 6).map((item) => {
-        return `<li><strong>${esc(item[labelA])}</strong> - ${esc(numberFmt.format(item[labelB]))} registros - ${esc(valueFormatter(item.total_multas || 0))}</li>`;
+        const rawLabel = (item[labelA] || '').toString();
+        const label = labelA === 'uf' ? rawLabel.toUpperCase() : rawLabel;
+        return `<li><strong>${esc(label)}</strong> - ${esc(numberFmt.format(item[labelB]))} registros - ${esc(valueFormatter(item.total_multas || 0))}</li>`;
       }).join('')}</ul>`;
     }
 
@@ -1346,6 +1360,39 @@
       }
     }
 
+    function updateMethodologyNotes(data) {
+      const datasetLabel = getDatasetLabel((data || {}).dataset || activeDataset);
+      const total = Number((data || {}).total_match || 0);
+      const geoValid = Number((data || {}).geo_valid_count || 0);
+      const geoCoverage = total > 0 ? (geoValid / total) * 100 : 0;
+      const outlierCount = Number((data || {}).outlier_old_big_count || 0);
+      const outlierMax = Number((data || {}).outlier_old_big_max || 0);
+
+      if (noteValueContext) {
+        noteValueContext.textContent = 'Valores das multas: exibidos em valor nominal do registro original da base pública, sem correção por inflação neste painel.';
+      }
+      if (noteStatusContext) {
+        noteStatusContext.textContent = `Status da multa: a base aberta do ${datasetLabel} não traz, neste painel, o andamento completo (paga, anulada, em recurso etc.).`;
+      }
+      if (noteDescriptionContext) {
+        noteDescriptionContext.textContent = 'Texto da infração: descrições são mantidas exatamente como registradas pelos órgãos, com baixa padronização textual.';
+      }
+      if (noteGeoContext) {
+        if (total > 0) {
+          noteGeoContext.textContent = `Cobertura geográfica (${datasetLabel}, filtro atual): ${numberFmt.format(geoValid)} de ${numberFmt.format(total)} autos (${geoCoverage.toFixed(1)}%) têm latitude/longitude válidas; os demais não trazem coordenada utilizável na fonte.`;
+        } else {
+          noteGeoContext.textContent = 'Cobertura geográfica: nem todos os autos possuem latitude/longitude válidas na fonte original.';
+        }
+      }
+      if (noteOutlierContext) {
+        if (outlierCount > 0) {
+          noteOutlierContext.textContent = `Registros históricos: o recorte atual tem ${numberFmt.format(outlierCount)} auto(s) anterior(es) a 2000 com multa acima de R$ 1 bilhão (maior valor: ${moneyFmt.format(outlierMax)}). Esses casos exigem checagem documental antes de publicação.`;
+        } else {
+          noteOutlierContext.textContent = 'Registros históricos: multas muito altas em anos antigos exigem checagem documental antes de publicação.';
+        }
+      }
+    }
+
     function emptyDatasetPayload(dataset) {
       return {
         dataset,
@@ -1359,6 +1406,9 @@
           data_inicial: '',
           data_final: '',
         },
+        geo_valid_count: 0,
+        outlier_old_big_count: 0,
+        outlier_old_big_max: 0,
         top_states: [],
         top_offenders: [],
         timeline: [],
@@ -1458,6 +1508,7 @@
         storyStepsEl.innerHTML = `<article class="story-step active"><h3>Erro de busca</h3><p class="empty">${esc(error.message)}</p></article>`;
         resultsBody.innerHTML = `<tr><td colspan="6" class="empty">Falha ao buscar dados: ${esc(error.message)}</td></tr>`;
         renderWatchPanel(null);
+        updateMethodologyNotes(null);
         statusLine.textContent = 'Erro ao consultar os dados locais.';
         updateDatasetTabs();
       } finally {
@@ -1889,6 +1940,7 @@
       restoreGeminiKey();
       resetAiConversation();
       updateDatasetTabs();
+      updateMethodologyNotes(null);
 
       try {
         dashboardMetadata = await fetchJson(DATA_METADATA_FILE);
@@ -1924,8 +1976,12 @@
       viewWatchBtn.addEventListener('click', () => setViewMode('watch'));
     }
 
-    btnExportCsv.addEventListener('click', exportCsv);
-    btnExportCsv2.addEventListener('click', exportCsv);
+    if (btnExportCsv) {
+      btnExportCsv.addEventListener('click', exportCsv);
+    }
+    if (btnExportCsv2) {
+      btnExportCsv2.addEventListener('click', exportCsv);
+    }
 
     btnAskAi.addEventListener('click', askGemini);
     btnAiReset.addEventListener('click', () => {

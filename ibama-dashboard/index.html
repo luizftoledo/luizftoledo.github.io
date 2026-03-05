@@ -4,6 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Multas ambientais (Ibama e ICMBio)</title>
+  <meta name="description" content="Painel jornalístico para investigar autos de infração ambiental do IBAMA e ICMBio por nome, UF e período, com exportação CSV.">
+  <meta property="og:title" content="Multas ambientais (Ibama e ICMBio)">
+  <meta property="og:description" content="Explore autos de infração ambiental por nome, UF, valores e período.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://luizftoledo.github.io/ibama-dashboard/">
+  <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -113,9 +119,23 @@
 
     .search-row {
       display: grid;
-      grid-template-columns: minmax(260px, 1fr) 90px 110px 125px;
+      grid-template-columns: minmax(260px, 1fr) 90px 120px;
       gap: 0.55rem;
       align-items: stretch;
+    }
+
+    .howto {
+      border: 1px solid #2e4569;
+      border-radius: 12px;
+      background: rgba(7, 14, 30, 0.72);
+      padding: 0.58rem 0.66rem;
+      font-size: 0.85rem;
+      line-height: 1.48;
+      color: #c7def8;
+    }
+
+    .howto strong {
+      color: #ecf8ff;
     }
 
     .dataset-tabs {
@@ -267,6 +287,24 @@
     .hint.error {
       color: var(--danger);
       font-family: "IBM Plex Mono", monospace;
+    }
+
+    .result-alert {
+      margin: 0;
+      border: 1px solid #e7c8a8;
+      border-radius: 10px;
+      background: #fff2df;
+      color: #5f432f;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      padding: 0.52rem 0.6rem;
+    }
+
+    .metric .desc {
+      margin-top: 0.22rem;
+      color: #7b8799;
+      font-size: 0.78rem;
+      line-height: 1.35;
     }
 
     .story-layout {
@@ -1183,6 +1221,7 @@
         <div class="title-row">
           <h1>Multas ambientais (Ibama e ICMBio)</h1>
           <p class="subtitle">Busque por nome do autuado, trecho de descricao da multa (ex: desmatamento, indigena), com ou sem acento e com qualquer caixa.</p>
+          <p class="howto"><strong>Como usar em 20s:</strong> clique em <strong>Buscar</strong> sem preencher nada para ver o panorama geral. Depois refine por nome/termo ou UF e use o CSV para análise completa.</p>
         </div>
 
         <div class="search-row">
@@ -1191,7 +1230,6 @@
             <option value="">UF</option>
           </select>
           <button class="btn-search" id="btn-search">Buscar</button>
-          <button class="btn-export" id="btn-export-csv">Exportar CSV</button>
         </div>
 
         <div class="dataset-tabs" id="dataset-tabs">
@@ -1200,27 +1238,31 @@
         </div>
         <p class="hint" id="dataset-summary">As abas IBAMA/ICMBio mudam o recorte. O painel usa a base inteira; a tabela abaixo mostra uma prévia para leitura rápida.</p>
         <div class="view-tabs" id="view-tabs" aria-label="Modos da ferramenta">
-          <button class="view-tab active" id="view-story" type="button">Resumo da busca</button>
-          <button class="view-tab" id="view-watch" type="button">Ficar de olho (tendências)</button>
-          <a class="view-tab" href="./tendencias.html">Tendências completas</a>
+          <button class="view-tab active" id="view-story" type="button">Panorama geral</button>
+          <button class="view-tab" id="view-watch" type="button">Alertas do ano atual</button>
+          <a class="view-tab" href="./tendencias.html">Série histórica completa</a>
         </div>
 
         <div class="metrics-grid">
           <article class="metric">
             <div class="label">Dados carregados agora (busca)</div>
             <div class="value" id="metric-loaded-now">--</div>
+            <div class="desc">Número de autos que atendem ao filtro atual.</div>
           </article>
           <article class="metric">
             <div class="label">Periodo valido da busca</div>
             <div class="value" id="metric-range">--</div>
+            <div class="desc">Data mais antiga e mais recente encontradas no recorte.</div>
           </article>
           <article class="metric">
             <div class="label">Multas ao todo (base)</div>
             <div class="value" id="metric-base-fines">--</div>
+            <div class="desc">Soma da base oficial carregada para o órgão selecionado.</div>
           </article>
           <article class="metric">
             <div class="label">Multas na busca atual</div>
             <div class="value" id="metric-filtered-fines">--</div>
+            <div class="desc">Soma financeira apenas do filtro que você aplicou.</div>
           </article>
         </div>
 
@@ -1242,7 +1284,7 @@
           </div>
         </div>
 
-        <p class="hint">Use os botões de exportação CSV para baixar o recorte atual da busca.</p>
+        <p class="hint">Valores seguem o registro original da fonte (nominais, sem correção monetária nesta interface).</p>
       </div>
     </section>
 
@@ -1252,7 +1294,7 @@
 
     <section class="watch-panel view-panel hidden" id="watch-section">
       <header class="section-head">
-        <h2>Ficar de olho: alertas e tendências</h2>
+        <h2>Alertas do ano atual</h2>
         <span class="badge" id="watch-badge">multa de alto valor: --</span>
       </header>
       <div class="watch-body">
@@ -1265,8 +1307,9 @@
     <section class="results-panel">
       <header class="section-head">
         <h2>Resultados filtrados (prévia da tabela)</h2>
+        <button class="btn-export" id="btn-export-csv-2">Exportar CSV</button>
       </header>
-      <button class="btn-export" id="btn-export-csv-2">Exportar CSV</button>
+      <p class="result-alert"><strong>Atenção:</strong> esta tabela mostra só uma prévia (maiores valores). Para analisar tudo no recorte, use o botão <strong>Exportar CSV</strong>.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -1284,10 +1327,23 @@
       </div>
     </section>
 
+    <section class="results-panel">
+      <header class="section-head">
+        <h2>Notas metodológicas essenciais</h2>
+      </header>
+      <div class="ai-body">
+        <p class="hint" id="note-value-context"><strong>Valores das multas:</strong> exibidos em valor nominal do registro original da base pública, sem correção por inflação neste painel.</p>
+        <p class="hint" id="note-status-context"><strong>Status da multa:</strong> esta base aberta não traz, neste painel, o andamento completo (paga, anulada, em recurso etc.).</p>
+        <p class="hint" id="note-description-context"><strong>Texto da infração:</strong> descrições são mantidas como registradas pelos órgãos, com baixa padronização textual.</p>
+        <p class="hint" id="note-geo-context"><strong>Cobertura geográfica:</strong> nem todos os autos possuem latitude/longitude válidas na fonte original.</p>
+        <p class="hint" id="note-outlier-context"><strong>Registros históricos:</strong> multas muito altas em anos antigos exigem checagem documental antes de publicação.</p>
+      </div>
+    </section>
+
     <footer class="ai-panel">
       <header class="section-head">
-        <h2>IA no rodape (Gemini Flash 2.5)</h2>
-        <span class="badge">chave local no navegador</span>
+        <h2>Assistente opcional (Gemini Flash 2.5)</h2>
+        <span class="badge">opcional, com chave própria</span>
       </header>
       <div class="ai-body">
         <div class="ai-row ai-key-row">
@@ -1299,7 +1355,7 @@
           <textarea id="ai-question" placeholder="Pergunte algo sobre os dados filtrados. Ex: Qual estado concentra maior valor nas multas desta busca?"></textarea>
           <button class="btn-ai" id="btn-ask-ai" type="button">Enviar</button>
         </div>
-        <p class="ai-note">Chat com <code>gemini-2.5-flash</code> com contexto do filtro atual. Resposta vem em markdown formatado (titulos, negrito, listas e tabela) e direto ao ponto. Enter envia e Shift+Enter quebra linha.</p>
+        <p class="ai-note">Funcionalidade opcional para quem já tem chave Gemini. O painel principal funciona sem IA.</p>
       </div>
     </footer>
   </main>

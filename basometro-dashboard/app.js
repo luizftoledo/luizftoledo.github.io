@@ -25,6 +25,8 @@ const refs = {
   govFilter: document.getElementById("filter-government"),
   minParty: document.getElementById("filter-min-party"),
   minDeputy: document.getElementById("filter-min-deputy"),
+  exportCurrent: document.getElementById("btn-export-current"),
+  filterHelp: document.getElementById("filter-help"),
 
   kpiAlignment: document.getElementById("kpi-alignment"),
   kpiPro: document.getElementById("kpi-pro"),
@@ -37,12 +39,21 @@ const refs = {
 
   tableGovernments: document.getElementById("table-governments"),
   partyNote: document.getElementById("party-note"),
+  partyContextNote: document.getElementById("party-context-note"),
   deputyNote: document.getElementById("deputy-note"),
 
   tablePartiesPro: document.getElementById("table-parties-pro"),
   tablePartiesAnti: document.getElementById("table-parties-anti"),
   tableDeputies: document.getElementById("table-deputies"),
   tableRecent: document.getElementById("table-recent"),
+};
+
+const PARTY_CONTEXT = {
+  PSL: "Partido extinto; parte da bancada migrou para o União Brasil (fusão PSL + DEM).",
+  DEM: "Partido extinto; fundiu-se com o PSL para formar o União Brasil.",
+  PSC: "Partido incorporado ao Progressistas (PP) em 2023.",
+  PTB: "Teve o registro partidário cancelado pelo TSE em 2022.",
+  PROS: "Partido incorporado ao Solidariedade em 2023.",
 };
 
 function safeNumber(v) {
@@ -58,10 +69,58 @@ function formatPct(v) {
   return `${percentFmt.format(safeNumber(v))}%`;
 }
 
+function esc(value) {
+  return (value || "")
+    .toString()
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function normalizePartyName(value) {
+  const raw = (value || "").toString().trim();
+  return raw || "Sem partido informado";
+}
+
+function normalizeUf(value) {
+  const raw = (value || "").toString().trim().toUpperCase();
+  return raw || "--";
+}
+
+function partyCellHtml(party) {
+  const normalized = normalizePartyName(party);
+  const context = PARTY_CONTEXT[normalized];
+  if (!context) return esc(normalized);
+  return `<span title="${esc(context)}">${esc(normalized)}*</span>`;
+}
+
 function parseDate(dateString) {
   if (!dateString) return null;
   const value = new Date(`${dateString}T12:00:00`);
   return Number.isNaN(value.getTime()) ? null : value;
+}
+
+function parseMonth(monthString) {
+  if (!monthString) return null;
+  const value = new Date(`${monthString}-01T12:00:00`);
+  return Number.isNaN(value.getTime()) ? null : value;
+}
+
+function countMissingMonths(monthlySeries) {
+  if (!Array.isArray(monthlySeries) || monthlySeries.length < 2) return 0;
+  let missing = 0;
+  for (let i = 1; i < monthlySeries.length; i += 1) {
+    const prev = parseMonth(monthlySeries[i - 1].month);
+    const curr = parseMonth(monthlySeries[i].month);
+    if (!prev || !curr) continue;
+    const diff = (curr.getFullYear() - prev.getFullYear()) * 12 + (curr.getMonth() - prev.getMonth());
+    if (diff > 1) {
+      missing += (diff - 1);
+    }
+  }
+  return missing;
 }
 
 function latestMonthRange(monthlySeries) {
@@ -150,6 +209,17 @@ function setMethodology() {
     li.textContent = note;
     refs.notesList.appendChild(li);
   }
+
+  const extraNotes = [
+    "Partidos extintos ou incorporados permanecem com a sigla original do momento da votação (ex.: PSL, DEM, PSC, PTB, PROS).",
+    "No recorte 'todos os governos', o PL pode aparecer com alinhamento médio baixo porque foi oposição em boa parte do período 2019-2021.",
+    "Esta versão cobre o período disponível no painel atual (2019 em diante), não a série histórica completa desde 2003.",
+  ];
+  for (const note of extraNotes) {
+    const li = document.createElement("li");
+    li.textContent = note;
+    refs.notesList.appendChild(li);
+  }
 }
 
 function setStatus() {
@@ -180,7 +250,11 @@ function setKpis(summary, filteredMonthly) {
   refs.kpiAnti.textContent = formatInt(summary.anti_votes);
   refs.kpiVotes.textContent = formatInt(summary.votacoes);
 
-  refs.kpiNote.textContent = `${summary.label}. ${formatInt(summary.total_votes)} votos de deputados considerados, em ${filteredMonthly.length} meses com votações válidas.`;
+  const missingMonths = countMissingMonths(filteredMonthly);
+  const gapNote = missingMonths > 0
+    ? ` Há ${formatInt(missingMonths)} mês(es) sem votação nominal no recorte e por isso eles não aparecem na série mensal.`
+    : "";
+  refs.kpiNote.textContent = `${summary.label}. ${formatInt(summary.total_votes)} votos de deputados considerados, em ${filteredMonthly.length} meses com votações válidas.${gapNote}`;
 }
 
 function drawMonthlyRate(filteredMonthly) {
@@ -377,7 +451,7 @@ function buildPartyRows(govId, minVotes) {
     const stats = pickGovStats(item, govId);
     if (stats.total_votes < minVotes) continue;
     out.push({
-      party: item.party,
+      party: normalizePartyName(item.party),
       ...stats,
     });
   }
@@ -385,9 +459,37 @@ function buildPartyRows(govId, minVotes) {
   return out;
 }
 
+function setPartyContextNote(govId, rows) {
+  if (!refs.partyContextNote) return;
+  if (!rows.length) {
+    refs.partyContextNote.textContent = "Sem partidos suficientes no recorte atual para mostrar contexto.";
+    return;
+  }
+
+  const parties = new Set(rows.map((row) => row.party));
+  const flagged = [...parties].filter((party) => PARTY_CONTEXT[party]);
+  const notes = [];
+
+  if (flagged.length) {
+    const details = flagged
+      .map((party) => `${party}: ${PARTY_CONTEXT[party]}`)
+      .join(" | ");
+    notes.push(`Siglas históricas no recorte: ${details}`);
+  }
+
+  if (govId === "all" && parties.has("PL")) {
+    notes.push("Leitura de contexto: no agregado de todos os governos, o PL inclui fase de oposição entre 2019 e 2021; por isso o percentual médio pode parecer contraintuitivo quando comparado ao cenário atual.");
+  }
+
+  notes.push("Cobertura temporal desta versão: 2019 em diante.");
+  refs.partyContextNote.textContent = notes.join(" ");
+}
+
 function setPartyTables(govId, minVotes) {
   const rows = buildPartyRows(govId, minVotes);
-  refs.partyNote.textContent = `Filtro aplicado: mínimo de ${formatInt(minVotes)} votos por partido (${rows.length} partidos no recorte).`;
+  const totalParties = (payload.party_ranking || []).length;
+  const excluded = Math.max(0, totalParties - rows.length);
+  refs.partyNote.textContent = `Filtro aplicado: mínimo de ${formatInt(minVotes)} votos por partido (${rows.length} partidos no recorte; ${excluded} excluídos pelo mínimo).`;
 
   refs.tablePartiesPro.innerHTML = "";
   refs.tablePartiesAnti.innerHTML = "";
@@ -395,6 +497,7 @@ function setPartyTables(govId, minVotes) {
   if (!rows.length) {
     refs.tablePartiesPro.innerHTML = '<tr><td colspan="5">Sem partidos com o mínimo de votos definido.</td></tr>';
     refs.tablePartiesAnti.innerHTML = '<tr><td colspan="5">Sem partidos com o mínimo de votos definido.</td></tr>';
+    setPartyContextNote(govId, rows);
     return;
   }
 
@@ -404,7 +507,7 @@ function setPartyTables(govId, minVotes) {
   for (const row of topPro) {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${row.party}</td>
+      <td>${partyCellHtml(row.party)}</td>
       <td><span class="chip chip-pro">${formatPct(row.alignment_pct)}</span></td>
       <td>${formatInt(row.pro_votes)}</td>
       <td>${formatInt(row.anti_votes)}</td>
@@ -416,7 +519,7 @@ function setPartyTables(govId, minVotes) {
   for (const row of topAnti) {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${row.party}</td>
+      <td>${partyCellHtml(row.party)}</td>
       <td><span class="chip chip-anti">${formatPct(row.alignment_pct)}</span></td>
       <td>${formatInt(row.pro_votes)}</td>
       <td>${formatInt(row.anti_votes)}</td>
@@ -426,6 +529,7 @@ function setPartyTables(govId, minVotes) {
   }
 
   drawPartyChart(rows);
+  setPartyContextNote(govId, rows);
 }
 
 function drawPartyChart(rows) {
@@ -468,7 +572,7 @@ function drawPartyChart(rows) {
   });
 }
 
-function setDeputyTable(govId, minVotes) {
+function buildDeputyRows(govId, minVotes) {
   const rows = [];
 
   for (const item of payload.deputy_ranking || []) {
@@ -477,16 +581,23 @@ function setDeputyTable(govId, minVotes) {
     rows.push({
       deputy_id: item.deputy_id,
       name: item.name,
-      party: item.party,
-      uf: item.uf,
+      party: normalizePartyName(item.party),
+      uf: normalizeUf(item.uf),
       ...stats,
     });
   }
 
   rows.sort((a, b) => b.total_votes - a.total_votes || b.alignment_pct - a.alignment_pct);
-  const top = rows.slice(0, 40);
+  return rows;
+}
 
-  refs.deputyNote.textContent = `Mostrando os 40 deputados com mais votos no recorte (mínimo de ${formatInt(minVotes)} votos por deputado; universo filtrado: ${rows.length}).`;
+function setDeputyTable(govId, minVotes) {
+  const rows = buildDeputyRows(govId, minVotes);
+  const top = rows.slice(0, 40);
+  const totalDeputies = (payload.deputy_ranking || []).length;
+  const excluded = Math.max(0, totalDeputies - rows.length);
+
+  refs.deputyNote.textContent = `Mostrando os 40 deputados com mais votos no recorte (mínimo de ${formatInt(minVotes)} votos por deputado; universo filtrado: ${rows.length}; ${excluded} excluídos pelo mínimo).`;
   refs.tableDeputies.innerHTML = "";
 
   if (!top.length) {
@@ -497,9 +608,9 @@ function setDeputyTable(govId, minVotes) {
   for (const row of top) {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${row.name || "--"}</td>
-      <td>${row.party || "--"}</td>
-      <td>${row.uf || "--"}</td>
+      <td>${esc(row.name || "--")}</td>
+      <td>${partyCellHtml(row.party)}</td>
+      <td>${esc(row.uf || "--")}</td>
       <td><span class="chip ${row.alignment_pct >= 50 ? "chip-pro" : "chip-anti"}">${formatPct(row.alignment_pct)}</span></td>
       <td>${formatInt(row.pro_votes)}</td>
       <td>${formatInt(row.anti_votes)}</td>
@@ -509,13 +620,25 @@ function setDeputyTable(govId, minVotes) {
   }
 }
 
-function setRecentVotes(govId) {
-  refs.tableRecent.innerHTML = "";
+function getRecentRows(govId) {
   let rows = (payload.recent_votes || []).slice();
   if (govId !== "all") {
     rows = rows.filter((row) => row.government_id === govId);
   }
-  rows = rows.slice(0, 30);
+  return rows;
+}
+
+function getVoteLink(row) {
+  const direct = (row.vote_uri || "").toString().trim();
+  if (direct) return direct;
+  const id = (row.id || "").toString().trim();
+  if (!id) return "";
+  return `https://dadosabertos.camara.leg.br/api/v2/votacoes/${encodeURIComponent(id)}`;
+}
+
+function setRecentVotes(govId) {
+  refs.tableRecent.innerHTML = "";
+  const rows = getRecentRows(govId).slice(0, 30);
 
   if (!rows.length) {
     refs.tableRecent.innerHTML = '<tr><td colspan="7">Sem votações recentes no recorte selecionado.</td></tr>';
@@ -525,19 +648,149 @@ function setRecentVotes(govId) {
   for (const row of rows) {
     const dtObj = parseDate(row.date);
     const summary = (row.description || "").slice(0, 180);
+    const link = getVoteLink(row);
+    const summarySuffix = (row.description || "").length > summary.length ? "..." : "";
+    const safeSummary = `${summary}${summarySuffix}`.trim() || "Abrir votação";
+    const summaryHtml = link
+      ? `<a class="vote-link" href="${esc(link)}" target="_blank" rel="noopener noreferrer" title="${esc(row.description || "")}">${esc(safeSummary)}</a>`
+      : `<span title="${esc(row.description || "")}">${esc(safeSummary)}</span>`;
+    const defeatChip = safeNumber(row.alignment_pct) < 50
+      ? '<span class="chip chip-anti">governo derrotado</span> '
+      : "";
 
     const tr = document.createElement("tr");
+    if (safeNumber(row.alignment_pct) < 50) {
+      tr.classList.add("row-defeat");
+    }
     tr.innerHTML = `
-      <td>${dtObj ? dateFmt.format(dtObj) : (row.date || "--")}</td>
-      <td><span class="chip">${row.government_label || "--"}</span></td>
-      <td>${row.gov_orientation || "--"}</td>
+      <td>${dtObj ? dateFmt.format(dtObj) : esc(row.date || "--")}</td>
+      <td><span class="chip">${esc(row.government_label || "--")}</span></td>
+      <td>${esc(row.gov_orientation || "--")}</td>
       <td><span class="chip ${row.alignment_pct >= 50 ? "chip-pro" : "chip-anti"}">${formatPct(row.alignment_pct)}</span></td>
       <td>${formatInt(row.pro_votes)}</td>
       <td>${formatInt(row.anti_votes)}</td>
-      <td title="${row.description || ""}">${summary}${(row.description || "").length > summary.length ? "..." : ""}</td>
+      <td>${defeatChip}${summaryHtml}</td>
     `;
     refs.tableRecent.appendChild(tr);
   }
+}
+
+function setFilterHelp(govId, minPartyVotes, minDeputyVotes) {
+  if (!refs.filterHelp) return;
+  const partyRows = buildPartyRows(govId, minPartyVotes);
+  const deputyRows = buildDeputyRows(govId, minDeputyVotes);
+  const recentRows = getRecentRows(govId);
+  refs.filterHelp.textContent = `Recorte atual pronto para exportação: ${partyRows.length} partidos, ${deputyRows.length} deputados e ${recentRows.length} votações recentes. O CSV baixa essas três tabelas com os filtros aplicados.`;
+}
+
+function csvEscape(value) {
+  const raw = (value ?? "").toString();
+  if (raw.includes('"') || raw.includes("\n") || raw.includes("\r") || raw.includes(";")) {
+    return `"${raw.replace(/"/g, '""')}"`;
+  }
+  return raw;
+}
+
+function downloadCsv(filename, headers, rows) {
+  const lines = [headers.join(";")];
+  for (const row of rows) {
+    lines.push(headers.map((key) => csvEscape(row[key])).join(";"));
+  }
+  const blob = new Blob([`\uFEFF${lines.join("\n")}`], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function exportCurrentCsv() {
+  if (!payload) return;
+  const govId = selectedGovernment();
+  const minPartyVotes = Math.max(1, safeNumber(refs.minParty.value));
+  const minDeputyVotes = Math.max(1, safeNumber(refs.minDeputy.value));
+
+  const exportRows = [];
+  for (const row of buildPartyRows(govId, minPartyVotes)) {
+    exportRows.push({
+      tipo: "partido",
+      governo: govId,
+      data: "",
+      nome: row.party,
+      partido: row.party,
+      uf: "",
+      orientacao: "",
+      alinhamento_pct: safeNumber(row.alignment_pct).toFixed(2),
+      votos_pro: row.pro_votes,
+      votos_contra: row.anti_votes,
+      votos_total: row.total_votes,
+      resumo: "",
+      link_original: "",
+    });
+  }
+
+  for (const row of buildDeputyRows(govId, minDeputyVotes)) {
+    exportRows.push({
+      tipo: "deputado",
+      governo: govId,
+      data: "",
+      nome: row.name || "",
+      partido: row.party,
+      uf: row.uf,
+      orientacao: "",
+      alinhamento_pct: safeNumber(row.alignment_pct).toFixed(2),
+      votos_pro: row.pro_votes,
+      votos_contra: row.anti_votes,
+      votos_total: row.total_votes,
+      resumo: "",
+      link_original: "",
+    });
+  }
+
+  for (const row of getRecentRows(govId)) {
+    exportRows.push({
+      tipo: "votacao_recente",
+      governo: row.government_label || govId,
+      data: row.date || "",
+      nome: row.id || "",
+      partido: "",
+      uf: "",
+      orientacao: row.gov_orientation || "",
+      alinhamento_pct: safeNumber(row.alignment_pct).toFixed(2),
+      votos_pro: row.pro_votes,
+      votos_contra: row.anti_votes,
+      votos_total: row.total_votes,
+      resumo: row.description || "",
+      link_original: getVoteLink(row),
+    });
+  }
+
+  if (!exportRows.length) {
+    refs.kpiNote.textContent = "Sem dados no recorte atual para exportar CSV.";
+    return;
+  }
+
+  const headers = [
+    "tipo",
+    "governo",
+    "data",
+    "nome",
+    "partido",
+    "uf",
+    "orientacao",
+    "alinhamento_pct",
+    "votos_pro",
+    "votos_contra",
+    "votos_total",
+    "resumo",
+    "link_original",
+  ];
+  const stamp = new Date().toISOString().slice(0, 10);
+  const govLabel = govId === "all" ? "todos_governos" : govId;
+  downloadCsv(`basometro_recorte_${govLabel}_${stamp}.csv`, headers, exportRows);
 }
 
 function refresh() {
@@ -554,6 +807,7 @@ function refresh() {
   setPartyTables(govId, minPartyVotes);
   setDeputyTable(govId, minDeputyVotes);
   setRecentVotes(govId);
+  setFilterHelp(govId, minPartyVotes, minDeputyVotes);
 }
 
 async function bootstrap() {
@@ -576,6 +830,9 @@ async function bootstrap() {
     refs.govFilter.addEventListener("change", refresh);
     refs.minParty.addEventListener("change", refresh);
     refs.minDeputy.addEventListener("change", refresh);
+    if (refs.exportCurrent) {
+      refs.exportCurrent.addEventListener("click", exportCurrentCsv);
+    }
 
     refresh();
   } catch (error) {

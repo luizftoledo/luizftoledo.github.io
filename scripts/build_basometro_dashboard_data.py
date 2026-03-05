@@ -62,6 +62,40 @@ VOTE_NORMALIZATION = {
     "ART.17": "Artigo 17",
 }
 
+VOTE_KIND_LABELS = {
+    "all": "Todas",
+    "merito": "Mérito",
+    "procedimental": "Procedimental",
+}
+
+# Context used in UI notes to avoid misinterpretation with extinct/fused parties.
+PARTY_CONTEXT = {
+    "PSL": "Partido extinto; parte da bancada migrou para o União Brasil (fusão PSL + DEM).",
+    "DEM": "Partido extinto; fundiu-se com o PSL para formar o União Brasil.",
+    "PSC": "Partido incorporado ao Progressistas (PP) em 2023.",
+    "PTB": "Teve o registro partidário cancelado pelo TSE em 2022.",
+    "PROS": "Partido incorporado ao Solidariedade em 2023.",
+}
+
+PROCEDURAL_KEYWORDS = [
+    "requerimento",
+    "urgencia",
+    "urgência",
+    "adiamento",
+    "retirada de pauta",
+    "inversao de pauta",
+    "inversão de pauta",
+    "encerramento da discussao",
+    "encerramento da discussão",
+    "preferencia",
+    "preferência",
+    "quebra de intersticio",
+    "quebra de interstício",
+    "art. 155",
+    "art 155",
+    "destaque",
+]
+
 
 def ensure_dirs() -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -75,6 +109,63 @@ def text(value: object) -> str:
     if value is None:
         return ""
     return str(value).replace("\ufeff", "").strip()
+
+
+def fold_text(value: object) -> str:
+    raw = text(value).lower()
+    if not raw:
+        return ""
+    for src, dst in (
+        ("á", "a"),
+        ("à", "a"),
+        ("â", "a"),
+        ("ã", "a"),
+        ("é", "e"),
+        ("ê", "e"),
+        ("í", "i"),
+        ("ó", "o"),
+        ("ô", "o"),
+        ("õ", "o"),
+        ("ú", "u"),
+        ("ç", "c"),
+    ):
+        raw = raw.replace(src, dst)
+    return re.sub(r"\s+", " ", raw).strip()
+
+
+def to_int(value: object) -> int:
+    raw = text(value)
+    if not raw:
+        return 0
+    try:
+        return int(raw)
+    except ValueError:
+        return 0
+
+
+def classify_vote_kind(description: str, approval: str) -> str:
+    sample = f"{fold_text(description)} {fold_text(approval)}".strip()
+    if not sample:
+        return "merito"
+    if any(token in sample for token in PROCEDURAL_KEYWORDS):
+        return "procedimental"
+    return "merito"
+
+
+def serialize_vote_bucket(raw: dict, include_votacoes: bool = False) -> dict:
+    out = {}
+    for kind, stats in raw.items():
+        total = int(stats.get("total", 0))
+        row = {
+            "pro_votes": int(stats.get("pro", 0)),
+            "anti_votes": int(stats.get("anti", 0)),
+            "total_votes": total,
+            "alignment_pct": pct(int(stats.get("pro", 0)), total),
+        }
+        if include_votacoes:
+            row["votacoes"] = int(stats.get("votacoes", 0))
+        out[kind] = row
+    return out
 
 
 def normalize_vote(value: object) -> str:
@@ -96,6 +187,32 @@ def parse_date(value: str) -> dt.date | None:
         return dt.datetime.strptime(value, "%Y-%m-%d").date()
     except ValueError:
         return None
+
+
+def parse_month(value: str) -> dt.date | None:
+    if not value:
+        return None
+    try:
+        return dt.datetime.strptime(f"{value}-01", "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def iter_month_keys(start_month: str, end_month: str) -> list[str]:
+    start = parse_month(start_month)
+    end = parse_month(end_month)
+    if not start or not end or start > end:
+        return []
+
+    out = []
+    current = start
+    while current <= end:
+        out.append(f"{current.year:04d}-{current.month:02d}")
+        if current.month == 12:
+            current = dt.date(current.year + 1, 1, 1)
+        else:
+            current = dt.date(current.year, current.month + 1, 1)
+    return out
 
 
 def government_for_date(date_iso: str) -> tuple[str, str]:
@@ -167,6 +284,9 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
         datetime_iso = text(row.get("dataHoraRegistro"))
         descricao = text(row.get("descricao"))
         aprovacao = text(row.get("aprovacao"))
+        vote_uri = text(row.get("uri")) or f"https://dadosabertos.camara.leg.br/api/v2/votacoes/{votacao_id}"
+        proposal_uri = text(row.get("ultimaApresentacaoProposicao_uriProposicao"))
+        vote_kind = classify_vote_kind(descricao, aprovacao)
 
         gov_id, gov_label = government_for_date(data_iso)
         votacoes_info[votacao_id] = {
@@ -175,6 +295,12 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
             "datetime": datetime_iso,
             "description": descricao,
             "approval": aprovacao,
+            "vote_uri": vote_uri,
+            "proposal_uri": proposal_uri,
+            "vote_kind": vote_kind,
+            "votos_sim_csv": to_int(row.get("votosSim")),
+            "votos_nao_csv": to_int(row.get("votosNao")),
+            "votos_outros_csv": to_int(row.get("votosOutros")),
             "government_id": gov_id,
             "government_label": gov_label,
         }
@@ -199,6 +325,8 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
 
     vote_level = {}
     seen_deputy_in_vote = defaultdict(set)
+    last_party_by_deputy: dict[str, str] = {}
+    last_uf_by_deputy: dict[str, str] = {}
 
     for row in csv_reader(files["votos"]):
         votacao_id = text(row.get("idVotacao"))
@@ -219,8 +347,19 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
             continue
         seen_deputy_in_vote[votacao_id].add(deputy_key)
 
-        party = text(row.get("deputado_siglaPartido")) or "Sem partido"
-        uf = text(row.get("deputado_siglaUf")) or "--"
+        raw_party = text(row.get("deputado_siglaPartido"))
+        if raw_party:
+            party = raw_party
+            last_party_by_deputy[deputy_key] = raw_party
+        else:
+            party = last_party_by_deputy.get(deputy_key, "Sem partido")
+
+        raw_uf = text(row.get("deputado_siglaUf"))
+        if raw_uf:
+            uf = raw_uf
+            last_uf_by_deputy[deputy_key] = raw_uf
+        else:
+            uf = last_uf_by_deputy.get(deputy_key, "--")
 
         orient = orientacao_governo[votacao_id]
         is_pro = vote_type == orient
@@ -231,6 +370,8 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
                 "pro": 0,
                 "anti": 0,
                 "total": 0,
+                "vote_kind": votacoes_info[votacao_id]["vote_kind"],
+                "vote_breakdown": defaultdict(int),
                 "deputies": {},
                 "parties": {},
             },
@@ -241,6 +382,7 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
             entry["pro"] += 1
         else:
             entry["anti"] += 1
+        entry["vote_breakdown"][vote_type] += 1
 
         dep = entry["deputies"].setdefault(
             deputy_key,
@@ -266,11 +408,38 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
         party_row["pro"] += int(is_pro)
         party_row["anti"] += int(not is_pro)
 
-    monthly = defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0, "government_id": "", "government_label": ""})
+    monthly = defaultdict(
+        lambda: {
+            "pro": 0,
+            "anti": 0,
+            "total": 0,
+            "votacoes": 0,
+            "government_id": "",
+            "government_label": "",
+            "by_vote_kind": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0}),
+        }
+    )
     yearly = defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0})
 
-    government_totals = defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0})
-    party_totals = defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "by_government": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0})})
+    government_totals = defaultdict(
+        lambda: {
+            "pro": 0,
+            "anti": 0,
+            "total": 0,
+            "votacoes": 0,
+            "by_vote_kind": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0}),
+        }
+    )
+    party_totals = defaultdict(
+        lambda: {
+            "pro": 0,
+            "anti": 0,
+            "total": 0,
+            "by_government": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0}),
+            "by_vote_kind": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0}),
+            "by_government_kind": defaultdict(lambda: defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0})),
+        }
+    )
     deputy_totals = {}
 
     vote_summaries = []
@@ -287,6 +456,7 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
 
         pro = counters["pro"]
         anti = counters["anti"]
+        vote_kind = counters.get("vote_kind", "merito")
 
         month_key = data_iso[:7]
         year_key = data_iso[:4]
@@ -298,6 +468,11 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
         month_row["votacoes"] += 1
         month_row["government_id"] = info["government_id"]
         month_row["government_label"] = info["government_label"]
+        month_kind = month_row["by_vote_kind"][vote_kind]
+        month_kind["pro"] += pro
+        month_kind["anti"] += anti
+        month_kind["total"] += total
+        month_kind["votacoes"] += 1
 
         yr = yearly[year_key]
         yr["pro"] += pro
@@ -310,6 +485,11 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
         gov["anti"] += anti
         gov["total"] += total
         gov["votacoes"] += 1
+        gov_kind = gov["by_vote_kind"][vote_kind]
+        gov_kind["pro"] += pro
+        gov_kind["anti"] += anti
+        gov_kind["total"] += total
+        gov_kind["votacoes"] += 1
 
         for party, pstats in counters["parties"].items():
             p = party_totals[party]
@@ -320,6 +500,14 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
             pg["pro"] += pstats["pro"]
             pg["anti"] += pstats["anti"]
             pg["total"] += pstats["total"]
+            pk = p["by_vote_kind"][vote_kind]
+            pk["pro"] += pstats["pro"]
+            pk["anti"] += pstats["anti"]
+            pk["total"] += pstats["total"]
+            pgk = p["by_government_kind"][info["government_id"]][vote_kind]
+            pgk["pro"] += pstats["pro"]
+            pgk["anti"] += pstats["anti"]
+            pgk["total"] += pstats["total"]
 
         for deputy_key, dstats in counters["deputies"].items():
             dep = deputy_totals.setdefault(
@@ -333,17 +521,33 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
                     "anti": 0,
                     "total": 0,
                     "by_government": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0}),
+                    "by_vote_kind": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0}),
+                    "by_government_kind": defaultdict(lambda: defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0})),
                 },
             )
             dep["pro"] += dstats["pro"]
             dep["anti"] += dstats["anti"]
             dep["total"] += dstats["total"]
-            dep["party"] = dstats["party"]
-            dep["uf"] = dstats["uf"]
+            if dstats["party"] and dstats["party"] != "Sem partido":
+                dep["party"] = dstats["party"]
+            elif not dep.get("party"):
+                dep["party"] = dstats["party"] or "Sem partido"
+            if dstats["uf"] and dstats["uf"] != "--":
+                dep["uf"] = dstats["uf"]
+            elif not dep.get("uf"):
+                dep["uf"] = dstats["uf"] or "--"
             dg = dep["by_government"][info["government_id"]]
             dg["pro"] += dstats["pro"]
             dg["anti"] += dstats["anti"]
             dg["total"] += dstats["total"]
+            dk = dep["by_vote_kind"][vote_kind]
+            dk["pro"] += dstats["pro"]
+            dk["anti"] += dstats["anti"]
+            dk["total"] += dstats["total"]
+            dgk = dep["by_government_kind"][info["government_id"]][vote_kind]
+            dgk["pro"] += dstats["pro"]
+            dgk["anti"] += dstats["anti"]
+            dgk["total"] += dstats["total"]
 
         vote_summaries.append(
             {
@@ -351,13 +555,22 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
                 "date": data_iso,
                 "datetime": info["datetime"],
                 "description": info["description"],
+                "vote_uri": info["vote_uri"],
+                "proposal_uri": info["proposal_uri"],
                 "government_id": info["government_id"],
                 "government_label": info["government_label"],
                 "gov_orientation": orientacao_governo[votacao_id],
                 "approval": info["approval"],
+                "vote_kind": vote_kind,
                 "pro_votes": pro,
                 "anti_votes": anti,
                 "total_votes": total,
+                "sim_votes": counters["vote_breakdown"].get("Sim", 0),
+                "nao_votes": counters["vote_breakdown"].get("Não", 0),
+                "abstencao_votes": counters["vote_breakdown"].get("Abstenção", 0),
+                "obstrucao_votes": counters["vote_breakdown"].get("Obstrução", 0),
+                "artigo17_votes": counters["vote_breakdown"].get("Artigo 17", 0),
+                "outros_votes_csv": info.get("votos_outros_csv", 0),
                 "alignment_pct": pct(pro, total),
             }
         )
@@ -378,6 +591,11 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
                         "alignment_pct": pct(gstats["pro"], gstats["total"]),
                     }
                     for gov_id, gstats in stats["by_government"].items()
+                },
+                "by_vote_kind": serialize_vote_bucket(stats["by_vote_kind"]),
+                "by_government_kind": {
+                    gov_id: serialize_vote_bucket(kind_stats)
+                    for gov_id, kind_stats in stats["by_government_kind"].items()
                 },
             }
         return out
@@ -403,6 +621,11 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
                     }
                     for gov_id, gstats in stats["by_government"].items()
                 },
+                "by_vote_kind": serialize_vote_bucket(stats["by_vote_kind"]),
+                "by_government_kind": {
+                    gov_id: serialize_vote_bucket(kind_stats)
+                    for gov_id, kind_stats in stats["by_government_kind"].items()
+                },
             }
         return out
 
@@ -417,6 +640,7 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
                 "alignment_pct": pct(stats["pro"], stats["total"]),
                 "government_id": stats["government_id"],
                 "government_label": stats["government_label"],
+                "by_vote_kind": serialize_vote_bucket(stats["by_vote_kind"], include_votacoes=True),
             }
             for month, stats in monthly.items()
         },
@@ -437,6 +661,7 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
                 "total": stats["total"],
                 "votacoes": stats["votacoes"],
                 "alignment_pct": pct(stats["pro"], stats["total"]),
+                "by_vote_kind": serialize_vote_bucket(stats["by_vote_kind"], include_votacoes=True),
             }
             for gov_id, stats in government_totals.items()
         },
@@ -452,11 +677,38 @@ def aggregate_year(year: int, files: dict[str, Path]) -> dict:
 
 
 def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> dict:
-    monthly = defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0, "government_id": "", "government_label": ""})
+    monthly = defaultdict(
+        lambda: {
+            "pro": 0,
+            "anti": 0,
+            "total": 0,
+            "votacoes": 0,
+            "government_id": "",
+            "government_label": "",
+            "by_vote_kind": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0}),
+        }
+    )
     yearly = defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0})
-    government_totals = defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0})
+    government_totals = defaultdict(
+        lambda: {
+            "pro": 0,
+            "anti": 0,
+            "total": 0,
+            "votacoes": 0,
+            "by_vote_kind": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0}),
+        }
+    )
 
-    party_totals = defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "by_government": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0})})
+    party_totals = defaultdict(
+        lambda: {
+            "pro": 0,
+            "anti": 0,
+            "total": 0,
+            "by_government": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0}),
+            "by_vote_kind": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0}),
+            "by_government_kind": defaultdict(lambda: defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0})),
+        }
+    )
     deputy_totals = {}
 
     vote_summaries = []
@@ -471,6 +723,12 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
             row["votacoes"] += stats["votacoes"]
             row["government_id"] = stats["government_id"]
             row["government_label"] = stats["government_label"]
+            for kind, kind_stats in stats.get("by_vote_kind", {}).items():
+                mk = row["by_vote_kind"][kind]
+                mk["pro"] += int(kind_stats.get("pro_votes", 0))
+                mk["anti"] += int(kind_stats.get("anti_votes", 0))
+                mk["total"] += int(kind_stats.get("total_votes", 0))
+                mk["votacoes"] += int(kind_stats.get("votacoes", 0))
 
         for year_key, stats in payload["yearly"].items():
             row = yearly[year_key]
@@ -485,6 +743,12 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
             row["anti"] += stats["anti"]
             row["total"] += stats["total"]
             row["votacoes"] += stats["votacoes"]
+            for kind, kind_stats in stats.get("by_vote_kind", {}).items():
+                gk = row["by_vote_kind"][kind]
+                gk["pro"] += int(kind_stats.get("pro_votes", 0))
+                gk["anti"] += int(kind_stats.get("anti_votes", 0))
+                gk["total"] += int(kind_stats.get("total_votes", 0))
+                gk["votacoes"] += int(kind_stats.get("votacoes", 0))
 
         for party, stats in payload["party_totals"].items():
             p = party_totals[party]
@@ -496,6 +760,17 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
                 pg["pro"] += gstats["pro"]
                 pg["anti"] += gstats["anti"]
                 pg["total"] += gstats["total"]
+            for kind, kind_stats in stats.get("by_vote_kind", {}).items():
+                pk = p["by_vote_kind"][kind]
+                pk["pro"] += int(kind_stats.get("pro_votes", 0))
+                pk["anti"] += int(kind_stats.get("anti_votes", 0))
+                pk["total"] += int(kind_stats.get("total_votes", 0))
+            for gov_id, gov_kind_stats in stats.get("by_government_kind", {}).items():
+                for kind, kind_stats in gov_kind_stats.items():
+                    pgk = p["by_government_kind"][gov_id][kind]
+                    pgk["pro"] += int(kind_stats.get("pro_votes", 0))
+                    pgk["anti"] += int(kind_stats.get("anti_votes", 0))
+                    pgk["total"] += int(kind_stats.get("total_votes", 0))
 
         for dep_key, stats in payload["deputy_totals"].items():
             dep = deputy_totals.setdefault(
@@ -509,18 +784,39 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
                     "anti": 0,
                     "total": 0,
                     "by_government": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0}),
+                    "by_vote_kind": defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0}),
+                    "by_government_kind": defaultdict(lambda: defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0})),
                 },
             )
             dep["pro"] += stats["pro"]
             dep["anti"] += stats["anti"]
             dep["total"] += stats["total"]
-            dep["party"] = stats["party"]
-            dep["uf"] = stats["uf"]
+            incoming_party = text(stats.get("party"))
+            incoming_uf = text(stats.get("uf"))
+            if incoming_party and incoming_party != "Sem partido":
+                dep["party"] = incoming_party
+            elif not dep.get("party"):
+                dep["party"] = incoming_party or "Sem partido"
+            if incoming_uf and incoming_uf != "--":
+                dep["uf"] = incoming_uf
+            elif not dep.get("uf"):
+                dep["uf"] = incoming_uf or "--"
             for gov_id, gstats in stats.get("by_government", {}).items():
                 dg = dep["by_government"][gov_id]
                 dg["pro"] += gstats["pro"]
                 dg["anti"] += gstats["anti"]
                 dg["total"] += gstats["total"]
+            for kind, kind_stats in stats.get("by_vote_kind", {}).items():
+                dk = dep["by_vote_kind"][kind]
+                dk["pro"] += int(kind_stats.get("pro_votes", 0))
+                dk["anti"] += int(kind_stats.get("anti_votes", 0))
+                dk["total"] += int(kind_stats.get("total_votes", 0))
+            for gov_id, gov_kind_stats in stats.get("by_government_kind", {}).items():
+                for kind, kind_stats in gov_kind_stats.items():
+                    dgk = dep["by_government_kind"][gov_id][kind]
+                    dgk["pro"] += int(kind_stats.get("pro_votes", 0))
+                    dgk["anti"] += int(kind_stats.get("anti_votes", 0))
+                    dgk["total"] += int(kind_stats.get("total_votes", 0))
 
         vote_summaries.extend(payload["vote_summaries"])
 
@@ -528,18 +824,43 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
             raw_counts[key] += int(val)
 
     monthly_series = []
-    for month in sorted(monthly.keys()):
-        stats = monthly[month]
+    month_keys = sorted(monthly.keys())
+    filled_months = iter_month_keys(month_keys[0], month_keys[-1]) if month_keys else []
+    for month in filled_months:
+        stats = monthly.get(month)
+        if stats:
+            pro_votes = stats["pro"]
+            anti_votes = stats["anti"]
+            total_votes = stats["total"]
+            votacoes = stats["votacoes"]
+            alignment_pct = pct(pro_votes, total_votes)
+            government_id = stats["government_id"]
+            government_label = stats["government_label"]
+            by_vote_kind = serialize_vote_bucket(stats["by_vote_kind"], include_votacoes=True)
+            has_votes = votacoes > 0
+        else:
+            first_day = parse_date(f"{month}-01")
+            government_id, government_label = government_for_date(first_day.isoformat() if first_day else "")
+            pro_votes = 0
+            anti_votes = 0
+            total_votes = 0
+            votacoes = 0
+            alignment_pct = None
+            by_vote_kind = {}
+            has_votes = False
+
         monthly_series.append(
             {
                 "month": month,
-                "pro_votes": stats["pro"],
-                "anti_votes": stats["anti"],
-                "total_votes": stats["total"],
-                "votacoes": stats["votacoes"],
-                "alignment_pct": pct(stats["pro"], stats["total"]),
-                "government_id": stats["government_id"],
-                "government_label": stats["government_label"],
+                "pro_votes": pro_votes,
+                "anti_votes": anti_votes,
+                "total_votes": total_votes,
+                "votacoes": votacoes,
+                "alignment_pct": alignment_pct,
+                "government_id": government_id,
+                "government_label": government_label,
+                "has_votes": has_votes,
+                "by_vote_kind": by_vote_kind,
             }
         )
 
@@ -574,6 +895,7 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
                 "total_votes": stats["total"],
                 "votacoes": stats["votacoes"],
                 "alignment_pct": pct(stats["pro"], stats["total"]),
+                "by_vote_kind": serialize_vote_bucket(stats["by_vote_kind"], include_votacoes=True),
             }
         )
 
@@ -594,6 +916,11 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
                         "alignment_pct": pct(gstats["pro"], gstats["total"]),
                     }
                     for gov_id, gstats in stats["by_government"].items()
+                },
+                "by_vote_kind": serialize_vote_bucket(stats["by_vote_kind"]),
+                "by_government_kind": {
+                    gov_id: serialize_vote_bucket(gov_kind_stats)
+                    for gov_id, gov_kind_stats in stats["by_government_kind"].items()
                 },
             }
         )
@@ -620,6 +947,11 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
                     }
                     for gov_id, gstats in dep["by_government"].items()
                 },
+                "by_vote_kind": serialize_vote_bucket(dep["by_vote_kind"]),
+                "by_government_kind": {
+                    gov_id: serialize_vote_bucket(gov_kind_stats)
+                    for gov_id, gov_kind_stats in dep["by_government_kind"].items()
+                },
             }
         )
     deputy_ranking.sort(key=lambda item: item["total_votes"], reverse=True)
@@ -630,6 +962,14 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
     total_pro = sum(item["pro_votes"] for item in government_series)
     total_anti = sum(item["anti_votes"] for item in government_series)
     total_votes = total_pro + total_anti
+    summary_by_vote_kind_raw = defaultdict(lambda: {"pro": 0, "anti": 0, "total": 0, "votacoes": 0})
+    for gov_stats in government_totals.values():
+        for kind, kind_stats in gov_stats["by_vote_kind"].items():
+            row = summary_by_vote_kind_raw[kind]
+            row["pro"] += int(kind_stats.get("pro", 0))
+            row["anti"] += int(kind_stats.get("anti", 0))
+            row["total"] += int(kind_stats.get("total", 0))
+            row["votacoes"] += int(kind_stats.get("votacoes", 0))
 
     summary = {
         "pro_votes": total_pro,
@@ -639,7 +979,15 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
         "votacoes_validas": sum(item["votacoes"] for item in government_series),
         "partidos_com_voto": sum(1 for item in party_ranking if item["total_votes"] > 0),
         "deputados_com_voto": sum(1 for item in deputy_ranking if item["total_votes"] > 0),
+        "by_vote_kind": serialize_vote_bucket(summary_by_vote_kind_raw, include_votacoes=True),
     }
+
+    party_context_active = {
+        party: note
+        for party, note in PARTY_CONTEXT.items()
+        if any(item["party"] == party for item in party_ranking)
+    }
+    missing_months = sum(1 for row in monthly_series if not row.get("has_votes"))
 
     return {
         "metadata": {
@@ -649,6 +997,8 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
             "start_year": start_year,
             "end_year": end_year,
             "raw_counts": raw_counts,
+            "missing_months_without_votes": missing_months,
+            "vote_kind_labels": VOTE_KIND_LABELS,
         },
         "governments": [
             {"id": gov["id"], "label": gov["label"], "start": gov["start"], "end": gov["end"]}
@@ -662,6 +1012,7 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
         "party_ranking": party_ranking,
         "deputy_ranking": deputy_ranking,
         "recent_votes": recent_votes,
+        "party_context": party_context_active,
         "methodology": {
             "title": "Metodologia",
             "items": [
@@ -669,11 +1020,13 @@ def merge_years(year_payloads: list[dict], start_year: int, end_year: int) -> di
                 "Um voto e contado como pro-governo apenas quando o voto do deputado e igual a orientacao do Governo na votacao.",
                 "Todos os demais votos validos (incluindo nao, abstencao, obstrucao e artigo 17) entram como contra-governo, mantendo o criterio historico do Basometro.",
                 "Votacoes sem orientacao do Governo ou sem votos nominais registrados sao descartadas.",
+                "Classificacao de tipo de votacao (merito/procedimental) e heuristica, baseada em palavras-chave da descricao oficial da votacao.",
             ],
             "notes": [
                 "Em 2026, a Camara mantem os arquivos anuais de votacoes, orientacoes e votos em formato CSV.",
                 "O endpoint de API v2 para listagem de votacoes tem limite de janela de 3 meses; por estabilidade, esta versao usa os dumps anuais oficiais.",
                 "Pode haver revisoes retroativas na base oficial; por isso o painel e reprocessado periodicamente.",
+                "Partidos extintos, fundidos ou incorporados permanecem no historico com a sigla original registrada no momento da votacao.",
             ],
         },
     }
