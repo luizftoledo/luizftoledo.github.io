@@ -1,8 +1,35 @@
 (function () {
   const nFmt = new Intl.NumberFormat('pt-BR');
-  const API_TIMEOUT_MS = 180000;
-  const MAX_TABLE_ROWS = 600;
-  const WORDCLOUD_DEFAULT_RANGE = 30;
+  const DEVICE_PROFILE = (() => {
+    const smallScreen = window.matchMedia ? window.matchMedia('(max-width: 820px)').matches : false;
+    const deviceMemory = Number(navigator.deviceMemory);
+    const lowRam = Number.isFinite(deviceMemory) && deviceMemory <= 4;
+    const saveData = Boolean(navigator.connection && navigator.connection.saveData);
+    return { smallScreen, lowRam, saveData, deviceMemory };
+  })();
+  const LIGHT_MODE_RECORDS_THRESHOLD = 5000;
+  const DATA_FETCH_TIMEOUT_MS = 180000;
+  const WORD_MIN_LEN = 3;
+  const WORDCLOUD_MAX_FUTURE_SKEW_DAYS = 7;
+  const EXAMPLE_MANDATES_LIMIT = 3;
+  const EXAMPLES_PER_MANDATE = 2;
+  const EXAMPLE_SNIPPET_RADIUS = 150;
+  const PT_STOPWORDS = new Set([
+    'a', 'ao', 'aos', 'aquela', 'aquelas', 'aquele', 'aqueles', 'aquilo', 'as', 'ate', 'com', 'como',
+    'contra', 'da', 'das', 'de', 'dela', 'delas', 'dele', 'deles', 'depois', 'do', 'dos', 'e', 'ela',
+    'elas', 'ele', 'eles', 'em', 'entre', 'era', 'eram', 'essa', 'essas', 'esse', 'esses', 'esta',
+    'estao', 'estar', 'estas', 'estava', 'estavam', 'este', 'estes', 'eu', 'foi', 'foram', 'ha', 'isso',
+    'isto', 'ja', 'la', 'lhe', 'lhes', 'mais', 'mas', 'me', 'mesmo', 'mesmos', 'meu', 'meus', 'minha',
+    'minhas', 'muito', 'na', 'nao', 'nas', 'nem', 'no', 'nos', 'nossa', 'nossas', 'nosso', 'nossos',
+    'num', 'numa', 'o', 'os', 'ou', 'para', 'pela', 'pelas', 'pelo', 'pelos', 'por', 'porque', 'quando',
+    'que', 'quem', 'se', 'sem', 'sera', 'serao', 'seu', 'seus', 'sim', 'sob', 'sobre', 'sua', 'suas',
+    'tambem', 'te', 'tem', 'tendo', 'tenho', 'ter', 'teve', 'ti', 'tu', 'tua', 'tuas', 'um', 'uma',
+    'umas', 'uns', 'vos', 'voces', 'ainda', 'cada', 'durante', 'entao', 'essa', 'esse', 'fazer', 'fez',
+    'for', 'fora', 'foram', 'fosse', 'fui', 'havia', 'isso', 'nesse', 'nessa', 'neste', 'nesta', 'nosso',
+    'nunca', 'onde', 'outra', 'outro', 'outros', 'outras', 'pode', 'podem', 'pois', 'qual', 'quais',
+    'qualquer', 'quase', 'seja', 'sejam', 'sendo', 'ser', 'seria', 'seriam', 'sido', 'sobre', 'somente',
+    'tanto', 'toda', 'todas', 'todo', 'todos', 'trata', 'vamos', 'vai', 'vem', 'vindo'
+  ]);
 
   const els = {
     statusUpdated: document.getElementById('status-updated'),
@@ -38,7 +65,6 @@
     methodologyNote: document.getElementById('methodology-note'),
     methodologyPresidentBody: document.getElementById('methodology-president-body'),
     methodologyMandateBody: document.getElementById('methodology-mandate-body'),
-
     wordcloudRange: document.getElementById('wordcloud-range'),
     wordcloudPhraseSize: document.getElementById('wordcloud-phrase-size'),
     wordcloudApply: document.getElementById('wordcloud-apply'),
@@ -46,7 +72,6 @@
     wordcloudCloud: document.getElementById('wordcloud-cloud'),
     wordcloudTableBody: document.getElementById('wordcloud-table-body'),
     wordcloudColLabel: document.getElementById('wordcloud-col-label'),
-
     loadProgressWrap: document.getElementById('load-progress-wrap'),
     loadProgressText: document.getElementById('load-progress-text'),
     loadProgressPct: document.getElementById('load-progress-pct'),
@@ -55,16 +80,144 @@
   };
 
   const state = {
-    apiBase: '',
-    ready: false,
-    bootstrap: null,
-    bootstrapPromise: null,
+    records: [],
+    metadata: null,
     charts: [],
-    searchRequestId: 0,
-    wordcloudRequestId: 0,
+    ready: false,
+    recordsLoaded: false,
+    coverage: null,
+    lightMode: false,
     wordcloudCache: new Map(),
-    searchResult: null,
+    wordcloudRequestId: 0,
+    wordcloudCurrentKey: '',
+    wordcloudLastParams: null,
+    recordsLoadPromise: null,
+    searchRequestId: 0,
   };
+
+  function foldText(value) {
+    return (value || '')
+      .toString()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  }
+
+  function hasExtractedText(rec) {
+    if (typeof rec._hasText === 'boolean') return rec._hasText;
+    rec._hasText = Boolean((rec.text || '').trim());
+    return rec._hasText;
+  }
+
+  function normalizeSearchText(value) {
+    return foldText(value)
+      .replace(/[^a-z0-9]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function normalizeQueryTerm(raw) {
+    const normalized = normalizeSearchText(raw || '');
+    const words = normalized ? normalized.split(' ').filter(Boolean) : [];
+    return {
+      normalized,
+      words,
+      wordsCount: words.length,
+      isPhrase: words.length > 1,
+    };
+  }
+
+  function escapeRegExp(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function buildTermRegex(words) {
+    if (!words || !words.length) return null;
+    const pattern = words.map((w) => escapeRegExp(w)).join('\\s+');
+    return new RegExp(`(?:^|\\s)(${pattern})(?=\\s|$)`, 'g');
+  }
+
+  function countTermMatches(searchText, regex) {
+    if (!regex || !searchText) return 0;
+    regex.lastIndex = 0;
+    let count = 0;
+    while (regex.exec(searchText)) {
+      count += 1;
+    }
+    return count;
+  }
+
+  function buildSnippetRegex(words) {
+    if (!words || !words.length) return null;
+    const pattern = words.map((w) => escapeRegExp(w)).join('[^a-z0-9]+');
+    return new RegExp(`(^|[^a-z0-9])(${pattern})(?=$|[^a-z0-9])`);
+  }
+
+  function extractMandateSortYear(mandate) {
+    if (!mandate) return 0;
+    const years = (mandate.match(/\d{4}/g) || []).map((x) => Number(x)).filter((x) => Number.isFinite(x));
+    return years.length ? Math.max(...years) : 0;
+  }
+
+  function buildHighlightedSnippet(text, queryWords) {
+    const rawText = (text || '').toString();
+    if (!rawText.trim()) return null;
+
+    const snippetRegex = buildSnippetRegex(queryWords);
+    const folded = foldText(rawText);
+    const match = snippetRegex ? snippetRegex.exec(folded) : null;
+
+    if (!match || typeof match.index !== 'number') {
+      const fallback = rawText.slice(0, EXAMPLE_SNIPPET_RADIUS + 120).replace(/\s+/g, ' ').trim();
+      if (!fallback) return null;
+      return `${esc(fallback)}${rawText.length > fallback.length ? '...' : ''}`;
+    }
+
+    const termStart = match.index + (match[1] ? match[1].length : 0);
+    const termEnd = termStart + (match[2] ? match[2].length : 0);
+
+    let start = Math.max(0, termStart - EXAMPLE_SNIPPET_RADIUS);
+    let end = Math.min(rawText.length, termEnd + EXAMPLE_SNIPPET_RADIUS);
+
+    const leftBreak = rawText.lastIndexOf(' ', start);
+    if (leftBreak >= 0 && leftBreak > start - 40) start = leftBreak + 1;
+
+    const rightBreak = rawText.indexOf(' ', end);
+    if (rightBreak >= 0 && rightBreak < end + 40) end = rightBreak;
+
+    const snippet = rawText.slice(start, end).replace(/\n/g, ' ');
+    const relStart = Math.max(0, termStart - start);
+    const relEnd = Math.min(snippet.length, termEnd - start);
+
+    const before = esc(snippet.slice(0, relStart).replace(/\s+/g, ' '));
+    const hit = esc(snippet.slice(relStart, relEnd).replace(/\s+/g, ' '));
+    const after = esc(snippet.slice(relEnd).replace(/\s+/g, ' '));
+
+    const prefix = start > 0 ? '... ' : '';
+    const suffix = end < rawText.length ? ' ...' : '';
+    return `${prefix}${before}<mark>${hit}</mark>${after}${suffix}`;
+  }
+
+  function getRecordEpochDay(rec) {
+    if (typeof rec._epochDay === 'number' || rec._epochDay === null) return rec._epochDay;
+    const dateIso = (rec.date || '').trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateIso)) {
+      rec._epochDay = null;
+      return rec._epochDay;
+    }
+    const [y, m, d] = dateIso.split('-').map((x) => Number(x));
+    if (!y || !m || !d) {
+      rec._epochDay = null;
+      return rec._epochDay;
+    }
+    rec._epochDay = Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+    return rec._epochDay;
+  }
+
+  function getUtcTodayEpochDay() {
+    const now = new Date();
+    return Math.floor(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) / 86400000);
+  }
 
   function esc(value) {
     return (value || '').toString()
@@ -82,182 +235,31 @@
     return d.toLocaleDateString('pt-BR');
   }
 
-  function formatDateTimeIso(value) {
-    if (!value) return '--';
-    const d = new Date(value);
+  function formatDateTimeIso(iso) {
+    if (!iso) return '--';
+    const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '--';
     return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
   }
 
-  function monthLabel(key) {
-    if (!/^\d{4}-\d{2}$/.test(key || '')) return key || '--';
+  function formatBytes(numBytes) {
+    const bytes = Number(numBytes);
+    if (!Number.isFinite(bytes) || bytes <= 0) return '0 B';
+    const units = ['B', 'KB', 'MB', 'GB'];
+    const idx = Math.min(units.length - 1, Math.floor(Math.log(bytes) / Math.log(1024)));
+    const value = bytes / (1024 ** idx);
+    return `${value.toFixed(value >= 10 ? 0 : 1)} ${units[idx]}`;
+  }
+
+  function monthKey(dateIso) {
+    if (!dateIso || !/^\d{4}-\d{2}-\d{2}$/.test(dateIso)) return '';
+    return dateIso.slice(0, 7);
+  }
+
+  function formatMonthKey(key) {
+    if (!/^\d{4}-\d{2}$/.test(key)) return key;
     const d = new Date(`${key}-01T00:00:00`);
     return d.toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
-  }
-
-  function setLoadProgress(visible, percent, text) {
-    if (!els.loadProgressWrap || !els.loadProgressFill || !els.loadProgressPct || !els.loadProgressText) return;
-    const pct = Math.max(0, Math.min(100, Number(percent) || 0));
-    els.loadProgressWrap.hidden = !visible;
-    els.loadProgressFill.style.width = `${pct}%`;
-    els.loadProgressPct.textContent = `${Math.round(pct)}%`;
-    if (text) els.loadProgressText.textContent = text;
-    if (els.loadProgressBar) {
-      els.loadProgressBar.setAttribute('aria-valuenow', String(Math.round(pct)));
-    }
-  }
-
-  function setLoadRequiredBanner(visible, titleText, bodyText) {
-    if (!els.loadRequiredBanner) return;
-    els.loadRequiredBanner.hidden = !visible;
-    if (typeof titleText === 'string' && els.loadRequiredTitle) els.loadRequiredTitle.textContent = titleText;
-    if (typeof bodyText === 'string' && els.loadRequiredText) els.loadRequiredText.textContent = bodyText;
-  }
-
-  function setControlsDisabled(disabled) {
-    [els.termInput, els.typeSelect, els.presidentSelect, els.mandateSelect, els.btnClear].forEach((el) => {
-      if (!el) return;
-      el.disabled = disabled;
-    });
-    if (els.wordcloudRange) els.wordcloudRange.disabled = disabled;
-    if (els.wordcloudPhraseSize) els.wordcloudPhraseSize.disabled = disabled;
-    if (els.wordcloudApply) els.wordcloudApply.disabled = disabled;
-  }
-
-  function setDeferredSearchState() {
-    setControlsDisabled(true);
-    if (els.btnSearch) {
-      els.btnSearch.disabled = false;
-      els.btnSearch.textContent = '1) Carregar Dados';
-    }
-    setLoadRequiredBanner(
-      true,
-      'Passo 1 obrigatorio: clique em "1) Carregar Dados".',
-      'A dashboard conecta no BigQuery via API e libera a busca completa sem baixar o corpus inteiro no seu navegador.'
-    );
-    if (els.searchHint) {
-      els.searchHint.textContent = 'Clique em "1) Carregar Dados" para habilitar busca, graficos e nuvem de termos.';
-    }
-    if (els.summaryText) {
-      els.summaryText.textContent = 'Busca textual indisponivel ate carregar os dados da API.';
-    }
-    if (els.tableCount) els.tableCount.textContent = '0 linhas';
-    if (els.resultsBody) {
-      els.resultsBody.innerHTML = '<tr><td colspan="8">Clique em <strong>Carregar Dados</strong> para iniciar.</td></tr>';
-    }
-    if (els.wordcloudContext) {
-      els.wordcloudContext.textContent = 'Carregue os dados para habilitar a nuvem de termos.';
-    }
-    if (els.wordcloudCloud) {
-      els.wordcloudCloud.innerHTML = '<span class="hint">Aguardando carregamento da API.</span>';
-    }
-    if (els.wordcloudTableBody) {
-      els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Sem dados.</td></tr>';
-    }
-    if (els.examplesHint) {
-      els.examplesHint.textContent = 'Busque um termo para ver exemplos reais dos 3 ultimos mandatos.';
-    }
-    if (els.examplesGrid) {
-      els.examplesGrid.innerHTML = '';
-    }
-    if (els.methodologyPresidentBody) {
-      els.methodologyPresidentBody.innerHTML = '<tr><td colspan="7">Carregue os dados para ver a cobertura por presidente.</td></tr>';
-    }
-    if (els.methodologyMandateBody) {
-      els.methodologyMandateBody.innerHTML = '<tr><td colspan="7">Carregue os dados para ver a cobertura por mandato.</td></tr>';
-    }
-    if (els.metricMentions) els.metricMentions.textContent = '--';
-    if (els.metricDocs) els.metricDocs.textContent = '--';
-    if (els.metricPresidents) els.metricPresidents.textContent = '--';
-    if (els.metricWindow) els.metricWindow.textContent = '--';
-    destroyCharts();
-  }
-
-  function setReadyState() {
-    state.ready = true;
-    setControlsDisabled(false);
-    if (els.btnSearch) {
-      els.btnSearch.disabled = false;
-      els.btnSearch.textContent = 'Buscar';
-    }
-    setLoadRequiredBanner(false);
-  }
-
-  function selectedText(selectEl, fallback) {
-    if (!selectEl || !selectEl.options || typeof selectEl.selectedIndex !== 'number') return fallback;
-    const opt = selectEl.options[selectEl.selectedIndex];
-    return (opt && opt.textContent ? opt.textContent.trim() : '') || fallback;
-  }
-
-  function updateActiveFiltersBanner(filters, termRaw, resultCount) {
-    if (!els.activeFilters) return;
-    const typeText = selectedText(els.typeSelect, 'Entrevista + Discurso');
-    const presText = selectedText(els.presidentSelect, 'Presidente: todos');
-    const mandateText = selectedText(els.mandateSelect, 'Mandato: todos');
-    const termText = termRaw ? `"${termRaw}"` : 'sem termo';
-    const resultText = Number.isFinite(resultCount)
-      ? ` | Resultado atual: ${nFmt.format(resultCount)} documentos`
-      : '';
-    els.activeFilters.textContent = `Filtros ativos agora -> ${typeText} | ${presText} | ${mandateText} | Termo: ${termText}${resultText}`;
-  }
-
-  function getActiveFilters() {
-    return {
-      typeFilter: (els.typeSelect && els.typeSelect.value) || 'ambos',
-      presidentFilter: (els.presidentSelect && els.presidentSelect.value) || 'todos',
-      mandateFilter: (els.mandateSelect && els.mandateSelect.value) || 'todos',
-    };
-  }
-
-  async function fetchJson(url, timeoutMs = API_TIMEOUT_MS) {
-    const controller = new AbortController();
-    const timeoutId = window.setTimeout(() => controller.abort(), timeoutMs);
-    try {
-      const resp = await fetch(url, { cache: 'no-store', signal: controller.signal });
-      if (!resp.ok) {
-        const text = await resp.text().catch(() => '');
-        throw new Error(`HTTP ${resp.status} ao acessar API. ${text ? text.slice(0, 180) : ''}`.trim());
-      }
-      return await resp.json();
-    } finally {
-      window.clearTimeout(timeoutId);
-    }
-  }
-
-  function normalizeApiBase(url) {
-    if (!url || typeof url !== 'string') return '';
-    return url.trim().replace(/\/+$/, '');
-  }
-
-  async function resolveApiBase() {
-    const params = new URLSearchParams(window.location.search);
-    const fromParam = normalizeApiBase(params.get('api_base') || '');
-    if (fromParam) return fromParam;
-
-    const fromWindow = normalizeApiBase(window.LULOMETRO_API_BASE || '');
-    if (fromWindow) return fromWindow;
-
-    try {
-      const cfg = await fetchJson(`./api-config.json?t=${Date.now()}`, 15000);
-      const fromCfg = normalizeApiBase(cfg && cfg.api_base_url);
-      if (fromCfg) return fromCfg;
-    } catch (err) {
-      // Optional config file.
-    }
-
-    return '';
-  }
-
-  function buildApiUrl(path, paramsObj) {
-    if (!state.apiBase) throw new Error('API base URL nao configurada.');
-    const url = new URL(`${state.apiBase}${path}`);
-    const params = new URLSearchParams();
-    Object.entries(paramsObj || {}).forEach(([key, value]) => {
-      if (value === undefined || value === null || value === '') return;
-      params.set(key, String(value));
-    });
-    const queryStr = params.toString();
-    return queryStr ? `${url.toString()}?${queryStr}` : url.toString();
   }
 
   function destroyCharts() {
@@ -277,6 +279,251 @@
     });
   }
 
+  async function fetchJson(url) {
+    const resp = await fetch(url, { cache: 'no-store' });
+    if (!resp.ok) {
+      throw new Error(`Falha no fetch de ${url}: ${resp.status}`);
+    }
+    return resp.json();
+  }
+
+  function setLoadProgress(visible, percent = 0, text = '') {
+    if (!els.loadProgressWrap || !els.loadProgressFill || !els.loadProgressPct || !els.loadProgressText) return;
+    const pct = Math.max(0, Math.min(100, Number(percent) || 0));
+    els.loadProgressWrap.hidden = !visible;
+    els.loadProgressFill.style.width = `${pct}%`;
+    els.loadProgressPct.textContent = `${Math.round(pct)}%`;
+    if (text) els.loadProgressText.textContent = text;
+    if (els.loadProgressBar) {
+      els.loadProgressBar.setAttribute('aria-valuenow', String(Math.round(pct)));
+    }
+  }
+
+  function setLoadRequiredBanner(visible, titleText, bodyText) {
+    if (!els.loadRequiredBanner) return;
+    els.loadRequiredBanner.hidden = !visible;
+    if (typeof titleText === 'string' && els.loadRequiredTitle) {
+      els.loadRequiredTitle.textContent = titleText;
+    }
+    if (typeof bodyText === 'string' && els.loadRequiredText) {
+      els.loadRequiredText.textContent = bodyText;
+    }
+  }
+
+  function selectedText(selectEl, fallback) {
+    if (!selectEl || !selectEl.options || typeof selectEl.selectedIndex !== 'number') return fallback;
+    const opt = selectEl.options[selectEl.selectedIndex];
+    return (opt && opt.textContent ? opt.textContent.trim() : '') || fallback;
+  }
+
+  function updateActiveFiltersBanner(filters, termRaw, resultCount) {
+    if (!els.activeFilters) return;
+    const typeText = selectedText(els.typeSelect, 'Entrevista + Discurso');
+    const presText = selectedText(els.presidentSelect, 'Presidente: todos');
+    const mandateText = selectedText(els.mandateSelect, 'Mandato: todos');
+    const termText = termRaw ? `"${termRaw}"` : 'sem termo';
+    const resultText = Number.isFinite(resultCount) ? ` | Resultado atual: ${nFmt.format(resultCount)} documentos` : '';
+    els.activeFilters.textContent = `Filtros ativos agora -> ${typeText} | ${presText} | ${mandateText} | Termo: ${termText}${resultText}`;
+  }
+
+  function parseJsonlTextChunk(buffer, out, flushTail = false) {
+    let cursor = 0;
+    let linesSeen = 0;
+
+    while (true) {
+      const idx = buffer.indexOf('\n', cursor);
+      if (idx < 0) break;
+      const line = buffer.slice(cursor, idx).trim();
+      cursor = idx + 1;
+      linesSeen += 1;
+      if (!line) continue;
+      try {
+        out.push(JSON.parse(line));
+      } catch (err) {
+        // Ignore malformed rows.
+      }
+    }
+
+    if (flushTail) {
+      const tail = buffer.slice(cursor).trim();
+      if (tail) {
+        try {
+          out.push(JSON.parse(tail));
+          linesSeen += 1;
+        } catch (err) {
+          // Ignore malformed tail row.
+        }
+      }
+      return { remainder: '', linesSeen };
+    }
+
+    return { remainder: buffer.slice(cursor), linesSeen };
+  }
+
+  async function fetchJsonlGz(url, onProgress, expectedRecords = 0) {
+    const emitProgress = (percent, text) => {
+      if (typeof onProgress === 'function') onProgress({ percent, text });
+    };
+
+    emitProgress(2, 'Iniciando download da base...');
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), DATA_FETCH_TIMEOUT_MS);
+    const resp = await fetch(url, { cache: 'no-store', signal: controller.signal });
+    window.clearTimeout(timeoutId);
+    if (!resp.ok) {
+      throw new Error(`Falha no fetch de ${url}: ${resp.status}`);
+    }
+
+    const out = [];
+    const totalBytes = Number(resp.headers.get('content-length') || 0);
+
+    const supportsNativeGzip = typeof DecompressionStream !== 'undefined'
+      && resp.body
+      && typeof resp.body.pipeThrough === 'function';
+
+    if (supportsNativeGzip) {
+      emitProgress(12, totalBytes > 0 ? `Baixando base (${formatBytes(totalBytes)})...` : 'Baixando base...');
+      emitProgress(24, 'Descompactando e indexando em streaming...');
+
+      const decompressedStream = resp.body.pipeThrough(new DecompressionStream('gzip'));
+      const reader = decompressedStream.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = '';
+      let loopCount = 0;
+      let parsedLines = 0;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (!value) continue;
+
+        textBuffer += decoder.decode(value, { stream: true });
+        const parsed = parseJsonlTextChunk(textBuffer, out, false);
+        textBuffer = parsed.remainder;
+        parsedLines += parsed.linesSeen;
+        loopCount += 1;
+
+        if (loopCount % 4 === 0) {
+          const ratio = expectedRecords > 0 ? Math.min(1, out.length / expectedRecords) : Math.min(0.98, Math.log10(parsedLines + 10) / 5);
+          const pct = 24 + ratio * 74;
+          emitProgress(pct, `Indexando documentos: ${nFmt.format(out.length)} itens`);
+          await new Promise((resolve) => setTimeout(resolve, 0));
+        }
+      }
+
+      textBuffer += decoder.decode();
+      const parsedTail = parseJsonlTextChunk(textBuffer, out, true);
+      parsedLines += parsedTail.linesSeen;
+
+      emitProgress(100, `Base pronta: ${nFmt.format(out.length)} documentos`);
+      return out;
+    }
+
+    // Fallback para navegadores sem DecompressionStream.
+    const hasPako = typeof window !== 'undefined' && window.pako && typeof window.pako.ungzip === 'function';
+    if (!hasPako) {
+      throw new Error('Seu navegador não suportou descompactação da base. Tente usar Chrome, Edge ou Safari atualizado.');
+    }
+
+    emitProgress(18, 'Baixando base...');
+    const buf = await resp.arrayBuffer();
+    const gzData = new Uint8Array(buf);
+    emitProgress(70, `Download concluído (${formatBytes(gzData.byteLength)}).`);
+    emitProgress(80, 'Descompactando base...');
+    const inflated = window.pako.ungzip(gzData, { to: 'string' });
+
+    parseJsonlTextChunk(inflated, out, true);
+
+    emitProgress(100, `Base pronta: ${nFmt.format(out.length)} documentos`);
+    return out;
+  }
+
+  function setControlsDisabled(disabled) {
+    [els.termInput, els.typeSelect, els.presidentSelect, els.mandateSelect, els.btnClear].forEach((el) => {
+      if (!el) return;
+      el.disabled = disabled;
+    });
+    if (els.wordcloudRange) {
+      els.wordcloudRange.disabled = disabled;
+    }
+    if (els.wordcloudPhraseSize) {
+      els.wordcloudPhraseSize.disabled = disabled;
+    }
+    if (els.wordcloudApply) {
+      els.wordcloudApply.disabled = disabled;
+    }
+  }
+
+  function setDeferredSearchState() {
+    setLoadProgress(false, 0, '');
+    setControlsDisabled(true);
+    els.btnSearch.disabled = false;
+    els.btnSearch.textContent = '1) Carregar Base Completa';
+    setLoadRequiredBanner(
+      true,
+      'Passo 1 obrigatório: clique em "1) Carregar Base Completa".',
+      'Sem esse passo a busca fica desativada para evitar travamento no seu navegador.'
+    );
+    els.searchHint.textContent = 'Passo obrigatório: clique primeiro em "1) Carregar Base Completa". Depois use os filtros e o termo.';
+    els.summaryText.textContent = 'Busca textual ainda indisponível. Clique em "1) Carregar Base Completa" para liberar consultas.';
+    els.tableCount.textContent = '0 linhas';
+    els.resultsBody.innerHTML = '<tr><td colspan="8">Modo progressivo ativo. Clique em <strong>Carregar base</strong> para iniciar a busca textual completa.</td></tr>';
+    if (els.wordcloudContext) {
+      els.wordcloudContext.textContent = 'Nuvem de termos será calculada após carregar a base completa.';
+    }
+    if (els.wordcloudCloud) {
+      els.wordcloudCloud.innerHTML = '<span class="hint">Carregue a base para habilitar a nuvem.</span>';
+    }
+    if (els.wordcloudTableBody) {
+      els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Carregue a base para ver o top 10.</td></tr>';
+    }
+    if (els.examplesHint) {
+      els.examplesHint.textContent = 'Carregue a base e busque um termo para ver exemplos reais dos 3 últimos mandatos.';
+    }
+    if (els.examplesGrid) {
+      els.examplesGrid.innerHTML = '';
+    }
+    if (els.methodologyPresidentBody) {
+      els.methodologyPresidentBody.innerHTML = '<tr><td colspan="7">Carregue a base para ver a cobertura por presidente.</td></tr>';
+    }
+    if (els.methodologyMandateBody) {
+      els.methodologyMandateBody.innerHTML = '<tr><td colspan="7">Carregue a base para ver a cobertura por mandato.</td></tr>';
+    }
+    updateActiveFiltersBanner(getActiveFilters(), '', null);
+  }
+
+  function shouldUseLightMode(metadata) {
+    const totalRecords = Number(metadata && metadata.total_records) || 0;
+    const largeDataset = totalRecords >= LIGHT_MODE_RECORDS_THRESHOLD;
+
+    if (DEVICE_PROFILE.saveData) return true;
+    if (largeDataset) return true;
+    return DEVICE_PROFILE.smallScreen || DEVICE_PROFILE.lowRam;
+  }
+
+  function createCoverageStats() {
+    return {
+      total: 0,
+      filled: 0,
+      discurso_total: 0,
+      discurso_filled: 0,
+      entrevista_total: 0,
+      entrevista_filled: 0,
+    };
+  }
+
+  function updateCoverageStats(stats, recType, hasText) {
+    stats.total += 1;
+    if (recType === 'entrevista') {
+      stats.entrevista_total += 1;
+      if (hasText) stats.entrevista_filled += 1;
+    } else {
+      stats.discurso_total += 1;
+      if (hasText) stats.discurso_filled += 1;
+    }
+    if (hasText) stats.filled += 1;
+  }
+
   function renderCoverageRows(targetBody, rows, emptyText) {
     if (!targetBody) return;
     if (!rows.length) {
@@ -285,100 +532,260 @@
     }
 
     targetBody.innerHTML = '';
-    rows.forEach((row) => {
-      const total = Number(row.total) || 0;
-      const filled = Number(row.filled) || 0;
-      const coveragePct = total ? ((filled * 100) / total).toFixed(1).replace('.', ',') : '0,0';
+    for (const row of rows) {
+      const coveragePct = row.total ? ((row.filled * 100) / row.total).toFixed(1).replace('.', ',') : '0,0';
       const tr = document.createElement('tr');
       tr.innerHTML = [
-        `<td>${esc(row.name || '--')}</td>`,
-        `<td>${nFmt.format(Number(row.discurso_total) || 0)}</td>`,
-        `<td>${nFmt.format(Number(row.entrevista_total) || 0)}</td>`,
-        `<td>${nFmt.format(Number(row.discurso_filled) || 0)}</td>`,
-        `<td>${nFmt.format(Number(row.entrevista_filled) || 0)}</td>`,
-        `<td>${nFmt.format(filled)}</td>`,
+        `<td>${esc(row.name)}</td>`,
+        `<td>${nFmt.format(row.discurso_total)}</td>`,
+        `<td>${nFmt.format(row.entrevista_total)}</td>`,
+        `<td>${nFmt.format(row.discurso_filled)}</td>`,
+        `<td>${nFmt.format(row.entrevista_filled)}</td>`,
+        `<td>${nFmt.format(row.filled)}</td>`,
         `<td>${coveragePct}%</td>`,
       ].join('');
       targetBody.appendChild(tr);
-    });
+    }
   }
 
   function updateMethodologyBreakdowns() {
-    if (!state.bootstrap) {
-      renderCoverageRows(els.methodologyPresidentBody, [], 'Carregue os dados para ver a cobertura por presidente.');
-      renderCoverageRows(els.methodologyMandateBody, [], 'Carregue os dados para ver a cobertura por mandato.');
+    if (!state.coverage || !state.coverage.totalDocs) {
+      renderCoverageRows(
+        els.methodologyPresidentBody,
+        [],
+        'Carregue a base para ver a cobertura por presidente.'
+      );
+      renderCoverageRows(
+        els.methodologyMandateBody,
+        [],
+        'Carregue a base para ver a cobertura por mandato.'
+      );
       return;
     }
 
-    const presRows = (state.bootstrap.presidents || []).slice()
-      .sort((a, b) => (Number(b.total) || 0) - (Number(a.total) || 0)
-        || (a.name || '').localeCompare(b.name || '', 'pt-BR'));
-    const mandateRows = (state.bootstrap.mandates || []).slice()
-      .sort((a, b) => (Number(b.total) || 0) - (Number(a.total) || 0)
-        || (a.name || '').localeCompare(b.name || '', 'pt-BR'));
+    const presRows = [...state.coverage.byPresident.entries()]
+      .map(([name, stats]) => ({ name, ...stats }))
+      .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name, 'pt-BR'));
+    const mandateRows = [...state.coverage.byMandate.entries()]
+      .map(([name, stats]) => ({ name, ...stats }))
+      .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name, 'pt-BR'));
 
-    renderCoverageRows(els.methodologyPresidentBody, presRows, 'Sem dados por presidente.');
-    renderCoverageRows(els.methodologyMandateBody, mandateRows, 'Sem dados por mandato.');
+    renderCoverageRows(
+      els.methodologyPresidentBody,
+      presRows,
+      'Sem dados por presidente.'
+    );
+    renderCoverageRows(
+      els.methodologyMandateBody,
+      mandateRows,
+      'Sem dados por mandato.'
+    );
+  }
+
+  function computeCoverage() {
+    const byPresident = new Map();
+    const byMandate = new Map();
+    let totalDocs = 0;
+    let totalFilled = 0;
+    let latestEpochDay = null;
+    let wordcloudAnchorEpochDay = null;
+    let futureOutlierDates = 0;
+    const maxAcceptedAnchorDay = getUtcTodayEpochDay() + WORDCLOUD_MAX_FUTURE_SKEW_DAYS;
+
+    for (const rec of state.records) {
+      totalDocs += 1;
+      const hasText = hasExtractedText(rec);
+      if (hasText) totalFilled += 1;
+      const epochDay = getRecordEpochDay(rec);
+      if (epochDay !== null && (latestEpochDay === null || epochDay > latestEpochDay)) {
+        latestEpochDay = epochDay;
+      }
+      if (epochDay !== null) {
+        if (epochDay <= maxAcceptedAnchorDay) {
+          if (wordcloudAnchorEpochDay === null || epochDay > wordcloudAnchorEpochDay) {
+            wordcloudAnchorEpochDay = epochDay;
+          }
+        } else {
+          futureOutlierDates += 1;
+        }
+      }
+
+      const recType = rec.type === 'entrevista' ? 'entrevista' : 'discurso';
+      const president = (rec.president || '').trim() || 'Nao identificado';
+      const mandate = (rec.mandate || '').trim() || 'Mandato nao identificado';
+
+      const pStats = byPresident.get(president) || createCoverageStats();
+      updateCoverageStats(pStats, recType, hasText);
+      byPresident.set(president, pStats);
+
+      const mStats = byMandate.get(mandate) || createCoverageStats();
+      updateCoverageStats(mStats, recType, hasText);
+      byMandate.set(mandate, mStats);
+    }
+
+    const hiddenPresidents = [...byPresident.entries()]
+      .filter(([, stats]) => stats.filled === 0)
+      .map(([name]) => name)
+      .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+    const hiddenMandates = [...byMandate.entries()]
+      .filter(([, stats]) => stats.filled === 0)
+      .map(([name]) => name)
+      .sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+    state.coverage = {
+      totalDocs,
+      totalFilled,
+      latestEpochDay,
+      wordcloudAnchorEpochDay: wordcloudAnchorEpochDay ?? latestEpochDay,
+      futureOutlierDates,
+      byPresident,
+      byMandate,
+      hiddenPresidents,
+      hiddenMandates,
+    };
   }
 
   function updateMethodologyNote() {
     if (!els.methodologyNote) return;
-    if (!state.bootstrap) {
-      els.methodologyNote.textContent = 'A busca usa extracao textual automatizada (HTML e anexos PDF/TXT). Parte do acervo historico da Biblioteca da Presidencia e mais dificil de raspar por paginas antigas, links /view, anexos fora do ar e limitacoes anti-bot.';
+    if (!state.coverage || !state.coverage.totalDocs) {
+      els.methodologyNote.textContent = 'A busca usa extração textual automatizada (HTML e anexos PDF/TXT). Parte do acervo histórico da Biblioteca da Presidência é mais difícil de raspar por páginas antigas, links /view, anexos fora do ar e limitações anti-bot.';
       updateMethodologyBreakdowns();
       return;
     }
 
-    const totalDocs = Number(state.bootstrap.total_docs) || 0;
-    const totalFilled = Number(state.bootstrap.total_filled) || 0;
+    const totalDocs = state.coverage.totalDocs;
+    const totalFilled = state.coverage.totalFilled;
     const pct = totalDocs ? ((totalFilled * 100) / totalDocs).toFixed(2).replace('.', ',') : '0,00';
-    const hiddenPresidents = (state.bootstrap.hidden_presidents || []).filter(Boolean);
-    const hiddenMandates = (state.bootstrap.hidden_mandates || []).filter(Boolean);
-    const hiddenPresPreview = hiddenPresidents.slice(0, 6).join('; ');
-    const hiddenSuffix = hiddenPresidents.length > 6 ? '...' : '';
-    const futureOutliers = Number(state.bootstrap.future_outlier_dates) || 0;
-    const futureDatesNote = futureOutliers > 0
-      ? ` Para a nuvem de termos por periodo, ${nFmt.format(futureOutliers)} documento(s) com data muito a frente foram ignorados para evitar distorcao temporal.`
+    const hiddenPresCount = state.coverage.hiddenPresidents.length;
+    const hiddenMandateCount = state.coverage.hiddenMandates.length;
+    const hiddenPresPreview = state.coverage.hiddenPresidents.slice(0, 6).join('; ');
+    const hiddenSuffix = hiddenPresCount > 6 ? '...' : '';
+    const futureDatesNote = state.coverage.futureOutlierDates > 0
+      ? ` Para a nuvem de termos por período, ${nFmt.format(state.coverage.futureOutlierDates)} documento(s) com data muito à frente foram ignorados para evitar distorção temporal.`
+      : '';
+    const progressiveStrategy = state.lightMode
+      ? ' Para evitar travamentos em bases grandes, o painel abre em modo progressivo e só carrega o texto integral sob demanda.'
       : '';
 
-    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). As tabelas abaixo mostram, para cada presidente e cada mandato, quantos discursos e entrevistas existem no acervo bruto e quantos entraram no buscador (texto recuperado). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponiveis ou lentos, alem de bloqueios anti-bot intermitentes na Biblioteca da Presidencia. Presidentes e mandatos com 0% de texto extraido foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresidents.length)} presidentes e ${nFmt.format(hiddenMandates.length)} mandatos${hiddenPresidents.length ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}. Em entrevistas, parte das mencoes pode vir do interlocutor (pergunta), nao apenas do presidente.${futureDatesNote}`;
-
+    els.methodologyNote.textContent = `Cobertura textual atual: ${pct}% (${nFmt.format(totalFilled)} de ${nFmt.format(totalDocs)} documentos). As tabelas abaixo mostram, para cada presidente e cada mandato, quantos discursos e entrevistas existem no acervo bruto e quantos entraram no buscador (texto recuperado). Desafios principais: documentos antigos com estrutura HTML irregular, links /view e anexos (PDF/TXT) indisponíveis ou lentos, além de bloqueios anti-bot intermitentes na Biblioteca da Presidência. Presidentes e mandatos com 0% de texto extraído foram ocultados dos filtros de busca para evitar resultados vazios; eles seguem no acervo bruto. Ocultos hoje: ${nFmt.format(hiddenPresCount)} presidentes e ${nFmt.format(hiddenMandateCount)} mandatos${hiddenPresCount ? ` (ex.: ${hiddenPresPreview}${hiddenSuffix})` : ''}. Em entrevistas, parte das menções pode vir do interlocutor (pergunta), não apenas do presidente.${futureDatesNote}${progressiveStrategy}`;
     updateMethodologyBreakdowns();
   }
 
+  async function ensureRecordsReady() {
+    if (state.recordsLoaded) return true;
+    if (state.recordsLoadPromise) return state.recordsLoadPromise;
+
+    state.recordsLoadPromise = (async () => {
+      els.btnSearch.disabled = true;
+      els.btnSearch.textContent = 'Carregando...';
+      setLoadRequiredBanner(
+        true,
+        'Carregando base textual completa...',
+        'Aguarde alguns segundos. Quando concluir, a busca será liberada automaticamente.'
+      );
+      els.searchHint.textContent = 'Carregando base completa de discursos e entrevistas...';
+      setLoadProgress(true, 1, 'Preparando carregamento da base...');
+      try {
+        const records = await fetchJsonlGz('./data/records.jsonl.gz', ({ percent, text }) => {
+          setLoadProgress(true, percent, text);
+        }, Number(state.metadata && state.metadata.total_records) || 0);
+        state.records = records;
+        state.recordsLoaded = true;
+        state.ready = true;
+        computeCoverage();
+        updateMethodologyNote();
+        populateFilterOptions();
+        setControlsDisabled(false);
+        els.btnSearch.textContent = 'Buscar';
+        setLoadRequiredBanner(false);
+        await applySearch();
+        await requestWordcloudUpdate(true);
+        setLoadProgress(true, 100, 'Carregamento concluído.');
+        setTimeout(() => setLoadProgress(false, 0, ''), 700);
+        return true;
+      } catch (error) {
+        els.summaryText.textContent = 'Falha ao carregar a base do Lulometro.';
+        els.searchHint.textContent = `Erro ao carregar base: ${error.message}`;
+        els.resultsBody.innerHTML = '<tr><td colspan="8">Nao foi possivel carregar os dados completos.</td></tr>';
+        els.btnSearch.textContent = '1) Carregar Base Completa';
+        setLoadRequiredBanner(
+          true,
+          'Falha no carregamento da base.',
+          'Tente novamente clicando em "1) Carregar Base Completa".'
+        );
+        setLoadProgress(true, 100, 'Erro no carregamento.');
+        setTimeout(() => setLoadProgress(false, 0, ''), 1700);
+        return false;
+      } finally {
+        state.recordsLoadPromise = null;
+        els.btnSearch.disabled = false;
+      }
+    })();
+
+    return state.recordsLoadPromise;
+  }
+
   function populateFilterOptions() {
-    if (!state.bootstrap) return;
+    if (!state.coverage) return;
+    els.presidentSelect.innerHTML = '<option value="todos">Presidente: todos</option>';
+    els.mandateSelect.innerHTML = '<option value="todos">Mandato: todos</option>';
 
-    if (els.presidentSelect) {
-      els.presidentSelect.innerHTML = '<option value="todos">Presidente: todos</option>';
-      (state.bootstrap.presidents || [])
-        .filter((row) => (Number(row.filled) || 0) > 0)
-        .sort((a, b) => (Number(b.filled) || 0) - (Number(a.filled) || 0)
-          || (a.name || '').localeCompare(b.name || '', 'pt-BR'))
-        .forEach((row) => {
-          const opt = document.createElement('option');
-          opt.value = row.name || '';
-          opt.textContent = `${row.name} (${nFmt.format(Number(row.filled) || 0)} com texto)`;
-          els.presidentSelect.appendChild(opt);
-        });
+    const presidentOptions = [...state.coverage.byPresident.entries()]
+      .filter(([, stats]) => stats.filled > 0)
+      .sort((a, b) => b[1].filled - a[1].filled || a[0].localeCompare(b[0], 'pt-BR'));
+
+    const mandateOptions = [...state.coverage.byMandate.entries()]
+      .filter(([, stats]) => stats.filled > 0)
+      .sort((a, b) => {
+        const ya = Number((a[0].match(/(\d{4})/) || [0, 0])[1]);
+        const yb = Number((b[0].match(/(\d{4})/) || [0, 0])[1]);
+        return yb - ya || a[0].localeCompare(b[0], 'pt-BR');
+      });
+
+    for (const [name, stats] of presidentOptions) {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = `${name} (${nFmt.format(stats.filled)} com texto)`;
+      els.presidentSelect.appendChild(opt);
     }
 
-    if (els.mandateSelect) {
-      els.mandateSelect.innerHTML = '<option value="todos">Mandato: todos</option>';
-      (state.bootstrap.mandates || [])
-        .filter((row) => (Number(row.filled) || 0) > 0)
-        .sort((a, b) => {
-          const ya = Number(((a.name || '').match(/(\d{4})/) || [0, 0])[1]);
-          const yb = Number(((b.name || '').match(/(\d{4})/) || [0, 0])[1]);
-          return yb - ya || (a.name || '').localeCompare(b.name || '', 'pt-BR');
-        })
-        .forEach((row) => {
-          const opt = document.createElement('option');
-          opt.value = row.name || '';
-          opt.textContent = `${row.name} (${nFmt.format(Number(row.filled) || 0)} com texto)`;
-          els.mandateSelect.appendChild(opt);
-        });
+    for (const [name, stats] of mandateOptions) {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = `${name} (${nFmt.format(stats.filled)} com texto)`;
+      els.mandateSelect.appendChild(opt);
     }
+  }
+
+  function getActiveFilters() {
+    return {
+      typeFilter: els.typeSelect.value,
+      presidentFilter: els.presidentSelect.value,
+      mandateFilter: els.mandateSelect.value,
+    };
+  }
+
+  function recordMatchesBaseFilters(rec, filters) {
+    if (!hasExtractedText(rec)) return false;
+    if (filters.typeFilter !== 'ambos' && rec.type !== filters.typeFilter) return false;
+    if (filters.presidentFilter !== 'todos' && rec.president !== filters.presidentFilter) return false;
+    if (filters.mandateFilter !== 'todos' && rec.mandate !== filters.mandateFilter) return false;
+    return true;
+  }
+
+  function isRelevantWordToken(token) {
+    if (!token || token.length < WORD_MIN_LEN) return false;
+    if (/^\d+$/.test(token)) return false;
+    if (PT_STOPWORDS.has(token)) return false;
+    return true;
+  }
+
+  function getWordcloudPhraseSizes(mode) {
+    if (mode === '1') return [1];
+    if (mode === '2') return [2];
+    if (mode === '3') return [3];
+    return [2, 3];
   }
 
   function getWordcloudPhraseModeLabel(mode) {
@@ -388,17 +795,55 @@
     return 'frases de 2 e 3 palavras';
   }
 
-  function getWordcloudParams() {
-    const filters = getActiveFilters();
-    const rangeDays = Number((els.wordcloudRange && els.wordcloudRange.value) || WORDCLOUD_DEFAULT_RANGE) || WORDCLOUD_DEFAULT_RANGE;
-    const phraseMode = ((els.wordcloudPhraseSize && els.wordcloudPhraseSize.value) || '2-3').trim();
-    return { filters, rangeDays, phraseMode };
+  function countTermUnits(tokens, phraseSizes, byTerm) {
+    if (!tokens || !tokens.length) return;
+
+    if (phraseSizes.includes(1)) {
+      for (const token of tokens) {
+        if (!isRelevantWordToken(token)) continue;
+        byTerm.set(token, (byTerm.get(token) || 0) + 1);
+      }
+    }
+
+    for (const size of phraseSizes) {
+      if (size <= 1 || tokens.length < size) continue;
+      for (let i = 0; i <= tokens.length - size; i += 1) {
+        const chunk = tokens.slice(i, i + size);
+        if (chunk.some((tok) => !tok || tok.length < 2 || /^\d+$/.test(tok))) continue;
+
+        const first = chunk[0];
+        const last = chunk[chunk.length - 1];
+        if (!isRelevantWordToken(first) || !isRelevantWordToken(last)) continue;
+
+        const relevantCount = chunk.reduce((acc, tok) => acc + (isRelevantWordToken(tok) ? 1 : 0), 0);
+        if (relevantCount < 2) continue;
+
+        const phrase = chunk.join(' ');
+        byTerm.set(phrase, (byTerm.get(phrase) || 0) + 1);
+      }
+    }
+  }
+
+  function getWordcloudParams(filters) {
+    const rangeDays = Number(els.wordcloudRange ? els.wordcloudRange.value : 30) || 30;
+    const phraseMode = (els.wordcloudPhraseSize && els.wordcloudPhraseSize.value) || '2-3';
+    const latestEpochDay = state.coverage ? state.coverage.wordcloudAnchorEpochDay : null;
+    const anchorDay = latestEpochDay;
+    const cutoffDay = latestEpochDay === null ? null : latestEpochDay - (rangeDays - 1);
+    return {
+      rangeDays,
+      phraseMode,
+      filters,
+      anchorDay,
+      cutoffDay,
+    };
   }
 
   function buildWordcloudCacheKey(params) {
     return [
       `r:${params.rangeDays}`,
       `pm:${params.phraseMode}`,
+      `a:${params.anchorDay ?? 'na'}`,
       `t:${params.filters.typeFilter}`,
       `p:${params.filters.presidentFilter}`,
       `m:${params.filters.mandateFilter}`,
@@ -407,43 +852,38 @@
 
   function renderWordInsightsPlaceholder(message) {
     if (els.wordcloudContext) els.wordcloudContext.textContent = message;
-    if (els.wordcloudCloud) els.wordcloudCloud.innerHTML = '<span class="hint">Aguardando atualizacao...</span>';
+    if (els.wordcloudCloud) els.wordcloudCloud.innerHTML = '<span class="hint">Aguardando atualização...</span>';
     if (els.wordcloudTableBody) els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Sem dados.</td></tr>';
   }
 
-  function renderWordInsightsResult(params, payload) {
+  function renderWordInsightsResult(params, result) {
     if (!els.wordcloudCloud || !els.wordcloudTableBody || !els.wordcloudContext) return;
-
+    const selectedPresident = params.filters.presidentFilter === 'todos'
+      ? 'todos os presidentes'
+      : params.filters.presidentFilter;
+    const selectedMandate = params.filters.mandateFilter === 'todos'
+      ? 'todos os mandatos'
+      : params.filters.mandateFilter;
+    const selectedType = params.filters.typeFilter === 'ambos'
+      ? 'discursos + entrevistas'
+      : params.filters.typeFilter;
+    const modeLabel = getWordcloudPhraseModeLabel(params.phraseMode);
     if (els.wordcloudColLabel) {
       els.wordcloudColLabel.textContent = params.phraseMode === '1' ? 'Palavra' : 'Expressao';
     }
 
-    const selectedPresident = params.filters.presidentFilter === 'todos' ? 'todos os presidentes' : params.filters.presidentFilter;
-    const selectedMandate = params.filters.mandateFilter === 'todos' ? 'todos os mandatos' : params.filters.mandateFilter;
-    const selectedType = params.filters.typeFilter === 'ambos' ? 'discursos + entrevistas' : params.filters.typeFilter;
-    const modeLabel = getWordcloudPhraseModeLabel(params.phraseMode);
-    const docsInWindow = Number(payload.docs_in_window) || 0;
-    const docsScanned = Number(payload.docs_scanned) || 0;
-    const truncatedNote = payload.docs_truncated
-      ? ` Janela muito grande: analise limitada a ${nFmt.format(docsScanned)} docs para manter performance.`
-      : '';
-
-    els.wordcloudContext.textContent = `Janela: ${nFmt.format(params.rangeDays)} dias | Base analisada: ${nFmt.format(docsInWindow)} documentos | Modo: ${modeLabel} | Filtro atual: ${selectedType}; ${selectedPresident}; ${selectedMandate}.${truncatedNote}`;
-
-    const topCloud = Array.isArray(payload.top_cloud) ? payload.top_cloud : [];
-    const topTable = Array.isArray(payload.top_table) ? payload.top_table : [];
+    els.wordcloudContext.textContent = `Janela: ${params.rangeDays} dias | Base analisada: ${nFmt.format(result.docsInWindow)} documentos | Modo: ${modeLabel} | Filtro atual: ${selectedType}; ${selectedPresident}; ${selectedMandate}.`;
 
     els.wordcloudCloud.innerHTML = '';
-    if (!topCloud.length) {
-      els.wordcloudCloud.innerHTML = '<span class="hint">Sem termos suficientes no periodo selecionado.</span>';
+    if (!result.topCloud.length) {
+      els.wordcloudCloud.innerHTML = '<span class="hint">Sem termos suficientes no período selecionado.</span>';
     } else {
-      const counts = topCloud.map((item) => Number(item.count) || 0);
+      const counts = result.topCloud.map(([, count]) => count);
       const min = Math.min(...counts);
       const max = Math.max(...counts);
       const spread = Math.max(1, max - min);
-      topCloud.forEach((item) => {
-        const word = item.word || '';
-        const count = Number(item.count) || 0;
+
+      for (const [word, count] of result.topCloud) {
         const ratio = (count - min) / spread;
         const size = 0.86 + ratio * 1.9;
         const span = document.createElement('span');
@@ -452,31 +892,77 @@
         span.style.fontSize = `${size.toFixed(2)}rem`;
         span.style.fontWeight = `${540 + Math.round(ratio * 240)}`;
         span.style.opacity = `${0.68 + ratio * 0.32}`;
-        span.title = `${word}: ${nFmt.format(count)} ocorrencias`;
+        span.title = `${word}: ${nFmt.format(count)} ocorrências`;
         els.wordcloudCloud.appendChild(span);
-      });
+      }
     }
 
     els.wordcloudTableBody.innerHTML = '';
-    if (!topTable.length) {
-      els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Sem dados no periodo.</td></tr>';
+    if (!result.topTable.length) {
+      els.wordcloudTableBody.innerHTML = '<tr><td colspan="3">Sem dados no período.</td></tr>';
       return;
     }
 
-    topTable.forEach((item, idx) => {
+    result.topTable.forEach(([word, count], idx) => {
       const tr = document.createElement('tr');
-      tr.innerHTML = `<td>${idx + 1}</td><td>${esc(item.word || '--')}</td><td>${nFmt.format(Number(item.count) || 0)}</td>`;
+      tr.innerHTML = `<td>${idx + 1}</td><td>${esc(word)}</td><td>${nFmt.format(count)}</td>`;
       els.wordcloudTableBody.appendChild(tr);
     });
   }
 
-  async function requestWordcloudUpdate(force) {
-    if (!state.ready) return;
-    const params = getWordcloudParams();
-    const cacheKey = buildWordcloudCacheKey(params);
+  async function computeWordInsights(params, requestId) {
+    const byTerm = new Map();
+    let docsInWindow = 0;
+    let processed = 0;
+    const total = state.records.length || 1;
+    const phraseSizes = getWordcloudPhraseSizes(params.phraseMode);
 
-    if (!force && state.wordcloudCache.has(cacheKey)) {
-      renderWordInsightsResult(params, state.wordcloudCache.get(cacheKey));
+    for (const rec of state.records) {
+      if (requestId !== state.wordcloudRequestId) return null;
+      processed += 1;
+      if (!recordMatchesBaseFilters(rec, params.filters)) continue;
+      const day = getRecordEpochDay(rec);
+      if (day === null || day < params.cutoffDay || day > params.anchorDay) continue;
+      docsInWindow += 1;
+
+      const searchText = normalizeSearchText(rec.text || '');
+      if (!searchText) continue;
+
+      const tokens = searchText.split(' ').filter(Boolean);
+      countTermUnits(tokens, phraseSizes, byTerm);
+
+      if (processed % 180 === 0) {
+        const pct = Math.round((processed / total) * 100);
+        if (els.wordcloudContext) {
+          els.wordcloudContext.textContent = `Calculando nuvem... ${pct}%`;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
+    }
+
+    const sortedWords = [...byTerm.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt-BR'));
+    return {
+      docsInWindow,
+      topCloud: sortedWords.slice(0, 60),
+      topTable: sortedWords.slice(0, 10),
+    };
+  }
+
+  async function requestWordcloudUpdate(force = false) {
+    if (!els.wordcloudCloud || !els.wordcloudTableBody || !els.wordcloudContext) return;
+    if (!state.coverage || state.coverage.wordcloudAnchorEpochDay === null) {
+      renderWordInsightsPlaceholder('Sem datas válidas para calcular termos recentes.');
+      return;
+    }
+
+    const params = getWordcloudParams(getActiveFilters());
+    state.wordcloudLastParams = params;
+    const key = buildWordcloudCacheKey(params);
+
+    if (!force && state.wordcloudCache.has(key)) {
+      const cached = state.wordcloudCache.get(key);
+      state.wordcloudCurrentKey = key;
+      renderWordInsightsResult(params, cached);
       return;
     }
 
@@ -487,24 +973,16 @@
       els.wordcloudApply.textContent = 'Atualizando...';
     }
     if (els.wordcloudContext) {
-      els.wordcloudContext.textContent = 'Consultando BigQuery para nuvem de termos...';
+      els.wordcloudContext.textContent = 'Calculando nuvem...';
     }
 
     try {
-      const url = buildApiUrl('/v1/wordcloud', {
-        range_days: params.rangeDays,
-        phrase_mode: params.phraseMode,
-        type: params.filters.typeFilter,
-        president: params.filters.presidentFilter,
-        mandate: params.filters.mandateFilter,
-      });
-      const payload = await fetchJson(url);
-      if (requestId !== state.wordcloudRequestId) return;
-      state.wordcloudCache.set(cacheKey, payload);
-      renderWordInsightsResult(params, payload);
-    } catch (err) {
-      if (requestId !== state.wordcloudRequestId) return;
-      renderWordInsightsPlaceholder(`Falha ao atualizar nuvem: ${err.message}`);
+      const result = await computeWordInsights(params, requestId);
+      if (!result || requestId !== state.wordcloudRequestId) return;
+
+      state.wordcloudCache.set(key, result);
+      state.wordcloudCurrentKey = key;
+      renderWordInsightsResult(params, result);
     } finally {
       if (els.wordcloudApply) {
         els.wordcloudApply.disabled = false;
@@ -513,62 +991,219 @@
     }
   }
 
-  function renderMetrics(searchData) {
-    if (!searchData) return;
-    const hasTerm = !!searchData.has_term;
-    const totalMentions = Number(searchData.total_mentions) || 0;
-    const resultCount = Number(searchData.results_count) || 0;
-    const presidentsCount = (searchData.by_president || []).length;
+  async function applySearch() {
+    if (!state.ready) return;
+    const requestId = state.searchRequestId + 1;
+    state.searchRequestId = requestId;
 
-    if (els.metricMentions) {
-      els.metricMentions.textContent = hasTerm ? nFmt.format(totalMentions) : `${nFmt.format(totalMentions)} docs`;
+    const termRaw = (els.termInput.value || '').trim();
+    const query = normalizeQueryTerm(termRaw);
+    const filters = getActiveFilters();
+    updateActiveFiltersBanner(filters, termRaw, null);
+    const hasTerm = query.wordsCount > 0;
+    const termRegex = hasTerm ? buildTermRegex(query.words) : null;
+    const results = [];
+
+    const timeline = new Map();
+    const byPresident = new Map();
+    const byMandate = new Map();
+
+    let totalMentions = 0;
+    let earliestDate = '';
+    let latestDate = '';
+    const docsByType = { entrevista: 0, discurso: 0 };
+    const mentionsByType = { entrevista: 0, discurso: 0 };
+
+    if (hasTerm) {
+      els.searchHint.textContent = 'Buscando termo na base textual...';
     }
-    if (els.metricDocs) {
-      els.metricDocs.textContent = nFmt.format(resultCount);
+
+    for (let idx = 0; idx < state.records.length; idx += 1) {
+      if (requestId !== state.searchRequestId) return;
+      const rec = state.records[idx];
+      if (idx > 0 && idx % 140 === 0) {
+        if (hasTerm) {
+          const pct = Math.round((idx / Math.max(1, state.records.length)) * 100);
+          els.searchHint.textContent = `Buscando termo na base textual... ${pct}%`;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
+      if (!recordMatchesBaseFilters(rec, filters)) continue;
+
+      let mentions = 0;
+      if (hasTerm) {
+        const searchText = normalizeSearchText(rec.text || '');
+        mentions = countTermMatches(searchText, termRegex);
+        if (mentions <= 0) continue;
+      }
+
+      results.push({ rec, mentions });
+      if (rec.type === 'entrevista') docsByType.entrevista += 1;
+      else docsByType.discurso += 1;
+      if (hasTerm) {
+        if (rec.type === 'entrevista') mentionsByType.entrevista += mentions;
+        else mentionsByType.discurso += mentions;
+      }
+
+      const value = hasTerm ? mentions : 1;
+      totalMentions += value;
+
+      const key = monthKey(rec.date);
+      if (key) {
+        timeline.set(key, (timeline.get(key) || 0) + value);
+      }
+
+      const pKey = rec.president || 'Nao identificado';
+      byPresident.set(pKey, (byPresident.get(pKey) || 0) + value);
+
+      const mKey = rec.mandate || 'Mandato nao identificado';
+      byMandate.set(mKey, (byMandate.get(mKey) || 0) + value);
+
+      if (rec.date) {
+        if (!earliestDate || rec.date < earliestDate) earliestDate = rec.date;
+        if (!latestDate || rec.date > latestDate) latestDate = rec.date;
+      }
+
     }
-    if (els.metricPresidents) {
-      els.metricPresidents.textContent = nFmt.format(presidentsCount);
+
+    if (requestId !== state.searchRequestId) return;
+
+    if (hasTerm) {
+      results.sort((a, b) => b.mentions - a.mentions || (b.rec.date || '').localeCompare(a.rec.date || ''));
+    } else {
+      results.sort((a, b) => (b.rec.date || '').localeCompare(a.rec.date || ''));
     }
-    if (els.metricWindow) {
-      if (searchData.earliest_date && searchData.latest_date) {
-        els.metricWindow.textContent = `${formatDateIso(searchData.earliest_date)} -> ${formatDateIso(searchData.latest_date)}`;
+
+    renderMetrics({
+      hasTerm,
+      termRaw,
+      totalMentions,
+      results,
+      earliestDate,
+      latestDate,
+      presidentsCount: byPresident.size,
+    });
+
+    renderCharts({ hasTerm, timeline, byPresident, byMandate, termRaw });
+    renderTable(results, hasTerm);
+    renderUsageExamples({ hasTerm, termRaw, query, results });
+    updateActiveFiltersBanner(filters, termRaw, results.length);
+    requestWordcloudUpdate();
+
+    const sampleDocs = nFmt.format(results.length);
+    const totalDocs = nFmt.format(state.coverage ? state.coverage.totalFilled : state.records.length);
+    if (hasTerm) {
+      const mentionsFmt = nFmt.format(totalMentions);
+      const docsEntFmt = nFmt.format(docsByType.entrevista);
+      const docsDisFmt = nFmt.format(docsByType.discurso);
+      const mentEntFmt = nFmt.format(mentionsByType.entrevista);
+      const mentDisFmt = nFmt.format(mentionsByType.discurso);
+      els.summaryText.textContent = `Busca por "${termRaw}" em ${sampleDocs} documentos (${docsEntFmt} entrevistas; ${docsDisFmt} discursos), com ${mentionsFmt} ocorrências no total (${mentEntFmt} em entrevistas; ${mentDisFmt} em discursos), dentro de ${totalDocs} documentos com texto.`;
+      if (query.isPhrase) {
+        els.searchHint.textContent = `Expressão atual: "${termRaw}" (${query.wordsCount} palavras). Busca sem distinção de maiúsculas/minúsculas e sem sensibilidade a acentos.`;
       } else {
-        els.metricWindow.textContent = '--';
+        els.searchHint.textContent = `Termo atual: "${termRaw}". Busca sem distinção de maiúsculas/minúsculas e sem sensibilidade a acentos.`;
+      }
+    } else {
+      els.summaryText.textContent = `Sem termo aplicado. Mostrando ${sampleDocs} documentos filtrados de ${totalDocs} no total.`;
+      els.searchHint.textContent = 'A busca ignora maiúsculas/minúsculas e acentos automaticamente. Você pode buscar palavra única ou expressão curta (2-3 palavras).';
+    }
+  }
+
+  function renderUsageExamples({ hasTerm, termRaw, query, results }) {
+    if (!els.examplesGrid || !els.examplesHint) return;
+    els.examplesGrid.innerHTML = '';
+
+    if (!hasTerm) {
+      els.examplesHint.textContent = 'Digite um termo e clique em Buscar para ver exemplos reais dos 3 últimos mandatos.';
+      return;
+    }
+
+    if (!results.length) {
+      els.examplesHint.textContent = `Nenhum trecho encontrado para "${termRaw}" no filtro atual.`;
+      return;
+    }
+
+    const byMandate = new Map();
+    for (const row of results) {
+      const mandate = row.rec.mandate || 'Mandato nao identificado';
+      if (!byMandate.has(mandate)) {
+        byMandate.set(mandate, {
+          mandate,
+          latestDate: row.rec.date || '',
+          rows: [],
+        });
+      }
+      const entry = byMandate.get(mandate);
+      if ((row.rec.date || '') > entry.latestDate) {
+        entry.latestDate = row.rec.date || '';
+      }
+      entry.rows.push(row);
+    }
+
+    const recentMandates = [...byMandate.values()]
+      .sort((a, b) => {
+        const byDate = (b.latestDate || '').localeCompare(a.latestDate || '');
+        if (byDate !== 0) return byDate;
+        const byYear = extractMandateSortYear(b.mandate) - extractMandateSortYear(a.mandate);
+        if (byYear !== 0) return byYear;
+        return a.mandate.localeCompare(b.mandate, 'pt-BR');
+      })
+      .slice(0, EXAMPLE_MANDATES_LIMIT);
+
+    if (!recentMandates.length) {
+      els.examplesHint.textContent = `Sem exemplos disponíveis para "${termRaw}".`;
+      return;
+    }
+
+    els.examplesHint.textContent = `Mostrando até ${EXAMPLES_PER_MANDATE} exemplos por mandato entre os ${recentMandates.length} mandatos mais recentes com a busca "${termRaw}".`;
+
+    for (const bucket of recentMandates) {
+      const picks = bucket.rows
+        .sort((a, b) => (b.rec.date || '').localeCompare(a.rec.date || '') || b.mentions - a.mentions)
+        .slice(0, EXAMPLES_PER_MANDATE);
+
+      for (const { rec, mentions } of picks) {
+        const snippetHtml = buildHighlightedSnippet(rec.text || '', query.words)
+          || 'Trecho não disponível para este documento.';
+        const card = document.createElement('article');
+        card.className = 'example-card';
+        card.innerHTML = `
+          <div class="example-kicker">${esc(rec.mandate || 'Mandato nao identificado')}</div>
+          <h3 class="example-title">${esc(rec.title || 'Sem titulo')}</h3>
+          <p class="example-meta">${esc(rec.president || '--')} | ${esc(rec.type || '--')} | ${esc(formatDateIso(rec.date))} | ${nFmt.format(mentions)} ocorrências</p>
+          <p class="example-snippet">${snippetHtml}</p>
+          <a class="example-link" href="${esc(rec.url || '#')}" target="_blank" rel="noopener noreferrer">Ver documento original</a>
+        `;
+        els.examplesGrid.appendChild(card);
       }
     }
   }
 
-  function renderCharts(searchData) {
+  function renderMetrics({ hasTerm, totalMentions, results, earliestDate, latestDate, presidentsCount }) {
+    els.metricMentions.textContent = nFmt.format(totalMentions);
+    els.metricDocs.textContent = nFmt.format(results.length);
+    els.metricPresidents.textContent = nFmt.format(presidentsCount);
+
+    if (earliestDate && latestDate) {
+      els.metricWindow.textContent = `${formatDateIso(earliestDate)} -> ${formatDateIso(latestDate)}`;
+    } else {
+      els.metricWindow.textContent = '--';
+    }
+
+    if (!hasTerm) {
+      els.metricMentions.textContent = `${nFmt.format(totalMentions)} docs`;
+    }
+  }
+
+  function renderCharts({ hasTerm, timeline, byPresident, byMandate, termRaw }) {
     destroyCharts();
     clampChartCanvasSize();
 
-    const hasTerm = !!searchData.has_term;
-    const termRaw = (searchData.term_raw || '').trim();
-
-    const timelineEntries = (searchData.timeline || [])
-      .map((row) => [row.key || '', Number(row.value) || 0])
-      .filter(([key]) => /^\d{4}-\d{2}$/.test(key))
-      .sort((a, b) => a[0].localeCompare(b[0]));
-
-    const timelineLabels = timelineEntries.map(([key]) => monthLabel(key));
-    const timelineValues = timelineEntries.map(([, value]) => value);
-
-    if (!timelineLabels.length) {
-      timelineLabels.push('Sem dados');
-      timelineValues.push(0);
-    }
-
-    const presEntries = (searchData.by_president || [])
-      .map((row) => [row.name || 'Nao identificado', Number(row.value) || 0])
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 12);
-    if (!presEntries.length) presEntries.push(['Sem dados', 0]);
-
-    const mandateEntries = (searchData.by_mandate || [])
-      .map((row) => [row.name || 'Mandato nao identificado', Number(row.value) || 0])
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 12);
-    if (!mandateEntries.length) mandateEntries.push(['Sem dados', 0]);
+    const timelineEntries = [...timeline.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+    const timelineLabels = timelineEntries.map(([k]) => formatMonthKey(k));
+    const timelineValues = timelineEntries.map(([, v]) => v);
+    const timelineHasSeries = timelineValues.length > 1;
 
     const titleSuffix = hasTerm ? ` (termo: ${termRaw})` : ' (contagem de documentos)';
 
@@ -577,14 +1212,14 @@
       data: {
         labels: timelineLabels,
         datasets: [{
-          label: hasTerm ? 'Citacoes por mes' : 'Documentos por mes',
+          label: hasTerm ? 'Citações por mês' : 'Documentos por mês',
           data: timelineValues,
           borderColor: '#b8612d',
           backgroundColor: 'rgba(184,97,45,0.18)',
           tension: 0.2,
           fill: false,
-          pointRadius: timelineValues.length > 1 ? 2 : 4,
-          pointHoverRadius: timelineValues.length > 1 ? 4 : 6,
+          pointRadius: timelineHasSeries ? 2 : 4,
+          pointHoverRadius: timelineHasSeries ? 4 : 6,
         }],
       },
       options: {
@@ -596,11 +1231,8 @@
           legend: { display: false },
           title: { display: true, text: `Linha do tempo${titleSuffix}` },
         },
-        layout: {
-          padding: { left: 8, right: 8, top: 4, bottom: 0 },
-        },
         scales: {
-          y: { beginAtZero: true, grace: '6%' },
+          y: { beginAtZero: true },
           x: {
             ticks: {
               autoSkip: true,
@@ -614,13 +1246,17 @@
     });
     state.charts.push(timelineChart);
 
+    const presEntries = [...byPresident.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12);
+
     const presidentChart = new Chart(els.chartPresidents, {
       type: 'bar',
       data: {
         labels: presEntries.map(([name]) => name),
         datasets: [{
-          label: hasTerm ? 'Total de citacoes' : 'Total de documentos',
-          data: presEntries.map(([, value]) => value),
+          label: hasTerm ? 'Total de citações' : 'Total de documentos',
+          data: presEntries.map(([, v]) => v),
           backgroundColor: '#2b6f62',
           borderRadius: 6,
           barPercentage: 0.55,
@@ -639,21 +1275,22 @@
           legend: { display: false },
           title: { display: true, text: 'Top presidentes' },
         },
-        layout: {
-          padding: { left: 8, right: 8, top: 4, bottom: 0 },
-        },
         scales: { x: { beginAtZero: true, grace: '8%' } },
       },
     });
     state.charts.push(presidentChart);
+
+    const mandateEntries = [...byMandate.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 12);
 
     const mandateChart = new Chart(els.chartMandates, {
       type: 'bar',
       data: {
         labels: mandateEntries.map(([name]) => name),
         datasets: [{
-          label: hasTerm ? 'Total de citacoes' : 'Total de documentos',
-          data: mandateEntries.map(([, value]) => value),
+          label: hasTerm ? 'Total de citações' : 'Total de documentos',
+          data: mandateEntries.map(([, v]) => v),
           backgroundColor: '#274c7f',
           borderRadius: 6,
           barPercentage: 0.55,
@@ -672,9 +1309,6 @@
           legend: { display: false },
           title: { display: true, text: 'Top mandatos' },
         },
-        layout: {
-          padding: { left: 8, right: 8, top: 4, bottom: 0 },
-        },
         scales: { x: { beginAtZero: true, grace: '8%' } },
       },
     });
@@ -685,376 +1319,128 @@
     });
   }
 
-  function renderTable(searchData) {
-    if (!els.resultsBody || !els.tableCount) return;
-
-    const rowsRaw = Array.isArray(searchData.rows) ? searchData.rows : [];
-    const rows = rowsRaw.slice(0, MAX_TABLE_ROWS);
-    const hasTerm = !!searchData.has_term;
-
+  function renderTable(results, hasTerm) {
+    const maxRows = 600;
+    const rows = results.slice(0, maxRows);
     els.resultsBody.innerHTML = '';
+
     if (!rows.length) {
       els.resultsBody.innerHTML = '<tr><td colspan="8">Nenhum resultado encontrado para o filtro atual.</td></tr>';
       els.tableCount.textContent = '0 linhas';
       return;
     }
 
-    rows.forEach((row) => {
+    for (const { rec, mentions } of rows) {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${esc(formatDateIso(row.date))}</td>
-        <td>${esc(row.president || '--')}</td>
-        <td>${esc(row.mandate || '--')}</td>
-        <td>${esc(row.type || '--')}</td>
-        <td>${hasTerm ? nFmt.format(Number(row.mentions) || 0) : '--'}</td>
-        <td>${esc(row.title || '--')}</td>
-        <td>${esc(row.location || '--')}</td>
-        <td><a class="doc-link" href="${esc(row.url || '#')}" target="_blank" rel="noopener noreferrer">Abrir</a></td>
+        <td>${esc(formatDateIso(rec.date))}</td>
+        <td>${esc(rec.president || '--')}</td>
+        <td>${esc(rec.mandate || '--')}</td>
+        <td>${esc(rec.type || '--')}</td>
+        <td>${hasTerm ? nFmt.format(mentions) : '--'}</td>
+        <td>${esc(rec.title || '--')}</td>
+        <td>${esc(rec.location || '--')}</td>
+        <td><a class="doc-link" href="${esc(rec.url || '#')}" target="_blank" rel="noopener noreferrer">Abrir</a></td>
       `;
       els.resultsBody.appendChild(tr);
-    });
+    }
 
-    if (rowsRaw.length > MAX_TABLE_ROWS) {
-      els.tableCount.textContent = `${nFmt.format(MAX_TABLE_ROWS)} de ${nFmt.format(rowsRaw.length)} linhas (limite de exibicao)`;
+    if (results.length > maxRows) {
+      els.tableCount.textContent = `${nFmt.format(maxRows)} de ${nFmt.format(results.length)} linhas (limite de exibição)`;
     } else {
-      els.tableCount.textContent = `${nFmt.format(rowsRaw.length)} linhas`;
+      els.tableCount.textContent = `${nFmt.format(results.length)} linhas`;
     }
-  }
-
-  function renderUsageExamples(searchData) {
-    if (!els.examplesGrid || !els.examplesHint) return;
-    els.examplesGrid.innerHTML = '';
-
-    const hasTerm = !!searchData.has_term;
-    const termRaw = (searchData.term_raw || '').trim();
-    const examples = Array.isArray(searchData.examples) ? searchData.examples : [];
-
-    if (!hasTerm) {
-      els.examplesHint.textContent = 'Digite um termo e clique em Buscar para ver exemplos reais dos 3 ultimos mandatos.';
-      return;
-    }
-
-    if (!examples.length) {
-      els.examplesHint.textContent = `Nenhum trecho encontrado para "${termRaw}" no filtro atual.`;
-      return;
-    }
-
-    const mandates = [...new Set(examples.map((row) => row.mandate).filter(Boolean))];
-    els.examplesHint.textContent = `Mostrando exemplos reais dos ${Math.min(3, mandates.length)} mandatos mais recentes com a busca "${termRaw}".`;
-
-    examples.forEach((row) => {
-      const card = document.createElement('article');
-      card.className = 'example-card';
-      card.innerHTML = `
-        <div class="example-kicker">${esc(row.mandate || 'Mandato nao identificado')}</div>
-        <h3 class="example-title">${esc(row.title || 'Sem titulo')}</h3>
-        <p class="example-meta">${esc(row.president || '--')} | ${esc(row.type || '--')} | ${esc(formatDateIso(row.date))} | ${nFmt.format(Number(row.mentions) || 0)} ocorrencias</p>
-        <p class="example-snippet">${row.snippet_html || 'Trecho nao disponivel para este documento.'}</p>
-        <a class="example-link" href="${esc(row.url || '#')}" target="_blank" rel="noopener noreferrer">Ver documento original</a>
-      `;
-      els.examplesGrid.appendChild(card);
-    });
-  }
-
-  function updateSummaryAndHint(searchData) {
-    const termRaw = (searchData.term_raw || '').trim();
-    const hasTerm = !!searchData.has_term;
-    const resultCount = Number(searchData.results_count) || 0;
-    const totalDocsWithText = Number(searchData.total_docs_with_text) || 0;
-    const totalMentions = Number(searchData.total_mentions) || 0;
-
-    if (!els.summaryText || !els.searchHint) return;
-
-    if (hasTerm) {
-      const docsByType = searchData.docs_by_type || {};
-      const mentionsByType = searchData.mentions_by_type || {};
-
-      els.summaryText.textContent = `Busca por "${termRaw}" em ${nFmt.format(resultCount)} documentos (${nFmt.format(Number(docsByType.entrevista) || 0)} entrevistas; ${nFmt.format(Number(docsByType.discurso) || 0)} discursos), com ${nFmt.format(totalMentions)} ocorrencias no total (${nFmt.format(Number(mentionsByType.entrevista) || 0)} em entrevistas; ${nFmt.format(Number(mentionsByType.discurso) || 0)} em discursos), dentro de ${nFmt.format(totalDocsWithText)} documentos com texto.`;
-
-      if (searchData.is_phrase) {
-        els.searchHint.textContent = `Expressao atual: "${termRaw}" (${nFmt.format(Number(searchData.query_words_count) || 0)} palavras). Busca sem distincao de maiusculas/minusculas e sem sensibilidade a acentos.`;
-      } else {
-        els.searchHint.textContent = `Termo atual: "${termRaw}". Busca sem distincao de maiusculas/minusculas e sem sensibilidade a acentos.`;
-      }
-      return;
-    }
-
-    els.summaryText.textContent = `Sem termo aplicado. Mostrando ${nFmt.format(resultCount)} documentos filtrados de ${nFmt.format(totalDocsWithText)} no total.`;
-    els.searchHint.textContent = 'A busca ignora maiusculas/minusculas e acentos automaticamente. Voce pode buscar palavra unica ou expressao curta (2-3 palavras).';
-  }
-
-  async function applySearch() {
-    if (!state.ready) return;
-
-    state.searchRequestId += 1;
-    const requestId = state.searchRequestId;
-    const termRaw = (els.termInput && els.termInput.value ? els.termInput.value : '').trim();
-    const filters = getActiveFilters();
-
-    if (els.btnSearch) {
-      els.btnSearch.disabled = true;
-      els.btnSearch.textContent = 'Buscando...';
-    }
-    setLoadProgress(true, 12, 'Consultando API...');
-    updateActiveFiltersBanner(filters, termRaw, null);
-
-    try {
-      const url = buildApiUrl('/v1/search', {
-        term: termRaw,
-        type: filters.typeFilter,
-        president: filters.presidentFilter,
-        mandate: filters.mandateFilter,
-        limit: MAX_TABLE_ROWS,
-      });
-      setLoadProgress(true, 54, 'Executando busca textual no BigQuery...');
-      const searchData = await fetchJson(url);
-      if (requestId !== state.searchRequestId) return;
-
-      state.searchResult = searchData;
-      renderMetrics(searchData);
-      renderCharts(searchData);
-      renderTable(searchData);
-      renderUsageExamples(searchData);
-      updateSummaryAndHint(searchData);
-      updateActiveFiltersBanner(filters, termRaw, Number(searchData.results_count) || 0);
-
-      setLoadProgress(true, 100, `Busca concluida: ${nFmt.format(Number(searchData.results_count) || 0)} documentos.`);
-      window.setTimeout(() => setLoadProgress(false, 0, ''), 600);
-
-      requestWordcloudUpdate(false);
-    } catch (err) {
-      if (requestId !== state.searchRequestId) return;
-      if (els.summaryText) els.summaryText.textContent = 'Falha ao consultar a API do Lulometro.';
-      if (els.searchHint) els.searchHint.textContent = `Erro de busca: ${err.message}`;
-      if (els.resultsBody) {
-        els.resultsBody.innerHTML = '<tr><td colspan="8">Nao foi possivel consultar os dados no momento.</td></tr>';
-      }
-      if (els.tableCount) els.tableCount.textContent = '0 linhas';
-      setLoadProgress(true, 100, 'Erro ao consultar a API.');
-      window.setTimeout(() => setLoadProgress(false, 0, ''), 1600);
-    } finally {
-      if (els.btnSearch) {
-        els.btnSearch.disabled = false;
-        els.btnSearch.textContent = state.ready ? 'Buscar' : '1) Carregar Dados';
-      }
-    }
-  }
-
-  async function ensureBootstrapReady() {
-    if (state.ready) return true;
-    if (state.bootstrapPromise) return state.bootstrapPromise;
-
-    state.bootstrapPromise = (async () => {
-      if (els.btnSearch) {
-        els.btnSearch.disabled = true;
-        els.btnSearch.textContent = 'Carregando...';
-      }
-      setLoadProgress(true, 8, 'Conectando API...');
-      setLoadRequiredBanner(
-        true,
-        'Conectando ao BigQuery via API...',
-        'Aguarde alguns segundos. Busca e graficos serao liberados automaticamente.'
-      );
-      if (els.searchHint) {
-        els.searchHint.textContent = 'Conectando dados em tempo real no BigQuery...';
-      }
-
-      try {
-        const bootstrapUrl = buildApiUrl('/v1/bootstrap', {});
-        setLoadProgress(true, 26, 'Carregando cobertura da base...');
-        const bootstrapData = await fetchJson(bootstrapUrl);
-        state.bootstrap = bootstrapData;
-
-        const generatedAt = bootstrapData.generated_at || bootstrapData.synced_at;
-        const sourceCount = (bootstrapData.sources || [])
-          .map((row) => `${row.source}: ${nFmt.format(Number(row.total) || 0)}`)
-          .join(' | ') || '--';
-
-        if (els.statusUpdated) {
-          els.statusUpdated.textContent = `Atualizado em ${formatDateTimeIso(generatedAt)}`;
-        }
-        if (els.statusTotalDocs) {
-          els.statusTotalDocs.textContent = `Documentos: ${nFmt.format(Number(bootstrapData.total_docs) || 0)} | Com texto: ${nFmt.format(Number(bootstrapData.total_filled) || 0)}`;
-        }
-        if (els.statusSources) {
-          els.statusSources.textContent = `Fontes: ${sourceCount}`;
-        }
-
-        setLoadProgress(true, 64, 'Montando filtros e metadados...');
-        populateFilterOptions();
-        updateMethodologyNote();
-        state.wordcloudCache.clear();
-
-        setReadyState();
-        updateActiveFiltersBanner(getActiveFilters(), '', null);
-
-        setLoadProgress(true, 84, 'Carregando busca inicial...');
-        await applySearch();
-        setLoadProgress(true, 92, 'Carregando nuvem inicial...');
-        await requestWordcloudUpdate(true);
-
-        setLoadProgress(true, 100, 'Dados carregados com sucesso.');
-        window.setTimeout(() => setLoadProgress(false, 0, ''), 700);
-        return true;
-      } catch (err) {
-        if (els.summaryText) {
-          els.summaryText.textContent = 'Falha ao conectar API/BigQuery do Lulometro.';
-        }
-        if (els.searchHint) {
-          els.searchHint.textContent = `Erro de conexao: ${err.message}`;
-        }
-        if (els.resultsBody) {
-          els.resultsBody.innerHTML = '<tr><td colspan="8">Nao foi possivel carregar os dados da API.</td></tr>';
-        }
-        if (els.btnSearch) {
-          els.btnSearch.disabled = false;
-          els.btnSearch.textContent = '1) Carregar Dados';
-        }
-        setLoadRequiredBanner(
-          true,
-          'Falha na conexao com a API do Lulometro.',
-          'Confira se a API esta publicada e se o arquivo api-config.json tem a URL correta.'
-        );
-        setLoadProgress(true, 100, 'Erro de conexao.');
-        window.setTimeout(() => setLoadProgress(false, 0, ''), 1800);
-        return false;
-      } finally {
-        state.bootstrapPromise = null;
-      }
-    })();
-
-    return state.bootstrapPromise;
   }
 
   function setupEvents() {
-    if (els.btnSearch) {
-      els.btnSearch.addEventListener('click', async () => {
-        if (!state.ready) {
-          await ensureBootstrapReady();
-          return;
-        }
-        applySearch();
-      });
-    }
+    els.btnSearch.addEventListener('click', async () => {
+      if (!state.recordsLoaded) {
+        await ensureRecordsReady();
+        return;
+      }
+      applySearch();
+    });
+    els.btnClear.addEventListener('click', () => {
+      if (!state.recordsLoaded) return;
+      els.termInput.value = '';
+      els.typeSelect.value = 'ambos';
+      els.presidentSelect.value = 'todos';
+      els.mandateSelect.value = 'todos';
+      applySearch();
+    });
 
-    if (els.btnClear) {
-      els.btnClear.addEventListener('click', () => {
-        if (!state.ready) return;
-        if (els.termInput) els.termInput.value = '';
-        if (els.typeSelect) els.typeSelect.value = 'ambos';
-        if (els.presidentSelect) els.presidentSelect.value = 'todos';
-        if (els.mandateSelect) els.mandateSelect.value = 'todos';
-        state.wordcloudCache.clear();
-        applySearch();
-      });
-    }
+    els.termInput.addEventListener('keydown', (ev) => {
+      if (ev.key !== 'Enter') return;
+      if (!state.recordsLoaded) {
+        ensureRecordsReady();
+        return;
+      }
+      applySearch();
+    });
 
-    if (els.termInput) {
-      els.termInput.addEventListener('keydown', (ev) => {
-        if (ev.key !== 'Enter') return;
-        if (!state.ready) {
-          ensureBootstrapReady();
-          return;
-        }
-        applySearch();
-      });
-    }
-
-    if (els.typeSelect) {
-      els.typeSelect.addEventListener('change', () => {
-        if (!state.ready) return;
-        state.wordcloudCache.clear();
-        applySearch();
-      });
-    }
-    if (els.presidentSelect) {
-      els.presidentSelect.addEventListener('change', () => {
-        if (!state.ready) return;
-        state.wordcloudCache.clear();
-        applySearch();
-      });
-    }
-    if (els.mandateSelect) {
-      els.mandateSelect.addEventListener('change', () => {
-        if (!state.ready) return;
-        state.wordcloudCache.clear();
-        applySearch();
-      });
-    }
-
+    els.typeSelect.addEventListener('change', () => {
+      if (!state.recordsLoaded) return;
+      applySearch();
+    });
+    els.presidentSelect.addEventListener('change', () => {
+      if (!state.recordsLoaded) return;
+      applySearch();
+    });
+    els.mandateSelect.addEventListener('change', () => {
+      if (!state.recordsLoaded) return;
+      applySearch();
+    });
     if (els.wordcloudRange) {
       els.wordcloudRange.addEventListener('change', () => {
-        if (!state.ready) return;
-        if (els.wordcloudContext) {
-          els.wordcloudContext.textContent = 'Periodo alterado. Clique em "Atualizar Nuvem" para aplicar.';
-        }
+        if (!state.recordsLoaded) return;
+        requestWordcloudUpdate(true);
       });
     }
     if (els.wordcloudPhraseSize) {
       els.wordcloudPhraseSize.addEventListener('change', () => {
-        if (!state.ready) return;
-        if (els.wordcloudContext) {
-          els.wordcloudContext.textContent = 'Modo de termo alterado. Clique em "Atualizar Nuvem" para aplicar.';
-        }
+        if (!state.recordsLoaded) return;
+        requestWordcloudUpdate(true);
       });
     }
     if (els.wordcloudApply) {
       els.wordcloudApply.addEventListener('click', () => {
-        if (!state.ready) return;
-        requestWordcloudUpdate(true);
+        if (!state.recordsLoaded) return;
+        requestWordcloudUpdate();
       });
     }
-
-    let resizeTimer = null;
-    window.addEventListener('resize', () => {
-      if (resizeTimer) window.clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(() => {
-        clampChartCanvasSize();
-        state.charts.forEach((chart) => chart.resize());
-      }, 120);
-    });
   }
 
   async function init() {
-    setDeferredSearchState();
-    updateMethodologyNote();
-    setupEvents();
-    updateActiveFiltersBanner(getActiveFilters(), '', null);
-
-    if (els.statusUpdated) {
-      els.statusUpdated.textContent = 'API: inicializando...';
-    }
-
-    state.apiBase = await resolveApiBase();
-    if (!state.apiBase) {
-      if (els.statusUpdated) {
-        els.statusUpdated.textContent = 'API nao configurada';
-      }
-      if (els.statusSources) {
-        els.statusSources.textContent = 'Configure lulometro-dashboard/api-config.json com api_base_url.';
-      }
-      if (els.searchHint) {
-        els.searchHint.textContent = 'API nao configurada. Defina api-config.json ou use ?api_base=https://...';
-      }
-      return;
-    }
-
     try {
-      const healthUrl = buildApiUrl('/v1/health', {});
-      const health = await fetchJson(healthUrl, 15000);
-      if (els.statusUpdated) {
-        els.statusUpdated.textContent = `API online (${health.project_id}.${health.dataset_id})`;
+      const metadata = await fetchJson('./data/metadata.json').catch(() => ({}));
+      state.metadata = metadata;
+      state.lightMode = shouldUseLightMode(metadata);
+
+      const generatedAt = metadata.generated_at ? formatDateTimeIso(metadata.generated_at) : '--';
+      const total = metadata.total_records || state.records.length;
+      const sourceCount = metadata.sources
+        ? Object.entries(metadata.sources).map(([k, v]) => `${k}: ${nFmt.format(v)}`).join(' | ')
+        : '--';
+
+      els.statusUpdated.textContent = `Atualizado em ${generatedAt}`;
+      els.statusTotalDocs.textContent = `Documentos: ${nFmt.format(total)}`;
+      els.statusSources.textContent = `Fontes: ${sourceCount}`;
+      updateMethodologyNote();
+
+      setupEvents();
+      updateActiveFiltersBanner(getActiveFilters(), '', null);
+      if (state.lightMode) {
+        setDeferredSearchState();
+        return;
       }
-      if (els.searchHint) {
-        els.searchHint.textContent = 'API conectada. Clique em "1) Carregar Dados" para liberar a dashboard.';
-      }
+
+      const ready = await ensureRecordsReady();
+      if (!ready) return;
     } catch (err) {
-      if (els.statusUpdated) {
-        els.statusUpdated.textContent = 'API indisponivel';
-      }
-      if (els.searchHint) {
-        els.searchHint.textContent = `API configurada mas indisponivel no momento: ${err.message}`;
-      }
+      console.error(err);
+      els.summaryText.textContent = 'Falha ao carregar a base do Lulometro.';
+      els.statusUpdated.textContent = 'Erro no carregamento';
+      els.resultsBody.innerHTML = '<tr><td colspan="8">Nao foi possivel carregar os dados.</td></tr>';
     }
   }
 
