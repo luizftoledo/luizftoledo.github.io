@@ -509,12 +509,86 @@
       flex: 1;
     }
 
+    /* ── PHOTO HERO ── */
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      opacity: 0.18;
+      z-index: 0;
+    }
+
+    /* ── PHOTO STRIP ── */
+    .photo-strip {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 calc(-2rem);
+    }
+
+    .photo-strip::-webkit-scrollbar { display: none; }
+
+    .photo-strip img {
+      height: 320px;
+      width: auto;
+      flex-shrink: 0;
+      object-fit: cover;
+      filter: grayscale(20%) contrast(1.1);
+      transition: filter 0.3s;
+    }
+
+    .photo-strip img:hover { filter: grayscale(0%) contrast(1.15); }
+
+    .photo-strip-wrapper {
+      position: relative;
+      max-width: 100vw;
+      margin: 0 auto;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── PHOTO GRID (Dienasty) ── */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+      margin-bottom: 2rem;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(15%) contrast(1.08);
+      transition: filter 0.3s, transform 0.3s;
+      display: block;
+    }
+
+    .photo-grid img:hover {
+      filter: grayscale(0%) contrast(1.15);
+      transform: scale(1.01);
+    }
+
+    .photo-grid img.wide {
+      grid-column: span 2;
+      aspect-ratio: 16/7;
+      object-position: center 20%;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 600px) {
       nav ul { gap: 0; overflow-x: auto; }
       nav a { padding: 0.9rem 0.8rem; font-size: 0.6rem; }
       .band-header { gap: 1rem; }
       .band-index { font-size: 2rem; }
+      .photo-strip img { height: 220px; }
+      .photo-grid { gap: 3px; }
     }
 
     /* ── MUSIC PLAYER ── */
@@ -618,6 +692,7 @@
 <header>
   <div class="header-bg"></div>
   <div class="header-lines"></div>
+  <div class="hero-photo" style="background-image: url('IMG_2629.jpeg')"></div>
   <h1>Luiz Fernando Toledo</h1>
   <p class="eyebrow">vocals</p>
   <p class="subtitle">Pervencer · Razek · Dienasty · Inchess</p>
@@ -637,6 +712,17 @@
     <li><a href="#inchess">Inchess</a></li>
   </ul>
 </nav>
+
+<!-- ═══════════════════════ PHOTO STRIP ═══════════════════════ -->
+<div class="photo-strip-wrapper">
+  <div class="photo-strip">
+    <img src="IMG_2624.jpeg" alt="Luiz Fernando Toledo ao vivo" loading="lazy">
+    <img src="IMG_2626.jpeg" alt="Luiz Fernando Toledo ao vivo" loading="lazy">
+    <img src="IMG_2583.jpeg" alt="Luiz Fernando Toledo ao vivo" loading="lazy">
+    <img src="IMG_2630.jpeg" alt="Luiz Fernando Toledo ao vivo" loading="lazy">
+    <img src="IMG_2625.jpeg" alt="Luiz Fernando Toledo ao vivo" loading="lazy">
+  </div>
+</div>
 
 <!-- ═══════════════════════ TIMELINE ═══════════════════════ -->
 <section id="timeline">
@@ -702,6 +788,13 @@
     <p class="band-desc">
       Banda atual. Material em gravação.
     </p>
+
+    <div class="photo-grid">
+      <img src="IMG_2627.jpeg" alt="Luiz Fernando Toledo — Dienasty" loading="lazy">
+      <img src="IMG_2584.jpeg" alt="Luiz Fernando Toledo — Dienasty" loading="lazy">
+      <img src="IMG_2631.jpeg" alt="Luiz Fernando Toledo — Dienasty wide" class="wide" loading="lazy">
+    </div>
+
     <div class="placeholder-block">
       <p><strong>Músicas em breve.</strong></p>
       <p>Material em processo de gravação — os links serão adicionados assim que disponíveis.</p>
