@@ -534,9 +534,10 @@
 
     .photo-strip img {
       height: 320px;
-      width: auto;
-      flex-shrink: 0;
+      flex: 1;
+      min-width: 180px;
       object-fit: cover;
+      object-position: center 15%;
       filter: grayscale(20%) contrast(1.1);
       transition: filter 0.3s;
     }
