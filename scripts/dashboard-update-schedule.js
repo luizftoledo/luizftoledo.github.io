@@ -10,6 +10,7 @@
       cadenceLabel: "Atualizacao diaria",
       type: "daily",
       utcHour: 13,
+      utcMinute: 0,
       graceHours: 18,
       workflowId: 240805909,
       workflowPath: "update-ibama-dashboard.yml",
@@ -18,6 +19,7 @@
       cadenceLabel: "Atualizacao diaria",
       type: "daily",
       utcHour: 13,
+      utcMinute: 10,
       graceHours: 18,
       workflowId: 240960264,
       workflowPath: "update-emendas-dashboard.yml",
@@ -26,6 +28,7 @@
       cadenceLabel: "Atualizacao diaria",
       type: "daily",
       utcHour: 13,
+      utcMinute: 20,
       graceHours: 18,
       workflowId: 241515122,
       workflowPath: "update-lulometro-dashboard.yml",
@@ -34,6 +37,7 @@
       cadenceLabel: "Atualizacao semanal",
       type: "weekly",
       utcHour: 13,
+      utcMinute: 30,
       weekday: 1,
       graceHours: 48,
       workflowId: 241323142,
@@ -43,6 +47,7 @@
       cadenceLabel: "Atualizacao mensal",
       type: "monthly",
       utcHour: 13,
+      utcMinute: 40,
       dayOfMonth: 1,
       graceHours: 96,
       workflowId: 240814394,
@@ -52,6 +57,7 @@
       cadenceLabel: "Atualizacao mensal",
       type: "monthly",
       utcHour: 13,
+      utcMinute: 40,
       dayOfMonth: 1,
       graceHours: 96,
       workflowId: 240814394,
@@ -87,16 +93,16 @@
     return dateTimeFormatter.format(parsed);
   }
 
-  function nextDailyRun(now, utcHour) {
-    const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), utcHour, 0, 0));
+  function nextDailyRun(now, utcHour, utcMinute) {
+    const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), utcHour, utcMinute || 0, 0));
     if (next <= now) {
       next.setUTCDate(next.getUTCDate() + 1);
     }
     return next;
   }
 
-  function nextWeeklyRun(now, utcHour, weekday) {
-    const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), utcHour, 0, 0));
+  function nextWeeklyRun(now, utcHour, utcMinute, weekday) {
+    const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), utcHour, utcMinute || 0, 0));
     const deltaDays = (weekday - next.getUTCDay() + 7) % 7;
     next.setUTCDate(next.getUTCDate() + deltaDays);
     if (next <= now) {
@@ -105,10 +111,10 @@
     return next;
   }
 
-  function nextMonthlyRun(now, utcHour, dayOfMonth) {
-    let next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), dayOfMonth, utcHour, 0, 0));
+  function nextMonthlyRun(now, utcHour, utcMinute, dayOfMonth) {
+    let next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), dayOfMonth, utcHour, utcMinute || 0, 0));
     if (next <= now) {
-      next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, dayOfMonth, utcHour, 0, 0));
+      next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, dayOfMonth, utcHour, utcMinute || 0, 0));
     }
     return next;
   }
@@ -121,15 +127,15 @@
 
     const reference = now instanceof Date ? now : new Date();
     if (schedule.type === "daily") {
-      return nextDailyRun(reference, schedule.utcHour);
+      return nextDailyRun(reference, schedule.utcHour, schedule.utcMinute);
     }
 
     if (schedule.type === "weekly") {
-      return nextWeeklyRun(reference, schedule.utcHour, schedule.weekday);
+      return nextWeeklyRun(reference, schedule.utcHour, schedule.utcMinute, schedule.weekday);
     }
 
     if (schedule.type === "monthly") {
-      return nextMonthlyRun(reference, schedule.utcHour, schedule.dayOfMonth);
+      return nextMonthlyRun(reference, schedule.utcHour, schedule.utcMinute, schedule.dayOfMonth);
     }
 
     return null;

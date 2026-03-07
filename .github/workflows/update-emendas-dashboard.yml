@@ -2,8 +2,8 @@ name: Update Emendas Dashboard Data
 
 on:
   schedule:
-    # 09:00 America/Cuiaba ~= 13:00 UTC
-    - cron: "0 13 * * *"
+    # 09:10 America/Cuiaba ~= 13:10 UTC
+    - cron: "10 13 * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,6 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - name: Setup Python
