@@ -2,7 +2,7 @@ name: Update LAI Dashboard Data
 
 on:
   schedule:
-    # 09:40 America/Cuiaba ~= 13:40 UTC (mensal)
+    # 10:40 horario de Brasilia ~= 13:40 UTC (mensal)
     - cron: "40 13 1 * *"
   workflow_dispatch:
 

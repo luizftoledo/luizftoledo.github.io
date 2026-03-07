@@ -109,14 +109,14 @@
     if (!iso) return '--';
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '--';
-    return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
+    return d.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
   }
 
   function formatHeaderDate(rawDate) {
     if (!rawDate) return '--';
     const d = new Date(rawDate);
     if (Number.isNaN(d.getTime())) return rawDate;
-    return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
+    return d.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
   }
 
   function formatDatePt(dateStr) {

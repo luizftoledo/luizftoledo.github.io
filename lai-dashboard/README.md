@@ -27,7 +27,7 @@ python3 scripts/build_lai_dashboard_data.py --force
 
 Workflow: `.github/workflows/update-lai-dashboard.yml`
 
-- Agenda mensal: dia 1 às 09:00 (America/Cuiaba), equivalente a `13:00 UTC`.
+- Agenda mensal: dia 1 às 10:40 (horario de Brasilia), equivalente a `13:40 UTC`.
 - Atualização incremental:
   - anos antigos usam cache anual já salvo em `lai-dashboard/data/cache/yearly/`;
   - ano atual é baixado e reprocessado a cada execução.

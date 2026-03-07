@@ -14,7 +14,7 @@ Dashboard estatico com dados de autos de infracao do IBAMA e ICMBio.
 
 Workflow: `.github/workflows/update-ibama-dashboard.yml`
 
-- Agenda: 09:00 (America/Cuiaba), equivalente a `13:00 UTC`.
+- Agenda: 10:00 (horario de Brasilia), equivalente a `13:00 UTC`.
 - Roda no GitHub Actions.
 - Baixa as fontes oficiais.
 - Compara tamanho da fonte nova com a anterior.

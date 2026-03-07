@@ -2,7 +2,7 @@ name: Update IBAMA Dashboard Data
 
 on:
   schedule:
-    # 09:00 America/Cuiaba ~= 13:00 UTC
+    # 10:00 horario de Brasilia ~= 13:00 UTC
     - cron: "0 13 * * *"
   workflow_dispatch:
 

@@ -2,7 +2,7 @@ name: Update Emendas Dashboard Data
 
 on:
   schedule:
-    # 09:10 America/Cuiaba ~= 13:10 UTC
+    # 10:10 horario de Brasilia ~= 13:10 UTC
     - cron: "10 13 * * *"
   workflow_dispatch:
 

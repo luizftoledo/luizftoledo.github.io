@@ -65,7 +65,7 @@
     },
   };
 
-  const DISPLAY_TIME_ZONE = "America/Cuiaba";
+  const DISPLAY_TIME_ZONE = "America/Sao_Paulo";
   const dateTimeFormatter = new Intl.DateTimeFormat("pt-BR", {
     timeZone: DISPLAY_TIME_ZONE,
     day: "2-digit",
@@ -167,7 +167,7 @@
       cadenceLabel: schedule.cadenceLabel,
       updatedLabel,
       nextLabel,
-      text: `${schedule.cadenceLabel}. Ultima atualizacao: ${updatedLabel}. Proxima prevista: ${nextLabel} (horario de Cuiaba).`,
+      text: `${schedule.cadenceLabel}. Ultima atualizacao: ${updatedLabel}. Proxima prevista: ${nextLabel} (horario de Brasilia).`,
     };
   }
 

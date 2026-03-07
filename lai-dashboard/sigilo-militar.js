@@ -244,7 +244,7 @@
     if (!iso) return '--';
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '--';
-    return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
+    return d.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
   }
 
   async function fetchJson(url) {
@@ -378,7 +378,7 @@
     const updatedAtRaw = (metadata || {}).updated_at || reportData.generated_at;
     const updateNotice = scheduleHelper ? scheduleHelper.buildNotice('sigilo', updatedAtRaw) : null;
     const updatedLabel = formatDateTime(updatedAtRaw);
-    updatedLine.textContent = `Atualizado em ${updatedLabel} (America/Cuiaba)`;
+    updatedLine.textContent = `Atualizado em ${updatedLabel} (horario de Brasilia)`;
     if (updateScheduleNote) {
       updateScheduleNote.textContent = updateNotice
         ? updateNotice.text

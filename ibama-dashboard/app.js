@@ -112,7 +112,7 @@
       if (!isoDateTime) return '-';
       const d = new Date(isoDateTime);
       if (Number.isNaN(d.getTime())) return '-';
-      return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
+      return d.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
     }
 
     function getLoadPhaseLabel(phase) {

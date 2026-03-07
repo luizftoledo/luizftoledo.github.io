@@ -283,7 +283,7 @@
     if (!iso) return '--';
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return '--';
-    return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
+    return d.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
   }
 
   function formatBytes(numBytes) {

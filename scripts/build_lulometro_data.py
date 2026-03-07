@@ -1717,7 +1717,7 @@ def main() -> int:
             "project": "Lulometro",
             "title": "Lulometro: analise de discurso de presidentes brasileiros",
             "generated_at": now_iso(),
-            "timezone": "America/Cuiaba",
+            "timezone": "America/Sao_Paulo",
             "scope_mandates": sorted(TARGET_MANDATES),
             "total_records": len(records_sorted),
             "excluded_records": filtered_out,

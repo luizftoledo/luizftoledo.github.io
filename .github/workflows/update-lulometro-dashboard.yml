@@ -2,7 +2,7 @@ name: Update Lulometro Dashboard Data
 
 on:
   schedule:
-    # 09:20 America/Cuiaba ~= 13:20 UTC
+    # 10:20 horario de Brasilia ~= 13:20 UTC
     - cron: "20 13 * * *"
   workflow_dispatch:
 

@@ -2,7 +2,7 @@ name: Update Basometro Dashboard Data
 
 on:
   schedule:
-    # Segunda-feira 09:30 America/Cuiaba ~= 13:30 UTC
+    # Segunda-feira 10:30 horario de Brasilia ~= 13:30 UTC
     - cron: "30 13 * * 1"
   workflow_dispatch:
 

@@ -21,7 +21,7 @@ Agora com duas leituras:
 
 Workflow: `.github/workflows/update-emendas-dashboard.yml`
 
-- Agenda: 09:00 (America/Cuiaba), equivalente a `13:00 UTC`.
+- Agenda: 10:10 (horario de Brasilia), equivalente a `13:10 UTC`.
 - Baixa a base oficial de emendas.
 - Baixa também a base anual de documentos e a base de apoiamento.
 - Compara com o último snapshot.
