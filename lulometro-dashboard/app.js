@@ -14,6 +14,9 @@
   const EXAMPLE_MANDATES_LIMIT = 3;
   const EXAMPLES_PER_MANDATE = 2;
   const EXAMPLE_SNIPPET_RADIUS = 150;
+  const PEOPLE_MAX_TABLE_ROWS = 400;
+  const PEOPLE_EXAMPLES_LIMIT = 8;
+  const PEOPLE_TOP_CHART_LIMIT = 15;
   const scheduleHelper = window.DashboardUpdateSchedule || null;
   const PT_STOPWORDS = new Set([
     'a', 'ao', 'aos', 'aquela', 'aquelas', 'aquele', 'aqueles', 'aquilo', 'as', 'ate', 'com', 'como',
@@ -37,6 +40,9 @@
     updateScheduleNote: document.getElementById('update-schedule-note'),
     statusTotalDocs: document.getElementById('status-total-docs'),
     statusSources: document.getElementById('status-sources'),
+    tabButtons: Array.from(document.querySelectorAll('[data-tab]')),
+    tabScopedBlocks: Array.from(document.querySelectorAll('[data-tab-scope]')),
+    textualOnlyBlocks: Array.from(document.querySelectorAll('.textual-only')),
 
     termInput: document.getElementById('term-input'),
     typeSelect: document.getElementById('type-select'),
@@ -79,12 +85,43 @@
     loadProgressPct: document.getElementById('load-progress-pct'),
     loadProgressFill: document.getElementById('load-progress-fill'),
     loadProgressBar: document.querySelector('.load-progress-bar'),
+
+    peopleStatusReady: document.getElementById('people-status-ready'),
+    peopleStatusEntities: document.getElementById('people-status-entities'),
+    peopleStatusMentions: document.getElementById('people-status-mentions'),
+    peopleQuery: document.getElementById('people-query'),
+    peopleGroup: document.getElementById('people-group'),
+    peopleType: document.getElementById('people-type'),
+    peopleRange: document.getElementById('people-range'),
+    peopleGranularity: document.getElementById('people-granularity'),
+    peopleMetric: document.getElementById('people-metric'),
+    peopleApply: document.getElementById('people-apply'),
+    peopleReset: document.getElementById('people-reset'),
+    peopleActiveFilters: document.getElementById('people-active-filters'),
+    peopleMetricOccurrences: document.getElementById('people-metric-occurrences'),
+    peopleMetricDocs: document.getElementById('people-metric-docs'),
+    peopleMetricEntities: document.getElementById('people-metric-entities'),
+    peopleMetricTop: document.getElementById('people-metric-top'),
+    peopleExamplesHint: document.getElementById('people-examples-hint'),
+    peopleExamplesGrid: document.getElementById('people-examples-grid'),
+    peopleChartTimeline: document.getElementById('people-chart-timeline'),
+    peopleChartTop: document.getElementById('people-chart-top'),
+    peopleChartGroups: document.getElementById('people-chart-groups'),
+    peopleSummaryText: document.getElementById('people-summary-text'),
+    peopleRankingCount: document.getElementById('people-ranking-count'),
+    peopleRankingBody: document.getElementById('people-ranking-body'),
+    peopleMethodologyNote: document.getElementById('people-methodology-note'),
+    peopleMethodologySearch: document.getElementById('people-methodology-search'),
+    peopleMethodologyKind: document.getElementById('people-methodology-kind'),
+    peopleMethodologyBody: document.getElementById('people-methodology-body'),
   };
 
   const state = {
     records: [],
     metadata: null,
-    charts: [],
+    activeTab: 'textual',
+    textualCharts: [],
+    peopleCharts: [],
     ready: false,
     recordsLoaded: false,
     coverage: null,
@@ -95,6 +132,12 @@
     wordcloudLastParams: null,
     recordsLoadPromise: null,
     searchRequestId: 0,
+    peopleDirectory: [],
+    peopleMentions: [],
+    peopleById: new Map(),
+    peopleMeta: null,
+    peopleReady: false,
+    peopleRequestId: 0,
   };
 
   function foldText(value) {
@@ -200,19 +243,17 @@
     return `${prefix}${before}<mark>${hit}</mark>${after}${suffix}`;
   }
 
+  function getEpochDay(dateIso) {
+    const value = (dateIso || '').trim();
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+    const [y, m, d] = value.split('-').map((x) => Number(x));
+    if (!y || !m || !d) return null;
+    return Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+  }
+
   function getRecordEpochDay(rec) {
     if (typeof rec._epochDay === 'number' || rec._epochDay === null) return rec._epochDay;
-    const dateIso = (rec.date || '').trim();
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateIso)) {
-      rec._epochDay = null;
-      return rec._epochDay;
-    }
-    const [y, m, d] = dateIso.split('-').map((x) => Number(x));
-    if (!y || !m || !d) {
-      rec._epochDay = null;
-      return rec._epochDay;
-    }
-    rec._epochDay = Math.floor(Date.UTC(y, m - 1, d) / 86400000);
+    rec._epochDay = getEpochDay(rec.date || '');
     return rec._epochDay;
   }
 
@@ -264,15 +305,16 @@
     return d.toLocaleDateString('pt-BR', { month: 'short', year: 'numeric' });
   }
 
-  function destroyCharts() {
-    while (state.charts.length) {
-      const chart = state.charts.pop();
+  function destroyChartList(listName) {
+    const list = state[listName];
+    while (list && list.length) {
+      const chart = list.pop();
       chart.destroy();
     }
   }
 
-  function clampChartCanvasSize() {
-    [els.chartTimeline, els.chartPresidents, els.chartMandates].forEach((canvas) => {
+  function clampChartCanvasSize(canvases) {
+    canvases.forEach((canvas) => {
       if (!canvas) return;
       canvas.style.width = '100%';
       canvas.style.height = '100%';
@@ -1199,8 +1241,8 @@
   }
 
   function renderCharts({ hasTerm, timeline, byPresident, byMandate, termRaw }) {
-    destroyCharts();
-    clampChartCanvasSize();
+    destroyChartList('textualCharts');
+    clampChartCanvasSize([els.chartTimeline, els.chartPresidents, els.chartMandates]);
 
     const timelineEntries = [...timeline.entries()].sort((a, b) => a[0].localeCompare(b[0]));
     const timelineLabels = timelineEntries.map(([k]) => formatMonthKey(k));
@@ -1246,7 +1288,7 @@
         },
       },
     });
-    state.charts.push(timelineChart);
+    state.textualCharts.push(timelineChart);
 
     const presEntries = [...byPresident.entries()]
       .sort((a, b) => b[1] - a[1])
@@ -1280,7 +1322,7 @@
         scales: { x: { beginAtZero: true, grace: '8%' } },
       },
     });
-    state.charts.push(presidentChart);
+    state.textualCharts.push(presidentChart);
 
     const mandateEntries = [...byMandate.entries()]
       .sort((a, b) => b[1] - a[1])
@@ -1314,10 +1356,10 @@
         scales: { x: { beginAtZero: true, grace: '8%' } },
       },
     });
-    state.charts.push(mandateChart);
+    state.textualCharts.push(mandateChart);
 
     window.requestAnimationFrame(() => {
-      state.charts.forEach((chart) => chart.resize());
+      state.textualCharts.forEach((chart) => chart.resize());
     });
   }
 
@@ -1352,6 +1394,444 @@
     } else {
       els.tableCount.textContent = `${nFmt.format(results.length)} linhas`;
     }
+  }
+
+  function formatWeekKey(key) {
+    if (!/^\d{4}-W\d{2}$/.test(key || '')) return key || '--';
+    const [year, week] = key.split('-W');
+    return `sem. ${week}/${year}`;
+  }
+
+  function formatPeopleBucketLabel(key, granularity) {
+    if (!key) return '--';
+    if (granularity === 'day') return formatDateIso(key);
+    if (granularity === 'week') return formatWeekKey(key);
+    if (granularity === 'month') return formatMonthKey(key);
+    return key;
+  }
+
+  function highlightPeopleSnippet(text, aliases) {
+    const raw = (text || '').toString();
+    if (!raw.trim()) return 'Trecho não disponível.';
+    const list = [...new Set((aliases || []).filter(Boolean))]
+      .sort((a, b) => b.length - a.length);
+    for (const alias of list) {
+      const regex = new RegExp(escapeRegExp(alias), 'i');
+      const match = regex.exec(raw);
+      if (!match || typeof match.index !== 'number') continue;
+      const start = match.index;
+      const end = start + match[0].length;
+      return `${esc(raw.slice(0, start))}<mark>${esc(raw.slice(start, end))}</mark>${esc(raw.slice(end))}`;
+    }
+    return esc(raw);
+  }
+
+  function getPeopleAnchorDay() {
+    const maxAcceptedDay = getUtcTodayEpochDay() + WORDCLOUD_MAX_FUTURE_SKEW_DAYS;
+    if (state.peopleMeta && state.peopleMeta.date_range && state.peopleMeta.date_range.max) {
+      const metaDay = getEpochDay(state.peopleMeta.date_range.max);
+      if (metaDay !== null && metaDay <= maxAcceptedDay) return metaDay;
+    }
+    let best = null;
+    for (const row of state.peopleMentions) {
+      const day = row._epochDay ?? getEpochDay(row.date || '');
+      row._epochDay = day;
+      if (day !== null && day <= maxAcceptedDay && (best === null || day > best)) best = day;
+    }
+    return best;
+  }
+
+  function getPeopleFilters() {
+    return {
+      query: (els.peopleQuery && els.peopleQuery.value ? els.peopleQuery.value : '').trim(),
+      group: els.peopleGroup ? els.peopleGroup.value : 'todos',
+      type: els.peopleType ? els.peopleType.value : 'ambos',
+      rangeDays: Number(els.peopleRange ? els.peopleRange.value : 30) || 0,
+      granularity: els.peopleGranularity ? els.peopleGranularity.value : 'month',
+      metric: els.peopleMetric ? els.peopleMetric.value : 'occurrences',
+    };
+  }
+
+  function updatePeopleFiltersBanner(filters, resultCount) {
+    if (!els.peopleActiveFilters) return;
+    const parts = [
+      filters.group === 'todos' ? 'todos os grupos' : selectedText(els.peopleGroup, filters.group),
+      filters.type === 'ambos' ? 'discursos + entrevistas' : filters.type,
+      filters.rangeDays > 0 ? `${nFmt.format(filters.rangeDays)} dias` : 'todo o período',
+      filters.metric === 'documents' ? 'métrica: documentos' : 'métrica: ocorrências',
+      filters.query ? `busca: "${filters.query}"` : 'sem busca nominal',
+    ];
+    const suffix = Number.isFinite(resultCount) ? ` | ${nFmt.format(resultCount)} linhas de menção` : '';
+    els.peopleActiveFilters.textContent = `Filtros nominais agora -> ${parts.join(' | ')}${suffix}`;
+  }
+
+  function setPeopleStatusError(message) {
+    if (els.peopleStatusReady) els.peopleStatusReady.textContent = 'Índice nominal: erro';
+    if (els.peopleStatusEntities) els.peopleStatusEntities.textContent = 'Pessoas rastreadas: --';
+    if (els.peopleStatusMentions) els.peopleStatusMentions.textContent = 'Menções indexadas: --';
+    if (els.peopleSummaryText) els.peopleSummaryText.textContent = message;
+    if (els.peopleMethodologyNote) els.peopleMethodologyNote.textContent = message;
+    if (els.peopleExamplesHint) els.peopleExamplesHint.textContent = message;
+    if (els.peopleRankingBody) {
+      els.peopleRankingBody.innerHTML = `<tr><td colspan="7">${esc(message)}</td></tr>`;
+    }
+    if (els.peopleMethodologyBody) {
+      els.peopleMethodologyBody.innerHTML = `<tr><td colspan="6">${esc(message)}</td></tr>`;
+    }
+  }
+
+  async function loadPeopleData() {
+    try {
+      const [directoryPayload, mentionsPayload] = await Promise.all([
+        fetchJson('./data/people_directory.json'),
+        fetchJson('./data/people_mentions.json'),
+      ]);
+      state.peopleMeta = directoryPayload || {};
+      state.peopleDirectory = Array.isArray(directoryPayload && directoryPayload.entities)
+        ? directoryPayload.entities
+        : [];
+      state.peopleMentions = Array.isArray(mentionsPayload && mentionsPayload.mentions)
+        ? mentionsPayload.mentions
+        : [];
+      state.peopleById = new Map(state.peopleDirectory.map((entity) => [entity.id, entity]));
+      for (const row of state.peopleMentions) {
+        row._epochDay = getEpochDay(row.date || '');
+      }
+      state.peopleReady = true;
+
+      const counts = state.peopleMeta.counts || {};
+      if (els.peopleStatusReady) els.peopleStatusReady.textContent = 'Índice nominal: pronto';
+      if (els.peopleStatusEntities) {
+        els.peopleStatusEntities.textContent = `Pessoas rastreadas: ${nFmt.format(counts.entities || state.peopleDirectory.length)}`;
+      }
+      if (els.peopleStatusMentions) {
+        els.peopleStatusMentions.textContent = `Menções indexadas: ${nFmt.format(counts.mention_occurrences_total || 0)}`;
+      }
+      renderPeopleMethodology();
+      await applyPeopleSearch();
+      return true;
+    } catch (error) {
+      console.error(error);
+      setPeopleStatusError(`Falha ao carregar o índice nominal: ${error.message}`);
+      return false;
+    }
+  }
+
+  function renderPeopleMetrics(summary) {
+    if (els.peopleMetricOccurrences) els.peopleMetricOccurrences.textContent = nFmt.format(summary.totalOccurrences);
+    if (els.peopleMetricDocs) els.peopleMetricDocs.textContent = nFmt.format(summary.totalDocs);
+    if (els.peopleMetricEntities) els.peopleMetricEntities.textContent = nFmt.format(summary.totalEntities);
+    if (els.peopleMetricTop) els.peopleMetricTop.textContent = summary.topLabel || '--';
+  }
+
+  function renderPeopleExamples(rows) {
+    if (!els.peopleExamplesGrid || !els.peopleExamplesHint) return;
+    els.peopleExamplesGrid.innerHTML = '';
+    if (!rows.length) {
+      els.peopleExamplesHint.textContent = 'Nenhuma menção encontrada no filtro nominal atual.';
+      return;
+    }
+    els.peopleExamplesHint.textContent = `Mostrando ${Math.min(rows.length, PEOPLE_EXAMPLES_LIMIT)} exemplos recentes do filtro nominal atual.`;
+    rows.slice(0, PEOPLE_EXAMPLES_LIMIT).forEach((row) => {
+      const entity = state.peopleById.get(row.entity_id);
+      if (!entity) return;
+      const aliases = Array.isArray(row.matched_aliases) ? row.matched_aliases : [];
+      const card = document.createElement('article');
+      card.className = 'example-card';
+      card.innerHTML = `
+        <div class="example-kicker">${esc(entity.group_label || entity.kind || '--')}</div>
+        <h3 class="example-title">${esc(entity.name || '--')}</h3>
+        <p class="example-meta">${esc(entity.role || '--')} | ${esc(row.type || '--')} | ${esc(formatDateIso(row.date))} | ${nFmt.format(row.occurrences || 0)} ocorrências</p>
+        <div class="example-aliases">${aliases.map((alias) => `<span class="alias-chip">${esc(alias)}</span>`).join('')}</div>
+        <p class="example-snippet">${highlightPeopleSnippet(row.snippet || '', aliases)}</p>
+        <a class="example-link" href="${esc(row.url || '#')}" target="_blank" rel="noopener noreferrer">Ver documento original</a>
+      `;
+      els.peopleExamplesGrid.appendChild(card);
+    });
+  }
+
+  function renderPeopleRanking(rankingRows) {
+    if (!els.peopleRankingBody || !els.peopleRankingCount) return;
+    els.peopleRankingBody.innerHTML = '';
+    if (!rankingRows.length) {
+      els.peopleRankingBody.innerHTML = '<tr><td colspan="7">Nenhum nome citado no filtro atual.</td></tr>';
+      els.peopleRankingCount.textContent = '0 linhas';
+      return;
+    }
+    rankingRows.slice(0, PEOPLE_MAX_TABLE_ROWS).forEach((row) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${esc(row.entity.name || '--')}</td>
+        <td>${esc(row.entity.group_label || '--')}</td>
+        <td>${esc(row.entity.role || '--')}</td>
+        <td>${nFmt.format(row.occurrences)}</td>
+        <td>${nFmt.format(row.docs)}</td>
+        <td>${esc(formatDateIso(row.lastDate))}</td>
+        <td>${esc((row.entity.aliases_counted || []).join('; '))}</td>
+      `;
+      els.peopleRankingBody.appendChild(tr);
+    });
+    if (rankingRows.length > PEOPLE_MAX_TABLE_ROWS) {
+      els.peopleRankingCount.textContent = `${nFmt.format(PEOPLE_MAX_TABLE_ROWS)} de ${nFmt.format(rankingRows.length)} linhas`;
+    } else {
+      els.peopleRankingCount.textContent = `${nFmt.format(rankingRows.length)} linhas`;
+    }
+  }
+
+  function renderPeopleMethodology() {
+    if (!els.peopleMethodologyBody || !els.peopleMethodologyNote) return;
+    if (!state.peopleReady) {
+      els.peopleMethodologyBody.innerHTML = '<tr><td colspan="6">Índice nominal ainda indisponível.</td></tr>';
+      return;
+    }
+    const textFilter = normalizeSearchText(els.peopleMethodologySearch ? els.peopleMethodologySearch.value : '');
+    const kindFilter = els.peopleMethodologyKind ? els.peopleMethodologyKind.value : 'todos';
+    const rows = state.peopleDirectory.filter((entity) => {
+      if (kindFilter !== 'todos' && entity.kind !== kindFilter) return false;
+      if (!textFilter) return true;
+      return normalizeSearchText(
+        `${entity.name || ''} ${entity.role || ''} ${(entity.aliases_counted || []).join(' ')} ${(entity.aliases_observed || []).map((item) => item.alias).join(' ')}`
+      ).includes(textFilter);
+    });
+
+    els.peopleMethodologyNote.textContent = 'As listas de ministros do governo, STF, Câmara e Senado são buscadas diariamente em portais oficiais. Janja fica separada. O matching é case-insensitive e sem acentos. Para reduzir falso positivo, o dicionário privilegia nomes compostos e formas oficiais; nomes de uma palavra só ou variantes ambíguas ficam de fora quando podem colidir com palavras comuns, homônimos ou sobrenomes genéricos. Em entrevistas, parte das menções pode ter sido pronunciada pelo interlocutor, não pelo presidente. Para parlamentares, o conjunto rastreado é o Congresso em exercício obtido nos portais oficiais atuais; ex-parlamentares e homônimos externos ao conjunto podem não ser capturados ou podem exigir leitura manual. Nos filtros temporais, documentos com data muito à frente do dia corrente são ignorados para evitar distorção da série.';
+    if (!rows.length) {
+      els.peopleMethodologyBody.innerHTML = '<tr><td colspan="6">Nenhum item no dicionário para esse filtro.</td></tr>';
+      return;
+    }
+    els.peopleMethodologyBody.innerHTML = '';
+    rows.forEach((entity) => {
+      const observed = (entity.aliases_observed || [])
+        .slice(0, 8)
+        .map((item) => `${item.alias} (${nFmt.format(item.docs)} docs)`)
+        .join('; ');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${esc(entity.name || '--')}</td>
+        <td>${esc(entity.group_label || '--')}</td>
+        <td>${esc(entity.role || '--')}</td>
+        <td>${esc((entity.aliases_counted || []).join('; ') || '--')}</td>
+        <td>${esc(observed || '--')}</td>
+        <td><a class="doc-link" href="${esc(entity.source_url || '#')}" target="_blank" rel="noopener noreferrer">Fonte</a></td>
+      `;
+      els.peopleMethodologyBody.appendChild(tr);
+    });
+  }
+
+  function renderPeopleCharts({ filters, timeline, rankingRows, groupCounts }) {
+    destroyChartList('peopleCharts');
+    clampChartCanvasSize([els.peopleChartTimeline, els.peopleChartTop, els.peopleChartGroups]);
+
+    const timelineEntries = [...timeline.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+    const timelineChart = new Chart(els.peopleChartTimeline, {
+      type: 'line',
+      data: {
+        labels: timelineEntries.map(([key]) => formatPeopleBucketLabel(key, filters.granularity)),
+        datasets: [{
+          label: filters.metric === 'documents' ? 'Documentos com menção' : 'Ocorrências',
+          data: timelineEntries.map(([, value]) => value),
+          borderColor: '#2b6f62',
+          backgroundColor: 'rgba(43,111,98,0.16)',
+          tension: 0.18,
+          fill: false,
+          pointRadius: timelineEntries.length > 1 ? 2 : 4,
+          pointHoverRadius: 4,
+        }],
+      },
+      options: {
+        animation: false,
+        responsiveAnimationDuration: 0,
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Linha do tempo das citações nominais' },
+        },
+        scales: {
+          y: { beginAtZero: true },
+          x: {
+            ticks: {
+              autoSkip: true,
+              maxTicksLimit: 12,
+              maxRotation: 60,
+              minRotation: 0,
+            },
+          },
+        },
+      },
+    });
+    state.peopleCharts.push(timelineChart);
+
+    const topRows = rankingRows.slice(0, PEOPLE_TOP_CHART_LIMIT);
+    const topChart = new Chart(els.peopleChartTop, {
+      type: 'bar',
+      data: {
+        labels: topRows.map((row) => row.entity.name),
+        datasets: [{
+          label: filters.metric === 'documents' ? 'Documentos com menção' : 'Ocorrências',
+          data: topRows.map((row) => (filters.metric === 'documents' ? row.docs : row.occurrences)),
+          backgroundColor: '#b8612d',
+          borderRadius: 6,
+          barPercentage: 0.55,
+          categoryPercentage: 0.72,
+          maxBarThickness: 34,
+          minBarLength: 2,
+        }],
+      },
+      options: {
+        animation: false,
+        responsiveAnimationDuration: 0,
+        responsive: true,
+        maintainAspectRatio: false,
+        indexAxis: 'y',
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Top nomes citados' },
+        },
+        scales: { x: { beginAtZero: true, grace: '8%' } },
+      },
+    });
+    state.peopleCharts.push(topChart);
+
+    const groupEntries = [...groupCounts.entries()].sort((a, b) => b[1] - a[1]);
+    const groupChart = new Chart(els.peopleChartGroups, {
+      type: 'doughnut',
+      data: {
+        labels: groupEntries.map(([label]) => label),
+        datasets: [{
+          data: groupEntries.map(([, value]) => value),
+          backgroundColor: ['#2b6f62', '#b8612d', '#274c7f', '#8b6f47', '#5a4c7f'],
+          borderWidth: 0,
+        }],
+      },
+      options: {
+        animation: false,
+        responsiveAnimationDuration: 0,
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom' },
+          title: { display: true, text: 'Distribuição por grupo' },
+        },
+      },
+    });
+    state.peopleCharts.push(groupChart);
+
+    window.requestAnimationFrame(() => {
+      state.peopleCharts.forEach((chart) => chart.resize());
+    });
+  }
+
+  async function applyPeopleSearch() {
+    if (!state.peopleReady) return;
+    const requestId = state.peopleRequestId + 1;
+    state.peopleRequestId = requestId;
+    const filters = getPeopleFilters();
+    const query = normalizeSearchText(filters.query);
+    const anchorDay = getPeopleAnchorDay();
+    const cutoffDay = filters.rangeDays > 0 && anchorDay !== null ? anchorDay - (filters.rangeDays - 1) : null;
+
+    updatePeopleFiltersBanner(filters, null);
+
+    const rankingMap = new Map();
+    const timeline = new Map();
+    const groupCounts = new Map();
+    const matchingRows = [];
+    const uniqueDocs = new Set();
+
+    for (let idx = 0; idx < state.peopleMentions.length; idx += 1) {
+      if (requestId !== state.peopleRequestId) return;
+      const row = state.peopleMentions[idx];
+      const entity = state.peopleById.get(row.entity_id);
+      if (!entity) continue;
+      if (filters.group !== 'todos' && entity.kind !== filters.group) continue;
+      if (filters.type !== 'ambos' && row.type !== filters.type) continue;
+      if (query && !normalizeSearchText(entity.search_text || '').includes(query)) continue;
+
+      const day = row._epochDay ?? getEpochDay(row.date || '');
+      if (cutoffDay !== null && (day === null || day < cutoffDay || day > anchorDay)) continue;
+
+      matchingRows.push(row);
+      uniqueDocs.add(row.doc_id);
+
+      const bucket = rankingMap.get(entity.id) || {
+        entity,
+        occurrences: 0,
+        docs: 0,
+        lastDate: '',
+      };
+      bucket.occurrences += Number(row.occurrences) || 0;
+      bucket.docs += 1;
+      if (!bucket.lastDate || (row.date || '') > bucket.lastDate) bucket.lastDate = row.date || '';
+      rankingMap.set(entity.id, bucket);
+
+      const metricValue = filters.metric === 'documents' ? 1 : (Number(row.occurrences) || 0);
+      const timelineKey = filters.granularity === 'day'
+        ? (row.date || '')
+        : filters.granularity === 'week'
+          ? (row.week || '')
+          : filters.granularity === 'year'
+            ? (row.year || '')
+            : (row.month || '');
+      if (timelineKey) {
+        timeline.set(timelineKey, (timeline.get(timelineKey) || 0) + metricValue);
+      }
+
+      const groupLabel = entity.group_label || entity.kind || '--';
+      groupCounts.set(groupLabel, (groupCounts.get(groupLabel) || 0) + metricValue);
+
+      if (idx > 0 && idx % 800 === 0) {
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
+    }
+
+    if (requestId !== state.peopleRequestId) return;
+
+    const rankingRows = [...rankingMap.values()]
+      .sort((a, b) => b.occurrences - a.occurrences || b.docs - a.docs || (b.lastDate || '').localeCompare(a.lastDate || '') || (a.entity.name || '').localeCompare(b.entity.name || '', 'pt-BR'));
+
+    const totalOccurrences = rankingRows.reduce((acc, row) => acc + row.occurrences, 0);
+    const totalDocs = uniqueDocs.size;
+    const totalEntities = rankingRows.length;
+    const topRow = rankingRows[0] || null;
+    const topLabel = topRow
+      ? `${topRow.entity.name} (${nFmt.format(filters.metric === 'documents' ? topRow.docs : topRow.occurrences)})`
+      : '--';
+
+    renderPeopleMetrics({ totalOccurrences, totalDocs, totalEntities, topLabel });
+    renderPeopleExamples(
+      matchingRows
+        .slice()
+        .sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.occurrences || 0) - (a.occurrences || 0))
+    );
+    renderPeopleRanking(rankingRows);
+    renderPeopleCharts({ filters, timeline, rankingRows, groupCounts });
+
+    if (els.peopleSummaryText) {
+      const rangeLabel = filters.rangeDays > 0 ? `${nFmt.format(filters.rangeDays)} dias` : 'todo o período';
+      const kindLabel = filters.group === 'todos' ? 'todos os grupos' : selectedText(els.peopleGroup, filters.group);
+      els.peopleSummaryText.textContent = `Filtro nominal atual: ${kindLabel}; ${filters.type === 'ambos' ? 'discursos + entrevistas' : filters.type}; janela ${rangeLabel}. Resultado: ${nFmt.format(totalOccurrences)} ocorrências em ${nFmt.format(totalDocs)} documentos, distribuídas por ${nFmt.format(totalEntities)} pessoas rastreadas.`;
+    }
+    updatePeopleFiltersBanner(filters, matchingRows.length);
+  }
+
+  function switchTab(tabName) {
+    state.activeTab = tabName === 'nominal' ? 'nominal' : 'textual';
+    els.tabButtons.forEach((button) => {
+      const isActive = button.dataset.tab === state.activeTab;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+    els.tabScopedBlocks.forEach((block) => {
+      block.hidden = block.getAttribute('data-tab-scope') !== state.activeTab;
+    });
+    els.textualOnlyBlocks.forEach((block) => {
+      block.hidden = state.activeTab !== 'textual';
+    });
+    window.requestAnimationFrame(() => {
+      const list = state.activeTab === 'nominal' ? state.peopleCharts : state.textualCharts;
+      list.forEach((chart) => chart.resize());
+    });
   }
 
   function setupEvents() {
@@ -1410,6 +1890,52 @@
         requestWordcloudUpdate();
       });
     }
+    els.tabButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        switchTab(button.dataset.tab || 'textual');
+      });
+    });
+    if (els.peopleApply) {
+      els.peopleApply.addEventListener('click', () => {
+        if (!state.peopleReady) return;
+        applyPeopleSearch();
+      });
+    }
+    if (els.peopleReset) {
+      els.peopleReset.addEventListener('click', () => {
+        if (!state.peopleReady) return;
+        if (els.peopleQuery) els.peopleQuery.value = '';
+        if (els.peopleGroup) els.peopleGroup.value = 'todos';
+        if (els.peopleType) els.peopleType.value = 'ambos';
+        if (els.peopleRange) els.peopleRange.value = '30';
+        if (els.peopleGranularity) els.peopleGranularity.value = 'month';
+        if (els.peopleMetric) els.peopleMetric.value = 'occurrences';
+        applyPeopleSearch();
+      });
+    }
+    if (els.peopleQuery) {
+      els.peopleQuery.addEventListener('keydown', (ev) => {
+        if (ev.key !== 'Enter' || !state.peopleReady) return;
+        applyPeopleSearch();
+      });
+    }
+    [els.peopleGroup, els.peopleType, els.peopleRange, els.peopleGranularity, els.peopleMetric].forEach((el) => {
+      if (!el) return;
+      el.addEventListener('change', () => {
+        if (!state.peopleReady) return;
+        applyPeopleSearch();
+      });
+    });
+    if (els.peopleMethodologySearch) {
+      els.peopleMethodologySearch.addEventListener('input', () => {
+        renderPeopleMethodology();
+      });
+    }
+    if (els.peopleMethodologyKind) {
+      els.peopleMethodologyKind.addEventListener('change', () => {
+        renderPeopleMethodology();
+      });
+    }
   }
 
   async function init() {
@@ -1436,14 +1962,11 @@
       updateMethodologyNote();
 
       setupEvents();
+      switchTab('textual');
       updateActiveFiltersBanner(getActiveFilters(), '', null);
-      if (state.lightMode) {
-        setDeferredSearchState();
-        return;
-      }
-
-      const ready = await ensureRecordsReady();
-      if (!ready) return;
+      updatePeopleFiltersBanner(getPeopleFilters(), null);
+      await loadPeopleData();
+      setDeferredSearchState();
     } catch (err) {
       console.error(err);
       els.summaryText.textContent = 'Falha ao carregar a base do Lulometro.';

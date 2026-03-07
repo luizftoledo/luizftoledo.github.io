@@ -8,6 +8,8 @@ Outputs:
 - lulometro-dashboard/data/super_tabela.csv   (portable table)
 - lulometro-dashboard/data/metadata.json      (update metadata)
 - lulometro-dashboard/data/sources.json       (crawl diagnostics)
+- lulometro-dashboard/data/people_directory.json (tracked public figures + alias methodology)
+- lulometro-dashboard/data/people_mentions.json  (precomputed Lula mentions by document)
 
 The scraper covers:
 - Current Planalto pages (Lula): interviews and speeches.
@@ -43,6 +45,8 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import Error as PlaywrightError
 from playwright.sync_api import sync_playwright
 
+from lulometro_people_index import build_people_index
+
 try:
     from pypdf import PdfReader
 except Exception:  # pragma: no cover - optional dependency in local runs
@@ -70,6 +74,8 @@ ITEMS_JSON = DATA_DIR / "items.json"
 CSV_FILE = DATA_DIR / "super_tabela.csv"
 META_JSON = DATA_DIR / "metadata.json"
 SOURCES_JSON = DATA_DIR / "sources.json"
+PEOPLE_DIRECTORY_JSON = DATA_DIR / "people_directory.json"
+PEOPLE_MENTIONS_JSON = DATA_DIR / "people_mentions.json"
 MAX_BINARY_BYTES = 20 * 1024 * 1024
 DETAIL_CHECKPOINT_EVERY = 500
 
@@ -1678,6 +1684,30 @@ def main() -> int:
         write_json(ITEMS_JSON, {"items": items})
         write_csv(records_sorted)
 
+        people_summary = {}
+        try:
+            people_payload = build_people_index(records_sorted, USER_AGENT)
+        except Exception as exc:
+            crawl_errors.append(
+                {
+                    "scope": "people-index",
+                    "url": "",
+                    "error": f"Failed to build nominal mentions index: {exc}",
+                }
+            )
+            people_summary = {
+                "status": "error",
+                "error": normalize_space(str(exc))[:500],
+            }
+        else:
+            write_json(PEOPLE_DIRECTORY_JSON, people_payload["directory"])
+            write_json(PEOPLE_MENTIONS_JSON, people_payload["mentions"])
+            people_summary = {
+                "status": "ok",
+                **people_payload["summary"]["counts"],
+                "date_range": people_payload["summary"].get("date_range", {}),
+            }
+
         source_counter = Counter(rec.get("source", "") for rec in records_sorted)
         type_counter = Counter(rec.get("type", "") for rec in records_sorted)
         president_counter = Counter(rec.get("president", "") for rec in records_sorted)
@@ -1698,6 +1728,7 @@ def main() -> int:
             "types": dict(type_counter),
             "top_presidents": president_counter.most_common(20),
             "top_mandates": mandate_counter.most_common(20),
+            "people_index": people_summary,
             "duration_seconds": round(time.time() - started, 2),
         }
         write_json(META_JSON, metadata)
