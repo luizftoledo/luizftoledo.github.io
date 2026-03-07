@@ -177,6 +177,22 @@ code {
   margin-top: 16px;
 }
 
+.scenario-block + .scenario-block,
+.scenario-block + .custom-rate-row {
+  margin-top: 18px;
+}
+
+.scenario-block-header {
+  display: grid;
+  gap: 4px;
+}
+
+.scenario-block-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: -0.03em;
+}
+
 .field {
   display: grid;
   gap: 8px;
@@ -292,6 +308,51 @@ button:focus-visible {
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
+.scenario-card--planning {
+  background: linear-gradient(180deg, rgba(13, 122, 83, 0.12), rgba(255, 248, 235, 0.94));
+}
+
+.scenario-card--reference {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 248, 235, 0.9));
+}
+
+.scenario-card--custom {
+  background: linear-gradient(180deg, rgba(213, 132, 43, 0.14), rgba(255, 248, 235, 0.94));
+}
+
+.scenario-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.scenario-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.scenario-badge--planning {
+  background: rgba(13, 122, 83, 0.14);
+  color: var(--accent);
+}
+
+.scenario-badge--reference {
+  background: rgba(20, 33, 29, 0.08);
+  color: var(--muted);
+}
+
+.scenario-badge--custom {
+  background: rgba(213, 132, 43, 0.16);
+  color: #8a5416;
+}
+
 .scenario-card:hover,
 .scenario-card.is-active {
   transform: translateY(-2px);
@@ -319,6 +380,12 @@ button:focus-visible {
 .rate-card small,
 .status-copy {
   margin: 0;
+}
+
+.scenario-note {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
 }
 
 .scenario-card small,

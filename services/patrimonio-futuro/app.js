@@ -4,6 +4,9 @@ const DEFAULTS = {
   currentBalance: 250000,
   monthlyContribution: 3000,
 };
+const DEFAULT_SCENARIO_ID = "netBase";
+const FIXED_INCOME_TAX_RATE = 15;
+const TESOURO_CUSTODY_FEE_RATE = 0.2;
 
 const EVENT_TYPES = [
   { id: "lumpSum", label: "Entrada unica" },
@@ -15,7 +18,7 @@ const state = {
   error: null,
   references: null,
   scenarios: [],
-  selectedScenarioId: "cdi100",
+  selectedScenarioId: DEFAULT_SCENARIO_ID,
   displayCurrency: "BRL",
   charts: {
     portfolio: null,
@@ -43,7 +46,8 @@ const dom = {
   statusPanel: document.getElementById("statusPanel"),
   referencesTimestamp: document.getElementById("referencesTimestamp"),
   referencesGrid: document.getElementById("referencesGrid"),
-  scenarioGrid: document.getElementById("scenarioGrid"),
+  scenarioGridPlanning: document.getElementById("scenarioGridPlanning"),
+  scenarioGridReference: document.getElementById("scenarioGridReference"),
   metricsGrid: document.getElementById("metricsGrid"),
   summaryHelper: document.getElementById("summaryHelper"),
   tableHelper: document.getElementById("tableHelper"),
@@ -77,15 +81,8 @@ function bindEvents() {
     runSimulation();
   });
 
-  dom.scenarioGrid.addEventListener("click", (event) => {
-    const card = event.target.closest("[data-scenario-id]");
-    if (!card) {
-      return;
-    }
-
-    state.selectedScenarioId = card.dataset.scenarioId;
-    updateScenarioSelection();
-    runSimulation();
+  [dom.scenarioGridPlanning, dom.scenarioGridReference].forEach((grid) => {
+    grid.addEventListener("click", handleScenarioSelection);
   });
 
   dom.addEventBtn.addEventListener("click", () => {
@@ -107,6 +104,17 @@ function bindEvents() {
     }
     runSimulation();
   });
+}
+
+function handleScenarioSelection(event) {
+  const card = event.target.closest("[data-scenario-id]");
+  if (!card) {
+    return;
+  }
+
+  state.selectedScenarioId = card.dataset.scenarioId;
+  updateScenarioSelection();
+  runSimulation();
 }
 
 function setDefaultInputs() {
@@ -182,47 +190,9 @@ async function loadReferences() {
       gbpDate: gbpSeries[0].data,
     };
 
-    state.scenarios = [
-      {
-        id: "poupanca",
-        label: "Poupanca aprox.",
-        rate: poupancaAnnual,
-        description: "Regra atual simplificada, sem TR.",
-      },
-      {
-        id: "selic",
-        label: "Tesouro Selic / Selic",
-        rate: selicAnnual,
-        description: "Referencia oficial anualizada base 252.",
-      },
-      {
-        id: "cdi100",
-        label: "CDI 100%",
-        rate: cdiAnnual,
-        description: "Benchmark bruto de renda fixa.",
-      },
-      {
-        id: "cdi110",
-        label: "CDB 110% do CDI",
-        rate: cdiAnnual * 1.1,
-        description: "Cenario simples acima do benchmark.",
-      },
-      {
-        id: "cdi120",
-        label: "CDB 120% do CDI",
-        rate: cdiAnnual * 1.2,
-        description: "Cenario mais agressivo, ainda simples.",
-      },
-      {
-        id: "custom",
-        label: "Taxa personalizada",
-        rate: cdiAnnual,
-        description: "Use a taxa anual que voce quiser.",
-      },
-    ];
-
     dom.inflationRate.value = percentageFormatter.format(ipca12mAnnual).replace(".", "").replace(",", ".");
     dom.customRate.value = percentageFormatter.format(cdiAnnual).replace(".", "").replace(",", ".");
+    state.scenarios = buildScenarios(ipca12mAnnual);
     dom.inflationHint.textContent = `Padrao: IPCA acumulado em 12 meses = ${formatPercent(ipca12mAnnual)}.`;
     updateCurrencyHint();
 
@@ -252,6 +222,112 @@ async function fetchSeries(code, count) {
   }
 
   return response.json();
+}
+
+function buildScenarios(inflationAnnual) {
+  const safeInflationAnnual =
+    Number.isFinite(inflationAnnual) && inflationAnnual >= 0 ? inflationAnnual : state.references.ipca12mAnnual;
+  const customRate = parsePercentageInput(dom.customRate.value);
+  const customScenarioRate =
+    Number.isFinite(customRate) && customRate >= 0 ? customRate : state.references.cdiAnnual;
+  const netSelicRate = estimateNetFixedIncomeRate(
+    state.references.selicAnnual,
+    FIXED_INCOME_TAX_RATE,
+    TESOURO_CUSTODY_FEE_RATE
+  );
+
+  return [
+    {
+      id: "netConservative",
+      label: "Realista conservador",
+      category: "planning",
+      tone: "planning",
+      badge: "Liquido",
+      rate: toNominalAnnualRate(safeInflationAnnual, 2),
+      note: "IPCA + 2,0% real",
+      description: "Planejamento prudente para horizontes longos.",
+    },
+    {
+      id: "netBase",
+      label: "Realista base",
+      category: "planning",
+      tone: "planning",
+      badge: "Liquido",
+      rate: toNominalAnnualRate(safeInflationAnnual, 3.5),
+      note: "IPCA + 3,5% real",
+      description: "Ponto de partida mais equilibrado para simular a vida real.",
+    },
+    {
+      id: "netOptimistic",
+      label: "Realista otimista",
+      category: "planning",
+      tone: "planning",
+      badge: "Liquido",
+      rate: toNominalAnnualRate(safeInflationAnnual, 5),
+      note: "IPCA + 5,0% real",
+      description: "Supoe carteira eficiente e constancia por muitos anos.",
+    },
+    {
+      id: "selicNet",
+      label: "Selic liquida hoje",
+      category: "planning",
+      tone: "planning",
+      badge: "Liquido aprox.",
+      rate: netSelicRate,
+      note: "Selic atual menos IR e custodia",
+      description: "Aproximacao simples com 15% de IR e 0,20% a.a. de custodia.",
+    },
+    {
+      id: "poupanca",
+      label: "Poupanca aprox.",
+      category: "reference",
+      tone: "reference",
+      badge: "Referencia",
+      rate: state.references.poupancaAnnual,
+      note: "Regra atual simplificada",
+      description: "Sem TR. Serve mais como piso de comparacao.",
+    },
+    {
+      id: "cdi100",
+      label: "CDI 100%",
+      category: "reference",
+      tone: "reference",
+      badge: "Bruto hoje",
+      rate: state.references.cdiAnnual,
+      note: "CDI anualizado atual",
+      description: "Benchmark bruto de renda fixa sem descontos.",
+    },
+    {
+      id: "cdi110",
+      label: "CDB 110% do CDI",
+      category: "reference",
+      tone: "reference",
+      badge: "Bruto hoje",
+      rate: state.references.cdiAnnual * 1.1,
+      note: "110% da taxa CDI atual",
+      description: "Comparacao simples acima do benchmark bruto.",
+    },
+    {
+      id: "cdi120",
+      label: "CDB 120% do CDI",
+      category: "reference",
+      tone: "reference",
+      badge: "Bruto hoje",
+      rate: state.references.cdiAnnual * 1.2,
+      note: "120% da taxa CDI atual",
+      description: "Cenario agressivo e pouco realista para 30 anos.",
+    },
+    {
+      id: "custom",
+      label: "Taxa personalizada",
+      category: "reference",
+      tone: "custom",
+      badge: "Livre",
+      rate: customScenarioRate,
+      note: "Escolhida por voce",
+      description: "Use qualquer taxa anual nominal que queira testar.",
+    },
+  ];
 }
 
 function renderReferenceCards() {
@@ -299,24 +375,33 @@ function renderReferenceCards() {
 }
 
 function renderScenarioCards() {
-  dom.scenarioGrid.innerHTML = state.scenarios
-    .map(
-      (scenario) => `
-        <article class="scenario-card" data-scenario-id="${scenario.id}">
-          <p>${escapeHtml(scenario.label)}</p>
-          <h3>${escapeHtml(formatPercent(scenario.rate))}</h3>
-          <small>${escapeHtml(scenario.description)}</small>
-        </article>
-      `
-    )
-    .join("");
+  const renderCards = (category) =>
+    state.scenarios
+      .filter((scenario) => scenario.category === category)
+      .map(
+        (scenario) => `
+          <article class="scenario-card scenario-card--${scenario.tone}" data-scenario-id="${scenario.id}">
+            <div class="scenario-card-header">
+              <p>${escapeHtml(scenario.label)}</p>
+              <span class="scenario-badge scenario-badge--${scenario.tone}">${escapeHtml(scenario.badge)}</span>
+            </div>
+            <h3>${escapeHtml(formatPercent(scenario.rate))}</h3>
+            <span class="scenario-note">${escapeHtml(scenario.note)}</span>
+            <small>${escapeHtml(scenario.description)}</small>
+          </article>
+        `
+      )
+      .join("");
+
+  dom.scenarioGridPlanning.innerHTML = renderCards("planning");
+  dom.scenarioGridReference.innerHTML = renderCards("reference");
 }
 
 function updateScenarioSelection() {
   const isCustom = state.selectedScenarioId === "custom";
   dom.customRateRow.classList.toggle("hidden", !isCustom);
 
-  [...dom.scenarioGrid.querySelectorAll(".scenario-card")].forEach((card) => {
+  [...document.querySelectorAll(".scenario-card")].forEach((card) => {
     card.classList.toggle("is-active", card.dataset.scenarioId === state.selectedScenarioId);
   });
 }
@@ -331,7 +416,15 @@ function runSimulation() {
   const monthlyContribution = parseMoneyInput(dom.monthlyContribution.value);
   const inflationAnnual = parsePercentageInput(dom.inflationRate.value);
   const events = collectEvents(currentAge);
-  const selectedScenario = state.scenarios.find((scenario) => scenario.id === state.selectedScenarioId);
+  state.scenarios = buildScenarios(inflationAnnual);
+  renderScenarioCards();
+  updateScenarioSelection();
+  let selectedScenario = state.scenarios.find((scenario) => scenario.id === state.selectedScenarioId);
+  if (!selectedScenario) {
+    state.selectedScenarioId = DEFAULT_SCENARIO_ID;
+    updateScenarioSelection();
+    selectedScenario = state.scenarios.find((scenario) => scenario.id === state.selectedScenarioId);
+  }
   const annualRate =
     state.selectedScenarioId === "custom"
       ? parsePercentageInput(dom.customRate.value)
@@ -449,14 +542,18 @@ function renderMetrics(rows, inputs) {
     inputs.currencyMeta.code === "BRL"
       ? "reais"
       : `${inputs.currencyMeta.label.toLowerCase()} na cotacao atual`;
+  const scenarioKindCopy =
+    inputs.selectedScenario.category === "planning"
+      ? "cenario liquido de planejamento"
+      : "referencia simples do mercado atual";
 
-  dom.summaryHelper.textContent = `${inputs.selectedScenario.label} com ${formatPercent(
+  dom.summaryHelper.textContent = `${inputs.selectedScenario.label} (${scenarioKindCopy}) com ${formatPercent(
     inputs.annualRate
-  )}, inflacao de ${formatPercent(inputs.inflationAnnual)} e aportes mensais de ${formatCurrency(
-    inputs.monthlyContribution,
-    "BRL",
-    false
-  )}. Mostrando os resultados em ${currencyLabel}${eventCount ? ` e considerando ${eventCount} evento(s) extra(s)` : ""}.`;
+  )}, ${inputs.selectedScenario.note.toLowerCase()}, inflacao de ${formatPercent(
+    inputs.inflationAnnual
+  )} e aportes mensais de ${formatCurrency(inputs.monthlyContribution, "BRL", false)}. Mostrando os resultados em ${currencyLabel}${
+    eventCount ? ` e considerando ${eventCount} evento(s) extra(s)` : ""
+  }.`;
 
   const cards = [
     {
@@ -627,6 +724,14 @@ function calculateSavingsApproximation(selicAnnual) {
   return (Math.pow(1.005, 12) - 1) * 100;
 }
 
+function toNominalAnnualRate(inflationAnnual, realAnnual) {
+  return ((1 + inflationAnnual / 100) * (1 + realAnnual / 100) - 1) * 100;
+}
+
+function estimateNetFixedIncomeRate(grossAnnual, taxRatePercent, annualFeePercent = 0) {
+  return Math.max(grossAnnual * (1 - taxRatePercent / 100) - annualFeePercent, 0);
+}
+
 function sumEvents(events, type, age) {
   return events
     .filter((event) => event.type === type && event.age === age)
@@ -706,9 +811,10 @@ function updateStatusPanel() {
   dom.statusPanel.innerHTML = `
     <p class="panel-label">Status</p>
     <h2>Cenarios prontos para simular</h2>
-    <p class="status-copy">A pagina combina CDI anualizado, Selic anualizada, IPCA acumulado em 12 meses, cambio atual de dolar/libra e eventos extras por idade, todos do Banco Central.</p>
+    <p class="status-copy">A pagina combina CDI anualizado, Selic anualizada, IPCA acumulado em 12 meses, cambio atual de dolar/libra e eventos extras por idade, todos do Banco Central. Os cenarios de planejamento usam versoes liquidas ou retornos reais simples; os brutos ficam separados como referencia.</p>
     <div class="status-details">
       <span>Horizonte: ${YEARS} anos</span>
+      <span>Planejamento: liquido e realista</span>
       <span>Comparacao: nominal x real</span>
       <span>Base oficial: SGS do BCB</span>
     </div>

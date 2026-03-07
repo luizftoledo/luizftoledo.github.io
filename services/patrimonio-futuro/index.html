@@ -6,11 +6,11 @@
   <title>Simulador de Patrimônio Futuro | BCB</title>
   <meta
     name="description"
-    content="Simule o crescimento do seu patrimônio nos próximos 30 anos com juros compostos, inflação e cenários simples baseados em CDI, Selic e outras referências.">
+    content="Simule o crescimento do seu patrimônio nos próximos 30 anos com juros compostos, inflação e cenários líquidos mais realistas, além de referências brutas do mercado atual.">
   <meta property="og:title" content="Simulador de Patrimônio Futuro | BCB">
   <meta
     property="og:description"
-    content="Informe patrimônio atual, aporte mensal e um cenário de taxa. Veja projeções nominais e reais em tabelas e gráficos.">
+    content="Informe patrimônio atual, aporte mensal e escolha entre cenários líquidos de planejamento e referências brutas do mercado atual.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://luizftoledo.github.io/services/patrimonio-futuro/">
   <meta property="og:image" content="https://luizftoledo.github.io/favicon.png">
@@ -18,7 +18,7 @@
   <meta name="twitter:title" content="Simulador de Patrimônio Futuro | BCB">
   <meta
     name="twitter:description"
-    content="Ferramenta simples para projetar patrimônio futuro com juros compostos e correção pela inflação.">
+    content="Ferramenta simples para projetar patrimônio futuro com cenários líquidos de planejamento e correção pela inflação.">
   <link rel="canonical" href="https://luizftoledo.github.io/services/patrimonio-futuro/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,13 +36,14 @@
         <p class="eyebrow">Juros compostos + inflacao</p>
         <h1>Simulador de patrimonio futuro para os proximos 30 anos</h1>
         <p class="lead">
-          Digite quanto voce ja tem, quanto consegue investir por mes e escolha um cenario de taxa. A pagina projeta,
-          ano a ano, o patrimonio total e o rendimento mensal no valor nominal e no valor corrigido pela inflacao.
+          Digite quanto voce ja tem, quanto consegue investir por mes e escolha entre cenarios liquidos mais realistas
+          para planejamento ou referencias brutas do mercado atual. A pagina projeta, ano a ano, o patrimonio total e
+          o rendimento mensal no valor nominal e no valor corrigido pela inflacao.
         </p>
       </div>
       <div class="hero-meta">
         <span class="meta-pill">30 anos</span>
-        <span class="meta-pill">CDI, Selic e cenarios simples</span>
+        <span class="meta-pill">Cenarios liquidos e brutos</span>
         <span class="meta-pill">Nominal x real</span>
       </div>
     </header>
@@ -95,15 +96,6 @@
           </label>
         </div>
 
-        <div class="custom-rate-row hidden" id="customRateRow">
-          <label class="field">
-            <span>Taxa anual personalizada</span>
-            <div class="inline-input">
-              <input id="customRate" type="number" min="0" max="100" step="0.01">
-              <span>% a.a.</span>
-            </div>
-          </label>
-        </div>
       </section>
 
       <section class="panel events-panel">
@@ -133,7 +125,7 @@
         <article class="panel status-panel" id="statusPanel" aria-live="polite">
           <p class="panel-label">Status</p>
           <h2>Carregando referencias oficiais...</h2>
-          <p class="status-copy">A pagina busca CDI, Selic e IPCA diretamente no Banco Central.</p>
+          <p class="status-copy">A pagina busca CDI, Selic e IPCA diretamente no Banco Central para montar cenarios de planejamento.</p>
         </article>
 
         <article class="panel references-panel">
@@ -155,12 +147,34 @@
       <section class="panel scenarios-panel">
         <div class="controls-header">
           <div>
-            <p class="panel-label">Cenarios simples</p>
-            <h2>Escolha a taxa nominal anual</h2>
+            <p class="panel-label">Cenarios</p>
+            <h2>Escolha um cenario anual</h2>
           </div>
-          <p class="helper">As opcoes abaixo sao cenarios brutos, antes de imposto, taxa de administracao ou eventos de mercado.</p>
+          <p class="helper">Os cenarios liquidos servem melhor para planejamento. As referencias brutas mostram apenas quanto as taxas atuais renderiam se ficassem constantes.</p>
         </div>
-        <div class="scenario-grid" id="scenarioGrid"></div>
+        <div class="scenario-block">
+          <div class="scenario-block-header">
+            <p class="panel-label">Planejamento</p>
+            <h3>Cenarios liquidos mais realistas</h3>
+          </div>
+          <div class="scenario-grid" id="scenarioGridPlanning"></div>
+        </div>
+        <div class="scenario-block">
+          <div class="scenario-block-header">
+            <p class="panel-label">Referencia</p>
+            <h3>Taxas atuais e comparacoes simples</h3>
+          </div>
+          <div class="scenario-grid" id="scenarioGridReference"></div>
+        </div>
+        <div class="custom-rate-row hidden" id="customRateRow">
+          <label class="field">
+            <span>Taxa anual personalizada</span>
+            <div class="inline-input">
+              <input id="customRate" type="number" min="0" max="100" step="0.01">
+              <span>% a.a.</span>
+            </div>
+          </label>
+        </div>
       </section>
 
       <section class="panel summary-panel">
@@ -228,7 +242,8 @@
           <p class="panel-label">Como funciona</p>
           <h2>Notas de leitura</h2>
           <ul class="notes-list">
-            <li>O retorno nominal anual fica constante durante toda a simulacao. Isso simplifica o calculo; nao e uma previsao de mercado.</li>
+            <li>Os cenarios liquidos de planejamento usam faixas simples de retorno real acima da inflacao escolhida. Eles servem como guia de longo prazo, nao como promessa de mercado.</li>
+            <li>As referencias brutas mostram as taxas observadas agora no BCB, sem desconto de imposto nem garantia de que o nivel atual durara por 30 anos.</li>
             <li>O ajuste real usa uma inflacao anual fixa, preenchida por padrao com o IPCA acumulado em 12 meses mais recente do BCB.</li>
             <li>O rendimento mensal mostrado para cada ano e o rendimento estimado daquele patrimonio no mes seguinte, mantida a mesma taxa.</li>
             <li>Dolar e libra sao apenas uma conversao de visualizacao, usando a cotacao oficial mais recente do BCB no momento em que a pagina carrega.</li>
