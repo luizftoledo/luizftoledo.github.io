@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-03-07T21:37:34.942285+00:00",
+  "counts": {
+    "items": 50,
+    "domains": 14,
+    "categories": {
+      "reportagem_autoral": 33,
+      "eco_republicacao": 0,
+      "mencao": 0,
+      "entrevista": 6,
+      "palestra_curso": 4,
+      "perfil_bio": 7
+    },
+    "recent": {
+      "last_1_day": 8,
+      "last_7_days": 8,
+      "last_30_days": 15
+    }
+  },
+  "date_range": {
+    "min": "2020-07-06",
+    "max": "2026-02-26"
+  },
+  "methodology": {
+    "names": [
+      "Luiz Fernando Toledo",
+      "Luiz Fernando Toledo Antunes"
+    ],
+    "summary": "Clipping incremental com duas camadas: sementes curadas do proprio portfolio/resume e descoberta automatica por buscas em noticias do Google, pagina de autor da BBC e sementes curadas do proprio portfolio/resume. Quando um site bloqueia raspagem direta, o script tenta uma leitura alternativa so para metadados e trechos. A classificacao e por regras (byline, tipo de pagina, palavras-chave e contexto institucional). O resultado e amplo, mas nao exaustivo: buscadores podem perder paginas, alguns sites bloqueiam raspagem e homonimos podem exigir revisao manual."
+  },
+  "sources": {
+    "discovery": {
+      "seeds": {
+        "portfolio": 33,
+        "bbc_author_page": 25
+      },
+      "searches": {
+        "google-news-html:\"Luiz Fernando Toledo\"": 0,
+        "google-news-html:\"Luiz Fernando Toledo Antunes\"": 0
+      }
+    },
+    "enrich": {
+      "fetched": 15,
+      "reused": 36,
+      "kept": 50,
+      "dropped": 1,
+      "categories": {
+        "reportagem_autoral": 33,
+        "entrevista": 6,
+        "palestra_curso": 4,
+        "perfil_bio": 7
+      },
+      "domains": {
+        "bbc.com": 31,
+        "tab.uol.com.br": 1,
+        "piaui.uol.com.br": 2,
+        "open.spotify.com": 2,
+        "youtube.com": 4,
+        "udemy.com": 1,
+        "congresso.abraji.org.br": 1,
+        "reutersinstitute.politics.ox.ac.uk": 2,
+        "abraji.org.br": 1,
+        "brown.columbia.edu": 1,
+        "repositorio.fgv.br": 1,
+        "talks.ox.ac.uk": 1,
+        "cima.ned.org": 1,
+        "scielo.br": 1
+      },
+      "errors": []
+    }
+  }
+}
