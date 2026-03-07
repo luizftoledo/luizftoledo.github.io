@@ -657,6 +657,267 @@ body::after {
   color: var(--text);
 }
 
+.signal-lab-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.signal-constellation-wrap,
+.signal-side-card,
+.runtime-panel,
+.album-card {
+  border-radius: calc(var(--radius-lg) - 6px);
+  border: 1px solid rgba(132, 255, 245, 0.12);
+  background:
+    linear-gradient(180deg, rgba(11, 24, 49, 0.95), rgba(7, 15, 30, 0.88));
+}
+
+.signal-constellation-wrap,
+.runtime-panel {
+  padding: 22px;
+}
+
+.signal-caption-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.signal-note {
+  margin: 0;
+  max-width: 34ch;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  text-align: right;
+}
+
+.signal-constellation {
+  margin-top: 18px;
+}
+
+.signal-constellation svg,
+.runtime-strips svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.signal-side-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.signal-side-card {
+  padding: 20px;
+}
+
+.signal-insights {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.signal-focus {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.06), transparent 32%),
+    rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.signal-focus h3 {
+  margin: 8px 0 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.15;
+}
+
+.signal-focus p {
+  margin: 0;
+}
+
+.signal-focus-meta {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.signal-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin-top: 14px;
+  font-size: 0.84rem;
+}
+
+.signal-focus-grid span {
+  color: var(--muted);
+}
+
+.signal-insight {
+  padding: 14px 14px 15px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.signal-insight strong {
+  display: block;
+  margin-bottom: 6px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.92rem;
+}
+
+.signal-insight p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 0.92rem;
+}
+
+.energy-gradient {
+  width: 100%;
+  height: 16px;
+  margin-top: 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3652c9 0%, #6ea0ff 25%, #84fff5 55%, #ffc05e 78%, #ff4e7d 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.energy-legend {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.album-scan-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.85fr);
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.album-cards {
+  display: grid;
+  gap: 14px;
+}
+
+.album-card {
+  padding: 18px;
+  overflow: hidden;
+}
+
+.album-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.album-card h3 {
+  margin: 8px 0 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  line-height: 1.08;
+}
+
+.album-card-year {
+  color: var(--muted);
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.album-card-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.album-card-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.album-card-dek {
+  margin: 14px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
+.album-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+  margin-top: 16px;
+}
+
+.album-metric {
+  display: grid;
+  gap: 6px;
+}
+
+.album-metric-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.84rem;
+}
+
+.album-metric-top span:first-child {
+  color: var(--muted);
+}
+
+.album-metric-bar {
+  height: 8px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.album-metric-fill {
+  height: 100%;
+  width: calc(var(--value) * 1%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--cyan), var(--blue), var(--pink));
+}
+
+.album-card-footer {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.album-card-footer strong {
+  color: var(--text);
+}
+
+.runtime-strips {
+  margin-top: 18px;
+}
+
 .spectrum-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
@@ -883,6 +1144,8 @@ body::after {
     min-height: auto;
   }
 
+  .signal-lab-layout,
+  .album-scan-layout,
   .storytelling-layout,
   .spectrum-layout,
   .album-wrap {
@@ -914,6 +1177,7 @@ body::after {
     grid-template-columns: 1fr;
   }
 
+  .signal-caption-row,
   .story-step-head,
   .radar-header {
     flex-direction: column;
@@ -925,6 +1189,14 @@ body::after {
 
   .story-axis-item strong {
     text-align: left;
+  }
+
+  .signal-note {
+    text-align: left;
+  }
+
+  .album-metric-grid {
+    grid-template-columns: 1fr;
   }
 }
 

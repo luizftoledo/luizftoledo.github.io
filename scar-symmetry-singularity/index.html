@@ -167,6 +167,72 @@
         </div>
       </section>
 
+      <section class="panel reveal" id="signal-lab">
+        <div class="section-heading">
+          <p class="eyebrow">Spotify signal lab</p>
+          <h2>Tempo, valencia, energia e duracao viram mapa cosmico.</h2>
+          <p>
+            Em vez de usar so um ranking linear, aqui os atributos de audio viram
+            visualizacao espacial. Cada ponto usa campos de audio do ecossistema do
+            Spotify para mostrar como Scar Symmetry distribui agressao, brilho,
+            velocidade e expansao ao longo da discografia.
+          </p>
+        </div>
+
+        <div class="signal-lab-layout">
+          <div class="signal-constellation-wrap">
+            <div class="signal-caption-row">
+              <p class="micro-label">Constelacao de faixas-farol</p>
+              <p class="signal-note">
+                Eixo X: tempo. Eixo Y: positividade. Tamanho: duracao. Cor: energia.
+              </p>
+            </div>
+            <div id="signal-constellation" class="signal-constellation" aria-label="Mapa de atributos do Spotify"></div>
+          </div>
+
+          <div class="signal-side-stack">
+            <article class="signal-side-card">
+              <p class="micro-label">Leitura rapida</p>
+              <div id="signal-focus" class="signal-focus"></div>
+              <div id="signal-insights" class="signal-insights"></div>
+            </article>
+
+            <article class="signal-side-card">
+              <p class="micro-label">Legenda cromatica</p>
+              <div class="energy-gradient"></div>
+              <div class="energy-legend">
+                <span>Energia alta</span>
+                <span>Quase constante</span>
+                <span>Faixas mais longas ganham orbitas maiores</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel reveal" id="album-scan">
+        <div class="section-heading">
+          <p class="eyebrow">Album scan</p>
+          <h2>O sinal por era fica diferente.</h2>
+          <p>
+            Este painel sintetiza as faixas-farol desta pagina por album. Nao e a
+            media de todo o catalogo, e sim um recorte curado para mostrar a
+            assinatura de cada fase com mais clareza.
+          </p>
+        </div>
+
+        <div class="album-scan-layout">
+          <div id="album-cards" class="album-cards" aria-label="Cartoes de metricas por album"></div>
+          <div class="runtime-panel">
+            <div class="signal-caption-row">
+              <p class="micro-label">Tempo x duracao</p>
+              <p class="signal-note">As trilhas mais longas esticam o cosmos; as mais rapidas comprimem o pulso.</p>
+            </div>
+            <div id="runtime-strips" class="runtime-strips" aria-label="Tiras de duracao e tempo"></div>
+          </div>
+        </div>
+      </section>
+
       <section class="panel reveal">
         <div class="section-heading">
           <p class="eyebrow">Aesthetic vectors</p>
@@ -365,7 +431,10 @@
               A linha do tempo usa os sete álbuns de estúdio e o radar é uma leitura
               visual curada para orientar a escuta. As referências factuais de
               discografia e a fase <em>Singularity</em> foram consolidadas a partir do
-              site oficial da banda e da discografia pública.
+              site oficial da banda e da discografia pública; os gráficos novos usam
+              campos públicos de áudio do ecossistema do Spotify, espelhados em
+              páginas do Musicstax, aplicados aqui sobre um conjunto curado de
+              faixas-farol.
             </p>
           </div>
         </div>

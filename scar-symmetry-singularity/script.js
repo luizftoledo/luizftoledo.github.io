@@ -251,6 +251,340 @@ const storyAlbums = [
   },
 ];
 
+const spotifySignalTracks = [
+  {
+    title: "2012 - The Demise of the 5th Sun",
+    shortTitle: "2012",
+    album: "Symmetric in Design",
+    year: 2005,
+    tempo: 140,
+    durationLabel: "3:51",
+    durationSeconds: 231,
+    popularity: 18,
+    key: "C# major",
+    partial: true,
+    note: "No recorte publico consultado, esta faixa expunha com mais facilidade tempo, duracao e popularidade do que os demais campos.",
+  },
+  {
+    title: "The Illusionist",
+    shortTitle: "The Illusionist",
+    album: "Pitch Black Progress",
+    year: 2006,
+    tempo: 75,
+    durationLabel: "4:31",
+    durationSeconds: 271,
+    popularity: 40,
+    danceability: 40,
+    energy: 96,
+    liveness: 14,
+    instrumentalness: 0,
+    valence: 40,
+    loudness: -3.67,
+    key: "D major",
+  },
+  {
+    title: "Mind Machine",
+    shortTitle: "Mind Machine",
+    album: "Pitch Black Progress",
+    year: 2006,
+    tempo: 85,
+    durationLabel: "3:53",
+    durationSeconds: 233,
+    popularity: 31,
+    danceability: 44,
+    energy: 98,
+    liveness: 9,
+    instrumentalness: 1,
+    valence: 57,
+    loudness: -3.0,
+    key: "F# minor",
+  },
+  {
+    title: "Morphogenesis",
+    shortTitle: "Morphogenesis",
+    album: "Holographic Universe",
+    year: 2008,
+    tempo: 120,
+    durationLabel: "3:54",
+    durationSeconds: 234,
+    popularity: 43,
+    danceability: 46,
+    energy: 94,
+    liveness: 38,
+    instrumentalness: 2,
+    valence: 48,
+    loudness: -3.15,
+    key: "D minor",
+  },
+  {
+    title: "Quantumleaper",
+    shortTitle: "Quantumleaper",
+    album: "Holographic Universe",
+    year: 2008,
+    tempo: 167,
+    durationLabel: "4:09",
+    durationSeconds: 249,
+    popularity: 35,
+    danceability: 38,
+    energy: 99,
+    liveness: 9,
+    instrumentalness: 0,
+    valence: 31,
+    loudness: -2.84,
+    key: "B minor",
+  },
+  {
+    title: "Artificial Sun Projection",
+    shortTitle: "Artificial Sun",
+    album: "Holographic Universe",
+    year: 2008,
+    tempo: 100,
+    durationLabel: "4:00",
+    durationSeconds: 240,
+    popularity: 38,
+    danceability: 43,
+    energy: 96,
+    liveness: 35,
+    instrumentalness: 9,
+    valence: 30,
+    loudness: -3.27,
+    key: "E minor",
+  },
+  {
+    title: "Ghost Prototype I - Measurement of Thought",
+    shortTitle: "Ghost Prototype I",
+    album: "Holographic Universe",
+    year: 2008,
+    tempo: 90,
+    durationLabel: "4:35",
+    durationSeconds: 275,
+    popularity: 36,
+    danceability: 46,
+    energy: 98,
+    liveness: 10,
+    instrumentalness: 0,
+    valence: 60,
+    loudness: -3.0,
+    key: "B minor",
+  },
+  {
+    title: "Ghost Prototype II - Deus Ex Machina",
+    shortTitle: "Ghost Prototype II",
+    album: "Holographic Universe",
+    year: 2008,
+    tempo: 200,
+    durationLabel: "6:03",
+    durationSeconds: 363,
+    popularity: 32,
+    danceability: 35,
+    energy: 98,
+    liveness: 11,
+    instrumentalness: 2,
+    valence: 30,
+    loudness: -4.0,
+    key: "B major",
+  },
+  {
+    title: "Chaosweaver",
+    shortTitle: "Chaosweaver",
+    album: "Holographic Universe",
+    year: 2008,
+    tempo: 165,
+    durationLabel: "3:40",
+    durationSeconds: 220,
+    popularity: 30,
+    danceability: 28,
+    energy: 98,
+    liveness: 36,
+    instrumentalness: 33,
+    valence: 23,
+    loudness: -3.92,
+    key: "B minor",
+  },
+  {
+    title: "The Spiral Timeshift",
+    shortTitle: "Spiral Timeshift",
+    album: "Dark Matter Dimensions",
+    year: 2009,
+    tempo: 90,
+    durationLabel: "4:50",
+    durationSeconds: 290,
+    popularity: 20,
+    danceability: 45,
+    energy: 99,
+    liveness: 39,
+    instrumentalness: 0,
+    valence: 36,
+    loudness: -2.46,
+    key: "A major",
+  },
+  {
+    title: "The Anomaly",
+    shortTitle: "The Anomaly",
+    album: "The Unseen Empire",
+    year: 2011,
+    tempo: 95,
+    durationLabel: "3:50",
+    durationSeconds: 230,
+    popularity: 42,
+    danceability: 39,
+    energy: 99,
+    liveness: 33,
+    instrumentalness: 0,
+    valence: 14,
+    loudness: -3.1,
+    key: "C# minor",
+  },
+  {
+    title: "Limits To Infinity",
+    shortTitle: "Limits To Infinity",
+    album: "The Singularity (Phase I - Neohumanity)",
+    year: 2014,
+    tempo: 139,
+    durationLabel: "4:57",
+    durationSeconds: 297,
+    popularity: 32,
+    danceability: 46,
+    energy: 98,
+    liveness: 34,
+    instrumentalness: 0,
+    valence: 34,
+    loudness: -2.77,
+    key: "D major",
+  },
+  {
+    title: "Technocalyptic Cybergeddon",
+    shortTitle: "Technocalyptic",
+    album: "The Singularity (Phase I - Neohumanity)",
+    year: 2014,
+    tempo: 120,
+    durationLabel: "10:12",
+    durationSeconds: 612,
+    popularity: 13,
+    danceability: 24,
+    energy: 99,
+    liveness: 13,
+    instrumentalness: 1,
+    valence: 9,
+    loudness: -3.83,
+    key: "C# minor",
+  },
+  {
+    title: "Chrononautilus",
+    shortTitle: "Chrononautilus",
+    album: "The Singularity (Phase II - Xenotaph)",
+    year: 2023,
+    tempo: 120,
+    durationLabel: "5:04",
+    durationSeconds: 304,
+    popularity: 27,
+    danceability: 50,
+    energy: 98,
+    liveness: 33,
+    instrumentalness: 8,
+    valence: 14,
+    loudness: -6.52,
+    key: "C# minor",
+  },
+  {
+    title: "Scorched Quadrant",
+    shortTitle: "Scorched Quadrant",
+    album: "The Singularity (Phase II - Xenotaph)",
+    year: 2023,
+    tempo: 170,
+    durationLabel: "5:05",
+    durationSeconds: 305,
+    popularity: 31,
+    danceability: 34,
+    energy: 98,
+    liveness: 37,
+    instrumentalness: 47,
+    valence: 42,
+    loudness: -7.13,
+    key: "F# major",
+  },
+];
+
+const signalTracksFull = spotifySignalTracks.filter((track) => !track.partial);
+const albumStoryLookup = new Map(storyAlbums.map((story) => [story.album, story]));
+
+function average(values) {
+  if (!values.length) return null;
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+function metricAverage(tracks, key) {
+  return average(tracks.map((track) => track[key]).filter((value) => Number.isFinite(value)));
+}
+
+function metricBarValue(metric, value) {
+  if (!Number.isFinite(value)) return 0;
+  if (metric === "tempo") return Math.min((value / 200) * 100, 100);
+  if (metric === "durationSeconds") return Math.min((value / 612) * 100, 100);
+  if (metric === "loudness") return Math.min(Math.max((value + 8) * 12.5, 0), 100);
+  return Math.min(Math.max(value, 0), 100);
+}
+
+function metricLabel(metric, value) {
+  if (!Number.isFinite(value)) return "n/d";
+  if (metric === "tempo") return `${Math.round(value)} BPM`;
+  if (metric === "durationSeconds") return formatDuration(value);
+  if (metric === "loudness") return `${value.toFixed(1)} dB`;
+  return `${Math.round(value)}`;
+}
+
+function formatDuration(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = Math.round(totalSeconds % 60)
+    .toString()
+    .padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
+
+function energyColor(energy) {
+  if (energy >= 99) return "#ff4e7d";
+  if (energy >= 98) return "#ffc05e";
+  if (energy >= 96) return "#84fff5";
+  return "#6e8cff";
+}
+
+function textEscape(value) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function albumTrackData(albumName) {
+  return spotifySignalTracks.filter((track) => track.album === albumName);
+}
+
+function albumSignalSummaries() {
+  return discography.map((entry) => {
+    const tracks = albumTrackData(entry.album);
+    const story = albumStoryLookup.get(entry.album);
+    const metrics = {
+      energy: metricAverage(tracks, "energy"),
+      valence: metricAverage(tracks, "valence"),
+      danceability: metricAverage(tracks, "danceability"),
+      liveness: metricAverage(tracks, "liveness"),
+      instrumentalness: metricAverage(tracks, "instrumentalness"),
+      popularity: metricAverage(tracks, "popularity"),
+      tempo: metricAverage(tracks, "tempo"),
+      durationSeconds: metricAverage(tracks, "durationSeconds"),
+    };
+
+    return {
+      ...entry,
+      story,
+      tracks,
+      metrics,
+      partial: tracks.some((track) => track.partial),
+    };
+  });
+}
+
 function renderTimeline() {
   const container = document.querySelector("#timeline-chart");
   if (!container) return;
@@ -566,7 +900,344 @@ function initStorytelling() {
   });
 }
 
+function renderSignalFocus(index) {
+  const container = document.querySelector("#signal-focus");
+  if (!container) return;
+
+  const track = signalTracksFull[index];
+  container.innerHTML = `
+    <p class="micro-label">Faixa ativa</p>
+    <h3>${track.title}</h3>
+    <p class="signal-focus-meta">${track.album} • ${track.year} • ${track.key}</p>
+    <div class="signal-focus-grid">
+      <div><span>tempo</span><br><strong>${Math.round(track.tempo)} BPM</strong></div>
+      <div><span>duracao</span><br><strong>${track.durationLabel}</strong></div>
+      <div><span>valencia</span><br><strong>${track.valence}</strong></div>
+      <div><span>energia</span><br><strong>${track.energy}</strong></div>
+      <div><span>danceability</span><br><strong>${track.danceability}</strong></div>
+      <div><span>instrumental</span><br><strong>${track.instrumentalness}</strong></div>
+    </div>
+  `;
+}
+
+function renderSignalInsights() {
+  const container = document.querySelector("#signal-insights");
+  if (!container) return;
+
+  const longest = signalTracksFull.reduce((best, track) =>
+    track.durationSeconds > best.durationSeconds ? track : best
+  );
+  const brightest = signalTracksFull.reduce((best, track) => (track.valence > best.valence ? track : best));
+  const fastest = signalTracksFull.reduce((best, track) => (track.tempo > best.tempo ? track : best));
+  const strangest = signalTracksFull.reduce((best, track) =>
+    track.instrumentalness > best.instrumentalness ? track : best
+  );
+
+  const insights = [
+    {
+      title: "Pulso maximo",
+      body: `${fastest.shortTitle} e o ponto mais veloz do recorte, com ${Math.round(fastest.tempo)} BPM e energia quase saturada.`,
+    },
+    {
+      title: "Brilho raro",
+      body: `${brightest.shortTitle} e a faixa mais alta em valencia, mostrando que a banda pode soar luminosa mesmo quando continua pesada.`,
+    },
+    {
+      title: "Orbita longa",
+      body: `${longest.shortTitle} dilata o tempo em ${longest.durationLabel}, transformando o painel em uma faixa de longa combustao.`,
+    },
+    {
+      title: "Zona estranha",
+      body: `${strangest.shortTitle} leva a maior carga instrumental do recorte e empurra a banda para um terreno mais mecanico e abstrato.`,
+    },
+  ];
+
+  container.innerHTML = insights
+    .map(
+      (insight) => `
+        <div class="signal-insight">
+          <strong>${insight.title}</strong>
+          <p>${insight.body}</p>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderSignalConstellation(activeIndex = 0) {
+  const container = document.querySelector("#signal-constellation");
+  if (!container) return;
+
+  const width = 900;
+  const height = 560;
+  const margin = { top: 34, right: 44, bottom: 64, left: 78 };
+  const plotWidth = width - margin.left - margin.right;
+  const plotHeight = height - margin.top - margin.bottom;
+  const bpmMin = 70;
+  const bpmMax = 205;
+  const valenceMin = 0;
+  const valenceMax = 65;
+
+  const xScale = (value) => margin.left + ((value - bpmMin) / (bpmMax - bpmMin)) * plotWidth;
+  const yScale = (value) =>
+    margin.top + plotHeight - ((value - valenceMin) / (valenceMax - valenceMin)) * plotHeight;
+
+  const durationMin = Math.min(...signalTracksFull.map((track) => track.durationSeconds));
+  const durationMax = Math.max(...signalTracksFull.map((track) => track.durationSeconds));
+
+  const radiusFor = (track) =>
+    10 + ((track.durationSeconds - durationMin) / (durationMax - durationMin || 1)) * 18;
+
+  const annotationTitles = new Set([
+    "Mind Machine",
+    "Ghost Prototype II - Deus Ex Machina",
+    "Technocalyptic Cybergeddon",
+    "Scorched Quadrant",
+  ]);
+
+  const points = signalTracksFull
+    .map((track, index) => {
+      const x = xScale(track.tempo);
+      const y = yScale(track.valence);
+      const radius = radiusFor(track);
+      const glow = radius + 9;
+      const selected = index === activeIndex;
+      return `
+        <g class="signal-point ${selected ? "is-selected" : ""}" data-index="${index}">
+          <circle cx="${x}" cy="${y}" r="${glow}" fill="${energyColor(track.energy)}" opacity="${selected ? 0.16 : 0.09}"></circle>
+          <circle
+            cx="${x}"
+            cy="${y}"
+            r="${radius}"
+            fill="${energyColor(track.energy)}"
+            fill-opacity="${selected ? 0.94 : 0.76}"
+            stroke="${selected ? "#f7fbff" : "#081321"}"
+            stroke-width="${selected ? 3 : 2}"
+            tabindex="0"
+            role="button"
+            aria-label="${textEscape(track.title)}"
+            data-index="${index}"
+          ></circle>
+          <circle cx="${x}" cy="${y}" r="${radius - 5}" fill="none" stroke="rgba(255,255,255,0.14)" data-index="${index}"></circle>
+        </g>
+      `;
+    })
+    .join("");
+
+  const annotations = signalTracksFull
+    .filter((track) => annotationTitles.has(track.title))
+    .map((track) => {
+      const x = xScale(track.tempo);
+      const y = yScale(track.valence);
+      const labelX = track.tempo > 150 ? x - 18 : x + 18;
+      const labelAnchor = track.tempo > 150 ? "end" : "start";
+      const labelY = track.title.includes("Technocalyptic") ? y + 42 : y - 18;
+      return `
+        <line x1="${x}" y1="${y}" x2="${labelX}" y2="${labelY + 4}" stroke="rgba(255,255,255,0.14)"></line>
+        <text x="${labelX}" y="${labelY}" text-anchor="${labelAnchor}" fill="#f4fbff" font-size="13">${track.shortTitle}</text>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="signalTitle signalDesc">
+      <title id="signalTitle">Mapa cosmico com variaveis de audio do Spotify</title>
+      <desc id="signalDesc">Faixas-farol posicionadas por tempo e valencia; energia muda a cor e a duracao muda o tamanho.</desc>
+      <defs>
+        <linearGradient id="signalAxis" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(132,255,245,0.55)"></stop>
+          <stop offset="100%" stop-color="rgba(255,78,125,0.28)"></stop>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="${width}" height="${height}" rx="28" fill="rgba(255,255,255,0.01)"></rect>
+      ${[10, 20, 30, 40, 50, 60]
+        .map((tick) => {
+          const y = yScale(tick);
+          return `
+            <line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 10"></line>
+            <text x="${margin.left - 16}" y="${y + 4}" text-anchor="end" fill="#8ea5bb" font-size="12">${tick}</text>
+          `;
+        })
+        .join("")}
+      ${[80, 100, 120, 140, 160, 180, 200]
+        .map((tick) => {
+          const x = xScale(tick);
+          return `
+            <line x1="${x}" y1="${margin.top}" x2="${x}" y2="${height - margin.bottom}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 10"></line>
+            <text x="${x}" y="${height - margin.bottom + 24}" text-anchor="middle" fill="#8ea5bb" font-size="12">${tick}</text>
+          `;
+        })
+        .join("")}
+      <rect x="${margin.left}" y="${margin.top}" width="${plotWidth}" height="${plotHeight}" rx="24" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"></rect>
+      ${annotations}
+      ${points}
+      <line x1="${margin.left}" y1="${height - margin.bottom}" x2="${width - margin.right}" y2="${height - margin.bottom}" stroke="url(#signalAxis)"></line>
+      <line x1="${margin.left}" y1="${margin.top}" x2="${margin.left}" y2="${height - margin.bottom}" stroke="url(#signalAxis)"></line>
+      <text x="${width / 2}" y="${height - 16}" text-anchor="middle" fill="#9eb4ca" font-size="14">tempo / BPM</text>
+      <text transform="translate(20 ${height / 2}) rotate(-90)" text-anchor="middle" fill="#9eb4ca" font-size="14">valencia / positividade</text>
+      <text x="${width - margin.right}" y="${margin.top - 10}" text-anchor="end" fill="#84fff5" font-size="13">mais veloz</text>
+      <text x="${margin.left}" y="${margin.top - 10}" text-anchor="start" fill="#ff9abb" font-size="13">mais sombria</text>
+    </svg>
+  `;
+}
+
+function renderAlbumCards() {
+  const container = document.querySelector("#album-cards");
+  if (!container) return;
+
+  const metricOrder = [
+    { key: "energy", label: "energia" },
+    { key: "valence", label: "valencia" },
+    { key: "danceability", label: "dance" },
+    { key: "liveness", label: "liveness" },
+    { key: "instrumentalness", label: "instrumental" },
+    { key: "popularity", label: "popularidade" },
+  ];
+
+  container.innerHTML = albumSignalSummaries()
+    .map((album) => {
+      const pills = [
+        `<span class="album-card-pill">${album.tracks.length} faixa${album.tracks.length > 1 ? "s" : ""}</span>`,
+        album.partial ? `<span class="album-card-pill">sinal parcial</span>` : "",
+        album.story ? `<span class="album-card-pill">${album.story.phase}</span>` : "",
+      ]
+        .filter(Boolean)
+        .join("");
+
+      const metrics = metricOrder
+        .map(({ key, label }) => {
+          const value = album.metrics[key];
+          return `
+            <div class="album-metric">
+              <div class="album-metric-top">
+                <span>${label}</span>
+                <strong>${metricLabel(key, value)}</strong>
+              </div>
+              <div class="album-metric-bar">
+                <div class="album-metric-fill" style="--value:${metricBarValue(key, value)}"></div>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+
+      const note = album.partial
+        ? "Este cartao mistura uma faixa-farol com sinal incompleto e por isso serve mais como farol de direcao do que como media fechada."
+        : "Leitura derivada apenas das faixas-farol exibidas nesta pagina, para deixar cada era mais legivel visualmente.";
+
+      return `
+        <article class="album-card">
+          <div class="album-card-head">
+            <div>
+              <p class="micro-label">${album.year}</p>
+              <h3>${album.album}</h3>
+              <p class="album-card-year">${album.story ? album.story.phase : "Sinal de album"}</p>
+            </div>
+            <div class="album-card-pills">${pills}</div>
+          </div>
+          <p class="album-card-dek">${album.story ? album.story.dek : "Recorte de atributos de audio inspirado nas faixas centrais do album."}</p>
+          <div class="album-metric-grid">${metrics}</div>
+          <div class="album-card-footer">
+            <p><strong>Tempo medio:</strong> ${metricLabel("tempo", album.metrics.tempo)} • <strong>Duracao media:</strong> ${metricLabel("durationSeconds", album.metrics.durationSeconds)}</p>
+            <p><strong>Faixas-farol:</strong> ${album.tracks.map((track) => track.shortTitle).join(", ")}</p>
+            <p>${note}</p>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function renderRuntimeStrips() {
+  const container = document.querySelector("#runtime-strips");
+  if (!container) return;
+
+  const width = 520;
+  const rowHeight = 34;
+  const margin = { top: 34, right: 18, bottom: 34, left: 150 };
+  const maxDuration = Math.max(...spotifySignalTracks.map((track) => track.durationSeconds));
+  const height = margin.top + margin.bottom + rowHeight * spotifySignalTracks.length;
+
+  const xScale = (seconds) => margin.left + (seconds / maxDuration) * (width - margin.left - margin.right);
+
+  const rows = spotifySignalTracks
+    .slice()
+    .sort((first, second) => first.year - second.year || first.durationSeconds - second.durationSeconds)
+    .map((track, index) => {
+      const y = margin.top + index * rowHeight;
+      const x = xScale(track.durationSeconds);
+      const stroke = energyColor(track.energy || 95);
+      const dash = `${Math.max(6, 220 / track.tempo)} ${Math.max(4, 120 / track.tempo)}`;
+      const endRadius = 5 + ((track.popularity || 20) / 100) * 8;
+      return `
+        <text x="${margin.left - 12}" y="${y + 20}" text-anchor="end" fill="#eaf4ff" font-size="12">${track.shortTitle}</text>
+        <text x="${margin.left - 12}" y="${y + 9}" text-anchor="end" fill="#7f95aa" font-size="10">${track.year}</text>
+        <line x1="${margin.left}" y1="${y + 16}" x2="${width - margin.right}" y2="${y + 16}" stroke="rgba(255,255,255,0.05)"></line>
+        <line x1="${margin.left}" y1="${y + 16}" x2="${x}" y2="${y + 16}" stroke="${stroke}" stroke-width="8" stroke-linecap="round"></line>
+        <line x1="${margin.left}" y1="${y + 16}" x2="${x}" y2="${y + 16}" stroke="rgba(7,17,32,0.58)" stroke-width="3" stroke-dasharray="${dash}"></line>
+        <circle cx="${x}" cy="${y + 16}" r="${endRadius}" fill="${stroke}" stroke="#071322" stroke-width="2"></circle>
+        <text x="${x + 12}" y="${y + 13}" fill="#f7fbff" font-size="11">${track.durationLabel}</text>
+        <text x="${x + 12}" y="${y + 27}" fill="#8ea5bb" font-size="10">${Math.round(track.tempo)} BPM</text>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="runtimeTitle runtimeDesc">
+      <title id="runtimeTitle">Duracao e tempo das faixas-farol</title>
+      <desc id="runtimeDesc">Cada faixa cresce de acordo com a duracao e ganha estrias de acordo com o BPM.</desc>
+      ${[180, 300, 420, 540, 600]
+        .map((tick) => {
+          const x = xScale(tick);
+          return `
+            <line x1="${x}" y1="${margin.top - 12}" x2="${x}" y2="${height - margin.bottom + 8}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 10"></line>
+            <text x="${x}" y="${height - 8}" text-anchor="middle" fill="#8ea5bb" font-size="11">${formatDuration(tick)}</text>
+          `;
+        })
+        .join("")}
+      ${rows}
+    </svg>
+  `;
+}
+
+function initSignalLab() {
+  const container = document.querySelector("#signal-constellation");
+  if (!container) return;
+
+  let activeIndex = 0;
+
+  const setActive = (index) => {
+    activeIndex = index;
+    renderSignalConstellation(activeIndex);
+    renderSignalFocus(activeIndex);
+  };
+
+  renderSignalInsights();
+  renderAlbumCards();
+  renderRuntimeStrips();
+  setActive(0);
+
+  container.addEventListener("pointerover", (event) => {
+    const target = event.target.closest("[data-index]");
+    if (!target) return;
+    setActive(Number(target.dataset.index));
+  });
+
+  container.addEventListener("focusin", (event) => {
+    const target = event.target.closest("[data-index]");
+    if (!target) return;
+    setActive(Number(target.dataset.index));
+  });
+
+  container.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-index]");
+    if (!target) return;
+    setActive(Number(target.dataset.index));
+  });
+}
+
 renderTimeline();
 initStorytelling();
+initSignalLab();
 renderTrackButtons();
 renderRadar(0);
