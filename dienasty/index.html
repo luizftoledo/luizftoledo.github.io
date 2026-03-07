@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dienasty · Luiz Fernando Toledo — Música</title>
+  <meta name="description" content="Portfólio musical de Luiz Fernando Toledo — Dienasty, Pervencer, Razek, Inchess">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080808;
+      --bg-2: #0f0f0f;
+      --bg-3: #161616;
+      --border: #222;
+      --text: #c8c8c8;
+      --text-dim: #5a5a5a;
+      --red: #c0392b;
+      --red-glow: rgba(192, 57, 43, 0.15);
+      --gold: #a8936a;
+      --white: #ececec;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      overflow: hidden;
+    }
+
+    .header-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 30%, rgba(192,57,43,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(168,147,106,0.04) 0%, transparent 60%);
+      z-index: 0;
+    }
+
+    .header-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(255,255,255,0.015) 80px);
+      z-index: 0;
+    }
+
+    header > * { position: relative; z-index: 1; }
+
+    .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      line-height: 0.9;
+      color: var(--white);
+      text-shadow: 0 0 80px rgba(192,57,43,0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 span { color: var(--red); }
+
+    .subtitle {
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      max-width: 500px;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-dim);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      animation: fadeFloat 2s ease-in-out infinite;
+    }
+
+    .scroll-hint svg { opacity: 0.4; }
+
+    @keyframes fadeFloat {
+      0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 0.8; transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      max-width: 900px;
+      margin: 0 auto;
+      gap: 0;
+    }
+
+    nav a {
+      display: block;
+      padding: 1rem 1.2rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1.2rem;
+      right: 1.2rem;
+      height: 1px;
+      background: var(--red);
+      transform: scaleX(0);
+      transition: transform 0.25s;
+    }
+
+    nav a:hover { color: var(--white); }
+    nav a:hover::after { transform: scaleX(1); }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+      z-index: 1;
+    }
+
+    .section-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 3rem;
+      line-height: 1.1;
+    }
+
+    hr.rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.4rem;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--red), var(--border), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3.5rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0.45rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 10px rgba(192,57,43,0.6);
+    }
+
+    .timeline-year {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.3rem;
+    }
+
+    .timeline-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .timeline-desc {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      max-width: 520px;
+    }
+
+    .timeline-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.2rem 0.6rem;
+      background: rgba(192,57,43,0.1);
+      border: 1px solid rgba(192,57,43,0.25);
+      border-radius: 2px;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    /* ── BAND CARDS ── */
+    .band {
+      margin-bottom: 5rem;
+    }
+
+    .band-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .band-index {
+      font-family: 'Cinzel', serif;
+      font-size: 3rem;
+      color: var(--border);
+      line-height: 1;
+      min-width: 2.5rem;
+      user-select: none;
+    }
+
+    .band-info h3 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .band-meta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    .band-meta span { text-transform: uppercase; }
+
+    .band-desc {
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      max-width: 640px;
+      font-size: 0.9rem;
+    }
+
+    /* ── EMBED CONTAINERS ── */
+    .embeds {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .embed-wrap {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--bg-2);
+    }
+
+    .embed-label {
+      padding: 0.5rem 1rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .embed-wrap iframe {
+      width: 100%;
+      display: block;
+      border: none;
+    }
+
+    /* ── LINKS GRID ── */
+    .links-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      background: var(--bg-2);
+    }
+
+    .link-btn:hover {
+      border-color: var(--red);
+      color: var(--white);
+      background: var(--red-glow);
+    }
+
+    .link-btn svg { flex-shrink: 0; }
+
+    /* ── DIVIDER ── */
+    .band-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4rem 0;
+    }
+
+    /* ── PLACEHOLDER ── */
+    .placeholder-block {
+      border: 1px dashed var(--border);
+      border-radius: 4px;
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+    }
+
+    .placeholder-block p { margin-bottom: 0.5rem; }
+    .placeholder-block strong { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--text-dim);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer a { color: var(--text-dim); text-decoration: none; }
+    footer a:hover { color: var(--red); }
+
+    /* ── STATUS BADGE ── */
+    .status-recording {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      background: rgba(168,147,106,0.08);
+      border: 1px solid rgba(168,147,106,0.2);
+      border-radius: 2px;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .status-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .status-active {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      background: rgba(39,174,96,0.06);
+      border: 1px solid rgba(39,174,96,0.2);
+      border-radius: 2px;
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #27ae60;
+      margin-bottom: 1rem;
+    }
+
+    .status-active .status-dot { background: #27ae60; }
+
+    /* ── TRACKLIST ── */
+    .tracklist {
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .tracklist-header {
+      padding: 0.6rem 1rem;
+      background: var(--bg-3);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .track {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid rgba(34,34,34,0.6);
+      transition: background 0.15s;
+    }
+
+    .track:last-child { border-bottom: none; }
+    .track:hover { background: var(--bg-3); }
+
+    .track-num {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      min-width: 1.5rem;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .track-name {
+      font-size: 0.85rem;
+      color: var(--text);
+      flex: 1;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav ul { gap: 0; overflow-x: auto; }
+      nav a { padding: 0.9rem 0.8rem; font-size: 0.6rem; }
+      .band-header { gap: 1rem; }
+      .band-index { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<header>
+  <div class="header-bg"></div>
+  <div class="header-lines"></div>
+  <p class="eyebrow">Luiz Fernando Toledo · Portfólio Musical</p>
+  <h1>DIE<span>NASTY</span></h1>
+  <p class="subtitle">Bandas · Discos · Ao Vivo · Uma vida no metal</p>
+  <div class="scroll-hint">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    scroll
+  </div>
+</header>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav>
+  <ul>
+    <li><a href="#timeline">Linha do Tempo</a></li>
+    <li><a href="#dienasty">Dienasty</a></li>
+    <li><a href="#pervencer">Pervencer</a></li>
+    <li><a href="#razek">Razek</a></li>
+    <li><a href="#inchess">Inchess</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════ TIMELINE ═══════════════════════ -->
+<section id="timeline">
+  <p class="section-label">Cronologia</p>
+  <h2>Linha do Tempo</h2>
+  <hr class="rule">
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <p class="timeline-year">início</p>
+      <p class="timeline-title">Razek</p>
+      <p class="timeline-desc">Primeira banda de metal. Músicas experimentais e formação do som pesado que definiria o percurso musical.</p>
+      <span class="timeline-tag">Metal · Pioneiro</span>
+    </div>
+
+    <div class="timeline-item">
+      <p class="timeline-year">anos seguintes</p>
+      <p class="timeline-title">Pervencer</p>
+      <p class="timeline-desc">Death metal técnico/progressivo com Luiz Fernando Toledo como vocalista. Álbum <em>Apocalyptic Suffering</em> lançado em 2019. Sorocaba, SP.</p>
+      <span class="timeline-tag">Technical Death Metal</span>
+    </div>
+
+    <div class="timeline-item">
+      <p class="timeline-year">anos seguintes</p>
+      <p class="timeline-title">Inchess</p>
+      <p class="timeline-desc">Projeto com a faixa <em>Humanist Killer</em> — metal denso e direto, disponível no SoundCloud e YouTube.</p>
+      <span class="timeline-tag">Metal</span>
+    </div>
+
+    <div class="timeline-item">
+      <p class="timeline-year">presente</p>
+      <p class="timeline-title">Dienasty</p>
+      <p class="timeline-desc">Banda atual. Músicas em processo de gravação. O próximo capítulo.</p>
+      <span class="timeline-tag">Em gravação</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════ DIENASTY ═══════════════════════ -->
+<section id="dienasty">
+  <p class="section-label">Banda Atual</p>
+  <h2>Dienasty</h2>
+  <hr class="rule">
+  <div class="band">
+    <div class="band-header">
+      <div class="band-index">01</div>
+      <div class="band-info">
+        <div class="status-recording">
+          <div class="status-dot"></div>
+          Em gravação
+        </div>
+        <h3>Dienasty</h3>
+        <div class="band-meta">
+          <span>Banda Atual</span>
+          <span>·</span>
+          <span>Metal</span>
+          <span>·</span>
+          <span>Brasil</span>
+        </div>
+      </div>
+    </div>
+    <p class="band-desc">
+      Dienasty é o projeto atual de Luiz Fernando Toledo. Com riffs pesados e uma abordagem sonora
+      que carrega toda a experiência acumulada em anos de metal underground brasileiro, a banda está
+      atualmente no estúdio gravando seu material inédito. Em breve.
+    </p>
+    <div class="placeholder-block">
+      <p><strong>Músicas em breve.</strong></p>
+      <p>Material em processo de gravação — os links serão adicionados assim que disponíveis.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ PERVENCER ═══════════════════════ -->
+<section id="pervencer">
+  <p class="section-label">Pervencer</p>
+  <h2>Pervencer</h2>
+  <hr class="rule">
+  <div class="band">
+    <div class="band-header">
+      <div class="band-index">02</div>
+      <div class="band-info">
+        <div class="status-active">
+          <div class="status-dot"></div>
+          Lançado · 2019
+        </div>
+        <h3>Pervencer</h3>
+        <div class="band-meta">
+          <span>Technical Death Metal</span>
+          <span>·</span>
+          <span>Sorocaba, SP</span>
+          <span>·</span>
+          <span>Brasil</span>
+        </div>
+      </div>
+    </div>
+    <p class="band-desc">
+      Death metal técnico e progressivo oriundo de Sorocaba, SP. Luiz Fernando Toledo como vocalista.
+      O álbum <em>Apocalyptic Suffering</em> (2019) é o principal registro da banda — dez faixas de
+      metal extremo com estruturas complexas e alto nível técnico, disponível no Spotify e demais plataformas.
+    </p>
+
+    <!-- Spotify embed -->
+    <div class="embeds">
+      <div class="embed-wrap">
+        <div class="embed-label">Spotify · Apocalyptic Suffering (2019)</div>
+        <iframe
+          src="https://open.spotify.com/embed/album/4ojJNMIh4JneQk3MTC4UZb?utm_source=generator&theme=0"
+          height="380"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Tracklist -->
+    <div class="tracklist">
+      <div class="tracklist-header">Apocalyptic Suffering — Tracklist</div>
+      <div class="track"><span class="track-num">1</span><span class="track-name">Intro – Meeting Condemned World</span></div>
+      <div class="track"><span class="track-num">2</span><span class="track-name">Hail New World Order</span></div>
+      <div class="track"><span class="track-num">3</span><span class="track-name">Signals Of Human Despair</span></div>
+      <div class="track"><span class="track-num">4</span><span class="track-name">I Am Serpent</span></div>
+      <div class="track"><span class="track-num">5</span><span class="track-name">Anunaki</span></div>
+      <div class="track"><span class="track-num">6</span><span class="track-name">Paranormal Activity</span></div>
+      <div class="track"><span class="track-num">7</span><span class="track-name">Chaos Introspection</span></div>
+      <div class="track"><span class="track-num">8</span><span class="track-name">Ghost Of The 18th Century</span></div>
+      <div class="track"><span class="track-num">9</span><span class="track-name">The Prisoner</span></div>
+      <div class="track"><span class="track-num">10</span><span class="track-name">Ossos</span></div>
+    </div>
+
+    <div class="links-grid">
+      <a class="link-btn" href="https://open.spotify.com/album/4ojJNMIh4JneQk3MTC4UZb" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        Spotify
+      </a>
+      <a class="link-btn" href="https://myspace.com/pervencerdeathbr" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+        Myspace
+      </a>
+      <a class="link-btn" href="https://www.metal-archives.com/albums/Pervencer/Apocalyptic_Suffering/768050" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Metal Archives
+      </a>
+      <a class="link-btn" href="https://music.apple.com/us/album/apocalyptic-suffering/1457093145" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-.09.06c-.22.14-2.22 1.3-2.2 3.88.04 3.06 2.69 4.08 2.72 4.09-.03.07-.42 1.44-1.38 2.61M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Apple Music
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ RAZEK ═══════════════════════ -->
+<section id="razek">
+  <p class="section-label">Razek</p>
+  <h2>Razek</h2>
+  <hr class="rule">
+  <div class="band">
+    <div class="band-header">
+      <div class="band-index">03</div>
+      <div class="band-info">
+        <h3>Razek</h3>
+        <div class="band-meta">
+          <span>Metal</span>
+          <span>·</span>
+          <span>Brasil</span>
+        </div>
+      </div>
+    </div>
+    <p class="band-desc">
+      Banda de metal que marcou uma das fases da carreira de Luiz Fernando Toledo. Música pesada,
+      riffs marcantes e apresentações ao vivo intensas. Parte do underground metal brasileiro.
+    </p>
+
+    <div class="placeholder-block">
+      <p><strong>Adicione os links aqui.</strong></p>
+      <p>YouTube · SoundCloud · Spotify · Bandcamp</p>
+      <p style="margin-top:0.75rem; font-size:0.75rem; color: var(--text-dim);">
+        Substitua este bloco pelos embeds do YouTube e SoundCloud da banda Razek.
+      </p>
+    </div>
+
+    <div class="links-grid">
+      <a class="link-btn" href="https://soundcloud.com/razekmetal" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.56 8.87V17h8.76c.97 0 1.68-.8 1.68-1.69 0-.88-.68-1.61-1.56-1.68-.03-1.84-1.57-3.32-3.46-3.32-.56 0-1.09.14-1.56.36-.28-1.34-1.49-2.35-2.94-2.35-.5 0-.97.13-1.38.36l.46 1.19zM0 15.31C0 16.26.74 17 1.68 17H3.5V14c0-1.38 1.12-2.5 2.5-2.5S8.5 12.62 8.5 14v3h1.56V8.87C9.62 7.4 8.4 6.25 6.9 6.25c-1.38 0-2.5 1.12-2.5 2.5v.08C3.96 8.61 3.5 8.5 3 8.5 1.34 8.5 0 9.84 0 11.5v3.81z"/></svg>
+        SoundCloud · Razek Metal
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ INCHESS ═══════════════════════ -->
+<section id="inchess">
+  <p class="section-label">Inchess</p>
+  <h2>Inchess</h2>
+  <hr class="rule">
+  <div class="band">
+    <div class="band-header">
+      <div class="band-index">04</div>
+      <div class="band-info">
+        <h3>Inchess</h3>
+        <div class="band-meta">
+          <span>Metal</span>
+          <span>·</span>
+          <span>Brasil</span>
+        </div>
+      </div>
+    </div>
+    <p class="band-desc">
+      Banda com a faixa <em>Humanist Killer</em> — uma peça de metal direto, pesado e sem concessões.
+      Disponível no SoundCloud e YouTube.
+    </p>
+
+    <div class="placeholder-block">
+      <p><strong>Humanist Killer</strong></p>
+      <p>Adicione o link do YouTube e SoundCloud da música "Humanist Killer" da Inchess.</p>
+      <p style="margin-top:0.75rem; font-size:0.75rem; color: var(--text-dim);">
+        Substitua este bloco pelo embed do YouTube ou SoundCloud.
+      </p>
+    </div>
+
+    <div class="links-grid">
+      <a class="link-btn" href="https://www.youtube.com/results?search_query=Inchess+Humanist+Killer" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        Buscar no YouTube
+      </a>
+      <a class="link-btn" href="https://soundcloud.com/search?q=Inchess+Humanist+Killer" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.56 8.87V17h8.76c.97 0 1.68-.8 1.68-1.69 0-.88-.68-1.61-1.56-1.68-.03-1.84-1.57-3.32-3.46-3.32-.56 0-1.09.14-1.56.36-.28-1.34-1.49-2.35-2.94-2.35-.5 0-.97.13-1.38.36l.46 1.19zM0 15.31C0 16.26.74 17 1.68 17H3.5V14c0-1.38 1.12-2.5 2.5-2.5S8.5 12.62 8.5 14v3h1.56V8.87C9.62 7.4 8.4 6.25 6.9 6.25c-1.38 0-2.5 1.12-2.5 2.5v.08C3.96 8.61 3.5 8.5 3 8.5 1.34 8.5 0 9.84 0 11.5v3.81z"/></svg>
+        Buscar no SoundCloud
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer>
+  <p style="font-family:'Cinzel',serif; font-size:0.9rem; color:var(--text-dim); letter-spacing:0.2em; margin-bottom:1rem;">DIENASTY</p>
+  <p>Luiz Fernando Toledo · Portfólio Musical</p>
+  <p style="margin-top:0.5rem;">
+    <a href="https://luizftoledo.github.io">luizftoledo.github.io</a>
+  </p>
+</footer>
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.style.color = '');
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.style.color = 'var(--white)';
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
