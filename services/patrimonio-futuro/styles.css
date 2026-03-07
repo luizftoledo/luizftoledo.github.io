@@ -148,6 +148,7 @@ code {
 .controls-panel,
 .status-panel,
 .references-panel,
+.events-panel,
 .scenarios-panel,
 .summary-panel,
 .chart-panel,
@@ -167,7 +168,7 @@ code {
 
 .controls-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 16px;
   margin-top: 18px;
 }
@@ -192,6 +193,7 @@ code {
 }
 
 input,
+select,
 button {
   font: inherit;
 }
@@ -233,6 +235,44 @@ button:focus-visible {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
   margin-top: 18px;
+}
+
+.events-head,
+.event-row {
+  display: grid;
+  grid-template-columns: 90px 200px 160px minmax(200px, 1fr) 46px;
+  gap: 10px;
+  align-items: center;
+}
+
+.events-head {
+  margin-top: 18px;
+  padding: 0 4px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.event-rows {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.event-row {
+  padding: 12px;
+  border: 1px solid rgba(20, 33, 29, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.event-remove {
+  min-height: 46px;
+  width: 46px;
+  padding: 0;
+  border-radius: 14px;
 }
 
 .scenario-card,
@@ -359,7 +399,7 @@ button:focus-visible {
 
 .projection-table {
   width: 100%;
-  min-width: 920px;
+  min-width: 1040px;
   border-collapse: collapse;
 }
 
@@ -385,6 +425,12 @@ button:focus-visible {
 .projection-table th:first-child {
   font-family: var(--mono);
   width: 70px;
+}
+
+.projection-table td:nth-child(2),
+.projection-table th:nth-child(2) {
+  font-family: var(--mono);
+  width: 80px;
 }
 
 .projection-table td {
@@ -421,6 +467,14 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  .events-head {
+    display: none;
+  }
+
+  .event-row {
+    grid-template-columns: 1fr;
+  }
+
   .controls-header,
   .rates-header {
     flex-direction: column;
@@ -435,6 +489,7 @@ button:focus-visible {
   .controls-panel,
   .status-panel,
   .references-panel,
+  .events-panel,
   .scenarios-panel,
   .summary-panel,
   .chart-panel,

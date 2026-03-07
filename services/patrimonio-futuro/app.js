@@ -1,8 +1,14 @@
 const YEARS = 30;
 const DEFAULTS = {
+  currentAge: 35,
   currentBalance: 250000,
   monthlyContribution: 3000,
 };
+
+const EVENT_TYPES = [
+  { id: "lumpSum", label: "Entrada unica" },
+  { id: "monthlyStep", label: "Aporte mensal extra" },
+];
 
 const state = {
   ready: false,
@@ -23,12 +29,15 @@ const percentageFormatter = new Intl.NumberFormat("pt-BR", {
 });
 
 const dom = {
+  currentAge: document.getElementById("currentAge"),
   currentBalance: document.getElementById("currentBalance"),
   monthlyContribution: document.getElementById("monthlyContribution"),
   inflationRate: document.getElementById("inflationRate"),
   inflationHint: document.getElementById("inflationHint"),
   displayCurrency: document.getElementById("displayCurrency"),
   currencyHint: document.getElementById("currencyHint"),
+  addEventBtn: document.getElementById("addEventBtn"),
+  eventRows: document.getElementById("eventRows"),
   customRateRow: document.getElementById("customRateRow"),
   customRate: document.getElementById("customRate"),
   statusPanel: document.getElementById("statusPanel"),
@@ -53,12 +62,13 @@ document.addEventListener("DOMContentLoaded", init);
 async function init() {
   bindEvents();
   setDefaultInputs();
+  addEventRow();
   await loadReferences();
   runSimulation();
 }
 
 function bindEvents() {
-  [dom.currentBalance, dom.monthlyContribution, dom.inflationRate, dom.customRate].forEach((input) => {
+  [dom.currentAge, dom.currentBalance, dom.monthlyContribution, dom.inflationRate, dom.customRate].forEach((input) => {
     input.addEventListener("input", runSimulation);
   });
 
@@ -77,12 +87,68 @@ function bindEvents() {
     updateScenarioSelection();
     runSimulation();
   });
+
+  dom.addEventBtn.addEventListener("click", () => {
+    addEventRow();
+    runSimulation();
+  });
+
+  dom.eventRows.addEventListener("input", runSimulation);
+  dom.eventRows.addEventListener("change", runSimulation);
+  dom.eventRows.addEventListener("click", (event) => {
+    const removeButton = event.target.closest(".event-remove");
+    if (!removeButton) {
+      return;
+    }
+
+    removeButton.closest(".event-row")?.remove();
+    if (!dom.eventRows.children.length) {
+      addEventRow();
+    }
+    runSimulation();
+  });
 }
 
 function setDefaultInputs() {
+  dom.currentAge.value = String(DEFAULTS.currentAge);
   dom.currentBalance.value = String(DEFAULTS.currentBalance);
   dom.monthlyContribution.value = String(DEFAULTS.monthlyContribution);
   dom.displayCurrency.value = state.displayCurrency;
+}
+
+function addEventRow(initial = {}) {
+  const row = document.createElement("div");
+  row.className = "event-row";
+  row.innerHTML = `
+    <input
+      class="event-age"
+      type="number"
+      min="0"
+      max="120"
+      step="1"
+      value="${initial.age ?? ""}"
+      placeholder="40"
+      aria-label="Idade do evento">
+    <select class="event-type" aria-label="Tipo do evento">
+      ${EVENT_TYPES.map(
+        (type) =>
+          `<option value="${type.id}" ${initial.type === type.id ? "selected" : ""}>${type.label}</option>`
+      ).join("")}
+    </select>
+    <input
+      class="event-value money-input"
+      type="text"
+      inputmode="decimal"
+      value="${initial.value ?? ""}"
+      placeholder="50000 ou 1500">
+    <input
+      class="event-label"
+      type="text"
+      value="${initial.label ?? ""}"
+      placeholder="Bonus, promocao, venda de casa...">
+    <button type="button" class="secondary event-remove" aria-label="Remover evento">x</button>
+  `;
+  dom.eventRows.appendChild(row);
 }
 
 async function loadReferences() {
@@ -260,9 +326,11 @@ function runSimulation() {
     return;
   }
 
+  const currentAge = Number.parseInt(dom.currentAge.value, 10);
   const currentBalance = parseMoneyInput(dom.currentBalance.value);
   const monthlyContribution = parseMoneyInput(dom.monthlyContribution.value);
   const inflationAnnual = parsePercentageInput(dom.inflationRate.value);
+  const events = collectEvents(currentAge);
   const selectedScenario = state.scenarios.find((scenario) => scenario.id === state.selectedScenarioId);
   const annualRate =
     state.selectedScenarioId === "custom"
@@ -270,6 +338,8 @@ function runSimulation() {
       : selectedScenario.rate;
 
   if (
+    !Number.isInteger(currentAge) ||
+    currentAge < 0 ||
     !Number.isFinite(currentBalance) ||
     !Number.isFinite(monthlyContribution) ||
     !Number.isFinite(inflationAnnual) ||
@@ -284,10 +354,12 @@ function runSimulation() {
   }
 
   const rows = simulateProjection({
+    currentAge,
     currentBalance,
     monthlyContribution,
     annualRate,
     inflationAnnual,
+    events,
   });
 
   const currencyMeta = getDisplayCurrencyMeta();
@@ -298,32 +370,66 @@ function runSimulation() {
     annualRate,
     inflationAnnual,
     selectedScenario,
+    currentAge,
     currentBalance,
     monthlyContribution,
     currencyMeta,
+    events,
   });
   renderTable(rows, currencyMeta);
   renderCharts(rows, currencyMeta);
 }
 
-function simulateProjection({ currentBalance, monthlyContribution, annualRate, inflationAnnual }) {
+function collectEvents(currentAge) {
+  return [...dom.eventRows.querySelectorAll(".event-row")]
+    .map((row) => {
+      const age = Number.parseInt(row.querySelector(".event-age")?.value ?? "", 10);
+      const type = row.querySelector(".event-type")?.value ?? "lumpSum";
+      const value = parseMoneyInput(row.querySelector(".event-value")?.value ?? "");
+      const label = row.querySelector(".event-label")?.value?.trim() ?? "";
+
+      if (!Number.isFinite(value) || value === 0 || !Number.isInteger(age)) {
+        return null;
+      }
+
+      return {
+        age: Math.max(age, currentAge),
+        type,
+        value,
+        label,
+      };
+    })
+    .filter(Boolean);
+}
+
+function simulateProjection({ currentAge, currentBalance, monthlyContribution, annualRate, inflationAnnual, events }) {
   const monthlyReturn = toEffectiveMonthlyRate(annualRate);
   const monthlyInflation = toEffectiveMonthlyRate(inflationAnnual);
-  let balance = currentBalance;
-  let contributed = currentBalance;
+  const immediateLumpSum = sumEvents(events, "lumpSum", currentAge);
+  let activeMonthlyExtra = sumEvents(events, "monthlyStep", currentAge);
+  let balance = currentBalance + immediateLumpSum;
+  let contributed = currentBalance + immediateLumpSum;
   let inflationFactor = 1;
   const rows = [];
 
   for (let year = 1; year <= YEARS; year += 1) {
+    const age = currentAge + year;
+    const yearlyLumpSum = sumEvents(events, "lumpSum", age);
+    const newMonthlyExtra = sumEvents(events, "monthlyStep", age);
+    balance += yearlyLumpSum;
+    contributed += yearlyLumpSum;
+    activeMonthlyExtra += newMonthlyExtra;
+
     for (let month = 1; month <= 12; month += 1) {
-      balance = balance * (1 + monthlyReturn) + monthlyContribution;
-      contributed += monthlyContribution;
+      balance = balance * (1 + monthlyReturn) + monthlyContribution + activeMonthlyExtra;
+      contributed += monthlyContribution + activeMonthlyExtra;
       inflationFactor *= 1 + monthlyInflation;
     }
 
     const monthlyIncomeNominal = balance * monthlyReturn;
     rows.push({
       year,
+      age,
       nominalBalance: balance,
       realBalance: balance / inflationFactor,
       nominalMonthlyIncome: monthlyIncomeNominal,
@@ -338,6 +444,7 @@ function simulateProjection({ currentBalance, monthlyContribution, annualRate, i
 function renderMetrics(rows, inputs) {
   const lastRow = rows[rows.length - 1];
   const realAnnualReturn = ((1 + inputs.annualRate / 100) / (1 + inputs.inflationAnnual / 100) - 1) * 100;
+  const eventCount = inputs.events.length;
   const currencyLabel =
     inputs.currencyMeta.code === "BRL"
       ? "reais"
@@ -349,26 +456,26 @@ function renderMetrics(rows, inputs) {
     inputs.monthlyContribution,
     "BRL",
     false
-  )}. Mostrando os resultados em ${currencyLabel}.`;
+  )}. Mostrando os resultados em ${currencyLabel}${eventCount ? ` e considerando ${eventCount} evento(s) extra(s)` : ""}.`;
 
   const cards = [
     {
-      label: "Patrimonio nominal em 30 anos",
+      label: `Patrimonio nominal aos ${lastRow.age} anos`,
       value: formatDisplayAmount(lastRow.nominalBalance, inputs.currencyMeta, false),
       note: "Valor bruto no fim do periodo.",
     },
     {
-      label: "Patrimonio em reais de hoje",
+      label: `Patrimonio real aos ${lastRow.age} anos`,
       value: formatDisplayAmount(lastRow.realBalance, inputs.currencyMeta, false),
       note: "Mesmo valor, ja descontando a inflacao assumida.",
     },
     {
-      label: "Rendimento mensal nominal no ano 30",
+      label: `Rendimento mensal nominal aos ${lastRow.age}`,
       value: formatDisplayAmount(lastRow.nominalMonthlyIncome, inputs.currencyMeta, false),
       note: "Renda mensal estimada se a taxa continuar igual.",
     },
     {
-      label: "Rendimento mensal real no ano 30",
+      label: `Rendimento mensal real aos ${lastRow.age}`,
       value: formatDisplayAmount(lastRow.realMonthlyIncome, inputs.currencyMeta, false),
       note: `Retorno real implicito: ${formatPercent(realAnnualReturn)} ao ano.`,
     },
@@ -393,6 +500,7 @@ function renderTable(rows, currencyMeta) {
       (row) => `
         <tr>
           <td>${row.year}</td>
+          <td>${row.age}</td>
           <td>${formatDisplayAmount(row.nominalBalance, currencyMeta, true)}</td>
           <td>${formatDisplayAmount(row.realBalance, currencyMeta, true)}</td>
           <td>${formatDisplayAmount(row.nominalMonthlyIncome, currencyMeta, true)}</td>
@@ -409,7 +517,7 @@ function renderCharts(rows, currencyMeta) {
     return;
   }
 
-  const labels = rows.map((row) => `${row.year}`);
+  const labels = rows.map((row) => `${row.age}`);
   const convert = (value) => convertAmount(value, currencyMeta);
   const portfolioData = {
     labels,
@@ -473,6 +581,10 @@ function renderCharts(rows, currencyMeta) {
       },
       tooltip: {
         callbacks: {
+          title: (items) => {
+            const row = rows[items[0].dataIndex];
+            return `Idade ${row.age} | Ano ${row.year}`;
+          },
           label: (context) =>
             `${context.dataset.label}: ${formatDisplayAmount(context.parsed.y, currencyMeta, true)}`,
         },
@@ -513,6 +625,12 @@ function calculateSavingsApproximation(selicAnnual) {
   }
 
   return (Math.pow(1.005, 12) - 1) * 100;
+}
+
+function sumEvents(events, type, age) {
+  return events
+    .filter((event) => event.type === type && event.age === age)
+    .reduce((accumulator, event) => accumulator + event.value, 0);
 }
 
 function parseMoneyInput(rawValue) {
@@ -588,7 +706,7 @@ function updateStatusPanel() {
   dom.statusPanel.innerHTML = `
     <p class="panel-label">Status</p>
     <h2>Cenarios prontos para simular</h2>
-    <p class="status-copy">A pagina combina CDI anualizado, Selic anualizada, IPCA acumulado em 12 meses e cambio atual de dolar/libra, todos do Banco Central.</p>
+    <p class="status-copy">A pagina combina CDI anualizado, Selic anualizada, IPCA acumulado em 12 meses, cambio atual de dolar/libra e eventos extras por idade, todos do Banco Central.</p>
     <div class="status-details">
       <span>Horizonte: ${YEARS} anos</span>
       <span>Comparacao: nominal x real</span>

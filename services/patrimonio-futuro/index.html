@@ -52,7 +52,7 @@
         <div class="controls-header">
           <div>
             <p class="panel-label">Entradas</p>
-            <h2>Preencha os tres pontos principais</h2>
+            <h2>Preencha os campos da simulacao</h2>
           </div>
           <p class="helper">
             A simulacao supoe aportes no fim de cada mes e reinvestimento total dos rendimentos.
@@ -60,6 +60,11 @@
         </div>
 
         <div class="controls-grid">
+          <label class="field">
+            <span>Idade atual</span>
+            <input id="currentAge" type="number" min="0" max="120" step="1" value="35">
+          </label>
+
           <label class="field">
             <span>Patrimonio atual</span>
             <input id="currentBalance" class="money-input" type="text" inputmode="decimal" value="250000">
@@ -99,6 +104,29 @@
             </div>
           </label>
         </div>
+      </section>
+
+      <section class="panel events-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Eventos extras</p>
+            <h2>Adicione bonus, promocao, venda de casa ou outros saltos de patrimonio</h2>
+          </div>
+          <button id="addEventBtn" type="button" class="secondary">Adicionar evento</button>
+        </div>
+        <p class="helper">
+          Use <strong>entrada unica</strong> para bonus, heranca ou venda de um imovel. Use
+          <strong>aporte mensal extra</strong> para promocao, aumento de renda ou qualquer reforco permanente no aporte.
+          Idades passadas entram como efeito imediato.
+        </p>
+        <div class="events-head">
+          <span>Idade</span>
+          <span>Tipo</span>
+          <span>Valor</span>
+          <span>Descricao</span>
+          <span></span>
+        </div>
+        <div id="eventRows" class="event-rows"></div>
       </section>
 
       <section class="summary-grid">
@@ -182,6 +210,7 @@
             <thead>
               <tr>
                 <th>Ano</th>
+                <th>Idade</th>
                 <th id="headerNominalBalance">Patrimonio nominal</th>
                 <th id="headerRealBalance">Patrimonio real</th>
                 <th id="headerNominalIncome">Rendimento mensal nominal</th>
@@ -203,6 +232,7 @@
             <li>O ajuste real usa uma inflacao anual fixa, preenchida por padrao com o IPCA acumulado em 12 meses mais recente do BCB.</li>
             <li>O rendimento mensal mostrado para cada ano e o rendimento estimado daquele patrimonio no mes seguinte, mantida a mesma taxa.</li>
             <li>Dolar e libra sao apenas uma conversao de visualizacao, usando a cotacao oficial mais recente do BCB no momento em que a pagina carrega.</li>
+            <li>Eventos extras podem ser de entrada unica ou de aumento permanente no aporte mensal. Entradas unicas entram no inicio do ano daquela idade.</li>
             <li>Poupanca aparece como aproximacao simples pela regra atual, sem incorporar TR. Por isso ela serve como referencia, nao como replica exata.</li>
           </ul>
         </article>
