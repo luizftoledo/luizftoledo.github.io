@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clipping | Luiz Fernando Toledo</title>
+  <meta name="description" content="Clipping automático de Luiz Fernando Toledo com publicações autorais, entrevistas, perfis, ecos e menções rastreadas diariamente.">
+  <meta property="og:title" content="Clipping | Luiz Fernando Toledo">
+  <meta property="og:description" content="Rastreamento diário de reportagens, entrevistas, perfis, ecos e menções a Luiz Fernando Toledo.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://luizftoledo.github.io/clipping-dashboard/">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f1e7;
+      --panel: rgba(255, 252, 245, 0.9);
+      --panel-strong: #fffdf8;
+      --ink: #1f2a1f;
+      --muted: #5f675d;
+      --line: rgba(31, 42, 31, 0.12);
+      --accent: #154734;
+      --accent-soft: #d8eadf;
+      --amber: #b06b1f;
+      --rose: #8f3e48;
+      --shadow: 0 22px 50px rgba(32, 38, 31, 0.08);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "IBM Plex Sans", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(21, 71, 52, 0.15), transparent 28%),
+        radial-gradient(circle at top right, rgba(176, 107, 31, 0.14), transparent 22%),
+        linear-gradient(180deg, #f7f3ea 0%, #f1ecdf 100%);
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(1280px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.85fr);
+      gap: 20px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero-card,
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-card {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -80px auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(21, 71, 52, 0.16) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(21, 71, 52, 0.08);
+      color: var(--accent);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: "Fraunces", serif;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 4vw, 4.25rem);
+      margin-top: 18px;
+      max-width: 12ch;
+    }
+
+    .hero-copy {
+      margin: 16px 0 0;
+      max-width: 58ch;
+      font-size: 1.03rem;
+      line-height: 1.62;
+      color: var(--muted);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .hero-pill strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 16px;
+    }
+
+    .headline-stack {
+      display: grid;
+      gap: 12px;
+      padding: 22px;
+    }
+
+    .headline-item {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
+    }
+
+    .headline-kicker {
+      display: block;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .headline-item a {
+      text-decoration: none;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .headline-item p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .summary-grid,
+    .story-grid,
+    .analysis-grid,
+    .recent-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .summary-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin-bottom: 18px;
+    }
+
+    .metric-card {
+      padding: 18px;
+    }
+
+    .metric-label {
+      display: block;
+      font-size: 0.83rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .metric-value {
+      display: block;
+      font-size: clamp(1.85rem, 3vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .metric-detail {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .controls {
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .control-group {
+      display: grid;
+      gap: 6px;
+      min-width: 220px;
+      flex: 1 1 220px;
+    }
+
+    .control-label {
+      font-size: 0.79rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    input:focus,
+    select:focus {
+      outline: 2px solid rgba(21, 71, 52, 0.18);
+      border-color: rgba(21, 71, 52, 0.32);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filter-pill {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .filter-pill.is-active {
+      background: var(--accent);
+      color: #f8f6f1;
+      border-color: var(--accent);
+    }
+
+    .story-grid,
+    .analysis-grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .section-title {
+      font-size: clamp(1.45rem, 2vw, 2rem);
+      margin-bottom: 8px;
+    }
+
+    .section-deck {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.58;
+      max-width: 64ch;
+    }
+
+    .narrative-list,
+    .recent-list,
+    .source-list,
+    .result-list,
+    .table-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .narrative-item,
+    .recent-item,
+    .result-item,
+    .source-item {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel-strong);
+    }
+
+    .narrative-item strong,
+    .result-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .narrative-item p,
+    .recent-item p,
+    .result-item p,
+    .source-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.95rem;
+    }
+
+    .mini-bars {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-bar {
+      display: grid;
+      gap: 6px;
+    }
+
+    .mini-bar-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+
+    .mini-bar-track {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(21, 71, 52, 0.08);
+      overflow: hidden;
+    }
+
+    .mini-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #154734 0%, #2a7b58 100%);
+    }
+
+    .mini-bar-fill.alt {
+      background: linear-gradient(90deg, #a85c1c 0%, #cd8d44 100%);
+    }
+
+    .recent-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 18px;
+    }
+
+    .recent-window-title {
+      font-size: 1.12rem;
+      margin-bottom: 10px;
+    }
+
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(21, 71, 52, 0.08);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+    }
+
+    .meta-line,
+    .result-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(21, 71, 52, 0.08);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .tag.alt {
+      background: rgba(176, 107, 31, 0.12);
+      color: var(--amber);
+    }
+
+    .tag.soft {
+      background: rgba(143, 62, 72, 0.10);
+      color: var(--rose);
+    }
+
+    .result-item a,
+    .recent-item a,
+    .headline-item a {
+      text-decoration: none;
+    }
+
+    .result-item h3,
+    .recent-item h3 {
+      font-size: 1.14rem;
+      margin-bottom: 10px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel-strong);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+      font-size: 0.95rem;
+    }
+
+    th,
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(21, 71, 52, 0.04);
+    }
+
+    tbody tr:hover {
+      background: rgba(21, 71, 52, 0.03);
+    }
+
+    .empty-state {
+      padding: 20px;
+      border-radius: 18px;
+      border: 1px dashed var(--line);
+      color: var(--muted);
+      background: rgba(255,255,255,0.45);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+
+    details {
+      margin-top: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .status-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(21, 71, 52, 0.08);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .status-chip.alt {
+      background: rgba(176, 107, 31, 0.12);
+      color: var(--amber);
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .story-grid,
+      .analysis-grid,
+      .recent-grid,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card,
+      .panel,
+      .controls {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        width: min(100vw - 20px, 100%);
+        padding: 18px 0 56px;
+      }
+
+      h1 {
+        max-width: none;
+      }
+
+      .hero-meta,
+      .controls-row,
+      .filter-pills,
+      .status-line {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-pill,
+      .filter-pill,
+      .status-chip {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .table-wrap {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <article class="hero-card">
+        <span class="eyebrow">Clipping diário automatizado</span>
+        <h1>Luiz Fernando Toledo, monitorado em tempo real editorial.</h1>
+        <p class="hero-copy">
+          Esta página consolida reportagens autorais, entrevistas, páginas institucionais, ecos de apuração e outras menções identificadas por um raspador que roda todos os dias no GitHub. O foco é mostrar onde o seu nome apareceu, em que contexto e o que mudou no último dia, na última semana e no último mês.
+        </p>
+        <div class="hero-meta" id="heroMeta"></div>
+      </article>
+
+      <aside class="hero-side">
+        <section class="panel headline-stack">
+          <h2 class="section-title">Leitura rápida</h2>
+          <div id="headlineStack" class="table-list"></div>
+        </section>
+      </aside>
+    </section>
+
+    <section class="summary-grid" id="summaryGrid"></section>
+
+    <section class="panel controls">
+      <div class="status-line" id="statusLine"></div>
+      <div class="controls-row">
+        <label class="control-group">
+          <span class="control-label">Pesquisar no clipping</span>
+          <input id="searchInput" type="search" placeholder="Ex.: BBC, LAI, entrevista, Epstein, Reuters Institute">
+        </label>
+        <label class="control-group">
+          <span class="control-label">Janela temporal</span>
+          <select id="windowSelect">
+            <option value="all">Todo o período</option>
+            <option value="1">Último dia</option>
+            <option value="7">Últimos 7 dias</option>
+            <option value="30">Últimos 30 dias</option>
+            <option value="365">Último ano</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <span class="control-label">Categoria</span>
+        <div class="filter-pills" id="categoryFilters"></div>
+      </div>
+    </section>
+
+    <section class="story-grid">
+      <article class="panel">
+        <h2 class="section-title">O que o clipping mostra</h2>
+        <p class="section-deck">
+          O painel abaixo tenta transformar o acervo em leitura editorial imediata: qual é o núcleo mais forte do seu rastro público, que tipo de aparição está crescendo agora e em quais ambientes seu nome tende a aparecer.
+        </p>
+        <div class="narrative-list" id="narrativeList"></div>
+      </article>
+
+      <aside class="panel">
+        <h2 class="section-title">Distribuição por categoria</h2>
+        <p class="section-deck">Contagem do recorte filtrado. O objetivo aqui é separar produção autoral de perfis, falas públicas, ecos e menções.</p>
+        <div class="mini-bars" id="categoryBars"></div>
+      </aside>
+    </section>
+
+    <section class="analysis-grid">
+      <article class="panel">
+        <h2 class="section-title">Linha do tempo anual</h2>
+        <p class="section-deck">Agrupamento simples por ano para enxergar a concentração histórica do acervo atual.</p>
+        <div class="mini-bars" id="timelineBars"></div>
+      </article>
+
+      <aside class="panel">
+        <h2 class="section-title">Fontes mais frequentes</h2>
+        <p class="section-deck">Domínios que mais aparecem no recorte ativo. Isso ajuda a distinguir produção própria, perfil institucional e terceiros.</p>
+        <div class="source-list" id="domainList"></div>
+      </aside>
+    </section>
+
+    <section class="recent-grid" id="recentGrid"></section>
+
+    <section class="panel">
+      <h2 class="section-title">Base filtrada</h2>
+      <p class="section-deck">
+        Lista completa do recorte pesquisado. Em desktop, a tabela fica disponível logo abaixo; em telas pequenas, a leitura fica em cartões para não pesar nem quebrar o layout.
+      </p>
+      <div class="result-list" id="resultList"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Categoria</th>
+              <th>Contexto</th>
+              <th>Título</th>
+              <th>Fonte</th>
+            </tr>
+          </thead>
+          <tbody id="resultTable"></tbody>
+        </table>
+      </div>
+      <p class="footer-note" id="resultCountNote"></p>
+    </section>
+
+    <details>
+      <summary>Metodologia e limites</summary>
+      <div class="footer-note" id="methodologyBox"></div>
+    </details>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

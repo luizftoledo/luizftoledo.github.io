@@ -1,0 +1,43 @@
+{
+  "discovery": {
+    "seeds": {
+      "portfolio": 33,
+      "bbc_author_page": 25
+    },
+    "searches": {
+      "google-news-rss:\"Luiz Fernando Toledo\"": 40,
+      "google-news-rss:\"Luiz Fernando Toledo Antunes\"": 3
+    }
+  },
+  "enrich": {
+    "fetched": 40,
+    "reused": 48,
+    "kept": 53,
+    "dropped": 35,
+    "categories": {
+      "reportagem_autoral": 34,
+      "entrevista": 6,
+      "palestra_curso": 4,
+      "perfil_bio": 8,
+      "eco_republicacao": 1
+    },
+    "domains": {
+      "bbc.com": 33,
+      "tab.uol.com.br": 1,
+      "piaui.uol.com.br": 2,
+      "open.spotify.com": 2,
+      "youtube.com": 4,
+      "udemy.com": 1,
+      "congresso.abraji.org.br": 1,
+      "reutersinstitute.politics.ox.ac.uk": 2,
+      "abraji.org.br": 1,
+      "brown.columbia.edu": 1,
+      "repositorio.fgv.br": 1,
+      "talks.ox.ac.uk": 1,
+      "cima.ned.org": 1,
+      "scielo.br": 1,
+      "theintercept.com": 1
+    },
+    "errors": []
+  }
+}
