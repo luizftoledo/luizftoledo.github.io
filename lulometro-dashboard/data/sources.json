@@ -23,7 +23,25 @@
   "target_biblioteca_slugs": [
     "bolsonaro"
   ],
-  "biblioteca_categories": [],
-  "pages_visited_by_source": {},
+  "biblioteca_categories": [
+    {
+      "url": "https://www.biblioteca.presidencia.gov.br/presidencia/ex-presidentes/bolsonaro/discursos",
+      "type": "discurso",
+      "source": "biblioteca",
+      "president_slug": "bolsonaro",
+      "president": "Jair Bolsonaro"
+    },
+    {
+      "url": "https://www.biblioteca.presidencia.gov.br/presidencia/ex-presidentes/bolsonaro/entrevistas",
+      "type": "entrevista",
+      "source": "biblioteca",
+      "president_slug": "bolsonaro",
+      "president": "Jair Bolsonaro"
+    }
+  ],
+  "pages_visited_by_source": {
+    "planalto": 17,
+    "biblioteca": 38
+  },
   "errors": []
 }
