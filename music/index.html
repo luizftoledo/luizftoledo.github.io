@@ -591,6 +591,52 @@
       .photo-grid { gap: 3px; }
     }
 
+    /* ── AUDIO TRACK (inline Dienasty) ── */
+    .audio-track {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--bg-2);
+      margin-bottom: 1rem;
+    }
+
+    .audio-track-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      gap: 0.5rem;
+    }
+
+    .audio-track-name {
+      font-size: 0.8rem;
+      color: var(--white);
+    }
+
+    .audio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      background: rgba(192,57,43,0.1);
+      border: 1px solid rgba(192,57,43,0.25);
+      border-radius: 2px;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .audio-player-wrap {
+      padding: 1rem;
+    }
+
+    .audio-player-wrap audio {
+      width: 100%;
+      accent-color: var(--red);
+    }
+
     /* ── MUSIC PLAYER ── */
     #music-player {
       position: fixed;
@@ -795,9 +841,19 @@
       <img src="IMG_2631.jpeg" alt="Luiz Fernando Toledo — Dienasty wide" class="wide" loading="lazy">
     </div>
 
-    <div class="placeholder-block">
-      <p><strong>Músicas em breve.</strong></p>
-      <p>Material em processo de gravação — os links serão adicionados assim que disponíveis.</p>
+    <div class="audio-track">
+      <div class="audio-track-header">
+        <span class="audio-track-name">Demo — Mar 2026</span>
+        <span class="audio-badge">
+          <span style="width:4px;height:4px;background:var(--red);border-radius:50%;display:inline-block;animation:pulse 1.5s ease-in-out infinite;"></span>
+          Em gravação
+        </span>
+      </div>
+      <div class="audio-player-wrap">
+        <audio id="dienasty-audio" controls src="whatsapp-audio-2026-03-01.mpeg">
+          Seu browser não suporta o player de áudio.
+        </audio>
+      </div>
     </div>
   </div>
 </section>
@@ -1024,7 +1080,7 @@
     <div class="player-progress-bar" id="progress-bar"></div>
   </div>
 </div>
-<audio id="bg-audio" src="https://luizftoledo.github.io/music/whatsapp-audio-2026-03-01.mpeg" preload="auto"></audio>
+<!-- bg-audio removed: using dienasty-audio element directly -->
 
 <!-- ═══════════════════════ FOOTER ═══════════════════════ -->
 <footer>
@@ -1050,7 +1106,8 @@
   sections.forEach(s => observer.observe(s));
 
   // ── MUSIC PLAYER ──
-  const audio = document.getElementById('bg-audio');
+  // Uses the inline #dienasty-audio element (avoids duplicate audio)
+  const audio = document.getElementById('dienasty-audio');
   const player = document.getElementById('music-player');
   const btn = document.getElementById('play-pause-btn');
   const iconPause = document.getElementById('icon-pause');
@@ -1058,53 +1115,58 @@
   const progressBar = document.getElementById('progress-bar');
   const tapHint = document.getElementById('tap-hint');
 
+  // Hide the inline controls (bottom player handles it)
+  if (audio) audio.removeAttribute('controls');
+
   function setPlaying(playing) {
     iconPause.style.display = playing ? '' : 'none';
     iconPlay.style.display = playing ? 'none' : '';
   }
 
-  // Update progress bar
-  audio.addEventListener('timeupdate', () => {
-    if (audio.duration) {
-      progressBar.style.width = (audio.currentTime / audio.duration * 100) + '%';
-    }
-  });
-
-  // Play/pause button
-  btn.addEventListener('click', () => {
-    if (audio.paused) {
-      audio.play();
-      setPlaying(true);
-      tapHint.style.display = 'none';
-      player.classList.remove('autoplay-blocked');
-    } else {
-      audio.pause();
-      setPlaying(false);
-    }
-  });
-
-  // Clicking anywhere on blocked player starts playback
-  player.addEventListener('click', (e) => {
-    if (player.classList.contains('autoplay-blocked') && e.target !== btn) {
-      audio.play();
-      setPlaying(true);
-      tapHint.style.display = 'none';
-      player.classList.remove('autoplay-blocked');
-    }
-  });
-
-  // Show player after short delay, attempt autoplay
-  setTimeout(() => {
-    player.classList.add('visible');
-    audio.play().then(() => {
-      setPlaying(true);
-    }).catch(() => {
-      // Autoplay blocked — show tap hint
-      setPlaying(false);
-      tapHint.style.display = '';
-      player.classList.add('autoplay-blocked');
+  if (audio) {
+    // Update progress bar
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration) {
+        progressBar.style.width = (audio.currentTime / audio.duration * 100) + '%';
+      }
     });
-  }, 800);
+
+    // Play/pause button
+    btn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        setPlaying(true);
+        tapHint.style.display = 'none';
+        player.classList.remove('autoplay-blocked');
+      } else {
+        audio.pause();
+        setPlaying(false);
+      }
+    });
+
+    // Clicking anywhere on blocked player starts playback
+    player.addEventListener('click', (e) => {
+      if (player.classList.contains('autoplay-blocked') && e.target !== btn) {
+        audio.play();
+        setPlaying(true);
+        tapHint.style.display = 'none';
+        player.classList.remove('autoplay-blocked');
+      }
+    });
+
+    // Show player, attempt autoplay
+    setTimeout(() => {
+      player.classList.add('visible');
+      audio.play().then(() => {
+        setPlaying(true);
+      }).catch(() => {
+        // Autoplay blocked by browser — show tap hint
+        setPlaying(false);
+        tapHint.style.display = '';
+        player.classList.add('autoplay-blocked');
+      });
+    }, 600);
+  }
 </script>
 </body>
 </html>
