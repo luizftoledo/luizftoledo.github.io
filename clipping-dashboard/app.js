@@ -180,13 +180,20 @@ function topItems(items, limit = 3) {
   return [...items].sort(compareByDate).slice(0, limit);
 }
 
+function topPublishedItems(items, limit = 3) {
+  return [...items]
+    .filter((item) => item.published_at)
+    .sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime())
+    .slice(0, limit);
+}
+
 function categoryLead(counts) {
   const ordered = CATEGORY_ORDER.map((key) => ({ key, count: counts[key] || 0 }));
   ordered.sort((a, b) => b.count - a.count);
   return ordered[0] || { key: "reportagem_autoral", count: 0 };
 }
 
-function renderHero() {
+function renderHero(filteredItems) {
   const meta = state.metadata;
   refs.heroMeta.innerHTML = `
     <span class="hero-pill"><strong>Foco:</strong> lista de menções e contexto</span>
@@ -194,12 +201,19 @@ function renderHero() {
     <span class="hero-pill"><strong>Atualizado:</strong> ${formatDateTime(meta?.generated_at)}</span>
   `;
 
-  const latest = topItems(state.items, 3);
+  const latest = topPublishedItems(filteredItems.length ? filteredItems : state.items, 3);
+  if (!latest.length) {
+    refs.headlineStack.innerHTML = `
+      <div class="empty-state">Sem itens com data publicada neste recorte.</div>
+    `;
+    return;
+  }
+
   refs.headlineStack.innerHTML = latest.map((item) => `
     <article class="headline-item">
       <span class="headline-kicker">${CATEGORY_LABELS[item.category] || item.category_label}</span>
       <a href="${item.url}" target="_blank" rel="noopener noreferrer">${item.title}</a>
-      <p>${formatDate(getReferenceDate(item))} · ${item.domain || item.site_name || "fonte"}</p>
+      <p>${formatDate(item.published_at)} · ${item.domain || item.site_name || "fonte"}</p>
     </article>
   `).join("");
 }
@@ -445,7 +459,7 @@ function renderMethodology() {
 
 function render() {
   const filteredItems = getFilteredItems();
-  renderHero();
+  renderHero(filteredItems);
   renderSummary(filteredItems);
   renderStatus();
   renderCategoryFilters();
