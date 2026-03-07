@@ -507,6 +507,89 @@ const spotifySignalTracks = [
 
 const signalTracksFull = spotifySignalTracks.filter((track) => !track.partial);
 const albumStoryLookup = new Map(storyAlbums.map((story) => [story.album, story]));
+const albumColorLookup = new Map(discography.map((entry) => [entry.album, entry.color]));
+
+const scarPopularityContext = {
+  bandPopularity: 45,
+  monthlyListeners: 123128,
+  followers: 152558,
+};
+
+const metalBenchmarks = [
+  {
+    band: "Solution .45",
+    track: "The Faint Pulse of Light",
+    trackPopularity: 25,
+    monthlyListeners: 16730,
+    followers: 33247,
+    color: "#ff4e7d",
+    labelDx: 14,
+    labelDy: -8,
+    labelAnchor: "start",
+  },
+  {
+    band: "Scar Symmetry",
+    track: "Morphogenesis",
+    trackPopularity: 43,
+    monthlyListeners: 123128,
+    followers: 152558,
+    color: "#84fff5",
+    labelDx: 14,
+    labelDy: -18,
+    labelAnchor: "start",
+  },
+  {
+    band: "Soilwork",
+    track: "Stabbing the Drama",
+    trackPopularity: 47,
+    monthlyListeners: 384584,
+    followers: 350368,
+    color: "#6ea0ff",
+    labelDx: 14,
+    labelDy: 18,
+    labelAnchor: "start",
+  },
+  {
+    band: "Meshuggah",
+    track: "Bleed",
+    trackPopularity: 58,
+    monthlyListeners: 586743,
+    followers: 851111,
+    color: "#8f90ff",
+    labelDx: 14,
+    labelDy: -16,
+    labelAnchor: "start",
+  },
+  {
+    band: "In Flames",
+    track: "Come Clarity",
+    trackPopularity: 38,
+    monthlyListeners: 1500000,
+    followers: 1305722,
+    color: "#ff7fab",
+    labelDx: -14,
+    labelDy: 18,
+    labelAnchor: "end",
+  },
+  {
+    band: "Gojira",
+    track: "Stranded",
+    trackPopularity: 69,
+    monthlyListeners: 2300000,
+    followers: 1800000,
+    color: "#ffd999",
+    labelDx: -14,
+    labelDy: -18,
+    labelAnchor: "end",
+  },
+];
+
+const albumPopularityBenchmarks = [
+  { band: "Meshuggah", album: "ObZen", popularity: 43, color: "#8f90ff" },
+  { band: "Gojira", album: "Terra Incognita", popularity: 49, color: "#ffd999" },
+  { band: "Arch Enemy", album: "War Eternal", popularity: 51, color: "#ff7fab" },
+  { band: "In Flames", album: "Foregone", popularity: 57, color: "#6ea0ff" },
+];
 
 function average(values) {
   if (!values.length) return null;
@@ -539,6 +622,38 @@ function formatDuration(totalSeconds) {
     .toString()
     .padStart(2, "0");
   return `${minutes}:${seconds}`;
+}
+
+function formatCompactNumber(value) {
+  return new Intl.NumberFormat("pt-BR", {
+    notation: "compact",
+    maximumFractionDigits: 1,
+  }).format(value);
+}
+
+function formatDecimal(value) {
+  return new Intl.NumberFormat("pt-BR", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  }).format(value);
+}
+
+function formatSignedValue(value) {
+  if (!Number.isFinite(value)) return "0";
+  return `${value > 0 ? "+" : ""}${Math.round(value)}`;
+}
+
+function shortAlbumName(name) {
+  if (name.includes("Phase I")) return "Singularity I";
+  if (name.includes("Phase II")) return "Singularity II";
+  return name;
+}
+
+function logScale(value, minValue, maxValue, start, end) {
+  const minLog = Math.log10(minValue);
+  const maxLog = Math.log10(maxValue);
+  const scaled = (Math.log10(value) - minLog) / (maxLog - minLog);
+  return start + scaled * (end - start);
 }
 
 function energyColor(energy) {
@@ -1200,6 +1315,455 @@ function renderRuntimeStrips() {
   `;
 }
 
+function renderPopularityFocus(index) {
+  const container = document.querySelector("#popularity-focus");
+  if (!container) return;
+
+  const track = spotifySignalTracks[index];
+  const ranking = spotifySignalTracks
+    .map((entry, entryIndex) => ({ entry, entryIndex }))
+    .sort((first, second) => second.entry.popularity - first.entry.popularity || first.entry.year - second.entry.year);
+  const rank = ranking.findIndex((entry) => entry.entryIndex === index) + 1;
+  const albumAverage = metricAverage(albumTrackData(track.album), "popularity");
+  const delta = track.popularity - scarPopularityContext.bandPopularity;
+
+  let note =
+    Math.abs(delta) <= 3
+      ? `${track.shortTitle} encosta no score do artista e funciona como uma das portas de entrada mais fortes da Scar.`
+      : rank <= 3
+        ? `${track.shortTitle} ainda esta no pelotao de frente do catalogo, mas depende mais da marca Scar Symmetry do que de um impulso proprio de hit.`
+        : `${track.shortTitle} orbita abaixo do score da banda e reforca como a Scar costuma ser consumida mais como universo completo do que como single isolado.`;
+
+  if (track.partial) {
+    note += " Esta faixa usa sinal parcial de audio, mas o score de popularidade continua valido para a comparacao.";
+  }
+
+  container.innerHTML = `
+    <p class="micro-label">Score atual</p>
+    <h3>${track.title}</h3>
+    <p class="popularity-focus-meta">${track.album} • ${track.year} • ${track.durationLabel}</p>
+    <div class="popularity-focus-grid">
+      <div><span>popularidade</span><br><strong>${track.popularity}</strong></div>
+      <div><span>rank no recorte</span><br><strong>#${rank}</strong></div>
+      <div><span>delta vs artista</span><br><strong>${formatSignedValue(delta)}</strong></div>
+      <div><span>album index</span><br><strong>${formatDecimal(albumAverage)}</strong></div>
+    </div>
+    <p class="popularity-focus-note">${note}</p>
+  `;
+}
+
+function renderPopularityInsights() {
+  const container = document.querySelector("#popularity-insights");
+  if (!container) return;
+
+  const highest = spotifySignalTracks.reduce((best, track) => (track.popularity > best.popularity ? track : best));
+  const lowest = spotifySignalTracks.reduce((best, track) => (track.popularity < best.popularity ? track : best));
+  const closestToBand = spotifySignalTracks.reduce((best, track) =>
+    Math.abs(track.popularity - scarPopularityContext.bandPopularity) <
+    Math.abs(best.popularity - scarPopularityContext.bandPopularity)
+      ? track
+      : best
+  );
+  const sampleAverage = metricAverage(spotifySignalTracks, "popularity");
+  const multiTrackLeader = albumSignalSummaries()
+    .filter((album) => album.tracks.length > 1)
+    .reduce((best, album) => (album.metrics.popularity > best.metrics.popularity ? album : best));
+
+  const insights = [
+    {
+      title: "Teto interno",
+      body: `${highest.shortTitle} lidera o recorte com ${highest.popularity} e chega mais perto do score do artista (${scarPopularityContext.bandPopularity}) do que qualquer outra faixa daqui.`,
+    },
+    {
+      title: "Centro de gravidade",
+      body: `A media das faixas-farol fica em ${formatDecimal(sampleAverage)}, bem abaixo do score do artista. A marca Scar Symmetry pesa mais do que um hit unico.`,
+    },
+    {
+      title: "Album mais estavel",
+      body: `${shortAlbumName(multiTrackLeader.album)} lidera entre discos com multiplas faixas no recorte, com indice ${formatDecimal(multiTrackLeader.metrics.popularity)}.`,
+    },
+    {
+      title: "Extremo oposto",
+      body: `${lowest.shortTitle} cai para ${lowest.popularity}, enquanto ${closestToBand.shortTitle} e o ponto que mais encosta na assinatura publica da banda.`,
+    },
+  ];
+
+  container.innerHTML = insights
+    .map(
+      (insight) => `
+        <div class="popularity-insight">
+          <strong>${insight.title}</strong>
+          <p>${insight.body}</p>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderPopularityKpis() {
+  const container = document.querySelector("#popularity-kpis");
+  if (!container) return;
+
+  const sampleAverage = metricAverage(spotifySignalTracks, "popularity");
+
+  const cards = [
+    {
+      label: "artista Scar",
+      value: scarPopularityContext.bandPopularity,
+      note: "score de artista no Musicstax",
+    },
+    {
+      label: "listeners",
+      value: formatCompactNumber(scarPopularityContext.monthlyListeners),
+      note: "monthly listeners atuais",
+    },
+    {
+      label: "seguidores",
+      value: formatCompactNumber(scarPopularityContext.followers),
+      note: "followers espelhados do Spotify",
+    },
+    {
+      label: "media do recorte",
+      value: formatDecimal(sampleAverage),
+      note: "popularidade media das faixas daqui",
+    },
+  ];
+
+  container.innerHTML = cards
+    .map(
+      (card) => `
+        <div class="popularity-kpi">
+          <span>${card.label}</span>
+          <strong>${card.value}</strong>
+          <small>${card.note}</small>
+        </div>
+      `
+    )
+    .join("");
+}
+
+function renderPopularityTrackMap(activeIndex = 0) {
+  const container = document.querySelector("#popularity-track-map");
+  if (!container) return;
+
+  const width = 920;
+  const height = 560;
+  const margin = { top: 34, right: 40, bottom: 68, left: 84 };
+  const plotWidth = width - margin.left - margin.right;
+  const plotHeight = height - margin.top - margin.bottom;
+  const popularityMin = 0;
+  const popularityMax = 60;
+  const yearMin = 2005;
+  const yearMax = 2023;
+  const sampleAverage = metricAverage(spotifySignalTracks, "popularity");
+  const activeTrack = spotifySignalTracks[activeIndex];
+
+  const xScale = (value) =>
+    margin.left + ((value - popularityMin) / (popularityMax - popularityMin)) * plotWidth;
+  const yScale = (year) => margin.top + plotHeight - ((year - yearMin) / (yearMax - yearMin)) * plotHeight;
+
+  const durationMin = Math.min(...spotifySignalTracks.map((track) => track.durationSeconds));
+  const durationMax = Math.max(...spotifySignalTracks.map((track) => track.durationSeconds));
+  const radiusFor = (track) =>
+    8 + ((track.durationSeconds - durationMin) / (durationMax - durationMin || 1)) * 13;
+
+  const activeX = xScale(activeTrack.popularity);
+  const activeY = yScale(activeTrack.year);
+  const activeLabelToLeft = activeTrack.popularity > 42;
+  const activeLabelX = activeLabelToLeft ? activeX - 18 : activeX + 18;
+  const activeLabelAnchor = activeLabelToLeft ? "end" : "start";
+  const activeLabelY = activeY - 16;
+
+  const points = spotifySignalTracks
+    .map((track, index) => {
+      const x = xScale(track.popularity);
+      const y = yScale(track.year);
+      const radius = radiusFor(track);
+      const color = albumColorLookup.get(track.album) || energyColor(track.energy || 96);
+      const selected = index === activeIndex;
+      return `
+        <g class="popularity-point ${selected ? "is-selected" : ""}">
+          <circle cx="${x}" cy="${y}" r="${radius + 7}" fill="${color}" opacity="${selected ? 0.18 : 0.08}"></circle>
+          <circle
+            cx="${x}"
+            cy="${y}"
+            r="${radius}"
+            fill="${color}"
+            fill-opacity="${selected ? 0.92 : 0.72}"
+            stroke="${selected ? "#f7fbff" : "#081321"}"
+            stroke-width="${selected ? 3 : 2}"
+            tabindex="0"
+            role="button"
+            aria-label="${textEscape(track.title)}"
+            data-pop-index="${index}"
+          ></circle>
+          <circle cx="${x}" cy="${y}" r="${Math.max(radius - 4, 4)}" fill="none" stroke="rgba(255,255,255,0.16)" data-pop-index="${index}"></circle>
+        </g>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="popularityTrackTitle popularityTrackDesc">
+      <title id="popularityTrackTitle">Mapa interno de popularidade das faixas da Scar Symmetry</title>
+      <desc id="popularityTrackDesc">As faixas sao posicionadas por popularidade e ano; a linha principal marca o score publico do artista.</desc>
+      <rect x="${margin.left}" y="${margin.top}" width="${plotWidth}" height="${plotHeight}" rx="24" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"></rect>
+      ${[10, 20, 30, 40, 50, 60]
+        .map((tick) => {
+          const x = xScale(tick);
+          return `
+            <line x1="${x}" y1="${margin.top}" x2="${x}" y2="${height - margin.bottom}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 10"></line>
+            <text x="${x}" y="${height - margin.bottom + 24}" text-anchor="middle" fill="#8ea5bb" font-size="12">${tick}</text>
+          `;
+        })
+        .join("")}
+      ${[2005, 2008, 2011, 2014, 2017, 2020, 2023]
+        .map((year) => {
+          const y = yScale(year);
+          return `
+            <line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 10"></line>
+            <text x="${margin.left - 16}" y="${y + 4}" text-anchor="end" fill="#8ea5bb" font-size="12">${year}</text>
+          `;
+        })
+        .join("")}
+      <line x1="${xScale(sampleAverage)}" y1="${margin.top}" x2="${xScale(sampleAverage)}" y2="${height - margin.bottom}" stroke="rgba(132,255,245,0.46)" stroke-dasharray="6 8"></line>
+      <line x1="${xScale(scarPopularityContext.bandPopularity)}" y1="${margin.top}" x2="${xScale(scarPopularityContext.bandPopularity)}" y2="${height - margin.bottom}" stroke="rgba(255,78,125,0.72)" stroke-width="2.2"></line>
+      <text x="${xScale(sampleAverage) - 8}" y="${margin.top - 10}" text-anchor="end" fill="#84fff5" font-size="12">media ${formatDecimal(sampleAverage)}</text>
+      <text x="${xScale(scarPopularityContext.bandPopularity) + 8}" y="${margin.top - 10}" text-anchor="start" fill="#ff9abb" font-size="12">artista ${scarPopularityContext.bandPopularity}</text>
+      ${points}
+      <line x1="${activeX}" y1="${activeY}" x2="${activeLabelX}" y2="${activeLabelY + 4}" stroke="rgba(255,255,255,0.18)"></line>
+      <text x="${activeLabelX}" y="${activeLabelY}" text-anchor="${activeLabelAnchor}" fill="#f7fbff" font-size="13">${textEscape(activeTrack.shortTitle)}</text>
+      <text x="${activeLabelX}" y="${activeLabelY + 16}" text-anchor="${activeLabelAnchor}" fill="#8ea5bb" font-size="11">${activeTrack.popularity} / 100</text>
+      <text x="${width / 2}" y="${height - 16}" text-anchor="middle" fill="#9eb4ca" font-size="14">popularidade da faixa</text>
+      <text transform="translate(22 ${height / 2}) rotate(-90)" text-anchor="middle" fill="#9eb4ca" font-size="14">ano</text>
+      <text x="${width - margin.right}" y="${margin.top - 10}" text-anchor="end" fill="#f7fbff" font-size="12">ponto maior = faixa mais longa</text>
+    </svg>
+  `;
+}
+
+function renderBandGravityMap() {
+  const container = document.querySelector("#band-gravity-map");
+  if (!container) return;
+
+  const width = 820;
+  const height = 520;
+  const margin = { top: 34, right: 34, bottom: 72, left: 78 };
+  const plotWidth = width - margin.left - margin.right;
+  const plotHeight = height - margin.top - margin.bottom;
+  const listenerMin = 10000;
+  const listenerMax = 3000000;
+  const popularityMin = 20;
+  const popularityMax = 72;
+  const followerMin = Math.min(...metalBenchmarks.map((band) => band.followers));
+  const followerMax = Math.max(...metalBenchmarks.map((band) => band.followers));
+
+  const xScale = (value) => logScale(value, listenerMin, listenerMax, margin.left, width - margin.right);
+  const yScale = (value) =>
+    margin.top + plotHeight - ((value - popularityMin) / (popularityMax - popularityMin)) * plotHeight;
+  const radiusFor = (value) => 11 + ((value - followerMin) / (followerMax - followerMin || 1)) * 16;
+
+  const zoneEdges = [listenerMin, 100000, 600000, listenerMax];
+  const zoneLabels = ["culto", "ponte", "grande alcance"];
+
+  const zones = zoneLabels
+    .map((label, index) => {
+      const x = xScale(zoneEdges[index]);
+      const nextX = xScale(zoneEdges[index + 1]);
+      return `
+        <rect x="${x}" y="${margin.top}" width="${nextX - x}" height="${plotHeight}" fill="rgba(255,255,255,${0.02 + index * 0.01})"></rect>
+        <text x="${(x + nextX) / 2}" y="${margin.top + 18}" text-anchor="middle" fill="#8ea5bb" font-size="11">${label}</text>
+      `;
+    })
+    .join("");
+
+  const points = metalBenchmarks
+    .map((band) => {
+      const x = xScale(band.monthlyListeners);
+      const y = yScale(band.trackPopularity);
+      const radius = radiusFor(band.followers);
+      const labelX = x + band.labelDx;
+      const labelY = y + band.labelDy;
+      const isScar = band.band === "Scar Symmetry";
+      return `
+        <g>
+          ${isScar ? `<circle cx="${x}" cy="${y}" r="${radius + 11}" fill="none" stroke="${band.color}" stroke-opacity="0.4" stroke-dasharray="5 7"></circle>` : ""}
+          <circle cx="${x}" cy="${y}" r="${radius + 6}" fill="${band.color}" opacity="0.12"></circle>
+          <circle cx="${x}" cy="${y}" r="${radius}" fill="${band.color}" fill-opacity="${isScar ? 0.9 : 0.76}" stroke="${isScar ? "#f7fbff" : "#081321"}" stroke-width="${isScar ? 3 : 2}"></circle>
+          <text x="${labelX}" y="${labelY}" text-anchor="${band.labelAnchor}" fill="#f7fbff" font-size="13">
+            <tspan x="${labelX}" dy="0">${textEscape(band.band)}</tspan>
+            <tspan x="${labelX}" dy="14" fill="#8ea5bb" font-size="11">${textEscape(band.track)} • ${band.trackPopularity}</tspan>
+          </text>
+        </g>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="bandGravityTitle bandGravityDesc">
+      <title id="bandGravityTitle">Comparacao de alcance entre Scar Symmetry e outras bandas de metal</title>
+      <desc id="bandGravityDesc">O eixo horizontal usa monthly listeners em escala logaritmica; o vertical usa a popularidade de uma faixa-referencia de cada banda.</desc>
+      <rect x="${margin.left}" y="${margin.top}" width="${plotWidth}" height="${plotHeight}" rx="24" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"></rect>
+      ${zones}
+      ${[20, 30, 40, 50, 60, 70]
+        .map((tick) => {
+          const y = yScale(tick);
+          return `
+            <line x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 10"></line>
+            <text x="${margin.left - 16}" y="${y + 4}" text-anchor="end" fill="#8ea5bb" font-size="12">${tick}</text>
+          `;
+        })
+        .join("")}
+      ${[20000, 100000, 500000, 1000000, 2000000]
+        .map((tick) => {
+          const x = xScale(tick);
+          return `
+            <line x1="${x}" y1="${margin.top}" x2="${x}" y2="${height - margin.bottom}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 10"></line>
+            <text x="${x}" y="${height - margin.bottom + 24}" text-anchor="middle" fill="#8ea5bb" font-size="12">${formatCompactNumber(tick)}</text>
+          `;
+        })
+        .join("")}
+      ${points}
+      <text x="${width / 2}" y="${height - 16}" text-anchor="middle" fill="#9eb4ca" font-size="14">monthly listeners</text>
+      <text transform="translate(22 ${height / 2}) rotate(-90)" text-anchor="middle" fill="#9eb4ca" font-size="14">popularidade da faixa-referencia</text>
+      <text x="${width - margin.right}" y="${margin.top - 10}" text-anchor="end" fill="#f7fbff" font-size="12">orbita maior = mais seguidores</text>
+    </svg>
+  `;
+}
+
+function renderAlbumVisibilityChart() {
+  const container = document.querySelector("#album-visibility-chart");
+  if (!container) return;
+
+  const scarAlbums = albumSignalSummaries().map((album) => {
+    const popularityValues = album.tracks
+      .map((track) => track.popularity)
+      .filter((value) => Number.isFinite(value));
+
+    return {
+      ...album,
+      avgPopularity: average(popularityValues),
+      minPopularity: Math.min(...popularityValues),
+      maxPopularity: Math.max(...popularityValues),
+    };
+  });
+
+  const width = 820;
+  const margin = { top: 34, right: 56, bottom: 54, left: 206 };
+  const benchmarkHeight = 108;
+  const rowHeight = 52;
+  const height = margin.top + benchmarkHeight + margin.bottom + rowHeight * scarAlbums.length;
+  const plotWidth = width - margin.left - margin.right;
+  const popularityMin = 0;
+  const popularityMax = 60;
+  const sampleAverage = metricAverage(spotifySignalTracks, "popularity");
+  const xScale = (value) =>
+    margin.left + ((value - popularityMin) / (popularityMax - popularityMin)) * plotWidth;
+
+  const benchmarkY = margin.top + 36;
+
+  const benchmarkDots = albumPopularityBenchmarks
+    .map((album, index) => {
+      const x = xScale(album.popularity);
+      const labelY = index % 2 === 0 ? benchmarkY - 22 : benchmarkY + 38;
+      const labelAnchor = index % 2 === 0 ? "middle" : "start";
+      const labelX = index % 2 === 0 ? x : x + 12;
+      return `
+        <line x1="${x}" y1="${benchmarkY}" x2="${labelX}" y2="${labelY + 4}" stroke="rgba(255,255,255,0.16)"></line>
+        <circle cx="${x}" cy="${benchmarkY}" r="7" fill="${album.color}" stroke="#071322" stroke-width="2"></circle>
+        <text x="${labelX}" y="${labelY}" text-anchor="${labelAnchor}" fill="#f7fbff" font-size="12">${textEscape(album.album)}</text>
+        <text x="${labelX}" y="${labelY + 14}" text-anchor="${labelAnchor}" fill="#8ea5bb" font-size="10">${textEscape(album.band)} • ${album.popularity}</text>
+      `;
+    })
+    .join("");
+
+  const albumRows = scarAlbums
+    .map((album, index) => {
+      const y = margin.top + benchmarkHeight + index * rowHeight + 22;
+      const avgX = xScale(album.avgPopularity);
+      const minX = xScale(album.minPopularity);
+      const maxX = xScale(album.maxPopularity);
+      const barWidth = Math.max(avgX - margin.left, 2);
+      return `
+        <text x="${margin.left - 14}" y="${y - 5}" text-anchor="end" fill="#f7fbff" font-size="12">${textEscape(shortAlbumName(album.album))}</text>
+        <text x="${margin.left - 14}" y="${y + 11}" text-anchor="end" fill="#8ea5bb" font-size="10">${album.year} • ${album.tracks.length} faixa${album.tracks.length > 1 ? "s" : ""}${album.partial ? " • parcial" : ""}</text>
+        <line x1="${minX}" y1="${y}" x2="${maxX}" y2="${y}" stroke="rgba(255,255,255,0.18)" stroke-width="4" stroke-linecap="round"></line>
+        <rect x="${margin.left}" y="${y - 10}" width="${barWidth}" height="20" rx="10" fill="${album.color}" fill-opacity="0.28"></rect>
+        <circle cx="${avgX}" cy="${y}" r="7" fill="${album.color}" stroke="#071322" stroke-width="2"></circle>
+        <circle cx="${maxX}" cy="${y}" r="4.5" fill="#f7fbff" stroke="#071322" stroke-width="1.6"></circle>
+        <text x="${avgX + 12}" y="${y + 4}" fill="#f7fbff" font-size="11">${formatDecimal(album.avgPopularity)}</text>
+      `;
+    })
+    .join("");
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="albumVisibilityTitle albumVisibilityDesc">
+      <title id="albumVisibilityTitle">Indice de visibilidade dos albuns da Scar Symmetry</title>
+      <desc id="albumVisibilityDesc">A barra mostra a media das faixas-farol por album; o ponto branco marca o pico interno; acima aparecem benchmarks de outros albuns de metal.</desc>
+      <rect x="${margin.left}" y="${margin.top}" width="${plotWidth}" height="${height - margin.top - margin.bottom}" rx="24" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)"></rect>
+      ${[10, 20, 30, 40, 50, 60]
+        .map((tick) => {
+          const x = xScale(tick);
+          return `
+            <line x1="${x}" y1="${margin.top}" x2="${x}" y2="${height - margin.bottom}" stroke="rgba(255,255,255,0.06)" stroke-dasharray="4 10"></line>
+            <text x="${x}" y="${height - margin.bottom + 24}" text-anchor="middle" fill="#8ea5bb" font-size="12">${tick}</text>
+          `;
+        })
+        .join("")}
+      <line x1="${xScale(sampleAverage)}" y1="${margin.top}" x2="${xScale(sampleAverage)}" y2="${height - margin.bottom}" stroke="rgba(132,255,245,0.38)" stroke-dasharray="6 8"></line>
+      <line x1="${xScale(scarPopularityContext.bandPopularity)}" y1="${margin.top}" x2="${xScale(scarPopularityContext.bandPopularity)}" y2="${height - margin.bottom}" stroke="rgba(255,78,125,0.72)" stroke-width="2.2"></line>
+      <text x="${xScale(sampleAverage) - 8}" y="${margin.top - 10}" text-anchor="end" fill="#84fff5" font-size="12">media ${formatDecimal(sampleAverage)}</text>
+      <text x="${xScale(scarPopularityContext.bandPopularity) + 8}" y="${margin.top - 10}" text-anchor="start" fill="#ff9abb" font-size="12">artista ${scarPopularityContext.bandPopularity}</text>
+      <text x="${margin.left + 8}" y="${margin.top + 18}" fill="#8ea5bb" font-size="11">benchmarks externos</text>
+      ${benchmarkDots}
+      <line x1="${margin.left}" y1="${margin.top + benchmarkHeight - 10}" x2="${width - margin.right}" y2="${margin.top + benchmarkHeight - 10}" stroke="rgba(255,255,255,0.08)"></line>
+      ${albumRows}
+      <text x="${width / 2}" y="${height - 14}" text-anchor="middle" fill="#9eb4ca" font-size="14">popularidade / indice de visibilidade</text>
+      <text x="${width - margin.right}" y="${margin.top + benchmarkHeight + 16}" text-anchor="end" fill="#8ea5bb" font-size="11">ponto branco = pico interno do album</text>
+    </svg>
+  `;
+}
+
+function initPopularityLab() {
+  const container = document.querySelector("#popularity-track-map");
+  if (!container) return;
+
+  let activeIndex = spotifySignalTracks.reduce(
+    (bestIndex, track, index, collection) =>
+      track.popularity > collection[bestIndex].popularity ? index : bestIndex,
+    0
+  );
+
+  const setActive = (index) => {
+    activeIndex = index;
+    renderPopularityTrackMap(activeIndex);
+    renderPopularityFocus(activeIndex);
+  };
+
+  renderPopularityInsights();
+  renderPopularityKpis();
+  renderBandGravityMap();
+  renderAlbumVisibilityChart();
+  setActive(activeIndex);
+
+  container.addEventListener("pointerover", (event) => {
+    const target = event.target.closest("[data-pop-index]");
+    if (!target) return;
+    setActive(Number(target.dataset.popIndex));
+  });
+
+  container.addEventListener("focusin", (event) => {
+    const target = event.target.closest("[data-pop-index]");
+    if (!target) return;
+    setActive(Number(target.dataset.popIndex));
+  });
+
+  container.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-pop-index]");
+    if (!target) return;
+    setActive(Number(target.dataset.popIndex));
+  });
+}
+
 function initSignalLab() {
   const container = document.querySelector("#signal-constellation");
   if (!container) return;
@@ -1239,5 +1803,6 @@ function initSignalLab() {
 renderTimeline();
 initStorytelling();
 initSignalLab();
+initPopularityLab();
 renderTrackButtons();
 renderRadar(0);

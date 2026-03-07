@@ -233,6 +233,75 @@
         </div>
       </section>
 
+      <section class="panel reveal" id="popularity-lab">
+        <div class="section-heading">
+          <p class="eyebrow">Popularity lab</p>
+          <h2>Quais faixas puxam a gravidade da banda.</h2>
+          <p>
+            Aqui a popularidade vira leitura de contexto. O painel cruza o score
+            das musicas com o score do proprio artista, estima a visibilidade de
+            cada album no recorte desta pagina e posiciona Scar Symmetry entre
+            bandas de metal com alcance maior e menor.
+          </p>
+        </div>
+
+        <div class="popularity-lab-layout">
+          <div class="popularity-map-card">
+            <div class="signal-caption-row">
+              <p class="micro-label">Faixas vs banda</p>
+              <p class="signal-note">
+                Eixo X: popularidade da faixa. Eixo Y: ano. Linha vertical:
+                popularidade do artista Scar Symmetry no Musicstax.
+              </p>
+            </div>
+            <div id="popularity-track-map" class="popularity-track-map" aria-label="Mapa interno de popularidade"></div>
+          </div>
+
+          <div class="popularity-side-stack">
+            <article class="popularity-side-card">
+              <p class="micro-label">Faixa em foco</p>
+              <div id="popularity-focus" class="popularity-focus"></div>
+              <div id="popularity-insights" class="popularity-insights"></div>
+            </article>
+
+            <article class="popularity-side-card">
+              <p class="micro-label">Calibragem do sistema</p>
+              <div id="popularity-kpis" class="popularity-kpis"></div>
+              <p class="popularity-method">
+                Dados consultados em 7 de marco de 2026. Faixas usam score de
+                popularidade por musica; o indice de album da Scar e inferido a
+                partir das faixas-farol desta pagina; monthly listeners e
+                seguidores das bandas externas usam espelhos publicos do Spotify.
+              </p>
+            </article>
+          </div>
+        </div>
+
+        <div class="popularity-benchmark-layout">
+          <article class="popularity-benchmark-card">
+            <div class="signal-caption-row">
+              <p class="micro-label">Band gravity map</p>
+              <p class="signal-note">
+                Eixo X: monthly listeners em escala log. Eixo Y: popularidade de
+                faixa-referencia. Orbita maior = mais seguidores.
+              </p>
+            </div>
+            <div id="band-gravity-map" class="band-gravity-map" aria-label="Mapa comparativo de bandas de metal"></div>
+          </article>
+
+          <article class="popularity-benchmark-card">
+            <div class="signal-caption-row">
+              <p class="micro-label">Album visibility index</p>
+              <p class="signal-note">
+                Barras: media de popularidade das faixas-farol da Scar. Pontos:
+                benchmarks de albuns de outras bandas no Musicstax.
+              </p>
+            </div>
+            <div id="album-visibility-chart" class="album-visibility-chart" aria-label="Comparacao de popularidade dos albuns"></div>
+          </article>
+        </div>
+      </section>
+
       <section class="panel reveal">
         <div class="section-heading">
           <p class="eyebrow">Aesthetic vectors</p>

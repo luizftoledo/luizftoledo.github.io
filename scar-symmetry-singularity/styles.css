@@ -667,7 +667,10 @@ body::after {
 .signal-constellation-wrap,
 .signal-side-card,
 .runtime-panel,
-.album-card {
+.album-card,
+.popularity-map-card,
+.popularity-side-card,
+.popularity-benchmark-card {
   border-radius: calc(var(--radius-lg) - 6px);
   border: 1px solid rgba(132, 255, 245, 0.12);
   background:
@@ -805,6 +808,162 @@ body::after {
   grid-template-columns: minmax(0, 1fr) minmax(320px, 0.85fr);
   gap: 24px;
   margin-top: 28px;
+}
+
+.popularity-lab-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  align-items: start;
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.popularity-map-card,
+.popularity-benchmark-card {
+  padding: 22px;
+}
+
+.popularity-side-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.popularity-side-card {
+  padding: 20px;
+}
+
+.popularity-track-map,
+.band-gravity-map,
+.album-visibility-chart {
+  margin-top: 18px;
+}
+
+.popularity-track-map svg,
+.band-gravity-map svg,
+.album-visibility-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.popularity-focus {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.06), transparent 34%),
+    rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.popularity-focus h3 {
+  margin: 8px 0 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.08rem;
+  line-height: 1.15;
+}
+
+.popularity-focus p {
+  margin: 0;
+}
+
+.popularity-focus-meta,
+.popularity-focus-note {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.popularity-focus-meta {
+  margin-top: 12px;
+  font-size: 0.92rem;
+}
+
+.popularity-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin-top: 14px;
+  font-size: 0.84rem;
+}
+
+.popularity-focus-grid span,
+.popularity-kpi span {
+  color: var(--muted);
+}
+
+.popularity-focus-note {
+  margin-top: 14px;
+  font-size: 0.92rem;
+}
+
+.popularity-insights {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.popularity-insight {
+  padding: 14px 14px 15px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.popularity-insight strong {
+  display: block;
+  margin-bottom: 6px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.92rem;
+}
+
+.popularity-insight p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 0.92rem;
+}
+
+.popularity-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.popularity-kpi {
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.popularity-kpi strong {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.popularity-kpi small {
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.popularity-method {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.popularity-benchmark-layout {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px;
+  margin-top: 24px;
 }
 
 .album-cards {
@@ -1145,6 +1304,8 @@ body::after {
   }
 
   .signal-lab-layout,
+  .popularity-lab-layout,
+  .popularity-benchmark-layout,
   .album-scan-layout,
   .storytelling-layout,
   .spectrum-layout,
@@ -1195,7 +1356,8 @@ body::after {
     text-align: left;
   }
 
-  .album-metric-grid {
+  .album-metric-grid,
+  .popularity-kpis {
     grid-template-columns: 1fr;
   }
 }
