@@ -10,23 +10,12 @@ const state = {
   references: null,
   scenarios: [],
   selectedScenarioId: "cdi100",
+  displayCurrency: "BRL",
   charts: {
     portfolio: null,
     income: null,
   },
 };
-
-const currencyFormatter = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-  maximumFractionDigits: 0,
-});
-
-const currencySmallFormatter = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-  maximumFractionDigits: 2,
-});
 
 const percentageFormatter = new Intl.NumberFormat("pt-BR", {
   minimumFractionDigits: 2,
@@ -38,6 +27,8 @@ const dom = {
   monthlyContribution: document.getElementById("monthlyContribution"),
   inflationRate: document.getElementById("inflationRate"),
   inflationHint: document.getElementById("inflationHint"),
+  displayCurrency: document.getElementById("displayCurrency"),
+  currencyHint: document.getElementById("currencyHint"),
   customRateRow: document.getElementById("customRateRow"),
   customRate: document.getElementById("customRate"),
   statusPanel: document.getElementById("statusPanel"),
@@ -46,6 +37,12 @@ const dom = {
   scenarioGrid: document.getElementById("scenarioGrid"),
   metricsGrid: document.getElementById("metricsGrid"),
   summaryHelper: document.getElementById("summaryHelper"),
+  tableHelper: document.getElementById("tableHelper"),
+  headerNominalBalance: document.getElementById("headerNominalBalance"),
+  headerRealBalance: document.getElementById("headerRealBalance"),
+  headerNominalIncome: document.getElementById("headerNominalIncome"),
+  headerRealIncome: document.getElementById("headerRealIncome"),
+  headerContributed: document.getElementById("headerContributed"),
   projectionBody: document.getElementById("projectionBody"),
   portfolioChart: document.getElementById("portfolioChart"),
   incomeChart: document.getElementById("incomeChart"),
@@ -65,6 +62,11 @@ function bindEvents() {
     input.addEventListener("input", runSimulation);
   });
 
+  dom.displayCurrency.addEventListener("change", () => {
+    state.displayCurrency = dom.displayCurrency.value;
+    runSimulation();
+  });
+
   dom.scenarioGrid.addEventListener("click", (event) => {
     const card = event.target.closest("[data-scenario-id]");
     if (!card) {
@@ -80,20 +82,25 @@ function bindEvents() {
 function setDefaultInputs() {
   dom.currentBalance.value = String(DEFAULTS.currentBalance);
   dom.monthlyContribution.value = String(DEFAULTS.monthlyContribution);
+  dom.displayCurrency.value = state.displayCurrency;
 }
 
 async function loadReferences() {
   try {
-    const [cdiSeries, selicSeries, ipcaSeries] = await Promise.all([
+    const [cdiSeries, selicSeries, ipcaSeries, usdSeries, gbpSeries] = await Promise.all([
       fetchSeries(4389, 1),
       fetchSeries(1178, 1),
       fetchSeries(433, 12),
+      fetchSeries(1, 1),
+      fetchSeries(21623, 1),
     ]);
 
     const cdiAnnual = toNumber(cdiSeries[0].valor);
     const selicAnnual = toNumber(selicSeries[0].valor);
     const ipca12mAnnual = calculateAccumulatedAnnualRate(ipcaSeries);
     const poupancaAnnual = calculateSavingsApproximation(selicAnnual);
+    const usdRate = toNumber(usdSeries[0].valor);
+    const gbpRate = toNumber(gbpSeries[0].valor);
 
     state.references = {
       cdiAnnual,
@@ -103,6 +110,10 @@ async function loadReferences() {
       ipca12mAnnual,
       ipcaDate: ipcaSeries[ipcaSeries.length - 1].data,
       poupancaAnnual,
+      usdRate,
+      usdDate: usdSeries[0].data,
+      gbpRate,
+      gbpDate: gbpSeries[0].data,
     };
 
     state.scenarios = [
@@ -147,6 +158,7 @@ async function loadReferences() {
     dom.inflationRate.value = percentageFormatter.format(ipca12mAnnual).replace(".", "").replace(",", ".");
     dom.customRate.value = percentageFormatter.format(cdiAnnual).replace(".", "").replace(",", ".");
     dom.inflationHint.textContent = `Padrao: IPCA acumulado em 12 meses = ${formatPercent(ipca12mAnnual)}.`;
+    updateCurrencyHint();
 
     renderReferenceCards();
     renderScenarioCards();
@@ -192,6 +204,16 @@ function renderReferenceCards() {
       label: "IPCA 12 meses",
       value: formatPercent(state.references.ipca12mAnnual),
       note: `Deflator padrao ate ${state.references.ipcaDate}`,
+    },
+    {
+      label: "Dolar comercial",
+      value: formatCurrency(state.references.usdRate, "BRL", false),
+      note: `1 US$ = ${formatCurrency(state.references.usdRate, "BRL", true)} em ${state.references.usdDate}`,
+    },
+    {
+      label: "Libra esterlina",
+      value: formatCurrency(state.references.gbpRate, "BRL", false),
+      note: `1 £ = ${formatCurrency(state.references.gbpRate, "BRL", true)} em ${state.references.gbpDate}`,
     },
   ];
 
@@ -268,15 +290,20 @@ function runSimulation() {
     inflationAnnual,
   });
 
+  const currencyMeta = getDisplayCurrencyMeta();
+  updateCurrencyHint();
+  updateTableHeaders(currencyMeta);
+
   renderMetrics(rows, {
     annualRate,
     inflationAnnual,
     selectedScenario,
     currentBalance,
     monthlyContribution,
+    currencyMeta,
   });
-  renderTable(rows);
-  renderCharts(rows);
+  renderTable(rows, currencyMeta);
+  renderCharts(rows, currencyMeta);
 }
 
 function simulateProjection({ currentBalance, monthlyContribution, annualRate, inflationAnnual }) {
@@ -311,32 +338,38 @@ function simulateProjection({ currentBalance, monthlyContribution, annualRate, i
 function renderMetrics(rows, inputs) {
   const lastRow = rows[rows.length - 1];
   const realAnnualReturn = ((1 + inputs.annualRate / 100) / (1 + inputs.inflationAnnual / 100) - 1) * 100;
+  const currencyLabel =
+    inputs.currencyMeta.code === "BRL"
+      ? "reais"
+      : `${inputs.currencyMeta.label.toLowerCase()} na cotacao atual`;
 
   dom.summaryHelper.textContent = `${inputs.selectedScenario.label} com ${formatPercent(
     inputs.annualRate
-  )}, inflacao de ${formatPercent(inputs.inflationAnnual)} e aportes mensais de ${currencyFormatter.format(
-    inputs.monthlyContribution
-  )}.`;
+  )}, inflacao de ${formatPercent(inputs.inflationAnnual)} e aportes mensais de ${formatCurrency(
+    inputs.monthlyContribution,
+    "BRL",
+    false
+  )}. Mostrando os resultados em ${currencyLabel}.`;
 
   const cards = [
     {
       label: "Patrimonio nominal em 30 anos",
-      value: currencyFormatter.format(lastRow.nominalBalance),
+      value: formatDisplayAmount(lastRow.nominalBalance, inputs.currencyMeta, false),
       note: "Valor bruto no fim do periodo.",
     },
     {
       label: "Patrimonio em reais de hoje",
-      value: currencyFormatter.format(lastRow.realBalance),
+      value: formatDisplayAmount(lastRow.realBalance, inputs.currencyMeta, false),
       note: "Mesmo valor, ja descontando a inflacao assumida.",
     },
     {
       label: "Rendimento mensal nominal no ano 30",
-      value: currencyFormatter.format(lastRow.nominalMonthlyIncome),
+      value: formatDisplayAmount(lastRow.nominalMonthlyIncome, inputs.currencyMeta, false),
       note: "Renda mensal estimada se a taxa continuar igual.",
     },
     {
       label: "Rendimento mensal real no ano 30",
-      value: currencyFormatter.format(lastRow.realMonthlyIncome),
+      value: formatDisplayAmount(lastRow.realMonthlyIncome, inputs.currencyMeta, false),
       note: `Retorno real implicito: ${formatPercent(realAnnualReturn)} ao ano.`,
     },
   ];
@@ -354,42 +387,43 @@ function renderMetrics(rows, inputs) {
     .join("");
 }
 
-function renderTable(rows) {
+function renderTable(rows, currencyMeta) {
   dom.projectionBody.innerHTML = rows
     .map(
       (row) => `
         <tr>
           <td>${row.year}</td>
-          <td>${currencySmallFormatter.format(row.nominalBalance)}</td>
-          <td>${currencySmallFormatter.format(row.realBalance)}</td>
-          <td>${currencySmallFormatter.format(row.nominalMonthlyIncome)}</td>
-          <td>${currencySmallFormatter.format(row.realMonthlyIncome)}</td>
-          <td>${currencySmallFormatter.format(row.contributed)}</td>
+          <td>${formatDisplayAmount(row.nominalBalance, currencyMeta, true)}</td>
+          <td>${formatDisplayAmount(row.realBalance, currencyMeta, true)}</td>
+          <td>${formatDisplayAmount(row.nominalMonthlyIncome, currencyMeta, true)}</td>
+          <td>${formatDisplayAmount(row.realMonthlyIncome, currencyMeta, true)}</td>
+          <td>${formatDisplayAmount(row.contributed, currencyMeta, true)}</td>
         </tr>
       `
     )
     .join("");
 }
 
-function renderCharts(rows) {
+function renderCharts(rows, currencyMeta) {
   if (typeof window.Chart === "undefined") {
     return;
   }
 
   const labels = rows.map((row) => `${row.year}`);
+  const convert = (value) => convertAmount(value, currencyMeta);
   const portfolioData = {
     labels,
     datasets: [
       {
         label: "Patrimonio nominal",
-        data: rows.map((row) => row.nominalBalance),
+        data: rows.map((row) => convert(row.nominalBalance)),
         borderColor: "#0d7a53",
         backgroundColor: "rgba(13, 122, 83, 0.12)",
         tension: 0.25,
       },
       {
         label: "Patrimonio real",
-        data: rows.map((row) => row.realBalance),
+        data: rows.map((row) => convert(row.realBalance)),
         borderColor: "#d5842b",
         backgroundColor: "rgba(213, 132, 43, 0.12)",
         tension: 0.25,
@@ -402,14 +436,14 @@ function renderCharts(rows) {
     datasets: [
       {
         label: "Rendimento mensal nominal",
-        data: rows.map((row) => row.nominalMonthlyIncome),
+        data: rows.map((row) => convert(row.nominalMonthlyIncome)),
         borderColor: "#0d7a53",
         backgroundColor: "rgba(13, 122, 83, 0.12)",
         tension: 0.25,
       },
       {
         label: "Rendimento mensal real",
-        data: rows.map((row) => row.realMonthlyIncome),
+        data: rows.map((row) => convert(row.realMonthlyIncome)),
         borderColor: "#d5842b",
         backgroundColor: "rgba(213, 132, 43, 0.12)",
         tension: 0.25,
@@ -427,7 +461,7 @@ function renderCharts(rows) {
     scales: {
       y: {
         ticks: {
-          callback: (value) => currencyFormatter.format(value),
+          callback: (value) => formatDisplayAmount(value, currencyMeta, false),
         },
       },
     },
@@ -439,7 +473,8 @@ function renderCharts(rows) {
       },
       tooltip: {
         callbacks: {
-          label: (context) => `${context.dataset.label}: ${currencySmallFormatter.format(context.parsed.y)}`,
+          label: (context) =>
+            `${context.dataset.label}: ${formatDisplayAmount(context.parsed.y, currencyMeta, true)}`,
         },
       },
     },
@@ -517,17 +552,98 @@ function formatPercent(value) {
   return `${percentageFormatter.format(value)}% a.a.`;
 }
 
+function updateCurrencyHint() {
+  if (!state.references) {
+    dom.currencyHint.textContent = "Carregando cambio atual...";
+    return;
+  }
+
+  const currencyMeta = getDisplayCurrencyMeta();
+  if (currencyMeta.code === "BRL") {
+    dom.currencyHint.textContent = "Resultados mostrados na moeda base da simulacao.";
+    return;
+  }
+
+  dom.currencyHint.textContent = `Conversao online pelo BCB: 1 ${currencyMeta.symbol} = ${formatCurrency(
+    currencyMeta.rate,
+    "BRL",
+    true
+  )} em ${currencyMeta.date}.`;
+}
+
+function updateTableHeaders(currencyMeta) {
+  const suffix = currencyMeta.code === "BRL" ? "(R$)" : `(${currencyMeta.symbol})`;
+  dom.headerNominalBalance.textContent = `Patrimonio nominal ${suffix}`;
+  dom.headerRealBalance.textContent = `Patrimonio real ${suffix}`;
+  dom.headerNominalIncome.textContent = `Rendimento mensal nominal ${suffix}`;
+  dom.headerRealIncome.textContent = `Rendimento mensal real ${suffix}`;
+  dom.headerContributed.textContent = `Total aportado ${suffix}`;
+  dom.tableHelper.textContent =
+    currencyMeta.code === "BRL"
+      ? "Os valores reais sao trazidos para valores de hoje usando a inflacao anual escolhida."
+      : `Os valores reais sao trazidos para valores de hoje e depois convertidos para ${currencyMeta.label.toLowerCase()} pela cotacao atual do BCB.`;
+}
+
 function updateStatusPanel() {
   dom.statusPanel.innerHTML = `
     <p class="panel-label">Status</p>
     <h2>Cenarios prontos para simular</h2>
-    <p class="status-copy">A pagina combina CDI anualizado, Selic anualizada e IPCA acumulado em 12 meses, todos do Banco Central.</p>
+    <p class="status-copy">A pagina combina CDI anualizado, Selic anualizada, IPCA acumulado em 12 meses e cambio atual de dolar/libra, todos do Banco Central.</p>
     <div class="status-details">
       <span>Horizonte: ${YEARS} anos</span>
       <span>Comparacao: nominal x real</span>
       <span>Base oficial: SGS do BCB</span>
     </div>
   `;
+}
+
+function getDisplayCurrencyMeta() {
+  if (state.displayCurrency === "USD") {
+    return {
+      code: "USD",
+      label: "Dolar",
+      symbol: "US$",
+      rate: state.references.usdRate,
+      date: state.references.usdDate,
+    };
+  }
+
+  if (state.displayCurrency === "GBP") {
+    return {
+      code: "GBP",
+      label: "Libra",
+      symbol: "£",
+      rate: state.references.gbpRate,
+      date: state.references.gbpDate,
+    };
+  }
+
+  return {
+    code: "BRL",
+    label: "Reais",
+    symbol: "R$",
+    rate: 1,
+    date: "",
+  };
+}
+
+function convertAmount(amount, currencyMeta) {
+  return currencyMeta.code === "BRL" ? amount : amount / currencyMeta.rate;
+}
+
+function formatDisplayAmount(amount, currencyMeta, precise) {
+  const converted = convertAmount(amount, currencyMeta);
+  return formatCurrency(converted, currencyMeta.code, precise);
+}
+
+function formatCurrency(value, currencyCode, precise) {
+  const formatter = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: currencyCode,
+    maximumFractionDigits: precise ? 2 : 0,
+  });
+
+  return formatter.format(value);
 }
 
 function escapeHtml(value) {

@@ -78,6 +78,16 @@
             </div>
             <small id="inflationHint">Carregando IPCA em 12 meses...</small>
           </label>
+
+          <label class="field">
+            <span>Visualizar valores em</span>
+            <select id="displayCurrency">
+              <option value="BRL">Reais</option>
+              <option value="USD">Dolar</option>
+              <option value="GBP">Libra</option>
+            </select>
+            <small id="currencyHint">Carregando cambio atual...</small>
+          </label>
         </div>
 
         <div class="custom-rate-row hidden" id="customRateRow">
@@ -165,18 +175,18 @@
             <p class="panel-label">Tabela anual</p>
             <h2>Projecao ano a ano</h2>
           </div>
-          <p class="helper">Os valores reais sao trazidos para reais de hoje usando a inflacao anual escolhida.</p>
+          <p class="helper" id="tableHelper">Os valores reais sao trazidos para valores de hoje usando a inflacao anual escolhida.</p>
         </div>
         <div class="table-wrap">
           <table class="projection-table">
             <thead>
               <tr>
                 <th>Ano</th>
-                <th>Patrimonio nominal</th>
-                <th>Patrimonio real</th>
-                <th>Rendimento mensal nominal</th>
-                <th>Rendimento mensal real</th>
-                <th>Total aportado</th>
+                <th id="headerNominalBalance">Patrimonio nominal</th>
+                <th id="headerRealBalance">Patrimonio real</th>
+                <th id="headerNominalIncome">Rendimento mensal nominal</th>
+                <th id="headerRealIncome">Rendimento mensal real</th>
+                <th id="headerContributed">Total aportado</th>
               </tr>
             </thead>
             <tbody id="projectionBody"></tbody>
@@ -192,6 +202,7 @@
             <li>O retorno nominal anual fica constante durante toda a simulacao. Isso simplifica o calculo; nao e uma previsao de mercado.</li>
             <li>O ajuste real usa uma inflacao anual fixa, preenchida por padrao com o IPCA acumulado em 12 meses mais recente do BCB.</li>
             <li>O rendimento mensal mostrado para cada ano e o rendimento estimado daquele patrimonio no mes seguinte, mantida a mesma taxa.</li>
+            <li>Dolar e libra sao apenas uma conversao de visualizacao, usando a cotacao oficial mais recente do BCB no momento em que a pagina carrega.</li>
             <li>Poupanca aparece como aproximacao simples pela regra atual, sem incorporar TR. Por isso ela serve como referencia, nao como replica exata.</li>
           </ul>
         </article>
@@ -203,6 +214,8 @@
             <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.4389/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / CDI anualizado base 252</a></li>
             <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.1178/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Selic anualizada base 252</a></li>
             <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados/ultimos/12?formato=json" target="_blank" rel="noopener noreferrer">SGS / IPCA mensal</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Dolar comercial venda</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.21623/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Libra esterlina venda</a></li>
             <li><a href="https://www3.bcb.gov.br/CALCIDADAO/publico/metodologiaCorrigirIndice.do?method=metodologiaCorrigirIndice" target="_blank" rel="noopener noreferrer">Metodologia de correcao do BCB</a></li>
           </ul>
         </article>
