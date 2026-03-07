@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Patrimônio Futuro | BCB</title>
+  <meta
+    name="description"
+    content="Simule o crescimento do seu patrimônio nos próximos 30 anos com juros compostos, inflação e cenários simples baseados em CDI, Selic e outras referências.">
+  <meta property="og:title" content="Simulador de Patrimônio Futuro | BCB">
+  <meta
+    property="og:description"
+    content="Informe patrimônio atual, aporte mensal e um cenário de taxa. Veja projeções nominais e reais em tabelas e gráficos.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://luizftoledo.github.io/services/patrimonio-futuro/">
+  <meta property="og:image" content="https://luizftoledo.github.io/favicon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Simulador de Patrimônio Futuro | BCB">
+  <meta
+    name="twitter:description"
+    content="Ferramenta simples para projetar patrimônio futuro com juros compostos e correção pela inflação.">
+  <link rel="canonical" href="https://luizftoledo.github.io/services/patrimonio-futuro/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <a class="back-link" href="../../index.html">luizftoledo.github.io</a>
+      <div class="hero-copy">
+        <p class="eyebrow">Juros compostos + inflacao</p>
+        <h1>Simulador de patrimonio futuro para os proximos 30 anos</h1>
+        <p class="lead">
+          Digite quanto voce ja tem, quanto consegue investir por mes e escolha um cenario de taxa. A pagina projeta,
+          ano a ano, o patrimonio total e o rendimento mensal no valor nominal e no valor corrigido pela inflacao.
+        </p>
+      </div>
+      <div class="hero-meta">
+        <span class="meta-pill">30 anos</span>
+        <span class="meta-pill">CDI, Selic e cenarios simples</span>
+        <span class="meta-pill">Nominal x real</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel controls-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Entradas</p>
+            <h2>Preencha os tres pontos principais</h2>
+          </div>
+          <p class="helper">
+            A simulacao supoe aportes no fim de cada mes e reinvestimento total dos rendimentos.
+          </p>
+        </div>
+
+        <div class="controls-grid">
+          <label class="field">
+            <span>Patrimonio atual</span>
+            <input id="currentBalance" class="money-input" type="text" inputmode="decimal" value="250000">
+          </label>
+
+          <label class="field">
+            <span>Aporte mensal</span>
+            <input id="monthlyContribution" class="money-input" type="text" inputmode="decimal" value="3000">
+          </label>
+
+          <label class="field">
+            <span>Inflacao anual usada no ajuste real</span>
+            <div class="inline-input">
+              <input id="inflationRate" type="number" min="0" max="50" step="0.01">
+              <span>% a.a.</span>
+            </div>
+            <small id="inflationHint">Carregando IPCA em 12 meses...</small>
+          </label>
+        </div>
+
+        <div class="custom-rate-row hidden" id="customRateRow">
+          <label class="field">
+            <span>Taxa anual personalizada</span>
+            <div class="inline-input">
+              <input id="customRate" type="number" min="0" max="100" step="0.01">
+              <span>% a.a.</span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <section class="summary-grid">
+        <article class="panel status-panel" id="statusPanel" aria-live="polite">
+          <p class="panel-label">Status</p>
+          <h2>Carregando referencias oficiais...</h2>
+          <p class="status-copy">A pagina busca CDI, Selic e IPCA diretamente no Banco Central.</p>
+        </article>
+
+        <article class="panel references-panel">
+          <div class="rates-header">
+            <div>
+              <p class="panel-label">Referencias atuais</p>
+              <h2>Taxas que alimentam os cenarios</h2>
+            </div>
+            <p class="helper" id="referencesTimestamp">Carregando...</p>
+          </div>
+          <div class="rates-grid" id="referencesGrid">
+            <div class="rate-card skeleton"></div>
+            <div class="rate-card skeleton"></div>
+            <div class="rate-card skeleton"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel scenarios-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Cenarios simples</p>
+            <h2>Escolha a taxa nominal anual</h2>
+          </div>
+          <p class="helper">As opcoes abaixo sao cenarios brutos, antes de imposto, taxa de administracao ou eventos de mercado.</p>
+        </div>
+        <div class="scenario-grid" id="scenarioGrid"></div>
+      </section>
+
+      <section class="panel summary-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Resultado em 30 anos</p>
+            <h2>Leitura rapida</h2>
+          </div>
+          <p class="helper" id="summaryHelper">Atualizando simulacao...</p>
+        </div>
+        <div class="metrics-grid" id="metricsGrid">
+          <div class="metric-card skeleton"></div>
+          <div class="metric-card skeleton"></div>
+          <div class="metric-card skeleton"></div>
+          <div class="metric-card skeleton"></div>
+        </div>
+      </section>
+
+      <section class="chart-grid">
+        <article class="panel chart-panel">
+          <p class="panel-label">Grafico 1</p>
+          <h2>Patrimonio nominal x patrimonio real</h2>
+          <div class="chart-wrap">
+            <canvas id="portfolioChart"></canvas>
+          </div>
+        </article>
+
+        <article class="panel chart-panel">
+          <p class="panel-label">Grafico 2</p>
+          <h2>Rendimento mensal nominal x real</h2>
+          <div class="chart-wrap">
+            <canvas id="incomeChart"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Tabela anual</p>
+            <h2>Projecao ano a ano</h2>
+          </div>
+          <p class="helper">Os valores reais sao trazidos para reais de hoje usando a inflacao anual escolhida.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="projection-table">
+            <thead>
+              <tr>
+                <th>Ano</th>
+                <th>Patrimonio nominal</th>
+                <th>Patrimonio real</th>
+                <th>Rendimento mensal nominal</th>
+                <th>Rendimento mensal real</th>
+                <th>Total aportado</th>
+              </tr>
+            </thead>
+            <tbody id="projectionBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="foot-grid">
+        <article class="panel notes-panel">
+          <p class="panel-label">Como funciona</p>
+          <h2>Notas de leitura</h2>
+          <ul class="notes-list">
+            <li>O retorno nominal anual fica constante durante toda a simulacao. Isso simplifica o calculo; nao e uma previsao de mercado.</li>
+            <li>O ajuste real usa uma inflacao anual fixa, preenchida por padrao com o IPCA acumulado em 12 meses mais recente do BCB.</li>
+            <li>O rendimento mensal mostrado para cada ano e o rendimento estimado daquele patrimonio no mes seguinte, mantida a mesma taxa.</li>
+            <li>Poupanca aparece como aproximacao simples pela regra atual, sem incorporar TR. Por isso ela serve como referencia, nao como replica exata.</li>
+          </ul>
+        </article>
+
+        <article class="panel source-panel">
+          <p class="panel-label">Fontes</p>
+          <h2>Series oficiais do BCB</h2>
+          <ul class="source-list">
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.4389/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / CDI anualizado base 252</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.1178/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Selic anualizada base 252</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados/ultimos/12?formato=json" target="_blank" rel="noopener noreferrer">SGS / IPCA mensal</a></li>
+            <li><a href="https://www3.bcb.gov.br/CALCIDADAO/publico/metodologiaCorrigirIndice.do?method=metodologiaCorrigirIndice" target="_blank" rel="noopener noreferrer">Metodologia de correcao do BCB</a></li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>
