@@ -27,8 +27,10 @@
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   });
+  const scheduleHelper = window.DashboardUpdateSchedule || null;
 
   const updatedLine = document.getElementById('updated-line');
+  const updateScheduleNote = document.getElementById('update-schedule-note');
   const yearsPill = document.getElementById('years-pill');
   const partialYearPill = document.getElementById('partial-year-pill');
   const chartPartialNote = document.getElementById('chart-partial-note');
@@ -459,7 +461,15 @@
     const minYear = years.length ? Math.min(...years) : '--';
     const maxYear = years.length ? Math.max(...years) : '--';
     yearsPill.textContent = `anos: ${minYear}-${maxYear}`;
-    updatedLine.textContent = `Atualizado em ${formatDateTime((metadata || {}).updated_at || reportData.generated_at)} (America/Cuiaba)`;
+    const updatedAtRaw = (metadata || {}).updated_at || reportData.generated_at;
+    const updateNotice = scheduleHelper ? scheduleHelper.buildNotice('lai', updatedAtRaw) : null;
+    const updatedLabel = formatDateTime(updatedAtRaw);
+    updatedLine.textContent = `Atualizado em ${updatedLabel} (America/Cuiaba)`;
+    if (updateScheduleNote) {
+      updateScheduleNote.textContent = updateNotice
+        ? updateNotice.text
+        : `Ultima atualizacao: ${updatedLabel}.`;
+    }
     renderSourceNote();
     renderPartialYearHints();
   }

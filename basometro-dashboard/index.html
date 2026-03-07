@@ -106,6 +106,13 @@
       color: var(--muted);
     }
 
+    .update-schedule-note {
+      margin: 0.45rem 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
     .filters {
       margin-top: 0.7rem;
       display: flex;
@@ -319,6 +326,7 @@
         <span class="pill" id="status-range">Período: --</span>
         <span class="pill" id="status-source">Fonte: Câmara dos Deputados</span>
       </div>
+      <p class="update-schedule-note" id="update-schedule-note" aria-live="polite">Frequência de atualização: carregando...</p>
       <div class="filters">
         <label for="filter-government">Recorte de governo</label>
         <select id="filter-government"></select>
@@ -488,6 +496,7 @@
     </section>
   </main>
 
+  <script src="../scripts/dashboard-update-schedule.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

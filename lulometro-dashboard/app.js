@@ -14,6 +14,7 @@
   const EXAMPLE_MANDATES_LIMIT = 3;
   const EXAMPLES_PER_MANDATE = 2;
   const EXAMPLE_SNIPPET_RADIUS = 150;
+  const scheduleHelper = window.DashboardUpdateSchedule || null;
   const PT_STOPWORDS = new Set([
     'a', 'ao', 'aos', 'aquela', 'aquelas', 'aquele', 'aqueles', 'aquilo', 'as', 'ate', 'com', 'como',
     'contra', 'da', 'das', 'de', 'dela', 'delas', 'dele', 'deles', 'depois', 'do', 'dos', 'e', 'ela',
@@ -33,6 +34,7 @@
 
   const els = {
     statusUpdated: document.getElementById('status-updated'),
+    updateScheduleNote: document.getElementById('update-schedule-note'),
     statusTotalDocs: document.getElementById('status-total-docs'),
     statusSources: document.getElementById('status-sources'),
 
@@ -1422,7 +1424,13 @@
         ? Object.entries(metadata.sources).map(([k, v]) => `${k}: ${nFmt.format(v)}`).join(' | ')
         : '--';
 
+      const updateNotice = scheduleHelper ? scheduleHelper.buildNotice('lulometro', metadata.generated_at) : null;
       els.statusUpdated.textContent = `Atualizado em ${generatedAt}`;
+      if (els.updateScheduleNote) {
+        els.updateScheduleNote.textContent = updateNotice
+          ? updateNotice.text
+          : `Ultima atualizacao: ${generatedAt}.`;
+      }
       els.statusTotalDocs.textContent = `Documentos: ${nFmt.format(total)}`;
       els.statusSources.textContent = `Fontes: ${sourceCount}`;
       updateMethodologyNote();

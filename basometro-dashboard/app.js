@@ -10,6 +10,7 @@ const dateFmt = new Intl.DateTimeFormat("pt-BR", {
   month: "2-digit",
   day: "2-digit",
 });
+const scheduleHelper = window.DashboardUpdateSchedule || null;
 
 let payload = null;
 let charts = {
@@ -22,6 +23,7 @@ let charts = {
 const refs = {
   updated: document.getElementById("status-updated"),
   range: document.getElementById("status-range"),
+  updateScheduleNote: document.getElementById("update-schedule-note"),
   govFilter: document.getElementById("filter-government"),
   minParty: document.getElementById("filter-min-party"),
   minDeputy: document.getElementById("filter-min-deputy"),
@@ -224,8 +226,18 @@ function setMethodology() {
 
 function setStatus() {
   const metadata = payload.metadata || {};
-  const updatedAt = metadata.generated_at ? new Date(metadata.generated_at) : null;
-  refs.updated.textContent = `Atualizado: ${updatedAt ? dateFmt.format(updatedAt) : "--"}`;
+  const updatedAtRaw = metadata.updated_at || metadata.generated_at || "";
+  const updatedAt = updatedAtRaw ? new Date(updatedAtRaw) : null;
+  const updateNotice = scheduleHelper ? scheduleHelper.buildNotice("basometro", updatedAtRaw) : null;
+  const updatedLabel = updatedAtRaw
+    ? (scheduleHelper ? scheduleHelper.formatDateTime(updatedAtRaw) : (updatedAt ? dateFmt.format(updatedAt) : "--"))
+    : "--";
+  refs.updated.textContent = `Atualizado: ${updatedLabel}`;
+  if (refs.updateScheduleNote) {
+    refs.updateScheduleNote.textContent = updateNotice
+      ? updateNotice.text
+      : `Ultima atualizacao: ${updatedLabel}.`;
+  }
   refs.range.textContent = `Período: ${metadata.start_year || "--"} até ${metadata.end_year || "--"}`;
 }
 

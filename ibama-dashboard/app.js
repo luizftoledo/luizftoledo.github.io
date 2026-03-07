@@ -15,6 +15,7 @@
     const metricFilteredFines = document.getElementById('metric-filtered-fines');
     const statusLine = document.getElementById('status-line');
     const updatedBadge = document.getElementById('updated-badge');
+    const updateScheduleNote = document.getElementById('update-schedule-note');
     const loadStatusLabel = document.getElementById('load-status-label');
     const loadStatusSummary = document.getElementById('load-status-summary');
     const loadStatusFill = document.getElementById('load-status-fill');
@@ -45,6 +46,7 @@
 
     const numberFmt = new Intl.NumberFormat('pt-BR');
     const moneyFmt = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+    const scheduleHelper = window.DashboardUpdateSchedule || null;
 
     let baseStats = null;
     let currentSearchData = null;
@@ -109,7 +111,7 @@
       if (!isoDateTime) return '-';
       const d = new Date(isoDateTime);
       if (Number.isNaN(d.getTime())) return '-';
-      return d.toLocaleString('pt-BR');
+      return d.toLocaleString('pt-BR', { timeZone: 'America/Cuiaba' });
     }
 
     function getLoadPhaseLabel(phase) {
@@ -226,7 +228,13 @@
     function setBaseStats(stats) {
       baseStats = stats;
       metricBaseFines.textContent = moneyFmt.format(stats.total_multas || 0);
+      const updateNotice = scheduleHelper ? scheduleHelper.buildNotice('ibama', stats.atualizado_em) : null;
       updatedBadge.textContent = `base: ${formatDateTime(stats.atualizado_em)}`;
+      if (updateScheduleNote) {
+        updateScheduleNote.textContent = updateNotice
+          ? updateNotice.text
+          : `Ultima atualizacao da base: ${formatDateTime(stats.atualizado_em)}.`;
+      }
 
       if (Array.isArray(stats.ufs) && stats.ufs.length > 0) {
         const already = new Set([...ufFilter.options].map((opt) => opt.value));

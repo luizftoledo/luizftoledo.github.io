@@ -192,6 +192,13 @@
       color: #6d5732;
     }
 
+    .update-schedule-note {
+      margin: 0.4rem 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
     .metrics {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1164,6 +1171,7 @@
         <span class="pill pill-warning" id="partial-year-pill" hidden>ano parcial</span>
         <span class="pill">fontes: CGU (Fala.BR + BuscaLAI)</span>
       </div>
+      <p class="update-schedule-note" id="update-schedule-note" aria-live="polite">Frequência de atualização: carregando...</p>
       <div class="metrics">
         <article class="metric">
           <div class="label">Pedidos (série inteira)</div>
@@ -1452,6 +1460,7 @@
     })();
   </script>
   <script src="./vendor/pako.min.js"></script>
+  <script src="../scripts/dashboard-update-schedule.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

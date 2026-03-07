@@ -20,8 +20,10 @@
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   });
+  const scheduleHelper = window.DashboardUpdateSchedule || null;
 
   const updatedLine = document.getElementById('updated-line');
+  const updateScheduleNote = document.getElementById('update-schedule-note');
   const metricTotal = document.getElementById('metric-total');
   const metricDenied = document.getElementById('metric-denied');
   const metricRestricted = document.getElementById('metric-restricted');
@@ -372,7 +374,15 @@
   }
 
   function renderHeader() {
-    updatedLine.textContent = `Atualizado em ${formatDateTime((metadata || {}).updated_at || reportData.generated_at)} (America/Cuiaba)`;
+    const updatedAtRaw = (metadata || {}).updated_at || reportData.generated_at;
+    const updateNotice = scheduleHelper ? scheduleHelper.buildNotice('sigilo', updatedAtRaw) : null;
+    const updatedLabel = formatDateTime(updatedAtRaw);
+    updatedLine.textContent = `Atualizado em ${updatedLabel} (America/Cuiaba)`;
+    if (updateScheduleNote) {
+      updateScheduleNote.textContent = updateNotice
+        ? updateNotice.text
+        : `Ultima atualizacao: ${updatedLabel}.`;
+    }
   }
 
   function renderMetricsAndAlerts() {

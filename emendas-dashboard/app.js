@@ -9,11 +9,13 @@
     style: 'percent',
     maximumFractionDigits: 1,
   });
+  const scheduleHelper = window.DashboardUpdateSchedule || null;
 
   const els = {
     statusUpdate: document.getElementById('status-update'),
     statusSnapshot: document.getElementById('status-snapshot'),
     statusSource: document.getElementById('status-source'),
+    updateScheduleNote: document.getElementById('update-schedule-note'),
     sourceUpdatedLine: document.getElementById('source-updated-line'),
     compareAlert: document.getElementById('compare-alert'),
     compareAlertText: document.getElementById('compare-alert-text'),
@@ -1076,7 +1078,15 @@
   }
 
   function setStatus(report, metadata) {
-    els.statusUpdate.textContent = `Atualizado: ${formatIsoDateTime(report.generated_at || metadata.updated_at || '')}`;
+    const updatedAtRaw = report.generated_at || metadata.updated_at || '';
+    const updateNotice = scheduleHelper ? scheduleHelper.buildNotice('emendas', updatedAtRaw) : null;
+    const updatedLabel = formatIsoDateTime(updatedAtRaw);
+    els.statusUpdate.textContent = `Atualizado: ${updatedLabel}`;
+    if (els.updateScheduleNote) {
+      els.updateScheduleNote.textContent = updateNotice
+        ? updateNotice.text
+        : `Ultima atualizacao: ${updatedLabel}.`;
+    }
     els.statusSnapshot.textContent = `Snapshot: ${report.snapshot_date || metadata.snapshot_date || '--'}`;
   }
 

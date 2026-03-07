@@ -99,6 +99,13 @@
       padding: 0.24rem 0.58rem;
     }
 
+    .update-schedule-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
     .controls {
       display: grid;
       grid-template-columns: minmax(240px, 1.5fr) 170px 190px 220px 110px 90px;
@@ -616,6 +623,7 @@
         <span class="status-pill" id="status-total-docs">Documentos: --</span>
         <span class="status-pill" id="status-sources">Fontes: --</span>
       </div>
+      <p class="update-schedule-note" id="update-schedule-note" aria-live="polite">Frequência de atualização: carregando...</p>
 
       <section class="load-required-banner" id="load-required-banner" aria-live="polite">
         <p class="load-required-title" id="load-required-title">Passo 1 obrigatório: clique em "1) Carregar Base Completa".</p>
@@ -833,6 +841,7 @@
   </main>
 
   <script src="./vendor/pako.min.js"></script>
-  <script src="./app.js?v=20260304j"></script>
+  <script src="../scripts/dashboard-update-schedule.js"></script>
+  <script src="./app.js?v=20260307a"></script>
 </body>
 </html>

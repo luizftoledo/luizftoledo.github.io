@@ -132,6 +132,13 @@
       line-height: 1.45;
     }
 
+    .update-schedule-note {
+      margin: 0.4rem 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
     .compare-alert {
       border: 1px solid #d8ccb9;
       border-radius: 12px;
@@ -568,6 +575,7 @@
         <span class="pill" id="status-snapshot">Snapshot: --</span>
         <span class="pill" id="status-source">Fonte: --</span>
       </div>
+      <p class="update-schedule-note" id="update-schedule-note" aria-live="polite">Frequência de atualização: carregando...</p>
       <div class="source-switch">
         <span class="source-label">Escolha a fonte dos dados:</span>
         <button class="view-tab active" id="tab-view-docs" type="button">Portal da Transparência (principal)</button>
@@ -925,6 +933,7 @@
     </section>
   </main>
 
+  <script src="../scripts/dashboard-update-schedule.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
