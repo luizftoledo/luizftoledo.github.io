@@ -553,6 +553,23 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .photo-credit {
+      text-align: right;
+      padding: 0.4rem 1.5rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .photo-credit a {
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .photo-credit a:hover { color: var(--red); }
+
     /* ── PHOTO GRID (Dienasty) ── */
     .photo-grid {
       display: grid;
@@ -770,6 +787,8 @@
     <img src="IMG_2625.jpeg" alt="Luiz Fernando Toledo ao vivo" loading="lazy">
   </div>
 </div>
+
+<p class="photo-credit">fotos: <a href="https://www.instagram.com/moshografia/" target="_blank" rel="noopener">@moshografia</a></p>
 
 <!-- ═══════════════════════ TIMELINE ═══════════════════════ -->
 <section id="timeline">
@@ -1087,6 +1106,7 @@
 <footer>
   <p style="font-family:'Cinzel',serif; font-size:0.9rem; color:var(--text-dim); letter-spacing:0.2em; margin-bottom:1rem;">DIENASTY</p>
   <p><a href="https://luizftoledo.github.io">luizftoledo.github.io</a></p>
+  <p style="margin-top:0.75rem; font-size:0.6rem; letter-spacing:0.12em;">fotos: <a href="https://www.instagram.com/moshografia/" target="_blank" rel="noopener">@moshografia</a></p>
 </footer>
 
 <script>
