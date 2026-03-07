@@ -188,12 +188,10 @@ function categoryLead(counts) {
 
 function renderHero() {
   const meta = state.metadata;
-  const total = meta?.counts?.items || 0;
-  const last30 = meta?.counts?.recent?.last_30_days || 0;
   refs.heroMeta.innerHTML = `
-    <span class="hero-pill"><strong>${total}</strong> itens consolidados</span>
-    <span class="hero-pill"><strong>${last30}</strong> itens no último mês</span>
-    <span class="hero-pill"><strong>${formatDateTime(meta?.generated_at)}</strong> última atualização</span>
+    <span class="hero-pill"><strong>Foco:</strong> lista de menções e contexto</span>
+    <span class="hero-pill"><strong>Filtros:</strong> termo, categoria e período</span>
+    <span class="hero-pill"><strong>Atualizado:</strong> ${formatDateTime(meta?.generated_at)}</span>
   `;
 
   const latest = topItems(state.items, 3);
@@ -252,16 +250,10 @@ function renderSummary(filteredItems) {
 }
 
 function renderStatus() {
-  const meta = state.metadata || {};
-  const discovery = meta.sources?.discovery || {};
-  const searches = discovery.searches || {};
-  const enrich = meta.sources?.enrich || {};
-  const searchCount = Object.values(searches).reduce((sum, value) => sum + Number(value || 0), 0);
-
   refs.statusLine.innerHTML = `
-    <span class="status-chip">Atualização diária via GitHub Actions</span>
-    <span class="status-chip alt">${searchCount} links brutos capturados por busca de notícias</span>
-    <span class="status-chip">${enrich.dropped || 0} candidatos descartados por filtro de homônimo/ruído</span>
+    <span class="status-chip">A lista abaixo é o foco principal da página</span>
+    <span class="status-chip alt">Use a busca para achar um veículo, tema ou contexto específico</span>
+    <span class="status-chip">Use os filtros para ver só entrevistas, perfis, ecos ou reportagens</span>
   `;
 }
 

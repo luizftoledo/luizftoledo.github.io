@@ -593,20 +593,18 @@
         <span class="eyebrow">Clipping diário automatizado</span>
         <h1>Luiz Fernando Toledo, monitorado em tempo real editorial.</h1>
         <p class="hero-copy">
-          Esta página consolida reportagens autorais, entrevistas, páginas institucionais, ecos de apuração e outras menções identificadas por um raspador que roda todos os dias no GitHub. O foco é mostrar onde o seu nome apareceu, em que contexto e o que mudou no último dia, na última semana e no último mês.
+          Esta página existe para uma tarefa simples: mostrar onde o seu nome apareceu e em que contexto. A lista filtrável vem logo abaixo, com categoria, tipo de menção, data, fonte e trecho.
         </p>
         <div class="hero-meta" id="heroMeta"></div>
       </article>
 
       <aside class="hero-side">
         <section class="panel headline-stack">
-          <h2 class="section-title">Leitura rápida</h2>
+          <h2 class="section-title">Últimos registros</h2>
           <div id="headlineStack" class="table-list"></div>
         </section>
       </aside>
     </section>
-
-    <section class="summary-grid" id="summaryGrid"></section>
 
     <section class="panel controls">
       <div class="status-line" id="statusLine"></div>
@@ -631,6 +629,33 @@
         <div class="filter-pills" id="categoryFilters"></div>
       </div>
     </section>
+
+    <section class="panel">
+      <h2 class="section-title">Onde seu nome apareceu</h2>
+      <p class="section-deck">
+        Esta é a parte principal da página. A lista abaixo mostra onde você foi citado ou apareceu, como isso foi classificado e um trecho para entender rapidamente o contexto da menção.
+      </p>
+      <div class="result-list" id="resultList"></div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Categoria</th>
+              <th>Contexto</th>
+              <th>Título</th>
+              <th>Fonte</th>
+            </tr>
+          </thead>
+          <tbody id="resultTable"></tbody>
+        </table>
+      </div>
+      <p class="footer-note" id="resultCountNote"></p>
+    </section>
+
+    <section class="recent-grid" id="recentGrid"></section>
+
+    <section class="summary-grid" id="summaryGrid"></section>
 
     <section class="story-grid">
       <article class="panel">
@@ -660,31 +685,6 @@
         <p class="section-deck">Domínios que mais aparecem no recorte ativo. Isso ajuda a distinguir produção própria, perfil institucional e terceiros.</p>
         <div class="source-list" id="domainList"></div>
       </aside>
-    </section>
-
-    <section class="recent-grid" id="recentGrid"></section>
-
-    <section class="panel">
-      <h2 class="section-title">Base filtrada</h2>
-      <p class="section-deck">
-        Lista completa do recorte pesquisado. Em desktop, a tabela fica disponível logo abaixo; em telas pequenas, a leitura fica em cartões para não pesar nem quebrar o layout.
-      </p>
-      <div class="result-list" id="resultList"></div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Categoria</th>
-              <th>Contexto</th>
-              <th>Título</th>
-              <th>Fonte</th>
-            </tr>
-          </thead>
-          <tbody id="resultTable"></tbody>
-        </table>
-      </div>
-      <p class="footer-note" id="resultCountNote"></p>
     </section>
 
     <details>
