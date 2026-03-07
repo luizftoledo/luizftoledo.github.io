@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Scar Symmetry | Cosmic Interface</title>
+    <meta
+      name="description"
+      content="Microsite editorial sobre Scar Symmetry com visual sci-fi, discografia em linha do tempo, mapa de escuta e embeds oficiais."
+    >
+    <meta property="og:title" content="Scar Symmetry | Cosmic Interface">
+    <meta
+      property="og:description"
+      content="Uma interface cósmica para explorar a discografia, os riffs e a estética transumana da Scar Symmetry."
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://luizftoledo.github.io/scar-symmetry-singularity/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <main class="page-shell">
+      <section class="hero reveal">
+        <div class="hero-copy">
+          <p class="eyebrow">Melodic death metal / transhuman signal</p>
+          <h1>Scar Symmetry em modo cósmico.</h1>
+          <p class="intro">
+            Um portal visual para uma das bandas mais cirúrgicas do metal melódico:
+            guitarras em espiral, refrões gigantes, brutalidade técnica e ficção
+            científica em escala planetária.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#escuta">Entrar na interface</a>
+            <a
+              class="button button-secondary"
+              href="https://open.spotify.com/album/5Rf3QTxZ42Lghe4pgIxc2o?si=rLjVKZOjSN6SM2dbMBSEgA"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Abrir no Spotify
+            </a>
+          </div>
+          <ul class="signal-grid" aria-label="Resumo da banda">
+            <li>
+              <strong>7</strong>
+              <span>álbuns de estúdio</span>
+            </li>
+            <li>
+              <strong>2005 → 2023</strong>
+              <span>arco discográfico</span>
+            </li>
+            <li>
+              <strong>Singularity</strong>
+              <span>saga transumana</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 640 640" class="orbital-illustration">
+            <defs>
+              <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#f7fbff" stop-opacity="1"></stop>
+                <stop offset="35%" stop-color="#9ef7ff" stop-opacity="0.85"></stop>
+                <stop offset="70%" stop-color="#4b84ff" stop-opacity="0.2"></stop>
+                <stop offset="100%" stop-color="#021120" stop-opacity="0"></stop>
+              </radialGradient>
+              <linearGradient id="circuitStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#83fff5"></stop>
+                <stop offset="55%" stop-color="#6a82ff"></stop>
+                <stop offset="100%" stop-color="#ff4e7d"></stop>
+              </linearGradient>
+            </defs>
+
+            <rect width="640" height="640" fill="transparent"></rect>
+            <circle cx="320" cy="320" r="256" fill="url(#coreGlow)"></circle>
+            <circle class="pulse-ring" cx="320" cy="320" r="224"></circle>
+            <circle class="pulse-ring delayed" cx="320" cy="320" r="178"></circle>
+            <path
+              class="orbital-line"
+              d="M92 355C124 223 252 124 387 130C478 134 548 190 585 296"
+            ></path>
+            <path
+              class="orbital-line alt"
+              d="M97 451C155 514 242 550 323 547C447 542 550 449 581 333"
+            ></path>
+            <path
+              class="orbital-line thin"
+              d="M135 170C225 90 360 74 473 118C553 149 612 215 626 287"
+            ></path>
+
+            <g class="cyber-mask">
+              <path
+                d="M321 142C402 142 468 203 468 281V365C468 444 408 509 321 509C232 509 170 444 170 365V281C170 203 238 142 321 142Z"
+              ></path>
+              <path
+                d="M322 180C380 180 426 225 426 283V358C426 415 381 462 322 462C261 462 214 415 214 358V283C214 225 262 180 322 180Z"
+              ></path>
+              <path d="M320 178V464"></path>
+              <path d="M248 250H294"></path>
+              <path d="M350 250H395"></path>
+              <path d="M236 328H296"></path>
+              <path d="M348 328H408"></path>
+              <path d="M258 392H305"></path>
+              <path d="M336 392H385"></path>
+              <circle cx="274" cy="281" r="28"></circle>
+              <circle cx="369" cy="281" r="28"></circle>
+              <path d="M294 361C308 373 334 373 349 361"></path>
+            </g>
+
+            <g class="floating-nodes">
+              <circle cx="145" cy="198" r="8"></circle>
+              <circle cx="500" cy="184" r="10"></circle>
+              <circle cx="554" cy="421" r="7"></circle>
+              <circle cx="121" cy="428" r="12"></circle>
+              <circle cx="208" cy="96" r="5"></circle>
+              <circle cx="448" cy="528" r="6"></circle>
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <section class="panel reveal" id="timeline">
+        <div class="section-heading">
+          <p class="eyebrow">Discography signal</p>
+          <h2>Linha do tempo da mutação.</h2>
+          <p>
+            Da estreia em 2005 até <em>The Singularity (Phase II - Xenotaph)</em>,
+            a banda atravessa três blocos estéticos: fundação melodeath, expansão
+            dual-vocal e a era conceitual transumana.
+          </p>
+        </div>
+        <div class="timeline-card">
+          <div id="timeline-chart" class="timeline-chart" aria-label="Linha do tempo da discografia"></div>
+          <div class="phase-legend">
+            <span><i class="legend-swatch legend-foundation"></i> Fundação</span>
+            <span><i class="legend-swatch legend-duality"></i> Dualidade</span>
+            <span><i class="legend-swatch legend-singularity"></i> Singularity</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Aesthetic vectors</p>
+          <h2>O DNA das faixas.</h2>
+          <p>
+            Este gráfico é editorial, não matemático: uma leitura visual da mistura
+            de melodia, impacto, ambição progressiva e escala sci-fi em algumas das
+            músicas mais fortes da banda.
+          </p>
+        </div>
+
+        <div class="spectrum-layout">
+          <div class="radar-panel">
+            <div class="radar-header">
+              <div>
+                <p class="micro-label">Faixa em foco</p>
+                <h3 id="radar-title">The Illusionist</h3>
+              </div>
+              <p id="radar-note" class="radar-note"></p>
+            </div>
+            <div id="radar-chart" class="radar-chart" aria-label="Mapa editorial de escuta"></div>
+          </div>
+          <div class="track-switcher">
+            <div id="track-buttons" class="track-buttons" aria-label="Selecionar faixa"></div>
+            <div class="spectrum-caption">
+              <span>Melodia</span>
+              <span>Impacto</span>
+              <span>Prog</span>
+              <span>Escala</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel reveal" id="escuta">
+        <div class="section-heading">
+          <p class="eyebrow">Listening deck</p>
+          <h2>Faixas para entrar no universo.</h2>
+          <p>
+            Três portas de entrada pelo Spotify e três vídeos oficiais para mergulhar
+            na fase mais cinematográfica da banda.
+          </p>
+        </div>
+
+        <div class="embed-grid" id="playlist-grid">
+          <article class="embed-card spotify-card">
+            <div class="embed-copy">
+              <p class="micro-label">Gateway track</p>
+              <h3>The Illusionist</h3>
+              <p>
+                Hook instantâneo, riff afiado e o equilíbrio clássico entre agressão
+                e refrão memorável.
+              </p>
+            </div>
+            <iframe
+              loading="lazy"
+              title="The Illusionist by Scar Symmetry no Spotify"
+              src="https://open.spotify.com/embed/track/5mPEgIhosRM5bbWCksONH8?utm_source=generator"
+              width="100%"
+              height="152"
+              frameborder="0"
+              allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            ></iframe>
+          </article>
+
+          <article class="embed-card spotify-card">
+            <div class="embed-copy">
+              <p class="micro-label">Signature track</p>
+              <h3>Holographic Universe</h3>
+              <p>
+                A faceta mais expansiva da banda: linhas melódicas largas, técnica de
+                sobra e atmosfera de ficção científica.
+              </p>
+            </div>
+            <iframe
+              loading="lazy"
+              title="Holographic Universe by Scar Symmetry no Spotify"
+              src="https://open.spotify.com/embed/track/5Gws7BBioR9Koi23oRUNll?utm_source=generator"
+              width="100%"
+              height="152"
+              frameborder="0"
+              allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            ></iframe>
+          </article>
+
+          <article class="embed-card spotify-card">
+            <div class="embed-copy">
+              <p class="micro-label">Machine hymn</p>
+              <h3>Ghost Prototype II: Deus Ex Machina</h3>
+              <p>
+                Uma síntese perfeita do lado tecnicamente brutal com refrões grandes
+                e senso de missão futurista.
+              </p>
+            </div>
+            <iframe
+              loading="lazy"
+              title="Ghost Prototype II: Deus Ex Machina by Scar Symmetry no Spotify"
+              src="https://open.spotify.com/embed/track/6H7jzJrbZrXYqwY4i5wk06?utm_source=generator"
+              width="100%"
+              height="152"
+              frameborder="0"
+              allowfullscreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            ></iframe>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Official transmissions</p>
+          <h2>Vídeos para a fase mais sci-fi.</h2>
+          <p>
+            Aqui o visual pesa tanto quanto os riffs: androides, geometrias digitais,
+            expansão cósmica e uma estética que combina muito com o universo da banda.
+          </p>
+        </div>
+
+        <div class="video-grid">
+          <article class="video-card">
+            <div class="video-copy">
+              <p class="micro-label">Official video</p>
+              <h3>Chrononautilus</h3>
+              <p>Propulsão melódica e viagem temporal em forma de hino futurista.</p>
+            </div>
+            <iframe
+              loading="lazy"
+              src="https://www.youtube.com/embed/HO_GlU5sC9k"
+              title="Chrononautilus official music video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </article>
+
+          <article class="video-card">
+            <div class="video-copy">
+              <p class="micro-label">Official video</p>
+              <h3>Scorched Quadrant</h3>
+              <p>Robótica fria, enquadramentos clínicos e uma sensação de colapso elegante.</p>
+            </div>
+            <iframe
+              loading="lazy"
+              src="https://www.youtube.com/embed/H9yi6jDmezc"
+              title="Scorched Quadrant official music video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </article>
+
+          <article class="video-card">
+            <div class="video-copy">
+              <p class="micro-label">Official lyric video</p>
+              <h3>Limits To Infinity</h3>
+              <p>O início da trilogia Singularity com foco em expansão artificial e escala cósmica.</p>
+            </div>
+            <iframe
+              loading="lazy"
+              src="https://www.youtube.com/embed/8NsFx6iVOaA"
+              title="Limits To Infinity official lyric video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel final-panel reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Core album</p>
+          <h2>Se quiser ouvir o arco completo agora.</h2>
+          <p>
+            <em>The Singularity (Phase II - Xenotaph)</em> fecha um ciclo importante
+            da banda e concentra bem o peso, o brilho melódico e a imaginação
+            transumana que definem Scar Symmetry.
+          </p>
+        </div>
+        <div class="album-wrap">
+          <iframe
+            loading="lazy"
+            title="The Singularity (Phase II - Xenotaph) no Spotify"
+            src="https://open.spotify.com/embed/album/5Rf3QTxZ42Lghe4pgIxc2o?utm_source=generator&theme=0"
+            width="100%"
+            height="380"
+            frameborder="0"
+            allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          ></iframe>
+          <div class="closing-copy">
+            <p class="micro-label">Nota editorial</p>
+            <p>
+              A linha do tempo usa os sete álbuns de estúdio e o radar é uma leitura
+              visual curada para orientar a escuta. As referências factuais de
+              discografia e a fase <em>Singularity</em> foram consolidadas a partir do
+              site oficial da banda e da discografia pública.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
