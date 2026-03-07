@@ -30,6 +30,7 @@
   const scheduleHelper = window.DashboardUpdateSchedule || null;
 
   const updatedLine = document.getElementById('updated-line');
+  const scraperHealthBtn = document.getElementById('scraper-health-btn');
   const updateScheduleNote = document.getElementById('update-schedule-note');
   const yearsPill = document.getElementById('years-pill');
   const partialYearPill = document.getElementById('partial-year-pill');
@@ -469,6 +470,9 @@
       updateScheduleNote.textContent = updateNotice
         ? updateNotice.text
         : `Ultima atualizacao: ${updatedLabel}.`;
+    }
+    if (scheduleHelper && scraperHealthBtn) {
+      scheduleHelper.applyHealthState('lai', updatedAtRaw, scraperHealthBtn);
     }
     renderSourceNote();
     renderPartialYearHints();

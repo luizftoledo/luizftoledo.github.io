@@ -199,6 +199,40 @@
       line-height: 1.45;
     }
 
+    .scraper-health-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0.24rem 0.68rem;
+      border-radius: 999px;
+      border: 1px solid #d6cfbf;
+      background: #efe6cf;
+      color: #5a5346;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    .scraper-health-btn.is-ok {
+      border-color: #1f8f5f;
+      background: #1f8f5f;
+      color: #fff;
+    }
+
+    .scraper-health-btn.is-fail {
+      border-color: #c84444;
+      background: #c84444;
+      color: #fff;
+    }
+
+    .scraper-health-btn.is-loading {
+      border-color: #d6cfbf;
+      background: #efe6cf;
+      color: #5a5346;
+    }
+
     .metrics {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1167,6 +1201,7 @@
       </div>
       <div class="update-line">
         <span id="updated-line">Atualização: carregando...</span>
+        <a class="scraper-health-btn is-loading" id="scraper-health-btn" href="https://github.com/luizftoledo/luizftoledo.github.io/actions" target="_blank" rel="noopener noreferrer">Testando raspador...</a>
         <span class="pill" id="years-pill">anos: --</span>
         <span class="pill pill-warning" id="partial-year-pill" hidden>ano parcial</span>
         <span class="pill">fontes: CGU (Fala.BR + BuscaLAI)</span>

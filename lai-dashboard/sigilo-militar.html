@@ -140,6 +140,40 @@
       line-height: 1.45;
     }
 
+    .scraper-health-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0.24rem 0.68rem;
+      border-radius: 999px;
+      border: 1px solid #d6cfbf;
+      background: #efe6cf;
+      color: #5a5346;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    .scraper-health-btn.is-ok {
+      border-color: #1f8f5f;
+      background: #1f8f5f;
+      color: #fff;
+    }
+
+    .scraper-health-btn.is-fail {
+      border-color: #c84444;
+      background: #c84444;
+      color: #fff;
+    }
+
+    .scraper-health-btn.is-loading {
+      border-color: #d6cfbf;
+      background: #efe6cf;
+      color: #5a5346;
+    }
+
     .metrics {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -515,6 +549,7 @@
       <p class="sub">Este recorte nasce do meu mestrado. No resumo da pesquisa eu mostro que, desde 2013, Exército, Marinha e Aeronáutica concentraram 90,4% das desclassificações federais e, no período analisado, foi possível acessar menos de 1% do conteúdo desclassificado. Também descrevo a lógica de “desclassificação vendada”, quando o documento perde o sigilo formal, mas continua difícil de entender por causa das tarjas. Por isso o monitor olha de perto CEX, MD, CMAR e COMAER. Leia a <a href="https://repositorio.fgv.br/items/e0088610-e3e2-4c40-afad-4461cf6e2df6" target="_blank" rel="noopener noreferrer">dissertação completa</a>.</p>
       <div class="meta-line">
         <span id="updated-line">Atualização: carregando...</span>
+        <a class="scraper-health-btn is-loading" id="scraper-health-btn" href="https://github.com/luizftoledo/luizftoledo.github.io/actions" target="_blank" rel="noopener noreferrer">Testando raspador...</a>
         <span class="pill">órgãos: CEX, MD, CMAR, COMAER</span>
         <span class="pill">fontes: CGU (Fala.BR + BuscaLAI)</span>
       </div>

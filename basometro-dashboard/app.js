@@ -23,6 +23,7 @@ let charts = {
 const refs = {
   updated: document.getElementById("status-updated"),
   range: document.getElementById("status-range"),
+  scraperHealthBtn: document.getElementById("scraper-health-btn"),
   updateScheduleNote: document.getElementById("update-schedule-note"),
   govFilter: document.getElementById("filter-government"),
   minParty: document.getElementById("filter-min-party"),
@@ -237,6 +238,9 @@ function setStatus() {
     refs.updateScheduleNote.textContent = updateNotice
       ? updateNotice.text
       : `Ultima atualizacao: ${updatedLabel}.`;
+  }
+  if (scheduleHelper && refs.scraperHealthBtn) {
+    scheduleHelper.applyHealthState("basometro", updatedAtRaw, refs.scraperHealthBtn);
   }
   refs.range.textContent = `Período: ${metadata.start_year || "--"} até ${metadata.end_year || "--"}`;
 }

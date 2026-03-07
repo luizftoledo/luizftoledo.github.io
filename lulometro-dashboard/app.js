@@ -37,6 +37,7 @@
 
   const els = {
     statusUpdated: document.getElementById('status-updated'),
+    scraperHealthBtn: document.getElementById('scraper-health-btn'),
     updateScheduleNote: document.getElementById('update-schedule-note'),
     statusTotalDocs: document.getElementById('status-total-docs'),
     statusSources: document.getElementById('status-sources'),
@@ -1956,6 +1957,9 @@
         els.updateScheduleNote.textContent = updateNotice
           ? updateNotice.text
           : `Ultima atualizacao: ${generatedAt}.`;
+      }
+      if (scheduleHelper && els.scraperHealthBtn) {
+        scheduleHelper.applyHealthState('lulometro', metadata.generated_at, els.scraperHealthBtn);
       }
       els.statusTotalDocs.textContent = `Documentos: ${nFmt.format(total)}`;
       els.statusSources.textContent = `Fontes: ${sourceCount}`;

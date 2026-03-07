@@ -15,6 +15,7 @@
     statusUpdate: document.getElementById('status-update'),
     statusSnapshot: document.getElementById('status-snapshot'),
     statusSource: document.getElementById('status-source'),
+    scraperHealthBtn: document.getElementById('scraper-health-btn'),
     updateScheduleNote: document.getElementById('update-schedule-note'),
     sourceUpdatedLine: document.getElementById('source-updated-line'),
     compareAlert: document.getElementById('compare-alert'),
@@ -1086,6 +1087,9 @@
       els.updateScheduleNote.textContent = updateNotice
         ? updateNotice.text
         : `Ultima atualizacao: ${updatedLabel}.`;
+    }
+    if (scheduleHelper && els.scraperHealthBtn) {
+      scheduleHelper.applyHealthState('emendas', updatedAtRaw, els.scraperHealthBtn);
     }
     els.statusSnapshot.textContent = `Snapshot: ${report.snapshot_date || metadata.snapshot_date || '--'}`;
   }

@@ -285,6 +285,40 @@
       line-height: 1.45;
     }
 
+    .scraper-health-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0.26rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid #d6cfbf;
+      background: #efe6cf;
+      color: #5a5346;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    .scraper-health-btn.is-ok {
+      border-color: #1f8f5f;
+      background: #1f8f5f;
+      color: #fff;
+    }
+
+    .scraper-health-btn.is-fail {
+      border-color: #c84444;
+      background: #c84444;
+      color: #fff;
+    }
+
+    .scraper-health-btn.is-loading {
+      border-color: #d6cfbf;
+      background: #efe6cf;
+      color: #5a5346;
+    }
+
     .hint {
       color: var(--muted);
       font-size: 0.86rem;
@@ -1276,6 +1310,7 @@
         <div class="status-row">
           <div id="status-line">Aguardando primeira busca...</div>
           <span class="badge" id="updated-badge">base: --</span>
+          <a class="scraper-health-btn is-loading" id="scraper-health-btn" href="https://github.com/luizftoledo/luizftoledo.github.io/actions" target="_blank" rel="noopener noreferrer">Testando raspador...</a>
         </div>
         <p class="update-schedule-note" id="update-schedule-note" aria-live="polite">Frequência de atualização: carregando...</p>
         <div class="load-status" id="load-status-panel" aria-live="polite">

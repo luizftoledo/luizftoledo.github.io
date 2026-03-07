@@ -23,6 +23,7 @@
   const scheduleHelper = window.DashboardUpdateSchedule || null;
 
   const updatedLine = document.getElementById('updated-line');
+  const scraperHealthBtn = document.getElementById('scraper-health-btn');
   const updateScheduleNote = document.getElementById('update-schedule-note');
   const metricTotal = document.getElementById('metric-total');
   const metricDenied = document.getElementById('metric-denied');
@@ -382,6 +383,9 @@
       updateScheduleNote.textContent = updateNotice
         ? updateNotice.text
         : `Ultima atualizacao: ${updatedLabel}.`;
+    }
+    if (scheduleHelper && scraperHealthBtn) {
+      scheduleHelper.applyHealthState('sigilo', updatedAtRaw, scraperHealthBtn);
     }
   }
 

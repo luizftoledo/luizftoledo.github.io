@@ -15,6 +15,7 @@
     const metricFilteredFines = document.getElementById('metric-filtered-fines');
     const statusLine = document.getElementById('status-line');
     const updatedBadge = document.getElementById('updated-badge');
+    const scraperHealthBtn = document.getElementById('scraper-health-btn');
     const updateScheduleNote = document.getElementById('update-schedule-note');
     const loadStatusLabel = document.getElementById('load-status-label');
     const loadStatusSummary = document.getElementById('load-status-summary');
@@ -234,6 +235,9 @@
         updateScheduleNote.textContent = updateNotice
           ? updateNotice.text
           : `Ultima atualizacao da base: ${formatDateTime(stats.atualizado_em)}.`;
+      }
+      if (scheduleHelper && scraperHealthBtn) {
+        scheduleHelper.applyHealthState('ibama', stats.atualizado_em, scraperHealthBtn);
       }
 
       if (Array.isArray(stats.ufs) && stats.ufs.length > 0) {
