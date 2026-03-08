@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-07T21:52:56.218117+00:00",
+  "generated_at": "2026-03-08T14:02:34.225049+00:00",
   "counts": {
     "items": 53,
     "domains": 15,
@@ -14,7 +14,7 @@
     "recent": {
       "last_1_day": 9,
       "last_7_days": 9,
-      "last_30_days": 16
+      "last_30_days": 15
     }
   },
   "date_range": {
@@ -40,10 +40,10 @@
       }
     },
     "enrich": {
-      "fetched": 40,
-      "reused": 48,
+      "fetched": 43,
+      "reused": 46,
       "kept": 53,
-      "dropped": 35,
+      "dropped": 36,
       "categories": {
         "reportagem_autoral": 34,
         "entrevista": 6,
