@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-07T16:26:01.823444+00:00",
+  "generated_at": "2026-03-08T13:54:54.928199+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -10,15 +10,16 @@
     "senado_senadores": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json"
   },
   "counts": {
-    "entities": 595,
+    "entities": 633,
     "entities_by_kind": {
       "deputado": 513,
       "janja": 1,
+      "ministro": 38,
       "senador": 81
     },
-    "mention_rows": 1094,
-    "mention_occurrences_total": 1641,
-    "mention_docs_total": 1094,
+    "mention_rows": 2875,
+    "mention_occurrences_total": 5237,
+    "mention_docs_total": 2875,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -10234,6 +10235,1158 @@
       "search_text": "janja rosangela lula da silva janja primeira dama rosangela lula da silva janja lula da silva rosangela da silva rosangela silva rosangela lula lula silva janja",
       "mention_occurrences_total": 487,
       "mention_docs_total": 204
+    },
+    {
+      "id": "ministro-fernando-haddad",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Fernando Haddad",
+      "official_name": "Fernando Haddad",
+      "role": "Ministro de Estado da Fazenda",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Fernando Haddad",
+        "Haddad"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Haddad",
+          "occurrences": 690,
+          "docs": 195
+        },
+        {
+          "alias": "Fernando Haddad",
+          "occurrences": 188,
+          "docs": 149
+        }
+      ],
+      "search_text": "fernando haddad fernando haddad ministros do governo ministro de estado da fazenda fernando haddad haddad",
+      "mention_occurrences_total": 878,
+      "mention_docs_total": 231
+    },
+    {
+      "id": "ministro-camilo-sobreira-de-santana",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Camilo Santana",
+      "official_name": "Camilo Sobreira de Santana",
+      "role": "Ministro de Estado da Educação",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Camilo Sobreira de Santana",
+        "Sobreira Santana",
+        "Camilo Sobreira",
+        "Camilo Santana",
+        "Camilo"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Camilo Santana",
+          "occurrences": 179,
+          "docs": 118
+        },
+        {
+          "alias": "Camilo",
+          "occurrences": 453,
+          "docs": 114
+        }
+      ],
+      "search_text": "camilo sobreira de santana camilo sobreira de santana ministros do governo ministro de estado da educacao camilo sobreira de santana sobreira santana camilo sobreira camilo santana camilo",
+      "mention_occurrences_total": 632,
+      "mention_docs_total": 146
+    },
+    {
+      "id": "ministro-rui-costa-dos-santos",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Rui Costa",
+      "official_name": "Rui Costa dos Santos",
+      "role": "Ministro de Estado da Casa Civil da Presidência da República",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Rui Costa dos Santos",
+        "Costa Santos",
+        "Rui Santos",
+        "Rui Costa"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Rui Costa",
+          "occurrences": 386,
+          "docs": 198
+        }
+      ],
+      "search_text": "rui costa dos santos rui costa dos santos ministros do governo ministro de estado da casa civil da presidencia da republica rui costa dos santos costa santos rui santos rui costa",
+      "mention_occurrences_total": 386,
+      "mention_docs_total": 198
+    },
+    {
+      "id": "ministro-geraldo-jose-rodrigues-alckmin-filho",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Geraldo Alckmin",
+      "official_name": "Geraldo José Rodrigues Alckmin Filho",
+      "role": "Ministro de Estado do Desenvolvimento, Indústria, Comércio e Serviços",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Geraldo José Rodrigues Alckmin Filho",
+        "Geraldo Rodrigues",
+        "Rodrigues Alckmin",
+        "Geraldo Alckmin",
+        "Rodrigues Filho",
+        "José Rodrigues",
+        "Alckmin Filho",
+        "Geraldo Filho",
+        "Geraldo José"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Geraldo Alckmin",
+          "occurrences": 136,
+          "docs": 119
+        }
+      ],
+      "search_text": "geraldo jose rodrigues alckmin filho geraldo jose rodrigues alckmin filho ministros do governo ministro de estado do desenvolvimento industria comercio e servicos geraldo jose rodrigues alckmin filho geraldo rodrigues rodrigues alckmin geraldo alckmin rodrigues filho jose rodrigues alckmin filho geraldo filho geraldo jose",
+      "mention_occurrences_total": 136,
+      "mention_docs_total": 119
+    },
+    {
+      "id": "ministro-luciana-barbosa-de-oliveira-santos",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Luciana Santos",
+      "official_name": "Luciana Barbosa de Oliveira Santos",
+      "role": "Ministra de Estado da Ciência, Tecnologia e Inovação",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Luciana Barbosa de Oliveira Santos",
+        "Barbosa Oliveira",
+        "Luciana Oliveira",
+        "Luciana Barbosa",
+        "Oliveira Santos",
+        "Barbosa Santos",
+        "Luciana Santos",
+        "Luciana"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Luciana Santos",
+          "occurrences": 47,
+          "docs": 42
+        },
+        {
+          "alias": "Luciana",
+          "occurrences": 72,
+          "docs": 35
+        }
+      ],
+      "search_text": "luciana barbosa de oliveira santos luciana barbosa de oliveira santos ministros do governo ministra de estado da ciencia tecnologia e inovacao luciana barbosa de oliveira santos barbosa oliveira luciana oliveira luciana barbosa oliveira santos barbosa santos luciana santos luciana",
+      "mention_occurrences_total": 119,
+      "mention_docs_total": 64
+    },
+    {
+      "id": "ministro-mauro-luiz-iecker-vieira",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Mauro Vieira",
+      "official_name": "Mauro Luiz Iecker Vieira",
+      "role": "Ministro de Estado das Relações Exteriores",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Mauro Luiz Iecker Vieira",
+        "Iecker Vieira",
+        "Mauro Iecker",
+        "Mauro Vieira",
+        "Luiz Iecker",
+        "Luiz Vieira",
+        "Mauro Luiz"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Mauro Vieira",
+          "occurrences": 111,
+          "docs": 90
+        },
+        {
+          "alias": "Mauro Luiz",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "mauro luiz iecker vieira mauro luiz iecker vieira ministros do governo ministro de estado das relacoes exteriores mauro luiz iecker vieira iecker vieira mauro iecker mauro vieira luiz iecker luiz vieira mauro luiz",
+      "mention_occurrences_total": 112,
+      "mention_docs_total": 91
+    },
+    {
+      "id": "ministro-gleisi-helena-hoffmann",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Gleisi Hoffmann",
+      "official_name": "Gleisi Helena Hoffmann",
+      "role": "Ministra de Estado da Secretaria de Relações Institucionais da Presidência da República",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Gleisi Helena Hoffmann",
+        "Gleisi Hoffmann",
+        "Helena Hoffmann",
+        "Gleisi Helena",
+        "Gleisi"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Gleisi Hoffmann",
+          "occurrences": 54,
+          "docs": 42
+        },
+        {
+          "alias": "Gleisi",
+          "occurrences": 44,
+          "docs": 21
+        }
+      ],
+      "search_text": "gleisi helena hoffmann gleisi helena hoffmann ministros do governo ministra de estado da secretaria de relacoes institucionais da presidencia da republica gleisi helena hoffmann gleisi hoffmann helena hoffmann gleisi helena gleisi",
+      "mention_occurrences_total": 98,
+      "mention_docs_total": 46
+    },
+    {
+      "id": "ministro-esther-dweck",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Esther Dweck",
+      "official_name": "Esther Dweck",
+      "role": "Ministra de Estado da Gestão e da Inovação em Serviços Públicos",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Esther Dweck",
+        "Esther",
+        "Dweck"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Esther Dweck",
+          "occurrences": 37,
+          "docs": 35
+        },
+        {
+          "alias": "Esther",
+          "occurrences": 58,
+          "docs": 26
+        }
+      ],
+      "search_text": "esther dweck esther dweck ministros do governo ministra de estado da gestao e da inovacao em servicos publicos esther dweck esther dweck",
+      "mention_occurrences_total": 95,
+      "mention_docs_total": 45
+    },
+    {
+      "id": "ministro-alexandre-silveira-de-oliveira",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Alexandre Silveira",
+      "official_name": "Alexandre Silveira de Oliveira",
+      "role": "Ministro de Estado de Minas e Energia",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Alexandre Silveira de Oliveira",
+        "Alexandre Oliveira",
+        "Alexandre Silveira",
+        "Silveira Oliveira"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Alexandre Silveira",
+          "occurrences": 93,
+          "docs": 49
+        }
+      ],
+      "search_text": "alexandre silveira de oliveira alexandre silveira de oliveira ministros do governo ministro de estado de minas e energia alexandre silveira de oliveira alexandre oliveira alexandre silveira silveira oliveira",
+      "mention_occurrences_total": 93,
+      "mention_docs_total": 49
+    },
+    {
+      "id": "ministro-sonia-bone-de-sousa-silva-santos",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Sousa Santos",
+      "official_name": "Sonia Bone de Sousa Silva Santos",
+      "role": "Ministra de Estado dos Povos Indígenas",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Sonia Bone de Sousa Silva Santos",
+        "Silva Santos",
+        "Sonia Santos",
+        "Sousa Santos",
+        "Bone Santos",
+        "Sonia Silva",
+        "Sonia Sousa",
+        "Sousa Silva",
+        "Bone Sousa",
+        "Sonia Bone",
+        "Sonia"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Sonia",
+          "occurrences": 89,
+          "docs": 39
+        },
+        {
+          "alias": "Sousa Santos",
+          "occurrences": 1,
+          "docs": 1
+        },
+        {
+          "alias": "Sousa Silva",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "sonia bone de sousa silva santos sonia bone de sousa silva santos ministros do governo ministra de estado dos povos indigenas sonia bone de sousa silva santos silva santos sonia santos sousa santos bone santos sonia silva sonia sousa sousa silva bone sousa sonia bone sonia",
+      "mention_occurrences_total": 91,
+      "mention_docs_total": 40
+    },
+    {
+      "id": "ministro-luiz-paulo-teixeira-ferreira",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Paulo Teixeira",
+      "official_name": "Luiz Paulo Teixeira Ferreira",
+      "role": "Ministro de Estado do Desenvolvimento Agrário e Agricultura Familiar",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Luiz Paulo Teixeira Ferreira",
+        "Teixeira Ferreira",
+        "Paulo Ferreira",
+        "Paulo Teixeira",
+        "Luiz Ferreira",
+        "Luiz Teixeira",
+        "Luiz Paulo"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Paulo Teixeira",
+          "occurrences": 88,
+          "docs": 62
+        },
+        {
+          "alias": "Luiz Paulo",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "luiz paulo teixeira ferreira luiz paulo teixeira ferreira ministros do governo ministro de estado do desenvolvimento agrario e agricultura familiar luiz paulo teixeira ferreira teixeira ferreira paulo ferreira paulo teixeira luiz ferreira luiz teixeira luiz paulo",
+      "mention_occurrences_total": 89,
+      "mention_docs_total": 62
+    },
+    {
+      "id": "ministro-jader-fontenelle-barbalho-filho",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Jader Filho",
+      "official_name": "Jader Fontenelle Barbalho Filho",
+      "role": "Ministro de Estado das Cidades",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Jader Fontenelle Barbalho Filho",
+        "Fontenelle Barbalho",
+        "Fontenelle Filho",
+        "Jader Fontenelle",
+        "Barbalho Filho",
+        "Jader Filho"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Jader Filho",
+          "occurrences": 83,
+          "docs": 58
+        },
+        {
+          "alias": "Barbalho Filho",
+          "occurrences": 5,
+          "docs": 5
+        }
+      ],
+      "search_text": "jader fontenelle barbalho filho jader fontenelle barbalho filho ministros do governo ministro de estado das cidades jader fontenelle barbalho filho fontenelle barbalho fontenelle filho jader fontenelle barbalho filho jader filho",
+      "mention_occurrences_total": 88,
+      "mention_docs_total": 63
+    },
+    {
+      "id": "ministro-maria-osmarina-marina-da-silva-vaz-de-lima",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Marina Silva",
+      "official_name": "Maria Osmarina Marina da Silva Vaz de Lima",
+      "role": "Ministra de Estado do Meio Ambiente e Mudança do Clima",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Maria Osmarina Marina da Silva Vaz de Lima",
+        "Osmarina Marina",
+        "Maria Osmarina",
+        "Osmarina Lima",
+        "Maria Marina",
+        "Marina Silva",
+        "Maria Silva",
+        "Marina Lima",
+        "Maria Lima",
+        "Silva Lima",
+        "Maria Vaz",
+        "Silva Vaz",
+        "Vaz Lima"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Marina Silva",
+          "occurrences": 80,
+          "docs": 71
+        },
+        {
+          "alias": "Maria Lima",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "maria osmarina marina da silva vaz de lima maria osmarina marina da silva vaz de lima ministros do governo ministra de estado do meio ambiente e mudanca do clima maria osmarina marina da silva vaz de lima osmarina marina maria osmarina osmarina lima maria marina marina silva maria silva marina lima maria lima silva lima maria vaz silva vaz vaz lima",
+      "mention_occurrences_total": 81,
+      "mention_docs_total": 72
+    },
+    {
+      "id": "ministro-margareth-menezes-da-purificacao-costa",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Margareth Menezes",
+      "official_name": "Margareth Menezes da Purificação Costa",
+      "role": "Ministra de Estado da Cultura",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Margareth Menezes da Purificação Costa",
+        "Margareth Purificação",
+        "Menezes Purificação",
+        "Margareth Menezes",
+        "Purificação Costa",
+        "Margareth Costa",
+        "Menezes Costa"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Margareth Menezes",
+          "occurrences": 71,
+          "docs": 44
+        }
+      ],
+      "search_text": "margareth menezes da purificacao costa margareth menezes da purificacao costa ministros do governo ministra de estado da cultura margareth menezes da purificacao costa margareth purificacao menezes purificacao margareth menezes purificacao costa margareth costa menezes costa",
+      "mention_occurrences_total": 71,
+      "mention_docs_total": 44
+    },
+    {
+      "id": "ministro-jose-wellington-barroso-de-araujo-dias",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Wellington Dias",
+      "official_name": "José Wellington Barroso de Araujo Dias",
+      "role": "Ministro de Estado do Desenvolvimento e Assistência Social, Família e Combate à Fome",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "José Wellington Barroso de Araujo Dias",
+        "Wellington Barroso",
+        "José Wellington",
+        "Wellington Dias",
+        "Barroso Araujo",
+        "Barroso Dias",
+        "José Barroso",
+        "Araujo Dias",
+        "José Araujo",
+        "José Dias"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Wellington Dias",
+          "occurrences": 63,
+          "docs": 53
+        }
+      ],
+      "search_text": "jose wellington barroso de araujo dias jose wellington barroso de araujo dias ministros do governo ministro de estado do desenvolvimento e assistencia social familia e combate a fome jose wellington barroso de araujo dias wellington barroso jose wellington wellington dias barroso araujo barroso dias jose barroso araujo dias jose araujo jose dias",
+      "mention_occurrences_total": 63,
+      "mention_docs_total": 53
+    },
+    {
+      "id": "ministro-alexandre-rocha-santos-padilha",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Alexandre Padilha",
+      "official_name": "Alexandre Rocha Santos Padilha",
+      "role": "Ministro de Estado da Saúde",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Alexandre Rocha Santos Padilha",
+        "Alexandre Padilha",
+        "Alexandre Santos",
+        "Alexandre Rocha",
+        "Santos Padilha",
+        "Rocha Padilha",
+        "Rocha Santos"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Alexandre Padilha",
+          "occurrences": 58,
+          "docs": 55
+        }
+      ],
+      "search_text": "alexandre rocha santos padilha alexandre rocha santos padilha ministros do governo ministro de estado da saude alexandre rocha santos padilha alexandre padilha alexandre santos alexandre rocha santos padilha rocha padilha rocha santos",
+      "mention_occurrences_total": 58,
+      "mention_docs_total": 55
+    },
+    {
+      "id": "ministro-jose-renan-vasconcelos-calheiros-filho",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Renan Filho",
+      "official_name": "José Renan Vasconcelos Calheiros Filho",
+      "role": "Ministro de Estado dos Transportes",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "José Renan Vasconcelos Calheiros Filho",
+        "Vasconcelos Calheiros",
+        "Renan Vasconcelos",
+        "Vasconcelos Filho",
+        "José Vasconcelos",
+        "Calheiros Filho",
+        "José Calheiros",
+        "Renan Filho",
+        "José Renan"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Renan Filho",
+          "occurrences": 58,
+          "docs": 53
+        }
+      ],
+      "search_text": "jose renan vasconcelos calheiros filho jose renan vasconcelos calheiros filho ministros do governo ministro de estado dos transportes jose renan vasconcelos calheiros filho vasconcelos calheiros renan vasconcelos vasconcelos filho jose vasconcelos calheiros filho jose calheiros renan filho jose renan",
+      "mention_occurrences_total": 58,
+      "mention_docs_total": 53
+    },
+    {
+      "id": "ministro-simone-nassar-tebet",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Simone Tebet",
+      "official_name": "Simone Nassar Tebet",
+      "role": "Ministra de Estado do Planejamento e Orçamento",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Simone Nassar Tebet",
+        "Simone Nassar",
+        "Nassar Tebet",
+        "Simone Tebet"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Simone Tebet",
+          "occurrences": 55,
+          "docs": 44
+        }
+      ],
+      "search_text": "simone nassar tebet simone nassar tebet ministros do governo ministra de estado do planejamento e orcamento simone nassar tebet simone nassar nassar tebet simone tebet",
+      "mention_occurrences_total": 55,
+      "mention_docs_total": 44
+    },
+    {
+      "id": "ministro-silvio-costa-filho",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Silvio Costa Filho",
+      "official_name": "Silvio Costa Filho",
+      "role": "Ministro de Estado de Portos e Aeroportos",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Silvio Costa Filho",
+        "Silvio Costa",
+        "Silvio Filho",
+        "Costa Filho"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Silvio Costa Filho",
+          "occurrences": 19,
+          "docs": 19
+        },
+        {
+          "alias": "Silvio Costa",
+          "occurrences": 11,
+          "docs": 9
+        },
+        {
+          "alias": "Costa Filho",
+          "occurrences": 13,
+          "docs": 2
+        },
+        {
+          "alias": "Silvio Filho",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "silvio costa filho silvio costa filho ministros do governo ministro de estado de portos e aeroportos silvio costa filho silvio costa silvio filho costa filho",
+      "mention_occurrences_total": 44,
+      "mention_docs_total": 30
+    },
+    {
+      "id": "ministro-anielle-francisco-da-silva",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Anielle Francisco da Silva",
+      "official_name": "Anielle Francisco da Silva",
+      "role": "Ministra de Estado da Igualdade Racial",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Anielle Francisco da Silva",
+        "Anielle Francisco",
+        "Francisco Silva",
+        "Anielle Silva",
+        "Anielle"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Anielle",
+          "occurrences": 42,
+          "docs": 22
+        }
+      ],
+      "search_text": "anielle francisco da silva anielle francisco da silva ministros do governo ministra de estado da igualdade racial anielle francisco da silva anielle francisco francisco silva anielle silva anielle",
+      "mention_occurrences_total": 42,
+      "mention_docs_total": 22
+    },
+    {
+      "id": "ministro-antonio-waldez-goes-da-silva",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Waldez Góes",
+      "official_name": "Antônio Waldez Góes da Silva",
+      "role": "Ministro de Estado da Integração e do Desenvolvimento Regional",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Antônio Waldez Góes da Silva",
+        "Antônio Waldez",
+        "Antônio Silva",
+        "Antônio Góes",
+        "Waldez Silva",
+        "Waldez Góes",
+        "Góes Silva"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Waldez Góes",
+          "occurrences": 36,
+          "docs": 33
+        }
+      ],
+      "search_text": "antonio waldez goes da silva antonio waldez goes da silva ministros do governo ministro de estado da integracao e do desenvolvimento regional antonio waldez goes da silva antonio waldez antonio silva antonio goes waldez silva waldez goes goes silva",
+      "mention_occurrences_total": 36,
+      "mention_docs_total": 33
+    },
+    {
+      "id": "ministro-sidonio-palmeira",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Sidônio Palmeira",
+      "official_name": "Sidônio Palmeira",
+      "role": "Ministro de Estado da Secretaria de Comunicação Social da Presidência da República",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Sidônio Palmeira",
+        "Palmeira",
+        "Sidônio"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Sidônio Palmeira",
+          "occurrences": 20,
+          "docs": 18
+        },
+        {
+          "alias": "Sidônio",
+          "occurrences": 14,
+          "docs": 8
+        },
+        {
+          "alias": "Palmeira",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "sidonio palmeira sidonio palmeira ministros do governo ministro de estado da secretaria de comunicacao social da presidencia da republica sidonio palmeira palmeira sidonio",
+      "mention_occurrences_total": 35,
+      "mention_docs_total": 19
+    },
+    {
+      "id": "ministro-macae-maria-evaristo-dos-santos",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Macaé Evaristo",
+      "official_name": "Macaé Maria Evaristo dos Santos",
+      "role": "Ministra de Estado dos Direitos Humanos e da Cidadania",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Macaé Maria Evaristo dos Santos",
+        "Evaristo Santos",
+        "Macaé Evaristo",
+        "Maria Evaristo",
+        "Macaé Santos",
+        "Maria Santos",
+        "Macaé Maria",
+        "Macaé"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Macaé Evaristo",
+          "occurrences": 22,
+          "docs": 17
+        },
+        {
+          "alias": "Macaé",
+          "occurrences": 11,
+          "docs": 6
+        }
+      ],
+      "search_text": "macae maria evaristo dos santos macae maria evaristo dos santos ministros do governo ministra de estado dos direitos humanos e da cidadania macae maria evaristo dos santos evaristo santos macae evaristo maria evaristo macae santos maria santos macae maria macae",
+      "mention_occurrences_total": 33,
+      "mention_docs_total": 18
+    },
+    {
+      "id": "ministro-carlos-henrique-baqueta-favaro",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Carlos Fávaro",
+      "official_name": "Carlos Henrique Baqueta Fávaro",
+      "role": "Ministro de Estado da Agricultura e Pecuária",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Carlos Henrique Baqueta Fávaro",
+        "Henrique Baqueta",
+        "Carlos Henrique",
+        "Henrique Fávaro",
+        "Baqueta Fávaro",
+        "Carlos Baqueta",
+        "Carlos Fávaro"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Carlos Fávaro",
+          "occurrences": 32,
+          "docs": 31
+        }
+      ],
+      "search_text": "carlos henrique baqueta favaro carlos henrique baqueta favaro ministros do governo ministro de estado da agricultura e pecuaria carlos henrique baqueta favaro henrique baqueta carlos henrique henrique favaro baqueta favaro carlos baqueta carlos favaro",
+      "mention_occurrences_total": 32,
+      "mention_docs_total": 31
+    },
+    {
+      "id": "ministro-jose-mucio-monteiro-filho",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "José Mucio",
+      "official_name": "José Mucio Monteiro Filho",
+      "role": "Ministro de Estado da Defesa",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "José Mucio Monteiro Filho",
+        "Monteiro Filho",
+        "Mucio Monteiro",
+        "José Monteiro",
+        "Mucio Filho",
+        "José Mucio"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "José Mucio",
+          "occurrences": 30,
+          "docs": 20
+        },
+        {
+          "alias": "Mucio Monteiro",
+          "occurrences": 2,
+          "docs": 2
+        }
+      ],
+      "search_text": "jose mucio monteiro filho jose mucio monteiro filho ministros do governo ministro de estado da defesa jose mucio monteiro filho monteiro filho mucio monteiro jose monteiro mucio filho jose mucio",
+      "mention_occurrences_total": 32,
+      "mention_docs_total": 22
+    },
+    {
+      "id": "ministro-luiz-marinho",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Luiz Marinho",
+      "official_name": "Luiz Marinho",
+      "role": "Ministro de Estado do Trabalho e Emprego",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Luiz Marinho"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Luiz Marinho",
+          "occurrences": 32,
+          "docs": 30
+        }
+      ],
+      "search_text": "luiz marinho luiz marinho ministros do governo ministro de estado do trabalho e emprego luiz marinho",
+      "mention_occurrences_total": 32,
+      "mention_docs_total": 30
+    },
+    {
+      "id": "ministro-marcia-helena-carvalho-lopes",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Márcia Lopes",
+      "official_name": "Márcia Helena Carvalho Lopes",
+      "role": "Ministra de Estado das Mulheres",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Márcia Helena Carvalho Lopes",
+        "Helena Carvalho",
+        "Márcia Carvalho",
+        "Carvalho Lopes",
+        "Márcia Helena",
+        "Helena Lopes",
+        "Márcia Lopes",
+        "Márcia"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Márcia",
+          "occurrences": 12,
+          "docs": 11
+        },
+        {
+          "alias": "Márcia Lopes",
+          "occurrences": 12,
+          "docs": 11
+        }
+      ],
+      "search_text": "marcia helena carvalho lopes marcia helena carvalho lopes ministros do governo ministra de estado das mulheres marcia helena carvalho lopes helena carvalho marcia carvalho carvalho lopes marcia helena helena lopes marcia lopes marcia",
+      "mention_occurrences_total": 24,
+      "mention_docs_total": 19
+    },
+    {
+      "id": "ministro-jorge-rodrigo-araujo-messias",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Jorge Messias",
+      "official_name": "Jorge Rodrigo Araújo Messias",
+      "role": "Advocacia-Geral da União",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Jorge Rodrigo Araújo Messias",
+        "Rodrigo Messias",
+        "Araújo Messias",
+        "Rodrigo Araújo",
+        "Jorge Messias",
+        "Jorge Rodrigo",
+        "Jorge Araújo"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Jorge Messias",
+          "occurrences": 22,
+          "docs": 22
+        }
+      ],
+      "search_text": "jorge rodrigo araujo messias jorge rodrigo araujo messias ministros do governo advocacia geral da uniao jorge rodrigo araujo messias rodrigo messias araujo messias rodrigo araujo jorge messias jorge rodrigo jorge araujo",
+      "mention_occurrences_total": 22,
+      "mention_docs_total": 22
+    },
+    {
+      "id": "ministro-marcio-luiz-franca-gomes",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Márcio França",
+      "official_name": "Márcio Luiz França Gomes",
+      "role": "Ministro de Estado do Empreendedorismo, da Microempresa e da Empresa de Pequeno Porte",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Márcio Luiz França Gomes",
+        "Márcio França",
+        "França Gomes",
+        "Márcio Gomes",
+        "Luiz França",
+        "Márcio Luiz",
+        "Luiz Gomes"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Márcio França",
+          "occurrences": 19,
+          "docs": 19
+        },
+        {
+          "alias": "Luiz França",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "marcio luiz franca gomes marcio luiz franca gomes ministros do governo ministro de estado do empreendedorismo da microempresa e da empresa de pequeno porte marcio luiz franca gomes marcio franca franca gomes marcio gomes luiz franca marcio luiz luiz gomes",
+      "mention_occurrences_total": 20,
+      "mention_docs_total": 20
+    },
+    {
+      "id": "ministro-marcos-antonio-amaro-dos-santos",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Marcos Antonio",
+      "official_name": "Marcos Antonio Amaro dos Santos",
+      "role": "Ministro de Estado Chefe do Gabinete de Segurança Institucional da Presidência da República",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Marcos Antonio Amaro dos Santos",
+        "Antonio Santos",
+        "Marcos Antonio",
+        "Antonio Amaro",
+        "Marcos Santos",
+        "Amaro Santos",
+        "Marcos Amaro"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Marcos Antonio",
+          "occurrences": 6,
+          "docs": 6
+        },
+        {
+          "alias": "Marcos Amaro",
+          "occurrences": 3,
+          "docs": 3
+        },
+        {
+          "alias": "Antonio Amaro",
+          "occurrences": 2,
+          "docs": 2
+        }
+      ],
+      "search_text": "marcos antonio amaro dos santos marcos antonio amaro dos santos ministros do governo ministro de estado chefe do gabinete de seguranca institucional da presidencia da republica marcos antonio amaro dos santos antonio santos marcos antonio antonio amaro marcos santos amaro santos marcos amaro",
+      "mention_occurrences_total": 11,
+      "mention_docs_total": 11
+    },
+    {
+      "id": "ministro-guilherme-castro-boulos",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Guilherme Boulos",
+      "official_name": "Guilherme Castro Boulos",
+      "role": "Ministro de Estado da Secretaria-Geral da Presidência da República",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Guilherme Castro Boulos",
+        "Guilherme Boulos",
+        "Guilherme Castro",
+        "Castro Boulos"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Guilherme Boulos",
+          "occurrences": 10,
+          "docs": 9
+        }
+      ],
+      "search_text": "guilherme castro boulos guilherme castro boulos ministros do governo ministro de estado da secretaria geral da presidencia da republica guilherme castro boulos guilherme boulos guilherme castro castro boulos",
+      "mention_occurrences_total": 10,
+      "mention_docs_total": 9
+    },
+    {
+      "id": "ministro-frederico-de-siqueira-filho",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Frederico de Siqueira Filho",
+      "official_name": "Frederico de Siqueira Filho",
+      "role": "Ministro de Estado das Comunicações",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Frederico de Siqueira Filho",
+        "Frederico Siqueira",
+        "Frederico Filho",
+        "Siqueira Filho"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Frederico de Siqueira Filho",
+          "occurrences": 4,
+          "docs": 4
+        },
+        {
+          "alias": "Frederico Siqueira",
+          "occurrences": 2,
+          "docs": 2
+        }
+      ],
+      "search_text": "frederico de siqueira filho frederico de siqueira filho ministros do governo ministro de estado das comunicacoes frederico de siqueira filho frederico siqueira frederico filho siqueira filho",
+      "mention_occurrences_total": 6,
+      "mention_docs_total": 6
+    },
+    {
+      "id": "ministro-wolney-queiroz-maciel",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Wolney Queiroz",
+      "official_name": "Wolney Queiroz Maciel",
+      "role": "Ministro de Estado da Previdência Social",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Wolney Queiroz Maciel",
+        "Queiroz Maciel",
+        "Wolney Queiroz",
+        "Wolney Maciel",
+        "Wolney"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Wolney Queiroz",
+          "occurrences": 5,
+          "docs": 5
+        }
+      ],
+      "search_text": "wolney queiroz maciel wolney queiroz maciel ministros do governo ministro de estado da previdencia social wolney queiroz maciel queiroz maciel wolney queiroz wolney maciel wolney",
+      "mention_occurrences_total": 5,
+      "mention_docs_total": 5
+    },
+    {
+      "id": "ministro-andre-carlos-alves-de-paula-filho",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Alves Filho",
+      "official_name": "André Carlos Alves de Paula Filho",
+      "role": "Ministro de Estado da Pesca e Aquicultura",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "André Carlos Alves de Paula Filho",
+        "André Carlos",
+        "Carlos Alves",
+        "Carlos Filho",
+        "Alves Filho",
+        "Alves Paula",
+        "André Alves",
+        "André Filho",
+        "André Paula",
+        "Paula Filho"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Alves Filho",
+          "occurrences": 3,
+          "docs": 3
+        },
+        {
+          "alias": "André Paula",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "andre carlos alves de paula filho andre carlos alves de paula filho ministros do governo ministro de estado da pesca e aquicultura andre carlos alves de paula filho andre carlos carlos alves carlos filho alves filho alves paula andre alves andre filho andre paula paula filho",
+      "mention_occurrences_total": 4,
+      "mention_docs_total": 4
+    },
+    {
+      "id": "ministro-vinicius-marques-de-carvalho",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Vinícius Marques de Carvalho",
+      "official_name": "Vinícius Marques de Carvalho",
+      "role": "Controladoria-Geral da União",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Vinícius Marques de Carvalho",
+        "Marques Carvalho",
+        "Vinícius Marques"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Vinícius Marques",
+          "occurrences": 1,
+          "docs": 1
+        },
+        {
+          "alias": "Vinícius Marques de Carvalho",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "vinicius marques de carvalho vinicius marques de carvalho ministros do governo controladoria geral da uniao vinicius marques de carvalho marques carvalho vinicius marques",
+      "mention_occurrences_total": 2,
+      "mention_docs_total": 2
+    },
+    {
+      "id": "ministro-wellington-cesar-lima-e-silva",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Wellington César Lima e Silva",
+      "official_name": "Wellington César Lima e Silva",
+      "role": "Ministro de Estado da Justiça e Segurança Pública",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Wellington César Lima e Silva",
+        "Wellington César",
+        "Wellington Silva",
+        "Wellington Lima",
+        "César Silva",
+        "César Lima",
+        "Lima Silva"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Wellington César Lima e Silva",
+          "occurrences": 2,
+          "docs": 2
+        }
+      ],
+      "search_text": "wellington cesar lima e silva wellington cesar lima e silva ministros do governo ministro de estado da justica e seguranca publica wellington cesar lima e silva wellington cesar wellington silva wellington lima cesar silva cesar lima lima silva",
+      "mention_occurrences_total": 2,
+      "mention_docs_total": 2
+    },
+    {
+      "id": "ministro-andre-luiz-carvalho-ribeiro",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "André Luiz",
+      "official_name": "André Luiz Carvalho Ribeiro",
+      "role": "Ministro de Estado do Esporte",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "André Luiz Carvalho Ribeiro",
+        "Carvalho Ribeiro",
+        "André Carvalho",
+        "André Ribeiro",
+        "Luiz Carvalho",
+        "Luiz Ribeiro",
+        "André Luiz"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "André Luiz",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "andre luiz carvalho ribeiro andre luiz carvalho ribeiro ministros do governo ministro de estado do esporte andre luiz carvalho ribeiro carvalho ribeiro andre carvalho andre ribeiro luiz carvalho luiz ribeiro andre luiz",
+      "mention_occurrences_total": 1,
+      "mention_docs_total": 1
+    },
+    {
+      "id": "ministro-gustavo-costa-feliciano",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Gustavo Costa Feliciano",
+      "official_name": "Gustavo Costa Feliciano",
+      "role": "Ministro de Estado do Turismo",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Gustavo Costa Feliciano",
+        "Gustavo Feliciano",
+        "Costa Feliciano",
+        "Gustavo Costa"
+      ],
+      "aliases_observed": [],
+      "search_text": "gustavo costa feliciano gustavo costa feliciano ministros do governo ministro de estado do turismo gustavo costa feliciano gustavo feliciano costa feliciano gustavo costa",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
     },
     {
       "id": "senador-jaques-wagner",
