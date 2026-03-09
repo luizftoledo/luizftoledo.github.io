@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-03-08T14:02:34.225049+00:00",
+  "generated_at": "2026-03-09T14:37:26.313573+00:00",
   "counts": {
-    "items": 53,
+    "items": 52,
     "domains": 15,
     "categories": {
       "reportagem_autoral": 34,
-      "eco_republicacao": 1,
+      "eco_republicacao": 0,
       "mencao": 0,
       "entrevista": 6,
       "palestra_curso": 4,
@@ -36,23 +36,22 @@
       },
       "searches": {
         "google-news-rss:\"Luiz Fernando Toledo\"": 40,
-        "google-news-rss:\"Luiz Fernando Toledo Antunes\"": 3
+        "google-news-rss:\"Luiz Fernando Toledo Antunes\"": 2
       }
     },
     "enrich": {
       "fetched": 43,
-      "reused": 46,
-      "kept": 53,
+      "reused": 45,
+      "kept": 52,
       "dropped": 36,
       "categories": {
         "reportagem_autoral": 34,
         "entrevista": 6,
         "palestra_curso": 4,
-        "perfil_bio": 8,
-        "eco_republicacao": 1
+        "perfil_bio": 8
       },
       "domains": {
-        "bbc.com": 33,
+        "bbc.com": 32,
         "tab.uol.com.br": 1,
         "piaui.uol.com.br": 2,
         "open.spotify.com": 2,

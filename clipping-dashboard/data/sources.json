@@ -6,23 +6,22 @@
     },
     "searches": {
       "google-news-rss:\"Luiz Fernando Toledo\"": 40,
-      "google-news-rss:\"Luiz Fernando Toledo Antunes\"": 3
+      "google-news-rss:\"Luiz Fernando Toledo Antunes\"": 2
     }
   },
   "enrich": {
     "fetched": 43,
-    "reused": 46,
-    "kept": 53,
+    "reused": 45,
+    "kept": 52,
     "dropped": 36,
     "categories": {
       "reportagem_autoral": 34,
       "entrevista": 6,
       "palestra_curso": 4,
-      "perfil_bio": 8,
-      "eco_republicacao": 1
+      "perfil_bio": 8
     },
     "domains": {
-      "bbc.com": 33,
+      "bbc.com": 32,
       "tab.uol.com.br": 1,
       "piaui.uol.com.br": 2,
       "open.spotify.com": 2,
