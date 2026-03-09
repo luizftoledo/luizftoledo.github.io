@@ -14,3 +14,8 @@ Arquivo escolhido: `aeronaves_proprietarios.csv` (RAB), por concentrar os campos
 
 ## Limitações de execução neste ambiente
 Tentativas de download direto dos arquivos oficiais em `gov.br` e `sistemas.anac.gov.br` retornaram `HTTP 403` no proxy deste ambiente de execução. A dashboard foi publicada com o esquema final e pronta para receber o snapshot completo em `data/rab_owners_snapshot.json`.
+
+
+## URL de publicação
+- URL principal da pasta: `/rab-dashboard/`
+- URL alternativa em arquivo raiz (mais resiliente no Pages): `/rab-dashboard.html`

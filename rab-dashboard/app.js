@@ -1,4 +1,4 @@
-const DATA_URL = './data/rab_owners_snapshot.json';
+const DATA_URL = window.location.pathname.endsWith('/rab-dashboard.html') ? './rab-dashboard/data/rab_owners_snapshot.json' : './data/rab_owners_snapshot.json';
 
 const normalizeText = (value = '') =>
   value
