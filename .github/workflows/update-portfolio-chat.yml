@@ -1,0 +1,95 @@
+name: Update Portfolio Chat
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - "resume.html"
+      - "api/portfolio-chat.js"
+      - "scripts/build_portfolio_chat_corpus.mjs"
+      - "scripts/extract_remote_source.py"
+      - "scripts/fetch_youtube_transcript.py"
+      - "scripts/prepare_portfolio_chat_api.mjs"
+      - ".github/workflows/update-portfolio-chat.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: portfolio-chat-sync
+  cancel-in-progress: false
+
+jobs:
+  sync-and-deploy:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install corpus build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install yt-dlp beautifulsoup4 pypdf requests youtube-transcript-api
+
+      - name: Rebuild corpus and standalone API package
+        run: |
+          node scripts/build_portfolio_chat_corpus.mjs
+          node scripts/prepare_portfolio_chat_api.mjs
+
+      - name: Commit generated files if changed
+        id: commit_generated
+        run: |
+          if git diff --quiet -- data/portfolio-chat-corpus.json portfolio-chat-api; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/portfolio-chat-corpus.json portfolio-chat-api
+          git commit -m "chore(chat): refresh portfolio chat corpus"
+
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep $((attempt * 5))
+          done
+
+          echo "Push failed after retries."
+          exit 1
+
+      - name: Link Vercel project
+        if: ${{ secrets.VERCEL_TOKEN != '' }}
+        run: |
+          mkdir -p portfolio-chat-api/.vercel
+          cat <<'EOF' > portfolio-chat-api/.vercel/project.json
+          {
+            "orgId": "team_FgFoHHlh7KxSmTZ1aCx7eS8K",
+            "projectId": "prj_kbH8t40tblJzOjtGgtBKofKzmZzw"
+          }
+          EOF
+
+      - name: Deploy API to Vercel
+        if: ${{ secrets.VERCEL_TOKEN != '' }}
+        run: npx vercel@latest deploy --prod --yes --cwd portfolio-chat-api --token "${{ secrets.VERCEL_TOKEN }}"
