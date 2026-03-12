@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Correção Monetária | BCB</title>
+  <meta
+    name="description"
+    content="Ferramenta simples para corrigir valores históricos com séries oficiais do Banco Central do Brasil e converter o resultado atualizado para dólar, euro e libra.">
+  <meta property="og:title" content="Correção Monetária | BCB">
+  <meta
+    property="og:description"
+    content="Cole datas e valores, aplique a série histórica do BCB e veja o equivalente atualizado em reais, dólar, euro e libra.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://luizftoledo.github.io/services/correcao-monetaria/">
+  <meta property="og:image" content="https://luizftoledo.github.io/favicon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Correção Monetária | BCB">
+  <meta
+    name="twitter:description"
+    content="Planilha simples para correção monetária histórica com dados oficiais do Banco Central do Brasil.">
+  <link rel="canonical" href="https://luizftoledo.github.io/services/correcao-monetaria/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <a class="back-link" href="../../index.html">luizftoledo.github.io</a>
+      <div class="hero-copy">
+        <p class="eyebrow">Banco Central do Brasil</p>
+        <h1>Correção monetária histórica em formato de planilha</h1>
+        <p class="lead">
+          Cole duas colunas da sua planilha, informe a data e o valor original, e a página calcula o equivalente
+          atualizado em reais de hoje. Na mesma linha ela também mostra o valor convertido para dólar, euro e libra com
+          a cotação diária oficial mais recente do BCB.
+        </p>
+      </div>
+      <div class="hero-meta">
+        <span class="meta-pill">Sem backend</span>
+        <span class="meta-pill">Dados oficiais do BCB</span>
+        <span class="meta-pill">Correção automática</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel controls-panel">
+        <div>
+          <p class="panel-label">Metodologia</p>
+          <h2>Série base para a correção</h2>
+        </div>
+        <div class="controls-grid">
+          <label class="field">
+            <span>Índice padrão</span>
+            <select id="seriesMode" aria-label="Escolher índice de correção">
+              <option value="extended">Série histórica estendida</option>
+              <option value="igpdi">IGP-DI</option>
+              <option value="ipca">IPCA</option>
+              <option value="inpc">INPC</option>
+              <option value="igpm">IGP-M</option>
+              <option value="ipcsp">IPC-SP</option>
+            </select>
+          </label>
+
+          <div class="button-row">
+            <button id="addRowsBtn" type="button">+10 linhas</button>
+            <button id="demoBtn" type="button" class="secondary">Exemplo</button>
+            <button id="clearBtn" type="button" class="secondary">Limpar</button>
+          </div>
+        </div>
+        <p class="helper" id="methodologyHint">
+          A opção padrão usa o maior trecho histórico possível com séries oficiais de preços listadas pelo BCB.
+        </p>
+      </section>
+
+      <section class="summary-grid">
+        <article class="panel status-panel" id="statusPanel" aria-live="polite">
+          <p class="panel-label">Status</p>
+          <h2>Carregando fontes oficiais...</h2>
+          <p class="status-copy">A página busca as séries do SGS e as cotações PTAX direto do Banco Central.</p>
+        </article>
+
+        <article class="panel rates-panel">
+          <div class="rates-header">
+            <div>
+              <p class="panel-label">Câmbio mais recente</p>
+              <h2>Cotações atuais</h2>
+            </div>
+            <p class="helper" id="fxTimestamp">Carregando cotações...</p>
+          </div>
+          <div class="rates-grid" id="ratesGrid">
+            <div class="rate-card skeleton"></div>
+            <div class="rate-card skeleton"></div>
+            <div class="rate-card skeleton"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel sheet-panel">
+        <div class="sheet-header">
+          <div>
+            <p class="panel-label">Planilha</p>
+            <h2>Cole duas colunas: data e valor</h2>
+          </div>
+          <p class="helper">
+            Datas aceitas: <code>DD/MM/AAAA</code>, <code>MM/AAAA</code> ou <code>AAAA-MM-DD</code>. Ao colar, a
+            grade cresce sozinha.
+          </p>
+        </div>
+
+        <div class="sheet-wrap">
+          <table class="sheet-table" aria-describedby="sheetDescription">
+            <caption id="sheetDescription" class="sr-only">
+              Planilha para correção monetária com colunas de data, valor original e valores corrigidos.
+            </caption>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Data informada</th>
+                <th>Valor original</th>
+                <th>Mês usado</th>
+                <th>Série aplicada</th>
+                <th>Fator</th>
+                <th>Valor corrigido</th>
+                <th>US$</th>
+                <th>€</th>
+                <th>£</th>
+                <th>Observação</th>
+              </tr>
+            </thead>
+            <tbody id="sheetBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="foot-grid">
+        <article class="panel notes-panel">
+          <p class="panel-label">Como ler</p>
+          <h2>Notas de metodologia</h2>
+          <ul class="notes-list">
+            <li>Os índices de preços do BCB usados aqui têm periodicidade mensal. Datas diárias entram normalmente, mas a correção usa o mês de referência da data.</li>
+            <li>O valor corrigido em reais vai até o último mês fechado disponível na série escolhida, não até um índice diário inexistente.</li>
+            <li>As colunas em dólar, euro e libra usam a cotação diária oficial mais recente disponível no Banco Central.</li>
+            <li>A opção “Série histórica estendida” encadeia IPC-SP (11/1942 a 01/1944) e IGP-DI (02/1944 em diante) para maximizar o alcance histórico.</li>
+          </ul>
+        </article>
+
+        <article class="panel source-panel">
+          <p class="panel-label">Fontes</p>
+          <h2>Endpoints oficiais</h2>
+          <ul class="source-list">
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.190/dados?formato=json" target="_blank" rel="noopener noreferrer">SGS / IGP-DI</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados?formato=json" target="_blank" rel="noopener noreferrer">SGS / IPCA</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.188/dados?formato=json" target="_blank" rel="noopener noreferrer">SGS / INPC</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.28655/dados?formato=json" target="_blank" rel="noopener noreferrer">SGS / IGP-M</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.193/dados?formato=json" target="_blank" rel="noopener noreferrer">SGS / IPC-SP</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Dólar</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.21619/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Euro</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.21623/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Libra</a></li>
+            <li><a href="https://www3.bcb.gov.br/CALCIDADAO/publico/metodologiaCorrigirIndice.do?method=metodologiaCorrigirIndice" target="_blank" rel="noopener noreferrer">Metodologia da Calculadora do Cidadão</a></li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

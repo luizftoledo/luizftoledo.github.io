@@ -1,0 +1,234 @@
+{
+  "desktop": {
+    "layout": {
+      "bodyW": 1440,
+      "canvasCount": 5,
+      "canvases": [
+        {
+          "h": 238,
+          "id": "chart-history",
+          "w": 1169
+        },
+        {
+          "h": 238,
+          "id": "chart-authors",
+          "w": 569
+        },
+        {
+          "h": 238,
+          "id": "chart-destinations",
+          "w": 569
+        },
+        {
+          "h": 0,
+          "id": "chart-docs-daily",
+          "w": 0
+        },
+        {
+          "h": 0,
+          "id": "chart-docs-authors-share",
+          "w": 0
+        }
+      ],
+      "hugeCanvas": [],
+      "overflow": false,
+      "tables": [
+        {
+          "sw": 1187,
+          "w": 1189.21875
+        },
+        {
+          "sw": 720,
+          "w": 589.015625
+        },
+        {
+          "sw": 720,
+          "w": 589.015625
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        }
+      ],
+      "vw": 1440
+    },
+    "snapshot": {
+      "progressText": "R$ 6.325.330 / R$ 49.901.486.761 (0%)",
+      "sourceLine": "Última atualização desta fonte: UNICO em 27/02/2026, 05:51:31; SIOP/SIAFI em 2/3/2026.",
+      "title": "Monitor diário de emendas: quanto foi empenhado hoje, por quem e para onde",
+      "visible": true
+    },
+    "docs": {
+      "note": "Valor autorizado anual considerado: R$ 49.901.486.761 (Dotação Atual da base SIOP (SIAFI em 2/3/2026)).",
+      "progressYear": "R$ 179.823.714 / R$ 49.901.486.761 (0,4%)",
+      "siopNote": "Extração direta do SIOP concluída com 555 linhas (555 emendas únicas), base SIAFI em 2/3/2026. Varredura vertical em 59 passos.",
+      "visible": true
+    },
+    "status": "Atualizado: 03/03/2026, 23:27:55",
+    "screenshot": "/Users/luizfernandotoledo/Desktop/Code_folder/cursor_testes/luizftoledo.github.io/output/emendas_desktop.png",
+    "console": [
+      {
+        "level": "SEVERE",
+        "message": "http://127.0.0.1:8765/favicon.ico - Failed to load resource: the server responded with a status of 404 (File not found)",
+        "source": "network",
+        "timestamp": 1772595925779
+      }
+    ]
+  },
+  "mobile": {
+    "layout": {
+      "bodyW": 438,
+      "canvasCount": 5,
+      "canvases": [
+        {
+          "h": 238,
+          "id": "chart-history",
+          "w": 331
+        },
+        {
+          "h": 238,
+          "id": "chart-authors",
+          "w": 331
+        },
+        {
+          "h": 238,
+          "id": "chart-destinations",
+          "w": 331
+        },
+        {
+          "h": 0,
+          "id": "chart-docs-daily",
+          "w": 0
+        },
+        {
+          "h": 0,
+          "id": "chart-docs-authors-share",
+          "w": 0
+        }
+      ],
+      "hugeCanvas": [],
+      "overflow": false,
+      "tables": [
+        {
+          "sw": 720,
+          "w": 351.40625
+        },
+        {
+          "sw": 720,
+          "w": 351.40625
+        },
+        {
+          "sw": 720,
+          "w": 351.40625
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        },
+        {
+          "sw": 0,
+          "w": 0
+        }
+      ],
+      "vw": 438
+    },
+    "snapshot": {
+      "progressText": "R$ 6.325.330 / R$ 49.901.486.761 (0%)",
+      "sourceLine": "Última atualização desta fonte: UNICO em 27/02/2026, 05:51:31; SIOP/SIAFI em 2/3/2026.",
+      "title": "Monitor diário de emendas: quanto foi empenhado hoje, por quem e para onde",
+      "visible": true
+    },
+    "docs": {
+      "note": "Valor autorizado anual considerado: R$ 49.901.486.761 (Dotação Atual da base SIOP (SIAFI em 2/3/2026)).",
+      "progressYear": "R$ 179.823.714 / R$ 49.901.486.761 (0,4%)",
+      "siopNote": "Extração direta do SIOP concluída com 555 linhas (555 emendas únicas), base SIAFI em 2/3/2026. Varredura vertical em 59 passos.",
+      "visible": true
+    },
+    "status": "Atualizado: 03/03/2026, 23:27:55",
+    "screenshot": "/Users/luizfernandotoledo/Desktop/Code_folder/cursor_testes/luizftoledo.github.io/output/emendas_mobile.png",
+    "console": [
+      {
+        "level": "SEVERE",
+        "message": "http://127.0.0.1:8765/favicon.ico - Failed to load resource: the server responded with a status of 404 (File not found)",
+        "source": "network",
+        "timestamp": 1772595932568
+      }
+    ]
+  }
+}
