@@ -20,14 +20,6 @@ const filesToCopy = [
   },
 ];
 
-const vercelConfig = {
-  functions: {
-    "api/*.js": {
-      runtime: "nodejs22.x",
-    },
-  },
-};
-
 const packageJson = {
   name: "portfolio-chat-api",
   private: true,
@@ -35,6 +27,7 @@ const packageJson = {
 };
 
 const gitignore = `.vercel
+.env*.local
 `;
 
 const readme = `# Portfolio Chat API
@@ -82,11 +75,6 @@ async function prepare() {
     await cp(file.from, file.to);
   }
 
-  await writeFile(
-    path.join(apiRoot, "vercel.json"),
-    `${JSON.stringify(vercelConfig, null, 2)}\n`,
-    "utf8",
-  );
   await writeFile(
     path.join(apiRoot, "package.json"),
     `${JSON.stringify(packageJson, null, 2)}\n`,
