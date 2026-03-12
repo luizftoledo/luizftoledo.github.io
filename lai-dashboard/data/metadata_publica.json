@@ -1,0 +1,50 @@
+{
+  "updated_at": "2026-03-04T23:26:23.055056+00:00",
+  "years_covered": [
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "overall": {
+    "total_requests": 946640,
+    "denied_total": 62365,
+    "restricted_total": 114817,
+    "personal_restricted_total": 13050,
+    "denied_rate": 0.0658803769120257,
+    "restricted_rate": 0.1212889799712668,
+    "personal_share_in_restricted": 0.11365912713274166
+  },
+  "source": {
+    "source_id": "publica",
+    "source_label": "Pedidos e recursos marcados como públicos (BuscaLAI)",
+    "portal_url": "https://buscalai.cgu.gov.br/DownloadDados/DownloadDados",
+    "download_url_template": "https://dadosabertos-download.cgu.gov.br/FalaBR/Arquivos_FalaBR_Filtrado/Arquivos_csv_{year}.zip",
+    "precedentes_url": "https://www.gov.br/cgu/pt-br/acesso-a-informacao/dados-abertos/arquivos/busca-de-precedentes",
+    "years_covered": [
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ]
+  },
+  "sample_count": 62365,
+  "years_refreshed_in_run": 1,
+  "build_notes": "Cache anual incremental: anos anteriores ficam congelados; ano corrente é reprocessado a cada execução."
+}

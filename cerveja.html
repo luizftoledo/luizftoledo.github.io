@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Calorias do Bar 🍺</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f0e0c;
+      color: #f5e9c8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #f5a623;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.25rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #8a7a5a;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    /* DRINK GRID */
+    .drink-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.75rem;
+      width: 100%;
+      max-width: 680px;
+      margin-bottom: 2rem;
+    }
+
+    .drink-btn {
+      background: #1c1a15;
+      border: 1.5px solid #2e2a20;
+      border-radius: 14px;
+      padding: 1rem 0.5rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: #f5e9c8;
+      font-family: inherit;
+    }
+
+    .drink-btn:hover {
+      border-color: #f5a623;
+      background: #241f13;
+      transform: translateY(-2px);
+    }
+
+    .drink-btn .icon { font-size: 2rem; }
+    .drink-btn .name { font-size: 0.78rem; font-weight: 600; text-align: center; }
+    .drink-btn .cal  { font-size: 0.7rem; color: #f5a623; }
+
+    /* LOG */
+    .log-section {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .log-header h2 { font-size: 1rem; font-weight: 700; color: #8a7a5a; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .clear-btn {
+      background: none;
+      border: 1px solid #2e2a20;
+      color: #8a7a5a;
+      border-radius: 8px;
+      padding: 0.3rem 0.75rem;
+      font-family: inherit;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .clear-btn:hover { border-color: #c0392b; color: #e74c3c; }
+
+    .log-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      min-height: 48px;
+    }
+
+    .log-item {
+      background: #1c1a15;
+      border: 1px solid #2e2a20;
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      animation: popIn 0.2s ease;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .log-item .left  { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
+    .log-item .right { display: flex; align-items: center; gap: 0.75rem; }
+    .log-item .kcal  { font-size: 0.85rem; color: #f5a623; font-weight: 600; }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #4a3f28;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: color 0.15s;
+      padding: 0;
+      line-height: 1;
+    }
+    .remove-btn:hover { color: #e74c3c; }
+
+    .empty-msg {
+      color: #4a3f28;
+      font-size: 0.88rem;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    /* RESULTS */
+    .results {
+      width: 100%;
+      max-width: 680px;
+      background: #1c1a15;
+      border: 1.5px solid #2e2a20;
+      border-radius: 18px;
+      padding: 1.5rem;
+      display: none;
+    }
+    .results.visible { display: block; }
+
+    .total-cal {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #f5a623;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .total-label { font-size: 0.85rem; color: #8a7a5a; margin-bottom: 1.25rem; margin-top: 0.2rem; }
+
+    .stat-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .stat-card {
+      flex: 1;
+      background: #13110e;
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .stat-card .s-icon { font-size: 1.5rem; margin-bottom: 0.3rem; }
+    .stat-card .s-val  { font-size: 1.4rem; font-weight: 800; color: #f5e9c8; }
+    .stat-card .s-unit { font-size: 0.7rem; color: #f5a623; font-weight: 600; }
+    .stat-card .s-label{ font-size: 0.72rem; color: #8a7a5a; margin-top: 0.15rem; }
+
+    .cardio-section h3 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #8a7a5a;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+
+    .cardio-list { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .cardio-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #13110e;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+    }
+    .cardio-item .c-icon { font-size: 1.3rem; }
+    .cardio-item .c-name { flex: 1; font-size: 0.88rem; color: #c9b88a; }
+    .cardio-item .c-time { font-weight: 700; font-size: 0.95rem; color: #f5e9c8; }
+
+    /* progress bar */
+    .progress-bar-wrap { margin: 1.25rem 0 0.25rem; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: #8a7a5a; margin-bottom: 0.4rem; }
+    .progress-bar { height: 6px; background: #13110e; border-radius: 99px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, #f5a623, #e74c3c); transition: width 0.5s ease; }
+
+    footer {
+      margin-top: 3rem;
+      color: #3a3020;
+      font-size: 0.75rem;
+      text-align: center;
+    }
+    footer a { color: #5a4a30; text-decoration: none; }
+    footer a:hover { color: #f5a623; }
+  </style>
+</head>
+<body>
+
+  <h1>🍺 Calculadora do Bar</h1>
+  <p class="subtitle">Adicione o que bebeu e veja o estrago.</p>
+
+  <!-- DRINK PICKER -->
+  <div class="drink-grid" id="drinkGrid"></div>
+
+  <!-- LOG -->
+  <div class="log-section">
+    <div class="log-header">
+      <h2>Consumido</h2>
+      <button class="clear-btn" onclick="clearAll()">Limpar tudo</button>
+    </div>
+    <div class="log-list" id="logList">
+      <p class="empty-msg" id="emptyMsg">Nenhuma bebida adicionada ainda.</p>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="total-cal" id="totalCal">0</div>
+    <div class="total-label">kcal totais</div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="s-icon">⚖️</div>
+        <div class="s-val" id="fatGrams">0</div>
+        <div class="s-unit">gramas de gordura</div>
+        <div class="s-label">se não queimar nada</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-icon">📅</div>
+        <div class="s-val" id="daysFood">0</div>
+        <div class="s-unit">% da dieta diária</div>
+        <div class="s-label">base 2.000 kcal/dia</div>
+      </div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-label">
+        <span>0 kcal</span>
+        <span>2.000 kcal (diária)</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="cardio-section" style="margin-top:1.25rem;">
+      <h3>Cardio para zerar 🔥</h3>
+      <div class="cardio-list">
+        <div class="cardio-item">
+          <span class="c-icon">🏃</span>
+          <span class="c-name">Corrida (ritmo moderado)</span>
+          <span class="c-time" id="run">—</span>
+        </div>
+        <div class="cardio-item">
+          <span class="c-icon">🚴</span>
+          <span class="c-name">Ciclismo</span>
+          <span class="c-time" id="bike">—</span>
+        </div>
+        <div class="cardio-item">
+          <span class="c-icon">🚶</span>
+          <span class="c-name">Caminhada</span>
+          <span class="c-time" id="walk">—</span>
+        </div>
+        <div class="cardio-item">
+          <span class="c-icon">🏊</span>
+          <span class="c-name">Natação</span>
+          <span class="c-time" id="swim">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Feito por <a href="https://luizftoledo.github.io">luizftoledo</a> &middot; Valores são estimativas para uma pessoa de ~70kg.
+  </footer>
+
+<script>
+  const DRINKS = [
+    { icon: '🍺', name: 'Lager 350ml',     cal: 150 },
+    { icon: '🍺', name: 'IPA 350ml',       cal: 210 },
+    { icon: '🍺', name: 'Stout 350ml',     cal: 185 },
+    { icon: '🍺', name: 'Pilsen 350ml',    cal: 140 },
+    { icon: '🍺', name: 'Long neck 330ml', cal: 140 },
+    { icon: '🥃', name: 'Caipirinha',      cal: 230 },
+    { icon: '🥃', name: 'Dose Cachaça',    cal: 90  },
+    { icon: '🥃', name: 'Dose Whisky',     cal: 105 },
+    { icon: '🍷', name: 'Vinho tinto 150ml', cal: 125 },
+    { icon: '🍷', name: 'Vinho branco 150ml', cal: 115 },
+    { icon: '🍹', name: 'Gin Tônica',      cal: 150 },
+    { icon: '🍹', name: 'Vodka Soda',      cal: 100 },
+  ];
+
+  // Burn rate in kcal/hour for ~70kg person
+  const CARDIO = {
+    run:  600,
+    bike: 480,
+    walk: 280,
+    swim: 550,
+  };
+
+  let log = [];
+  let nextId = 0;
+
+  function buildGrid() {
+    const grid = document.getElementById('drinkGrid');
+    DRINKS.forEach((d, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'drink-btn';
+      btn.innerHTML = `<span class="icon">${d.icon}</span><span class="name">${d.name}</span><span class="cal">${d.cal} kcal</span>`;
+      btn.onclick = () => addDrink(i);
+      grid.appendChild(btn);
+    });
+  }
+
+  function addDrink(idx) {
+    const d = DRINKS[idx];
+    const id = nextId++;
+    log.push({ id, ...d });
+    renderLog();
+    updateResults();
+  }
+
+  function removeDrink(id) {
+    log = log.filter(i => i.id !== id);
+    renderLog();
+    updateResults();
+  }
+
+  function clearAll() {
+    log = [];
+    renderLog();
+    updateResults();
+  }
+
+  function renderLog() {
+    const list = document.getElementById('logList');
+    const empty = document.getElementById('emptyMsg');
+    list.innerHTML = '';
+    if (log.length === 0) {
+      list.appendChild(empty);
+      return;
+    }
+    log.forEach(item => {
+      const el = document.createElement('div');
+      el.className = 'log-item';
+      el.innerHTML = `
+        <div class="left"><span>${item.icon}</span><span>${item.name}</span></div>
+        <div class="right">
+          <span class="kcal">${item.cal} kcal</span>
+          <button class="remove-btn" onclick="removeDrink(${item.id})" title="Remover">✕</button>
+        </div>`;
+      list.appendChild(el);
+    });
+  }
+
+  function fmtTime(hours) {
+    if (hours < 1/60) return '< 1 min';
+    const h = Math.floor(hours);
+    const m = Math.round((hours - h) * 60);
+    if (h === 0) return `${m} min`;
+    if (m === 0) return `${h}h`;
+    return `${h}h ${m}min`;
+  }
+
+  function updateResults() {
+    const total = log.reduce((s, i) => s + i.cal, 0);
+    const results = document.getElementById('results');
+
+    if (total === 0) {
+      results.classList.remove('visible');
+      return;
+    }
+    results.classList.add('visible');
+
+    document.getElementById('totalCal').textContent = total.toLocaleString('pt-BR');
+    document.getElementById('fatGrams').textContent = Math.round(total / 9);
+    document.getElementById('daysFood').textContent = Math.round((total / 2000) * 100);
+
+    const pct = Math.min((total / 2000) * 100, 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    document.getElementById('run').textContent  = fmtTime(total / CARDIO.run);
+    document.getElementById('bike').textContent = fmtTime(total / CARDIO.bike);
+    document.getElementById('walk').textContent = fmtTime(total / CARDIO.walk);
+    document.getElementById('swim').textContent = fmtTime(total / CARDIO.swim);
+  }
+
+  buildGrid();
+  renderLog();
+</script>
+</body>
+</html>
