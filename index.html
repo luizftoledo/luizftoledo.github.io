@@ -100,7 +100,7 @@
   </nav>
 
   <main>
-    <section class="hero section">
+    <section id="about" class="hero section">
       <div class="container">
         <div class="hero-text">
           <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
@@ -716,7 +716,7 @@
       });
     </script>
 
-    <section class="grants section" data-reveal>
+    <section id="grants" class="grants section" data-reveal>
       <div class="container">
         <h2 class="section-title">Scholarships, Fellowships and Grants</h2>
         <ul class="grant-list">
@@ -783,8 +783,54 @@
       </div>
     </section>
 
+    <section id="portfolio-chat" class="section portfolio-chat-section" data-reveal>
+      <div class="container">
+        <div class="portfolio-chat-shell">
+          <div class="portfolio-chat-intro" data-reveal>
+            <p class="portfolio-chat-kicker">Portfolio assistant</p>
+            <h2 class="section-title">Ask me about my work</h2>
+            <p class="portfolio-chat-description">
+              Questions are answered only from this site and each answer includes the relevant source links from the
+              portfolio.
+            </p>
+            <div class="portfolio-chat-prompts" aria-label="Suggested questions">
+              <button type="button" class="portfolio-chat-prompt"
+                data-chat-question="What do you currently do at BBC and DataFixers?">BBC + DataFixers</button>
+              <button type="button" class="portfolio-chat-prompt"
+                data-chat-question="What investigations had the biggest impact?">Top investigations</button>
+              <button type="button" class="portfolio-chat-prompt"
+                data-chat-question="What fellowships, grants and scholarships have you received?">Fellowships and
+                grants</button>
+              <button type="button" class="portfolio-chat-prompt"
+                data-chat-question="What is your academic and teaching background?">Teaching and education</button>
+            </div>
+          </div>
+
+          <div class="portfolio-chat-widget" data-reveal>
+            <div class="portfolio-chat-messages" id="portfolioChatMessages" aria-live="polite">
+              <article class="portfolio-chat-message portfolio-chat-message-assistant">
+                <p>Ask about reporting, awards, fellowships, workshops, research, or DataFixers. I will answer from
+                  the portfolio and attach the sources used.</p>
+              </article>
+            </div>
+
+            <form id="portfolioChatForm" class="portfolio-chat-form">
+              <label class="sr-only" for="portfolioChatInput">Ask a question about Luiz Fernando Toledo</label>
+              <textarea id="portfolioChatInput" name="question" rows="4"
+                placeholder="Example: What investigations led to public impact?" maxlength="800"></textarea>
+              <div class="portfolio-chat-actions">
+                <p class="portfolio-chat-note">Portfolio content only. No external web search.</p>
+                <button type="submit" class="btn portfolio-chat-submit" id="portfolioChatSubmit">Ask</button>
+              </div>
+            </form>
+
+            <p class="portfolio-chat-status" id="portfolioChatStatus" hidden></p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer class="footer section">
+  <footer id="contact" class="footer section">
     <div class="container">
       <h2>Get in touch</h2>
       <p>Interested in collaboration, have a story tip, or want to discuss investigative journalism? I'd love to hear
@@ -805,6 +851,8 @@
   </footer>
 
   <script src="scripts/main.js"></script>
+  <script src="scripts/portfolio-chat.config.js"></script>
+  <script src="scripts/portfolio-chat.js"></script>
   <!-- Interactive Background -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   <script src="scripts/background.js"></script>
