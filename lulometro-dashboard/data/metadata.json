@@ -1,7 +1,7 @@
 {
   "project": "Lulometro",
   "title": "Lulometro: analise de discurso de presidentes brasileiros",
-  "generated_at": "2026-03-11T14:16:11.693012+00:00",
+  "generated_at": "2026-03-12T14:13:49.464347+00:00",
   "timezone": "America/Sao_Paulo",
   "scope_mandates": [
     "Bolsonaro (2019-2022)",
@@ -9,8 +9,8 @@
   ],
   "total_records": 1625,
   "excluded_records": 8,
-  "candidate_urls": 1109,
-  "new_urls": 10,
+  "candidate_urls": 1019,
+  "new_urls": 8,
   "detail_fetched": 14,
   "sources": {
     "planalto": 939,
@@ -41,8 +41,21 @@
     ]
   ],
   "people_index": {
-    "status": "error",
-    "error": "HTTPSConnectionPool(host='legis.senado.leg.br', port=443): Max retries exceeded with url: /dadosabertos/senador/lista/atual.json (Caused by ConnectTimeoutError(<HTTPSConnection(host='legis.senado.leg.br', port=443) at 0x7fa0a6f8fa50>, 'Connection to legis.senado.leg.br timed out. (connect timeout=30)'))"
+    "status": "ok",
+    "entities": 595,
+    "entities_by_kind": {
+      "deputado": 513,
+      "janja": 1,
+      "senador": 81
+    },
+    "mention_rows": 1094,
+    "mention_occurrences_total": 1641,
+    "mention_docs_total": 1094,
+    "lula_docs_with_text": 931,
+    "date_range": {
+      "min": "2023-01-06",
+      "max": "2026-10-13"
+    }
   },
-  "duration_seconds": 152.03
+  "duration_seconds": 133.7
 }
