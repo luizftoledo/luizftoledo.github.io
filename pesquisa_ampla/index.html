@@ -3,28 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pesquisa Ampla</title>
+    <title>Busca amplo de pessoa física ou jurídica</title>
     <link rel="stylesheet" href="./styles.css" />
     <script src="./config.js"></script>
   </head>
   <body>
     <main class="page-shell">
-      <section class="hero">
-        <div>
-          <p class="eyebrow">Pesquisa ampla</p>
-          <h1>Busca pública</h1>
-          <p class="lede">
-            Esta página abre a ferramenta de busca no endereço público do projeto.
-          </p>
+      <header class="topbar">
+        <div class="topbar-copy">
+          <p class="eyebrow">Pesquisa pública</p>
+          <h1>Busca amplo de pessoa física ou jurídica</h1>
         </div>
-        <div class="status-panel" id="status-panel">
-          <p class="status-label">Status</p>
-          <p class="status-text" id="status-text">Preparando a ferramenta...</p>
+
+        <div class="topbar-actions">
+          <p class="status-text" id="status-text">Carregando a ferramenta...</p>
           <a class="open-link" id="open-link" href="#" target="_blank" rel="noreferrer" hidden>
             Abrir em nova aba
           </a>
         </div>
-      </section>
+      </header>
 
       <section class="frame-panel" id="frame-panel" hidden>
         <iframe
@@ -37,12 +34,8 @@
 
       <section class="help-panel" id="help-panel" hidden>
         <h2>Configuração pendente</h2>
-        <p>
-          Falta informar o endereço público do backend em <code>docs/config.js</code>.
-        </p>
-        <p>
-          Depois do deploy no Cloud Run, troque <code>https://SEU-BACKEND.run.app</code> pelo endereço real.
-        </p>
+        <p>Falta ligar esta página ao backend público da ferramenta.</p>
+        <p>Edite <code>docs/config.js</code> e troque o endereço de exemplo pela URL real do Cloud Run.</p>
       </section>
     </main>
 
@@ -69,7 +62,6 @@
         appFrame.src = targetUrl;
         openLink.href = targetUrl;
         openLink.hidden = false;
-        statusText.textContent = "Carregando a ferramenta...";
         appFrame.addEventListener("load", () => {
           statusText.textContent = "Ferramenta pronta.";
         });
