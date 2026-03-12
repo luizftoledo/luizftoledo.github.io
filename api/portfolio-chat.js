@@ -9,7 +9,9 @@ const CORPUS_PATH = path.join(
 );
 const CHAT_MODEL = process.env.PORTFOLIO_CHAT_MODEL || "gemini-2.5-flash";
 const EMBEDDING_MODEL =
-  process.env.PORTFOLIO_CHAT_EMBEDDING_MODEL || "gemini-embedding-2-preview";
+  process.env.PORTFOLIO_CHAT_EMBEDDING_MODEL || "gemini-embedding-001";
+const EMBEDDING_OUTPUT_DIMENSIONS = 768;
+const EMBEDDING_BATCH_SIZE = 50;
 const MAX_REQUEST_BYTES = 3.5 * 1024 * 1024;
 const MAX_QUESTION_CHARS = 800;
 const MAX_HISTORY_ITEMS = 8;
@@ -414,13 +416,15 @@ async function callGoogleApi(endpoint, apiKey, payload) {
   return data;
 }
 
-async function embedSingleText(apiKey, text) {
+async function embedSingleText(apiKey, text, taskType = "RETRIEVAL_QUERY") {
   const endpoint = `${GOOGLE_API_BASE}/${EMBEDDING_MODEL}:embedContent`;
   const data = await callGoogleApi(endpoint, apiKey, {
     model: `models/${EMBEDDING_MODEL}`,
     content: {
       parts: [{ text: text.slice(0, 3_000) }],
     },
+    taskType,
+    outputDimensionality: EMBEDDING_OUTPUT_DIMENSIONS,
   });
 
   return data?.embedding?.values || [];
@@ -432,16 +436,26 @@ async function getChunkEmbeddings(apiKey, corpus) {
   }
 
   const endpoint = `${GOOGLE_API_BASE}/${EMBEDDING_MODEL}:batchEmbedContents`;
-  const data = await callGoogleApi(endpoint, apiKey, {
-    requests: corpus.chunks.map((chunk) => ({
-      model: `models/${EMBEDDING_MODEL}`,
-      content: {
-        parts: [{ text: `${chunk.sourceLabel}\n${chunk.text}` }],
-      },
-    })),
-  });
+  const allEmbeddings = [];
 
-  cachedChunkEmbeddings = (data.embeddings || []).map((item) => item.values || []);
+  for (let index = 0; index < corpus.chunks.length; index += EMBEDDING_BATCH_SIZE) {
+    const batch = corpus.chunks.slice(index, index + EMBEDDING_BATCH_SIZE);
+    const data = await callGoogleApi(endpoint, apiKey, {
+      requests: batch.map((chunk) => ({
+        model: `models/${EMBEDDING_MODEL}`,
+        content: {
+          parts: [{ text: `${chunk.sourceLabel}\n${chunk.text}`.slice(0, 3_000) }],
+        },
+        taskType: "RETRIEVAL_DOCUMENT",
+        title: chunk.sourceLabel.slice(0, 512),
+        outputDimensionality: EMBEDDING_OUTPUT_DIMENSIONS,
+      })),
+    });
+
+    allEmbeddings.push(...(data.embeddings || []).map((item) => item.values || []));
+  }
+
+  cachedChunkEmbeddings = allEmbeddings;
   return cachedChunkEmbeddings;
 }
 
@@ -537,7 +551,7 @@ async function rankChunks(apiKey, corpus, question) {
 
   try {
     const [queryEmbedding, chunkEmbeddings] = await Promise.all([
-      embedSingleText(apiKey, question),
+      embedSingleText(apiKey, question, "RETRIEVAL_QUERY"),
       getChunkEmbeddings(apiKey, corpus),
     ]);
 
@@ -639,12 +653,12 @@ function buildSystemInstruction(sources) {
 
   return [
     "You are the portfolio assistant for Luiz Fernando Toledo.",
-    "Use the site excerpts below for facts about Luiz Fernando Toledo and his work.",
-    "If the user uploaded a file, you may describe that file too, but keep portfolio claims grounded only in the site excerpts.",
+    "Use the portfolio-linked source excerpts below for facts about Luiz Fernando Toledo and his work.",
+    "If the user uploaded a file, you may describe that file too, but keep portfolio claims grounded only in those source excerpts.",
     "Reply in the same language as the user's latest message.",
     "Default to a tight answer: at most 1 short paragraph or 3 bullets unless the user explicitly asks for detail.",
     "Unless the user asks for depth, stay under roughly 90 words.",
-    "If the answer is not supported by the excerpts, say you could not confirm it from the site.",
+    "If the answer is not supported by the excerpts, say you could not confirm it from the portfolio sources.",
     "Keep the answer concise, factual, and useful.",
     "Do not invent achievements, dates, roles, clients, awards, or employers.",
     "Every factual claim grounded in the portfolio must end with citation markers like [1] or [2].",
@@ -652,7 +666,7 @@ function buildSystemInstruction(sources) {
     "Do not output a separate sources section or bibliography.",
     "If you mention something from the user's uploaded file itself, do not invent a portfolio citation for that part.",
     "",
-    "Available site excerpts:",
+    "Available source excerpts:",
     sourceContext,
   ].join("\n");
 }
