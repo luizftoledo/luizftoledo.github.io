@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-11T14:11:21.201603+00:00",
+  "generated_at": "2026-03-12T14:08:22.345425+00:00",
   "snapshot_date": "2026-03-11",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -1018,7 +1018,7 @@
     "total_liquidado": 25904.7,
     "total_pago": 0.0
   },
-  "run_date": "2026-03-11",
+  "run_date": "2026-03-12",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -1102,7 +1102,7 @@
           "error": ""
         }
       ],
-      "error": "7 - Emendas de Bancada Estadual: filtro não confirmado ; 8 - Emendas de Comissão: filtro não confirmado",
+      "error": "6 - Emendas Individuais: filtro não confirmado ; 7 - Emendas de Bancada Estadual: filtro não confirmado ; 8 - Emendas de Comissão: filtro não confirmado",
       "fallback_from_previous": true
     },
     "siop_details": {
@@ -1153,7 +1153,7 @@
           "error": ""
         }
       ],
-      "error": "8 - Emendas de Comissão: filtro não confirmado",
+      "error": "6 - Emendas Individuais: filtro não confirmado ; 8 - Emendas de Comissão: filtro não confirmado",
       "fallback_from_previous": true
     },
     "documents": {
@@ -2426,6 +2426,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-03-12",
+      "last_update": "",
+      "base_siafi_date": "9/3/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
-  ]
+  ],
+  "updated_at": "2026-03-12T14:08:22.345425+00:00"
 }
