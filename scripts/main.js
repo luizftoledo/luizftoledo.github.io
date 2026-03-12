@@ -4,6 +4,17 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  const highlightHashTarget = () => {
+    if (!window.location.hash) return;
+    const target = document.querySelector(window.location.hash);
+    if (!target) return;
+
+    target.classList.add('source-highlight');
+    window.setTimeout(() => {
+      target.classList.remove('source-highlight');
+    }, 2400);
+  };
+
   // Mobile menu
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
@@ -51,6 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('load', () => {
     updateProgress();
     toggleBackBtn();
+    highlightHashTarget();
+  });
+  window.addEventListener('hashchange', () => {
+    window.setTimeout(highlightHashTarget, 120);
   });
 
   // Anchor links copy for section titles
@@ -232,5 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
+  }
+
+  if (window.location.hash) {
+    window.setTimeout(highlightHashTarget, 180);
   }
 });
