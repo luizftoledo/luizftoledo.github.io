@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pesquisa Ampla</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js"></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">Pesquisa ampla</p>
+          <h1>Busca pública</h1>
+          <p class="lede">
+            Esta página abre a ferramenta de busca no endereço público do projeto.
+          </p>
+        </div>
+        <div class="status-panel" id="status-panel">
+          <p class="status-label">Status</p>
+          <p class="status-text" id="status-text">Preparando a ferramenta...</p>
+          <a class="open-link" id="open-link" href="#" target="_blank" rel="noreferrer" hidden>
+            Abrir em nova aba
+          </a>
+        </div>
+      </section>
+
+      <section class="frame-panel" id="frame-panel" hidden>
+        <iframe
+          id="app-frame"
+          title="Ferramenta de busca"
+          loading="eager"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </section>
+
+      <section class="help-panel" id="help-panel" hidden>
+        <h2>Configuração pendente</h2>
+        <p>
+          Falta informar o endereço público do backend em <code>docs/config.js</code>.
+        </p>
+        <p>
+          Depois do deploy no Cloud Run, troque <code>https://SEU-BACKEND.run.app</code> pelo endereço real.
+        </p>
+      </section>
+    </main>
+
+    <script>
+      const config = window.APP_CONFIG || {};
+      const backendUrl = (config.BACKEND_URL || "").replace(/\/+$/, "");
+      const framePanel = document.getElementById("frame-panel");
+      const helpPanel = document.getElementById("help-panel");
+      const appFrame = document.getElementById("app-frame");
+      const statusText = document.getElementById("status-text");
+      const openLink = document.getElementById("open-link");
+
+      const isConfigured =
+        backendUrl &&
+        backendUrl.startsWith("http") &&
+        !backendUrl.includes("SEU-BACKEND.run.app");
+
+      if (!isConfigured) {
+        statusText.textContent = "Falta ligar esta página ao backend.";
+        helpPanel.hidden = false;
+      } else {
+        const targetUrl = `${backendUrl}/`;
+        framePanel.hidden = false;
+        appFrame.src = targetUrl;
+        openLink.href = targetUrl;
+        openLink.hidden = false;
+        statusText.textContent = "Carregando a ferramenta...";
+        appFrame.addEventListener("load", () => {
+          statusText.textContent = "Ferramenta pronta.";
+        });
+      }
+    </script>
+  </body>
+</html>
