@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Patrimônio Futuro | BCB</title>
+  <meta
+    name="description"
+    content="Simule o crescimento do seu patrimônio nos próximos 30 anos com juros compostos, inflação e cenários líquidos mais realistas, além de referências brutas do mercado atual.">
+  <meta property="og:title" content="Simulador de Patrimônio Futuro | BCB">
+  <meta
+    property="og:description"
+    content="Informe patrimônio atual, aporte mensal e escolha entre cenários líquidos de planejamento e referências brutas do mercado atual.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://luizftoledo.github.io/services/patrimonio-futuro/">
+  <meta property="og:image" content="https://luizftoledo.github.io/favicon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Simulador de Patrimônio Futuro | BCB">
+  <meta
+    name="twitter:description"
+    content="Ferramenta simples para projetar patrimônio futuro com cenários líquidos de planejamento e correção pela inflação.">
+  <link rel="canonical" href="https://luizftoledo.github.io/services/patrimonio-futuro/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="../../favicon.png">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <a class="back-link" href="../../index.html">luizftoledo.github.io</a>
+      <div class="hero-copy">
+        <p class="eyebrow">Juros compostos + inflacao</p>
+        <h1>Simulador de patrimonio futuro para os proximos 30 anos</h1>
+        <p class="lead">
+          Digite quanto voce ja tem, quanto consegue investir por mes e escolha entre cenarios liquidos mais realistas
+          para planejamento ou referencias brutas do mercado atual. A pagina projeta, ano a ano, o patrimonio total e
+          o rendimento mensal no valor nominal e no valor corrigido pela inflacao.
+        </p>
+      </div>
+      <div class="hero-meta">
+        <span class="meta-pill">30 anos</span>
+        <span class="meta-pill">Cenarios liquidos e brutos</span>
+        <span class="meta-pill">Nominal x real</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel controls-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Entradas</p>
+            <h2>Preencha os campos da simulacao</h2>
+          </div>
+          <p class="helper">
+            A simulacao supoe aportes no fim de cada mes e reinvestimento total dos rendimentos.
+          </p>
+        </div>
+
+        <div class="controls-grid">
+          <label class="field">
+            <span>Idade atual</span>
+            <input id="currentAge" type="number" min="0" max="120" step="1" value="35">
+          </label>
+
+          <label class="field">
+            <span>Patrimonio atual</span>
+            <input id="currentBalance" class="money-input" type="text" inputmode="decimal" value="250000">
+          </label>
+
+          <label class="field">
+            <span>Aporte mensal</span>
+            <input id="monthlyContribution" class="money-input" type="text" inputmode="decimal" value="3000">
+          </label>
+
+          <label class="field">
+            <span>Inflacao anual usada no ajuste real</span>
+            <div class="inline-input">
+              <input id="inflationRate" type="number" min="0" max="50" step="0.01">
+              <span>% a.a.</span>
+            </div>
+            <small id="inflationHint">Carregando IPCA em 12 meses...</small>
+          </label>
+
+          <label class="field">
+            <span>Visualizar valores em</span>
+            <select id="displayCurrency">
+              <option value="BRL">Reais</option>
+              <option value="USD">Dolar</option>
+              <option value="GBP">Libra</option>
+            </select>
+            <small id="currencyHint">Carregando cambio atual...</small>
+          </label>
+        </div>
+
+      </section>
+
+      <section class="panel events-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Eventos extras</p>
+            <h2>Adicione bonus, promocao, venda de casa ou outros saltos de patrimonio</h2>
+          </div>
+          <button id="addEventBtn" type="button" class="secondary">Adicionar evento</button>
+        </div>
+        <p class="helper">
+          Use <strong>entrada unica</strong> para bonus, heranca ou venda de um imovel. Use
+          <strong>aporte mensal extra</strong> para promocao, aumento de renda ou qualquer reforco permanente no aporte.
+          Idades passadas entram como efeito imediato.
+        </p>
+        <div class="events-head">
+          <span>Idade</span>
+          <span>Tipo</span>
+          <span>Valor</span>
+          <span>Descricao</span>
+          <span></span>
+        </div>
+        <div id="eventRows" class="event-rows"></div>
+      </section>
+
+      <section class="summary-grid">
+        <article class="panel status-panel" id="statusPanel" aria-live="polite">
+          <p class="panel-label">Status</p>
+          <h2>Carregando referencias oficiais...</h2>
+          <p class="status-copy">A pagina busca CDI, Selic e IPCA diretamente no Banco Central para montar cenarios de planejamento.</p>
+        </article>
+
+        <article class="panel references-panel">
+          <div class="rates-header">
+            <div>
+              <p class="panel-label">Referencias atuais</p>
+              <h2>Taxas que alimentam os cenarios</h2>
+            </div>
+            <p class="helper" id="referencesTimestamp">Carregando...</p>
+          </div>
+          <div class="rates-grid" id="referencesGrid">
+            <div class="rate-card skeleton"></div>
+            <div class="rate-card skeleton"></div>
+            <div class="rate-card skeleton"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel scenarios-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Cenarios</p>
+            <h2>Escolha um cenario anual</h2>
+          </div>
+          <p class="helper">Os cenarios liquidos servem melhor para planejamento. As referencias brutas mostram apenas quanto as taxas atuais renderiam se ficassem constantes.</p>
+        </div>
+        <div class="scenario-block">
+          <div class="scenario-block-header">
+            <p class="panel-label">Planejamento</p>
+            <h3>Cenarios liquidos mais realistas</h3>
+          </div>
+          <div class="scenario-grid" id="scenarioGridPlanning"></div>
+        </div>
+        <div class="scenario-block">
+          <div class="scenario-block-header">
+            <p class="panel-label">Referencia</p>
+            <h3>Taxas atuais e comparacoes simples</h3>
+          </div>
+          <div class="scenario-grid" id="scenarioGridReference"></div>
+        </div>
+        <div class="custom-rate-row hidden" id="customRateRow">
+          <label class="field">
+            <span>Taxa anual personalizada</span>
+            <div class="inline-input">
+              <input id="customRate" type="number" min="0" max="100" step="0.01">
+              <span>% a.a.</span>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <section class="panel summary-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Resultado em 30 anos</p>
+            <h2>Leitura rapida</h2>
+          </div>
+          <p class="helper" id="summaryHelper">Atualizando simulacao...</p>
+        </div>
+        <div class="metrics-grid" id="metricsGrid">
+          <div class="metric-card skeleton"></div>
+          <div class="metric-card skeleton"></div>
+          <div class="metric-card skeleton"></div>
+          <div class="metric-card skeleton"></div>
+        </div>
+      </section>
+
+      <section class="chart-grid">
+        <article class="panel chart-panel">
+          <p class="panel-label">Grafico 1</p>
+          <h2>Patrimonio nominal x patrimonio real</h2>
+          <div class="chart-wrap">
+            <canvas id="portfolioChart"></canvas>
+          </div>
+        </article>
+
+        <article class="panel chart-panel">
+          <p class="panel-label">Grafico 2</p>
+          <h2>Rendimento mensal nominal x real</h2>
+          <div class="chart-wrap">
+            <canvas id="incomeChart"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel table-panel">
+        <div class="controls-header">
+          <div>
+            <p class="panel-label">Tabela anual</p>
+            <h2>Projecao ano a ano</h2>
+          </div>
+          <p class="helper" id="tableHelper">Os valores reais sao trazidos para valores de hoje usando a inflacao anual escolhida.</p>
+        </div>
+        <div class="table-wrap">
+          <table class="projection-table">
+            <thead>
+              <tr>
+                <th>Ano</th>
+                <th>Idade</th>
+                <th id="headerNominalBalance">Patrimonio nominal</th>
+                <th id="headerRealBalance">Patrimonio real</th>
+                <th id="headerNominalIncome">Rendimento mensal nominal</th>
+                <th id="headerRealIncome">Rendimento mensal real</th>
+                <th id="headerContributed">Total aportado</th>
+              </tr>
+            </thead>
+            <tbody id="projectionBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="foot-grid">
+        <article class="panel notes-panel">
+          <p class="panel-label">Como funciona</p>
+          <h2>Notas de leitura</h2>
+          <ul class="notes-list">
+            <li>Os cenarios liquidos de planejamento usam faixas simples de retorno real acima da inflacao escolhida. Eles servem como guia de longo prazo, nao como promessa de mercado.</li>
+            <li>As referencias brutas mostram as taxas observadas agora no BCB, sem desconto de imposto nem garantia de que o nivel atual durara por 30 anos.</li>
+            <li>O ajuste real usa uma inflacao anual fixa, preenchida por padrao com o IPCA acumulado em 12 meses mais recente do BCB.</li>
+            <li>O rendimento mensal mostrado para cada ano e o rendimento estimado daquele patrimonio no mes seguinte, mantida a mesma taxa.</li>
+            <li>Dolar e libra sao apenas uma conversao de visualizacao, usando a cotacao oficial mais recente do BCB no momento em que a pagina carrega.</li>
+            <li>Eventos extras podem ser de entrada unica ou de aumento permanente no aporte mensal. Entradas unicas entram no inicio do ano daquela idade.</li>
+            <li>Poupanca aparece como aproximacao simples pela regra atual, sem incorporar TR. Por isso ela serve como referencia, nao como replica exata.</li>
+          </ul>
+        </article>
+
+        <article class="panel source-panel">
+          <p class="panel-label">Fontes</p>
+          <h2>Series oficiais do BCB</h2>
+          <ul class="source-list">
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.4389/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / CDI anualizado base 252</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.1178/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Selic anualizada base 252</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.433/dados/ultimos/12?formato=json" target="_blank" rel="noopener noreferrer">SGS / IPCA mensal</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Dolar comercial venda</a></li>
+            <li><a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.21623/dados/ultimos/1?formato=json" target="_blank" rel="noopener noreferrer">SGS / Libra esterlina venda</a></li>
+            <li><a href="https://www3.bcb.gov.br/CALCIDADAO/publico/metodologiaCorrigirIndice.do?method=metodologiaCorrigirIndice" target="_blank" rel="noopener noreferrer">Metodologia de correcao do BCB</a></li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+</body>
+</html>

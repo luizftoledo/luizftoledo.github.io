@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Jornalismo de dados para contar histórias | Luiz Fernando Toledo</title>
+    <script async src="https://www.instagram.com/embed.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #111;
+            --white: #fff;
+            --mid: #888;
+            --light-gray: #e5e5e5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .reveal {
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: var(--black);
+        }
+
+        .reveal .slides {
+            text-align: left;
+        }
+
+        .reveal .slides section {
+            background: var(--white);
+            padding: 50px 70px;
+            height: 100%;
+        }
+
+        .reveal h1,
+        .reveal h2,
+        .reveal h3 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 900;
+            color: var(--black);
+            text-transform: none;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .reveal p {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 0.9em;
+            line-height: 1.7;
+            color: var(--mid);
+        }
+
+        .reveal .progress {
+            color: var(--black);
+            height: 3px;
+        }
+
+        .reveal .controls {
+            color: var(--black);
+        }
+
+        .reveal .slide-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.55em;
+            color: var(--mid);
+            background: none;
+        }
+
+        /* ---- Reusable ---- */
+        .divider {
+            width: 50px;
+            height: 2px;
+            background: var(--black);
+            margin: 16px 0;
+        }
+
+        .divider-center {
+            width: 50px;
+            height: 2px;
+            background: var(--black);
+            margin: 20px auto;
+        }
+
+        .tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.55em;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .slide-concept {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1em;
+            font-weight: 900;
+            color: var(--black);
+            margin-bottom: 16px;
+            display: block;
+            line-height: 1.2;
+        }
+
+        .btn-read {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65em;
+            font-weight: 600;
+            color: var(--white);
+            background: var(--black);
+            padding: 10px 24px;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            margin-top: 14px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-read:hover {
+            opacity: 0.7;
+        }
+
+        /* ---- SLIDE: Title ---- */
+        .slide-title {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center !important;
+            background: var(--black) !important;
+        }
+
+        .slide-title h1 {
+            color: var(--white);
+            font-size: 3.4em;
+            max-width: 850px;
+        }
+
+        .slide-title .divider-center {
+            background: var(--white);
+            margin: 28px auto;
+        }
+
+        .slide-title .author {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.15em;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.75);
+            letter-spacing: 0.06em;
+        }
+
+        .slide-title .site {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9em;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: 8px;
+            letter-spacing: 0.03em;
+        }
+
+        /* ---- SLIDE: Article ---- */
+        .article-layout {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            height: 100%;
+        }
+
+        .article-layout .img-side {
+            flex: 1.1;
+            overflow: hidden;
+        }
+
+        .article-layout .img-side img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(15%);
+        }
+
+        .article-layout .text-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .article-layout .text-side h2 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .article-layout .text-side p {
+            font-size: 0.8em;
+        }
+
+        /* ---- SLIDE: Photo focus ---- */
+        .photo-focus {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center !important;
+        }
+
+        .photo-focus .bbc-mark {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7em;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            background: var(--black);
+            color: var(--white);
+            padding: 6px 18px;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .photo-focus .slide-concept {
+            margin-bottom: 12px;
+        }
+
+        .photo-focus img {
+            width: 680px;
+            max-width: 100%;
+            height: 320px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .photo-focus h3 {
+            font-size: 1em;
+            margin-top: 16px;
+            max-width: 620px;
+            text-align: center;
+        }
+
+        /* ---- SLIDE: Side by side ---- */
+        .duo-layout {
+            display: flex;
+            gap: 28px;
+            align-items: stretch;
+        }
+
+        .duo-card {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .duo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .duo-card .duo-text {
+            padding: 16px 0 0;
+            flex: 1;
+        }
+
+        .duo-card .duo-text h3 {
+            font-size: 0.9em;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .duo-separator {
+            width: 1px;
+            background: var(--light-gray);
+            align-self: stretch;
+        }
+
+        /* ---- SLIDE: Section break ---- */
+        .section-break {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center !important;
+            background: var(--black) !important;
+        }
+
+        .section-break h2 {
+            color: var(--white);
+            font-size: 2.2em;
+            max-width: 700px;
+        }
+
+        .section-break .divider-center {
+            background: rgba(255, 255, 255, 0.3);
+            margin: 18px auto;
+        }
+
+        .section-break p {
+            color: rgba(255, 255, 255, 0.4);
+            text-align: center;
+        }
+
+        /* ---- SLIDE: Epstein grid ---- */
+        .ep-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 8px;
+        }
+
+        .ep-item {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            border: 1px solid var(--light-gray);
+            transition: box-shadow 0.2s;
+        }
+
+        .ep-item:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .ep-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .ep-item .ep-title {
+            padding: 8px 10px;
+            font-size: 0.55em;
+            font-weight: 500;
+            line-height: 1.4;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .ep-highlight {
+            grid-column: 1 / -1;
+            display: flex;
+            background: var(--black);
+            text-decoration: none;
+            color: var(--white);
+            border: none;
+        }
+
+        .ep-highlight img {
+            width: 35%;
+            height: 130px;
+            object-fit: cover;
+        }
+
+        .ep-highlight .ep-title {
+            color: var(--white);
+            font-size: 0.7em;
+            font-weight: 600;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* ---- SLIDE: Notebook ---- */
+        .notebook-slide {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center !important;
+        }
+
+        .nb-google {
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            font-weight: 300;
+            color: var(--mid);
+            letter-spacing: 0.05em;
+        }
+
+        .nb-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            font-weight: 900;
+            margin: 8px 0 16px;
+        }
+
+        .nb-desc {
+            max-width: 550px;
+            text-align: center;
+            font-size: 0.85em;
+        }
+
+        .nb-pills {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .nb-pill {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65em;
+            font-weight: 500;
+            border: 1px solid var(--light-gray);
+            padding: 10px 20px;
+        }
+
+        .nb-link {
+            margin-top: 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7em;
+            color: var(--black);
+            text-decoration: none;
+            border-bottom: 1px solid var(--black);
+            padding-bottom: 2px;
+        }
+
+        /* ---- SLIDE: AI ---- */
+        .ai-layout {
+            display: flex;
+            gap: 50px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .ai-col {
+            flex: 1;
+            max-width: 340px;
+        }
+
+        .ai-col-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6em;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .ai-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .ai-row:last-child {
+            border-bottom: none;
+        }
+
+        .ai-dot {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.55em;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .ai-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        /* ---- SLIDE: Tools ---- */
+        .tools-row {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            margin-top: 36px;
+        }
+
+        .tool-box {
+            text-align: center;
+            width: 100px;
+        }
+
+        .tool-icon {
+            width: 72px;
+            height: 72px;
+            border: 2px solid var(--black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            font-weight: 700;
+            color: var(--black);
+        }
+
+        .tool-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7em;
+            font-weight: 500;
+            color: var(--mid);
+        }
+
+        /* ---- SLIDE: Udemy ---- */
+        .udemy-slide {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center !important;
+        }
+
+        .udemy-tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6em;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--mid);
+        }
+
+        .udemy-title {
+            font-size: 1.8em;
+            max-width: 650px;
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .udemy-btn {
+            display: inline-block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            font-weight: 600;
+            background: var(--black);
+            color: var(--white);
+            padding: 14px 36px;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            margin-top: 24px;
+            transition: opacity 0.2s;
+        }
+
+        .udemy-btn:hover {
+            opacity: 0.8;
+        }
+
+        /* ---- SLIDE: Thanks ---- */
+        .thanks-slide {
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center !important;
+            background: var(--white) !important;
+        }
+
+        .thanks-slide h1 {
+            font-size: 4em;
+        }
+
+        .thanks-slide .divider-center {
+            margin: 20px auto;
+        }
+
+        .thanks-link {
+            font-family: 'Inter', sans-serif;
+            font-size: 1em;
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 3px;
+        }
+
+        /* ---- SLIDE: Videos ---- */
+        .video-slide {
+            text-align: center !important;
+            overflow: hidden;
+        }
+
+        .video-slide .slide-concept {
+            text-align: center;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .video-slide p {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 16px;
+            font-size: 0.8em;
+        }
+
+        .video-grid {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .video-grid .instagram-media {
+            min-width: 0 !important;
+            max-width: 250px !important;
+            width: 250px !important;
+            margin: 0 !important;
+        }
+
+        img {
+            background: var(--light-gray);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- 1: TITLE -->
+            <section class="slide-title">
+                <h1>Jornalismo de dados para contar histórias</h1>
+                <div class="divider-center"></div>
+                <div class="author">Luiz Fernando Toledo</div>
+                <div class="site">luizftoledo.github.io</div>
+            </section>
+
+            <!-- 2: ESTADÃO — Achar personagens com dados -->
+            <section>
+                <div class="article-layout">
+                    <div class="img-side">
+                        <img referrerpolicy="no-referrer"
+                            src="https://www.estadao.com.br/resizer/v2/RJY6XSK55NNQLEY3DR3YKASIXY.jpg?quality=80&auth=13db7c5e17266e4f46961a165c8efe716ae332149fcfd894620fb9f7dccdaf50&width=1200&height=630&focal=0,0"
+                            alt="ENEM">
+                    </div>
+                    <div class="text-side">
+                        <span class="slide-concept">Achar personagens com dados</span>
+                        <span class="tag">Estadão &middot; Dados</span>
+                        <h2>Aluno pobre tem só 0,16% de chance de estar entre os melhores do Enem</h2>
+                        <div class="divider"></div>
+                        <p>Análise de 1,3 milhão de candidatos mostra que fatores socioeconômicos pesam até 85% no
+                            resultado. Entre alunos ricos, a chance de estar no topo é de 25%.</p>
+                        <a class="btn-read"
+                            href="https://www.estadao.com.br/brasil/aluno-pobre-tem-so-0-16-de-chance-de-estar-entre-os-melhores-do-enem/"
+                            target="_blank">LER MATÉRIA</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3: BBC — Descobrir autoridades envolvidas -->
+            <section>
+                <div class="article-layout">
+                    <div class="img-side">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/87d6/live/203357b0-79b2-11ef-b02d-c5f3b724a1ea.jpg"
+                            alt="Candidatos multados">
+                    </div>
+                    <div class="text-side">
+                        <span class="slide-concept">Descobrir autoridades envolvidas</span>
+                        <span class="tag">BBC News Brasil &middot; Eleições 2024</span>
+                        <h2>Os 2,8 mil candidatos multados por danos ao meio ambiente</h2>
+                        <div class="divider"></div>
+                        <p>Levantamento da BBC mostra políticos que disputam cargos municipais mesmo com multas
+                            ambientais em seus nomes.</p>
+                        <a class="btn-read" href="https://www.bbc.com/portuguese/articles/c62dx1nl619o"
+                            target="_blank">LER MATÉRIA</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4: BBC — Descobrir autoridades envolvidas (imobiliário) -->
+            <section>
+                <div class="article-layout">
+                    <div class="img-side">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/5896/live/da0eaff0-8686-11ef-822c-a50726bfda2e.jpg"
+                            alt="Doadores imobiliários">
+                    </div>
+                    <div class="text-side">
+                        <span class="slide-concept">Descobrir autoridades envolvidas</span>
+                        <span class="tag">BBC News Brasil &middot; Eleições 2024</span>
+                        <h2>Empresários do mercado imobiliário são metade dos 50 maiores doadores</h2>
+                        <div class="divider"></div>
+                        <p>Investigação sobre o financiamento das campanhas municipais de 2024.</p>
+                        <a class="btn-read" href="https://www.bbc.com/portuguese/articles/c3rlz7g9914o"
+                            target="_blank">LER MATÉRIA</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5: BBC — Encontrar lugares que se destacam -->
+            <section>
+                <div class="article-layout">
+                    <div class="img-side">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/5d5c/live/b5401e40-8d46-11ef-8e6d-e3e64e16c628.png"
+                            alt="Fernando de Noronha">
+                    </div>
+                    <div class="text-side">
+                        <span class="slide-concept">Encontrar lugares que se destacam por determinado problema</span>
+                        <span class="tag">BBC News Brasil &middot; Meio Ambiente</span>
+                        <h2>'Turismo de Instagram' aumenta violações ambientais em Fernando de Noronha</h2>
+                        <div class="divider"></div>
+                        <p>Pousada de celebridades e turismo de massa pressionam o arquipélago protegido.</p>
+                        <a class="btn-read" href="https://www.bbc.com/portuguese/articles/cevy34jwl8do"
+                            target="_blank">LER MATÉRIA</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6: BBC — Encontrar história nova em problema conhecido -->
+            <section class="photo-focus">
+                <span class="slide-concept">Encontrar uma história nova em um problema conhecido</span>
+                <div class="bbc-mark">BBC NEWS BRASIL</div>
+                <img referrerpolicy="no-referrer"
+                    src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/0bd9/live/69d84620-d1b2-11ef-bbe0-eb255759a6ac.jpg"
+                    alt="Brasileiros na Irlanda">
+                <h3>Os brasileiros que vão para a Irlanda trabalhar em 'condições precárias e abusivas' em frigoríficos
+                </h3>
+                <a class="btn-read" href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank"
+                    style="margin-top:16px;">LER MATÉRIA</a>
+            </section>
+
+            <!-- 7: Side by side — Dar nomes aos responsáveis -->
+            <section>
+                <span class="slide-concept">Dar nomes aos responsáveis por um crime e encontrar padrões em um
+                    problema</span>
+                <span class="tag">BBC News Brasil &middot; Investigações</span>
+                <div class="duo-layout" style="margin-top: 8px;">
+                    <div class="duo-card">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/cec5/live/a8ca9950-147e-11f0-8a1e-3ff815141b98.png"
+                            alt="Trabalho escravo">
+                        <div class="duo-text">
+                            <h3>Trabalho escravo: como produto de mão de obra escrava vai parar na sua calçada</h3>
+                            <a class="btn-read" href="https://www.bbc.com/portuguese/articles/c20xkrxny32o"
+                                target="_blank">LER MATÉRIA</a>
+                        </div>
+                    </div>
+                    <div class="duo-separator"></div>
+                    <div class="duo-card">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/00ba/live/d624daf0-29be-11f0-8f57-b7237f6a66e6.jpg"
+                            alt="Orçamento secreto">
+                        <div class="duo-text">
+                            <h3>Como emenda apoiada por Hugo Motta foi parar em obra com produto de trabalho escravo
+                            </h3>
+                            <a class="btn-read" href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro"
+                                target="_blank">LER MATÉRIA</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8: BBC — Encontrar padrões em textos -->
+            <section>
+                <div class="article-layout">
+                    <div class="img-side">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/3292/live/7f7b3040-7f47-11ef-822c-a50726bfda2e.jpg"
+                            alt="Planos de governo">
+                    </div>
+                    <div class="text-side">
+                        <span class="slide-concept">Encontrar padrões em textos que tenham interesse público</span>
+                        <span class="tag">BBC News Brasil &middot; Eleições 2024</span>
+                        <h2>Candidatos que usam propostas idênticas em planos de governo</h2>
+                        <div class="divider"></div>
+                        <p>"Nada se cria, tudo se copia", diz autor de plano.</p>
+                        <a class="btn-read" href="https://www.bbc.com/portuguese/articles/cpw5yl8jgelo"
+                            target="_blank">LER MATÉRIA</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9: Section - Epstein -->
+            <section class="section-break">
+                <h2>Série de reportagens sobre Epstein no Brasil</h2>
+                <div class="divider-center"></div>
+                <p>BBC News Brasil &middot; 2025</p>
+            </section>
+
+            <!-- 10: Epstein grid — Navegar por milhões de arquivos -->
+            <section>
+                <span class="slide-concept" style="text-align:center; display:block; margin-bottom:12px;">Navegar por
+                    milhões de arquivos em busca de pautas</span>
+                <div class="ep-grid">
+                    <a class="ep-item" href="https://www.bbc.com/portuguese/articles/cvg83wprk37o" target="_blank">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/9c0e/live/289ab5e0-04dc-11f1-b7e1-afb6d0884c18.png"
+                            alt="">
+                        <div class="ep-title">Epstein financiou modelos brasileiras e avisou dias antes sobre sua prisão
+                        </div>
+                    </a>
+                    <a class="ep-item" href="https://www.bbc.com/portuguese/articles/cm24mr6el23o" target="_blank">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/ed82/live/b1af3020-002e-11f1-b7e1-afb6d0884c18.png"
+                            alt="">
+                        <div class="ep-title">Os indícios de como bilionário pretendia recrutar mulheres no Brasil</div>
+                    </a>
+                    <a class="ep-item" href="https://www.bbc.com/portuguese/articles/cnv2937j42ro" target="_blank">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/e841/live/a689bce0-dfd8-11f0-aae2-2191c0e48a3b.jpg"
+                            alt="">
+                        <div class="ep-title">O elo com o Brasil revelado em novos documentos: 'Grande grupo brasileiro'
+                        </div>
+                    </a>
+                    <a class="ep-item" href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/413c/live/f4fe5a00-e02f-11f0-997b-df531e67f496.jpg"
+                            alt="">
+                        <div class="ep-title">'Umas 50 brasileiras' estiveram na mansão do bilionário, diz vítima à BBC
+                        </div>
+                    </a>
+                    <a class="ep-item" href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/b464/live/f063e5e0-07e5-11f1-b7e1-afb6d0884c18.jpg"
+                            alt="">
+                        <div class="ep-title">MPF abre investigação sobre rede de aliciamento de mulheres após
+                            reportagem da BBC</div>
+                    </a>
+                    <a class="ep-item" href="https://www.bbc.com/portuguese/articles/c2047g008dgo" target="_blank">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/d530/live/8839d6a0-0786-11f1-b7e1-afb6d0884c18.png"
+                            alt="">
+                        <div class="ep-title">Epstein tinha CPF e tentou ponte com empresários brasileiros para negócios
+                        </div>
+                    </a>
+                    <a class="ep-highlight" href="https://www.bbc.com/portuguese/articles/c5y6g6yzev5o" target="_blank">
+                        <img referrerpolicy="no-referrer"
+                            src="https://ichef.bbci.co.uk/news/1024/branded_portuguese/f363/live/6c95cca0-133f-11f1-801d-ed3cff6bf876.jpg"
+                            alt="">
+                        <div class="ep-title">Caso Epstein: mãe impediu modelo brasileira de viajar aos EUA com
+                            recrutador de bilionário</div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- 11: Vídeos / Multimídia -->
+            <section class="video-slide">
+                <span class="slide-concept">Não fique só nos dados nem só no texto</span>
+                <p>O mais importante é que sua história chegue às pessoas, seja em áudio, vídeo, redes sociais, etc.</p>
+                <div class="video-grid">
+                    <blockquote class="instagram-media"
+                        data-instgrm-permalink="https://www.instagram.com/p/DVO4gD_j5T4/" data-instgrm-version="14">
+                    </blockquote>
+                    <blockquote class="instagram-media"
+                        data-instgrm-permalink="https://www.instagram.com/reel/DVOzOrYjtxj/" data-instgrm-version="14">
+                    </blockquote>
+                    <blockquote class="instagram-media"
+                        data-instgrm-permalink="https://www.instagram.com/reel/DPKauEVD71z/" data-instgrm-version="14">
+                    </blockquote>
+                    <blockquote class="instagram-media"
+                        data-instgrm-permalink="https://www.instagram.com/reel/DUi12gSEaFV/" data-instgrm-version="14">
+                    </blockquote>
+                </div>
+            </section>
+
+            <!-- 12: Google NotebookLM -->
+            <section class="notebook-slide">
+                <div class="nb-google">Google</div>
+                <div class="nb-name">NotebookLM</div>
+                <p class="nb-desc">Ferramenta de IA para analisar documentos, gerar resumos e criar podcasts a partir de
+                    fontes.</p>
+                <div class="nb-pills">
+                    <div class="nb-pill">Análise de documentos</div>
+                    <div class="nb-pill">Geração de áudio</div>
+                    <div class="nb-pill">Resumos automáticos</div>
+                </div>
+                <a class="nb-link" href="https://notebooklm.google.com/" target="_blank">notebooklm.google.com</a>
+            </section>
+
+            <!-- 12: AI tools -->
+            <section>
+                <h2 style="text-align:center; font-size:1.6em; margin-bottom: 6px;">Inteligência Artificial</h2>
+                <p style="text-align:center;">Ferramentas que estão transformando o jornalismo</p>
+                <div class="ai-layout">
+                    <div class="ai-col">
+                        <div class="ai-col-title">LLMs / Chatbots</div>
+                        <div class="ai-row">
+                            <div class="ai-dot">C</div>
+                            <div class="ai-label">Claude</div>
+                        </div>
+                        <div class="ai-row">
+                            <div class="ai-dot">G</div>
+                            <div class="ai-label">ChatGPT</div>
+                        </div>
+                        <div class="ai-row">
+                            <div class="ai-dot">G</div>
+                            <div class="ai-label">Gemini</div>
+                        </div>
+                    </div>
+                    <div class="ai-col">
+                        <div class="ai-col-title">Agentes de IA</div>
+                        <div class="ai-row">
+                            <div class="ai-dot">A</div>
+                            <div class="ai-label">Antigravity</div>
+                        </div>
+                        <div class="ai-row">
+                            <div class="ai-dot">Cx</div>
+                            <div class="ai-label">Codex</div>
+                        </div>
+                        <div class="ai-row">
+                            <div class="ai-dot">Cc</div>
+                            <div class="ai-label">Claude Code</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 13: Learning tools -->
+            <section class="notebook-slide">
+                <h2 style="font-size:1.6em; text-align:center;">Para quem quer começar</h2>
+                <div class="divider-center"></div>
+                <div class="tools-row">
+                    <div class="tool-box">
+                        <div class="tool-icon">XLS</div>
+                        <div class="tool-label">Excel</div>
+                    </div>
+                    <div class="tool-box">
+                        <div class="tool-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#111"
+                                stroke-width="1.5">
+                                <rect x="3" y="3" width="18" height="18" rx="1" />
+                                <line x1="3" y1="9" x2="21" y2="9" />
+                                <line x1="3" y1="15" x2="21" y2="15" />
+                                <line x1="9" y1="3" x2="9" y2="21" />
+                            </svg>
+                        </div>
+                        <div class="tool-label">Google Sheets</div>
+                    </div>
+                    <div class="tool-box">
+                        <div class="tool-icon">SQL</div>
+                        <div class="tool-label">SQL</div>
+                    </div>
+                    <div class="tool-box">
+                        <div class="tool-icon">Py</div>
+                        <div class="tool-label">Python</div>
+                    </div>
+                    <div class="tool-box">
+                        <div class="tool-icon" style="font-family:serif;font-style:italic;font-size:1.1em;">R</div>
+                        <div class="tool-label">R</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 14: Udemy -->
+            <section class="udemy-slide">
+                <div class="udemy-tag">Curso Online</div>
+                <h2 class="udemy-title">Investigue gastos públicos com a Lei de Acesso à Informação</h2>
+                <div class="divider-center"></div>
+                <p style="max-width:500px;text-align:center;">Aprenda a usar dados públicos para investigar e contar
+                    histórias com impacto.</p>
+                <a class="udemy-btn"
+                    href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/"
+                    target="_blank">ACESSAR CURSO</a>
+            </section>
+
+            <!-- 15: Thanks -->
+            <section class="thanks-slide">
+                <h1>Obrigado!</h1>
+                <div class="divider-center"></div>
+                <a class="thanks-link" href="https://luizftoledo.github.io" target="_blank">luizftoledo.github.io</a>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'none',
+            width: 1200,
+            height: 700,
+            margin: 0.04
+        });
+        // Re-process Instagram embeds when slide becomes visible
+        Reveal.on('slidechanged', function () {
+            if (window.instgrm) {
+                window.instgrm.Embeds.process();
+            }
+        });
+    </script>
+</body>
+
+</html>

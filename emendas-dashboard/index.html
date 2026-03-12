@@ -1,0 +1,974 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Monitor diário de emendas parlamentares</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #f5f5f2;
+      --panel: #fffefb;
+      --ink: #2f2f2d;
+      --muted: #65645f;
+      --line: #d6d4cc;
+      --accent: #c1733f;
+      --accent-soft: #f4e9df;
+      --accent-2: #3f6b7b;
+      --good: #2f7d59;
+      --bad: #9a2e2e;
+      --shadow: 0 8px 26px rgba(44, 41, 35, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Albert Sans", sans-serif;
+      background: linear-gradient(180deg, #f7f6f2 0%, #efede7 100%);
+      color: var(--ink);
+    }
+
+    .page {
+      width: min(1220px, 96vw);
+      margin: 1.1rem auto 2rem;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .quick-nav {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      border: 1px solid #d1cec4;
+      border-radius: 999px;
+      background: #fff;
+      color: #3c3a34;
+      text-decoration: none;
+      padding: 0.38rem 0.76rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.28rem, 2.15vw, 2.06rem);
+      line-height: 1.2;
+    }
+
+    .sub {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .status {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .status .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.24rem 0.6rem;
+      background: #faf9f5;
+    }
+
+    .source-switch {
+      display: flex;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .source-label {
+      font-size: 0.86rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .view-tab {
+      border: 1px solid #d1cec4;
+      border-radius: 999px;
+      background: #fff;
+      color: #3d3a35;
+      font-size: 0.8rem;
+      font-weight: 700;
+      min-height: 34px;
+      padding: 0.34rem 0.7rem;
+      cursor: pointer;
+    }
+
+    .view-tab.active {
+      border-color: #b88a68;
+      background: #f8eee6;
+      color: #513f32;
+    }
+
+    .source-updated {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+
+    .update-schedule-note {
+      margin: 0.4rem 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .scraper-health-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0.24rem 0.68rem;
+      border-radius: 999px;
+      border: 1px solid #d6cfbf;
+      background: #efe6cf;
+      color: #5a5346;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+    }
+
+    .scraper-health-btn.is-ok {
+      border-color: #1f8f5f;
+      background: #1f8f5f;
+      color: #fff;
+    }
+
+    .scraper-health-btn.is-fail {
+      border-color: #c84444;
+      background: #c84444;
+      color: #fff;
+    }
+
+    .scraper-health-btn.is-loading {
+      border-color: #d6cfbf;
+      background: #efe6cf;
+      color: #5a5346;
+    }
+
+    .compare-alert {
+      border: 1px solid #d8ccb9;
+      border-radius: 12px;
+      background: #f8f2ea;
+      padding: 0.62rem 0.7rem;
+      display: flex;
+      gap: 0.6rem;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .compare-alert p {
+      margin: 0;
+      color: #5f4d3f;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      flex: 1 1 380px;
+    }
+
+    .compare-alert button {
+      border: 1px solid #c49b7a;
+      border-radius: 999px;
+      background: #fff9f2;
+      color: #5e4734;
+      font-size: 0.78rem;
+      font-weight: 700;
+      min-height: 32px;
+      padding: 0.28rem 0.64rem;
+      cursor: pointer;
+    }
+
+    .kpi-main {
+      border: 1px solid #dfccb7;
+      border-radius: 14px;
+      background: #fff6ec;
+      padding: 0.72rem 0.8rem;
+      display: grid;
+      gap: 0.24rem;
+    }
+
+    .kpi-main .label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #76553d;
+      font-weight: 700;
+    }
+
+    .kpi-main .value {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: clamp(1.34rem, 2.9vw, 2.26rem);
+      line-height: 1.12;
+      color: #2f7d59;
+      word-break: break-word;
+      font-weight: 700;
+    }
+
+    .kpi-main .subline {
+      margin: 0;
+      font-size: 0.84rem;
+      color: #6f6257;
+      line-height: 1.4;
+    }
+
+    .dashboard-view {
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .dashboard-view[hidden] {
+      display: none;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.55rem;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 0.7rem 0.74rem;
+      background: #fff;
+      min-height: 86px;
+    }
+
+    .card .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.24rem;
+    }
+
+    .card .value {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: clamp(0.94rem, 1.5vw, 1.18rem);
+      line-height: 1.28;
+    }
+
+    .value.good { color: var(--good); }
+    .value.bad { color: var(--bad); }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      padding: 0.9rem;
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .panel h2 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .panel-head {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .mini-toggle {
+      display: inline-flex;
+      gap: 0.36rem;
+      flex-wrap: wrap;
+    }
+
+    .mini-toggle button {
+      border: 1px solid #d1cec4;
+      border-radius: 999px;
+      background: #fff;
+      color: #3d3a35;
+      font-size: 0.76rem;
+      font-weight: 700;
+      min-height: 30px;
+      padding: 0.24rem 0.58rem;
+      cursor: pointer;
+    }
+
+    .mini-toggle button.active {
+      border-color: #b88a68;
+      background: #f8eee6;
+      color: #513f32;
+    }
+
+    .progress-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+
+    .progress-item {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 0.56rem 0.62rem;
+      display: grid;
+      gap: 0.38rem;
+    }
+
+    .progress-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.55rem;
+      font-size: 0.8rem;
+      color: #5f5b53;
+    }
+
+    .progress-head strong {
+      color: #3f3b35;
+    }
+
+    .progress-track {
+      height: 8px;
+      border-radius: 999px;
+      background: #eeeae0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #c1733f, #e0a176);
+      transition: width 180ms ease;
+    }
+
+    .progress-fill.good {
+      background: linear-gradient(90deg, #2f7d59, #49a373);
+    }
+
+    .progress-grid-focus .progress-item {
+      padding: 0.82rem 0.86rem;
+      gap: 0.56rem;
+      border-color: #d2ccc0;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    .progress-grid-focus .progress-head {
+      align-items: flex-start;
+      gap: 0.72rem;
+    }
+
+    .progress-grid-focus .progress-head > span {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #4b463f;
+      line-height: 1.35;
+      max-width: 74%;
+    }
+
+    .progress-grid-focus .progress-head > strong {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: clamp(1rem, 1.45vw, 1.22rem);
+      line-height: 1.28;
+      color: #2f2f2d;
+      text-align: right;
+    }
+
+    .progress-grid-focus .progress-track {
+      height: 12px;
+      background: #ebe5d8;
+    }
+
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+      align-items: start;
+    }
+
+    .chart-box {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 0.56rem;
+      min-height: 260px;
+    }
+
+    .chart-box canvas {
+      width: 100%;
+      height: 238px !important;
+    }
+
+    .chart-box-authors-share {
+      min-height: 360px;
+    }
+
+    .chart-box-authors-share canvas {
+      height: 338px !important;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th, td {
+      padding: 0.55rem 0.66rem;
+      border-bottom: 1px solid #ece9df;
+      text-align: left;
+      font-size: 0.86rem;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f2f0ea;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #595850;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .hint {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .help-tip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      margin-left: 0.26rem;
+      border-radius: 999px;
+      border: 1px solid #b8b1a4;
+      background: #f5f2eb;
+      color: #665f52;
+      font-size: 0.68rem;
+      font-weight: 700;
+      line-height: 1;
+      cursor: help;
+      position: relative;
+      vertical-align: middle;
+    }
+
+    .help-tip::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 8px);
+      transform: translateX(-50%);
+      width: min(280px, 78vw);
+      border: 1px solid #d3ccb9;
+      border-radius: 10px;
+      background: #fffdf8;
+      color: #4d483f;
+      padding: 0.48rem 0.56rem;
+      font-size: 0.76rem;
+      font-weight: 500;
+      line-height: 1.4;
+      box-shadow: 0 10px 22px rgba(37, 33, 28, 0.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 120ms ease;
+      z-index: 8;
+    }
+
+    .help-tip:hover::after,
+    .help-tip:focus-visible::after {
+      opacity: 1;
+    }
+
+    .table-wide {
+      min-width: 980px;
+    }
+
+    .spotlight {
+      border: 1px solid #e8d9cc;
+      background: var(--accent-soft);
+      border-radius: 12px;
+      padding: 0.62rem 0.7rem;
+      color: #5f4d3f;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .spotlight strong {
+      color: #4a3a2c;
+    }
+
+    .source-list {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    .source-list a {
+      color: #264f8a;
+    }
+
+    .footnote-note {
+      margin-top: 0.35rem;
+      padding: 0.52rem 0.58rem;
+      border: 1px solid #ddd5c8;
+      border-radius: 10px;
+      background: #faf8f2;
+    }
+
+    .context-links {
+      margin-top: 0.18rem;
+    }
+
+    .context-links li + li {
+      margin-top: 0.22rem;
+    }
+
+    @media (max-width: 980px) {
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .charts { grid-template-columns: 1fr; }
+      .progress-grid { grid-template-columns: 1fr; }
+      .progress-grid-focus .progress-head > span {
+        max-width: 100%;
+      }
+      .progress-grid-focus .progress-head > strong {
+        text-align: left;
+      }
+      .chart-box-authors-share {
+        min-height: 320px;
+      }
+      .chart-box-authors-share canvas {
+        height: 296px !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page { width: min(1220px, 98vw); }
+      .cards { grid-template-columns: 1fr; }
+      .card { min-height: 74px; }
+      th, td { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="quick-nav">
+      <a class="nav-btn" href="https://luizftoledo.github.io/" target="_blank" rel="noopener noreferrer">Voltar para home</a>
+      <a class="nav-btn" href="https://datafixers.org/" target="_blank" rel="noopener noreferrer">Ir para datafixers.org</a>
+    </div>
+
+    <section class="hero">
+      <div>
+        <h1>Monitor diário de emendas parlamentares</h1>
+        <p class="sub">Este painel acompanha mudanças diárias no valor empenhado das emendas parlamentares usando base oficial aberta. A leitura é simples: quando o valor acumulado de um autor ou de uma localidade de aplicação sobe em relação ao último snapshot, isso entra como movimento do dia.</p>
+      </div>
+      <div class="status">
+        <span class="pill" id="status-update">Atualizado: --</span>
+        <span class="pill" id="status-snapshot">Snapshot: --</span>
+        <span class="pill" id="status-source">Fonte: --</span>
+        <a class="scraper-health-btn is-loading" id="scraper-health-btn" href="https://github.com/luizftoledo/luizftoledo.github.io/actions" target="_blank" rel="noopener noreferrer">Testando raspador...</a>
+      </div>
+      <p class="update-schedule-note" id="update-schedule-note" aria-live="polite">Frequência de atualização: carregando...</p>
+      <div class="source-switch">
+        <span class="source-label">Escolha a fonte dos dados:</span>
+        <button class="view-tab active" id="tab-view-docs" type="button">Portal da Transparência (principal)</button>
+        <button class="view-tab" id="tab-view-snapshot" type="button">Comparar com SIOP/Siga Brasil</button>
+      </div>
+      <p class="source-updated" id="source-updated-line">Última atualização desta fonte: --</p>
+      <article class="compare-alert" id="compare-alert" hidden>
+        <p id="compare-alert-text">Comparativo de atualização entre fontes.</p>
+        <button id="compare-alert-action" type="button">Ver comparação no SIOP</button>
+      </article>
+      <article class="kpi-main">
+        <div class="label">Empenhado no dia</div>
+        <div class="value good" id="kpi-day-main">--</div>
+        <p class="subline" id="kpi-day-main-note">Comparação com o snapshot anterior da fonte selecionada.</p>
+      </article>
+      <div class="cards">
+        <article class="card">
+          <div class="label" id="label-kpi-net">Variação líquida no dia</div>
+          <div class="value" id="kpi-delta-net">--</div>
+        </article>
+        <article class="card">
+          <div class="label" id="label-kpi-authors">Autores com aumento hoje</div>
+          <div class="value" id="kpi-authors-up">--</div>
+        </article>
+        <article class="card">
+          <div class="label" id="label-kpi-destinations">Localidades com aumento hoje</div>
+          <div class="value" id="kpi-destinations-up">--</div>
+        </article>
+      </div>
+      <p class="spotlight" id="spotlight">Sem dados carregados.</p>
+    </section>
+
+    <div class="dashboard-view" id="view-snapshot">
+      <section class="panel">
+        <h2>Relação entre o dia e o total da base</h2>
+        <div class="progress-grid">
+          <article class="progress-item">
+            <div class="progress-head">
+              <span>Empenhado no ano / valor autorizado anual (SIOP)</span>
+              <strong id="snapshot-progress-total-text">--</strong>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill" id="snapshot-progress-total-fill"></span>
+            </div>
+          </article>
+          <article class="progress-item">
+            <div class="progress-head">
+              <span>Empenhado no dia / empenhado do ano corrente</span>
+              <strong id="snapshot-progress-year-text">--</strong>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill good" id="snapshot-progress-year-fill"></span>
+            </div>
+          </article>
+        </div>
+        <p class="hint" id="snapshot-progress-note">As barras ajudam a ver se o movimento do dia foi grande ou pequeno no contexto geral.</p>
+      </section>
+
+      <section class="panel">
+        <h2>Histórico do monitoramento diário</h2>
+        <p class="hint">A linha mostra a variação observada em cada atualização da base. Isso permite ver rapidamente quando houve picos.</p>
+        <div class="chart-box">
+          <canvas id="chart-history"></canvas>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Quem teve maior aumento hoje e para onde foi</h2>
+        <div class="charts">
+          <div class="chart-box">
+            <canvas id="chart-authors"></canvas>
+          </div>
+          <div class="chart-box">
+            <canvas id="chart-destinations"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Pares autor -> localidade de aplicação com maior aumento no dia</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Autor</th>
+                <th>Partido</th>
+                <th>Localidade de aplicação do recurso</th>
+                <th>Aumento no dia</th>
+                <th>Total acumulado do par</th>
+              </tr>
+            </thead>
+            <tbody id="table-pairs">
+              <tr><td colspan="5">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Top acumulado no ano corrente (mesmo recorte do painel)</h2>
+        <p class="hint">Essas tabelas usam o ano vigente da base UNICO, para ficar coerente com o acompanhamento anual mostrado acima.</p>
+        <div class="charts">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autor</th>
+                  <th>Partido</th>
+                  <th>Total empenhado no ano</th>
+                </tr>
+              </thead>
+              <tbody id="table-authors-total">
+                <tr><td colspan="3">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Localidade de aplicação</th>
+                  <th>Total empenhado no ano</th>
+                </tr>
+              </thead>
+              <tbody id="table-destinations-total">
+                <tr><td colspan="2">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="dashboard-view" id="view-docs" hidden>
+      <section class="panel">
+        <h2>Execução diária de emendas parlamentares</h2>
+        <p class="hint">Leitura no estilo da divulgação histórica: valor empenhado até a data, percentual do autorizado no ano e visão rápida por dia/semana.</p>
+        <div class="cards">
+          <article class="card">
+            <div class="label">Valor autorizado anual estimado <span class="help-tip" tabindex="0" data-tip="Valor autorizado é o limite anual aprovado para execução. Em muitos painéis ele aparece como teto.">?</span></div>
+            <div class="value" id="doc-kpi-max-year">--</div>
+          </article>
+          <article class="card">
+            <div class="label">Já empenhado até agora</div>
+            <div class="value" id="doc-kpi-committed-so-far">--</div>
+          </article>
+          <article class="card">
+            <div class="label">Empenhado no último dia</div>
+            <div class="value good" id="doc-kpi-committed-last-day">--</div>
+          </article>
+          <article class="card">
+            <div class="label">Pago no ano (documentos)</div>
+            <div class="value" id="doc-kpi-paid-year">--</div>
+          </article>
+        </div>
+        <div class="progress-grid progress-grid-focus">
+          <article class="progress-item">
+            <div class="progress-head">
+              <span>Empenhado acumulado / valor autorizado anual <span class="help-tip" tabindex="0" data-tip="Mostra quanto do limite anual autorizado já foi comprometido em empenhos.">?</span></span>
+              <strong id="docs-progress-year-text">--</strong>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill good" id="docs-progress-year-fill"></span>
+            </div>
+          </article>
+          <article class="progress-item">
+            <div class="progress-head">
+              <span>Empenhado no último dia / acumulado do ano</span>
+              <strong id="docs-progress-day-text">--</strong>
+            </div>
+            <div class="progress-track">
+              <span class="progress-fill" id="docs-progress-day-fill"></span>
+            </div>
+          </article>
+        </div>
+        <p class="hint" id="docs-progress-note">Quando não há valor autorizado disponível na fonte, mostramos a comparação com o acumulado do ano.</p>
+        <p class="spotlight" id="doc-spotlight">Carregando monitor paralelo...</p>
+      </section>
+
+      <section class="panel">
+        <h2>Leitura rápida por data, semana e acumulado</h2>
+        <div class="charts">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data do empenho</th>
+                  <th>Acumulado até a data</th>
+                  <th>% autorizado</th>
+                </tr>
+              </thead>
+              <tbody id="table-classic-accumulated">
+                <tr><td colspan="3">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Semana</th>
+                  <th>Acumulado (fim da semana)</th>
+                  <th>Na semana</th>
+                </tr>
+              </thead>
+              <tbody id="table-classic-week">
+                <tr><td colspan="3">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Empenhado na data</th>
+              </tr>
+            </thead>
+            <tbody id="table-classic-day">
+              <tr><td colspan="2">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Evolução diária do empenhado (com acumulado do ano)</h2>
+        <p class="hint">A barra mostra o empenhado em cada dia. A linha mostra quanto já foi acumulado no ano até aquele momento.</p>
+        <div class="chart-box">
+          <canvas id="chart-docs-daily"></canvas>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Quem mais empenhou (pessoa/partido/bancada) <span class="help-tip" tabindex="0" data-tip="No gráfico da direita, cada barra mostra a participação de cada autor no total do recorte escolhido: dia ou ano.">?</span></h2>
+          <div class="mini-toggle">
+            <button id="docs-mode-day" type="button">No dia</button>
+            <button class="active" id="docs-mode-year" type="button">No ano</button>
+          </div>
+        </div>
+        <p class="hint" id="docs-mode-note">Use os botões para trocar entre o recorte diário e o acumulado do ano.</p>
+        <div class="charts">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autor</th>
+                  <th>Grupo</th>
+                  <th>Empenhado</th>
+                  <th>% do total do recorte</th>
+                </tr>
+              </thead>
+              <tbody id="table-docs-authors-dynamic">
+                <tr><td colspan="4">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="chart-box chart-box-authors-share">
+            <canvas id="chart-docs-authors-share"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Para quais localidades de aplicação foi o empenho no último dia <span class="help-tip" tabindex="0" data-tip="Localidade de aplicação é o campo que indica para onde o recurso foi direcionado: município, estado, órgão ou unidade executora.">?</span></h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Localidade de aplicação</th>
+                <th>Empenhado no dia</th>
+              </tr>
+            </thead>
+            <tbody id="table-docs-dest-day">
+              <tr><td colspan="2">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Apoiamento de emendas (fonte complementar) <span class="help-tip" tabindex="0" data-tip="Apoiamento mostra quando um parlamentar ou grupo assina apoio à emenda de outro autor. É uma relação política de apoio, não um gasto adicional separado.">?</span></h2>
+        <p class="hint" id="apoiamento-note">Carregando fonte de apoiamento...</p>
+        <p class="hint" id="apoiamento-explain">Apoiamento indica quem apoiou emenda de quem. Isso ajuda a entender articulações políticas e concentração de apoios.</p>
+        <div class="table-wrap">
+          <table class="table-wide">
+            <thead>
+              <tr>
+                <th>Apoiador</th>
+                <th>Grupo</th>
+                <th>Empenhado</th>
+                <th>% do total apoiado</th>
+                <th>Autores apoiados</th>
+                <th>Principais autores apoiados</th>
+              </tr>
+            </thead>
+            <tbody id="table-apoiamento-top">
+              <tr><td colspan="6">Carregando...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="charts">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Autores mais apoiados</th>
+                  <th>Empenhado com apoio</th>
+                </tr>
+              </thead>
+              <tbody id="table-apoiamento-authors">
+                <tr><td colspan="2">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Grupo de apoiador</th>
+                  <th>Empenhado com apoio</th>
+                </tr>
+              </thead>
+              <tbody id="table-apoiamento-groups">
+                <tr><td colspan="2">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel">
+      <h2>Metodologia, nota de rodapé e contexto</h2>
+      <p class="hint">Como este painel foi montado (linguagem simples): usamos dados oficiais abertos, atualizados por rotina automática. O painel principal usa a base de documentos do Portal da Transparência; a aba comparativa usa SIOP/Siga Brasil para conferir ritmo e teto anual.</p>
+      <p class="hint">Leitura dos termos: <strong>autorizado</strong> = teto previsto no orçamento; <strong>empenhado</strong> = valor já reservado para pagamento; <strong>pago</strong> = valor efetivamente desembolsado.</p>
+      <p class="hint">Definição usada aqui: <strong>“Empenhado no dia”</strong> é a variação positiva do valor empenhado acumulado entre o snapshot atual e o snapshot anterior da mesma fonte.</p>
+      <ul class="source-list" id="sources-list">
+        <li>Carregando fontes...</li>
+      </ul>
+      <p class="hint footnote-note"><strong>Nota de rodapé:</strong> os valores podem divergir entre fontes no curto prazo por diferença de data de atualização, regras de classificação (RP/tipo de emenda) e estágio da execução. Por isso o painel destaca o Portal como base principal e mostra alerta quando o SIOP estiver mais atualizado ou muito diferente.</p>
+      <h2>Leituras de contexto</h2>
+      <p class="hint">Para entender por que acompanhar esses dados: emendas afetam serviços públicos, disputa de prioridades e relação entre Executivo e Legislativo. A liberação costuma ocorrer em ondas ao longo do ano e pode acelerar em momentos de negociação política.</p>
+      <p class="hint"><strong>O que observar no painel:</strong> 1) picos de empenho em poucos dias; 2) concentração em poucos autores ou localidades; 3) avanço (ou atraso) do % do teto autorizado; 4) diferença de ritmo entre as duas fontes.</p>
+      <ul class="source-list context-links">
+        <li><a href="https://portaldatransparencia.gov.br/entenda-a-gestao-publica/emendas-parlamentares" target="_blank" rel="noopener noreferrer">Portal da Transparência (CGU): o que são emendas, quais são obrigatórias e como consultar</a></li>
+        <li><a href="https://www.camara.leg.br/assessoria-de-imprensa/1230786-camara-cria-guia-que-ajuda-cidadao-a-entender-e-fiscalizar-recursos-das-emendas/" target="_blank" rel="noopener noreferrer">Câmara dos Deputados: guia para acompanhar e fiscalizar emendas</a></li>
+        <li><a href="https://www12.senado.leg.br/noticias/materias/2025/02/28/maioria-do-stf-valida-plano-para-emendas-parlamentares" target="_blank" rel="noopener noreferrer">Senado Notícias: validação no STF do plano de transparência e rastreabilidade</a></li>
+        <li><a href="https://www.poder360.com.br/poder-governo/lula-reservou-r-9-bi-de-emendas-em-pior-momento-com-congresso/" target="_blank" rel="noopener noreferrer">Poder360: aceleração de empenhos em momento de tensão com o Congresso</a></li>
+        <li><a href="https://www.jota.info/stf/do-supremo/liberacao-parcial-das-emendas-deve-arrastar-crise-para-2025-e-planalto-tera-de-agir" target="_blank" rel="noopener noreferrer">JOTA: liberação parcial de emendas e impacto na negociação entre poderes</a></li>
+        <li><a href="https://www.ipea.gov.br/portal/categorias/45-todas-as-noticias/noticias/16161-expansao-das-emendas-parlamentares-transforma-o-orcamento-do-sus" target="_blank" rel="noopener noreferrer">Ipea: expansão das emendas e efeitos no financiamento de políticas públicas</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../scripts/dashboard-update-schedule.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
