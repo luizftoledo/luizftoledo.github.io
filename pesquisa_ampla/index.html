@@ -9,31 +9,17 @@
   </head>
   <body>
     <main class="page-shell">
-      <header class="topbar">
-        <div class="topbar-copy">
-          <p class="eyebrow">Pesquisa pública</p>
-          <h1>Busca amplo de pessoa física ou jurídica</h1>
-        </div>
-
-        <div class="topbar-actions">
-          <p class="status-text" id="status-text">Carregando a ferramenta...</p>
-          <a class="open-link" id="open-link" href="#" target="_blank" rel="noreferrer" hidden>
-            Abrir em nova aba
-          </a>
-        </div>
-      </header>
-
       <section class="frame-panel" id="frame-panel" hidden>
         <iframe
           id="app-frame"
-          title="Ferramenta de busca"
+          title="Busca amplo de pessoa física ou jurídica"
           loading="eager"
           referrerpolicy="strict-origin-when-cross-origin"
         ></iframe>
       </section>
 
       <section class="help-panel" id="help-panel" hidden>
-        <h2>Configuração pendente</h2>
+        <h1>Busca amplo de pessoa física ou jurídica</h1>
         <p>Falta ligar esta página ao backend público da ferramenta.</p>
         <p>Edite <code>docs/config.js</code> e troque o endereço de exemplo pela URL real do Cloud Run.</p>
       </section>
@@ -45,8 +31,6 @@
       const framePanel = document.getElementById("frame-panel");
       const helpPanel = document.getElementById("help-panel");
       const appFrame = document.getElementById("app-frame");
-      const statusText = document.getElementById("status-text");
-      const openLink = document.getElementById("open-link");
 
       const isConfigured =
         backendUrl &&
@@ -54,17 +38,10 @@
         !backendUrl.includes("SEU-BACKEND.run.app");
 
       if (!isConfigured) {
-        statusText.textContent = "Falta ligar esta página ao backend.";
         helpPanel.hidden = false;
       } else {
-        const targetUrl = `${backendUrl}/`;
         framePanel.hidden = false;
-        appFrame.src = targetUrl;
-        openLink.href = targetUrl;
-        openLink.hidden = false;
-        appFrame.addEventListener("load", () => {
-          statusText.textContent = "Ferramenta pronta.";
-        });
+        appFrame.src = `${backendUrl}/`;
       }
     </script>
   </body>
