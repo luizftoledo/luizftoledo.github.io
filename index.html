@@ -814,8 +814,9 @@
           <div class="portfolio-chat-widget">
             <div class="portfolio-chat-messages" id="portfolioChatMessages" aria-live="polite">
               <article class="portfolio-chat-message portfolio-chat-message-assistant">
-                <p>Ask about reporting, awards, fellowships, workshops, research, or DataFixers. I will answer from
-                  the portfolio and attach the sources used.</p>
+                <p>Ask about reporting, awards, fellowships, workshops, research, or DataFixers. You can also attach
+                  one image, audio clip, or text file. I will answer from the portfolio and keep the source buttons
+                  next to each claim.</p>
               </article>
             </div>
 
@@ -823,6 +824,15 @@
               <label class="sr-only" for="portfolioChatInput">Ask a question about Luiz Fernando Toledo</label>
               <textarea id="portfolioChatInput" name="question" rows="4"
                 placeholder="Example: What investigations led to public impact?" maxlength="800"></textarea>
+              <div class="portfolio-chat-attachment-row">
+                <label class="portfolio-chat-upload" for="portfolioChatFile">Attach image, audio, or text</label>
+                <input id="portfolioChatFile" name="attachment" type="file"
+                  accept="image/*,audio/*,.txt,.md,.csv,.json,text/plain,text/markdown,text/csv,application/json">
+                <button type="button" class="portfolio-chat-file-clear" id="portfolioChatFileClear" hidden>Remove
+                  file</button>
+              </div>
+              <p class="portfolio-chat-file-meta" id="portfolioChatFileMeta">Optional: attach one image, audio clip,
+                or text file.</p>
               <div class="portfolio-chat-actions">
                 <p class="portfolio-chat-note">Portfolio content only. No external web search.</p>
                 <button type="submit" class="btn portfolio-chat-submit" id="portfolioChatSubmit">Ask</button>

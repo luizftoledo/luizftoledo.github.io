@@ -172,6 +172,15 @@
     };
     window.addEventListener('scroll', updateProgress);
     window.addEventListener('load', updateProgress);
+    const highlightHashTarget = () => {
+      if (!window.location.hash) return;
+      const target = document.querySelector(window.location.hash);
+      if (!target) return;
+      target.classList.add('source-highlight');
+      setTimeout(() => target.classList.remove('source-highlight'), 2400);
+    };
+    window.addEventListener('load', () => setTimeout(highlightHashTarget, 180));
+    window.addEventListener('hashchange', () => setTimeout(highlightHashTarget, 120));
     // Back to top button
     const backBtn = document.createElement('button');
     backBtn.className = 'back-to-top';
