@@ -429,7 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const answer =
         (typeof data.answer === "string" && data.answer.trim()) ||
-        "I could not confirm that from the portfolio content.";
+        "I could not confirm that from the portfolio sources.";
 
       history.push({
         role: "user",

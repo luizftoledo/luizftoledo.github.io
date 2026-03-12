@@ -9,6 +9,8 @@ on:
       - "resume.html"
       - "api/portfolio-chat.js"
       - "scripts/build_portfolio_chat_corpus.mjs"
+      - "scripts/extract_remote_source.py"
+      - "scripts/fetch_youtube_transcript.py"
       - "scripts/prepare_portfolio_chat_api.mjs"
       - ".github/workflows/update-portfolio-chat.yml"
   workflow_dispatch:
@@ -36,6 +38,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install corpus build dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install yt-dlp beautifulsoup4 pypdf requests youtube-transcript-api
 
       - name: Rebuild corpus and standalone API package
         run: |
