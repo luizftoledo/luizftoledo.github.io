@@ -131,6 +131,13 @@ nav .nav-links a:hover {
   gap: 16px;
 }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
 .hero h1 {
   font-size: 56px;
   font-weight: 900;
@@ -176,6 +183,17 @@ nav .nav-links a:hover {
 
 .btn:hover {
   filter: brightness(1.05);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.04);
 }
 
 /* glass cards */
@@ -946,6 +964,11 @@ html[data-theme='light'] {
 
   .portfolio-chat-shell {
     grid-template-columns: 1fr;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 
