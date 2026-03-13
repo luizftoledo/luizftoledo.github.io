@@ -681,7 +681,7 @@ async function generateAnswer(apiKey, question, history, sources, attachment) {
     generationConfig: {
       temperature: 0.15,
       topP: 0.8,
-      maxOutputTokens: 260,
+      maxOutputTokens: 800,
       responseMimeType: "text/plain",
     },
   });
