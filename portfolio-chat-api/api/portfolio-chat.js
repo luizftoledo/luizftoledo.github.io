@@ -657,7 +657,7 @@ function buildSystemInstruction(sources) {
     "If the user uploaded a file, you may describe that file too, but keep portfolio claims grounded only in those source excerpts.",
     "Reply in the same language as the user's latest message.",
     "Default to a tight answer: at most 1 short paragraph or 3 bullets unless the user explicitly asks for detail.",
-    "Unless the user asks for depth, stay under roughly 90 words.",
+    "Unless the user asks for depth, stay under roughly 200 words. Always finish your sentence — never cut off mid-sentence.",
     "If the answer is not supported by the excerpts, say you could not confirm it from the portfolio sources.",
     "Keep the answer concise, factual, and useful.",
     "Do not invent achievements, dates, roles, clients, awards, or employers.",
@@ -681,7 +681,7 @@ async function generateAnswer(apiKey, question, history, sources, attachment) {
     generationConfig: {
       temperature: 0.15,
       topP: 0.8,
-      maxOutputTokens: 260,
+      maxOutputTokens: 1500,
       responseMimeType: "text/plain",
     },
   });
