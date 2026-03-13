@@ -326,14 +326,19 @@ document.addEventListener("DOMContentLoaded", () => {
       targetUrl.origin === currentUrl.origin &&
       targetUrl.pathname === currentUrl.pathname;
 
-    if (!isSamePage || !targetUrl.hash) {
-      window.location.href = targetUrl.toString();
+    if (!isSamePage) {
+      window.open(targetUrl.toString(), "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    if (!targetUrl.hash) {
+      window.open(targetUrl.toString(), "_blank", "noopener,noreferrer");
       return;
     }
 
     const target = document.querySelector(targetUrl.hash);
     if (!target) {
-      window.location.href = targetUrl.toString();
+      window.open(targetUrl.toString(), "_blank", "noopener,noreferrer");
       return;
     }
 
