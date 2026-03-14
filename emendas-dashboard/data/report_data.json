@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-13T14:05:10.584466+00:00",
+  "generated_at": "2026-03-14T13:52:12.183742+00:00",
   "snapshot_date": "2026-03-13",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -576,7 +576,7 @@
     "total_liquidado": 109999.36,
     "total_pago": 0.0
   },
-  "run_date": "2026-03-13",
+  "run_date": "2026-03-14",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -606,7 +606,7 @@
       "available": true,
       "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
       "last_update": "",
-      "base_siafi_date": "9/3/2026",
+      "base_siafi_date": "12/3/2026",
       "filters": {
         "year": 2026,
         "rp": [
@@ -660,8 +660,7 @@
           "error": ""
         }
       ],
-      "error": "6 - Emendas Individuais: filtro não confirmado ; 7 - Emendas de Bancada Estadual: filtro não confirmado ; 8 - Emendas de Comissão: filtro não confirmado",
-      "fallback_from_previous": true
+      "error": ""
     },
     "siop_details": {
       "available": true,
@@ -676,7 +675,7 @@
         ]
       },
       "last_update": "",
-      "base_siafi_date": "9/3/2026",
+      "base_siafi_date": "12/3/2026",
       "rows": [],
       "rows_count": 0,
       "unique_nro_emendas": 0,
@@ -711,8 +710,7 @@
           "error": ""
         }
       ],
-      "error": "6 - Emendas Individuais: filtro não confirmado ; 7 - Emendas de Bancada Estadual: filtro não confirmado ; 8 - Emendas de Comissão: filtro não confirmado",
-      "fallback_from_previous": true
+      "error": ""
     },
     "documents": {
       "year": 2026,
@@ -2125,6 +2123,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-03-14",
+      "last_update": "",
+      "base_siafi_date": "12/3/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
-  ]
+  ],
+  "updated_at": "2026-03-14T13:52:12.183742+00:00"
 }
