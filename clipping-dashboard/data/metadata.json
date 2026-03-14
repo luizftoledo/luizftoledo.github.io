@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-03-13T14:29:52.226119+00:00",
+  "generated_at": "2026-03-14T14:06:39.229413+00:00",
   "counts": {
     "items": 81,
-    "domains": 23,
+    "domains": 21,
     "categories": {
-      "reportagem_autoral": 52,
+      "reportagem_autoral": 55,
       "eco_republicacao": 0,
-      "mencao": 11,
+      "mencao": 8,
       "entrevista": 1,
       "palestra_curso": 0,
       "perfil_bio": 17
@@ -18,7 +18,7 @@
     }
   },
   "date_range": {
-    "min": "2020-11-25",
+    "min": "2021-02-06",
     "max": "2026-03-11"
   },
   "methodology": {
@@ -39,18 +39,18 @@
       }
     },
     "enrich": {
-      "fetched": 64,
-      "reused": 22,
+      "fetched": 65,
+      "reused": 21,
       "kept": 81,
       "dropped": 5,
       "categories": {
         "perfil_bio": 17,
-        "reportagem_autoral": 52,
-        "mencao": 11,
+        "reportagem_autoral": 55,
+        "mencao": 8,
         "entrevista": 1
       },
       "domains": {
-        "bbc.com": 54,
+        "bbc.com": 56,
         "intercept.com.br": 1,
         "piaui.folha.uol.com.br": 1,
         "apublica.org": 3,
@@ -70,9 +70,7 @@
         "scielo.br": 1,
         "theintercept.com": 1,
         "sbtnews.sbt.com.br": 1,
-        "g1.globo.com": 1,
-        "cnnbrasil.com.br": 1,
-        "www1.folha.uol.com.br": 1
+        "g1.globo.com": 1
       },
       "errors": [
         {

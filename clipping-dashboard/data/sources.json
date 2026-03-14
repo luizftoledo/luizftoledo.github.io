@@ -9,18 +9,18 @@
     }
   },
   "enrich": {
-    "fetched": 64,
-    "reused": 22,
+    "fetched": 65,
+    "reused": 21,
     "kept": 81,
     "dropped": 5,
     "categories": {
       "perfil_bio": 17,
-      "reportagem_autoral": 52,
-      "mencao": 11,
+      "reportagem_autoral": 55,
+      "mencao": 8,
       "entrevista": 1
     },
     "domains": {
-      "bbc.com": 54,
+      "bbc.com": 56,
       "intercept.com.br": 1,
       "piaui.folha.uol.com.br": 1,
       "apublica.org": 3,
@@ -40,9 +40,7 @@
       "scielo.br": 1,
       "theintercept.com": 1,
       "sbtnews.sbt.com.br": 1,
-      "g1.globo.com": 1,
-      "cnnbrasil.com.br": 1,
-      "www1.folha.uol.com.br": 1
+      "g1.globo.com": 1
     },
     "errors": [
       {
