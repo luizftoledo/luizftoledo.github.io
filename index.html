@@ -111,7 +111,6 @@
               target="_blank" rel="noopener noreferrer" class="highlight">various languages</a>, reaching thousands of
             readers in Brazil and abroad.</p>
           <div class="hero-actions">
-            <a href="#portfolio-chat" class="btn">Ask the portfolio assistant</a>
             <a href="resume.html" class="btn btn-secondary">View resume</a>
           </div>
         </div>
@@ -314,16 +313,16 @@
                   <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">7.</span>
                   <span>The modelling contest used by Epstein's network to recruit Latin American teenagers</span>
                 </a>
-                <a href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener noreferrer"
+                <a href="https://www.bbc.com/portuguese/articles/cm21e7gnx0ro" target="_blank" rel="noopener noreferrer"
                   class="story-link" style="display: flex; align-items: baseline; gap: 10px;">
                   <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">8.</span>
-                  <span>'He used to do some tests on me': Brazilian woman tells how she was lured to Epstein in Sao Paulo</span>
+                  <span>Epstein bought apartment in upscale Sao Paulo neighborhood, deed shows</span>
                 </a>
-                <a href="https://www.bbc.com/portuguese/articles/cm21e7gnx0ro" target="_blank" rel="noopener noreferrer"
+                <a href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener noreferrer"
                   class="story-link"
                   style="display: flex; align-items: center; gap: 10px; background: rgba(0, 212, 160, 0.07); border: 1px solid rgba(0, 212, 160, 0.25); border-radius: 6px; padding: 8px 10px; margin-top: 2px;">
                   <span style="color: #00d4a0; font-weight: 700; font-size: 0.85rem; min-width: 18px;">9.</span>
-                  <span style="flex: 1;">Epstein bought apartment in upscale Sao Paulo neighborhood, deed shows</span>
+                  <span style="flex: 1;">'He used to do some tests on me': Brazilian woman tells how she was lured to Epstein in Sao Paulo</span>
                   <span
                     style="background: rgba(0, 212, 160, 0.18); color: #00d4a0; border: 1px solid rgba(0, 212, 160, 0.4); border-radius: 4px; padding: 2px 7px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0;">NEW</span>
                 </a>
@@ -807,62 +806,7 @@
       </div>
     </section>
 
-    <section id="portfolio-chat" class="section portfolio-chat-section">
-      <div class="container">
-        <div class="portfolio-chat-shell">
-          <div class="portfolio-chat-intro">
-            <p class="portfolio-chat-kicker">Portfolio assistant</p>
-            <h2 class="section-title">Ask me about my work</h2>
-            <p class="portfolio-chat-description">
-              Questions are answered from this portfolio plus the linked reporting, documents, and available video
-              transcripts behind it. Source buttons open the original article, page, or video.
-            </p>
-            <div class="portfolio-chat-prompts" aria-label="Suggested questions">
-              <button type="button" class="portfolio-chat-prompt"
-                data-chat-question="What do you currently do at BBC and DataFixers?">BBC + DataFixers</button>
-              <button type="button" class="portfolio-chat-prompt"
-                data-chat-question="What investigations had the biggest impact?">Top investigations</button>
-              <button type="button" class="portfolio-chat-prompt"
-                data-chat-question="What fellowships, grants and scholarships have you received?">Fellowships and
-                grants</button>
-              <button type="button" class="portfolio-chat-prompt"
-                data-chat-question="What is your academic and teaching background?">Teaching and education</button>
-            </div>
-          </div>
 
-          <div class="portfolio-chat-widget">
-            <div class="portfolio-chat-messages" id="portfolioChatMessages" aria-live="polite">
-              <article class="portfolio-chat-message portfolio-chat-message-assistant">
-                <p>Ask about reporting, awards, fellowships, workshops, research, or DataFixers. You can also attach
-                  one image, audio clip, or text file. I will answer from the portfolio and keep the source buttons
-                  next to each claim.</p>
-              </article>
-            </div>
-
-            <form id="portfolioChatForm" class="portfolio-chat-form">
-              <label class="sr-only" for="portfolioChatInput">Ask a question about Luiz Fernando Toledo</label>
-              <textarea id="portfolioChatInput" name="question" rows="4"
-                placeholder="Example: What investigations led to public impact?" maxlength="800"></textarea>
-              <div class="portfolio-chat-attachment-row">
-                <label class="portfolio-chat-upload" for="portfolioChatFile">Attach image, audio, or text</label>
-                <input id="portfolioChatFile" name="attachment" type="file"
-                  accept="image/*,audio/*,.txt,.md,.csv,.json,text/plain,text/markdown,text/csv,application/json">
-                <button type="button" class="portfolio-chat-file-clear" id="portfolioChatFileClear" hidden>Remove
-                  file</button>
-              </div>
-              <p class="portfolio-chat-file-meta" id="portfolioChatFileMeta">Optional: attach one image, audio clip,
-                or text file.</p>
-              <div class="portfolio-chat-actions">
-                <p class="portfolio-chat-note">Uses the portfolio and the sources it links to. No open-web search.</p>
-                <button type="submit" class="btn portfolio-chat-submit" id="portfolioChatSubmit">Ask</button>
-              </div>
-            </form>
-
-            <p class="portfolio-chat-status" id="portfolioChatStatus" hidden></p>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
   <footer id="contact" class="footer section">
     <div class="container">
@@ -885,8 +829,7 @@
   </footer>
 
   <script src="scripts/main.js"></script>
-  <script src="scripts/portfolio-chat.config.js"></script>
-  <script src="scripts/portfolio-chat.js"></script>
+
   <!-- Interactive Background -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
   <script src="scripts/background.js"></script>
