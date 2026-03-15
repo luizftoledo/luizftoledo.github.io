@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-03-14T14:06:39.229413+00:00",
+  "generated_at": "2026-03-15T14:18:39.437297+00:00",
   "counts": {
     "items": 81,
-    "domains": 21,
+    "domains": 23,
     "categories": {
-      "reportagem_autoral": 55,
+      "reportagem_autoral": 51,
       "eco_republicacao": 0,
-      "mencao": 8,
+      "mencao": 12,
       "entrevista": 1,
       "palestra_curso": 0,
       "perfil_bio": 17
@@ -14,11 +14,11 @@
     "recent": {
       "last_1_day": 0,
       "last_7_days": 1,
-      "last_30_days": 4
+      "last_30_days": 3
     }
   },
   "date_range": {
-    "min": "2021-02-06",
+    "min": "2020-11-25",
     "max": "2026-03-11"
   },
   "methodology": {
@@ -45,17 +45,17 @@
       "dropped": 5,
       "categories": {
         "perfil_bio": 17,
-        "reportagem_autoral": 55,
-        "mencao": 8,
+        "reportagem_autoral": 51,
+        "mencao": 12,
         "entrevista": 1
       },
       "domains": {
-        "bbc.com": 56,
+        "bbc.com": 53,
         "intercept.com.br": 1,
         "piaui.folha.uol.com.br": 1,
         "apublica.org": 3,
         "ojoioeotrigo.com.br": 2,
-        "estadao.com.br": 3,
+        "estadao.com.br": 4,
         "escavador.com": 1,
         "icfj.org": 1,
         "devstudies.cam.ac.uk": 1,
@@ -70,7 +70,9 @@
         "scielo.br": 1,
         "theintercept.com": 1,
         "sbtnews.sbt.com.br": 1,
-        "g1.globo.com": 1
+        "g1.globo.com": 1,
+        "www1.folha.uol.com.br": 1,
+        "cnnbrasil.com.br": 1
       },
       "errors": [
         {
