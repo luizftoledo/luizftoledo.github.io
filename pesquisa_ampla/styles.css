@@ -1,0 +1,93 @@
+:root {
+  --paper: #efe7d6;
+  --line: rgba(31, 34, 38, 0.10);
+  --card: rgba(255, 255, 255, 0.78);
+  --shadow: 0 18px 60px rgba(31, 34, 38, 0.10);
+  --ink: #1f2226;
+  --ink-soft: #586168;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #f8f4ea 0%, var(--paper) 100%);
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  color: var(--ink);
+}
+
+.page-shell {
+  width: min(100%, 1500px);
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 8px;
+}
+
+.frame-panel,
+.help-panel {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.frame-panel {
+  padding: 0;
+  overflow: hidden;
+}
+
+#app-frame {
+  display: block;
+  width: 100%;
+  height: calc(100vh - 16px);
+  border: none;
+  background: #fff;
+}
+
+.help-panel {
+  max-width: 720px;
+  margin: 32px auto;
+  padding: 24px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 0.95;
+}
+
+p {
+  margin: 0 0 10px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+code {
+  background: rgba(31, 34, 38, 0.08);
+  border-radius: 8px;
+  padding: 2px 6px;
+}
+
+@media (max-width: 900px) {
+  .page-shell {
+    padding: 0;
+  }
+
+  .frame-panel {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  #app-frame {
+    height: 100vh;
+  }
+}

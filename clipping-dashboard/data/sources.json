@@ -9,23 +9,23 @@
     }
   },
   "enrich": {
-    "fetched": 60,
-    "reused": 26,
-    "kept": 81,
+    "fetched": 62,
+    "reused": 23,
+    "kept": 80,
     "dropped": 5,
     "categories": {
       "perfil_bio": 17,
-      "reportagem_autoral": 50,
-      "mencao": 13,
+      "reportagem_autoral": 51,
+      "mencao": 11,
       "entrevista": 1
     },
     "domains": {
-      "bbc.com": 51,
+      "bbc.com": 53,
       "intercept.com.br": 1,
       "piaui.folha.uol.com.br": 1,
       "apublica.org": 3,
       "ojoioeotrigo.com.br": 2,
-      "estadao.com.br": 5,
+      "estadao.com.br": 3,
       "escavador.com": 1,
       "icfj.org": 1,
       "devstudies.cam.ac.uk": 1,
@@ -40,10 +40,9 @@
       "scielo.br": 1,
       "theintercept.com": 1,
       "sbtnews.sbt.com.br": 1,
-      "g1.globo.com": 1,
       "abraji.org.br": 1,
-      "cnnbrasil.com.br": 1,
-      "www1.folha.uol.com.br": 1
+      "g1.globo.com": 1,
+      "cnnbrasil.com.br": 1
     },
     "errors": [
       {
