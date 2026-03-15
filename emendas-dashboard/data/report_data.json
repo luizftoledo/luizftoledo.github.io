@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-14T13:52:12.183742+00:00",
+  "generated_at": "2026-03-15T13:54:05.457353+00:00",
   "snapshot_date": "2026-03-13",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -576,7 +576,7 @@
     "total_liquidado": 109999.36,
     "total_pago": 0.0
   },
-  "run_date": "2026-03-14",
+  "run_date": "2026-03-15",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -2133,7 +2133,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-03-15",
+      "last_update": "",
+      "base_siafi_date": "12/3/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
   ],
-  "updated_at": "2026-03-14T13:52:12.183742+00:00"
+  "updated_at": "2026-03-15T13:54:05.457353+00:00"
 }
