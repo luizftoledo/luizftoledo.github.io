@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-14T13:58:30.456839+00:00",
+  "generated_at": "2026-03-15T13:59:55.406942+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -10,16 +10,17 @@
     "senado_senadores": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json"
   },
   "counts": {
-    "entities": 633,
+    "entities": 643,
     "entities_by_kind": {
       "deputado": 513,
       "janja": 1,
       "ministro": 38,
+      "stf": 10,
       "senador": 81
     },
-    "mention_rows": 2875,
-    "mention_occurrences_total": 5237,
-    "mention_docs_total": 2875,
+    "mention_rows": 3017,
+    "mention_occurrences_total": 5480,
+    "mention_docs_total": 3017,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -11385,6 +11386,262 @@
       ],
       "aliases_observed": [],
       "search_text": "gustavo costa feliciano gustavo costa feliciano ministros do governo ministro de estado do turismo gustavo costa feliciano gustavo feliciano costa feliciano gustavo costa",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
+    },
+    {
+      "id": "stf-flavio-dino",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Flávio Dino",
+      "official_name": "Flávio Dino",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=FlavioDinoPrincipal",
+      "aliases_counted": [
+        "Flávio Dino"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Flávio Dino",
+          "occurrences": 119,
+          "docs": 53
+        }
+      ],
+      "search_text": "flavio dino flavio dino stf ministro do stf flavio dino",
+      "mention_occurrences_total": 119,
+      "mention_docs_total": 53
+    },
+    {
+      "id": "stf-alexandre-de-moraes",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Alexandre de Moraes",
+      "official_name": "Alexandre de Moraes",
+      "role": "Vice-Presidente",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=AlexandreMoraesPrincipal",
+      "aliases_counted": [
+        "Alexandre de Moraes",
+        "Alexandre Moraes"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Alexandre de Moraes",
+          "occurrences": 40,
+          "docs": 31
+        },
+        {
+          "alias": "Alexandre Moraes",
+          "occurrences": 6,
+          "docs": 6
+        }
+      ],
+      "search_text": "alexandre de moraes alexandre de moraes stf vice presidente alexandre de moraes alexandre moraes",
+      "mention_occurrences_total": 46,
+      "mention_docs_total": 37
+    },
+    {
+      "id": "stf-cristiano-zanin",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Cristiano Zanin",
+      "official_name": "Cristiano Zanin",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=CristianoZaninPrincipal",
+      "aliases_counted": [
+        "Cristiano Zanin",
+        "Cristiano",
+        "Zanin"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Cristiano",
+          "occurrences": 11,
+          "docs": 11
+        },
+        {
+          "alias": "Cristiano Zanin",
+          "occurrences": 8,
+          "docs": 7
+        },
+        {
+          "alias": "Zanin",
+          "occurrences": 17,
+          "docs": 6
+        }
+      ],
+      "search_text": "cristiano zanin cristiano zanin stf ministro do stf cristiano zanin cristiano zanin",
+      "mention_occurrences_total": 36,
+      "mention_docs_total": 18
+    },
+    {
+      "id": "stf-gilmar-mendes",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Gilmar Mendes",
+      "official_name": "Gilmar Mendes",
+      "role": "Decano",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=GilmarMendesPrincipal",
+      "aliases_counted": [
+        "Gilmar Mendes",
+        "Gilmar"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Gilmar Mendes",
+          "occurrences": 12,
+          "docs": 11
+        },
+        {
+          "alias": "Gilmar",
+          "occurrences": 5,
+          "docs": 5
+        }
+      ],
+      "search_text": "gilmar mendes gilmar mendes stf decano gilmar mendes gilmar",
+      "mention_occurrences_total": 17,
+      "mention_docs_total": 15
+    },
+    {
+      "id": "stf-edson-fachin",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Edson Fachin",
+      "official_name": "Edson Fachin",
+      "role": "Presidente",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=EdsonFachinPrincipal",
+      "aliases_counted": [
+        "Edson Fachin",
+        "Fachin",
+        "Edson"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Edson Fachin",
+          "occurrences": 6,
+          "docs": 6
+        },
+        {
+          "alias": "Edson",
+          "occurrences": 6,
+          "docs": 3
+        },
+        {
+          "alias": "Fachin",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "edson fachin edson fachin stf presidente edson fachin fachin edson",
+      "mention_occurrences_total": 13,
+      "mention_docs_total": 9
+    },
+    {
+      "id": "stf-carmen-lucia",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Cármen Lúcia",
+      "official_name": "Cármen Lúcia",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=CarmenLuciaPrincipal",
+      "aliases_counted": [
+        "Cármen Lúcia",
+        "Cármen"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Cármen Lúcia",
+          "occurrences": 5,
+          "docs": 4
+        },
+        {
+          "alias": "Cármen",
+          "occurrences": 2,
+          "docs": 2
+        }
+      ],
+      "search_text": "carmen lucia carmen lucia stf ministro do stf carmen lucia carmen",
+      "mention_occurrences_total": 7,
+      "mention_docs_total": 5
+    },
+    {
+      "id": "stf-dias-toffoli",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Dias Toffoli",
+      "official_name": "Dias Toffoli",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=DiasToffoliPrincipal",
+      "aliases_counted": [
+        "Dias Toffoli",
+        "Toffoli"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Dias Toffoli",
+          "occurrences": 2,
+          "docs": 2
+        },
+        {
+          "alias": "Toffoli",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "dias toffoli dias toffoli stf ministro do stf dias toffoli toffoli",
+      "mention_occurrences_total": 3,
+      "mention_docs_total": 3
+    },
+    {
+      "id": "stf-luiz-fux",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Luiz Fux",
+      "official_name": "Luiz Fux",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=LuizFuxPrincipal",
+      "aliases_counted": [
+        "Luiz Fux"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Luiz Fux",
+          "occurrences": 2,
+          "docs": 2
+        }
+      ],
+      "search_text": "luiz fux luiz fux stf ministro do stf luiz fux",
+      "mention_occurrences_total": 2,
+      "mention_docs_total": 2
+    },
+    {
+      "id": "stf-andre-mendonca",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "André Mendonça",
+      "official_name": "André Mendonça",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=AndreMendoncaPrincipal",
+      "aliases_counted": [
+        "André Mendonça"
+      ],
+      "aliases_observed": [],
+      "search_text": "andre mendonca andre mendonca stf ministro do stf andre mendonca",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
+    },
+    {
+      "id": "stf-nunes-marques",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Nunes Marques",
+      "official_name": "Nunes Marques",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=NunesMarquesPrincipal",
+      "aliases_counted": [
+        "Nunes Marques"
+      ],
+      "aliases_observed": [],
+      "search_text": "nunes marques nunes marques stf ministro do stf nunes marques",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
