@@ -247,6 +247,15 @@ const PERSONAS = [
     description: 'Geralmente apenas lê, mas foi motivado a comentar por algo chocante ou muito relevante. Costuma ser direto e sério.',
     sentiment_hint: 'explicitly says they rarely comment but this story made them break the silence; brief, direct, earnest; no political posturing; focused on one specific fact that shocked them',
   },
+  {
+    id: 'critico_veiculo',
+    emoji: '🚫',
+    name: 'Crítico do veículo',
+    category: 'Comportamentos online',
+    role: 'Leitor que foca em descredibilizar o veículo',
+    description: 'Foca no mensageiro em vez da mensagem. Busca erros passados do veículo ou suposto viés editorial para invalidar a notícia atual, ignorando os fatos apresentados.',
+    sentiment_hint: 'attacks the news outlet\'s credibility; ignores the article\'s facts to focus on the "agenda" or past mistakes of the publisher; uses phrases like "vende-se para quem paga mais" or "mídia tendenciosa"',
+  },
 ];
 
 // ——— DOM refs ————————————————————————————————————————————
