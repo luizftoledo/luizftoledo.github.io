@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Girls report sexual harassment by military monitors in civic-military schools - Investigative Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Base styles -->
+  <link rel="stylesheet" href="../shared/base.css">
+
+  <style>
+    /* Article-specific styles */
+    .hero-bg {
+      background-image: linear-gradient(135deg, rgba(26, 26, 26, 0.85), rgba(45, 45, 45, 0.85)), linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      background-size: cover;
+      background-position: center;
+    }
+
+    .article-intro {
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 32px;
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .warning-box {
+      background-color: rgba(196, 30, 58, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 24px;
+      margin: 40px 0;
+      border-radius: 2px;
+    }
+
+    .warning-box p {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .chapter-nav {
+      position: sticky;
+      top: 96px;
+      z-index: 100;
+      background-color: var(--bg-light);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      margin-bottom: 40px;
+    }
+
+    .chapter-nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      font-family: var(--sans);
+    }
+
+    @media (max-width: 768px) {
+      .chapter-nav-inner {
+        padding: 0 24px;
+        gap: 16px;
+      }
+    }
+
+    .chapter-nav a {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.3s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 8px;
+    }
+
+    .chapter-nav a:hover,
+    .chapter-nav a.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .case-study {
+      background-color: var(--bg-light);
+      padding: 32px;
+      margin: 40px 0;
+      border-radius: 4px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .case-title {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-dark);
+    }
+
+    .case-content p {
+      font-size: 15px;
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+
+    .viz-container {
+      background-color: var(--bg-light);
+      padding: 40px;
+      border-radius: 4px;
+      margin: 60px 0;
+      border-top: 3px solid var(--accent);
+    }
+
+    .chart-title {
+      font-family: var(--display);
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: var(--text-dark);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin: 30px 0;
+    }
+
+    .stat-card {
+      background-color: white;
+      padding: 24px;
+      border-radius: 4px;
+      border-top: 3px solid var(--accent);
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: var(--display);
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.5;
+    }
+
+    .comparison-bars {
+      margin: 30px 0;
+    }
+
+    .bar-item {
+      margin-bottom: 20px;
+    }
+
+    .bar-label {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
+
+    .bar-container {
+      background-color: var(--border);
+      height: 32px;
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 12px;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .violation-list {
+      margin: 40px 0;
+    }
+
+    .violation-item {
+      background-color: white;
+      padding: 24px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--accent);
+      border-radius: 2px;
+    }
+
+    .violation-year {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .violation-content {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-dark);
+    }
+
+    .expert-quote {
+      background-color: white;
+      padding: 32px;
+      margin: 40px 0;
+      border-radius: 4px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .expert-name {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .back-link {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 30px;
+      transition: opacity 0.3s;
+    }
+
+    .back-link:hover {
+      opacity: 0.8;
+    }
+
+    .harassment-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
+    }
+
+    .type-card {
+      background-color: white;
+      padding: 24px;
+      border-radius: 4px;
+      border-top: 3px solid var(--accent);
+    }
+
+    .type-title {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-dark);
+    }
+
+    .type-description {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- Progress Bar -->
+  <div id="progressBar" class="progress-bar"></div>
+
+  <!-- Disclaimer Bar -->
+  <div id="disclaimerBar" class="disclaimer-bar">
+    <div class="disclaimer-inner">
+      <div class="disclaimer-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <div class="disclaimer-text">
+        <span data-lang="en"><strong>Portfolio piece:</strong> This is an enhanced presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span>
+        <span data-lang="pt"><strong>Peça de portfólio:</strong> Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span>
+      </div>
+      <button id="disclaimerClose" class="disclaimer-close" aria-label="Close disclaimer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Language Toggle Bar -->
+  <div class="lang-toggle-bar">
+    <div class="lang-toggle-inner">
+      <span class="lang-toggle-label" data-lang="en">Language</span>
+      <span class="lang-toggle-label hidden" data-lang="pt">Idioma</span>
+      <button id="btnEn" class="lang-btn active" data-lang="en">EN</button>
+      <button id="btnPt" class="lang-btn" data-lang="pt">PT</button>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <header class="hero hero-bg">
+    <div class="hero-content fade-in">
+      <h1 class="hero-label" data-lang="en">Sexual harassment in schools</h1>
+      <h1 class="hero-label hidden" data-lang="pt">Assédio sexual em escolas</h1>
+
+      <h2 class="hero-title" data-lang="en">Girls report sexual harassment by military monitors in paraná's civic-military schools</h2>
+      <h2 class="hero-title hidden" data-lang="pt">Alunas denunciam PMs por assédio em escolas cívico-militares no Paraná</h2>
+<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+  <img src="imgs/photo-01.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
+</figure>
+
+
+      <p class="hero-subtitle" data-lang="en">At least nine girls between ages 11 and 13 reported inappropriate touching by a military employee, revealing systemic transparency failures and the lack of accountability mechanisms in an expanding program</p>
+      <p class="hero-subtitle hidden" data-lang="pt">Ao menos nove meninas entre 11 e 13 anos denunciaram toques indevidos de um funcionário militar, revelando falhas sistemáticas de transparência e falta de mecanismos de responsabilidade em um programa em expansão</p>
+
+      <div class="hero-meta">
+        <span data-lang="en">Luiz Fernando Toledo</span>
+        <span class="hidden" data-lang="pt">Luiz Fernando Toledo</span>
+        <span>BBC News Brasil • February 5, 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Warning -->
+  <div style="max-width: 900px; margin: 40px auto; padding: 0 40px;">
+    <div class="warning-box">
+      <p data-lang="en">⚠ WARNING: This report contains accounts of sexual violence that may be considered disturbing.</p>
+      <p class="hidden" data-lang="pt">⚠ AVISO: Este relatório contém relatos de violência sexual que podem ser considerados perturbadores.</p>
+    </div>
+  </div>
+
+  <!-- Chapter Navigation -->
+  <nav class="chapter-nav">
+    <div class="chapter-nav-inner">
+      <a href="#incident" data-lang="en">The incident</a>
+      <a href="#incident" class="hidden" data-lang="pt">O incidente</a>
+
+      <a href="#context" data-lang="en">Context</a>
+      <a href="#context" class="hidden" data-lang="pt">Contexto</a>
+
+      <a href="#cases" data-lang="en">Other cases</a>
+      <a href="#cases" class="hidden" data-lang="pt">Outros casos</a>
+
+      <a href="#transparency" data-lang="en">Transparency</a>
+      <a href="#transparency" class="hidden" data-lang="pt">Transparência</a>
+
+      <a href="#expert" data-lang="en">Expert view</a>
+      <a href="#expert" class="hidden" data-lang="pt">Visão especialista</a>
+
+      <a href="#stats" data-lang="en">Data</a>
+      <a href="#stats" class="hidden" data-lang="pt">Dados</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- The Incident -->
+    <section class="text-section" id="incident">
+      <p class="article-intro" data-lang="en">ATTENTION: This report contains accounts of sexual violence.</p>
+      <p class="article-intro hidden" data-lang="pt">ATENÇÃO: Este relatório contém relatos de violência sexual.</p>
+
+      <p data-lang="en">A group of at least nine girls, aged 11 to 13, reported that a military monitor had touched private parts of their bodies, including the breast of one of them, on different dates at a civic-military school in Cornélio Procópio, an inland municipality in Paraná state. The case happened in 2023. The reports were taken to the police. An investigation was opened for the charge of rape of a vulnerable person, and the case proceeded to court, where a process still runs under judicial secrecy. In depositions to the authorities, the girls reported inappropriate touches from the monitor during conversations.</p>
+
+      <p class="hidden" data-lang="pt">Um grupo de ao menos nove meninas, com idades entre 11 e 13 anos, denunciou que um funcionário militar teria tocado partes de seus corpos, incluindo o seio de uma delas, em diferentes datas, em uma escola cívico-militar em Cornélio Procópio, no interior do Paraná. O caso aconteceu em 2023. Os relatos foram levados à polícia. Uma investigação foi aberta para apuração de estupro de vulnerável, e o caso seguiu para a Justiça, onde um processo ainda corre sob sigilo. Em depoimento às autoridades, as meninas relataram toques indevidos do monitor durante conversas.</p>
+
+      <p data-lang="en">After the reports, the military monitor continued working at the school. He was only dismissed by the Paraná state government almost two years later, in 2025. Since school staff did not have the power to fire him, he was removed from monitor duties and reassigned to administrative functions. The case has never been made public and remains in the appeals stage. The fact that it is still pending in court means that there has been no conviction to date and that there may still be an investigation of the facts by the authorities. The Public Prosecutor's Office (MP) of Paraná stated that it had requested the acquittal of the monitor.</p>
+
+      <p class="hidden" data-lang="pt">Após os relatos, o monitor militar continuou trabalhando na escola. Foi desligado pelo governo do Paraná quase dois anos depois, em 2025. Como funcionários do colégio não tinham poder para demiti-lo, ele foi afastado das atividades de monitor e passou a trabalhar em funções administrativas. O caso nunca veio a público e segue em fase recursal. O fato de ainda estar tramitando na Justiça significa que não houve até o momento eventual condenação e que ainda pode haver apuração dos fatos por parte das autoridades. O Ministério Público (MP) do Paraná afirmou ter pedido a absolvição do monitor.</p>
+    </section>
+
+    <!-- Context -->
+    <section class="text-section" id="context">
+      <h2 data-lang="en">An expanding model facing allegations</h2>
+      <h2 class="hidden" data-lang="pt">Um modelo em expansão enfrentando denúncias</h2>
+<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+  <img src="imgs/photo-02.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
+</figure>
+
+
+      <p data-lang="en">Created in 2021 with objectives such as guaranteeing greater security to students and requiring more discipline, civic-military schools have been the target of allegations of harassment and other types of sexual violations against female students. The Paraná civic-military model, which holds the largest number of such enrollments in Brazil — the Paraná government speaks of 55% of all civic-military schools in the country — is set to expand further in 2026, with plans to create more schools of this type.</p>
+
+      <p class="hidden" data-lang="pt">Criadas em 2021 com objetivos como garantir mais segurança aos estudantes e exigir mais disciplina, escolas cívico-militares têm sido alvo de denúncias de assédio e outros tipos de violações sexuais contra alunas. O modelo cívico-militar paranaense, que detém a maior quantidade de matrículas do tipo no Brasil — o governo do Paraná fala em 55% das escolas de todo o país — e deve expandir essa rede em 2026, prevê a contratação de militares inativos por R$ 5,5 mil mensais para cargos administrativos e de monitoramento de estudantes, além de outras atribuições.</p>
+
+      <p data-lang="en">These schools are popular among families facing long waiting lists for enrollment in Paraná. But they are also the target of criticism from some teachers and a lawsuit at the Federal Supreme Court (STF), where PT and PSOL argue that they promote early militarization of students, among other arguments — the case has not yet been judged. The model is one of the main flagships of the government of Ratinho Júnior (PSD), presented by his party as a possible candidate for the Presidency of the Republic in the next elections.</p>
+
+      <p class="hidden" data-lang="pt">Essas escolas são populares entre as famílias, que enfrentam no Paraná uma longa fila de espera para matrículas. Mas também são alvo de críticas de parte dos professores e de uma ação no Supremo Tribunal Federal (STF), onde PT e PSOL alegam que elas promovem uma militarização precoce dos estudantes, além de outros argumentos — o processo ainda não foi julgado. O modelo é uma das principais bandeiras do governo de Ratinho Júnior (PSD), apresentado por seu partido como possível candidato à Presidência da República nas próximas eleições.</p>
+
+      <div class="pullquote" data-lang="en">
+        <p>"The aggressor cannot remain in the school environment at all. He can continue to work in administrative processes at the Education Department, but not at the school, until an investigation is concluded."</p>
+        <p class="pullquote-citation">Amanda Sadalla, executive director of Serenas, organization that advises governments on policies to prevent gender violence</p>
+      </div>
+    </section>
+
+    <!-- Other Cases -->
+    <section class="text-section" id="cases">
+      <h2 data-lang="en">A pattern of allegations</h2>
+      <h2 class="hidden" data-lang="pt">Um padrão de denúncias</h2>
+<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+  <img src="imgs/photo-03.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
+</figure>
+
+
+      <p data-lang="en">BBC News Brasil identified at least four cases of allegations of abuse against students that were subject to police investigation, all under judicial secrecy, and that resulted in dismissals. At least three more cases have been reported in the local Paraná press. Beyond the case in Cornélio Procópio, there are troubling patterns: delays in removing accused individuals from schools, lack of transparency about investigations, and missing data on the overall scope of the problem.</p>
+
+      <p class="hidden" data-lang="pt">A BBC News Brasil identificou ao menos quatro casos de denúncias de abusos contra estudantes que foram alvo de investigação policial, todos sob sigilo, e que resultaram em demissões. Pelo menos três outros casos já foram noticiados na imprensa local paranaense. Além do caso em Cornélio Procópio, há padrões preocupantes: atrasos na remoção de acusados das escolas, falta de transparência sobre as investigações, e dados faltando sobre o escopo geral do problema.</p>
+
+      <div class="violation-list">
+        <div class="violation-item">
+          <p class="violation-year" data-lang="en">2021</p>
+          <p class="violation-year hidden" data-lang="pt">2021</p>
+          <p class="violation-content" data-lang="en">A retired military police officer was arrested in Francisco Beltrão, southwest Paraná, under charges related to sexual misconduct toward students at a civic-military school. Federal Police executed a search warrant at his residence.</p>
+          <p class="violation-content hidden" data-lang="pt">Um policial militar da reserva foi preso em Francisco Beltrão, sudoeste do Paraná, sob acusações relacionadas a má conduta sexual contra estudantes em uma escola cívico-militar. A PF cumpriu mandado de busca e apreensão na casa do suspeito.</p>
+        </div>
+
+        <div class="violation-item">
+          <p class="violation-year" data-lang="en">2023-2024</p>
+          <p class="violation-year hidden" data-lang="pt">2023-2024</p>
+          <p class="violation-content" data-lang="en">In Ponta Grossa, three female students of a civic-military school reported a mathematics teacher for sexual harassment and importunation. The man had a history of similar crimes, according to police records.</p>
+          <p class="violation-content hidden" data-lang="pt">Em Ponta Grossa, três alunas de um colégio cívico-militar denunciaram um professor de matemática por assédio e importunação sexual. O homem tinha histórico de prática de crimes da mesma natureza, segundo a polícia.</p>
+        </div>
+
+        <div class="violation-item">
+          <p class="violation-year" data-lang="en">2024</p>
+          <p class="violation-year hidden" data-lang="pt">2024</p>
+          <p class="violation-content" data-lang="en">In Capitão Leônidas Marques, the Public Prosecutor's Office brought criminal charges against an employee of a civic-military school for rape of vulnerable persons and threatening three teenage girls.</p>
+          <p class="violation-content hidden" data-lang="pt">Em Capitão Leônidas Marques, o MP estadual denunciou criminalmente um funcionário de um colégio cívico-militar por estupro de vulnerável e ameaça contra três adolescentes.</p>
+        </div>
+      </div>
+
+      <p data-lang="en">However, public data that would allow an estimate of the true size of the problem is lacking. The Paraná government says it maintains a zero-tolerance policy for any form of harassment or violence in the school environment and that there have been dismissals in 14 cases, without providing details.</p>
+
+      <p class="hidden" data-lang="pt">Porém, faltam dados públicos que permitam estimar o tamanho real do problema. O governo do Paraná diz que mantém política de zero tolerância a qualquer forma de assédio ou violência no ambiente escolar e que já houve demissões em 14 casos, sem mencionar detalhes.</p>
+    </section>
+
+    <!-- Transparency -->
+    <section class="text-section" id="transparency">
+      <h2 data-lang="en">A transparency gap</h2>
+      <h2 class="hidden" data-lang="pt">Uma lacuna de transparência</h2>
+<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+  <img src="imgs/photo-04.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
+</figure>
+
+
+      <p data-lang="en">Sexual harassment is not a type of occurrence exclusive to this school model. In schools of the Paraná public network that follow the traditional model (i.e., that are not civic-military), BBC News Brasil identified approximately 400 procedures already opened since 2022 by the Department of Education to investigate alleged cases of sexual harassment committed by civilian employees. It is the Department itself that investigates these cases.</p>
+
+      <p class="hidden" data-lang="pt">O assédio sexual não é um tipo de ocorrência exclusiva desse modelo de escola. Em escolas da rede pública do Paraná que seguem o modelo tradicional (ou seja, que não são cívico-militares), a BBC News Brasil identificou cerca de 400 procedimentos já instaurados, desde 2022, pela Secretaria de Educação, para apurar supostos casos de assédio sexual cometidos por funcionários civis. É a própria secretaria que apura esses casos.</p>
+
+      <p data-lang="en">In the Department of Education, all administrative procedures opened against employees, including for sexual harassment, are disclosed on the Transparency Portal of the government in spreadsheet format, with the process number, dates, reason, and resolution. The names of those involved are not provided. However, when the suspect in misconduct at a civic-military school is a military officer, the procedure falls to the Department of Public Security and the police.</p>
+
+      <p class="hidden" data-lang="pt">Na Secretaria de Educação, todos os processos administrativos instaurados contra servidores, inclusive por assédio sexual, são divulgados no Portal da Transparência do governo, em formato de planilha, com o número do processo, datas, motivo e resolução. O nome dos envolvidos não é fornecido. Já quando o suspeito de ter cometido irregularidades em uma escola cívico-militar é um militar, o procedimento cabe à Secretaria da Segurança Pública e às polícias.</p>
+
+      <p data-lang="en">BBC News Brasil questioned these agencies about the number of processes opened against military personnel in the state for this reason, via the Access to Information Law (LAI). In response, the Police Ombudsman's Office requested that the "purpose of the information requested" be presented. The report argued that the Department of Education itself was already providing such data for investigations involving civilians. Still, access to the data was denied to BBC News Brasil by the Ombudsman.</p>
+
+      <p class="hidden" data-lang="pt">A BBC News Brasil questionou estes órgãos sobre o número de processos instaurados por este motivo contra militares no Estado, por meio da Lei de Acesso à Informação (LAI). Em resposta, a Ouvidoria da Polícia do Paraná pediu que fosse apresentada "a finalidade das informações solicitadas". A reportagem argumentou que a própria Secretaria de Educação já fornecia esses dados para apurações do tipo envolvendo civis. Ainda assim, o acesso aos dados foi negado à BBC News Brasil pela Ouvidoria.</p>
+
+      <p data-lang="en">A survey by BBC News Brasil identified that more than 300 military monitors have been dismissed since the implementation of the civic-military schools program in 2021, but the reasons are not made public. This does not mean they committed any irregularity. The rules allow the departure of the military officer in cases of health problems, grave violations, or at the request of the military officer themselves. But the Transparency Portal of the Paraná government does not inform the specific reasons.</p>
+
+      <p class="hidden" data-lang="pt">Um levantamento da BBC News Brasil identificou que mais de 300 monitores militares já foram desligados desde a implementação do programa de escolas cívico-militares, em 2021, mas os motivos não são divulgados publicamente. Isso não significa que eles tenham cometido alguma irregularidade. As regras permitem a saída do militar em casos de problemas de saúde, transgressões graves ou a pedido do próprio militar inativo. Mas o Portal da Transparência do governo do Paraná não informa os motivos específicos.</p>
+    </section>
+
+    <!-- Expert View -->
+    <section class="text-section" id="expert">
+      <h2 data-lang="en">Expert perspective: The impact of institutional barriers</h2>
+      <h2 class="hidden" data-lang="pt">Perspectiva especialista: O impacto de barreiras institucionais</h2>
+<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+  <img src="imgs/photo-05.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
+</figure>
+
+
+      <p data-lang="en">Amanda Sadalla, executive director and co-founder of Serenas, a nonprofit organization that helps governments develop public policies to prevent gender violence, says that in cases of allegations by students, the correct procedure is to remove the accused from the school. "He can continue to work in administrative processes at the Education Department, but not in the school, until an investigation is concluded. He cannot remain in the school environment at all," Sadalla says.</p>
+
+      <p class="hidden" data-lang="pt">Amanda Sadalla, diretora-executiva e cofundadora da Serenas, organização sem fins lucrativos que apoia governos a desenvolverem políticas públicas para prevenir violência de gênero, diz que, em casos de denúncias por alunas, o procedimento correto é afastar o acusado da escola. "Ele pode continuar trabalhando em processos administrativos na Secretaria de Educação, mas não na escola, até que uma investigação seja concluída. Ele não pode permanecer dentro do ambiente escolar de forma alguma", diz Sadalla.</p>
+
+      <p data-lang="en">For the expert, the permanence of someone accused of assault can lead female students to abandon their education. "The school, which is the environment in which the student should have security and opportunity for development, becomes the environment where she begins to feel insecure, distressed," Sadalla says. "This girl may develop panic syndrome, anxiety, post-traumatic stress. She may even drop out. I even use the word 'expelled,' because she comes to have no condition to be in school."</p>
+
+      <p class="hidden" data-lang="pt">Para a especialista, a permanência do acusado de agressão pode levar as alunas a abandonar os estudos. "A escola, que é o ambiente em que a aluna deveria ter segurança e oportunidade de desenvolvimento, torna-se o ambiente onde ela passa a se sentir insegura, angustiada", diz Sadalla. "Essa menina pode passar a desenvolver síndrome do pânico, ansiedade, stress pós-traumático. Pode, inclusive, evadir. Uso até a expressão expulsa, porque ela passa a não ter condição de estar na escola."</p>
+
+      <div class="expert-quote">
+        <p data-lang="en">Sadalla explains that one of the lessons learned since Serenas was founded is that violence against girls happens predominantly at home and, in second place, at school. "Gender-based violence within schools, perpetrated by school professionals, is a reality throughout the country. Girls are subjected to sexual, moral, psychological, physical violence. Some are more explicit, others less so."</p>
+        <p class="hidden" data-lang="pt">Sadalla explica que um dos aprendizados desde que a Serenas foi criada é que a violência contra meninas acontece majoritariamente dentro de casa e, em segundo lugar, na escola. "A violência de gênero dentro das escolas, praticada por profissionais da escola, é uma realidade de todo o país. As meninas estão sujeitas à violência sexual, moral, psicológica, física. Algumas são mais explícitas, outras menos."</p>
+        <p class="expert-name" data-lang="en">— Amanda Sadalla, Serenas</p>
+        <p class="expert-name hidden" data-lang="pt">— Amanda Sadalla, Serenas</p>
+      </div>
+
+      <p data-lang="en">One of the challenges, she explains, is that there are barriers for victims to report and be heard. She explains that professionals take advantage of the hierarchical power they have to obtain sexual advantages from students, often multiple ones. "In most cases, when we investigate, this professional has already done this with several students. This shows how this employee has this sense that he has enormous power over this girl, that nothing will be done."</p>
+
+      <p class="hidden" data-lang="pt">Um dos desafios, explica, é que existem barreiras para que as vítimas denunciem e sejam ouvidas. Ela explica que profissionais se aproveitam do poder hierárquico que têm para obter vantagens sexuais das alunas, muitas vezes mais de uma. "Na maior parte dos casos, quando vamos investigar, este profissional já fez isso com várias alunas. Isso mostra como esse funcionário tem essa sensação de que ele tem um poder enorme sobre essa menina, que nada vai ser feito."</p>
+
+      <p data-lang="en">Sadalla evaluates that the civic-military model adds a layer of complexity to the problem. "It's a different logic of investigation from education, without pedagogical sensitivity to understand what happens in the school. If it's already difficult to investigate these cases within the scope of the school, when we add a police hierarchy, much more rigid, the investigation becomes even more difficult. And this falls on the girl."</p>
+
+      <p class="hidden" data-lang="pt">Sadalla avalia que o modelo cívico-militar adiciona uma camada de complexidade ao problema. "É uma lógica de investigação diferente da educação, sem que exista uma sensibilidade pedagógica de entender o que acontece na escola. Se no âmbito da escola já é difícil investigar esses casos, quando somamos uma hierarquia da polícia, muito mais rígida, a investigação fica ainda mais difícil. E isso recai sobre a menina."</p>
+    </section>
+
+    <!-- Data Section -->
+    <section class="viz-container" id="stats">
+      <h3 class="chart-title" data-lang="en">By the numbers</h3>
+      <h3 class="chart-title hidden" data-lang="pt">Pelos números</h3>
+<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+  <img src="imgs/photo-06.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
+</figure>
+
+
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-number">9+</div>
+          <p class="stat-label" data-lang="en">Girls reporting inappropriate touching in Cornélio Procópio case</p>
+          <p class="stat-label hidden" data-lang="pt">Meninas denunciando toques indevidos no caso de Cornélio Procópio</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">2</div>
+          <p class="stat-label" data-lang="en">Years to dismiss the accused after initial reports</p>
+          <p class="stat-label hidden" data-lang="pt">Anos até demitir o acusado após denúncias iniciais</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">4+</div>
+          <p class="stat-label" data-lang="en">Documented cases with police investigations</p>
+          <p class="stat-label hidden" data-lang="pt">Casos documentados com investigações policiais</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">300+</div>
+          <p class="stat-label" data-lang="en">Military monitors dismissed since 2021 (reasons undisclosed)</p>
+          <p class="stat-label hidden" data-lang="pt">Monitores militares desligados desde 2021 (motivos não divulgados)</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">55%</div>
+          <p class="stat-label" data-lang="en">Of all civic-military schools in Brazil located in Paraná</p>
+          <p class="stat-label hidden" data-lang="pt">De todas as escolas cívico-militares no Brasil localizadas no Paraná</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">400</div>
+          <p class="stat-label" data-lang="en">Administrative procedures for harassment in traditional Paraná schools since 2022 (publicly available)</p>
+          <p class="stat-label hidden" data-lang="pt">Procedimentos administrativos para assédio em escolas tradicionais do Paraná desde 2022 (públicos)</p>
+        </div>
+      </div>
+
+      <h3 class="chart-title mt-lg" data-lang="en">Comparison: Data transparency</h3>
+      <h3 class="chart-title hidden mt-lg" data-lang="pt">Comparação: Transparência de dados</h3>
+<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+  <img src="imgs/photo-07.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
+  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
+</figure>
+
+
+      <div class="harassment-types">
+        <div class="type-card">
+          <p class="type-title" data-lang="en">Traditional schools</p>
+          <p class="type-title hidden" data-lang="pt">Escolas tradicionais</p>
+          <p class="type-description" data-lang="en">400+ harassment cases documented and publicly available in the government transparency portal since 2022</p>
+          <p class="type-description hidden" data-lang="pt">400+ casos de assédio documentados e disponíveis publicamente no portal de transparência do governo desde 2022</p>
+        </div>
+
+        <div class="type-card">
+          <p class="type-title" data-lang="en">Civic-military schools</p>
+          <p class="type-title hidden" data-lang="pt">Escolas cívico-militares</p>
+          <p class="type-description" data-lang="en">Number of cases unknown; police refuses to disclose data; 300+ monitor dismissals with reasons undisclosed; 14 cases mentioned by government with no details</p>
+          <p class="type-description hidden" data-lang="pt">Número de casos desconhecido; polícia recusa divulgar dados; 300+ demissões de monitores com motivos não divulgados; 14 casos mencionados pelo governo sem detalhes</p>
+        </div>
+      </div>
+
+      <h3 class="chart-title mt-lg" data-lang="en">Types of harassment documented</h3>
+      <h3 class="chart-title hidden mt-lg" data-lang="pt">Tipos de assédio documentados</h3>
+
+      <div class="harassment-types">
+        <div class="type-card">
+          <p class="type-title" data-lang="en">Physical touching</p>
+          <p class="type-title hidden" data-lang="pt">Toques físicos</p>
+          <p class="type-description" data-lang="en">Inappropriate touches on shoulder, waist, arm, neck, hair, and in one case, breast during conversations</p>
+          <p class="type-description hidden" data-lang="pt">Toques indevidos no ombro, cintura, braço, pescoço, cabelo, e em um caso, seio durante conversas</p>
+        </div>
+
+        <div class="type-card">
+          <p class="type-title" data-lang="en">Verbal harassment</p>
+          <p class="type-title hidden" data-lang="pt">Assédio verbal</p>
+          <p class="type-description" data-lang="en">"If you come with those clothes again, I'll take you to the corner" — comparing girls to prostitutes and making demeaning comments about appearance</p>
+          <p class="type-description hidden" data-lang="pt">"Se vierem com essa roupa de novo, vou levar vocês para a esquina" — comparando meninas a prostitutas e fazendo comentários depreciativos sobre aparência</p>
+        </div>
+
+        <div class="type-card">
+          <p class="type-title" data-lang="en">Psychological control</p>
+          <p class="type-title hidden" data-lang="pt">Controle psicológico</p>
+          <p class="type-description" data-lang="en">Excessive enforcement of dress codes, uniforms, and physical appearance; using authority to shame and control behavior</p>
+          <p class="type-description hidden" data-lang="pt">Aplicação excessiva de códigos de vestimenta, uniformes e aparência física; usar autoridade para envergonhar e controlar comportamento</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back Link -->
+    <div class="breadcrumb">
+      <a href="../index.html" class="back-link" data-lang="en">← Back to portfolio</a>
+      <a href="../index.html" class="back-link hidden" data-lang="pt">← Voltar ao portfólio</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p data-lang="en"><strong>About this piece:</strong> This investigative report examines patterns of sexual harassment in Paraná's civic-military schools, the systemic failures in accountability and transparency, and the impact on student safety. It features interviews with education experts and documents the experiences of affected students and families.</p>
+        <p class="hidden" data-lang="pt"><strong>Sobre esta peça:</strong> Este relatório investigativo examina padrões de assédio sexual em escolas cívico-militares do Paraná, as falhas sistêmicas em responsabilidade e transparência, e o impacto na segurança dos alunos. Apresenta entrevistas com especialistas em educação e documenta as experiências de alunos e famílias afetadas.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../shared/base.js"></script>
+  <script>
+    // Chapter navigation active state
+    window.addEventListener('scroll', function() {
+      const sections = document.querySelectorAll('.text-section');
+      const navLinks = document.querySelectorAll('.chapter-nav a');
+
+      let currentSection = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 200) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

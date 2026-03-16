@@ -1,468 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang="en">26km from the Presidential Palace: How Land Grabbers Invaded Brasília's Conservation Areas</title>
-    <title data-lang="pt">A 26km do Palácio do Planalto: Como Grileiros Invadiram as Áreas de Conservação do DF</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-lang="en">26km from the presidential palace: how land grabbers invaded Brasília's protected areas</title>
+  <title data-lang="pt">A 26km do Palácio do Planalto: como grileiros invadiram as áreas protegidas de Brasília</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/base.css">
 
-    <link rel="stylesheet" href="../shared/base.css">
+  <style>
+    :root {
+      --earth-brown: #4a3f35;
+      --cerrado-green: #6b7d3d;
+      --warning-red: #a8361a;
+      --accent-tan: #c9b8a8;
+    }
 
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #1a1500 0%, #2a1a0a 100%);
-            --accent-color: #d4a574;
-            --text-dark: #1a1a1a;
-            --text-light: #f5f5f5;
-            --border-color: #e0e0e0;
-        }
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(74, 63, 53, 0.88), rgba(45, 38, 35, 0.88)), url('imgs/photo-01.jpg') center/cover;
+      background-attachment: fixed;
+      text-align: center;
+      color: white;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
 
-        body {
-            font-family: 'Source Sans 3', sans-serif;
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+    }
 
-        .hero-section {
-            background: var(--primary-gradient);
-            color: var(--text-light);
-            padding: 120px 20px 80px;
-            text-align: center;
-            position: relative;
-        }
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      animation: fadeInUp 1s ease-out;
+    }
 
-        .series-tag {
-            display: inline-block;
-            background: rgba(212, 165, 116, 0.2);
-            color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            border: 1px solid var(--accent-color);
-        }
+    .series-label {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent-tan);
+      margin-bottom: 24px;
+      background: rgba(201, 184, 168, 0.15);
+      padding: 8px 16px;
+      border: 1px solid var(--accent-tan);
+      border-radius: 3px;
+    }
 
-        .hero-section h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            font-weight: 900;
-        }
+    #hero h1 {
+      font-family: var(--display);
+      font-size: clamp(32px, 8vw, 64px);
+      font-weight: 900;
+      line-height: 1.2;
+      margin: 24px 0;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
 
-        .hero-section .deck {
-            font-family: 'Source Serif 4', serif;
-            font-size: 1.3rem;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            font-weight: 400;
-            line-height: 1.5;
-        }
+    .hero-subtitle {
+      font-family: var(--serif);
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 400;
+      line-height: 1.6;
+      margin: 24px 0 32px;
+      color: rgba(255, 255, 255, 0.95);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-        .meta {
-            font-size: 0.95rem;
-            opacity: 0.9;
-            margin-top: 20px;
-        }
+    .hero-meta {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.8);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-        .meta span[data-lang] {
-            display: none;
-        }
+    main {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
 
-        body.lang-en .meta span[data-lang="en"],
-        body.lang-pt .meta span[data-lang="pt"] {
-            display: inline;
-        }
+    .section-chapter {
+      margin-bottom: 100px;
+      padding-bottom: 60px;
+      border-bottom: 1px solid var(--border);
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+    .section-chapter:last-child {
+      border-bottom: none;
+    }
 
-        .text-section {
-            margin: 60px 0;
-            opacity: 0;
-            transition: opacity 0.8s ease-in;
-        }
+    .section-chapter h2 {
+      font-family: var(--display);
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 32px;
+      color: var(--text-dark);
+    }
 
-        .text-section.visible {
-            opacity: 1;
-        }
+    .section-chapter p {
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      color: var(--text-dark);
+    }
 
-        .text-section p {
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-            text-align: justify;
-        }
+    .section-chapter strong {
+      color: var(--earth-brown);
+    }
 
-        .pullquote {
-            background: #f9f9f9;
-            border-left: 4px solid var(--accent-color);
-            padding: 30px 20px;
-            margin: 40px 0;
-            font-family: 'Source Serif 4', serif;
-            font-size: 1.25rem;
-            font-style: italic;
-            color: #333;
-            opacity: 0;
-            transition: opacity 0.8s ease-in;
-        }
+    .pullquote {
+      border-left: 4px solid var(--earth-brown);
+      padding: 32px 40px;
+      margin: 50px 0;
+      background-color: var(--bg-light);
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1.7;
+      color: var(--text-dark);
+    }
 
-        .pullquote.visible {
-            opacity: 1;
-        }
+    .image-block {
+      margin: 60px 0;
+      text-align: center;
+    }
 
-        .stats-section {
-            background: #f5f5f5;
-            padding: 60px 20px;
-            margin: 80px 0;
-            opacity: 0;
-            transition: opacity 0.8s ease-in;
-        }
+    .image-block img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 2px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        .stats-section.visible {
-            opacity: 1;
-        }
+    .image-credit {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 12px;
+      font-style: italic;
+    }
 
-        .stats-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 50px;
-        }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin: 80px 0;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+    .stat-card {
+      background-color: var(--bg-light);
+      padding: 40px 30px;
+      text-align: center;
+      border-radius: 3px;
+      border-top: 3px solid var(--earth-brown);
+    }
 
-        .stat-card {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+    .stat-number {
+      font-family: var(--display);
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--earth-brown);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
 
-        .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
+    .stat-label {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.5;
+    }
 
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-            line-height: 1.4;
-        }
+    .warning-box {
+      background-color: #fff3cd;
+      border-left: 4px solid var(--warning-red);
+      padding: 20px 24px;
+      margin: 40px 0;
+      border-radius: 2px;
+    }
 
-        .timeline {
-            margin: 80px 0;
-            position: relative;
-        }
+    .warning-box p {
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
 
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--border-color);
-            transform: translateX(-50%);
-        }
+    footer {
+      background-color: var(--primary);
+      color: var(--text-light);
+      padding: 80px 40px;
+      margin-top: 100px;
+    }
 
-        .timeline-item {
-            margin-bottom: 50px;
-            opacity: 0;
-            transition: opacity 0.6s ease-in;
-        }
+    .footer-disclaimer p {
+      font-family: var(--sans);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      opacity: 0.85;
+    }
 
-        .timeline-item.visible {
-            opacity: 1;
-        }
+    .back-link {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-        .timeline-item:nth-child(odd) {
-            margin-left: 0;
-            margin-right: 50%;
-            text-align: right;
-            padding-right: 30px;
-        }
+    .back-link a {
+      color: var(--accent-tan);
+      text-decoration: none;
+    }
 
-        .timeline-item:nth-child(even) {
-            margin-left: 50%;
-            text-align: left;
-            padding-left: 30px;
-        }
+    @media (max-width: 768px) {
+      main {
+        padding: 60px 24px;
+      }
+      #hero h1 {
+        font-size: 36px;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
 
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            top: 10px;
-            width: 16px;
-            height: 16px;
-            background: var(--accent-color);
-            border: 3px solid white;
-            border-radius: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-
-        .timeline-content {
-            background: white;
-            padding: 20px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-        }
-
-        .timeline-year {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: 8px;
-        }
-
-        .timeline-text {
-            font-size: 0.95rem;
-            color: #555;
-        }
-
-        .footer {
-            background: #2a2a2a;
-            color: var(--text-light);
-            padding: 60px 20px;
-            margin-top: 80px;
-            text-align: center;
-        }
-
-        .footer-disclaimer {
-            font-size: 0.85rem;
-            opacity: 0.8;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .footer-nav {
-            margin-top: 20px;
-        }
-
-        .footer-nav a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .footer-nav a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 2rem;
-            }
-
-            .hero-section .deck {
-                font-size: 1.1rem;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item:nth-child(odd),
-            .timeline-item:nth-child(even) {
-                margin: 0;
-                margin-left: 60px;
-                text-align: left;
-                padding-left: 30px;
-            }
-
-            .timeline-dot {
-                left: 20px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    @media (max-width: 480px) {
+      main {
+        padding: 40px 16px;
+      }
+      .pullquote {
+        font-size: 18px;
+        padding: 24px 20px;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body class="lang-en">
-    <!-- Disclaimer Bar -->
-    <div id="disclaimerBar" class="disclaimer-bar">
-        <span>⚠</span>
-        <span id="disclaimerText" data-lang="en">This is an alternative layout version of an investigative article by journalists Luiz Fernando Toledo and Allan de Abreu, created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to Piauí magazine and the authors.</span>
-        <span id="disclaimerText" data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem investigativa dos jornalistas Luiz Fernando Toledo e Allan de Abreu, criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente à revista Piauí e aos autores.</span>
-        <a href="https://piaui.folha.uol.com.br" target="_blank" data-lang="en">Original Article</a>
-        <a href="https://piaui.folha.uol.com.br" target="_blank" data-lang="pt">Artigo Original</a>
-        <button id="disclaimerClose">&times;</button>
+
+  <div class="disclaimer-bar">
+    <div class="disclaimer-inner">
+      <div class="disclaimer-icon">⚠</div>
+      <div class="disclaimer-text">
+        <span data-lang="en">This is an enhanced portfolio presentation of my journalism. The original article was published at Piauí magazine. Content is reproduced for portfolio purposes.</span>
+        <span data-lang="pt">Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na revista Piauí. O conteúdo é reproduzido para fins de portfólio.</span>
+        <a href="https://piaui.folha.uol.com.br" target="_blank" rel="noopener" class="disclaimer-link" data-lang="en">Read original ↗</a>
+        <a href="https://piaui.folha.uol.com.br" target="_blank" rel="noopener" class="disclaimer-link" data-lang="pt">Leia original ↗</a>
+      </div>
+      <button class="disclaimer-close" id="disclaimerClose">×</button>
+    </div>
+  </div>
+
+  <div class="lang-toggle-bar">
+    <div class="lang-toggle-inner">
+      <span class="lang-toggle-label" data-lang="en">Language:</span>
+      <span class="lang-toggle-label" data-lang="pt">Idioma:</span>
+      <button class="lang-btn active" id="btnEn" data-lang="en">English</button>
+      <button class="lang-btn" id="btnPt" data-lang="pt">Português</button>
+    </div>
+  </div>
+
+  <div class="progress-bar" id="progressBar"></div>
+
+  <section id="hero">
+    <div class="hero-content">
+      <div class="series-label" data-lang="en">Investigation</div>
+      <div class="series-label" data-lang="pt">Investigação</div>
+      <h1 data-lang="en">26km from the presidential palace: how land grabbers invaded Brasília's protected areas</h1>
+      <h1 data-lang="pt">A 26km do Palácio do Planalto: como grileiros invadiram as áreas protegidas de Brasília</h1>
+      <div class="hero-subtitle" data-lang="en">A systematic scheme of environmental destruction operating within sight of Brazil's seat of power, threatening the Cerrado biome and displacing hundreds of families—with the help of corrupt politicians and forged documents.</div>
+      <div class="hero-subtitle" data-lang="pt">Um esquema sistemático de destruição ambiental operando à vista da sede do poder do Brasil, ameaçando o bioma Cerrado e deslocando centenas de famílias—com ajuda de políticos corruptos e documentos falsificados.</div>
+      <div class="hero-meta">
+        <span data-lang="en">Piauí Magazine</span>
+        <span data-lang="pt">Revista Piauí</span>
+        <span>•</span>
+        <span data-lang="en">November 2023</span>
+        <span data-lang="pt">Novembro de 2023</span>
+        <span>•</span>
+        <span data-lang="en">Luiz Fernando Toledo & Allan de Abreu</span>
+        <span data-lang="pt">Luiz Fernando Toledo & Allan de Abreu</span>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="section-chapter fade-in">
+      <h2 data-lang="en">The quiet takeover</h2>
+      <h2 data-lang="pt">A invasão silenciosa</h2>
+      <p data-lang="en">In 2019, a quiet transformation began in a conservation unit north of Brasília. Surveyors marked tree stumps in what was officially designated as protected Cerrado forest—a biodiversity hotspot meant to remain pristine. Within months, improvised shelters appeared among the cleared trees. By 2020, the land had been subdivided into parcels. By 2021, it was being marketed as the "26 de Setembro Agricultural Colony," with plots sold to low-income families seeking affordable housing.</p>
+      <p data-lang="pt">Em 2019, uma transformação silenciosa começou em uma unidade de conservação ao norte de Brasília. Agrimensores marcaram troncos de árvores no que era oficialmente designado como floresta de Cerrado protegida—um hotspot de biodiversidade destinado a permanecer pristino. Dentro de meses, abrigos improvisados apareceram entre as árvores limpas. Em 2020, a terra havia sido subdividida em parcelas. Em 2021, estava sendo comercializada como a "Colônia Agrícola 26 de Setembro," com lotes vendidos para famílias de baixa renda buscando moradia acessível.</p>
+      <p data-lang="en">The scheme was brutally efficient: identify empty conservation land, invade it, build structures, create fake ownership documents, profit from desperate homebuyers. The result: today, the "colony" has an estimated population of 35,000 people living in conditions without basic services—no schools, no health clinics, minimal electricity access, no sewage system. And from a legal perspective, every resident is a land grabber (grileiro). Not a single property has legitimate title.</p>
+      <p data-lang="pt">O esquema era brutalmente eficiente: identificar terra de conservação vazia, invadir, construir estruturas, criar documentos de propriedade falsificados, lucrar com compradores desesperados. O resultado: hoje, a "colônia" tem uma população estimada de 35 mil pessoas vivendo em condições sem serviços básicos—sem escolas, sem clínicas de saúde, acesso mínimo de eletricidade, sem sistema de esgotos. E de uma perspectiva legal, cada residente é um grileiro. Nenhuma propriedade tem título legítimo.</p>
+    </section>
+
+    <div class="image-block fade-in">
+      <img src="imgs/photo-02.jpg" alt="Invasion site">
+      <div class="image-credit" data-lang="en">The boundary between protected Cerrado forest and the invaded settlement marks an ecological and legal divide</div>
+      <div class="image-credit" data-lang="pt">O limite entre a floresta de Cerrado protegida e o assentamento invadido marca uma divisão ecológica e legal</div>
     </div>
 
-    <!-- Language Toggle Bar -->
-    <div id="langBar" class="lang-bar">
-        <button id="btnEn" class="lang-btn active" data-lang="en">EN</button>
-        <button id="btnPt" class="lang-btn" data-lang="pt">PT</button>
+    <div class="stats-grid fade-in">
+      <div class="stat-card">
+        <div class="stat-number">35k</div>
+        <div class="stat-label" data-lang="en">Population of Colônia 26 de Setembro</div>
+        <div class="stat-label" data-lang="pt">População da Colônia 26 de Setembro</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">0</div>
+        <div class="stat-label" data-lang="en">Properties with legitimate land titles</div>
+        <div class="stat-label" data-lang="pt">Propriedades com títulos legítimos de terra</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">69k</div>
+        <div class="stat-label" data-lang="en">Hectares claimed in DF conservation units</div>
+        <div class="stat-label" data-lang="pt">Hectares reivindicados em unidades de conservação do DF</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">26km</div>
+        <div class="stat-label" data-lang="en">Distance from Presidential Palace</div>
+        <div class="stat-label" data-lang="pt">Distância do Palácio do Planalto</div>
+      </div>
     </div>
 
-    <!-- Progress Bar -->
-    <div id="progressBar" class="progress-bar"></div>
+    <section class="section-chapter fade-in">
+      <h2 data-lang="en">A systematic assault on protected land</h2>
+      <h2 data-lang="pt">Um ataque sistemático a terras protegidas</h2>
+      <p data-lang="en">The 26 de Setembro invasion is not an isolated incident. It is part of a coordinated, systematic assault on conservation areas across the Federal District. This investigation found that at least 1,026 individuals or companies have registered claims (through the Rural Environmental Cadastre, or CAR) to possess land within Brasília's conservation units. These registrations total 69,000 hectares—representing 90% of all protected area in the DF.</p>
+      <p data-lang="pt">A invasão do 26 de Setembro não é um incidente isolado. É parte de um ataque coordenado e sistemático a áreas de conservação em todo o Distrito Federal. Esta investigação descobriu que pelo menos 1.026 indivíduos ou empresas registraram reivindicações (através do Cadastro Ambiental Rural, ou CAR) para possuir terra dentro de unidades de conservação de Brasília. Estes registros totalizam 69 mil hectares—representando 90% de toda a área protegida no DF.</p>
+      <p data-lang="en">The CAR (Rural Environmental Cadastre) was created by the federal government in 2012 as a tool to monitor rural properties and ensure compliance with environmental regulations. Instead, it was weaponized: land grabbers discovered they could use CAR registration to create a false veneer of legitimacy for illegal land possession. Register in the CAR, create fake ownership documents, wait for the conservation area to be dedesignated, and then claim ownership retroactively.</p>
+      <p data-lang="pt">O CAR (Cadastro Ambiental Rural) foi criado pelo governo federal em 2012 como ferramenta para monitorar propriedades rurais e garantir conformidade com regulações ambientais. Em vez disso, foi militarizado: grileiros descobriram que poderiam usar o registro de CAR para criar uma falsa aparência de legitimidade para posse ilegal de terra. Registre no CAR, crie documentos de propriedade falsificados, aguarde a área de conservação ser desafetada, e então reclame propriedade retroativamente.</p>
+    </section>
 
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="series-tag" data-lang="en">Piauí Magazine Investigation</div>
-        <div class="series-tag" data-lang="pt">Investigação da Revista Piauí</div>
-
-        <h1 data-lang="en">26km from the Presidential Palace: How Land Grabbers Invaded Brasília's Conservation Areas</h1>
-        <h1 data-lang="pt">A 26km do Palácio do Planalto: Como Grileiros Invadiram as Áreas de Conservação do DF</h1>
-
-        <div class="deck" data-lang="en">A systematic scheme of land invasion, illegal deforestation, and forged documentation operating within kilometers of Brazil's seat of power, threatening the Cerrado biome and displacing hundreds of families.</div>
-        <div class="deck" data-lang="pt">Um esquema sistemático de invasão de terras, desflorestamento ilegal e documentação falsificada operando a poucos quilômetros da sede do poder do Brasil, ameaçando o bioma Cerrado e deslocando centenas de famílias.</div>
-
-        <div class="meta">
-            <span data-lang="en">Luiz Fernando Toledo & Allan de Abreu • Piauí Magazine • November 2023</span>
-            <span data-lang="pt">Luiz Fernando Toledo & Allan de Abreu • Revista Piauí • Novembro de 2023</span>
-        </div>
+    <div class="pullquote fade-in">
+      <span data-lang="en">"The Cerrado loses 1% of its remaining territory every year. If this continues, within three decades the biome will be ecologically non-viable. And much of that loss is happening in areas that are supposed to be legally protected."</span>
+      <span data-lang="pt">"O Cerrado perde 1% de seu território remanescente a cada ano. Se isso continuar, em três décadas o bioma será ecologicamente inviável. E muito dessa perda está acontecendo em áreas que supostamente deveriam estar legalmente protegidas."</span>
     </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Text Section 1 -->
-        <section class="text-section fade-in">
-            <p data-lang="en">The invasion began quietly. In 2019, surveyors marked tree stumps in a conservation unit north of Brasília, designated as protected Cerrado forest. Within months, improvised shelters appeared. By 2020, the land had been subdivided, sold to low-income families seeking housing, and incorporated into what was officially called the "26 de Setembro Agricultural Colony." The scheme was efficient and brutal: steal public land, deforest it, forge ownership documents, profit from desperate homebuyers.</p>
-            <p data-lang="pt">A invasão começou silenciosamente. Em 2019, agrimensores marcaram troncos de árvores em uma unidade de conservação ao norte de Brasília, designada como floresta de Cerrado protegida. Dentro de meses, abrigos improvisados apareceram. Em 2020, a terra havia sido subdividida, vendida para famílias de baixa renda buscando moradia, e incorporada ao que foi oficialmente chamado de "Colônia Agrícola 26 de Setembro". O esquema era eficiente e brutal: roubar terras públicas, desflorestá-las, falsificar documentos de propriedade, lucrar com compradores de casas desesperados.</p>
-        </section>
+    <section class="section-chapter fade-in">
+      <h2 data-lang="en">The destruction of a global biodiversity hotspot</h2>
+      <h2 data-lang="pt">A destruição de um hotspot de biodiversidade global</h2>
+      <p data-lang="en">The Cerrado is one of the world's most important ecosystems. Despite its size and ecological importance, the Cerrado receives a fraction of the attention and protection afforded to the Amazon. The biome is under siege. It loses approximately 1% of its remaining territory every year. At current rates of destruction, within three decades the Cerrado will no longer be ecologically viable. And a significant portion of that destruction is occurring in conservation areas that are legally designated as protected.</p>
+      <p data-lang="pt">O Cerrado é um dos ecossistemas mais importantes do mundo. Apesar de seu tamanho e importância ecológica, o Cerrado recebe uma fração da atenção e proteção concedida à Amazônia. O bioma está sob cerco. Perde aproximadamente 1% de seu território remanescente a cada ano. Às taxas atuais de destruição, em três décadas o Cerrado não será mais ecologicamente viável. E uma porção significativa dessa destruição está ocorrendo em áreas de conservação que são legalmente designadas como protegidas.</p>
+    </section>
 
-        <!-- Pullquote -->
-        <div class="pullquote fade-in">
-            <span data-lang="en">"The Cerrado loses 1% of its remaining territory every year. If this continues, within three decades the biome will be ecologically non-viable. And much of that loss is happening in the DF, on land that is supposed to be protected."</span>
-            <span data-lang="pt">"O Cerrado perde 1% de seu território remanescente a cada ano. Se isso continuar, em três décadas o bioma será ecologicamente inviável. E muito dessa perda está acontecendo no DF, em terra que supostamente deveria estar protegida."</span>
-        </div>
-
-        <!-- Text Section 2 -->
-        <section class="text-section fade-in">
-            <p data-lang="en">This investigation, published in Piauí magazine in November 2023, revealed how land grabbers (grileiros) were systematically invading conservation units in the Distrito Federal. The invasions were happening within 26 kilometers of the Palácio do Planalto—Brazil's seat of government. The Cerrado biome, which sits at the heart of the DF, is one of the world's biodiversity hotspots, home to thousands of species found nowhere else on Earth.</p>
-            <p data-lang="pt">Esta investigação, publicada na revista Piauí em novembro de 2023, revelou como grileiros estavam invadindo sistematicamente unidades de conservação no Distrito Federal. As invasões estavam acontecendo a apenas 26 quilômetros do Palácio do Planalto—sede do governo do Brasil. O bioma Cerrado, que fica no coração do DF, é um dos hotspots de biodiversidade do mundo, lar de milhares de espécies encontradas em nenhum outro lugar da Terra.</p>
-
-            <p data-lang="en">The scheme followed a predictable pattern: identify empty conservation land, invade and build structures, create fake property titles through corrupt officials or falsified documents, then sell parcels to low-income populations. IBRAM, the DF's environmental agency, lacks the personnel to monitor and respond to invasions at scale. Land inspectors are overwhelmed. Enforcement is almost nonexistent.</p>
-            <p data-lang="pt">O esquema seguia um padrão previsível: identificar terra de conservação vazia, invadir e construir estruturas, criar títulos de propriedade falsos por meio de funcionários corruptos ou documentos falsificados, e então vender parcelas para populações de baixa renda. IBRAM, agência ambiental do DF, carece de pessoal para monitorar e responder a invasões em larga escala. Inspetores de terras estão sobrecarregados. A aplicação é quase inexistente.</p>
-        </section>
-
-        <!-- Stats Section -->
-        <section class="stats-section fade-in">
-            <h2 data-lang="en">The Crisis in Numbers</h2>
-            <h2 data-lang="pt">A Crise em Números</h2>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" data-count="26">26km</div>
-                    <div class="stat-label" data-lang="en">Distance from Presidential Palace to nearest invasion</div>
-                    <div class="stat-label" data-lang="pt">Distância do Palácio do Planalto até invasão mais próxima</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number" data-count="2023">2023</div>
-                    <div class="stat-label" data-lang="en">Year of investigation publication</div>
-                    <div class="stat-label" data-lang="pt">Ano da publicação da investigação</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number" data-count="1">1</div>
-                    <div class="stat-label" data-lang="en">Biome at risk: the Cerrado biodiversity hotspot</div>
-                    <div class="stat-label" data-lang="pt">Bioma em risco: o hotspot de biodiversidade do Cerrado</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number" data-count="0">0</div>
-                    <div class="stat-label" data-lang="en">Effective monitoring of DF conservation units</div>
-                    <div class="stat-label" data-lang="pt">Monitoramento efetivo de unidades de conservação do DF</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Text Section 3 -->
-        <section class="text-section fade-in">
-            <p data-lang="en">The investigation traced specific parcels, identifying land grabbing networks and corrupt officials who enabled the scheme. Satellite imagery showed the progression: intact forest in 2018, deforestation marks by 2019, structures by 2020, subdivided and sold by 2021. Some families purchasing lots were unaware they were buying illegally seized public land. Others were knowingly participating in the scheme.</p>
-            <p data-lang="pt">A investigação rastreou parcelas específicas, identificando redes de grilagem e funcionários corruptos que possibilitaram o esquema. Imagens de satélite mostraram a progressão: floresta intacta em 2018, marcas de desflorestamento em 2019, estruturas em 2020, subdivididas e vendidas em 2021. Algumas famílias comprando lotes desconheciam que estavam comprando terras públicas ilegalmente apreendidas. Outras estavam participando conscientemente do esquema.</p>
-
-            <p data-lang="en">The reporting won attention from federal authorities and sparked follow-up investigations. But the damage to the Cerrado continues. The biome loses approximately 1% of its remaining territory every year. If current trends continue, within three decades the Cerrado will be ecologically non-viable—and much of that destruction is happening in conservation areas that are, on paper, legally protected.</p>
-            <p data-lang="pt">A reportagem atraiu a atenção de autoridades federais e gerou investigações posteriores. Mas o dano ao Cerrado continua. O bioma perde aproximadamente 1% de seu território remanescente a cada ano. Se as tendências atuais continuarem, em três décadas o Cerrado será ecologicamente inviável—e muito dessa destruição está acontecendo em áreas de conservação que são, no papel, legalmente protegidas.</p>
-        </section>
-
-        <!-- Timeline Section -->
-        <section class="timeline">
-            <h2 style="text-align: center; margin-bottom: 40px;" data-lang="en">Timeline of Land Invasion in the DF</h2>
-            <h2 style="text-align: center; margin-bottom: 40px;" data-lang="pt">Cronologia da Invasão de Terras no DF</h2>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">1960s</div>
-                    <div class="timeline-text" data-lang="en">Brasília is planned as Brazil's new capital; surrounding areas designated as conservation units to preserve Cerrado biome</div>
-                    <div class="timeline-text" data-lang="pt">Brasília é planejada como nova capital do Brasil; áreas circundantes designadas como unidades de conservação para preservar o bioma Cerrado</div>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">2015</div>
-                    <div class="timeline-text" data-lang="en">First documented land invasions in DF conservation units; IBRAM enforcement capacity remains inadequate</div>
-                    <div class="timeline-text" data-lang="pt">Primeiras invasões de terras documentadas em unidades de conservação do DF; capacidade de aplicação de IBRAM permanece inadequada</div>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">2019</div>
-                    <div class="timeline-text" data-lang="en">Coordinated land grabbing begins in north DF conservation areas; first survey marks appear</div>
-                    <div class="timeline-text" data-lang="pt">Grilagem coordenada começa em áreas de conservação do norte do DF; primeiras marcas de levantamento aparecem</div>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">2020</div>
-                    <div class="timeline-text" data-lang="en">Deforestation accelerates; "26 de Setembro Agricultural Colony" is formalized; land sales to low-income families begin</div>
-                    <div class="timeline-text" data-lang="pt">Desflorestamento acelera; "Colônia Agrícola 26 de Setembro" é formalizada; vendas de terras para famílias de baixa renda começam</div>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">2023</div>
-                    <div class="timeline-text" data-lang="en">Piauí magazine investigation exposes the scheme; federal authorities launch inquiries; continued invasions documented</div>
-                    <div class="timeline-text" data-lang="pt">Investigação da revista Piauí expõe o esquema; autoridades federais abrem inquéritos; invasões contínuas documentadas</div>
-                </div>
-            </div>
-        </section>
+    <div class="image-block fade-in">
+      <img src="imgs/photo-03.jpg" alt="Deforestation">
+      <div class="image-credit" data-lang="en">Satellite imagery shows the progression from intact Cerrado forest to cleared land in just a few years</div>
+      <div class="image-credit" data-lang="pt">Imagens de satélite mostram a progressão de floresta de Cerrado intacta para terra limpa em apenas alguns anos</div>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <div class="footer-disclaimer">
-            <p data-lang="en">This is an alternative layout version of an investigative article by journalists Luiz Fernando Toledo and Allan de Abreu, created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to Piauí magazine and the authors.</p>
-            <p data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem investigativa dos jornalistas Luiz Fernando Toledo e Allan de Abreu, criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente à revista Piauí e aos autores.</p>
-        </div>
-        <div class="footer-nav">
-            <a href="../index.html" data-lang="en">← Back to Portfolio</a>
-            <a href="../index.html" data-lang="pt">← Voltar ao Portfólio</a>
-        </div>
-    </div>
+    <section class="section-chapter fade-in">
+      <h2 data-lang="en">A system designed to fail</h2>
+      <h2 data-lang="pt">Um sistema projetado para falhar</h2>
+      <p data-lang="en">The invasion of Brasília's conservation areas reveals a system that is fundamentally broken. Environmental agencies lack the personnel to monitor invasions at scale. Enforcement is almost nonexistent. The legal instruments meant to prevent land grabbing have been weaponized to enable it. Politicians benefit from the corruption. Land grabbers profit. And the Cerrado—one of the world's most important ecosystems—continues to disappear.</p>
+      <p data-lang="pt">A invasão das áreas de conservação de Brasília revela um sistema que é fundamentalmente quebrado. Agências ambientais carecem de pessoal para monitorar invasões em larga escala. Aplicação é quase inexistente. Os instrumentos legais destinados a prevenir grilagem foram militarizados para habilitá-lo. Políticos se beneficiam da corrupção. Grileiros lucram. E o Cerrado—um dos ecossistemas mais importantes do mundo—continua a desaparecer.</p>
+      <p data-lang="en">This investigation was published in November 2023. Federal authorities launched inquiries. But the invasions continue, the biome continues to be destroyed, and the system that enables this destruction remains in place.</p>
+      <p data-lang="pt">Esta investigação foi publicada em novembro de 2023. Autoridades federais lançaram inquéritos. Mas as invasões continuam, o bioma continua a ser destruído, e o sistema que habilita esta destruição permanece em lugar.</p>
+    </section>
+  </main>
 
-    <script src="../shared/base.js"></script>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p data-lang="en"><strong>About this presentation:</strong> This is an enhanced layout version of investigative journalism originally published by Piauí magazine. The original reporting and all journalistic content are the work of journalists Luiz Fernando Toledo and Allan de Abreu. This presentation is created for portfolio purposes.</p>
+        <p data-lang="pt"><strong>Sobre esta apresentação:</strong> Esta é uma versão de layout aprimorado de jornalismo investigativo originalmente publicado pela revista Piauí. A reportagem original e todo conteúdo jornalístico são trabalho dos jornalistas Luiz Fernando Toledo e Allan de Abreu. Esta apresentação é criada para fins de portfólio.</p>
+        <p><a href="https://piaui.folha.uol.com.br" target="_blank" rel="noopener" data-lang="en">Read the original Piauí investigation ↗</a>
+          <a href="https://piaui.folha.uol.com.br" target="_blank" rel="noopener" data-lang="pt">Leia a investigação original da Piauí ↗</a></p>
+      </div>
+      <div class="back-link">
+        <a href="../index.html" data-lang="en">← Back to portfolio</a>
+        <a href="../index.html" data-lang="pt">← Voltar ao portfólio</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../shared/base.js"></script>
 </body>
 </html>

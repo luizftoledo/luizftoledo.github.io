@@ -1,469 +1,525 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang="en">The Endangered National Symbol Being Smuggled to Europe for Violin Bows</title>
-    <title data-lang="pt">O Símbolo Nacional Ameaçado de Extinção que É Contrabandeado para Virar Arco de Violino na Europa</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A park at the heart of pau-brasil smuggling - Investigative Portfolio</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../shared/base.css">
+  <!-- Base styles -->
+  <link rel="stylesheet" href="../shared/base.css">
 
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #1a0a00 0%, #1a2a0a 100%);
-            --accent-color: #8b6b47;
-            --text-dark: #1a1a1a;
-            --text-light: #f5f5f5;
-            --border-color: #e0e0e0;
-        }
+  <style>
+    /* Article-specific styles */
+    .hero-bg {
+      background-image: linear-gradient(135deg, rgba(26, 26, 26, 0.85), rgba(45, 45, 45, 0.85)), url('imgs/photo-01.jpg');
+      background-size: cover;
+      background-position: center;
+    }
 
-        body {
-            font-family: 'Source Sans 3', sans-serif;
-            color: var(--text-dark);
-            line-height: 1.6;
-        }
+    .article-intro {
+      font-size: 20px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
 
-        .hero-section {
-            background: var(--primary-gradient);
-            color: var(--text-light);
-            padding: 120px 20px 80px;
-            text-align: center;
-            position: relative;
-        }
+    .chapter-nav {
+      position: sticky;
+      top: 96px;
+      z-index: 100;
+      background-color: var(--bg-light);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      margin-bottom: 40px;
+    }
 
-        .series-tag {
-            display: inline-block;
-            background: rgba(139, 107, 71, 0.2);
-            color: var(--accent-color);
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            border: 1px solid var(--accent-color);
-        }
+    .chapter-nav-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      font-family: var(--sans);
+    }
 
-        .hero-section h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            font-weight: 900;
-        }
+    @media (max-width: 768px) {
+      .chapter-nav-inner {
+        padding: 0 24px;
+        gap: 16px;
+      }
+    }
 
-        .hero-section .deck {
-            font-family: 'Source Serif 4', serif;
-            font-size: 1.3rem;
-            max-width: 600px;
-            margin: 0 auto 30px;
-            font-weight: 400;
-            line-height: 1.5;
-        }
+    .chapter-nav a {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.3s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 8px;
+    }
 
-        .meta {
-            font-size: 0.95rem;
-            opacity: 0.9;
-            margin-top: 20px;
-        }
+    .chapter-nav a:hover,
+    .chapter-nav a.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
 
-        .meta span[data-lang] {
-            display: none;
-        }
+    .viz-container {
+      background-color: var(--bg-light);
+      padding: 40px;
+      border-radius: 4px;
+      margin: 60px 0;
+      border-top: 3px solid var(--accent);
+    }
 
-        body.lang-en .meta span[data-lang="en"],
-        body.lang-pt .meta span[data-lang="pt"] {
-            display: inline;
-        }
+    .chart-title {
+      font-family: var(--display);
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: var(--text-dark);
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+    .bar-chart {
+      margin-bottom: 40px;
+    }
 
-        .text-section {
-            margin: 60px 0;
-            opacity: 0;
-            transition: opacity 0.8s ease-in;
-        }
+    .chart-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 16px;
+    }
 
-        .text-section.visible {
-            opacity: 1;
-        }
+    .chart-label {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      min-width: 140px;
+      text-align: right;
+    }
 
-        .text-section p {
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-            text-align: justify;
-        }
+    .chart-bar-container {
+      flex: 1;
+      background-color: var(--border);
+      height: 28px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
 
-        .pullquote {
-            background: #f9f9f9;
-            border-left: 4px solid var(--accent-color);
-            padding: 30px 20px;
-            margin: 40px 0;
-            font-family: 'Source Serif 4', serif;
-            font-size: 1.25rem;
-            font-style: italic;
-            color: #333;
-            opacity: 0;
-            transition: opacity 0.8s ease-in;
-        }
+    .chart-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-light));
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 12px;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+    }
 
-        .pullquote.visible {
-            opacity: 1;
-        }
+    .price-comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin: 40px 0;
+    }
 
-        .stats-section {
-            background: #f5f5f5;
-            padding: 60px 20px;
-            margin: 80px 0;
-            opacity: 0;
-            transition: opacity 0.8s ease-in;
-        }
+    .price-card {
+      background-color: var(--bg-light);
+      padding: 24px;
+      border-radius: 4px;
+      text-align: center;
+      border-top: 3px solid var(--accent);
+    }
 
-        .stats-section.visible {
-            opacity: 1;
-        }
+    .price-label {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
 
-        .stats-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 50px;
-        }
+    .price {
+      font-family: var(--display);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
+    .price-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
 
-        .stat-card {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+    .back-link {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      margin-bottom: 30px;
+      transition: opacity 0.3s;
+    }
 
-        .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-            line-height: 1.4;
-        }
-
-        .timeline {
-            margin: 80px 0;
-            position: relative;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--border-color);
-            transform: translateX(-50%);
-        }
-
-        .timeline-item {
-            margin-bottom: 50px;
-            opacity: 0;
-            transition: opacity 0.6s ease-in;
-        }
-
-        .timeline-item.visible {
-            opacity: 1;
-        }
-
-        .timeline-item:nth-child(odd) {
-            margin-left: 0;
-            margin-right: 50%;
-            text-align: right;
-            padding-right: 30px;
-        }
-
-        .timeline-item:nth-child(even) {
-            margin-left: 50%;
-            text-align: left;
-            padding-left: 30px;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            top: 10px;
-            width: 16px;
-            height: 16px;
-            background: var(--accent-color);
-            border: 3px solid white;
-            border-radius: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-
-        .timeline-content {
-            background: white;
-            padding: 20px;
-            border-radius: 4px;
-            border: 1px solid var(--border-color);
-        }
-
-        .timeline-year {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--accent-color);
-            margin-bottom: 8px;
-        }
-
-        .timeline-text {
-            font-size: 0.95rem;
-            color: #555;
-        }
-
-        .footer {
-            background: #2a2a2a;
-            color: var(--text-light);
-            padding: 60px 20px;
-            margin-top: 80px;
-            text-align: center;
-        }
-
-        .footer-disclaimer {
-            font-size: 0.85rem;
-            opacity: 0.8;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-
-        .footer-nav {
-            margin-top: 20px;
-        }
-
-        .footer-nav a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .footer-nav a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 2rem;
-            }
-
-            .hero-section .deck {
-                font-size: 1.1rem;
-            }
-
-            .timeline::before {
-                left: 20px;
-            }
-
-            .timeline-item:nth-child(odd),
-            .timeline-item:nth-child(even) {
-                margin: 0;
-                margin-left: 60px;
-                text-align: left;
-                padding-left: 30px;
-            }
-
-            .timeline-dot {
-                left: 20px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    .back-link:hover {
+      opacity: 0.8;
+    }
+  </style>
 </head>
-<body class="lang-en">
-    <!-- Disclaimer Bar -->
-    <div id="disclaimerBar" class="disclaimer-bar">
-        <span>⚠</span>
-        <span id="disclaimerText" data-lang="en">This is an alternative layout version of an investigative article by journalist Luiz Fernando Toledo (in partnership with Data Fixers), created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to Piauí magazine and Luiz Fernando Toledo.</span>
-        <span id="disclaimerText" data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem investigativa do jornalista Luiz Fernando Toledo (em parceria com Data Fixers), criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente à revista Piauí e a Luiz Fernando Toledo.</span>
-        <a href="https://piaui.folha.uol.com.br" target="_blank" data-lang="en">Original Article</a>
-        <a href="https://piaui.folha.uol.com.br" target="_blank" data-lang="pt">Artigo Original</a>
-        <button id="disclaimerClose">&times;</button>
+<body>
+  <!-- Progress Bar -->
+  <div id="progressBar" class="progress-bar"></div>
+
+  <!-- Disclaimer Bar -->
+  <div id="disclaimerBar" class="disclaimer-bar">
+    <div class="disclaimer-inner">
+      <div class="disclaimer-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <div class="disclaimer-text">
+        <span data-lang="en"><strong>Portfolio piece:</strong> This is an enhanced presentation of my journalism. The original article was published at BBC News Brasil / Revista Piauí. Content is reproduced for portfolio purposes.</span>
+        <span data-lang="pt"><strong>Peça de portfólio:</strong> Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil / Revista Piauí. O conteúdo é reproduzido para fins de portfólio.</span>
+      </div>
+      <button id="disclaimerClose" class="disclaimer-close" aria-label="Close disclaimer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
+  </div>
 
-    <!-- Language Toggle Bar -->
-    <div id="langBar" class="lang-bar">
-        <button id="btnEn" class="lang-btn active" data-lang="en">EN</button>
-        <button id="btnPt" class="lang-btn" data-lang="pt">PT</button>
+  <!-- Language Toggle Bar -->
+  <div class="lang-toggle-bar">
+    <div class="lang-toggle-inner">
+      <span class="lang-toggle-label" data-lang="en">Language</span>
+      <span class="lang-toggle-label hidden" data-lang="pt">Idioma</span>
+      <button id="btnEn" class="lang-btn active" data-lang="en">EN</button>
+      <button id="btnPt" class="lang-btn" data-lang="pt">PT</button>
     </div>
+  </div>
 
-    <!-- Progress Bar -->
-    <div id="progressBar" class="progress-bar"></div>
+  <!-- Hero Section -->
+  <header class="hero hero-bg">
+    <div class="hero-content fade-in">
+      <h1 class="hero-label" data-lang="en">Environmental Crime</h1>
+      <h1 class="hero-label hidden" data-lang="pt">Crime Ambiental</h1>
 
-    <!-- Hero Section -->
-    <div class="hero-section">
-        <div class="series-tag" data-lang="en">Piauí Magazine & Data Fixers</div>
-        <div class="series-tag" data-lang="pt">Revista Piauí & Data Fixers</div>
+      <h2 class="hero-title" data-lang="en">A park at the heart of pau-brasil smuggling</h2>
+      <h2 class="hero-title hidden" data-lang="pt">Um parque no coração do contrabando de pau-brasil</h2>
 
-        <h1 data-lang="en">The Endangered National Symbol Being Smuggled to Europe for Violin Bows</h1>
-        <h1 data-lang="pt">O Símbolo Nacional Ameaçado de Extinção que É Contrabandeado para Virar Arco de Violino na Europa</h1>
+      <p class="hero-subtitle" data-lang="en">Exclusive documents reveal illegal wood trafficking from Brazil's protected national park destined for international violin bow markets</p>
+      <p class="hero-subtitle hidden" data-lang="pt">Documentos exclusivos revelam tráfico ilegal de madeira do parque nacional protegido do Brasil destinado aos mercados internacionais de arcos de violino</p>
 
-        <div class="deck" data-lang="en">Pau-brasil, the tree that gave Brazil its name, is being trafficked globally to supply the world's violin bow makers, despite international protection laws and near-extinction in its native Atlantic Forest.</div>
-        <div class="deck" data-lang="pt">Pau-brasil, a árvore que deu nome ao Brasil, está sendo traficada globalmente para abastecer os fabricantes de arcos de violino do mundo, apesar das leis de proteção internacional e quase extinção em sua Mata Atlântica nativa.</div>
+      <div class="hero-meta">
+        <span data-lang="en">Fernanda Santana & Luiz Fernando Toledo</span>
+        <span class="hidden" data-lang="pt">Fernanda Santana & Luiz Fernando Toledo</span>
+        <span>April 2023</span>
+      </div>
+    </div>
+  </header>
 
-        <div class="meta">
-            <span data-lang="en">Luiz Fernando Toledo (with Data Fixers) • Piauí Magazine • April 2023</span>
-            <span data-lang="pt">Luiz Fernando Toledo (com Data Fixers) • Revista Piauí • Abril de 2023</span>
+  <!-- Chapter Navigation -->
+  <nav class="chapter-nav">
+    <div class="chapter-nav-inner">
+      <a href="#conservation" data-lang="en">Conservation</a>
+      <a href="#conservation" class="hidden" data-lang="pt">Conservação</a>
+
+      <a href="#extraction" data-lang="en">Extraction</a>
+      <a href="#extraction" class="hidden" data-lang="pt">Extração</a>
+
+      <a href="#investigation" data-lang="en">Investigation</a>
+      <a href="#investigation" class="hidden" data-lang="pt">Investigação</a>
+
+      <a href="#trafficking" data-lang="en">Trafficking</a>
+      <a href="#trafficking" class="hidden" data-lang="pt">Tráfico</a>
+
+      <a href="#conflict" data-lang="en">Conflict</a>
+      <a href="#conflict" class="hidden" data-lang="pt">Conflito</a>
+
+      <a href="#stats" data-lang="en">Data</a>
+      <a href="#stats" class="hidden" data-lang="pt">Dados</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Introduction -->
+    <section class="text-section" id="conservation">
+      <p class="article-intro" data-lang="en">Whoever arrives at Pau Brasil National Park (PNPB), in Porto Seguro, in southern Bahia, is invited to learn about the history of the wood that gives the country its name. The visitor center tells, through panels, the history of pau-brasil cycles, from its use as a fabric dye during Portuguese colonization, to the making of violin bows from the 19th century onwards. One of those murals informs that great symphonic orchestras use pau-brasil to make violin bows. The caption does not say that the bow on display is not made of the tree that is the symbol of the country, nor that park employees frequently need to curb the actions of criminals who are part of an illegal scheme that supplies the noble market of archetry — the art of making these bows.</p>
+
+      <p class="article-intro hidden" data-lang="pt">Quem chega ao Parque Nacional do Pau Brasil (PNPB), em Porto Seguro, no Sul da Bahia, é convidado a conhecer a história da madeira que dá nome ao país. O centro de visitantes da unidade conta, por meio de painéis, a história dos ciclos do pau-brasil, do uso como tintura de tecidos, durante a colonização portuguesa, à confecção de arcos de violino a partir do século XIX. Um desses murais informa que grandes orquestras sinfônicas usam pau-brasil para fabricar arcos de violino. A legenda não diz que aquele arco exposto não é feito da árvore símbolo do país, nem que os servidores do parque precisam frequentemente coibir a ação de criminosos que integram um esquema ilegal que abastece o mercado nobre da archetaria – a arte de fabricar esses arcos.</p>
+
+      <p data-lang="en">Pau-brasil has been threatened with extinction since 1992. Any extraction of this wood without authorization is a crime. Piauí magazine, in partnership with the Fiquem Sabendo data agency, obtained exclusive expert reports and documents from the Federal Police (PF) and the US Fish and Wildlife Service. The documents reveal details of the wood trafficking scheme investigation and, for the first time, attest that part of the raw material found with bow manufacturers and businessmen illegally left the park nestled in the Coast of Discovery, a UNESCO world heritage site and home to Atlantic Forest species.</p>
+
+      <p class="hidden" data-lang="pt">O pau-brasil está, desde 1992, ameaçado de extinção. Qualquer extração dessa madeira sem autorização é crime. A revista piauí, em parceria com a agência de dados Fiquem Sabendo, obteve laudos e relatórios inéditos da Polícia Federal (PF) e da agência governamental americana US Fish and Wildlife Service. Os documentos revelam detalhes da investigação do esquema de tráfico de madeira e, pela primeira vez, atestam que parte da matéria-prima encontrada com fabricantes de arcos e empresários saiu ilegalmente do parque encravado na Costa do Descobrimento, patrimônio natural mundial da Unesco e abrigo de espécies da Mata Atlântica.</p>
+
+      <div class="image-block">
+        <img src="imgs/photo-01.jpg" alt="Violin on display at PNPB visitor center">
+        <p class="image-credit" data-lang="en">Violin on display at PNPB headquarters. The violin bow is usually produced with the heartwood of the tree. | Photo by Joana Moncau</p>
+        <p class="image-credit hidden" data-lang="pt">Violino exposto na sede do PNPB. O arco de violino costuma ser produzido com o cerne da árvore. | Foto: Joana Moncau</p>
+      </div>
+    </section>
+
+    <!-- Extraction Section -->
+    <section class="text-section" id="extraction">
+      <h2 data-lang="en">Inside the park</h2>
+      <h2 class="hidden" data-lang="pt">Dentro do parque</h2>
+
+      <p data-lang="en">About 20 meters from the space open to tourists, Piauí found, in April of that year, a place closed to visitors: an open-air depot of felled trees, including pau-brasil logs. Before they could supply illegal markets, they were intercepted by environmental inspectors working in the park, an area of 19,000 hectares under the responsibility of the Chico Mendes Biodiversity Conservation Institute (ICMBio), an agency linked to the Ministry of Environment.</p>
+
+      <p class="hidden" data-lang="pt">A cerca de 20 metros do espaço aberto aos turistas, a piauí conheceu, em abril deste ano, um lugar interditado aos visitantes: um depósito a céu aberto de árvores cortadas, incluindo toras de pau-brasil. Antes que seguissem para abastecer mercados ilegais, elas foram interceptadas por fiscais ambientais que atuam no parque, uma área de 19 mil hectares sob responsabilidade do Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio), autarquia vinculada ao Ministério do Meio Ambiente (MMA).</p>
+
+      <p data-lang="en">The depot is a memory, albeit partial, of the advance of wood smugglers on a federally protected area. According to ICMBio, the logs will be used to build bridges and lookouts within the park. Created as a conservation unit in 1999, Pau Brasil National Park is surrounded by seven districts. In the neighborhood, there are still Arraial D'Ajuda and Trancoso, two points of luxury tourism in Brazil. It is residents of poorer communities, such as Vale Verde and Coqueiro Alto, not yet incorporated into the logic of tourism, who participate more actively in the park's wood extraction network, disputed by rival criminal groups.</p>
+
+      <p class="hidden" data-lang="pt">O depósito é uma memória, ainda que parcial, do avanço de contrabandistas de madeira sobre uma área federal e protegida por lei. Segundo o ICMBio, as toras serão utilizadas para construir pontes e mirantes dentro do parque. Criado como unidade de conservação em 1999, o Parque Nacional do Pau Brasil é rodeado por sete distritos. Na vizinhança, ainda estão Arraial D'Ajuda e Trancoso, dois points do turismo de luxo no Brasil. São moradores de comunidades mais pobres, como Vale Verde e Coqueiro Alto, ainda não incorporados à lógica do turismo, que participam mais ativamente da rede de extração de madeira do parque, disputada por grupos criminosos rivais.</p>
+
+      <div class="pullquote" data-lang="en">
+        <p>"This entire illegal economic circuit is very profitable. They are people who end up seeing pau-brasil as an opportunity for easy money."</p>
+        <p class="pullquote-citation">Environmental analyst Fábio Faraco, former ICMBio chief at the park</p>
+      </div>
+
+      <p data-lang="en">According to environmental analyst Fábio Faraco, former ICMBio chief at the park, a person can earn, from one or two nights of work with illegal cutting, up to 500 reals, equivalent to almost half a minimum wage. He headed the conservation unit until 2019. At night, the sound of chainsaws, turned on to fell trees in the park, reaches the home of a 25-year-old rural producer, a resident of the rural area of Vale Verde, 2 km away. The conservation unit and the rural community are connected by four dirt roads.</p>
+
+      <p class="hidden" data-lang="pt">Segundo o analista ambiental Fábio Faraco, ex-chefe do ICMBio no parque, uma pessoa pode ganhar, por uma ou duas noites de trabalho com o corte ilegal, até 500 reais, o equivalente a quase metade de um salário mínimo. Ele esteve à frente da unidade de conservação até 2019. À noite, o som das motosserras, ligadas para derrubar árvores do parque, chega à casa de um produtor rural de 25 anos, morador da zona rural de Vale Verde, a 2 km dali. A unidade de conservação e a comunidade rural são unidas por quatro estradas de terra.</p>
+
+      <p data-lang="en">In February of that year, when passing through one of them, around 8 p.m., the farmer (whose name will be kept confidential for security reasons) came face to face with two men on a truck and a motorcycle, heading to the park. One of them told him: "We're going to leave loaded." Loaded with pau-brasil.</p>
+
+      <p class="hidden" data-lang="pt">Em fevereiro deste ano, quando passava por uma delas, por volta das 20 horas, o agricultor (cujo nome será mantido em sigilo por motivo de segurança) deu de cara com dois homens a bordo de um caminhão e uma moto, rumo ao parque. Um deles lhe disse: "Vamos sair carregados." Carregados de pau-brasil.</p>
+    </section>
+
+    <!-- Investigation Section -->
+    <section class="text-section" id="investigation">
+      <h2 data-lang="en">A complex operation</h2>
+      <h2 class="hidden" data-lang="pt">Uma operação complexa</h2>
+
+      <p data-lang="en">Since the beginning of this year, ICMBio has been investigating new reports of tree felling within the park. Between January and March, six bonfires were found inside the unit, traces of the presence of wood thieves and hunters. Trees of all kinds are targeted by smugglers, but the most coveted target is pau-brasil, a noble wood with high resistance that does not rot or is attacked by insects — which is why it is considered ideal for violin bows.</p>
+
+      <p class="hidden" data-lang="pt">Desde o início deste ano, o ICMBio apura novas denúncias de derrubada de árvores dentro do parque. Entre os meses de janeiro e março, seis fogueiras foram encontradas no interior da unidade, rastros da presença de ladrões de madeira e caçadores. Árvores de todo tipo estão na mira dos contrabandistas, mas o alvo mais cobiçado é o pau-brasil, uma madeira de alta nobreza e resistência, que não apodrece nem é atacada por insetos – e por isso tudo considerada ideal para arcos de violino.</p>
+
+      <p data-lang="en">Within the park, tree felling typically takes two nights, one for cutting and another for loading the wood. The scheme can involve at least five people: two to fell the trees, two to keep watch, and a driver who transports the wood logs to rural properties or illegal carpentry shops in the region. Before that, the trunks are cut into pieces, which makes it difficult to identify the species and facilitates transportation.</p>
+
+      <p class="hidden" data-lang="pt">Dentro do parque, a derrubada de árvores costuma durar duas noites, uma para cortar e outra para carregar a madeira. O esquema pode englobar ao menos cinco pessoas: duas para decepar as árvores, duas para vigiar e um motorista, que leva as toras de madeira para propriedades rurais ou marcenarias ilegais na região. Antes, os troncos são cortados em pedaços, o que dificulta a identificação da espécie e facilita o transporte.</p>
+
+      <p data-lang="en">Since at least 2016, teams from the Federal Police, Ibama, and ICMBio have been carrying out operations to try to break the illegal cycle of pau-brasil removal from the park. In July of that year, an internal report prepared by the then park managers had already identified three gangs of criminals, each made up of seven people. That same month, before the document was drawn up, Diego Lopes de Oliveira, 36, a former firefighter at the park, was found by military police with twenty logs of pau-brasil and arrested for environmental crime and criminal association.</p>
+
+      <p class="hidden" data-lang="pt">Ao menos desde 2016, equipes da PF, do Ibama e do ICMBio realizam operações para tentar romper o ciclo ilegal de retirada do pau-brasil do parque. Em julho daquele ano, um relatório interno elaborado pelos então gestores do parque já havia identificado três bandos de criminosos, cada um deles formado por sete pessoas. Naquele mesmo mês, antes da elaboração do documento, Diego Lopes de Oliveira, 36, ex-brigadista no parque, foi encontrado por policiais militares com vinte toras de pau-brasil e detido por crime ambiental e associação criminosa.</p>
+
+      <div class="image-block">
+        <img src="imgs/photo-02.jpg" alt="Illegal wood depot at the park">
+        <p class="image-credit" data-lang="en">Illegal wood found during inspections at Pau Brasil National Park | Photo by Joana Moncau</p>
+        <p class="image-credit hidden" data-lang="pt">Madeira ilegal encontrada durante inspeções no Parque Nacional do Pau Brasil | Foto: Joana Moncau</p>
+      </div>
+    </section>
+
+    <!-- Trafficking Section -->
+    <section class="text-section" id="trafficking">
+      <h2 data-lang="en">A pyramid of crime</h2>
+      <h2 class="hidden" data-lang="pt">Uma pirâmide do crime</h2>
+
+      <p data-lang="en">"Peons" like Oliveira, who cut wood inside the park, are the base of the pau-brasil smuggling pyramid. In the middle is the artisan who receives the wood without legal origin. At the top, businessmen who export the product, with profit similar to cocaine trafficking. A wooden stick from the raw material used to make the bow can cost from 20 to 40 reals, according to Federal Police. In a store abroad, some bow models can cost more than 20,000 reals.</p>
+
+      <p class="hidden" data-lang="pt">"Peões" como Oliveira, que cortam madeira dentro do parque, são a base da pirâmide do contrabando do pau-brasil. No meio está o artesão que recebe a madeira sem origem legal. No topo, empresários que exportam o produto, com lucro semelhante ao do tráfico de cocaína. Uma vareta da matéria-prima, usada para fabricar o arco, pode custar de 20 a 40 reais, segundo a PF. Em loja no exterior, alguns modelos de arco podem custar mais de 20 mil reais.</p>
+
+      <div class="price-comparison">
+        <div class="price-card">
+          <p class="price-label" data-lang="en">Raw material</p>
+          <p class="price-label hidden" data-lang="pt">Matéria-prima</p>
+          <div class="price">R$ 20-40</div>
+          <p class="price-note" data-lang="en">Per wooden stick</p>
+          <p class="price-note hidden" data-lang="pt">Por vareta de madeira</p>
         </div>
-    </div>
+        <div class="price-card">
+          <p class="price-label" data-lang="en">Retail price</p>
+          <p class="price-label hidden" data-lang="pt">Preço no varejo</p>
+          <div class="price">R$ 20k+</div>
+          <p class="price-note" data-lang="en">Violin bow in stores</p>
+          <p class="price-note hidden" data-lang="pt">Arco de violino nas lojas</p>
+        </div>
+      </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Text Section 1 -->
-        <section class="text-section fade-in">
-            <p data-lang="en">Paubrasilia echinata—pau-brasil—is the rarest wood in the luthier's arsenal. Its weight, density, and acoustic properties make it the premium material for violin bows. A single pau-brasil bow can cost €800 to €2,000. A single tree can yield dozens of bows. But pau-brasil is also Brazil's national symbol, named the tree that gave the country its name. It is also critically endangered, reduced to scattered fragments in the Atlantic Forest, and protected under CITES (Convention on International Trade in Endangered Species) since 1992.</p>
-            <p data-lang="pt">Paubrasilia echinata—pau-brasil—é a madeira mais rara no arsenal do luthier. Seu peso, densidade e propriedades acústicas a tornam o material premium para arcos de violino. Um único arco de pau-brasil pode custar de €800 a €2.000. Uma única árvore pode render dezenas de arcos. Mas pau-brasil é também o símbolo nacional do Brasil, nomeado a árvore que deu nome ao país. É também criticamente ameaçada de extinção, reduzida a fragmentos dispersos na Mata Atlântica, e protegida sob CITES (Convenção sobre o Comércio Internacional de Espécies Ameaçadas) desde 1992.</p>
-        </section>
+      <p data-lang="en">Since 2021, Federal Police and Ibama have been investigating the scheme in the so-called Operation Ibirapitanga, which last year alone carried out 37 search and seizure warrants — three of them in southern Bahia. The businessmen accused of using illegally obtained wood have always claimed that the raw material for producing the bows came from their own plantations or donations from older, authorized extractions, within the law.</p>
 
-        <!-- Pullquote -->
-        <div class="pullquote fade-in">
-            <span data-lang="en">"The classical music world has a supply chain problem it hasn't fully acknowledged. Most bow makers and players don't know where their bows come from, or they choose not to ask."</span>
-            <span data-lang="pt">"O mundo da música clássica tem um problema de cadeia de suprimentos que não foi totalmente reconhecido. A maioria dos fabricantes e tocadores de arcos não sabe de onde seus arcos vêm, ou escolhem não perguntar."</span>
+      <p class="hidden" data-lang="pt">Desde 2021, Polícia Federal e Ibama investigam o esquema na chamada Operação Ibirapitanga, que só no ano passado cumpriu 37 mandados de busca e apreensão – três deles no Sul da Bahia. Os empresários acusados de usar madeira obtida ilegalmente sempre alegaram que a matéria-prima para produzir os arcos vinha de plantios próprios ou doações de extrações mais antigas, autorizadas e dentro da lei.</p>
+
+      <p data-lang="en">What the documents obtained by Piauí show, however, is that a considerable part of the wood leaves the park in Bahia. Federal Police experts studied the anatomical composition of wood samples from the park and other samples seized at properties and yards of those investigated in the operation. The technical reports, finalized in December, pointed out that most of the seized samples "corresponds to those of reference origin from Pau Brasil National Park, of natural origin".</p>
+
+      <p class="hidden" data-lang="pt">O que os documentos obtidos pela piauí mostram, porém, é que parte considerável da madeira sai do parque na Bahia. A perícia da Polícia Federal estudou a composição anatômica de amostras de madeira do parque e de outras apreendidas em propriedades e pátios dos investigados na operação. Os laudos técnicos, finalizados em dezembro passado, apontaram que a maior parte das amostras apreendidas "corresponde às de referência oriundas do Parque Nacional do Pau Brasil, de origem natural".</p>
+
+      <div class="pullquote" data-lang="en">
+        <p>"Five years is impossible to make a bow; in thirty years, bows are produced. It's like whiskey. An eight-year-old won't be the same as a thirty-year-old."</p>
+        <p class="pullquote-citation">Daniel Piotto, forest engineer and Yale University doctoral graduate</p>
+      </div>
+
+      <div class="image-block">
+        <img src="imgs/photo-03.jpg" alt="Wood samples and analysis">
+        <p class="image-credit" data-lang="en">Technical forensic analysis of wood samples from the investigation | Photo by Joana Moncau</p>
+        <p class="image-credit hidden" data-lang="pt">Análise técnica forense de amostras de madeira da investigação | Foto: Joana Moncau</p>
+      </div>
+
+      <p data-lang="en">The hypothesis that the wood used by the investigated violin bow manufacturers is extracted from centuries-old trees is corroborated by the characteristics of pau-brasil necessary to make a bow, which require more mature trees. After extraction, the species takes a minimum of two years to dry and be handled. A violin bow is usually produced with the heartwood of the tree. The heartwood is a softer part, like marrow. It takes time to develop.</p>
+
+      <p class="hidden" data-lang="pt">A hipótese de que a madeira utilizada pelos fabricantes de violino investigados é extraída de árvores centenárias é corroborada pelas características do pau-brasil necessárias para fabricar um arco, que demandam árvores mais maduras. Depois de extraída, a espécie demora, no mínimo, dois anos para secar e ser manuseada. Um arco de violino costuma ser produzido com o cerne da árvore. O cerne é uma parte mais mole, tipo uma medula. Demora a se desenvolver.</p>
+    </section>
+
+    <!-- Conflict Section -->
+    <section class="text-section" id="conflict">
+      <h2 data-lang="en">Violence and power struggles</h2>
+      <h2 class="hidden" data-lang="pt">Violência e disputas de poder</h2>
+
+      <p data-lang="en">In addition to illegal wood extraction, other environmental crimes, such as hunting, illegal sand extraction, and invasion and occupation of areas without authorization, are frequently suppressed in the park. In the last decade, at least fifty violations have been recorded by ICMBio within the park, according to data obtained through the Information Access Law by the Fiquem Sabendo agency. Anyone who frequents the conservation unit is used to seeing the traces left by offenders. "We've seen hunters at six in the morning. We've seen guns," says advertising professional Daniel Silva, who counted twenty felled pau-brasil trunks on the ground in the park while cycling through one of the six trails there in 2021.</p>
+
+      <p class="hidden" data-lang="pt">Além da extração ilegal de madeira, outros crimes ambientais, como a caça, extração de areia ilegal e invasão e ocupação de área sem autorização são frequentemente coibidos no parque. Na última década, ao menos cinquenta infrações foram registradas pelo ICMBio dentro do parque, segundo dados obtidos por meio da Lei de Acesso à Informação pela agência Fiquem Sabendo. Quem frequenta a unidade de conservação está acostumado a ver os rastros deixados por infratores. "Já vimos caçadores às seis da manhã. A gente já viu armas", conta o publicitário Daniel Silva, que contou vinte troncos de pau-brasil cortados no chão do parque enquanto percorria, de bicicleta, uma das seis trilhas do lugar, em 2021.</p>
+
+      <p data-lang="en">Another challenge for ICMBio is the permanence, inside and around the park, of various private areas that have not been expropriated. The creation of the conservation unit, more than two decades ago, and its expansion in 2010 faced resistance from medium and large landowners who wanted to keep possession of their farms. Almost half of the park's area (46%) is still not regularized, according to ICMBio. The institution has adopted a strategy to increase this share: if a person or company needs to regulate another area within the same biome, they can, as compensation, buy land inside the park and donate it to the State. To this day, there are plots of land inside the park fenced with gates and padlocks, beyond the reach of authorities.</p>
+
+      <p class="hidden" data-lang="pt">Outro desafio para o ICMBio é a permanência, no interior e no entorno do parque, de diversas áreas privadas que não foram desapropriadas. A criação da unidade de conservação, há mais de duas décadas, e sua ampliação em 2010 enfrentaram resistência de médios e grandes proprietários que queriam manter a posse de suas fazendas. Quase metade da área do parque (46%) ainda não está regularizada, segundo o ICMBio. A instituição tem adotado uma estratégia para aumentar essa fatia: se uma pessoa ou empresa precisa regulamentar outra área dentro do mesmo bioma, ela pode, como compensação, comprar terras dentro do parque e doá-las ao Estado. Até hoje há, dentro do parque, terrenos fechados com portões e cadeados, fora do alcance das autoridades.</p>
+
+      <div class="image-block">
+        <img src="imgs/photo-04.jpg" alt="Park landscape and private property">
+        <p class="image-credit" data-lang="en">The landscape of Pau Brasil National Park showing the intersection of protected and private areas | Photo by Joana Moncau</p>
+        <p class="image-credit hidden" data-lang="pt">A paisagem do Parque Nacional do Pau Brasil mostrando a intersecção de áreas protegidas e privadas | Foto: Joana Moncau</p>
+      </div>
+
+      <p data-lang="en">An example of this conflict between public and private happened in 2021. On September 27, ICMBio employees sent a request for help to the Federal Police. In the document, they requested "institutional support and protection," reporting that in the week following an inspection that caught illegal wood extraction on a private farm with access to the park from the back, they were informed of the murder of the property manager. The body was found outside the park, in the rural area of Queimado, a district neighboring the unit. The crime is being investigated by the Territorial Police Department of Arraial D'Ajuda, but the police inquiry has not yet been completed and it is not known whether there is any connection to the inspection.</p>
+
+      <p class="hidden" data-lang="pt">Um exemplo desse conflito entre o público e o privado aconteceu em 2021. No dia 27 de setembro, servidores do ICMBio enviaram um pedido de socorro à Polícia Federal. No documento, solicitavam "suporte institucional e proteção," relatando que na semana seguinte a uma fiscalização que flagrou extração ilegal de madeira em uma fazenda privada com acesso ao parque pelos fundos, foram informados do assassinato do gerente do imóvel. O corpo foi encontrado fora do parque, na zona rural de Queimado, distrito vizinho à unidade. O crime é investigado pela Delegacia Territorial de Arraial D'Ajuda, mas o inquérito policial ainda não foi concluído e não se sabe se há ou não relação com a fiscalização.</p>
+
+      <p data-lang="en">Eight days before the manager was found dead, ICMBio found 26 trails linking the property to wood extraction areas inside the conservation unit. On the property, 36 cubic meters of native wood were found, mainly Paraju and Pequi, extracted illegally and used to decorate the ceilings of luxurious houses, according to authorities. The violation resulted in a fine of 58,000 reals.</p>
+
+      <p class="hidden" data-lang="pt">Oito dias antes de o gerente ser encontrado morto, o ICMBio encontrou 26 trilhas ligando a propriedade a áreas de extração de madeira dentro da unidade de conservação. Na propriedade, foram encontrados 36 m3 de madeiras nativas, principalmente Paraju e Pequi, extraídas ilegalmente e usadas para ornamentar forros de casas luxuosas, segundo as autoridades. A infração gerou uma multa de 58 mil reais.</p>
+    </section>
+
+    <!-- Data Visualization Section -->
+    <section class="viz-container" id="stats">
+      <h3 class="chart-title" data-lang="en">The scope of the investigation</h3>
+      <h3 class="chart-title hidden" data-lang="pt">A extensão da investigação</h3>
+
+      <div class="bar-chart">
+        <div class="chart-row">
+          <div class="chart-label" data-lang="en">Search warrants (2022)</div>
+          <div class="chart-label hidden" data-lang="pt">Mandados (2022)</div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" style="width: 100%;">37</div>
+          </div>
         </div>
 
-        <!-- Text Section 2 -->
-        <section class="text-section fade-in">
-            <p data-lang="en">Despite CITES protection, pau-brasil continues to be trafficked internationally. This investigation, published in Piauí magazine in April 2023 in partnership with Data Fixers, identified companies and individuals penalized for illegal trafficking of pau-brasil bows and wood. Some traders claim to use "legally sourced" pau-brasil from plantations, but verification is difficult. International enforcement is patchy. The incentives are enormous: a kilogram of pau-brasil wood can sell for €500 to €1,000 in Europe.</p>
-            <p data-lang="pt">Apesar da proteção CITES, pau-brasil continua sendo traficado internacionalmente. Esta investigação, publicada na revista Piauí em abril de 2023 em parceria com Data Fixers, identificou empresas e indivíduos penalizados por tráfico ilegal de arcos e madeira de pau-brasil. Alguns comerciantes afirmam usar pau-brasil "legalmente obtido" de plantações, mas a verificação é difícil. A aplicação internacional é esporádica. Os incentivos são enormes: um quilograma de madeira de pau-brasil pode ser vendido por €500 a €1.000 na Europa.</p>
-
-            <p data-lang="en">The tree's natural habitat—the Atlantic Forest, or Mata Atlântica—has been reduced to fragments totaling less than 12% of its original extent. Pau-brasil was once the most abundant tree in this forest. Today, it survives in protected pockets, but illegal harvesting continues. IBAMA raids have found illegal stocks, but enforcement is inadequate. The musical world has been slow to address the supply chain problem. Many luthiers and performers are unaware of the sourcing of their bows, or they prioritize acoustic quality over environmental responsibility.</p>
-            <p data-lang="pt">O habitat natural da árvore—a Mata Atlântica—foi reduzido a fragmentos totalizando menos de 12% de sua extensão original. Pau-brasil era uma vez a árvore mais abundante dessa floresta. Hoje, sobrevive em bolsões protegidos, mas a colheita ilegal continua. Operações da IBAMA encontraram estoques ilegais, mas a aplicação é inadequada. O mundo musical foi lento em resolver o problema da cadeia de suprimentos. Muitos luthiers e músicos desconhecem a origem de seus arcos, ou priorizam a qualidade acústica sobre a responsabilidade ambiental.</p>
-        </section>
-
-        <!-- Stats Section -->
-        <section class="stats-section fade-in">
-            <h2 data-lang="en">Critical Facts</h2>
-            <h2 data-lang="pt">Fatos Críticos</h2>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" data-count="500">500+</div>
-                    <div class="stat-label" data-lang="en">Years of pau-brasil exploitation since Portuguese arrival</div>
-                    <div class="stat-label" data-lang="pt">Anos de exploração de pau-brasil desde a chegada portuguesa</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number" data-count="2023">2023</div>
-                    <div class="stat-label" data-lang="en">Year investigation was published</div>
-                    <div class="stat-label" data-lang="pt">Ano em que a investigação foi publicada</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number" data-count="1">1</div>
-                    <div class="stat-label" data-lang="en">National symbol: the tree that named Brazil</div>
-                    <div class="stat-label" data-lang="pt">Símbolo nacional: a árvore que nomeou o Brasil</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-number" data-lang="en">CITES</div>
-                    <div class="stat-number" data-lang="pt">CITES</div>
-                    <div class="stat-label" data-lang="en">International protection status since 1992</div>
-                    <div class="stat-label" data-lang="pt">Status de proteção internacional desde 1992</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Text Section 3 -->
-        <section class="text-section fade-in">
-            <p data-lang="en">The investigation traced specific shipments and identified traders operating across multiple countries. Some companies process pau-brasil in Europe and sell finished bows without documenting the origin of the wood. Others work with suppliers in Brazil who harvest illegally or falsify CITES permits. The supply chain is fragmented and opaque—deliberately so. As long as the classical music world values pau-brasil bows above all other materials, and as long as enforcement remains weak, the trafficking will continue.</p>
-            <p data-lang="pt">A investigação rastreou remessas específicas e identificou comerciantes operando em vários países. Algumas empresas processam pau-brasil na Europa e vendem arcos acabados sem documentar a origem da madeira. Outras trabalham com fornecedores no Brasil que colhem ilegalmente ou falsificam permissões CITES. A cadeia de suprimentos é fragmentada e opaca—deliberadamente. Enquanto o mundo da música clássica valorizar arcos de pau-brasil acima de todos os outros materiais, e enquanto a aplicação permanecer fraca, o tráfico continuará.</p>
-
-            <p data-lang="en">International bodies including CITES, the IUCN (International Union for Conservation of Nature), and the Brazilian government have recognized pau-brasil's endangered status. Yet demand from the global bow-making industry remains strong. Some luthiers have experimented with alternative woods, but pau-brasil's acoustic properties remain unmatched in the eyes of many professionals. The question facing the classical music world is whether it can transition away from pau-brasil before the species disappears entirely from the wild.</p>
-            <p data-lang="pt">Organismos internacionais, incluindo CITES, a IUCN (União Internacional para a Conservação da Natureza), e o governo brasileiro, reconheceram o status ameaçado de pau-brasil. Mas a demanda da indústria global de fabricação de arcos permanece forte. Alguns luthiers experimentaram madeiras alternativas, mas as propriedades acústicas de pau-brasil permanecem inigualáveis aos olhos de muitos profissionais. A questão que enfrenta o mundo da música clássica é se conseguirá se afastar de pau-brasil antes que a espécie desapareça completamente da natureza.</p>
-        </section>
-
-        <!-- Timeline Section -->
-        <section class="timeline">
-            <h2 style="text-align: center; margin-bottom: 40px;" data-lang="en">Timeline of Pau-Brasil: From Abundance to Crisis</h2>
-            <h2 style="text-align: center; margin-bottom: 40px;" data-lang="pt">Cronologia do Pau-Brasil: Da Abundância à Crise</h2>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">1500s</div>
-                    <div class="timeline-text" data-lang="en">Portuguese colonizers exploit pau-brasil for red dye; it becomes Brazil's first major export commodity</div>
-                    <div class="timeline-text" data-lang="pt">Colonizadores portugueses exploram pau-brasil para corante vermelho; torna-se a primeira grande mercadoria de exportação do Brasil</div>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">1800s</div>
-                    <div class="timeline-text" data-lang="en">Pau-brasil populations decimated; the tree becomes rare; Atlantic Forest habitat shrinks dramatically</div>
-                    <div class="timeline-text" data-lang="pt">Populações de pau-brasil decimadas; a árvore torna-se rara; habitat da Mata Atlântica encolhe dramaticamente</div>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">1961</div>
-                    <div class="timeline-text" data-lang="en">Pau-brasil is declared Brazil's national tree; ecological protection begins</div>
-                    <div class="timeline-text" data-lang="pt">Pau-brasil é declarada árvore nacional do Brasil; proteção ecológica começa</div>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">1992</div>
-                    <div class="timeline-text" data-lang="en">Pau-brasil is added to CITES Appendix II; international trade monitoring begins</div>
-                    <div class="timeline-text" data-lang="pt">Pau-brasil é adicionada ao Apêndice II do CITES; monitoramento internacional do comércio começa</div>
-                </div>
-            </div>
-
-            <div class="timeline-item fade-in">
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-year">2023</div>
-                    <div class="timeline-text" data-lang="en">Piauí/Data Fixers investigation reveals ongoing illegal trafficking to European bow makers</div>
-                    <div class="timeline-text" data-lang="pt">Investigação Piauí/Data Fixers revela tráfico ilegal contínuo para fabricantes de arcos europeus</div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-        <div class="footer-disclaimer">
-            <p data-lang="en">This is an alternative layout version of an investigative article by journalist Luiz Fernando Toledo (in partnership with Data Fixers), created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to Piauí magazine and Luiz Fernando Toledo.</p>
-            <p data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem investigativa do jornalista Luiz Fernando Toledo (em parceria com Data Fixers), criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente à revista Piauí e a Luiz Fernando Toledo.</p>
+        <div class="chart-row">
+          <div class="chart-label" data-lang="en">Operations since 2016</div>
+          <div class="chart-label hidden" data-lang="pt">Operações desde 2016</div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" style="width: 60%;">50+</div>
+          </div>
         </div>
-        <div class="footer-nav">
-            <a href="../index.html" data-lang="en">← Back to Portfolio</a>
-            <a href="../index.html" data-lang="pt">← Voltar ao Portfólio</a>
-        </div>
-    </div>
 
-    <script src="../shared/base.js"></script>
+        <div class="chart-row">
+          <div class="chart-label" data-lang="en">Arcs exported (2018-2021)</div>
+          <div class="chart-label hidden" data-lang="pt">Arcos exportados (2018-2021)</div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" style="width: 100%;">1,502</div>
+          </div>
+        </div>
+
+        <div class="chart-row">
+          <div class="chart-label" data-lang="en">Park violations (decade)</div>
+          <div class="chart-label hidden" data-lang="pt">Violações (década)</div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" style="width: 75%;">50+</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="chart-title mt-lg" data-lang="en">Price markups in the supply chain</h3>
+      <h3 class="chart-title hidden mt-lg" data-lang="pt">Marcas de preço na cadeia de suprimentos</h3>
+
+      <div class="bar-chart">
+        <div class="chart-row">
+          <div class="chart-label" data-lang="en">Extraction</div>
+          <div class="chart-label hidden" data-lang="pt">Extração</div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" style="width: 20%;">R$20-40</div>
+          </div>
+        </div>
+
+        <div class="chart-row">
+          <div class="chart-label" data-lang="en">Manufacturing</div>
+          <div class="chart-label hidden" data-lang="pt">Fabricação</div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" style="width: 45%;">R$800-2k</div>
+          </div>
+        </div>
+
+        <div class="chart-row">
+          <div class="chart-label" data-lang="en">Retail sale</div>
+          <div class="chart-label hidden" data-lang="pt">Venda no varejo</div>
+          <div class="chart-bar-container">
+            <div class="chart-bar" style="width: 100%;">R$20k+</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back Link -->
+    <div class="breadcrumb">
+      <a href="../index.html" class="back-link" data-lang="en">← Back to portfolio</a>
+      <a href="../index.html" class="back-link hidden" data-lang="pt">← Voltar ao portfólio</a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p data-lang="en"><strong>About this piece:</strong> This article was co-authored with Fernanda Santana and published in partnership with Revista Piauí and Fiquem Sabendo data agency, with support from Internews/Earth Journalism Network. It presents investigative reporting on environmental crime and wood trafficking from a UNESCO World Heritage site, featuring exclusive documents from Federal Police and US Fish and Wildlife Service.</p>
+        <p class="hidden" data-lang="pt"><strong>Sobre esta peça:</strong> Este artigo foi coautoria com Fernanda Santana e publicado em parceria com a revista Piauí e a agência de dados Fiquem Sabendo, com suporte da Internews/Earth Journalism Network. Apresenta reportagem investigativa sobre crime ambiental e tráfico de madeira de um sítio do Patrimônio Mundial da Unesco, com documentos exclusivos da Polícia Federal e US Fish and Wildlife Service.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="../shared/base.js"></script>
+  <script>
+    // Chapter navigation active state
+    window.addEventListener('scroll', function() {
+      const sections = document.querySelectorAll('.text-section');
+      const navLinks = document.querySelectorAll('.chapter-nav a');
+
+      let currentSection = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 200) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + currentSection) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
