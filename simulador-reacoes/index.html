@@ -39,23 +39,37 @@
         <h2 class="section-label">Configuração da API</h2>
 
         <div class="form-group">
-          <label class="form-label" for="apiKey">Chave OpenAI</label>
-          <div class="key-wrap">
-            <input type="password" id="apiKey" class="form-input"
-              placeholder="sk-..." autocomplete="off" spellcheck="false">
-            <button type="button" class="key-toggle" id="keyToggle"
-              title="Mostrar/ocultar" aria-label="Mostrar ou ocultar chave">👁️</button>
-          </div>
-          <span class="form-hint">Salva só no seu navegador. Nunca enviada a nenhum servidor.</span>
+          <label class="form-label" for="providerSelect">Provedor</label>
+          <select id="providerSelect" class="form-select">
+            <option value="openai">OpenAI</option>
+            <option value="gemini">Google Gemini</option>
+            <option value="anthropic">Anthropic (Claude) — requer proxy CORS</option>
+          </select>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="modelSelect">Modelo</label>
-          <select id="modelSelect" class="form-select">
-            <option value="gpt-4o-mini">gpt-4o-mini — rápido e barato</option>
-            <option value="gpt-4o">gpt-4o — mais preciso</option>
-            <option value="gpt-4-turbo">gpt-4-turbo</option>
-          </select>
+          <select id="modelSelect" class="form-select"></select>
+          <span class="form-hint" id="modelHint"></span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="apiKey">Chave de API</label>
+          <div class="key-wrap">
+            <input type="password" id="apiKey" class="form-input"
+              placeholder="" autocomplete="off" spellcheck="false">
+            <button type="button" class="key-toggle" id="keyToggle"
+              title="Mostrar/ocultar" aria-label="Mostrar ou ocultar chave">👁️</button>
+          </div>
+          <span class="form-hint" id="keyHint">Salva só no seu navegador. Nunca enviada a nenhum servidor.</span>
+        </div>
+
+        <div id="corsWarning" class="cors-warning hidden">
+          ⚠️ A API da Anthropic bloqueia chamadas diretas do navegador. Funciona apenas com um proxy CORS. Insira a URL base do proxy no campo abaixo.
+        </div>
+        <div class="form-group hidden" id="proxyGroup">
+          <label class="form-label" for="proxyUrl">URL base do proxy</label>
+          <input type="text" id="proxyUrl" class="form-input" placeholder="https://seu-proxy.com/v1">
         </div>
       </section>
 
