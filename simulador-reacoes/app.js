@@ -385,26 +385,20 @@ Comments must be in Brazilian Portuguese.
 Return ONLY a valid JSON object with this exact structure — no markdown, no explanation:
 {
   "reactions": [
-    {
-      "id": string,
-      "emoji": string,
-      "name": string,
-      "role": string,
-      "sentiment": "positive" | "critical" | "neutral" | "mixed",
-      "comment": string (2-4 sentences in the persona's authentic voice),
-      "likes": integer (realistic number of likes this comment would receive on a Brazilian news post. Use the engagement level typical for this persona: political/emotional comments tend to 50-2000 likes, professional ones 10-300, humoristas can go viral 500-5000, lurker/neutral 5-80)
-    }
+    ...
   ],
-  "thread": [
-    {
-      "emoji": string,
-      "name": string,
-      "role": string,
-      "comment": string (1-2 sentences, a direct reply to the top-liked comment, in PT-BR)
-    }
-  ]
+  "threads": {
+    "persona_id_X": [
+      {
+        "emoji": string,
+        "name": string,
+        "role": string,
+        "comment": string (1-2 sentences, responding to persona_id_X, in PT-BR)
+      }
+    ]
+  }
 }
-The "thread" must contain exactly 3 reply comments FROM DIFFERENT personas responding directly to whichever reaction you assigned the most likes. Make the replies feel like a real comment thread — mix agreement, disagreement, and tangential responses.`;
+The "threads" object should contain deep interactions for at least the 5 comments you assigned more likes. The personas in the threads should debate with each other, referencing previous points or the article. Make it feel like a real conversation.`;
 
   const user = `Artigo / texto jornalístico:
 """
@@ -416,7 +410,7 @@ ${context ? `Contexto adicional:\n"""\n${context}\n"""\n` : ''}Veículo: ${outle
 Gere um comentário realista para cada uma das ${totalCount} personas:
 [${totalPersonaDescriptions}]
 
-Retorne o JSON com "reactions" (${totalCount} itens com likes) e "thread" (3 respostas ao comentário com mais likes).`;
+Retorne o JSON com "reactions" (${totalCount} itens com likes) e "threads" (interações ricas nos 5 comentários mais populares).`;
 
   return { system, user };
 }
@@ -424,11 +418,19 @@ Retorne o JSON com "reactions" (${totalCount} itens com likes) e "thread" (3 res
 function parseResponse(raw) {
   let obj;
   try { obj = JSON.parse(raw); } catch { throw new Error('A IA retornou um formato inválido. Tente novamente.'); }
-  // Support both raw array and wrapped object
-  if (Array.isArray(obj)) return { reactions: obj, thread: [] };
+  
+  if (Array.isArray(obj)) return { reactions: obj, threads: {} };
+  
   const reactions = obj.reactions ?? Object.values(obj).find(v => Array.isArray(v)) ?? [];
-  const thread    = Array.isArray(obj.thread) ? obj.thread : [];
-  return { reactions, thread };
+  const threads   = obj.threads || {};
+  
+  // Backward compatibility with single 'thread' field
+  if (Array.isArray(obj.thread) && reactions.length > 0) {
+    const topId = [...reactions].sort((a,b) => (b.likes||0) - (a.likes||0))[0]?.id;
+    if (topId) threads[topId] = obj.thread;
+  }
+
+  return { reactions, threads };
 }
 
 
@@ -580,7 +582,7 @@ function clearLoader() {
 
 
 // ——— Render comments ————————————————————————————————————
-function renderComments(reactions, thread = []) {
+function renderComments(reactions, threads = {}) {
   if (!reactions?.length) { showError('A IA não retornou comentários. Tente novamente.'); return; }
 
   // Sort descending by likes so highest engagement appears first
@@ -601,19 +603,22 @@ function renderComments(reactions, thread = []) {
     return String(n);
   };
 
-  const threadHtml = thread?.length ? `
-    <div class="thread-block">
-      <div class="thread-header">Respostas ao comentário mais curtido</div>
-      ${thread.map(r => `
-        <div class="thread-reply">
-          <span class="thread-avatar">${escHtml(r.emoji || '💬')}</span>
-          <div class="thread-reply-body">
-            <span class="thread-reply-name">${escHtml(r.name || 'Anônimo')}</span>
-            <span class="thread-reply-role">${escHtml(r.role || '')}</span>
-            <p class="thread-reply-text">${escHtml(r.comment || '')}</p>
-          </div>
-        </div>`).join('')}
-    </div>` : '';
+  const renderThread = (thread, isTop) => {
+    if (!thread || !thread.length) return '';
+    return `
+      <div class="thread-block">
+        <div class="thread-header">${isTop ? 'Respostas em destaque' : 'Mais respostas'}</div>
+        ${thread.map(r => `
+          <div class="thread-reply">
+            <span class="thread-avatar">${escHtml(r.emoji || '💬')}</span>
+            <div class="thread-reply-body">
+              <span class="thread-reply-name">${escHtml(r.name || 'Anônimo')}</span>
+              <span class="thread-reply-role">${escHtml(r.role || '')}</span>
+              <p class="thread-reply-text">${escHtml(r.comment || '')}</p>
+            </div>
+          </div>`).join('')}
+      </div>`;
+  };
 
   const cardsHtml = sorted.map((c, i) => {
     const sentiment = ['positive','critical','neutral','mixed'].includes(c.sentiment) ? c.sentiment : 'neutral';
@@ -632,7 +637,7 @@ function renderComments(reactions, thread = []) {
           ${likes ? `<div class="comment-likes">♥︎ ${likes} curtidas</div>` : ''}
         </div>
       </div>
-      ${isTop && threadHtml ? threadHtml : ''}`;
+      ${renderThread(threads[c.id], isTop)}`;
   }).join('');
 
   resultsArea.innerHTML = `
