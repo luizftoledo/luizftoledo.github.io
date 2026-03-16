@@ -3,682 +3,315 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Secret budget amendment funded slave labor in Brazil</title>
-
-  <!-- Google Fonts -->
+  <title>Secret budget amendment and forced labor</title>
+  <meta name="description" content="Investigation into how a secret budget amendment funded a paving project using slave labor in Brazil.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Serif+4:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Shared styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Serif+4:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../shared/base.css">
-
-  <style>
-    .flow-diagram {
-      background: var(--bg-light);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 40px;
-      margin: 60px 0;
-    }
-
-    .flow-title {
-      font-family: var(--display);
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 32px;
-      text-align: center;
-      color: var(--text-dark);
-    }
-
-    .flow-steps {
-      position: relative;
-    }
-
-    .flow-step {
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 24px;
-      margin-bottom: 40px;
-      position: relative;
-    }
-
-    .flow-step:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 40px;
-      top: 80px;
-      width: 2px;
-      height: 60px;
-      background: var(--accent);
-    }
-
-    .step-number {
-      width: 80px;
-      height: 80px;
-      background: var(--accent);
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--display);
-      font-size: 36px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .step-content {
-      padding-top: 12px;
-    }
-
-    .step-title {
-      font-family: var(--display);
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--text-dark);
-    }
-
-    .step-desc {
-      font-family: var(--sans);
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .amount-badge {
-      display: inline-block;
-      background: rgba(196, 30, 58, 0.1);
-      color: var(--accent);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-family: var(--display);
-      font-weight: 700;
-      font-size: 14px;
-      margin-top: 8px;
-    }
-
-    .key-facts {
-      background: var(--bg-light);
-      border-left: 4px solid var(--accent);
-      padding: 24px;
-      margin: 40px 0;
-      border-radius: 4px;
-    }
-
-    .fact-item {
-      margin-bottom: 16px;
-      font-family: var(--sans);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .fact-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .fact-label {
-      font-weight: 700;
-      color: var(--text-dark);
-      margin-bottom: 4px;
-    }
-
-    .fact-value {
-      color: var(--text-muted);
-    }
-
-    .timeline-simple {
-      margin: 40px 0;
-    }
-
-    .timeline-year {
-      font-family: var(--display);
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 12px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .timeline-entry {
-      padding-left: 24px;
-      margin-bottom: 20px;
-      border-left: 2px solid var(--border);
-      padding-bottom: 20px;
-    }
-
-    .timeline-entry:last-child {
-      border-left: 2px solid var(--accent);
-    }
-
-    .entry-title {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 4px;
-      letter-spacing: 0.5px;
-    }
-
-    .entry-text {
-      font-family: var(--serif);
-      font-size: 14px;
-      color: var(--text-dark);
-      line-height: 1.6;
-    }
-
-    .comparison-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin: 40px 0;
-    }
-
-    .comparison-card {
-      background: var(--bg-light);
-      padding: 24px;
-      border-radius: 4px;
-      border-top: 3px solid var(--accent);
-    }
-
-    .card-label {
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
-    }
-
-    .card-title {
-      font-family: var(--display);
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--text-dark);
-    }
-
-    .card-desc {
-      font-family: var(--sans);
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .number-highlight {
-      font-family: var(--display);
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--accent);
-      display: inline;
-    }
-
-    @media (max-width: 768px) {
-      .flow-step {
-        grid-template-columns: 1fr;
-      }
-
-      .step-number {
-        margin-bottom: 12px;
-      }
-
-      .flow-step:not(:last-child)::after {
-        display: none;
-      }
-
-      .comparison-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
 </head>
 <body>
-  <!-- Progress bar -->
-  <div id="progressBar" class="progress-bar"></div>
 
-  <!-- Disclaimer bar -->
-  <div id="disclaimerBar" class="disclaimer-bar">
+  <div class="disclaimer-bar">
     <div class="disclaimer-inner">
       <div class="disclaimer-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="16" x2="12" y2="12"></line>
-          <line x1="12" y1="8" x2="12.01" y2="8"></line>
-        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
       </div>
       <div class="disclaimer-text">
-        <span data-lang="en"><strong>Portfolio Piece:</strong> This is an enhanced presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span>
-        <span data-lang="pt"><strong>Peça de Portfólio:</strong> Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span>
+        <span data-lang="en"><strong>Portfolio presentation</strong> of published journalism. Original article: <a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank">BBC News Brasil</a></span>
+        <span class="hidden" data-lang="pt"><strong>Apresentação de portfólio</strong> de jornalismo publicado. Artigo original: <a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank">BBC News Brasil</a></span>
       </div>
-      <button id="disclaimerClose" class="disclaimer-close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
+      <button class="disclaimer-close" onclick="this.closest('.disclaimer-bar').classList.add('hidden')">&times;</button>
     </div>
   </div>
 
-  <!-- Language toggle bar -->
   <div class="lang-toggle-bar">
     <div class="lang-toggle-inner">
       <span class="lang-toggle-label" data-lang="en">Language:</span>
-      <span class="lang-toggle-label" data-lang="pt">Idioma:</span>
-      <button id="btnEn" class="lang-btn active">English</button>
-      <button id="btnPt" class="lang-btn">Português</button>
+      <span class="lang-toggle-label hidden" data-lang="pt">Idioma:</span>
+      <button class="lang-btn active" onclick="setLanguage('en')">English</button>
+      <button class="lang-btn" onclick="setLanguage('pt')">Português</button>
     </div>
   </div>
 
-  <!-- Hero section -->
-  <section class="hero" style="background-image: linear-gradient(135deg, rgba(26, 26, 26, 0.92), rgba(45, 45, 45, 0.92)), url('imgs/photo-05.jpg'); background-size: cover; background-position: center;">
+  <div class="progress-bar"></div>
+
+  <section class="hero" style="background-image: linear-gradient(135deg, rgba(26, 26, 26, 0.92), rgba(45, 45, 45, 0.92)), url('imgs/photo-01.jpg'); background-size: cover; background-position: center;">
     <div class="hero-content">
-      <div class="hero-label">
-        <span data-lang="en">Investigation</span>
-        <span data-lang="pt">Investigação</span>
-      </div>
-      <h1 class="hero-title">
-        <span data-lang="en">How a secret budget amendment funded slave labor in public works</span>
-        <span data-lang="pt">Como uma emenda do orçamento secreto foi parar em obra com produto de trabalho escravo</span>
-      </h1>
-      <p class="hero-subtitle">
-        <span data-lang="en">Parliamentary discretionary spending, opaque allocation processes, and inadequate oversight create conditions for exploitation in government infrastructure projects</span>
-        <span data-lang="pt">Despesa parlamentar discricionária, processos de alocação opacos e supervisão inadequada criam condições para exploração em projetos de infraestrutura governamental</span>
-      </p>
+      <div class="hero-label" data-lang="en">Investigation</div>
+      <div class="hero-label hidden" data-lang="pt">Investigação</div>
+      <h1 class="hero-title" data-lang="en">Secret budget amendment funded forced labor</h1>
+      <h1 class="hero-title hidden" data-lang="pt">Orçamento secreto: como emenda apoiada por Hugo Motta foi parar em obra com produto de trabalho escravo</h1>
+      <p class="hero-subtitle" data-lang="en">Political favor channeled state resources to a paving project supplied by slave laborers in a Brazilian quarry</p>
+      <p class="hero-subtitle hidden" data-lang="pt">Emenda de relator financiou obra que usou pedras produzidas por trabalhadores em condições análogas à escravidão</p>
       <div class="hero-meta">
-        <span data-lang="en">LUIZ FERNANDO TOLEDO</span>
-        <span data-lang="pt">LUIZ FERNANDO TOLEDO</span>
-        <span>12 MAIO 2025</span>
+        <span data-lang="en">Luiz Fernando Toledo</span>
+        <span class="hidden" data-lang="pt">Luiz Fernando Toledo</span>
+        <span data-lang="en">BBC News Brasil from Juazeirinho, Paraíba</span>
+        <span class="hidden" data-lang="pt">BBC News Brasil, enviado para Juazeirinho (PB)</span>
+        <span>12 May 2025 | 12 de maio de 2025</span>
       </div>
     </div>
   </section>
 
-  <!-- Main content -->
   <main>
-    <!-- CHAPTER 1: THE WORKERS -->
-    <section class="text-section">
-      <h2>
-        <span data-lang="en">Degradation in the quarry</span>
-        <span data-lang="pt">Degradação na pedreira</span>
-      </h2>
+    <div class="breadcrumb">
+      <a href="../../index.html" data-lang="en">← Back to portfolio</a>
+      <a href="../../index.html" class="hidden" data-lang="pt">← Voltar ao portfólio</a>
+    </div>
 
-      <p data-lang="en">At age 57, Cláudio—a pseudonym—has accumulated nearly half a century of experience cutting stone. He has worked across multiple states since childhood, learning the trade from his parents. His last assignment brought him to Taperoá, a municipality in rural Paraíba, where he found work at a stone quarry. What followed was a descent into conditions that Brazilian law classifies as slavery.</p>
-      <p data-lang="pt">Aos 57 anos, Cláudio (nome fictício) relata já ter acumulado quase meio século de experiência no ofício de cortar pedras. Ele diz ter trabalhado a vida toda, desde a infância, em diversos Estados, depois de aprender o ofício com os pais, até que chegou à Taperoá, no sertão da Paraíba, onde conseguiu trabalho em uma pedreira na zona rural.</p>
+    <div class="text-section" data-lang="en">
+      <p>At age 57, Cláudio (a pseudonym) says he has accumulated almost half a century of experience in the trade of cutting stone. He says he has worked his whole life, since childhood, in various states after learning the trade from his parents, until he arrived in Taperoá, in the backlands of Paraíba, where he found work in a quarry in the rural zone.</p>
+      <p>Without training from employers, Cláudio did not use protective equipment, although the activity is risky and includes even the use of explosives. The ultimate aim of the industry is to produce stones of the type paving block to be used mainly in paving works.</p>
+    </div>
 
-      <p data-lang="en">Without employer-provided safety training, Cláudio worked without protective equipment in an inherently dangerous activity that included the use of explosives. The goal: produce parallelepipeds (flagstone blocks) for street paving.</p>
-      <p data-lang="pt">Sem ter tido treinamento de empregadores, Cláudio não usava equipamentos de proteção, embora a atividade seja arriscada e inclua até mesmo o uso de explosivos. O objetivo final do ramo é produzir pedras do tipo paralelepípedo para serem usadas, principalmente, em obras de calçamento.</p>
-
-      <div class="pullquote">
-        <p data-lang="en">After nine hours cutting stone in the sun, workers slept on scraps of foam and improvised car seats. They had no bathrooms. They bathed in rainwater pooled on rocks.</p>
-        <p data-lang="pt">Depois de trabalhar nove horas por dia cortando pedras, os trabalhadores dormiam sobre pedaços de espuma velha ou bancos de carro improvisados como camas. Não havia banheiro. O banho era tomado em poças formadas pela chuva sobre as pedras.</p>
-        <div class="pullquote-citation">— MINISTRY OF LABOR INSPECTION REPORT, JUNE 2024</div>
-      </div>
-
-      <p data-lang="en">When not cutting, workers were housed in a ramshackle shelter: dirt floor, wooden frame covered in plastic sheets and tarps. Their belongings lay scattered on the ground. Food was prepared in a stone structure on the ground with fire and firewood. There was no toilet—workers relieved themselves in the bush.</p>
-      <p data-lang="pt">Quando não estava sob o sol cortando pedras, o trabalhador ficava alojado em um barraco improvisado no local, com chão de terra, estrutura de madeira rústica e coberta por lona e pedaços de plástico. Pertences dele e dos colegas ficavam espalhados pelo chão. Os alimentos que comia eram mantidos ao ar livre e o preparo era feito em uma estrutura de pedra improvisada, no chão, com fogo e lenha. Como não havia banheiro, fazia suas necessidades no mato. Já o banho era tomado em poças formadas pela chuva sobre as pedras.</p>
-
-      <p data-lang="en">In June 2024, Brazil's Ministry of Labor and Employment auditors reached the quarry and documented these conditions. They cited the site for maintaining workers in conditions analogous to slavery. Four workers, including Cláudio, were rescued. The employer, Haroldo dos Santos Alves, 59 years old, was placed on the government's "dirty list" of slave labor violators.</p>
-      <p data-lang="pt">Em junho de 2024, auditores do Ministério do Trabalho e Emprego chegaram à pedreira e registraram as condições. Cláudio e outros três trabalhadores foram resgatados. O empregador foi autuado por manter trabalhadores em condições análogas à escravidão.</p>
-    </section>
+    <div class="text-section hidden" data-lang="pt">
+      <p>Aos 57 anos, Cláudio (nome fictício) relata já ter acumulado quase meio século de experiência no ofício de cortar pedras. Ele diz ter trabalhado a vida toda, desde a infância, em diversos Estados, depois de aprender o ofício com os pais, até que chegou à Taperoá, no sertão da Paraíba, onde conseguiu trabalho em uma pedreira na zona rural.</p>
+      <p>Sem ter tido treinamento de empregadores, Cláudio não usava equipamentos de proteção, embora a atividade seja arriscada e inclua até mesmo o uso de explosivos. O objetivo final do ramo é produzir pedras do tipo paralelepípedo para serem usadas, principalmente, em obras de calçamento.</p>
+    </div>
 
     <div class="image-block">
-      <img src="imgs/photo-02.jpg" alt="Stone quarry workers' living conditions">
-      <p class="image-credit" data-lang="en">Photo credit: BBC News Brasil / Vitor Serrano</p>
-      <p class="image-credit" data-lang="pt">Crédito da foto: BBC News Brasil / Vitor Serrano</p>
+      <img src="imgs/photo-02.jpg" alt="Quarry workers and conditions">
     </div>
 
-    <!-- CHAPTER 2: THE MONEY TRAIL -->
-    <section class="text-section">
-      <h2>
-        <span data-lang="en">Where the money came from</span>
-        <span data-lang="pt">De onde vieram os recursos</span>
-      </h2>
+    <div class="text-section" data-lang="en">
+      <h2>Degrading working conditions</h2>
+      <p>When not cutting stone under the sun, the worker was housed in an improvised shack on site, with dirt floor, rustic wooden structure covered with tarp and pieces of plastic.</p>
+      <p>After working nine hours a day, he slept on pieces of old foam or car seats improvised as beds. His and his colleagues' belongings were scattered across the floor. The food he ate was kept in the open air and preparation was done in an improvised stone structure on the ground, with fire and firewood. Since there was no bathroom, he did his business in the woods. Baths were taken in puddles formed by rain on the rocks.</p>
+      <p>The working conditions to which he was subjected, recorded in writing, were considered degrading and his employer was cited by the Ministry of Labor and Employment (MTE) in June 2024 for keeping workers in conditions analogous to slavery. Cláudio and three other workers were rescued.</p>
+    </div>
 
-      <p data-lang="en">The stones cut by Cláudio and his coworkers became part of a larger supply chain feeding what municipal officials promoted as the largest paving project in the history of Juazeirinho—a city of just over 17,000 people in Paraíba. The project was championed by the city's mayor and supported by federal Deputy Hugo Motta, who is now (as of February 2025) President of Brazil's Chamber of Deputies.</p>
-      <p data-lang="pt">As pedras cortadas por ele integraram uma ponta da cadeia produtiva do que viria a ser chamado de maior projeto de pavimentação da história de uma cidade vizinha à pedreira, Juazeirinho, também na Paraíba, liderado pela prefeita da cidade e apoiado por um parlamentar que hoje é uma das mais poderosas autoridades do país: o deputado federal e presidente da Câmara dos Deputados Hugo Motta (Republicanos-PB).</p>
-
-      <p data-lang="en">BBC News Brasil traced the origin of the funds. The resource stemmed from a <span class="number-highlight">"relator amendment"</span>—the technical term for what has popularly become known as the "secret budget," a mechanism within Brazil's General Budget that allows parliamentarians to direct funds without transparency, based on political dealings, and with publicity left to the discretion of the congressman.</p>
-      <p data-lang="pt">A BBC News Brasil identificou que a origem política do recurso que bancou o contrato com a empresa - a que comprou as pedras produzidas por trabalhadores em condições análogas à escravidão - está vinculada a dois parlamentares do mesmo Estado.</p>
-
-      <p data-lang="en">In response to a request under Brazil's Access to Information Law, the Chamber of Deputies provided two official letters requesting the release of funds from this amendment to Juazeirinho. Both were submitted in 2024: one by Senator Veneziano Vital do Rego (MDB-PB) and another by Deputy Hugo Motta, even as Chamber President, in April 2025.</p>
-      <p data-lang="pt">Em resposta enviada por meio da Lei de Acesso à Informação à BBC News Brasil, a Câmara dos Deputados forneceu dois ofícios que pedem a liberação de recursos desta emenda a Juazeirinho, enviados pelo senador Veneziano Vital do Rego (MDB-PB), em 2024, e também pelo deputado federal Hugo Motta, já como presidente da Câmara, em abril de 2025.</p>
-
-      <div class="key-facts">
-        <div class="fact-item">
-          <div class="fact-label" data-lang="en">Amendment Type:</div>
-          <div class="fact-label" data-lang="pt">Tipo de Emenda:</div>
-          <div class="fact-value" data-lang="en">Relator amendment (secret budget)</div>
-          <div class="fact-value" data-lang="pt">Emenda de relator (orçamento secreto)</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-label" data-lang="en">Amount:</div>
-          <div class="fact-label" data-lang="pt">Valor:</div>
-          <div class="fact-value" data-lang="en">R$ 1.9 million for paving works</div>
-          <div class="fact-value" data-lang="pt">R$ 1,9 milhão para obras de pavimentação</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-label" data-lang="en">Supporting Politicians:</div>
-          <div class="fact-label" data-lang="pt">Políticos Apoiadores:</div>
-          <div class="fact-value" data-lang="en">Hugo Motta (Chamber President), Veneziano Vital do Rego (Senator)</div>
-          <div class="fact-value" data-lang="pt">Hugo Motta (Presidente da Câmara), Veneziano Vital do Rego (Senador)</div>
-        </div>
-        <div class="fact-item">
-          <div class="fact-label" data-lang="en">Prime Beneficiary Company:</div>
-          <div class="fact-label" data-lang="pt">Empresa Beneficiária Principal:</div>
-          <div class="fact-value" data-lang="en">Construtora Realizar (construction firm)</div>
-          <div class="fact-value" data-lang="pt">Construtora Realizar (construtora)</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- THE FLOW DIAGRAM -->
-    <section class="flow-diagram">
-      <div class="flow-title">
-        <span data-lang="en">How money flowed to slave labor</span>
-        <span data-lang="pt">Como o dinheiro chegou ao trabalho escravo</span>
-      </div>
-
-      <div class="flow-steps">
-        <div class="flow-step">
-          <div class="step-number">1</div>
-          <div class="step-content">
-            <div class="step-title" data-lang="en">Relator Amendment approved</div>
-            <div class="step-title" data-lang="pt">Emenda de relator aprovada</div>
-            <div class="step-desc" data-lang="en">Parliamentarians Hugo Motta and Veneziano Vital do Rego direct federal budget funds to Juazeirinho for paving.</div>
-            <div class="step-desc" data-lang="pt">Parlamentares indicam emenda para Juazeirinho com fim de pavimentação.</div>
-            <div class="amount-badge">R$ 1,9 mi</div>
-          </div>
-        </div>
-
-        <div class="flow-step">
-          <div class="step-number">2</div>
-          <div class="step-content">
-            <div class="step-title" data-lang="en">Municipal administration processes funds</div>
-            <div class="step-title" data-lang="pt">Administração municipal processa recursos</div>
-            <div class="step-desc" data-lang="en">Juazeirinho receives allocation and submits project to Caixa Econômica Federal for approval.</div>
-            <div class="step-desc" data-lang="pt">Juazeirinho recebe e envia projeto para aprovação da Caixa Econômica Federal.</div>
-          </div>
-        </div>
-
-        <div class="flow-step">
-          <div class="step-number">3</div>
-          <div class="step-content">
-            <div class="step-title" data-lang="en">Public bidding process</div>
-            <div class="step-title" data-lang="pt">Processo de licitação pública</div>
-            <div class="step-desc" data-lang="en">City conducts competitive bidding. Construtora Realizar wins contract worth R$ 1.9 million with lowest bid.</div>
-            <div class="step-desc" data-lang="pt">Município realiza licitação. Construtora Realizar vence contrato de R$ 1,9 mi.</div>
-          </div>
-        </div>
-
-        <div class="flow-step">
-          <div class="step-number">4</div>
-          <div class="step-content">
-            <div class="step-title" data-lang="en">Subcontracted supply chain</div>
-            <div class="step-title" data-lang="pt">Cadeia de fornecimento terceirizada</div>
-            <div class="step-desc" data-lang="en">Construtora Realizar outsources stone procurement to intermediaries. One intermediary is Haroldo dos Santos Alves.</div>
-            <div class="step-desc" data-lang="pt">Construtora terceiriza fornecimento de pedras. Um intermediário é Haroldo dos Santos Alves.</div>
-          </div>
-        </div>
-
-        <div class="flow-step">
-          <div class="step-number">5</div>
-          <div class="step-content">
-            <div class="step-title" data-lang="en">Slave labor at quarry</div>
-            <div class="step-title" data-lang="pt">Trabalho escravo na pedreira</div>
-            <div class="step-desc" data-lang="en">Haroldo employs workers in degrading conditions. Stones sold to meet contract deadlines. Workers rescued June 2024.</div>
-            <div class="step-desc" data-lang="pt">Haroldo emprega trabalhadores em condições degradantes. Pedras vendidas para cumprir prazos. Trabalhadores resgatados em junho de 2024.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CHAPTER 3: THE POLITICAL MACHINERY -->
-    <section class="text-section">
-      <h2>
-        <span data-lang="en">How the secret budget works: a case study in opaque governance</span>
-        <span data-lang="pt">Como funciona o orçamento secreto: um caso de governança opaca</span>
-      </h2>
-
-      <p data-lang="en">The relator amendment mechanism allows parliamentarians to allocate federal resources without the normal transparency requirements. The system works like this: a city requests funds (or an agreement is struck verbally); the parliamentarian makes the formal indication; the municipality submits a project to Caixa Econômica Federal for evaluation. If approved, the municipality conducts competitive bidding and selects the contractor with the best proposal.</p>
-      <p data-lang="pt">O apoio via emendas, em casos como este, funcionava assim: a prefeitura pede os recursos e o parlamentar faz a indicação ao orçamento (pode haver ou não apresentação de um ofício e há casos em que o acordo é apenas verbal). O governo municipal, então, precisa apresentar um projeto que será avaliado pela Caixa Econômica Federal. Só depois de liberado é que o governo municipal pode fazer licitação e selecionar a empresa que fará a obra.</p>
-
-      <p data-lang="en">Formally, the parliamentarian's role ends after the allocation. Responsibility for project oversight supposedly transfers to the municipality and later to the courts of account. In practice, parliamentarians receive extensive credit—and votes—for bringing funds, while accountability for how those funds are used remains diffuse.</p>
-      <p data-lang="pt">Formalmente, a responsabilidade pela fiscalização da obra é do município (e posteriormente dos tribunais de contas) — não da Caixa, nem do parlamentar, que apenas indica o destino dos recursos.</p>
-
-      <div class="pullquote">
-        <p data-lang="en">"The effect for electoral capitalization is immediate. The parliamentarian treats the resource as if it were theirs."</p>
-        <p data-lang="pt">"O efeito para a capitalização eleitoral é imediato. O parlamentar que faz isso está tratando o recurso como se fosse dele."</p>
-        <div class="pullquote-citation">— MARCO ANTONIO CARVALHO TEIXEIRA, POLITICAL SCIENTIST, FGV</div>
-      </div>
-
-      <p data-lang="en">In Juazeirinho, the municipal administration acknowledged that the nature of the amendment "does not invalidate the political origin of the articulation, publicly recognized by the municipality and by Deputy Hugo Motta himself." The mayor, Anna Virginia Matias, even honored Motta with street nameplates bearing his name on paved thoroughfares—the very roads built with funds he directed.</p>
-      <p data-lang="pt">O município disse que o depuutado Hugo Motta "sempre foi um grande deputado, um parceiro essencial da nossa cidade, alguém que nunca mediu esforços para levar investimentos e melhorias para o nosso povo."</p>
-    </section>
+    <div class="text-section hidden" data-lang="pt">
+      <h2>Condições degradantes de trabalho</h2>
+      <p>Quando não estava sob o sol cortando pedras, o trabalhador ficava alojado em um barraco improvisado no local, com chão de terra, estrutura de madeira rústica e coberta por lona e pedaços de plástico.</p>
+      <p>Depois de trabalhar nove horas por dia, dormia sobre pedaços de espuma velha ou bancos de carro improvisados como camas. Pertences dele e dos colegas ficavam espalhados pelo chão. Os alimentos que comia eram mantidos ao ar livre e o preparo era feito em uma estrutura de pedra improvisada, no chão, com fogo e lenha. Como não havia banheiro, fazia suas necessidades no mato. Já o banho era tomado em poças formadas pela chuva sobre as pedras.</p>
+      <p>As condições de trabalho a que ele foi submetido, registradas por escrito, foram consideradas degradantes e seu empregador foi autuado pelo Ministério do Trabalho e Emprego (MTE), em junho de 2024, por manter trabalhadores em condições análogas à escravidão. Cláudio e outros três trabalhadores foram resgatados.</p>
+    </div>
 
     <div class="image-block">
-      <img src="imgs/photo-08.jpg" alt="Mayor ceremony honoring Hugo Motta">
-      <p class="image-credit" data-lang="en">Hugo Motta was honored in 2023 at a ceremony celebrating the paving project he funded</p>
-      <p class="image-credit" data-lang="pt">Hugo Motta foi homenageado em cerimônia celebrando o projeto de pavimentação que financiou</p>
+      <img src="imgs/photo-03.jpg" alt="Workers accommodations">
     </div>
 
-    <!-- CHAPTER 4: THE INTERMEDIARY -->
-    <section class="text-section">
-      <h2>
-        <span data-lang="en">The intermediary: bearing the burden alone</span>
-        <span data-lang="pt">O intermediário: carregando o fardo sozinho</span>
-      </h2>
+    <div class="text-section" data-lang="en">
+      <h2>From quarry to public works</h2>
+      <p>The stones cut by him integrated a portion of the production chain of what would become known as the largest paving project in the history of a city neighboring the quarry, Juazeirinho, also in Paraíba, led by the city's mayor and supported by a parliamentarian who today is one of the country's most powerful authorities: federal deputy and president of the Chamber of Deputies Hugo Motta (Republicanos-PB).</p>
+    </div>
 
-      <p data-lang="en">Haroldo dos Santos Alves, 59, was the visible face of the labor violations, but arguably one of the least enriched links in the chain. As an intermediary stone broker, he sourced materials for contractors. When Ministry of Labor auditors arrived in June 2024, workers identified him as the person responsible. His name—and only his—was placed on the official labor violation notice and added to the government's "dirty list" of slave labor perpetrators.</p>
-      <p data-lang="pt">Haroldo dos Santos Alves, 59 anos, era um intermediário da cadeia de produção e afirma que nada lucrou com o empreendimento. O auto de infração foi lavrado em seu nome. O nome dele também foi inserido na lista suja do trabalho escravo.</p>
-
-      <p data-lang="en">Haroldo told BBC News Brasil that he is not a formal employer—that he and the quarry workers are each "stone cutters" working individually. <span class="number-highlight">He claimed to live on less than minimum wage</span>, unable to restore the quarry to operation or find other work since the operation was shuttered.</p>
-      <p data-lang="pt">"Tem quase cinquenta anos que eu mexo com pedra e eu não tenho riqueza. O senhor [repórter] entrou na minha casa lá, é humilde. Moro de aluguel e vivo com menos de um salário [mínimo]."</p>
-
-      <p data-lang="en">A contractor representative, Jorge Ramos (lawyer and representative of Construtora Realizar), paid roughly R$ 32,000 in severance to the rescued workers on behalf of the company. He acknowledged that the reality in these quarries <span class="number-highlight">"is really something hard to see,"</span> but argued that low bid prices from municipalities necessitate the use of cheap, informal labor.</p>
-      <p data-lang="pt">Jorge Ramos, advogado e representante da Construtora Realizar, afirmou que "os preços para empresas são horríveis, consequentemente a compra também vai ser horrível."</p>
-
-      <div class="pullquote">
-        <p data-lang="en">"Almost fifty years I've worked with stone and I have no wealth. The reporter came to my house—it's humble. I rent and live on less than minimum wage."</p>
-        <p data-lang="pt">"Tem quase cinquenta anos que eu mexo com pedra e eu não tenho riqueza. O senhor entrou na minha casa lá, é humilde. Moro de aluguel e vivo com menos de um salário."</p>
-        <div class="pullquote-citation">— HAROLDO DOS SANTOS ALVES</div>
-      </div>
-
-      <p data-lang="en">The Ministry of Labor's inspection report, however, noted that "the entire destination of the fruit of labor from the manpower found in the quarry was for the benefit of the public administration." The report suggested that Construtora Realizar was the "primary recipient," yet the company was never added to the dirty list. The municipality was cited but not held responsible.</p>
-      <p data-lang="pt">A Prefeitura de Juazeirinho foi citada no documento da fiscalização, mas não responsabilizada formalmente. O relatório afirma que toda a produção estava em benefício final à administração pública.</p>
-    </section>
-
-    <!-- TIMELINE -->
-    <section class="timeline-simple">
-      <div class="timeline-year">
-        <span data-lang="en">2021</span>
-        <span data-lang="pt">2021</span>
-      </div>
-      <div class="timeline-entry">
-        <div class="entry-title" data-lang="en">Partnership established</div>
-        <div class="entry-title" data-lang="pt">Parceria estabelecida</div>
-        <div class="entry-text" data-lang="en">Hugo Motta and Mayor Anna Virginia Matias begin political alliance. Motta begins directing parliamentary amendments to Juazeirinho.</div>
-        <div class="entry-text" data-lang="pt">Hugo Motta e a prefeita Anna Virginia Matias começam aliança política. Motta passa a destinar emendas para Juazeirinho.</div>
-      </div>
-
-      <div class="timeline-year">
-        <span data-lang="en">November 2021</span>
-        <span data-lang="pt">Novembro de 2021</span>
-      </div>
-      <div class="timeline-entry">
-        <div class="entry-title" data-lang="en">Public promise of investment</div>
-        <div class="entry-title" data-lang="pt">Promessa pública de investimento</div>
-        <div class="entry-text" data-lang="en">Motta publicly promises R$ 2 million for the city's largest paving program in history.</div>
-        <div class="entry-text" data-lang="pt">Motta promete publicamente R$ 2 milhões para o maior programa de pavimentação da história da cidade.</div>
-      </div>
-
-      <div class="timeline-year">
-        <span data-lang="en">2022</span>
-        <span data-lang="pt">2022</span>
-      </div>
-      <div class="timeline-entry">
-        <div class="entry-title" data-lang="en">Amendment becomes reality</div>
-        <div class="entry-title" data-lang="pt">Emenda se torna realidade</div>
-        <div class="entry-text" data-lang="en">Juazeirinho secures relator amendment: R$ 1.9 million contract with Caixa Econômica Federal for paving. Motta's votes in the city skyrocket from 17 in 2010 to 4,500+ in 2022.</div>
-        <div class="entry-text" data-lang="pt">Juazeirinho obtém R$ 1,9 mi de emenda de relator. Votos de Motta na cidade saltam de 17 em 2010 para 4.500+ em 2022.</div>
-      </div>
-
-      <div class="timeline-year">
-        <span data-lang="en">2023</span>
-        <span data-lang="pt">2023</span>
-      </div>
-      <div class="timeline-entry">
-        <div class="entry-title" data-lang="en">Construction begins; Motta honored</div>
-        <div class="entry-title" data-lang="pt">Construção inicia; Motta é homenageado</div>
-        <div class="entry-text" data-lang="en">Construtora Realizar wins bid. Work begins. Motta receives ceremonial honor as "Citizen of Juazeirinho" with plaques bearing his name installed on paved streets. Unknown to all: Haroldo's workers are in the quarry.</div>
-        <div class="entry-text" data-lang="pt">Construtora Realizar vence licitação. Motta é homenageado como "Cidadão de Juazeirinho." Os trabalhadores de Haroldo estão na pedreira.</div>
-      </div>
-
-      <div class="timeline-year">
-        <span data-lang="en">June 2024</span>
-        <span data-lang="pt">Junho de 2024</span>
-      </div>
-      <div class="timeline-entry">
-        <div class="entry-title" data-lang="en">Inspection and rescue</div>
-        <div class="entry-title" data-lang="pt">Inspeção e resgate</div>
-        <div class="entry-text" data-lang="en">Ministry of Labor auditors discover conditions at the quarry. Four workers rescued. Haroldo cited and added to dirty list. Quarry operations shuttered.</div>
-        <div class="entry-text" data-lang="pt">Auditores do Ministério do Trabalho resgatam trabalhadores. Haroldo é autuado e incluso na lista suja.</div>
-      </div>
-
-      <div class="timeline-year">
-        <span data-lang="en">February 2025</span>
-        <span data-lang="pt">Fevereiro de 2025</span>
-      </div>
-      <div class="timeline-entry">
-        <div class="entry-title" data-lang="en">Motta becomes Chamber President</div>
-        <div class="entry-title" data-lang="pt">Motta se torna Presidente da Câmara</div>
-        <div class="entry-text" data-lang="en">Hugo Motta is elected President of Brazil's Chamber of Deputies.</div>
-        <div class="entry-text" data-lang="pt">Hugo Motta é eleito Presidente da Câmara dos Deputados.</div>
-      </div>
-
-      <div class="timeline-year">
-        <span data-lang="en">April 2025</span>
-        <span data-lang="pt">Abril de 2025</span>
-      </div>
-      <div class="timeline-entry">
-        <div class="entry-title" data-lang="en">Still requesting funds</div>
-        <div class="entry-title" data-lang="pt">Ainda solicitando recursos</div>
-        <div class="entry-text" data-lang="en">As Chamber President, Motta requests additional fund releases for the same Juazeirinho amendment.</div>
-        <div class="entry-text" data-lang="pt">Como Presidente da Câmara, Motta solicita liberação adicional de recursos para a mesma emenda de Juazeirinho.</div>
-      </div>
-    </section>
-
-    <!-- CHAPTER 5: ACCOUNTABILITY FAILURE -->
-    <section class="text-section">
-      <h2>
-        <span data-lang="en">A system structured for deniability</span>
-        <span data-lang="pt">Um sistema estruturado para negação</span>
-      </h2>
-
-      <p data-lang="en">The structure of relator amendments creates a peculiar form of accountability evasion. The parliamentarian gets credit for bringing funds while maintaining plausible deniability about how they are used. The municipality is ostensibly in charge but often claims ignorance about supply chain conditions. Caixa Econômica Federal approves projects but claims limited oversight responsibility. Contractors win bids then subcontract work through informal chains where labor standards are unenforceable.</p>
-      <p data-lang="pt">A estrutura das emendas de relator cria uma forma peculiar de evasão de responsabilidade. O parlamentar ganha crédito por trazer recursos enquanto mantém negação plausível sobre como são usados.</p>
-
-      <p data-lang="en">The Juazeirinho case reveals how this structure allows systematic exploitation. For Lívia Miraglia, a post-doctoral researcher in labor law at UFMG who specializes in modern slavery, the ideal would be to hold accountable the employer who profits most—in this case, Construtora Realizar. "They are the ones getting economic benefit," she argued, noting that intermediaries like Haroldo "are often as poor as the workers they exploit."</p>
-      <p data-lang="pt">Para Lívia Miraglia, pós-doutora em direito e coordenadora da Clínica de Trabalho Escravo, a autuação deveria ser contra quem de fato tira proveito econômico, não os intermediários, que "costumam ser quase tão pobres quanto os trabalhadores que foram explorados."</p>
-
-      <p data-lang="en">Miraglia advocates for evolving labor enforcement to hold accountable the entire supply chain, including public authorities if necessary. "In an ideal world," she said, "responsibility would reach everyone who directly or indirectly benefited economically from the product of slave labor, including politicians who use it for electoral capital."</p>
-      <p data-lang="pt">Ela defende que é preciso evoluir na esfera trabalhista para que haja responsabilização de toda a cadeia produtiva, inclusive do poder público. "Em um mundo ideal, a responsabilidade deveria alcançar todos aqueles que, direta ou indiretamente, tiveram algum proveito econômico sobre o produto fruto de trabalho escravo, inclusive eventuais políticos que se utilizem disso para fins de capital eleitoral."</p>
-
-      <div class="pullquote">
-        <p data-lang="en">"In an ideal world, responsibility would reach everyone who directly or indirectly benefited—including politicians who used this for electoral capital."</p>
-        <p data-lang="pt">"Em um mundo ideal, a responsabilidade deveria alcançar todos aqueles que tiveram proveito, inclusive políticos que se utilizem disso para fins eleitoral."</p>
-        <div class="pullquote-citation">— LÍVIA MIRAGLIA, LABOR LAW SPECIALIST, UFMG</div>
-      </div>
-    </section>
+    <div class="text-section hidden" data-lang="pt">
+      <h2>Da pedreira à obra pública</h2>
+      <p>As pedras cortadas por ele integraram uma ponta da cadeia produtiva do que viria a ser chamado de maior projeto de pavimentação da história de uma cidade vizinha à pedreira, Juazeirinho, também na Paraíba, liderado pela prefeita da cidade e apoiado por um parlamentar que hoje é uma das mais poderosas autoridades do país: o deputado federal e presidente da Câmara dos Deputados Hugo Motta (Republicanos-PB).</p>
+    </div>
 
     <div class="image-block">
-      <img src="imgs/photo-15.jpg" alt="Paved streets in Juazeirinho bearing Motta's name">
-      <p class="image-credit" data-lang="en">Streets paved with funds Motta directed, bearing his name</p>
-      <p class="image-credit" data-lang="pt">Ruas pavimentadas com recursos que Motta direcionou, com seu nome</p>
+      <img src="imgs/photo-04.jpg" alt="Paving project">
     </div>
 
-    <!-- CHAPTER 6: SYSTEMIC ISSUE -->
-    <section class="text-section">
-      <h2>
-        <span data-lang="en">This is not an isolated case</span>
-        <span data-lang="pt">Este não é um caso isolado</span>
-      </h2>
+    <div class="text-section" data-lang="en">
+      <h2>The secret budget at work</h2>
+      <p>BBC News Brasil identified that the political origin of the resource that financed the contract with the company—the one that bought the stones produced by workers in conditions analogous to slavery—is linked to two parliamentarians from the same state.</p>
+      <p>In the Transparency Portal the money is attributed to a relator amendment, the technical name for what became popularly known as the secret budget, a device part of the General Budget of the Union, whose destination is chosen by parliamentarians without transparency, based on political agreements and whose publicity is at the discretion of the parliamentarian themselves.</p>
+      <p>After a determination from the Federal Supreme Court (STF), Congress began disclosing the names of those who supported the indication of these relator amendments, based on information disclosed by the parliamentarians themselves.</p>
+      <p>In response sent via the Law of Access to Information to BBC News Brasil, the Chamber of Deputies provided two official letters requesting the release of resources from this amendment to Juazeirinho, sent by senator Veneziano Vital do Rego (MDB-PB) in 2024, and also by federal deputy Hugo Motta (Republicanos-PB), already as president of the Chamber in April of this year.</p>
+    </div>
 
-      <p data-lang="en">BBC News Brasil's investigation, which began in late 2024, mapped cases of slave labor in quarries supplying paving stones for public works across eight Brazilian states. The Juazeirinho case is one of several revealing a pattern: informal stone supply chains, inadequate municipal oversight, weak accountability for contractors, and relator amendments directing funds without transparency.</p>
-      <p data-lang="pt">A BBC News Brasil investiga a relação entre o trabalho escravo em pedreiras e obras públicas desde o fim de 2024 e já publicou, em abril, uma reportagem especial que mapeou casos como este, de Juazeirinho, em oito Estados brasileiros.</p>
+    <div class="text-section hidden" data-lang="pt">
+      <h2>O orçamento secreto em ação</h2>
+      <p>A BBC News Brasil identificou que a origem política do recurso que bancou o contrato com a empresa - a que comprou as pedras produzidas por trabalhadores em condições análogas à escravidão - está vinculada a dois parlamentares do mesmo Estado.</p>
+      <p>No Portal da Transparência o dinheiro é atribuído a uma emenda de relator, nome técnico do que ficou popularmente conhecido por orçamento secreto, dispositivo parte do Orçamento-Geral da União, cuja destinação é escolhida por parlamentares sem transparência, a partir de acordos políticos e cuja publicidade fica a critério do próprio parlamentar.</p>
+      <p>Depois de determinação do Supremo Tribunal Federal (STF), o Congresso passou a divulgar o nome de quem apoiou a indicação dessas emendas do relator, a partir de informações divulgadas pelos próprios parlamentares.</p>
+      <p>Em resposta enviada por meio da Lei de Acesso à Informação à BBC News Brasil, a Câmara dos Deputados forneceu dois ofícios que pedem a liberação de recursos desta emenda a Juazeirinho, enviados pelo senador Veneziano Vital do Rego (MDB-PB), em 2024, e também pelo deputado federal Hugo Motta (Republicanos-PB), já como presidente da Câmara, em abril deste ano.</p>
+    </div>
 
-      <p data-lang="en">Federal auditor Gislene Stacholski, who coordinated the rescue operation in Juazeirinho, stated plainly: <span class="number-highlight">"Municipalities cannot track stones because they admit that everything is informal."</span> She emphasized that public authorities must take responsibility for supply chains they finance. "They have to inspect everything."</p>
-      <p data-lang="pt">Gislene Stacholski, auditora fiscal do trabalho que coordenou a operação que identificou os trabalhadores, acredita que o poder público também deve tomar para si a responsabilidade. "Elas [prefeituras] não conseguem rastrear as pedras porque admitem que seja tudo informal."</p>
+    <div class="pullquote" data-lang="en">
+      <p>"Tem quase cinquenta anos que eu mexo com pedra e eu não tenho riqueza. O senhor [repórter] entrou na minha casa lá, é humilde. Moro de aluguel e vivo com menos de um salário [mínimo]."</p>
+      <div class="pullquote-citation">Haroldo dos Santos Alves, quarry operator</div>
+    </div>
 
-      <p data-lang="en">Federal Public Defender Pedro Wagner Pereira, who works on worker rescue operations, noted the recurring pattern: "In 2025, the public sector cannot sponsor situations of slavery." The mayor of Juazeirinho belatedly claimed ignorance—saying she only learned of the violation after BBC News Brasil's inquiry, months after the June 2024 rescue operation.</p>
-      <p data-lang="pt">O defensor público federal Pedro Wagner Pereira afirma que a participação do poder público nos casos identificados é uma constante. "Estamos em 2025 e o poder público não pode patrocinar situações de trabalho análogo à escravidão."</p>
-    </section>
-
-    <!-- Conclusion -->
-    <section class="text-section">
-      <h2>
-        <span data-lang="en">What would accountability look like?</span>
-        <span data-lang="pt">Como seria a responsabilização?</span>
-      </h2>
-
-      <p data-lang="en">The Juazeirinho case demonstrates how relator amendments—political discretionary spending mechanisms—can flow into public works contaminated by labor exploitation. The design of the system itself creates conditions where:</p>
-      <p data-lang="pt">O caso de Juazeirinho demonstra como as emendas de relator podem desembocar em obras públicas contaminadas por exploração laboral. O desenho do sistema cria condições onde:</p>
-
-      <ul style="margin: 20px 0 40px 20px; font-size: 18px; line-height: 1.8;">
-        <li data-lang="en">Parliamentarians receive electoral credit without operational responsibility</li>
-        <li data-lang="pt">Parlamentares recebem crédito eleitoral sem responsabilidade operacional</li>
-
-        <li data-lang="en">Municipalities claim inadequate capacity to audit supply chains</li>
-        <li data-lang="pt">Municípios afirmam capacidade inadequada para auditar cadeias de fornecimento</li>
-
-        <li data-lang="en">Contractors outsource dangerous work to informal intermediaries</li>
-        <li data-lang="pt">Construtoras terceirizam trabalho perigoso para intermediários informais</li>
-
-        <li data-lang="en">Enforcement concentrates on the poorest link—the immediate employer—while wealthier beneficiaries escape</li>
-        <li data-lang="pt">Fiscalização concentra-se no elo mais pobre—o empregador imediato—enquanto beneficiários mais ricos escapam</li>
-      </ul>
-
-      <p data-lang="en">Real accountability would require: strengthened labor law enforcement across entire supply chains; mandatory due diligence by municipalities in public procurement; rules preventing relator amendment funds from reaching projects with labor violations; and political consequences for parliamentarians whose directed funds end up supporting exploitation.</p>
-      <p data-lang="pt">A responsabilização real exigiria: cumprimento fortalecido da lei trabalhista em cadeias inteiras; diligência obrigatória pelas municípios em licitações; regras impedindo que recursos de emendas de relator cheguem a projetos com violações trabalhistas; e consequências políticas para parlamentares cujos recursos direcionados terminam apoiando exploração.</p>
-
-      <div class="pullquote">
-        <p data-lang="en">The municipality must accept responsibility for how public funds are used in their jurisdiction, from the top of the supply chain to the quarry floor.</p>
-        <p data-lang="pt">O município deve aceitar responsabilidade por como recursos públicos são usados em seu território, da origem à pedreira.</p>
-        <div class="pullquote-citation">— GISLENE STACHOLSKI, FEDERAL LABOR AUDITOR</div>
-      </div>
-    </section>
+    <div class="pullquote hidden" data-lang="pt">
+      <p>"Tem quase cinquenta anos que eu mexo com pedra e eu não tenho riqueza. O senhor [repórter] entrou na minha casa lá, é humilde. Moro de aluguel e vivo com menos de um salário [mínimo]."</p>
+      <div class="pullquote-citation">Haroldo dos Santos Alves, operador da pedreira</div>
+    </div>
 
     <div class="image-block">
-      <img src="imgs/photo-25.jpg" alt="Juazeirinho street after paving">
-      <p class="image-credit" data-lang="en">A newly paved street in Juazeirinho—built by rescued workers from a quarry operating in slave labor conditions</p>
-      <p class="image-credit" data-lang="pt">Rua recém pavimentada em Juazeirinho — construída com pedras de uma pedreira operando em condições de trabalho escravo</p>
+      <img src="imgs/photo-05.jpg" alt="Hugo Motta political infrastructure">
     </div>
 
-    <!-- BACK TO PORTFOLIO -->
-    <div style="margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border);">
-      <a href="../index.html" style="color: var(--accent); text-decoration: none; font-family: var(--sans); font-size: 14px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s;">
-        <span data-lang="en">← Back to portfolio</span>
-        <span data-lang="pt">← Voltar para portfólio</span>
-      </a>
+    <div class="text-section" data-lang="en">
+      <h2>The chain of responsibility</h2>
+      <p>Haroldo dos Santos Alves, 59 years old, was an intermediary in the production chain and claims that he profited nothing from the undertaking. The majority of the profit from stone sales, according to him, went to the company that applied them in municipal works, the Realizar Construction Company, whose name was not included on the dirty list.</p>
+      <p>"I've been working with stone for almost fifty years and I don't have wealth. You [reporter] entered my house there, it's humble. I live in rental and I live with less than a minimum wage," he said.</p>
+      <p>Almost a year has passed since the operation, which halted the quarry, and Haroldo said he has not been able to regularize the quarry or find other work, only odd jobs. "I rent and live with less than a salary."</p>
+      <p>The contractor cited, Realizar, has a contract with the Juazeirinho municipal government worth R$ 1.9 million, from resources of an agreement with Caixa Econômica Federal, for paving works in the city. Although Haroldo was held responsible for the harm caused to workers, the termination was paid by an attorney and representative of the Realizar contractor, Jorge Ramos—about R$ 32,000 in total. The company was not included on the dirty list.</p>
     </div>
+
+    <div class="text-section hidden" data-lang="pt">
+      <h2>A cadeia de responsabilidade</h2>
+      <p>Haroldo dos Santos Alves, 59 anos, era um intermediário da cadeia de produção e afirma que nada lucrou com o empreendimento. A maior parte do lucro das vendas das pedras, segundo ele afirmou à BBC News Brasil, ia para a empresa que as aplicava em obras municipais, a Construtora Realizar, cujo nome não foi incluído na lista suja.</p>
+      <p>"Tem quase cinquenta anos que eu mexo com pedra e eu não tenho riqueza. O senhor [repórter] entrou na minha casa lá, é humilde. Moro de aluguel e vivo com menos de um salário [mínimo]", disse.</p>
+      <p>Quase um ano se passou desde a operação, que embargou a pedreira, e Haroldo disse não ter conseguido regularizar a pedreira nem arrumar outros trabalhos, só bicos. "Moro de aluguel e vivo com menos de um salário."</p>
+      <p>A construtora citada, Realizar, tem um contrato com a prefeitura de Juazeirinho no valor de R$ 1,9 milhão, de recursos de um convênio com a Caixa Econômica Federal, para obras de calçamento na cidade. Embora Haroldo tenha sido responsabilizado pelo dano causado aos trabalhadores, a rescisão foi paga por um advogado e representante da construtora Realizar, Jorge Ramos – cerca de R$ 32 mil ao todo. A empresa não foi incluída na lista suja.</p>
+    </div>
+
+    <div class="image-block">
+      <img src="imgs/photo-06.jpg" alt="Jorge Ramos and contractor representative">
+    </div>
+
+    <div class="text-section" data-lang="en">
+      <h2>The contractor's argument</h2>
+      <p>Jorge Ramos, attorney and representative of Realizar Construction, told BBC News Brasil that, although the company was the only one cited in the Ministry of Labor and Employment violation, "there were several other companies that could have been called," without naming them.</p>
+      <p>The ministry report, based on accounts from the employer Haroldo and the rescued workers, states that all quarry production "was being destined for street paving in the city of Juazeirinho" and that the contractor represented by Jorge Ramos was the "main recipient."</p>
+      <p>He believes that responsibility for any irregularities should extend to whoever contracts the service. "If you have a contract linked with municipality, state or with federal government and all these entities are aware that for the execution of paving with paving blocks it will have to be extraction in the quarry, why isn't this inspected from top to bottom, rather than bottom to top?"</p>
+      <p>Ramos admitted, however, that the reality of these quarries "is really something difficult to see." For Ramos, one of the reasons why there is no inspection of the origin of the stones is the value of the bids, which he considers low. "The prices for companies are horrible, consequently the purchase will also be horrible and who pays the most in fact is the worker who is there extracting. The company does not agree with this type of situation, but unfortunately it is the situation that the region has as available."</p>
+    </div>
+
+    <div class="text-section hidden" data-lang="pt">
+      <h2>Argumento do contratado</h2>
+      <p>Jorge Ramos, advogado e representante da Construtora Realizar, disse à BBC News Brasil que, apesar de a empresa ter sido a única incluída na infração do Ministério do Trabalho e Emprego, "tinha diversas outras empresas que poderiam ter sido chamadas", sem citar nomes.</p>
+      <p>O relatório do ministério, baseado em relatos do empregador Haroldo e dos trabalhadores resgatados, diz que toda a produção da pedreira "estava sendo destinada à pavimentação de ruas na cidade de Juazeirinho" e que a construtora representada por Jorge Ramos era "o destinatário principal."</p>
+      <p>Ele acredita que a responsabilidade sobre eventuais irregularidades deveria se estender a quem contrata o serviço. "Se você tem um contrato vinculado com município, Estado ou com governo federal e todas essas entidades são cientes de que para execução de via com paralelepípedo vai ter que ter a retirada na pedreira, por que isso não é fiscalizado desde cima pra baixo, e não de baixo pra cima?"</p>
+      <p>Ramos admitiu, no entanto, que a realidade dessas pedreiras "é realmente algo duro de se ver". Para Ramos, um dos motivos pelos quais não há fiscalização da origem das pedras é o valor dos editais, que considera baixo. "Os preços para empresas são horríveis, consequentemente a compra também vai ser horrível e quem paga mais de fato é o trabalhador que está lá tirando. A empresa não concorda com esse tipo de situação, mas infelizmente é a situação que a região tem como disponível."</p>
+    </div>
+
+    <div class="image-block">
+      <img src="imgs/photo-07.jpg" alt="Political partnership announcement">
+    </div>
+
+    <div class="text-section" data-lang="en">
+      <h2>Political partnership and parliamentary favors</h2>
+      <p>Juazeirinho is a municipality with little more than 17,000 inhabitants located in the Campina Grande region of Paraíba. The current mayor, Anna Virginia Matias (Republicanos), in her second term, comes from a traditional family in city politics. Her uncle, Bevilacqua Matias, was mayor. Her grandfather, Genival Matias de Oliveira, was a judge and vice-mayor. Her father, Genival Matias Filho, was a state deputy.</p>
+      <p>It was from Anna Virginia's position at the head of the prefecture that a political partnership with federal deputy Hugo Motta was consolidated, also from Paraíba and with roots in the region: his father, Narbor Wanderley, is mayor of Patos, less than 100 km from Juazeirinho.</p>
+      <p>The pair came together still in 2021 and, since then, the federal deputy has directed a series of parliamentary amendments to the municipality, ranging from paving works to health investments, always with the disclosure of this support on social media.</p>
+    </div>
+
+    <div class="text-section hidden" data-lang="pt">
+      <h2>Parceria política e favores parlamentares</h2>
+      <p>Juazeirinho é um município com pouco mais de 17 mil habitantes situado na região de Campina Grande, na Paraíba. A atual prefeita, Anna Virginia Matias (Republicanos), em segundo mandato, vem de uma família tradicional da política na cidade. Seu tio, Bevilacqua Matias, já foi prefeito. Seu avô, Genival Matias de Oliveira, foi juiz e vice-prefeito. Seu pai, Genival Matias Filho, foi deputado estadual.</p>
+      <p>Foi a partir de Anna Virginia à frente da prefeitura que se consolidou uma parceria política com o deputado federal Hugo Motta, também da Paraíba e com raízes na região: seu pai, Narbor Wanderley, é prefeito de Patos, que fica a menos de 100km de Juazeirinho.</p>
+      <p>A dupla se aproximou ainda em 2021 e, desde então, o deputado federal tem destinado uma série de emendas parlamentares para o município, que vão de obras de pavimentação a investimentos em saúde, sempre com a divulgação desses apoios nas redes sociais.</p>
+    </div>
+
+    <div class="pullquote" data-lang="en">
+      <p>"Hugo Motta has always been a great deputy, an essential partner to our city, someone who never measured efforts to bring investments and improvements to our people. Now, as president of the Chamber of Deputies, I am sure that he will do even more."</p>
+      <div class="pullquote-citation">Anna Virginia Matias, Mayor of Juazeirinho</div>
+    </div>
+
+    <div class="pullquote hidden" data-lang="pt">
+      <p>"Hugo Motta sempre foi um grande deputado, um parceiro essencial da nossa cidade, alguém que nunca mediu esforços para levar investimentos e melhorias para o nosso povo. Agora, como presidente da Câmara dos Deputados, tenho certeza de que ele fará ainda mais."</p>
+      <div class="pullquote-citation">Anna Virginia Matias, prefeita de Juazeirinho</div>
+    </div>
+
+    <div class="image-block">
+      <img src="imgs/photo-08.jpg" alt="Electoral boost and political promotion">
+    </div>
+
+    <div class="text-section" data-lang="en">
+      <h2>Electoral benefits</h2>
+      <p>When Motta was elected president of the Chamber of Deputies in February 2025, Anna Virginia did not spare praise: "Hugo Motta has always been a great deputy, an essential partner of our city, someone who never measured efforts to bring investments and improvements to our people. Now, as president of the Chamber of Deputies, I am sure that he will do even more, with his skill in dialogue, commitment and attentive look to the municipalities."</p>
+      <p>The exchange of praise is mutual. The deputy visited Juazeirinho in August 2024 to support Anna Virginia Matias's campaign for reelection. "Having a mayor like you in our party (Republicanos) is a reason for joy, for pride, because you are one of the best mayors in all of Paraíba."</p>
+      <p>In the same speech supporting the mayor, Motta highlighted that she "has done the largest street paving program" and left a promise in the air: "by the end of your second term, we will leave Juazeirinho 100% paved, ending the dust, the mud at people's doors."</p>
+    </div>
+
+    <div class="text-section hidden" data-lang="pt">
+      <h2>Benefícios eleitorais</h2>
+      <p>Quando Motta foi eleito à presidente da Câmara dos Deputados, em fevereiro de 2025, Anna Virgínia não economizou elogios: "Hugo Motta sempre foi um grande deputado, um parceiro essencial da nossa cidade, alguém que nunca mediu esforços para levar investimentos e melhorias para o nosso povo. Agora, como presidente da Câmara dos Deputados, tenho certeza de que ele fará ainda mais, com sua habilidade de diálogo, compromisso e olhar atento para os municípios."</p>
+      <p>A troca de elogios é mútua. O deputado foi a Juazeirinho, em agosto de 2024, para apoiar a campanha de Anna Virginia Matias à reeleição. "Ter uma prefeita como você em nosso partido (Republicanos) é motivo de alegria, de orgulho, porque você é uma das melhores prefeitas de toda a Paraíba."</p>
+      <p>No mesmo discurso de apoio à prefeita, Motta destacou que ela "tem feito o maior programa de calçamento de ruas" e deixou uma promessa no ar: "até o final do seu segundo mandato, nós vamos deixar Juazeirinho 100% calçada, acabando com a poeira, com a lama na porta das pessoas."</p>
+    </div>
+
+    <div class="stats-section" data-lang="en">
+      <div class="stat-card">
+        <div class="stat-number">17</div>
+        <div class="stat-label">Votes for Hugo Motta in 2010</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4,500+</div>
+        <div class="stat-label">Votes in 2022</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">R$ 1.9M</div>
+        <div class="stat-label">Contract value for paving project</div>
+      </div>
+    </div>
+
+    <div class="stats-section hidden" data-lang="pt">
+      <div class="stat-card">
+        <div class="stat-number">17</div>
+        <div class="stat-label">Votos para Hugo Motta em 2010</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">4.500+</div>
+        <div class="stat-label">Votos em 2022</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">R$ 1,9M</div>
+        <div class="stat-label">Valor do contrato de pavimentação</div>
+      </div>
+    </div>
+
+    <div class="text-section" data-lang="en">
+      <p>In 2010, when first elected as federal deputy, Hugo Motta received only 17 votes in Juazeirinho. In 2022, more than 4,500, according to open data from the Superior Electoral Court (TSE).</p>
+    </div>
+
+    <div class="text-section hidden" data-lang="pt">
+      <p>Em 2010, quando foi eleito pela primeira vez como deputado federal, Hugo Motta teve apenas 17 votos em Juazeirinho. Em 2022, mais de 4.500, segundo dados abertos do Tribunal Superior Eleitoral (TSE).</p>
+    </div>
+
+    <div class="image-block">
+      <img src="imgs/photo-04.jpg" alt="Project completion and honor ceremony">
+    </div>
+
+    <div class="text-section" data-lang="en">
+      <h2>Hidden costs of political favors</h2>
+      <p>In late 2023, Hugo Motta was honored personally in Juazeirinho with the title of citizen of the municipality, with special emphasis on street paving works. The ceremony featured a moment when a plaque was revealed with the names of streets with delivery of these works, including roads that are part of the contract with Realizar Construction, the same mentioned in the Ministry of Labor and Employment report.</p>
+      <p>At the bottom of the plaque appear the names of the mayor, her deputy, the city infrastructure secretary and Motta's.</p>
+      <p>When BBC News Brasil asked Motta and the senator about the allegations, both declined to comment.</p>
+    </div>
+
+    <div class="text-section hidden" data-lang="pt">
+      <h2>Custos ocultos dos favores políticos</h2>
+      <p>No fim de 2023, Hugo Motta foi homenageado pessoalmente, em Juazeirinho, com o título de cidadão do município, com destaque especial às obras de pavimentação de ruas. A cerimônia contou com um momento em que foi revelada uma placa com o nome de ruas com entrega dessas obras, incluindo vias que constam do contrato com a construtora Realizar, o mesmo citado no relatório do Ministério do Trabalho e Emprego.</p>
+      <p>No pé da placa aparecem o nome da prefeita, de sua vice, do secretário de infraestrutura da cidade e o de Motta.</p>
+      <p>Quando BBC News Brasil perguntou a Motta e ao senador sobre as alegações, ambos declinaram comentar.</p>
+    </div>
+
   </main>
 
-  <!-- Footer -->
   <footer>
     <div class="footer-inner">
       <div class="footer-disclaimer">
-        <p data-lang="en"><strong>About this piece:</strong> This investigation was originally published at BBC News Brasil in May 2025. The research traces how a secret budget amendment (relator amendment) directed by federal politicians flowed through municipal administration into a supply chain that included workers in slave labor conditions. Interviews conducted with government auditors, public defenders, labor law specialists, municipal officials, contractors, and affected workers.</p>
-        <p data-lang="pt"><strong>Sobre esta peça:</strong> Esta investigação foi publicada originalmente na BBC News Brasil em maio de 2025. A pesquisa rastreia como uma emenda de orçamento secreto direcionada por políticos federais fluiu através da administração municipal para uma cadeia de fornecimento que incluía trabalhadores em condições de escravidão. Entrevistas com auditores governamentais, defensores públicos, especialistas em direito trabalhista, autoridades municipais, construtoras e trabalhadores afetados.</p>
-
-        <p data-lang="en"><strong>Reporting:</strong> Field research in Paraíba documenting conditions at the quarry site, interviews with workers and contractors, analysis of government inspection reports and budget records, interviews with legal experts and labor auditors, and document requests under Brazil's Access to Information Law.</p>
-        <p data-lang="pt"><strong>Reportagem:</strong> Pesquisa de campo na Paraíba documentando condições no local da pedreira, entrevistas com trabalhadores e construtoras, análise de relatórios de inspeção governamental e registros orçamentários, entrevistas com especialistas jurídicos e auditores trabalhistas, e solicitações de documentos sob a Lei de Acesso à Informação do Brasil.</p>
+        <p data-lang="en"><strong>About this investigation:</strong> This article was originally published by BBC News Brasil in May 2025. It documented how a secret budget amendment channeled state resources through political patronage, ultimately funding a paving project supplied with slave labor. The investigation traced the chain from quarry workers in degrading conditions through parliamentary amendments and contractor networks.</p>
+        <p class="hidden" data-lang="pt"><strong>Sobre esta investigação:</strong> Este artigo foi originalmente publicado pela BBC News Brasil em maio de 2025. Documentou como uma emenda do orçamento secreto canalizou recursos estatais através do clientelismo político, financiando em última instância um projeto de pavimentação fornecido com trabalho escravo. A investigação rastreou a cadeia desde trabalhadores de pedreira em condições degradantes até emendas parlamentares e redes de contratados.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Shared JavaScript -->
   <script src="../shared/base.js"></script>
+  <script>
+    function setLanguage(lang) {
+      const buttons = document.querySelectorAll('.lang-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      if (lang === 'pt') {
+        document.body.classList.add('lang-pt');
+      } else {
+        document.body.classList.remove('lang-pt');
+      }
+
+      localStorage.setItem('preferred-language', lang);
+    }
+
+    const savedLang = localStorage.getItem('preferred-language') || 'en';
+    if (savedLang === 'pt') {
+      document.body.classList.add('lang-pt');
+      document.querySelectorAll('.lang-btn')[1].classList.add('active');
+    }
+
+    window.addEventListener('scroll', () => {
+      const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+    });
+  </script>
+
 </body>
 </html>

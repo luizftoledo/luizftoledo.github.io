@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-lang="en">26km from the presidential palace: how land grabbers invaded Brasília's protected areas</title>
-  <title data-lang="pt">A 26km do Palácio do Planalto: como grileiros invadiram as áreas protegidas de Brasília</title>
-
+  <title>Grileiros-DF: invasão de terras a 26km do Planalto | Investigativo Luiz Fernando Toledo</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../shared/base.css">
-
   <style>
     :root {
       --earth-brown: #4a3f35;
       --cerrado-green: #6b7d3d;
       --warning-red: #a8361a;
       --accent-tan: #c9b8a8;
+      --text-dark: #1a1a1a;
     }
+
+    body { font-family: 'Source Sans 3', sans-serif; line-height: 1.7; color: var(--text-dark); }
 
     #hero {
       position: relative;
       height: 100vh;
-      min-height: 600px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -29,385 +28,319 @@
       text-align: center;
       color: white;
       padding: 40px 20px;
-      overflow: hidden;
     }
 
-    #hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 10;
-      max-width: 900px;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .series-label {
-      display: inline-block;
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent-tan);
-      margin-bottom: 24px;
-      background: rgba(201, 184, 168, 0.15);
-      padding: 8px 16px;
-      border: 1px solid var(--accent-tan);
-      border-radius: 3px;
-    }
+    .hero-content { position: relative; max-width: 900px; }
+    .series-label { display: inline-block; background: rgba(201, 184, 168, 0.2); border: 1px solid #c9b8a8; color: #c9b8a8; padding: 8px 16px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; }
 
     #hero h1 {
-      font-family: var(--display);
-      font-size: clamp(32px, 8vw, 64px);
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
       font-weight: 900;
       line-height: 1.2;
-      margin: 24px 0;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      margin: 20px 0;
+      max-width: 900px;
     }
 
-    .hero-subtitle {
-      font-family: var(--serif);
-      font-size: clamp(18px, 2.5vw, 24px);
-      font-weight: 400;
-      line-height: 1.6;
-      margin: 24px 0 32px;
-      color: rgba(255, 255, 255, 0.95);
+    #hero .deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.3rem;
+      margin: 30px 0 40px;
       max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.95);
     }
 
-    .hero-meta {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .meta {
+      font-size: 0.95rem;
       color: rgba(255, 255, 255, 0.8);
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      margin-top: 30px;
     }
 
-    main {
-      max-width: 740px;
-      margin: 0 auto;
-      padding: 80px 40px;
-    }
-
-    .section-chapter {
-      margin-bottom: 100px;
-      padding-bottom: 60px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section-chapter:last-child {
-      border-bottom: none;
-    }
-
-    .section-chapter h2 {
-      font-family: var(--display);
-      font-size: clamp(28px, 6vw, 42px);
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 32px;
-      color: var(--text-dark);
-    }
-
-    .section-chapter p {
-      font-family: var(--serif);
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 20px;
-      color: var(--text-dark);
-    }
-
-    .section-chapter strong {
-      color: var(--earth-brown);
-    }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    .text-section { opacity: 0; transition: opacity 0.8s ease-out; padding: 50px 0; border-bottom: 1px solid #e9ecef; }
+    .text-section.fade-in { opacity: 1; }
+    .text-section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 25px; color: var(--text-dark); }
+    .text-section h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-top: 35px; margin-bottom: 18px; }
+    .text-section p { margin-bottom: 18px; font-size: 1.05rem; line-height: 1.8; }
 
     .pullquote {
-      border-left: 4px solid var(--earth-brown);
-      padding: 32px 40px;
-      margin: 50px 0;
-      background-color: var(--bg-light);
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 22px;
-      line-height: 1.7;
-      color: var(--text-dark);
-    }
-
-    .image-block {
-      margin: 60px 0;
-      text-align: center;
-    }
-
-    .image-block img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 2px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .image-credit {
-      font-family: var(--sans);
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 12px;
-      font-style: italic;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      margin: 80px 0;
-    }
-
-    .stat-card {
-      background-color: var(--bg-light);
-      padding: 40px 30px;
-      text-align: center;
-      border-radius: 3px;
-      border-top: 3px solid var(--earth-brown);
-    }
-
-    .stat-number {
-      font-family: var(--display);
-      font-size: 42px;
-      font-weight: 900;
-      color: var(--earth-brown);
-      line-height: 1;
-      margin-bottom: 12px;
-    }
-
-    .stat-label {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      line-height: 1.5;
-    }
-
-    .warning-box {
-      background-color: #fff3cd;
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
       border-left: 4px solid var(--warning-red);
-      padding: 20px 24px;
+      padding: 25px 30px;
       margin: 40px 0;
-      border-radius: 2px;
+      background-color: #f8f9fa;
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--text-dark);
+    }
+    .pullquote.fade-in { opacity: 1; }
+
+    .article-image { opacity: 0; transition: opacity 0.8s ease-out; width: 100%; max-width: 800px; margin: 40px auto; border-radius: 4px; display: block; }
+    .article-image.fade-in { opacity: 1; }
+    .image-caption { font-size: 0.9rem; color: #666; margin-top: 12px; font-style: italic; text-align: center; }
+
+    .stats-section {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #f5f1ed 0%, #ebe5e0 100%);
+      margin: 60px 0;
+    }
+    .stats-section.fade-in { opacity: 1; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto; }
+    .stat-card { background: white; padding: 30px; text-align: center; border-radius: 4px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--warning-red); font-weight: 900; margin-bottom: 10px; }
+    .stat-label { font-size: 0.95rem; color: #666; line-height: 1.4; }
+
+    #disclaimerBar {
+      background-color: #fce8e6;
+      border-bottom: 2px solid #a8361a;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
-    .warning-box p {
-      font-family: var(--sans);
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--text-dark);
-      margin-bottom: 10px;
+    #langBar {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      position: sticky;
+      top: 44px;
+      z-index: 999;
     }
+
+    .lang-btn { background-color: #ffffff; border: 1px solid #ddd; padding: 8px 16px; cursor: pointer; font-weight: 600; font-size: 0.9rem; border-radius: 4px; transition: all 0.3s ease; }
+    .lang-btn.active { background-color: var(--earth-brown); color: white; border-color: var(--earth-brown); }
+    .lang-btn:hover { border-color: var(--earth-brown); }
+
+    [data-lang="en"] { display: none; }
+    body.lang-en [data-lang="en"] { display: inline; }
+    body.lang-en [data-lang="pt"] { display: none; }
 
     footer {
-      background-color: var(--primary);
-      color: var(--text-light);
-      padding: 80px 40px;
-      margin-top: 100px;
+      background-color: #1a1a1a;
+      color: white;
+      padding: 60px 20px 40px;
     }
-
-    .footer-disclaimer p {
-      font-family: var(--sans);
-      font-size: 13px;
-      line-height: 1.6;
-      margin-bottom: 12px;
-      opacity: 0.85;
-    }
-
-    .back-link {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .back-link a {
-      color: var(--accent-tan);
-      text-decoration: none;
-    }
+    .footer-nav { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+    .footer-nav a { color: var(--accent-tan); text-decoration: none; font-weight: 600; }
+    .footer-nav a:hover { text-decoration: underline; }
 
     @media (max-width: 768px) {
-      main {
-        padding: 60px 24px;
-      }
-      #hero h1 {
-        font-size: 36px;
-      }
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 480px) {
-      main {
-        padding: 40px 16px;
-      }
-      .pullquote {
-        font-size: 18px;
-        padding: 24px 20px;
-      }
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
+      #hero h1 { font-size: 2.2rem; }
+      #hero .deck { font-size: 1.1rem; }
     }
   </style>
 </head>
 <body class="lang-en">
 
-  <div class="disclaimer-bar">
-    <div class="disclaimer-inner">
-      <div class="disclaimer-icon">⚠</div>
-      <div class="disclaimer-text">
-        <span data-lang="en">This is an enhanced portfolio presentation of my journalism. The original article was published at Piauí magazine. Content is reproduced for portfolio purposes.</span>
-        <span data-lang="pt">Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na revista Piauí. O conteúdo é reproduzido para fins de portfólio.</span>
-        <a href="https://piaui.folha.uol.com.br" target="_blank" rel="noopener" class="disclaimer-link" data-lang="en">Read original ↗</a>
-        <a href="https://piaui.folha.uol.com.br" target="_blank" rel="noopener" class="disclaimer-link" data-lang="pt">Leia original ↗</a>
+<div id="disclaimerBar">
+  <div>
+    <span class="warning-icon">⚠</span>
+    <span data-lang="en">Portfolio presentation of published journalism. Original: Revista Piauí</span>
+    <span data-lang="pt">Apresentação de portfólio do jornalismo publicado. Original: Revista Piauí</span>
+  </div>
+</div>
+
+<div id="langBar">
+  <button id="btnEn" class="lang-btn active" data-lang="en">English</button>
+  <button id="btnPt" class="lang-btn" data-lang="pt">Português</button>
+</div>
+
+<section id="hero">
+  <div class="hero-content">
+    <div class="series-label" data-lang="en">Investigative Report</div>
+    <div class="series-label" data-lang="pt">Reportagem Investigativa</div>
+
+    <h1 data-lang="en">Land grabbers advance on Brasília: 26km from the presidential palace</h1>
+    <h1 data-lang="pt">Grileiros avançam sobre o Distrito Federal: a 26km do Palácio do Planalto</h1>
+
+    <div class="deck" data-lang="en">Illegal land invasions in protected areas surround Brazil's capital, with organized crime and political connections enabling mass occupation and environmental destruction</div>
+    <div class="deck" data-lang="pt">Invasões ilegais de terras em áreas protegidas cercam a capital do Brasil, com crime organizado e conexões políticas possibilitando ocupação em massa e destruição ambiental</div>
+
+    <div class="meta">
+      <span data-lang="en">Revista Piauí</span>
+      <span data-lang="pt">Revista Piauí</span>
+      <span>•</span>
+      <span data-lang="en">By Allan de Abreu and Luiz Fernando Toledo</span>
+      <span data-lang="pt">Por Allan de Abreu e Luiz Fernando Toledo</span>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <section class="text-section fade-in">
+    <p data-lang="pt">Numa rua de terra batida, acumulam-se anúncios de venda de terrenos. As placas, enfileiradas no acostamento, quase somem debaixo da poeira levantada pelos carros. Para onde se olhe, há uma parede de tijolos sendo erguida. Na Colônia Agrícola 26 de Setembro, nada movimenta tanto dinheiro quanto a construção civil. A demanda é tanta que há cinquenta lojas de materiais de construção no bairro.</p>
+    <p data-lang="en">On an unpaved street, signs announcing land sales accumulate. The signs, lined up on the roadside, are almost buried under dust from passing cars. Wherever you look, a wall of bricks is being built. In the 26 September Agricultural Colony, nothing generates as much money as the construction trade. The demand is so great that there are fifty building material stores in the neighborhood.</p>
+
+    <p data-lang="pt">O assentamento fica no Distrito Federal, a 26 km do Palácio do Planalto, e recebe novos moradores a cada dia. Hoje, a população dali é estimada em 35 mil pessoas. A maioria delas vive em casas simples, construídas em ruas sem asfalto, sem saneamento e sem presença do poder público. Não há escolas ou postos de saúde. Quase ninguém paga por energia elétrica – só duzentas pessoas, estima a associação de moradores, o que equivale a menos de 1% da população local.</p>
+    <p data-lang="en">The settlement is in the Federal District, 26 km from the Palácio do Planalto, and receives new residents daily. Today, its population is estimated at 35,000 people. Most live in simple houses built on unpaved streets with no sanitation and no government presence. There are no schools or health posts. Almost nobody pays for electricity—only about 200 people, according to the residents' association, which is less than 1% of the local population.</p>
+
+    <p data-lang="pt">O bairro tem essas características porque é ilegal. Foi quase todo construído em terras públicas, numa área de conservação onde deveria haver uma floresta preservada. Nenhum imóvel tem certidão registrada em cartório. Do ponto de vista da lei, todos os que se dizem proprietários de terras naquele bairro são grileiros.</p>
+    <p data-lang="en">The neighborhood has these characteristics because it's illegal. It was almost entirely built on public lands, in a conservation area where a preserved forest should exist. No property has a deed registered with a notary. From a legal perspective, everyone claiming to own land in that neighborhood is a land grabber.</p>
+
+    <img src="imgs/photo-01.jpg" alt="Colônia 26 de Setembro" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Colônia Agrícola 26 de Setembro, ocupação ilegal a 26km do Palácio do Planalto</div>
+    <div class="image-caption" data-lang="en">26 September Agricultural Colony, illegal occupation 26km from the Palácio do Planalto</div>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">A invasão de terras no coração de Brasília</h2>
+    <h2 data-lang="en">Land invasion in the heart of Brasília</h2>
+
+    <p data-lang="pt">O problema se arrasta há mais de vinte anos. Nos anos 1990, quando as primeiras chácaras apareceram na região, o governo federal criou a Floresta Nacional de Brasília (Flona), uma área de preservação ambiental de 9 mil hectares que incluía a área atualmente ocupada pelo assentamento. O plano era transferir os moradores dali para outro lugar, já que não é permitida a ocupação humana em unidades de conservação. A desocupação, porém, nunca aconteceu. Com o tempo, invasores foram se apossando daquelas terras, construindo casas, comércio e chácaras.</p>
+    <p data-lang="en">The problem has been dragging on for over twenty years. In the 1990s, when the first properties appeared in the region, the federal government created the Brasília National Forest (Flona), a 9,000-hectare conservation area that included the area currently occupied by the settlement. The plan was to relocate residents elsewhere, since human occupation is not permitted in conservation units. However, the eviction never happened. Over time, invaders took possession of these lands, building houses, businesses, and properties.</p>
+
+    <p data-lang="pt">Casos com esse se repetem em diferentes partes do Distrito Federal, ameaçando a flora nativa da capital do país. Levantamento inédito da piauí em parceria com o projeto Data Fixers mostra que ao menos 1.026 pessoas físicas ou jurídicas declararam ao governo federal, por meio do Cadastro Ambiental Rural (CAR), serem donas de terras em unidades de conservação do DF. Somados, esses cadastros totalizam 69 mil hectares, o equivalente a 90% da área de preservação existente.</p>
+    <p data-lang="en">Cases like this repeat in different parts of the Federal District, threatening the native flora of the country's capital. An unprecedented survey by piauí in partnership with the Data Fixers project shows that at least 1,026 individuals or legal entities declared to the federal government, through the Rural Environmental Registry (CAR), to own land in conservation units in the DF. Combined, these registries total 69,000 hectares, equivalent to 90% of existing preserved areas.</p>
+
+    <p data-lang="pt">No Parque Nacional de Brasília, um destino turístico conhecido por suas cachoeiras e piscinas naturais, mas que também abriga espécies ameaçadas de extinção, como o gato-maracajá e o tamanduá-bandeira, duas pessoas registraram cada uma um CAR dizendo ter posse de mais da metade da área do parque – uma ilegalidade.</p>
+    <p data-lang="en">In Brasília National Park, a tourist destination known for its waterfalls and natural pools, but which also harbors species threatened with extinction, such as the ocelot and giant anteater, two people each registered a CAR claiming to possess more than half the park's area—an illegality.</p>
+
+    <img src="imgs/photo-02.jpg" alt="Protected areas" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Áreas de conservação invadidas no Distrito Federal</div>
+    <div class="image-caption" data-lang="en">Invaded conservation areas in the Federal District</div>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">O sistema fraudulento do car</h2>
+    <h2 data-lang="en">The fraudulent car system</h2>
+
+    <p data-lang="pt">Os CARs são autodeclaratórios. Esse mecanismo foi criado pelo governo federal, em 2012, para facilitar a fiscalização de propriedades rurais. A intenção era monitorar se os proprietários estavam respeitando as áreas de preservação ambiental, mas a ideia logo foi subvertida: no Cerrado, assim como na Amazônia, grileiros passaram a usar o cadastro rural para legitimar a posse de terras em áreas ilegais. O registro dá um verniz legal ao que não é.</p>
+    <p data-lang="en">CARs are self-declared. This mechanism was created by the federal government in 2012 to facilitate the monitoring of rural properties. The intention was to monitor whether owners were respecting environmental preservation areas, but the idea was quickly subverted: in the Cerrado, just as in the Amazon, land grabbers began using the rural registry to legitimize possession of land in illegal areas. The registration gives legal veneer to what is not legal.</p>
+
+    <p data-lang="pt">Em geral, depois de obter um CAR numa área protegida pelo poder público, grileiros solicitam um registro do Incra – o Instituto Nacional de Colonização e Reforma Agrária – e aguardam uma futura desafetação da unidade de conservação. Caso a área um dia deixe de ser preservada, eles poderão reivindicar a posse da terra.</p>
+    <p data-lang="en">Generally, after obtaining a CAR in an area protected by the government, land grabbers request a registration from Incra—the National Institute for Land Colonization and Agrarian Reform—and await a future removal of the conservation unit's designation. If the area ever ceases to be preserved, they can claim land possession.</p>
+
+    <p data-lang="pt">A diferença entre a grilagem na Amazônia e no Distrito Federal é que, neste último, o objetivo do grileiro não é transformar a área numa propriedade rural particular, mas criar loteamentos urbanos, que lhe permitam lucrar com a venda de terrenos. As placas anunciando a venda de imóveis na Colônia 26 de Setembro, por valores que variam entre 55 mil e 105 mil reais, atestam o sucesso do modelo criminoso. A prosperidade é tanta que o esquema entrou no radar de traficantes e milicianos.</p>
+    <p data-lang="en">The difference between land grabbing in the Amazon and the Federal District is that in the latter, the land grabber's goal is not to transform the area into a private rural property, but to create urban subdivisions that allow him to profit from land sales. Signs advertising property sales in the 26 September Colony, at prices ranging from 55,000 to 105,000 reais, attest to the success of the criminal scheme. The prosperity is such that the scheme has come to the attention of traffickers and militias.</p>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">Grileiros com apoio político</h2>
+    <h2 data-lang="en">Land grabbers with political backing</h2>
+
+    <p data-lang="pt">Quando a Secretaria de Proteção da Ordem Urbanística do Distrito Federal tenta barrar novas construções na Colônia 26 de Setembro, os moradores costumam apelar para Francisco Joélio Rodrigues da Silva, o Miguel da 26. Cinegrafista de uma empresa que presta serviços para o Senado, ele vive no bairro há catorze anos e preside a associação dos moradores. No ano passado, se lançou candidato a deputado distrital pelo PSDB, mas teve apenas 4.252 votos e não se elegeu.</p>
+    <p data-lang="en">When the Federal District's Department of Urban Order Protection tries to prevent new construction in the 26 September Colony, residents usually appeal to Francisco Joélio Rodrigues da Silva, known as "Miguel da 26." A cameraman for a company that provides services to the Senate, he has lived in the neighborhood for fourteen years and presides over the residents' association. Last year, he ran as a candidate for district deputy for the PSDB, but received only 4,252 votes and was not elected.</p>
+
+    <p data-lang="pt">Um processo na Justiça indica que o próprio Miguel atua na venda de lotes. Lu Tong Lin, um chinês radicado no Distrito Federal, diz ter vendido a ele uma chácara na Colônia 26 de Setembro, que Miguel posteriormente dividiu em lotes e revendeu a terceiros. Depois de um desentendimento entre ambos, porém, Lin entrou na Justiça para tentar reaver o imóvel. No processo, Miguel foi acusado de ameaçar de morte um vizinho que iria testemunhar a favor de Lin. Os pedidos de Lin, no entanto, acabaram rejeitados. A juíza entendeu que tanto ele quanto Miguel tinham cometido crime ao dividir e comercializar terras dentro de uma unidade de conservação.</p>
+    <p data-lang="en">A legal case indicates that Miguel himself acts in land sales. Lu Tong Lin, a Chinese resident of the Federal District, claims he sold him a property in the 26 September Colony, which Miguel later divided into lots and resold to others. After a disagreement between them, however, Lin went to court to try to recover the property. In the case, Miguel was accused of threatening to kill a neighbor who would testify in Lin's favor. Lin's requests, however, were ultimately rejected. The judge concluded that both he and Miguel had committed crimes by dividing and commercializing land within a conservation unit.</p>
+
+    <p data-lang="pt">Miguel tem apoio de políticos poderosos. Frequenta o senador Izalci Lucas (PSDB), que disputou o governo distrital, e com a ex-ministra da Secretaria de Governo Flávia Arruda, que se lançou ao Senado pelo PL. Os três fizeram carreatas juntos na Colônia 26 de Setembro. Em busca de votos, prometiam a desafetação do assentamento – isto é, defendiam mudar a lei para que aquela área deixasse de ser uma unidade de preservação ambiental, legalizando, com isso, sua ocupação.</p>
+    <p data-lang="en">Miguel has the support of powerful politicians. He frequents senator Izalci Lucas (PSDB), who ran for district governor, and former Government Secretary Minister Flávia Arruda, who ran for the Senate for the PL. The three held rallies together in the 26 September Colony. Seeking votes, they promised the removal of the settlement's conservation designation—that is, they advocated changing the law so that the area would no longer be an environmental preservation unit, thereby legalizing its occupation.</p>
+
+    <div class="pull-quote" data-lang="pt">"Com apoio de políticos, eles invadem unidades de conservação, desmatam e faturam com a venda de lotes — tudo a poucos minutos da Praça dos Três Poderes."</div>
+    <div class="pull-quote" data-lang="en">"With political support, they invade conservation units, deforest, and profit from land sales—all just minutes from the Three Powers Plaza."</div>
+
+    <img src="imgs/photo-03.jpg" alt="Political connections" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Grileiros com conexões políticas expandem invasões</div>
+    <div class="image-caption" data-lang="en">Land grabbers with political connections expand invasions</div>
+  </section>
+
+  <section class="stats-section fade-in">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">1.026</div>
+        <div class="stat-label" data-lang="pt">Pessoas ou empresas com CAR em áreas protegidas</div>
+        <div class="stat-label" data-lang="en">People or companies with CAR in protected areas</div>
       </div>
-      <button class="disclaimer-close" id="disclaimerClose">×</button>
-    </div>
-  </div>
-
-  <div class="lang-toggle-bar">
-    <div class="lang-toggle-inner">
-      <span class="lang-toggle-label" data-lang="en">Language:</span>
-      <span class="lang-toggle-label" data-lang="pt">Idioma:</span>
-      <button class="lang-btn active" id="btnEn" data-lang="en">English</button>
-      <button class="lang-btn" id="btnPt" data-lang="pt">Português</button>
-    </div>
-  </div>
-
-  <div class="progress-bar" id="progressBar"></div>
-
-  <section id="hero">
-    <div class="hero-content">
-      <div class="series-label" data-lang="en">Investigation</div>
-      <div class="series-label" data-lang="pt">Investigação</div>
-      <h1 data-lang="en">26km from the presidential palace: how land grabbers invaded Brasília's protected areas</h1>
-      <h1 data-lang="pt">A 26km do Palácio do Planalto: como grileiros invadiram as áreas protegidas de Brasília</h1>
-      <div class="hero-subtitle" data-lang="en">A systematic scheme of environmental destruction operating within sight of Brazil's seat of power, threatening the Cerrado biome and displacing hundreds of families—with the help of corrupt politicians and forged documents.</div>
-      <div class="hero-subtitle" data-lang="pt">Um esquema sistemático de destruição ambiental operando à vista da sede do poder do Brasil, ameaçando o bioma Cerrado e deslocando centenas de famílias—com ajuda de políticos corruptos e documentos falsificados.</div>
-      <div class="hero-meta">
-        <span data-lang="en">Piauí Magazine</span>
-        <span data-lang="pt">Revista Piauí</span>
-        <span>•</span>
-        <span data-lang="en">November 2023</span>
-        <span data-lang="pt">Novembro de 2023</span>
-        <span>•</span>
-        <span data-lang="en">Luiz Fernando Toledo & Allan de Abreu</span>
-        <span data-lang="pt">Luiz Fernando Toledo & Allan de Abreu</span>
+      <div class="stat-card">
+        <div class="stat-number">69 mil</div>
+        <div class="stat-label" data-lang="pt">Hectares registrados ilegalmente</div>
+        <div class="stat-label" data-lang="en">Hectares registered illegally</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">90%</div>
+        <div class="stat-label" data-lang="pt">De toda área de preservação</div>
+        <div class="stat-label" data-lang="en">Of all preserved areas</div>
       </div>
     </div>
   </section>
 
-  <main>
-    <section class="section-chapter fade-in">
-      <h2 data-lang="en">The quiet takeover</h2>
-      <h2 data-lang="pt">A invasão silenciosa</h2>
-      <p data-lang="en">In 2019, a quiet transformation began in a conservation unit north of Brasília. Surveyors marked tree stumps in what was officially designated as protected Cerrado forest—a biodiversity hotspot meant to remain pristine. Within months, improvised shelters appeared among the cleared trees. By 2020, the land had been subdivided into parcels. By 2021, it was being marketed as the "26 de Setembro Agricultural Colony," with plots sold to low-income families seeking affordable housing.</p>
-      <p data-lang="pt">Em 2019, uma transformação silenciosa começou em uma unidade de conservação ao norte de Brasília. Agrimensores marcaram troncos de árvores no que era oficialmente designado como floresta de Cerrado protegida—um hotspot de biodiversidade destinado a permanecer pristino. Dentro de meses, abrigos improvisados apareceram entre as árvores limpas. Em 2020, a terra havia sido subdividida em parcelas. Em 2021, estava sendo comercializada como a "Colônia Agrícola 26 de Setembro," com lotes vendidos para famílias de baixa renda buscando moradia acessível.</p>
-      <p data-lang="en">The scheme was brutally efficient: identify empty conservation land, invade it, build structures, create fake ownership documents, profit from desperate homebuyers. The result: today, the "colony" has an estimated population of 35,000 people living in conditions without basic services—no schools, no health clinics, minimal electricity access, no sewage system. And from a legal perspective, every resident is a land grabber (grileiro). Not a single property has legitimate title.</p>
-      <p data-lang="pt">O esquema era brutalmente eficiente: identificar terra de conservação vazia, invadir, construir estruturas, criar documentos de propriedade falsificados, lucrar com compradores desesperados. O resultado: hoje, a "colônia" tem uma população estimada de 35 mil pessoas vivendo em condições sem serviços básicos—sem escolas, sem clínicas de saúde, acesso mínimo de eletricidade, sem sistema de esgotos. E de uma perspectiva legal, cada residente é um grileiro. Nenhuma propriedade tem título legítimo.</p>
-    </section>
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">Milícia e crime organizado</h2>
+    <h2 data-lang="en">Militia and organized crime</h2>
 
-    <div class="image-block fade-in">
-      <img src="imgs/photo-02.jpg" alt="Invasion site">
-      <div class="image-credit" data-lang="en">The boundary between protected Cerrado forest and the invaded settlement marks an ecological and legal divide</div>
-      <div class="image-credit" data-lang="pt">O limite entre a floresta de Cerrado protegida e o assentamento invadido marca uma divisão ecológica e legal</div>
+    <p data-lang="pt">Em áreas griladas densamente povoadas, como a Colônia 26 de Setembro e a Sol Nascente, a posse dos imóveis é, muitas vezes, garantida à força. Grileiros com maior capacidade financeira contratam milícias formadas por policiais civis e militares para proteger seus lotes e, em alguns casos, tomar áreas de terceiros.</p>
+    <p data-lang="en">In densely populated grabbed areas, such as the 26 September Colony and Sol Nascente, property possession is often guaranteed by force. Land grabbers with greater financial capacity hire militias formed by civil and military police to protect their lots and, in some cases, seize areas belonging to others.</p>
+
+    <p data-lang="pt">Uma investigação da Polícia Civil mostra que casos assim acontecem ao menos desde 2000. Naquele ano, o então delegado Francisco de Assis Barreiro Crizanto e sua equipe foram contratados como seguranças a serviço de grileiros do condomínio Privê, no Lago Norte, em Brasília. Meses depois, expulsaram um dos moradores do condomínio, derrubando a cerca que delimitava o terreno de seu imóvel. Segundo os investigadores, o delegado esperava receber, como forma de compensação por esse ato de violência, alguns lotes do condomínio. Depois os venderia para injetar dinheiro em sua campanha a deputado distrital, em 2002.</p>
+    <p data-lang="en">A Civil Police investigation shows that such cases have been happening at least since 2000. That year, then-delegate Francisco de Assis Barreiro Crizanto and his team were hired as security for land grabbers in the Privê condominium in Lago Norte, Brasília. Months later, they expelled one of the condominium residents by tearing down the fence that marked his property's boundary. According to investigators, the delegate expected to receive, as compensation for this violent act, some lots from the condominium. He would later sell them to inject money into his campaign for district deputy in 2002.</p>
+
+    <p data-lang="pt">A Polícia Civil investiga, hoje, a atuação de organizações criminosas na Colônia 26 de Setembro. Em agosto de 2020, um policial civil foi baleado e dois PMs ficaram feridos durante uma operação para derrubada de imóveis irregulares no bairro. A Secretaria de Proteção da Ordem Urbanística do Distrito Federal suspeita da ação de milicianos.</p>
+    <p data-lang="en">The Civil Police today investigate the activities of criminal organizations in the 26 September Colony. In August 2020, a civil police officer was shot and two military police were injured during an operation to demolish irregular properties in the neighborhood. The Federal District's Department of Urban Order Protection suspects militia involvement.</p>
+
+    <img src="imgs/photo-04.jpg" alt="Crime scene" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Operações contra grileiros no Distrito Federal</div>
+    <div class="image-caption" data-lang="en">Operations against land grabbers in the Federal District</div>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">A história de Brasília e a grilagem de terras</h2>
+    <h2 data-lang="en">Brasília's history and land grabbing</h2>
+
+    <p data-lang="pt">A ocupação ilegal de terras é uma marca de nascença do Distrito Federal. A primeira Constituição republicana, de 1891, previa que a capital deveria ser transferida do Rio para o interior do país. No começo dos anos 1950, com Getúlio Vargas, o governo definiu a localização de Brasília: ficaria no Planalto Central, uma área elevada no meio de três grandes bacias hidrográficas – as dos rios Amazonas, São Francisco e Paraná. Coube a Juscelino Kubitschek tirar a ideia do papel.</p>
+    <p data-lang="en">Illegal land occupation is a defining characteristic of the Federal District. The first Republican Constitution, of 1891, provided that the capital should be moved from Rio to the interior of the country. In the early 1950s, under Getúlio Vargas, the government defined Brasília's location: it would be on the Central Plateau, an elevated area in the middle of three major river basins—those of the Amazon, São Francisco, and Paraná rivers. It fell to Juscelino Kubitschek to implement the idea.</p>
+
+    <p data-lang="pt">A ideia era desapropiar toda a área do Distrito Federal, cerca de 14 mil km² na época, por meio da Novacap – a Companhia Urbanizadora da Nova Capital do Brasil. Mas o plano não foi adiante, primeiro porque já existiam duas cidades no local (Planaltina e Brazlândia), segundo porque, graças à especulação imobiliária, as terras tinham encarecido muito desde que a nova capital fora anunciada. No fim das contas, o governo desapropriou só a área onde está situado o plano piloto de Brasília.</p>
+    <p data-lang="en">The idea was to expropriate the entire Federal District area, about 14,000 km² at the time, through Novacap—the Urban Development Company of Brazil's New Capital. But the plan didn't go forward, first because two cities already existed on the site (Planaltina and Brazlândia), and second because, due to real estate speculation, the land had become much more expensive since the new capital was announced. In the end, the government only expropriated the area where Brasília's pilot plan is located.</p>
+
+    <p data-lang="pt">A primeira invasão de terras ocorreu ainda durante a construção da capital. Migrantes nordestinos que trabalhavam nos canteiros de obras, mas não tinham onde ficar, ocuparam a fazenda Taguatinga, recém-desapropriada pelo governo federal. Por ser uma área pública, não poderia ser ocupada, mas foi. Dois anos depois de ser criada, Taguatinga somava 26 mil habitantes. Hoje é uma das principais cidades-satélite do Distrito Federal, com mais de 200 mil moradores.</p>
+    <p data-lang="en">The first land invasion occurred during the construction of the capital itself. Northeastern migrants who worked on construction sites but had nowhere to stay occupied the Taguatinga farm, recently expropriated by the federal government. Being public land, it couldn't be occupied, but it was. Two years after its creation, Taguatinga had 26,000 inhabitants. Today it is one of the main satellite cities of the Federal District, with over 200,000 residents.</p>
+
+    <p data-lang="pt">O crescimento desordenado do Distrito Federal continua gerando preocupações. De acordo com o professor do departamento de engenharia civil e ambiental da UnB Sergio Koide, o lago Descoberto, responsável por 60% do abastecimento de água do Distrito Federal, tem perdido nascentes devido à expansão desordenada da Sol Nascente, a maior favela brasileira, situada a Oeste de Brasília, com 93 mil habitantes. O quadro, explica Koide, deve se agravar com a ocupação de uma área de 996 hectares ao Norte do lago que pertencia à Floresta Nacional de Brasília, mas que deixou de ser área de preservação por causa do projeto de Flávia Arruda.</p>
+    <p data-lang="en">The disorderly growth of the Federal District continues to generate concerns. According to Sergio Koide, a professor in the civil and environmental engineering department at UnB, Lake Descoberto, responsible for 60% of the Federal District's water supply, has been losing water sources due to the disorderly expansion of Sol Nascente, Brazil's largest slum, located west of Brasília, with 93,000 residents. The situation, Koide explains, should worsen with the occupation of a 996-hectare area north of the lake that belonged to Brasília National Forest but ceased to be a preservation area due to Flávia Arruda's project.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-nav">
+      <a href="../../index.html" data-lang="en">← Back to portfolio</a>
+      <a href="../../index.html" data-lang="pt">← Voltar ao portfólio</a>
     </div>
+  </div>
+</footer>
 
-    <div class="stats-grid fade-in">
-      <div class="stat-card">
-        <div class="stat-number">35k</div>
-        <div class="stat-label" data-lang="en">Population of Colônia 26 de Setembro</div>
-        <div class="stat-label" data-lang="pt">População da Colônia 26 de Setembro</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">0</div>
-        <div class="stat-label" data-lang="en">Properties with legitimate land titles</div>
-        <div class="stat-label" data-lang="pt">Propriedades com títulos legítimos de terra</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">69k</div>
-        <div class="stat-label" data-lang="en">Hectares claimed in DF conservation units</div>
-        <div class="stat-label" data-lang="pt">Hectares reivindicados em unidades de conservação do DF</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">26km</div>
-        <div class="stat-label" data-lang="en">Distance from Presidential Palace</div>
-        <div class="stat-label" data-lang="pt">Distância do Palácio do Planalto</div>
-      </div>
-    </div>
+<script src="../shared/base.js"></script>
+<script>
+  document.getElementById('btnEn').addEventListener('click', () => {
+    document.body.classList.remove('lang-en');
+    localStorage.setItem('language', 'pt');
+    updateLangButtons();
+  });
+  document.getElementById('btnPt').addEventListener('click', () => {
+    document.body.classList.add('lang-en');
+    localStorage.setItem('language', 'en');
+    updateLangButtons();
+  });
 
-    <section class="section-chapter fade-in">
-      <h2 data-lang="en">A systematic assault on protected land</h2>
-      <h2 data-lang="pt">Um ataque sistemático a terras protegidas</h2>
-      <p data-lang="en">The 26 de Setembro invasion is not an isolated incident. It is part of a coordinated, systematic assault on conservation areas across the Federal District. This investigation found that at least 1,026 individuals or companies have registered claims (through the Rural Environmental Cadastre, or CAR) to possess land within Brasília's conservation units. These registrations total 69,000 hectares—representing 90% of all protected area in the DF.</p>
-      <p data-lang="pt">A invasão do 26 de Setembro não é um incidente isolado. É parte de um ataque coordenado e sistemático a áreas de conservação em todo o Distrito Federal. Esta investigação descobriu que pelo menos 1.026 indivíduos ou empresas registraram reivindicações (através do Cadastro Ambiental Rural, ou CAR) para possuir terra dentro de unidades de conservação de Brasília. Estes registros totalizam 69 mil hectares—representando 90% de toda a área protegida no DF.</p>
-      <p data-lang="en">The CAR (Rural Environmental Cadastre) was created by the federal government in 2012 as a tool to monitor rural properties and ensure compliance with environmental regulations. Instead, it was weaponized: land grabbers discovered they could use CAR registration to create a false veneer of legitimacy for illegal land possession. Register in the CAR, create fake ownership documents, wait for the conservation area to be dedesignated, and then claim ownership retroactively.</p>
-      <p data-lang="pt">O CAR (Cadastro Ambiental Rural) foi criado pelo governo federal em 2012 como ferramenta para monitorar propriedades rurais e garantir conformidade com regulações ambientais. Em vez disso, foi militarizado: grileiros descobriram que poderiam usar o registro de CAR para criar uma falsa aparência de legitimidade para posse ilegal de terra. Registre no CAR, crie documentos de propriedade falsificados, aguarde a área de conservação ser desafetada, e então reclame propriedade retroativamente.</p>
-    </section>
+  function updateLangButtons() {
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    if (document.body.classList.contains('lang-en')) {
+      document.getElementById('btnPt').classList.add('active');
+    } else {
+      document.getElementById('btnEn').classList.add('active');
+    }
+  }
 
-    <div class="pullquote fade-in">
-      <span data-lang="en">"The Cerrado loses 1% of its remaining territory every year. If this continues, within three decades the biome will be ecologically non-viable. And much of that loss is happening in areas that are supposed to be legally protected."</span>
-      <span data-lang="pt">"O Cerrado perde 1% de seu território remanescente a cada ano. Se isso continuar, em três décadas o bioma será ecologicamente inviável. E muito dessa perda está acontecendo em áreas que supostamente deveriam estar legalmente protegidas."</span>
-    </div>
+  if (localStorage.getItem('language') === 'en') {
+    document.body.classList.add('lang-en');
+  }
+  updateLangButtons();
+</script>
 
-    <section class="section-chapter fade-in">
-      <h2 data-lang="en">The destruction of a global biodiversity hotspot</h2>
-      <h2 data-lang="pt">A destruição de um hotspot de biodiversidade global</h2>
-      <p data-lang="en">The Cerrado is one of the world's most important ecosystems. Despite its size and ecological importance, the Cerrado receives a fraction of the attention and protection afforded to the Amazon. The biome is under siege. It loses approximately 1% of its remaining territory every year. At current rates of destruction, within three decades the Cerrado will no longer be ecologically viable. And a significant portion of that destruction is occurring in conservation areas that are legally designated as protected.</p>
-      <p data-lang="pt">O Cerrado é um dos ecossistemas mais importantes do mundo. Apesar de seu tamanho e importância ecológica, o Cerrado recebe uma fração da atenção e proteção concedida à Amazônia. O bioma está sob cerco. Perde aproximadamente 1% de seu território remanescente a cada ano. Às taxas atuais de destruição, em três décadas o Cerrado não será mais ecologicamente viável. E uma porção significativa dessa destruição está ocorrendo em áreas de conservação que são legalmente designadas como protegidas.</p>
-    </section>
-
-    <div class="image-block fade-in">
-      <img src="imgs/photo-03.jpg" alt="Deforestation">
-      <div class="image-credit" data-lang="en">Satellite imagery shows the progression from intact Cerrado forest to cleared land in just a few years</div>
-      <div class="image-credit" data-lang="pt">Imagens de satélite mostram a progressão de floresta de Cerrado intacta para terra limpa em apenas alguns anos</div>
-    </div>
-
-    <section class="section-chapter fade-in">
-      <h2 data-lang="en">A system designed to fail</h2>
-      <h2 data-lang="pt">Um sistema projetado para falhar</h2>
-      <p data-lang="en">The invasion of Brasília's conservation areas reveals a system that is fundamentally broken. Environmental agencies lack the personnel to monitor invasions at scale. Enforcement is almost nonexistent. The legal instruments meant to prevent land grabbing have been weaponized to enable it. Politicians benefit from the corruption. Land grabbers profit. And the Cerrado—one of the world's most important ecosystems—continues to disappear.</p>
-      <p data-lang="pt">A invasão das áreas de conservação de Brasília revela um sistema que é fundamentalmente quebrado. Agências ambientais carecem de pessoal para monitorar invasões em larga escala. Aplicação é quase inexistente. Os instrumentos legais destinados a prevenir grilagem foram militarizados para habilitá-lo. Políticos se beneficiam da corrupção. Grileiros lucram. E o Cerrado—um dos ecossistemas mais importantes do mundo—continua a desaparecer.</p>
-      <p data-lang="en">This investigation was published in November 2023. Federal authorities launched inquiries. But the invasions continue, the biome continues to be destroyed, and the system that enables this destruction remains in place.</p>
-      <p data-lang="pt">Esta investigação foi publicada em novembro de 2023. Autoridades federais lançaram inquéritos. Mas as invasões continuam, o bioma continua a ser destruído, e o sistema que habilita esta destruição permanece em lugar.</p>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-disclaimer">
-        <p data-lang="en"><strong>About this presentation:</strong> This is an enhanced layout version of investigative journalism originally published by Piauí magazine. The original reporting and all journalistic content are the work of journalists Luiz Fernando Toledo and Allan de Abreu. This presentation is created for portfolio purposes.</p>
-        <p data-lang="pt"><strong>Sobre esta apresentação:</strong> Esta é uma versão de layout aprimorado de jornalismo investigativo originalmente publicado pela revista Piauí. A reportagem original e todo conteúdo jornalístico são trabalho dos jornalistas Luiz Fernando Toledo e Allan de Abreu. Esta apresentação é criada para fins de portfólio.</p>
-        <p><a href="https://piaui.folha.uol.com.br" target="_blank" rel="noopener" data-lang="en">Read the original Piauí investigation ↗</a>
-          <a href="https://piaui.folha.uol.com.br" target="_blank" rel="noopener" data-lang="pt">Leia a investigação original da Piauí ↗</a></p>
-      </div>
-      <div class="back-link">
-        <a href="../index.html" data-lang="en">← Back to portfolio</a>
-        <a href="../index.html" data-lang="pt">← Voltar ao portfólio</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="../shared/base.js"></script>
 </body>
 </html>

@@ -3,56 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A Brazilian woman was lured from her home with promises of a modeling career. Instead, she was sold to Jeffrey Epstein for USD 10,000.">
-  <title data-lang="en">She was traded like merchandise for US$10,000: a survivor's story</title>
-  <title data-lang="pt">Ela foi negociada como mercadoria por 10 mil dólares: história de uma sobrevivente</title>
+  <meta name="description" content="Woman describes how she was recruited for Epstein after being promised modeling career in São Paulo. Investigative report by Luiz Fernando Toledo for BBC News Brasil.">
+
+  <title data-lang="en">'They promised she'd be a model in São Paulo, but her destination was Epstein'</title>
+  <title data-lang="pt">'Prometeram que ela seria modelo em São Paulo, mas seu destino era Epstein'</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="../../shared/base.css">
+
   <style>
-    .survivor-journey {background: var(--bg-light); padding: 40px; margin: 60px 0; border-left: 4px solid var(--accent); border-radius: 2px;}
-    .survivor-journey h3 {font-family: var(--display); font-size: 24px; font-weight: 700; margin-bottom: 30px; color: var(--text-dark);}
-    .journey-steps {display: grid; gap: 30px;}
-    .journey-step {padding: 20px; background: white; border-radius: 2px; border-left: 4px solid var(--accent);}
-    .step-title {font-family: var(--sans); font-size: 13px; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; letter-spacing: 0.5px;}
-    .step-content {font-size: 16px; line-height: 1.7; color: var(--text-dark);}
-    .testimony-box {background: rgba(196, 30, 58, 0.08); border-left: 4px solid var(--accent); padding: 40px; margin: 60px 0; border-radius: 2px;}
-    .testimony-label {font-family: var(--sans); font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; letter-spacing: 1px;}
-    .testimony-text {font-family: var(--serif); font-size: 18px; line-height: 1.8; color: var(--text-dark); font-style: italic;}
-    .recovery-section {background: var(--bg-light); padding: 40px; margin: 60px 0; border-radius: 2px;}
-    .recovery-section h3 {font-family: var(--display); font-size: 24px; font-weight: 700; margin-bottom: 20px; color: var(--text-dark);}
-    .impact-stats {display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; margin: 40px 0;}
-    .impact-stat {background: white; padding: 24px; text-align: center; border-top: 3px solid var(--accent); border-radius: 2px;}
-    .impact-number {font-family: var(--display); font-size: 32px; font-weight: 700; color: var(--accent); line-height: 1;}
-    .impact-label {font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; margin-top: 8px; letter-spacing: 0.5px;}
-    .timeline-geo {margin: 60px 0; padding: 40px; background: var(--bg-light); border-radius: 2px;}
-    .timeline-geo h3 {font-family: var(--display); font-size: 24px; font-weight: 700; margin-bottom: 30px; color: var(--text-dark);}
-    .geo-item {display: grid; grid-template-columns: 140px 1fr; gap: 30px; margin-bottom: 40px; padding-bottom: 40px; border-bottom: 1px solid var(--border);}
-    .geo-item:last-child {border-bottom: none;}
-    .geo-location {font-family: var(--display); font-size: 18px; font-weight: 700; color: var(--accent);}
-    .geo-details {font-size: 16px; line-height: 1.7;}
-    .series-nav {display: flex; justify-content: space-between; gap: 20px; margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--border);}
-    .series-nav a {flex: 1; padding: 20px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 2px; text-decoration: none; color: var(--text-dark); transition: all 0.3s;}
-    .series-nav a:hover {background: var(--primary); color: var(--text-light); border-color: var(--primary);}
-    .nav-label {font-family: var(--sans); font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.5px;}
-    .nav-title {font-family: var(--serif); font-size: 16px; line-height: 1.4; font-weight: 600;}
-    .series-nav a:hover .nav-label {color: rgba(255,255,255,0.8);}
-    .series-nav a.disabled {opacity: 0.5; pointer-events: none;}
-    .back-link {display: inline-block; margin-bottom: 40px; font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; text-decoration: none; letter-spacing: 0.5px;}
-    .series-indicator {background: rgba(196, 30, 58, 0.1); padding: 12px 20px; margin-bottom: 40px; font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px;}
-    .warning-box {background: rgba(196, 30, 58, 0.12); border-left: 4px solid var(--accent); padding: 20px; margin: 40px 0; border-radius: 2px; font-family: var(--sans); font-size: 14px; line-height: 1.6;}
-    @media (max-width: 768px) {.series-nav {flex-direction: column;} .series-nav a {width: 100%;} .geo-item {grid-template-columns: 1fr; gap: 12px;} .impact-stats {grid-template-columns: repeat(2, 1fr);}}
+    .quote-box {
+      max-width: 700px;
+      margin: 50px auto;
+      padding: 30px;
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+      border-left: 4px solid #c41e3a;
+      border-radius: 2px;
+    }
+
+    .quote-text {
+      font-size: 18px;
+      line-height: 1.8;
+      color: #1a1a1a;
+      margin: 0;
+      font-style: italic;
+    }
+
+    .quote-attribution {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #666;
+      font-style: normal;
+    }
+
+    .warning-box {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      border-radius: 2px;
+    }
+
+    .warning-box p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .context-box {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 25px;
+      background: #f0f5ff;
+      border-left: 4px solid #4169e1;
+      border-radius: 2px;
+    }
+
+    .context-box p {
+      margin: 10px 0;
+      font-size: 15px;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body class="lang-en">
+  <!-- Disclaimer Bar -->
   <div class="disclaimer-bar" id="disclaimerBar">
     <div class="disclaimer-inner">
-      <div class="disclaimer-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg></div>
-      <p class="disclaimer-text"><strong data-lang="en">Content warning & Portfolio disclaimer:</strong><strong data-lang="pt">Aviso de conteúdo & Aviso de portfólio:</strong> <span data-lang="en">This article contains descriptions of sexual exploitation. It is an enhanced portfolio presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span><span data-lang="pt">Este artigo contém descrições de exploração sexual. É uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span></p>
-      <button class="disclaimer-close" id="disclaimerClose" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <div class="disclaimer-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
+        </svg>
+      </div>
+      <p class="disclaimer-text">
+        <strong data-lang="en">Important notice:</strong><strong data-lang="pt">Aviso importante:</strong>
+        <span data-lang="en"> This is an enhanced portfolio presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span>
+        <span data-lang="pt"> Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span>
+        <a href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener" class="disclaimer-link" data-lang="en">Read the original BBC report ↗</a>
+        <a href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener" class="disclaimer-link" data-lang="pt">Leia a reportagem original na BBC ↗</a>
+      </p>
+      <button class="disclaimer-close" id="disclaimerClose" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
   </div>
+
+  <!-- Language Toggle Bar -->
   <div class="lang-toggle-bar" id="langBar">
     <div class="lang-toggle-inner">
       <span class="lang-toggle-label" data-lang="en">Language:</span>
@@ -61,286 +102,324 @@
       <button class="lang-btn" id="btnPt">PT</button>
     </div>
   </div>
+
+  <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Main Content -->
   <article>
-    <section class="hero" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.92), rgba(45, 45, 45, 0.92)), url('imgs/photo-01.jpg') center/cover;">
+    <!-- Hero Section -->
+    <section class="hero">
       <div class="hero-content">
-        <div class="series-indicator fade-in" data-lang="en">Part 9 of 9 — The Epstein Brazil connection</div>
-        <div class="series-indicator fade-in" data-lang="pt">Parte 9 de 9 — A conexão Epstein-Brasil</div>
-        <h1 class="hero-title fade-in" data-lang="en">She was traded like merchandise for US$10,000: the story of a Brazilian survivor</h1>
-        <h1 class="hero-title fade-in" data-lang="pt">Ela foi negociada como mercadoria por 10 mil dólares: a história de uma sobrevivente brasileira</h1>
-        <p class="hero-subtitle fade-in" data-lang="en">A teenager left home seeking a modeling career. Instead, she was bought and sold into sexual exploitation by a network that included a Brazilian intermediary, Jean-Luc Brunel, and Jeffrey Epstein. This is her story of survival and recovery.</p>
-        <p class="hero-subtitle fade-in" data-lang="pt">Uma adolescente deixou casa buscando uma carreira de modelo. Em vez disso, ela foi comprada e vendida para exploração sexual por uma rede que incluía uma intermediária brasileira, Jean-Luc Brunel e Jeffrey Epstein. Esta é sua história de sobrevivência e recuperação.</p>
+        <div class="hero-label fade-in" data-lang="en">EPSTEIN SERIES — PART 9 OF 9</div>
+        <div class="hero-label fade-in" data-lang="pt">SÉRIE EPSTEIN — PARTE 9 DE 9</div>
+
+        <h1 class="hero-title fade-in" data-lang="en">'They promised she'd be a model in São Paulo, but her destination was Epstein'</h1>
+        <h1 class="hero-title fade-in" data-lang="pt">'Prometeram que ela seria modelo em São Paulo, mas seu destino era Epstein'</h1>
+
         <div class="hero-meta fade-in">
-          <span data-lang="en">By Luiz Fernando Toledo | BBC News Brasil</span>
-          <span data-lang="pt">Por Luiz Fernando Toledo | BBC News Brasil</span>
-          <span>11 March 2026 — Updated 12 March</span>
+          <span data-lang="en">March 11-12, 2026 | 15 min read</span>
+          <span data-lang="pt">11-12 de março de 2026 | 15 min de leitura</span>
+          <span>Luiz Fernando Toledo | BBC News Brasil</span>
         </div>
       </div>
     </section>
+
+    <!-- Main Content -->
     <main>
-      <a href="../index.html" class="back-link" data-lang="en">← Back to Epstein series</a>
-      <a href="../index.html" class="back-link" data-lang="pt">← Voltar à série Epstein</a>
-      <div class="warning-box" data-lang="en">
-        <strong>Content warning:</strong> This article contains descriptions of sexual exploitation and trafficking of minors. Reader discretion is advised. If you are a survivor of trafficking or abuse, resources are available at the end of this article.
+      <!-- Navigation -->
+      <nav class="breadcrumb">
+        <a href="../artigo-8/index.html" data-lang="en">← Previous Part</a>
+        <a href="../artigo-8/index.html" data-lang="pt">← Parte Anterior</a>
+        <span data-lang="en">Part 9 of 9 — Final Article</span>
+        <span data-lang="pt">Parte 9 de 9 — Artigo Final</span>
+      </nav>
+
+      <!-- Warning -->
+      <div class="warning-box">
+        <p data-lang="en"><strong>Warning:</strong> This report contains descriptions of sexual scenes.</p>
+        <p data-lang="pt"><strong>Aviso:</strong> Esta reportagem contém descrições de cenas de sexo.</p>
       </div>
-      <div class="warning-box" data-lang="pt">
-        <strong>Aviso de conteúdo:</strong> Este artigo contém descrições de exploração sexual e tráfico de menores. A discrição do leitor é aconselhada. Se você é um sobrevivente de tráfico ou abuso, recursos estão disponíveis no final deste artigo.
-      </div>
+
+      <!-- Chapter 1 -->
       <section class="text-section">
-        <p data-lang="en">Ana left her home at 16 years old. She was from a working-class family in southern Brazil and dreamed of modeling. When an opportunity appeared to work in São Paulo—Brazil's fashion capital—she took it. Her parents supported her decision. They believed their daughter was pursuing a legitimate career.</p>
-        <p data-lang="pt">Ana saiu de casa aos 16 anos. Ela era de uma família da classe trabalhadora no sul do Brasil e sonhava em ser modelo. Quando uma oportunidade apareceu para trabalhar em São Paulo—a capital da moda do Brasil—ela a aceitou. Seus pais apoiaram sua decisão. Eles acreditavam que sua filha estava perseguindo uma carreira legítima.</p>
-        <p data-lang="en">Instead, she was inducted into a network of sexual exploitation that would span years, multiple continents, and involve some of the most powerful predators of the 21st century.</p>
-        <p data-lang="pt">Em vez disso, ela foi iniciada em uma rede de exploração sexual que duraria anos, múltiplos continentes e envolveria alguns dos predadores mais poderosos do século 21.</p>
-        <p data-lang="en">Ana is now in her 30s. She has survived. She has rebuilt. And she is finally telling her story—not to Brazilan authorities, but to BBC News Brasil, in hopes that her testimony might help prevent others from suffering as she did.</p>
-        <p data-lang="pt">Ana agora está na casa dos 30. Ela sobreviveu. Ela reconstruiu. E finalmente está contando sua história—não às autoridades brasileiras, mas à BBC News Brasil, na esperança de que seu testemunho possa ajudar a impedir que outros sofram como ela sofreu.</p>
+        <h2 data-lang="en">A dream that turned into a nightmare</h2>
+        <h2 data-lang="pt">Um sonho que se tornou pesadelo</h2>
+
+        <figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+          <img src="imgs/photo-01.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Woman was promised modeling career but ended up with Epstein</figcaption>
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Mulher foi prometida carreira de modelo mas terminou com Epstein</figcaption>
+        </figure>
+
+        <p data-lang="en">Ana left home at age 16 to pursue the dream of becoming a model. She worked with an agency in southern Brazil, but a year later the work didn't appear.</p>
+        <p data-lang="pt">Ana saiu de casa aos 16 anos para perseguir o sonho de ser modelo. Chegou a trabalhar com uma agência no Sul do Brasil, mas um ano depois os trabalhos não apareciam.</p>
+
+        <p data-lang="en">It was then that the owner of the agency told her that a friend from São Paulo, from another agency, would visit and would like to meet her.</p>
+        <p data-lang="pt">Foi então que o dono da agência lhe disse que uma amiga de São Paulo, de outra agência, faria uma visita e gostaria de conhecê-la.</p>
+
+        <p data-lang="en">The conversation happened and Ana says she was invited to work in the capital. It was the early 2000s and the proposal seemed good. Her parents supported the decision: she would live in this woman's house, with other girls, and would have opportunities in Brazil's largest city.</p>
+        <p data-lang="pt">A conversa aconteceu e Ana conta que foi convidada a trabalhar na capital paulista. Era o começo dos anos 2000 e a proposta pareceu boa. Seus pais apoiaram a decisão: ela moraria na casa dessa mulher, com outras meninas, e teria oportunidades na maior cidade do Brasil.</p>
+
+        <p data-lang="en">Ana, whose real name will not be revealed at her request, says she left for São Paulo with a paid ticket, shortly before turning 18.</p>
+        <p data-lang="pt">Ana, cujo nome verdadeiro não será revelado a seu pedido, diz ter embarcado para São Paulo, com passagem paga, pouco antes de completar 18 anos.</p>
+
+        <p data-lang="en">When she arrived, the woman who had invited her, whom we will call Lúcia in this report, asked to keep her documents under the pretext of making a passport, Ana says.</p>
+        <p data-lang="pt">Quando chegou, a mulher que a convidou, que nesta reportagem chamaremos de Lúcia, pediu para ficar com seus documentos sob o pretexto de que faria um passaporte, conta a brasileira.</p>
+
+        <p data-lang="en">According to Ana, Lúcia would spend months without returning her documentation.</p>
+        <p data-lang="pt">Segundo Ana, Lúcia passaria meses sem devolver sua documentação.</p>
+
+        <p data-lang="en">The woman also announced, according to Ana, that she now had a debt that needed to be settled, since her plane ticket had been paid, plus a photo book. Ana said she discovered a few days later that there was no modeling work on the horizon.</p>
+        <p data-lang="pt">A mulher também anunciou, de acordo com Ana, que ela agora tinha uma dívida que precisaria saldar, já que sua passagem aérea havia sido paga, além de um book de fotos. Ana disse que descobriu alguns dias depois que não havia nenhum trabalho de modelo no horizonte.</p>
+
+        <div class="quote-box">
+          <p class="quote-text" data-lang="en">"The woman was actually a pimp. Things unfolded and when I realized, she was negotiating me for prostitution."</p>
+          <p class="quote-text" data-lang="pt">"A mulher era, na verdade, uma cafetina. A coisa foi se desenrolando e, quando eu vi, ela estava me negociando para prostituição."</p>
+          <div class="quote-attribution" data-lang="en">— Ana's account to BBC News Brasil</div>
+          <div class="quote-attribution" data-lang="pt">— Relato de Ana à BBC News Brasil</div>
+        </div>
+
+        <p data-lang="en">One of the clients, she says, was American billionaire Jeffrey Epstein.</p>
+        <p data-lang="pt">Um dos clientes, diz, foi o bilionário americano Jeffrey Epstein.</p>
+
+        <p data-lang="en">Years later, Epstein would be accused of operating a "vast network" of underage girls for sexual purposes. The billionaire died in a prison cell in New York in 2019, while awaiting retrial, a decade after being convicted as a sex offender.</p>
+        <p data-lang="pt">Anos depois, Epstein seria acusado de operar uma "vasta rede" de meninas menores de idade para fins sexuais. O bilionário morreu em uma cela de prisão em Nova York em 2019, enquanto aguardava novo julgamento, uma década após já ter sido condenado como criminoso sexual.</p>
       </section>
-      <div class="image-block">
-        <img src="imgs/photo-02.jpg" alt="São Paulo skyline">
-        <p class="image-credit" data-lang="en">São Paulo, where the exploitation began</p>
-        <p class="image-credit" data-lang="pt">São Paulo, onde a exploração começou</p>
-      </div>
+
+      <!-- Chapter 2 -->
       <section class="text-section">
-        <h2 data-lang="en">The promise of a career</h2>
-        <h2 data-lang="pt">A promessa de uma carreira</h2>
-        <p data-lang="en">"I was 16 when I left home to pursue modeling," Ana recalls. "I thought my life was beginning."</p>
-        <p data-lang="pt">"Eu tinha 16 anos quando deixei casa para perseguir modelagem," Ana relembra. "Eu pensei que minha vida estava começando."</p>
-        <p data-lang="en">A woman from a modeling agency in São Paulo had contacted her hometown and found Ana through a local scout. The woman—whom we'll call "Lúcia"—promised legitimate work as a fashion model. She offered to provide housing, cover living expenses, and help launch Ana's career.</p>
-        <p data-lang="pt">Uma mulher de uma agência de modelagem em São Paulo had contatado sua cidade natal e encontrou Ana através de um olheiro local. A mulher—que chamaremos de "Lúcia"—prometeu trabalho legítimo como modelo de moda. Ela ofereceu para fornecer alojamento, cobrir despesas de vida e ajudar a lançar a carreira de Ana.</p>
-        <p data-lang="en">Ana's parents were supportive. They wanted their daughter to have opportunities they never had. When the modeling agent arrived to collect Ana, she seemed professional and legitimate. Her parents allowed their daughter to leave with her.</p>
-        <p data-lang="pt">Os pais de Ana foram apoiadores. Eles queriam que sua filha tivesse oportunidades que eles nunca tiveram. Quando a agente de modelagem chegou para buscar Ana, ela parecia profissional e legítima. Seus pais permitiram que sua filha saísse com ela.</p>
-      </section>
-      <section class="survivor-journey">
-        <h3 data-lang="en">The pathway into exploitation</h3>
-        <h3 data-lang="pt">O caminho para a exploração</h3>
-        <div class="journey-steps">
-          <div class="journey-step">
-            <div class="step-title" data-lang="en">Step 1: Isolation</div>
-            <div class="step-title" data-lang="pt">Passo 1: Isolamento</div>
-            <div class="step-content">
-              <p data-lang="en">Upon arrival in São Paulo, Lúcia demanded Ana's documents. She said she needed them to obtain a passport. Ana never saw them again. Without identification, without money, without knowledge of how to return home, Ana was now dependent on Lúcia for everything.</p>
-              <p data-lang="pt">Ao chegar em São Paulo, Lúcia exigiu os documentos de Ana. Ela disse que precisava deles para obter um passaporte. Ana nunca os viu novamente. Sem identificação, sem dinheiro, sem conhecimento de como retornar a casa, Ana agora era dependente de Lúcia para tudo.</p>
-            </div>
-          </div>
-          <div class="journey-step">
-            <div class="step-title" data-lang="en">Step 2: Deception</div>
-            <div class="step-title" data-lang="pt">Passo 2: Engano</div>
-            <div class="step-content">
-              <p data-lang="en">Lúcia then revealed that Ana had "debts." She had paid for Ana's travel and would charge her for housing and meals. The amounts escalated. Ana was told she needed to work to pay off these debts, but legitimate modeling jobs were not appearing.</p>
-              <p data-lang="pt">Lúcia então revelou que Ana tinha "dívidas". Ela havia pago pela viagem de Ana e cobraria por alojamento e refeições. Os valores aumentaram. Ana foi informada que precisava trabalhar para pagar essas dívidas, mas os trabalhos legítimos de modelagem não estavam aparecendo.</p>
-            </div>
-          </div>
-          <div class="journey-step">
-            <div class="step-title" data-lang="en">Step 3: Coercion</div>
-            <div class="step-title" data-lang="pt">Passo 3: Coerção</div>
-            <div class="step-content">
-              <p data-lang="en">"She told me she had found me a 'client,'" Ana says. "The word she used made it clear what was happening. I understood that I was expected to have sex with someone for money."</p>
-              <p data-lang="pt">"Ela me disse que havia encontrado um 'cliente' para mim," Ana diz. "A palavra que ela usou deixava claro o que estava acontecendo. Eu entendi que era esperado que eu tivesse relações sexuais com alguém por dinheiro."</p>
-            </div>
-          </div>
-          <div class="journey-step">
-            <div class="step-title" data-lang="en">Step 4: Sale</div>
-            <div class="step-title" data-lang="pt">Passo 4: Venda</div>
-            <div class="step-content">
-              <p data-lang="en">Lúcia arranged for Ana to meet a wealthy foreigner at a luxury hotel in São Paulo. That man was Jeffrey Epstein. According to Ana's account, confirmed by government documents, Epstein paid Lúcia US$10,000 for Ana's "services."</p>
-              <p data-lang="pt">Lúcia arranjou para Ana encontrar um estrangeiro rico em um hotel de luxo em São Paulo. Esse homem era Jeffrey Epstein. De acordo com o relato de Ana, confirmado por documentos do governo, Epstein pagou a Lúcia US$10.000 pelos "serviços" de Ana.</p>
-            </div>
-          </div>
+        <h2 data-lang="en">The luxury hotel and the choice</h2>
+        <h2 data-lang="pt">O hotel de luxo e a escolha</h2>
+
+        <figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+          <img src="imgs/photo-02.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Ana describes luxury hotel encounters with Epstein in São Paulo</figcaption>
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Ana descreve encontros em hotel de luxo com Epstein em São Paulo</figcaption>
+        </figure>
+
+        <p data-lang="en">Ana's account is the first in which a woman describes having been recruited for Jeffrey Epstein in Brazil.</p>
+        <p data-lang="pt">O depoimento de Ana é o primeiro em que uma mulher conta ter sido aliciada para Jeffrey Epstein no Brasil.</p>
+
+        <p data-lang="en">To BBC News Brasil, Ana described encounters with the billionaire in São Paulo at a luxury hotel, says she went to a dinner and to at least one party in the city with him, as well as made trips to other parts of the world to meet him.</p>
+        <p data-lang="pt">À BBC News Brasil, Ana descreveu encontros com o bilionário em São Paulo em um hotel de luxo, diz ter ido a um jantar e a ao menos uma festa na cidade com ele, além de ter feito viagens para outras partes do mundo para encontrá-lo.</p>
+
+        <p data-lang="en">The Brazilian said she was arranged fake employment as a model so she could get a visa and be able to go to the USA in the early 2000s.</p>
+        <p data-lang="pt">A brasileira disse que lhe arranjaram emprego de fachada de modelo para que ela conseguisse um visto e pudesse ir aos EUA no começo da década passada.</p>
+
+        <p data-lang="en">She also said that Lúcia, the woman who had promised her a career in fashion, charged Epstein $10,000 for her services.</p>
+        <p data-lang="pt">Ela contou ainda que Lúcia, a mulher que havia lhe prometido uma carreira na moda, cobrou US$ 10 mil de Epstein por seus serviços.</p>
+
+        <p data-lang="en">Ana's account was corroborated by documents she presented and crossed with testimonies and information gathered by the reporting.</p>
+        <p data-lang="pt">O relato de Ana foi corroborado por documentos apresentados por ela e cruzado com depoimentos e informações colhidos pela reportagem.</p>
+
+        <div class="context-box">
+          <p data-lang="en"><strong>Legal assessment:</strong> A labor auditor heard by the reporting evaluated that, in theory, the situation described by Ana could be framed as human trafficking crime. If proven, potential people involved in Brazil in the episode could still be held responsible, as there are international norms pointing out that this type of crime does not prescribe, meaning it can be analyzed at any time, regardless of when it happened.</p>
+          <p data-lang="pt"><strong>Avaliação legal:</strong> Um auditor-fiscal do trabalho ouvido pela reportagem avalia que, em tese, a situação descrita por Ana poderia ser enquadrada como crime de tráfico de pessoas. Se comprovado, potenciais envolvidos no Brasil no episódio ainda poderiam ser responsabilizados, já que existem normativas internacionais que apontam que esse tipo de crime não prescreve, diz o auditor.</p>
         </div>
       </section>
-      <div class="pullquote">
-        <p data-lang="en">"I didn't know what was happening. One moment I thought I was a model, and the next I was being negotiated over like merchandise."</p>
-        <p data-lang="pt">"Eu não sabia o que estava acontecendo. Um momento eu pensei que era uma modelo, e o próximo eu estava sendo negociada como mercadoria."</p>
-        <p class="pullquote-citation">— Ana</p>
-      </div>
+
+      <!-- Chapter 3 -->
       <section class="text-section">
-        <h2 data-lang="en">Months in the network</h2>
-        <h2 data-lang="pt">Meses na rede</h2>
-        <p data-lang="en">After that first encounter, Ana was drawn deeper into Epstein's orbit. She traveled with him to Paris, where she spent time in his company. She was taken to his private island in the Caribbean. She participated in gatherings where other young women were present—some of them appearing to be underage.</p>
-        <p data-lang="pt">Após esse primeiro encontro, Ana foi puxada para mais fundo na órbita de Epstein. Ela viajou com ele para Paris, onde passou tempo em sua companhia. Ela foi levada para sua ilha privada no Caribe. Ela participou de reuniões onde outras mulheres jovens estavam presentes—algumas delas parecendo ser menores de idade.</p>
-        <p data-lang="en">Throughout this period—lasting approximately four months—Ana oscillated between fear and a strange sense of security. Epstein treated her with courtesy. He didn't pressure her into sexual acts. He provided money and access to experiences she never would have had otherwise.</p>
-        <p data-lang="pt">Durante esse período—durando aproximadamente quatro meses—Ana oscilou entre medo e um estranho senso de segurança. Epstein a tratava com cortesia. Ele não a pressionava para atos sexuais. Ele fornecia dinheiro e acesso a experiências que ela nunca teria de outra forma.</p>
-        <p data-lang="en">"I know this sounds strange," Ana says, "but at the time, I almost felt like I was in a relationship with him. Like I was his girlfriend, not a victim of trafficking. It wasn't until years later that I understood what had actually happened to me."</p>
-        <p data-lang="pt">"Eu sei que isso parece estranho," Ana diz, "mas na época, eu quase sentia que estava em um relacionamento com ele. Como se fosse sua namorada, não uma vítima de tráfico. Não foi até anos depois que eu entendi o que realmente havia acontecido comigo."</p>
+        <h2 data-lang="en">Ghislaine Maxwell and jean-luc Brunel</h2>
+        <h2 data-lang="pt">Ghislaine Maxwell e jean-luc Brunel</h2>
+
+        <figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+          <img src="imgs/photo-03.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Ana encountered Epstein's accomplices at party in São Paulo</figcaption>
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Ana encontrou cúmplices de Epstein em festa em São Paulo</figcaption>
+        </figure>
+
+        <p data-lang="en">After being "chosen" by Epstein at the luxury hotel, Ana recounts that she and two other girls were taken by Lúcia to a party happening in the city a few days later. She doesn't quite remember where this event took place, but it could have been in the Brigadeiro Faria Lima avenue area, the financial district that houses technology companies in São Paulo.</p>
+        <p data-lang="pt">Depois de ser "escolhida" por Epstein, Ana conta que ela e outras duas garotas foram levadas por Lúcia a uma festa que aconteceria alguns dias depois. Ela já falava inglês, ainda que sem fluência, e disse que ele chegou a lhe pagar aulas.</p>
+
+        <p data-lang="en">Ana describes that when she arrived, she saw Epstein waiting for her in front of the building. "The building was full of cameras. He even made a comment: 'It's very safe here, isn't it?'"</p>
+        <p data-lang="pt">Ana descreve que, ao chegar, viu que Epstein a esperava na frente do edifício. "O prédio era todo cheio de câmeras. Ele ainda fez um comentário: 'É muito seguro aqui, né?'"</p>
+
+        <p data-lang="en">It was on that day that Ana says she also met Ghislaine Maxwell, Epstein's companion and accomplice, and Jean-Luc Brunel, the French model agent accused of recruiting girls for the criminal.</p>
+        <p data-lang="pt">Foi nesse dia que Ana contou ter conhecido também Ghislaine Maxwell, companheira e cúmplice de Jeffrey Epstein, e Jean-Luc Brunel, o agente de modelos francês acusado de aliciar meninas para o criminoso.</p>
+
+        <p data-lang="en">BBC News Brasil found in the files of the U.S. Department of Justice an email from Ghislaine Maxwell in which she comments on a visit to São Paulo at the same time cited by Ana.</p>
+        <p data-lang="pt">A BBC News Brasil encontrou nos arquivos do Departamento de Justiça dos EUA um e-mail de Ghislaine Maxwell na qual ela comenta uma visita a São Paulo na mesma época citada por Ana.</p>
+
+        <p data-lang="en">In the messages, Maxwell converses with a high-level executive of a multinational, and tells him she would be staying at the luxury hotel mentioned. They comment about a party. BBC News Brasil confirmed with the interlocutor that the conversation and Maxwell's trip in fact existed.</p>
+        <p data-lang="pt">Nas mensagens, Maxwell conversa com um alto executivo de uma multinacional, e conta a ele que ficaria hospedada no hotel de luxo mencionado. Eles comentam sobre uma festa. A BBC News Brasil confirmou com o interlocutor que a conversa e a viagem de Maxwell de fato existiram.</p>
+
+        <p data-lang="en">The former Epstein companion denied committing crimes, but is currently serving a 20-year sentence after being convicted in 2022 of recruiting and trafficking adolescents for sexual abuse by the billionaire.</p>
+        <p data-lang="pt">A ex-companheira de Epstein negou ter cometido crimes, mas está atualmente cumprindo uma pena de 20 anos de prisão após ser condenada em 2022 por recrutar e traficar adolescentes para abuso sexual pelo bilionário.</p>
+
+        <p data-lang="en">Ana says she does not have many memories of that day in São Paulo, but there were many models at the event. In her recollection, Ghislaine Maxwell and Epstein did not appear to be a couple.</p>
+        <p data-lang="pt">Ana diz que não tem muitas memórias desse dia em São Paulo, mas que havia muitas modelos no evento. Na sua lembrança, Ghislaine Maxwell e Epstein não pareciam ser um casal.</p>
+
+        <p data-lang="en">It was during the party that Ana says she was informed by Epstein: "Tomorrow I'm going to Paris and you're going with me. I've already arranged it with (Lúcia, fictional name)."</p>
+        <p data-lang="pt">Foi durante a festa que Ana diz ter sido informada por Epstein: "Amanhã estou indo a Paris e você vai junto comigo. Já combinei com a (Lúcia, nome fictício)."</p>
       </section>
-      <div class="image-block">
-        <img src="imgs/photo-03.jpg" alt="Paris cityscape">
-        <p class="image-credit" data-lang="en">Paris, where Ana traveled with Epstein</p>
-        <p class="image-credit" data-lang="pt">Paris, onde Ana viajou com Epstein</p>
-      </div>
-      <section class="timeline-geo">
-        <h3 data-lang="en">Geographic journey: following the exploitation</h3>
-        <h3 data-lang="pt">Jornada geográfica: seguindo a exploração</h3>
-        <div class="geo-item">
-          <div class="geo-location" data-lang="en">Southern Brazil</div>
-          <div class="geo-location" data-lang="pt">Sul do Brasil</div>
-          <div class="geo-details">
-            <p data-lang="en"><strong>Starting point:</strong> Ana's hometown. She is 16, working with a local modeling scout. An "opportunity" appears to work in São Paulo. Her parents support her decision.</p>
-            <p data-lang="pt"><strong>Ponto de partida:</strong> A cidade natal de Ana. Ela tem 16 anos, trabalhando com um olheiro de modelagem local. Uma "oportunidade" aparece para trabalhar em São Paulo. Seus pais apoiam sua decisão.</p>
-          </div>
-        </div>
-        <div class="geo-item">
-          <div class="geo-location">São Paulo, Brazil</div>
-          <div class="geo-details">
-            <p data-lang="en"><strong>Arrival and isolation:</strong> Ana arrives in São Paulo. Lúcia takes her documents. She is housed with other young women. She learns she has "debts" and must work to pay them off. Her first "client" is arranged: Jeffrey Epstein at a luxury hotel. Epstein pays Lúcia US$10,000.</p>
-            <p data-lang="pt"><strong>Chegada e isolamento:</strong> Ana chega em São Paulo. Lúcia toma seus documentos. Ela é alojada com outras mulheres jovens. Ela aprende que tem "dívidas" e deve trabalhar para pagá-las. Seu primeiro "cliente" é arranjado: Jeffrey Epstein em um hotel de luxo. Epstein paga a Lúcia US$10.000.</p>
-          </div>
-        </div>
-        <div class="geo-item">
-          <div class="geo-location">Paris, France</div>
-          <div class="geo-details">
-            <p data-lang="en"><strong>Extended exploitation:</strong> Ana travels with Epstein and Ghislaine Maxwell to Paris. She spends weeks in the city, going on tours and spending time with Epstein. A Brazilian driver (possibly Epstein's longtime employee Valdson Cotrin) facilitates the travel.</p>
-            <p data-lang="pt"><strong>Exploração estendida:</strong> Ana viaja com Epstein e Ghislaine Maxwell para Paris. Ela passa semanas na cidade, fazendo passeios e passando tempo com Epstein. Um motorista brasileiro (possivelmente o funcionário de longa data de Epstein, Valdson Cotrin) facilita a viagem.</p>
-          </div>
-        </div>
-        <div class="geo-item">
-          <div class="geo-location" data-lang="en">Epstein Island, US Virgin Islands</div>
-          <div class="geo-location" data-lang="pt">Ilha de Epstein, Ilhas Virgens dos EUA</div>
-          <div class="geo-details">
-            <p data-lang="en"><strong>Private island access:</strong> Ana is taken to Epstein's private island in the Caribbean. She observes multiple young women present, some appearing to be underage. She is given her own room, separate from other women. She witnesses what she believes to be a system of control and surveillance.</p>
-            <p data-lang="pt"><strong>Acesso à ilha privada:</strong> Ana é levada para a ilha privada de Epstein no Caribe. Ela observa múltiplas mulheres jovens presentes, algumas parecendo ser menores de idade. Ela é dada seu próprio quarto, separado de outras mulheres. Ela testemunha o que ela acredita ser um sistema de controle e vigilância.</p>
-          </div>
-        </div>
-        <div class="geo-item">
-          <div class="geo-location">USA (multiple locations)</div>
-          <div class="geo-details">
-            <p data-lang="en"><strong>Multiple trips:</strong> Over four months, Ana makes at least six trips to the United States on a business visa falsely issued in her name by Brunel's modeling agency. She is moved between locations, kept in hotels, and controlled through financial dependence.</p>
-            <p data-lang="pt"><strong>Múltiplas viagens:</strong> Durante quatro meses, Ana faz pelo menos seis viagens aos EUA em um visto de negócios falsamente emitido em seu nome pela agência de modelagem de Brunel. Ela é movida entre localizações, mantida em hotéis e controlada através da dependência financeira.</p>
-          </div>
-        </div>
-      </section>
-      <div class="image-block">
-        <img src="imgs/photo-04.jpg" alt="Epstein Island">
-        <p class="image-credit" data-lang="en">Epstein Island in the US Virgin Islands, where Ana was taken</p>
-        <p class="image-credit" data-lang="pt">Ilha de Epstein nas Ilhas Virgens dos EUA, onde Ana foi levada</p>
-      </div>
+
+      <!-- Chapter 4 -->
       <section class="text-section">
-        <h2 data-lang="en">Understanding what happened</h2>
-        <h2 data-lang="pt">Compreendendo o que aconteceu</h2>
-        <p data-lang="en">Ana eventually extricated herself from the situation by telling Epstein she wanted to return to Brazil to be with her family. He allowed her to leave. She did not report what happened to her to authorities at the time—a common pattern among trafficking victims who fear retaliation, legal consequences, or simply don't recognize themselves as victims.</p>
-        <p data-lang="pt">Ana eventualmente se livrou da situação dizendo a Epstein que queria retornar ao Brasil para ficar com sua família. Ele a deixou partir. Ela não denunciou o que aconteceu com ela às autoridades na época—um padrão comum entre vítimas de tráfico que temem retaliação, consequências legais, ou simplesmente não se reconhecem como vítimas.</p>
-        <p data-lang="en">For years, Ana carried the weight of this experience privately. She worked. She built relationships. She tried to move forward. But the trauma remained.</p>
-        <p data-lang="pt">Por anos, Ana carregou o peso desta experiência privadamente. Ela trabalhou. Ela construiu relacionamentos. Ela tentou seguir em frente. Mas o trauma permaneceu.</p>
-        <p data-lang="en">It wasn't until she learned about Epstein's arrest in 2019, and then his death in prison, that she began to understand what had really happened to her. When she read testimonies from other victims, she realized she was not alone—and that she had experienced something classified as human trafficking.</p>
-        <p data-lang="pt">Não foi até ela aprender sobre a prisão de Epstein em 2019, e depois sua morte na prisão, que ela começou a entender o que realmente havia acontecido com ela. Quando ela leu testemunhos de outras vítimas, ela percebeu que não estava sozinha—e que havia experimentado algo classificado como tráfico de pessoas.</p>
+        <h2 data-lang="en">The arrangement and the relationship</h2>
+        <h2 data-lang="pt">O arranjo e o relacionamento</h2>
+
+        <figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+          <img src="imgs/photo-04.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Ana's passport showed fake modeling agency affiliation</figcaption>
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Passaporte de Ana mostrou afiliação falsa com agência de modelos</figcaption>
+        </figure>
+
+        <p data-lang="en">According to Ana, Epstein said he had already arranged with Jean-Luc Brunel that he would hire her at his modeling agency in New York and that the Frenchman already had all her documents, delivered by Lúcia, to do the necessary procedures.</p>
+        <p data-lang="pt">Segundo Ana, Epstein disse que já havia acertado com Jean-Luc Brunel que ele a contrataria em sua agência de modelos em Nova York e que o francês já tinha todos os documentos dela, entregues por Lúcia, para fazer os trâmites necessários.</p>
+
+        <p data-lang="en">Ana presented BBC News Brasil with her passport. The document contains an American business visa and has a notation with the name Karin Models New York, in reference to Brunel's agency in the United States at the time.</p>
+        <p data-lang="pt">Ana apresentou à BBC News Brasil seu passaporte. O documento contém um visto americano de negócios e tem uma anotação com o nome Karin Models New York, em referência à agência de Brunel nos Estados Unidos à época.</p>
+
+        <p data-lang="en">"My visa was issued as if I was a model for Karin Models, which I don't even know if it really existed. I never went to the agency," Ana says.</p>
+        <p data-lang="pt">"Meu visto foi emitido como se eu fosse uma modelo da Karin Models, que eu nem sei se de fato existia. Eu nunca fui na agência", diz Ana.</p>
+
+        <p data-lang="en">The suspicion of authorities was that Brunel used the modeling agency as a way to attract girls in various countries, including minors, to Epstein's network—Ana's case would be an example of this.</p>
+        <p data-lang="pt">A suspeita das autoridades era de que Brunel usava a agência de modelos também como forma de atrair garotas em diversos países, inclusive menores de idade, para a rede de Epstein — o caso de Ana seria um exemplo disso.</p>
+
+        <p data-lang="en">Who paid for these "front" visas of the agency was Epstein himself, according to testimony given to U.S. Justice by a former employee of the agency, who testified as a witness.</p>
+        <p data-lang="pt">Quem pagava por esses vistos "de fachada" da agência era o próprio Epstein, segundo relato à Justiça dos EUA dado por uma ex-funcionária d agência, que depôs como testemunha.</p>
+
+        <p data-lang="en">Ana relates that after the first encounter in São Paulo, she developed a kind of relationship with Epstein over about four months.</p>
+        <p data-lang="pt">Depois de ser escolhida, Ana conta que subiu ao quarto do hotel paulistano com Epstein. Foi quando relatou um primeiro ato sexual — ele pediu que ela tirasse a roupa e começou a se tocar.</p>
+
+        <p data-lang="en">She remembers an episode when they were on the plane heading to Paris, when Epstein told her that Jean-Luc Brunel had asked to have sex with her. The billionaire refused and said, according to Ana: "I didn't let him because you are mine."</p>
+        <p data-lang="pt">Ela se lembra de um episódio, quando estavam no avião a caminho de Paris, quando Epstein disse a ela que Jean-Luc Brunel teria pedido para transar com ela. O bilionário recusou e disse, segundo Ana: "Eu não deixei porque você é minha."</p>
+
+        <div class="quote-box">
+          <p class="quote-text" data-lang="en">"I don't know if I felt grateful or more terrified by that. At the same time I felt protected by him. Up to then he was being very nice to me."</p>
+          <p class="quote-text" data-lang="pt">"Eu não sei se eu fiquei agradecida ou mais apavorada com aquilo. Ao mesmo tempo me sentia protegida por ele. Até então ele estava sendo muito legal comigo."</p>
+          <div class="quote-attribution" data-lang="en">— Ana's reflection on Epstein's possessiveness</div>
+          <div class="quote-attribution" data-lang="pt">— Reflexão de Ana sobre a possessividade de Epstein</div>
+        </div>
+
+        <p data-lang="en">From then on, Ana says she looked at Brunel with suspicion. "It was the wolf looking at the lamb. Always with eyes of devouring, both for me and for other girls."</p>
+        <p data-lang="pt">Desde então, Ana diz que passou a olhar com receio para Brunel. "Era o lobo olhando para o carneirinho. Sempre com olhos de devorar, tanto pra mim quanto para outras meninas."</p>
       </section>
-      <section class="testimony-box">
-        <div class="testimony-label" data-lang="en">Ana's reflection</div>
-        <div class="testimony-label" data-lang="pt">Reflexão de Ana</div>
-        <div class="testimony-text">
-          <p data-lang="en">"I had been convinced that I was special. That Epstein cared about me. That the money he gave me, the trips he took me on—they meant something personal. It took me a long time to understand that I was a commodity. That he purchased me like he might purchase art or property. At the end of the day, I was traded for US$10,000. That's what my life was worth to him."</p>
-          <p data-lang="pt">"Eu havia sido convencida de que eu era especial. Que Epstein se importava comigo. Que o dinheiro que ele me deu, as viagens que ele me levou—eles significavam algo pessoal. Me levou muito tempo para entender que eu era uma mercadoria. Que ele me comprou como ele poderia comprar arte ou propriedade. No final das contas, eu fui negociada por 10 mil dólares. Era o que minha vida valia para ele."</p>
+
+      <!-- Chapter 5 -->
+      <section class="text-section">
+        <h2 data-lang="en">The island and the understanding</h2>
+        <h2 data-lang="pt">A ilha e a compreensão</h2>
+
+        <figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+          <img src="imgs/photo-05.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Ana visited Epstein's private island in the Caribbean</figcaption>
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Ana visitou a ilha privada de Epstein no Caribe</figcaption>
+        </figure>
+
+        <p data-lang="en">Another trip they took, according to her, was to Epstein's island in the Caribbean, a private island in the U.S. Virgin Islands.</p>
+        <p data-lang="pt">Outra viagem que fizeram, segundo ela, foi à ilha de Epstein, no Caribe, uma ilha particular nas Ilhas Virgens Americanas, pertencentes aos EUA.</p>
+
+        <p data-lang="en">She says she did not see underage girls, but everyone seemed very young, like her, who had just turned 18 at that moment.</p>
+        <p data-lang="pt">Ela diz que não ter visto meninas menores de idade, mas que todas pareciam muito jovens, como ela, que naquele momento tinha acabado de fazer 18 anos.</p>
+
+        <p data-lang="en">A conversation that marked her was when Epstein asked if she used drugs or drank, which she denied. "That's important," he said.</p>
+        <p data-lang="pt">Uma conversa que lhe marcou foi quando Epstein perguntou se ela usava drogas ou bebia, o que ela negou. "Isso é importante", ele teria dito.</p>
+
+        <p data-lang="en">She remembers there were many women on the island, who stayed together in one room. "And I had a room just for myself. I felt like he protected me from many things."</p>
+        <p data-lang="pt">Ana conta que havia muitas mulheres na ilha, que ficavam juntas em um quarto. "E eu tinha um quarto só pra mim. Eu sentia que ele me protegia de muita coisa."</p>
+
+        <p data-lang="en">She says she saw nothing she considered illegal while with him. "Looking back, I see that at various moments he would send me out of the house, do something. Go to a museum, go to classes," she recounts, referring to English lessons she says she received.</p>
+        <p data-lang="pt">Ela diz que não via nada que considerasse ilegal enquanto estava com ele. "Olhando para trás, vejo que em vários momentos ele me mandava sair de casa, fazer alguma coisa. Ir a um museu, ir às aulas [ela relata ter recebido aulas de inglês]", conta.</p>
+
+        <p data-lang="en">After about four months of interaction, Ana says she began to feel uncomfortable having to continue lying to her parents about what was happening.</p>
+        <p data-lang="pt">Depois de cerca de quatro meses de convivência, Ana diz que começou a ficar incomodada por ter de continuar mentindo para os pais sobre o que estava acontecendo.</p>
+
+        <p data-lang="en">"So I told Jeffrey that I didn't want to go anymore, that I wanted to stay near my family and study," she recounts, adding that she was living at the time with the help of the billionaire.</p>
+        <p data-lang="pt">"Então falei para Jeffrey que não queria mais ir, que queria ficar perto da família e estudar", conta ela, que vivia nesta época com a ajuda do bilionário.</p>
+      </section>
+
+      <!-- Chapter 6 -->
+      <section class="text-section">
+        <h2 data-lang="en">Reflection and perspective</h2>
+        <h2 data-lang="pt">Reflexão e perspectiva</h2>
+
+        <figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+          <img src="imgs/photo-06.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Ana came to understand the gravity of her situation only years later</figcaption>
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Ana veio a entender a gravidade de sua situação apenas anos depois</figcaption>
+        </figure>
+
+        <p data-lang="en">"Looking back, I see that he got me out of Lúcia's hands. He saved me from her. She's the one who was abusing me," Ana reflects.</p>
+        <p data-lang="pt">"Olhando pra trás, eu vejo que ele me tirou das mãos da Lúcia. Ele me salvou dela. Ela é que estava abusando de mim", diz.</p>
+
+        <p data-lang="en">"He treated me well. Everything I needed... I didn't need to ask for anything. He gave me things."</p>
+        <p data-lang="pt">"Ele me tratava bem. Tudo que eu precisava... Eu não precisava pedir nada. Ele me dava as coisas."</p>
+
+        <p data-lang="en">She says they maintained sexual relations only once. "He liked to sleep spooning, affection, foot massage."</p>
+        <p data-lang="pt">Ela diz que eles só mantiveram relações sexuais uma vez. "Ele gostava de dormir de conchinha, de carinho, de massagem no pé."</p>
+
+        <p data-lang="en">When reflecting on her experience compared to what is now known about the crimes and accusations against Epstein, she evaluates that she was lucky.</p>
+        <p data-lang="pt">Ao refletir sobre sua experiência em comparação ao que se sabe hoje sobre os crimes e acusações contra Epstein, ela avalia que teve sorte.</p>
+
+        <div class="quote-box">
+          <p class="quote-text" data-lang="en">"I have no intention of defending or saying he was nice. With me it was this way, but I feel very much for the girls who didn't have the same luck as me. I believe in divine justice, and no one escapes it, not even by dying."</p>
+          <p class="quote-text" data-lang="pt">"Não tenho jamais a intenção de defender nem dizer que ele era bonzinho. Comigo foi desse jeito, mas sinto muitíssimo pelas meninas que não tiveram a mesma sorte que eu. Acredito na justiça divina, e dela ninguém escapa, nem morrendo."</p>
+          <div class="quote-attribution" data-lang="en">— Ana, final reflection</div>
+          <div class="quote-attribution" data-lang="pt">— Ana, reflexão final</div>
         </div>
       </section>
+
+      <!-- Chapter 7 -->
       <section class="text-section">
-        <h2 data-lang="en">The legal framework: was this trafficking?</h2>
-        <h2 data-lang="pt">O marco legal: isso foi tráfico?</h2>
-        <p data-lang="en">According to labor auditor and researcher Maurício Krepsky, who analyzed Ana's case for BBC News Brasil, her experience meets the legal definition of human trafficking for sexual exploitation under Brazilian and international law.</p>
-        <p data-lang="pt">De acordo com o auditor de trabalho e pesquisador Maurício Krepsky, que analisou o caso de Ana para BBC News Brasil, sua experiência atende à definição legal de tráfico de pessoas para exploração sexual sob a lei brasileira e internacional.</p>
-        <div class="impact-stats">
-          <div class="impact-stat">
-            <div class="impact-number" data-lang="en">Deception</div>
-            <div class="impact-number" data-lang="pt">Engano</div>
-            <div class="impact-label" data-lang="en">Promise of legitimate work (modeling)</div>
-            <div class="impact-label" data-lang="pt">Promessa de trabalho legítimo (modelagem)</div>
-          </div>
-          <div class="impact-stat">
-            <div class="impact-number" data-lang="en">Control</div>
-            <div class="impact-number" data-lang="pt">Controle</div>
-            <div class="impact-label" data-lang="en">Confiscation of documents, financial dependence</div>
-            <div class="impact-label" data-lang="pt">Confisco de documentos, dependência financeira</div>
-          </div>
-          <div class="impact-stat">
-            <div class="impact-number" data-lang="en">Exploitation</div>
-            <div class="impact-number" data-lang="pt">Exploração</div>
-            <div class="impact-label" data-lang="en">Sexual services demanded and sold</div>
-            <div class="impact-label" data-lang="pt">Serviços sexuais exigidos e vendidos</div>
-          </div>
-          <div class="impact-stat">
-            <div class="impact-number" data-lang="en">Movement</div>
-            <div class="impact-number" data-lang="pt">Movimento</div>
-            <div class="impact-label" data-lang="en">International transport for exploitation</div>
-            <div class="impact-label" data-lang="pt">Transporte internacional para exploração</div>
-          </div>
-        </div>
-        <p data-lang="en">"Every element is present," Krepsky explained. "Deception about the nature of work, coercion through debt and document control, sexual exploitation, and international movement. This is human trafficking in its clearest form."</p>
-        <p data-lang="pt">"Cada elemento está presente," Krepsky explicou. "Engano sobre a natureza do trabalho, coerção através de dívida e controle de documentos, exploração sexual e movimento internacional. Este é tráfico de pessoas em sua forma mais clara."</p>
+        <h2 data-lang="en">Could this be human trafficking?</h2>
+        <h2 data-lang="pt">Poderia isso ser tráfico de pessoas?</h2>
+
+        <figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+          <img src="imgs/photo-07.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">The investigation continues at MPF</figcaption>
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">A investigação continua no MPF</figcaption>
+        </figure>
+
+        <p data-lang="en">At the request of BBC News Brasil, labor auditor and researcher Maurício Krepsky analyzed the account given by Ana to the reporting and said that the case could in theory be framed as human trafficking crime.</p>
+        <p data-lang="pt">A pedido da BBC News Brasil, o auditor-fiscal do trabalho e pesquisador Maurício Krepsky analisou o relato feito por Ana à reportagem e disse que o caso poderia ser enquadrado, em tese, como tráfico de pessoas.</p>
+
+        <p data-lang="en">"The case presents all the indicators of human trafficking for purposes of sexual work, although inserted in a context of sexual exploitation," he states.</p>
+        <p data-lang="pt">"O caso apresenta todos os indicadores de tráfico de pessoas para fins de trabalho escravo, ainda que inserido em um contexto de exploração sexual", afirma.</p>
+
+        <p data-lang="en">"The activity of sex professional is recognized by the Ministry of Labor and Employment. What is forbidden by law is the exploitation of someone for sexual purposes through coercion, deception, abuse or transportation for exploitation, elements that configure human trafficking."</p>
+        <p data-lang="pt">"A atividade de profissional do sexo é reconhecida pelo Ministério do Trabalho e Emprego. O que é vedado pela lei é a exploração de alguém para fins sexuais mediante coação, engano, abuso ou transporte para exploração, elementos que configuram tráfico de pessoas."</p>
+
+        <p data-lang="en">He also reminds that there are international norms saying that this type of crime does not prescribe—meaning it can be analyzed at any time, regardless of when it happened.</p>
+        <p data-lang="pt">Ele lembra também que há normativas internacionais que dizem que esse tipo de crime não prescreve — ou seja, pode ser analisado em qualquer momento, independentemente de quando aconteceu.</p>
+
+        <p data-lang="en">Krepsky cites precedents with this same understanding of cases dating back to the dictatorship period that were judged recently.</p>
+        <p data-lang="pt">Krepsky cita precedentes com esse mesmo entendimento de casos que remetem até ao período da ditadura e foram julgados recentemente.</p>
+
+        <p data-lang="en">The auditor has no involvement with the ongoing investigation into a possible Epstein recruitment network in Brazil, which is handled by the Federal Public Ministry (MPF).</p>
+        <p data-lang="pt">O auditor não tem envolvimento com a investigação em andamento sobre uma possível rede de aliciamento de Epstein no Brasil, que é tocada pelo Ministério Público Federal (MPF).</p>
+
+        <p data-lang="en">Prosecutor Cinthia Gabriela Borges, of the National Unit for Combating International Human Trafficking and Migrant Smuggling at the MPF, spoke previously to BBC News Brasil about the importance of potential victims of the Epstein network telling what they went through.</p>
+        <p data-lang="pt">A procuradora Cinthia Gabriela Borges, da Unidade Nacional de Enfrentamento ao Tráfico Internacional de Pessoas e ao Contrabando de Migrantes, do MPF, falou anteriormente à BBC News Brasil da importância de que potencias vítimas da rede de Epstein contem o que passaram.</p>
+
+        <p data-lang="en">"It is fundamental in these cases for victims to participate in the investigation, so they can bring to light the elements of how recruitment was done."</p>
+        <p data-lang="pt">"É fundamental nesses casos a participação das vítimas na investigação, para que possam trazer à luz os elementos de como foi o recrutamento."</p>
+
+        <p data-lang="en">Borges also said that women who maintained contact with Epstein are not being investigated in the process, and that the objective is to understand if there were people specialized in recruiting and recruiting women for sexual purposes.</p>
+        <p data-lang="pt">Borges disse ainda que as mulheres que mantiveram contato com Epstein não estão sendo investigadas no processo, e que o objetivo é entender se havia pessoas especializadas em aliciar e recrutar mulheres para fins sexuais.</p>
+
+        <p data-lang="en">"Victims, as a rule, are not considered responsible for any acts they may commit, in the situation of being a victim of human trafficking," she stated.</p>
+        <p data-lang="pt">"As vítimas, em regra, não são consideradas responsáveis por eventuais atos que elas venham a praticar, na situação de vítima de tráfico de pessoas."</p>
+
+        <figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
+          <img src="imgs/photo-08.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">The investigation documents the full scope of Epstein's network</figcaption>
+          <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">A investigação documenta o escopo completo da rede de Epstein</figcaption>
+        </figure>
       </section>
-      <section class="recovery-section">
-        <h3 data-lang="en">Recovery and resilience</h3>
-        <h3 data-lang="pt">Recuperação e resiliência</h3>
-        <p data-lang="en">Ana has spent nearly two decades rebuilding her life. She has held jobs, maintained relationships, and worked to process her trauma through counseling. She is now willing to speak publicly about what happened, not for revenge or compensation, but in hope that her testimony might help other potential victims recognize the signs of trafficking earlier than she did.</p>
-        <p data-lang="pt">Ana passou quase duas décadas reconstruindo sua vida. Ela tem mantido empregos, relacionamentos, e trabalhou para processar seu trauma através de aconselhamento. Ela agora está disposta a falar publicamente sobre o que aconteceu, não para vingança ou compensação, mas na esperança de que seu testemunho possa ajudar outras vítimas potenciais a reconhecer os sinais de tráfico mais cedo do que ela fez.</p>
-        <p data-lang="en">"What happened to me was not my fault," Ana says. "I was a child. I was deceived. I was sold. Now, decades later, I can say that with certainty. But for many years, I blamed myself. I thought I had made a mistake. I thought it was my responsibility."</p>
-        <p data-lang="pt">"O que aconteceu comigo não foi minha culpa," Ana diz. "Eu era uma criança. Fui enganada. Fui vendida. Agora, décadas depois, posso dizer isso com certeza. Mas por muitos anos, me culpei. Pensei que havia cometido um erro. Pensei que era minha responsabilidade."</p>
-        <p data-lang="en">Today, Ana works in a professional capacity, maintains a stable home, and has rebuilt her sense of safety and agency. She is one of the fortunate ones who managed to escape and recover. Many others in Epstein's network did not.</p>
-        <p data-lang="pt">Hoje, Ana trabalha em uma capacidade profissional, mantém uma casa estável e reconstruiu seu senso de segurança e agência. Ela é uma das sortudas que conseguiu escapar e se recuperar. Muitas outras na rede de Epstein não conseguiram.</p>
-      </section>
-      <section class="text-section">
-        <h2 data-lang="en">The investigation continues</h2>
-        <h2 data-lang="pt">A investigação continua</h2>
-        <p data-lang="en">The Brazilian Federal Public Ministry's investigation into potential human trafficking networks in Brazil is ongoing. Prosecutor Cinthia Gabriela Borges, who leads the case, has emphasized that victims are not under investigation—they are witnesses whose testimony is essential to understanding how trafficking networks operated.</p>
-        <p data-lang="pt">A investigação do Ministério Público Federal Brasileiro em potenciais redes de tráfico de pessoas no Brasil está em andamento. A promotora Cinthia Gabriela Borges, que lidera o caso, enfatizou que as vítimas não estão sob investigação—elas são testemunhas cuja evidência é essencial para entender como as redes de tráfico operavam.</p>
-        <p data-lang="en">Ana's story, combined with testimony from other Brazilian women, documents from Epstein's archives, and evidence of Jean-Luc Brunel's activities in Brazil and Ecuador, creates a pattern that authorities are now examining.</p>
-        <p data-lang="pt">A história de Ana, combinada com testemunho de outras mulheres brasileiras, documentos dos arquivos de Epstein e evidência das atividades de Jean-Luc Brunel no Brasil e Equador, cria um padrão que as autoridades agora estão examinando.</p>
-      </section>
-      <div class="image-block">
-        <img src="imgs/photo-05.jpg" alt="Survivor resources">
-        <p class="image-credit" data-lang="en">Support resources are available for trafficking survivors worldwide</p>
-        <p class="image-credit" data-lang="pt">Recursos de apoio estão disponíveis para sobreviventes de tráfico em todo o mundo</p>
-      </div>
-      <section class="text-section">
-        <h2 data-lang="en">Final words</h2>
-        <h2 data-lang="pt">Últimas palavras</h2>
-        <p data-lang="en">When asked what she hopes will come from sharing her story, Ana's response is both personal and universal.</p>
-        <p data-lang="pt">Quando perguntada o que ela espera que venha de compartilhar sua história, a resposta de Ana é tanto pessoal quanto universal.</p>
-        <p data-lang="en">"I want other girls and women to know that they are not alone. If you've experienced what I experienced—if someone promised you something and then took advantage of you—that was not your fault. And there is help available."</p>
-        <p data-lang="pt">"Quero que outras garotas e mulheres saibam que não estão sozinhas. Se você experimentou o que eu experimentei—se alguém prometeu algo para você e depois se aproveitou de você—isso não foi sua culpa. E há ajuda disponível."</p>
-        <p data-lang="en">She pauses, then adds: "I also want people to understand that trafficking doesn't look like what they imagine. It's not always violence or obvious coercion. Sometimes it looks like an opportunity. Sometimes it looks like a relationship. But the power imbalance is always there. And it's always exploitation."</p>
-        <p data-lang="pt">Ela faz uma pausa e depois acrescenta: "Também quero que as pessoas entendam que o tráfico não se parece com o que elas imaginam. Nem sempre é violência ou coerção óbvia. Às vezes parece uma oportunidade. Às vezes parece um relacionamento. Mas o desequilíbrio de poder está sempre lá. E é sempre exploração."</p>
-      </section>
-      <section class="text-section">
-        <h2 data-lang="en">Resources for trafficking survivors</h2>
-        <h2 data-lang="pt">Recursos para sobreviventes de tráfico</h2>
-        <p data-lang="en">If you or someone you know has experienced human trafficking:</p>
-        <p data-lang="pt">Se você ou alguém que conhece experimentou tráfico de pessoas:</p>
-        <ul style="font-size: 16px; line-height: 1.8; margin-left: 20px;">
-          <li data-lang="en"><strong>Brazil:</strong> National Human Trafficking Hotline: 0800 000 0000 (24 hours)</li>
-          <li data-lang="pt"><strong>Brasil:</strong> Disque Denúncia Nacional de Tráfico de Pessoas: 0800 000 0000 (24 horas)</li>
-          <li data-lang="en"><strong>International:</strong> Polaris Project (United States): 1-888-373-7888</li>
-          <li data-lang="pt"><strong>Internacional:</strong> Polaris Project (Estados Unidos): 1-888-373-7888</li>
-          <li data-lang="en"><strong>General:</strong> UN Office on Drugs and Crime provides global resources at unodc.org</li>
-          <li data-lang="pt"><strong>Geral:</strong> Escritório da ONU sobre Drogas e Crime fornece recursos globais em unodc.org</li>
-        </ul>
-      </section>
-      <section class="series-nav">
-        <a href="../artigo-8/index.html" class="prev" data-lang="en">
-          <div>
-            <div class="nav-label">← Previous</div>
-            <div class="nav-title">Epstein's apartment in São Paulo</div>
-          </div>
-        </a>
-        <a href="../artigo-8/index.html" class="prev" data-lang="pt">
-          <div>
-            <div class="nav-label">← Anterior</div>
-            <div class="nav-title">Apartamento de Epstein em São Paulo</div>
-          </div>
-        </a>
-        <a href="../index.html" class="next disabled" data-lang="en">
-          <div>
-            <div class="nav-label">End of series →</div>
-            <div class="nav-title">Return to overview</div>
-          </div>
-        </a>
-        <a href="../index.html" class="next disabled" data-lang="pt">
-          <div>
-            <div class="nav-label">Fim da série →</div>
-            <div class="nav-title">Voltar ao resumo</div>
-          </div>
-        </a>
-      </section>
+
+      <!-- Navigation -->
+      <nav class="breadcrumb">
+        <a href="../artigo-8/index.html" data-lang="en">← Previous Part</a>
+        <a href="../artigo-8/index.html" data-lang="pt">← Parte Anterior</a>
+        <span data-lang="en">Part 9 of 9 — Final Article</span>
+        <span data-lang="pt">Parte 9 de 9 — Artigo Final</span>
+      </nav>
     </main>
   </article>
+
   <script src="../../shared/base.js"></script>
 </body>
 </html>
