@@ -1,764 +1,762 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-lang="en">Fake Seals, Real Deaths: Inside Brazil's Counterfeit Alcohol Market</title>
-  <title data-lang="pt">Lacres Falsos, Mortes Reais: Por Dentro do Mercado Clandestino de Bebidas Falsificadas</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang="en">How counterfeit seals, caps, and alcohol bottles are sold online</title>
+    <title data-lang="pt">Como funciona a venda na internet de lacres falsos, tampas e garrafas de bebidas alcoólicas</title>
+    <link rel="stylesheet" href="../shared/base.css">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #d32f2f;
+            --text-color: #333;
+            --light-gray: #f5f5f5;
+            --border-color: #ddd;
+            --max-width: 740px;
+        }
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text-color);
+            background-color: #fff;
+            line-height: 1.6;
+        }
 
-  <!-- Shared CSS -->
-  <link rel="stylesheet" href="../shared/base.css">
+        .disclaimer-bar {
+            position: sticky;
+            top: 0;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 20px;
+            font-size: 13px;
+            z-index: 1000;
+            text-align: center;
+            font-weight: 500;
+        }
 
-  <!-- Page-specific styles -->
-  <style>
-    :root {
-      --hero-gradient: linear-gradient(135deg, #1a1a2e 0%, #2d0a0a 100%);
-      --primary-color: #8b0000;
-      --accent-color: #d4af37;
-      --text-dark: #1a1a1a;
-      --text-light: #ffffff;
-    }
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    body {
-      font-family: 'Source Sans 3', sans-serif;
-      line-height: 1.7;
-      color: var(--text-dark);
-    }
+        .progress-bar {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            height: 3px;
+            background-color: var(--accent-color);
+            width: 0%;
+            z-index: 999;
+            transition: width 0.2s ease;
+        }
 
-    #disclaimerBar {
-      background-color: #fff3cd;
-      border-bottom: 2px solid #ffc107;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.95rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+        .hero {
+            height: 500px;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5)), url('imgs/photo-01.jpg') center/cover;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
 
-    #disclaimerBar .warning-icon {
-      margin-right: 12px;
-      font-size: 1.2rem;
-    }
+        .hero-content {
+            padding: 60px 40px 40px;
+            max-width: var(--max-width);
+        }
 
-    #disclaimerBar a {
-      color: #8b0000;
-      text-decoration: none;
-      font-weight: 600;
-    }
+        .hero h1 {
+            font-family: 'Georgia', 'Garamond', serif;
+            font-size: 48px;
+            line-height: 1.2;
+            margin: 0 0 30px 0;
+            font-weight: 700;
+        }
 
-    #disclaimerClose {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #333;
-    }
+        .hero-meta {
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0.95;
+            margin: 0;
+        }
 
-    #langBar {
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #e9ecef;
-      padding: 12px 20px;
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      position: sticky;
-      top: 44px;
-      z-index: 999;
-    }
+        .article-content {
+            padding: 60px 0;
+        }
 
-    .lang-btn {
-      background-color: #ffffff;
-      border: 1px solid #ddd;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-    }
+        .section {
+            margin-bottom: 80px;
+        }
 
-    .lang-btn.active {
-      background-color: var(--primary-color);
-      color: white;
-      border-color: var(--primary-color);
-    }
+        .section h2 {
+            font-family: 'Georgia', 'Garamond', serif;
+            font-size: 32px;
+            line-height: 1.3;
+            margin: 60px 0 30px 0;
+            color: var(--primary-color);
+        }
 
-    .lang-btn:hover {
-      border-color: var(--primary-color);
-    }
+        .section p {
+            font-family: 'Georgia', 'Garamond', serif;
+            font-size: 18px;
+            line-height: 1.8;
+            margin: 0 0 24px 0;
+            color: var(--text-color);
+        }
 
-    #progressBar {
-      height: 3px;
-      background-color: #e9ecef;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-      z-index: 1001;
-      transition: width 0.2s ease;
-    }
+        .intro-text {
+            font-size: 20px;
+            font-style: italic;
+            color: #555;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 24px;
+            margin: 40px 0;
+            line-height: 1.7;
+        }
 
-    /* Hero Section */
-    #hero {
-      background: var(--hero-gradient);
-      color: white;
-      padding: 100px 20px 80px;
-      text-align: center;
-      margin-top: 44px;
-    }
+        .image-block {
+            margin: 60px 0;
+            text-align: center;
+        }
 
-    .series-tag {
-      display: inline-block;
-      background-color: rgba(212, 175, 55, 0.2);
-      border: 1px solid var(--accent-color);
-      color: var(--accent-color);
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
+        .image-block img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
 
-    #hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-      font-weight: 900;
-      line-height: 1.2;
-      margin: 20px 0;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
+        .image-caption {
+            font-size: 14px;
+            color: #666;
+            margin-top: 12px;
+            font-style: italic;
+        }
 
-    #hero .deck {
-      font-family: 'Source Serif 4', serif;
-      font-size: 1.3rem;
-      margin: 30px 0 40px;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.95);
-    }
+        .pullquote {
+            font-family: 'Georgia', 'Garamond', serif;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--primary-color);
+            border-left: 5px solid var(--accent-color);
+            padding: 40px 0 40px 32px;
+            margin: 60px 0;
+            max-width: 600px;
+        }
 
-    .meta {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-top: 30px;
-    }
+        .pullquote-attribution {
+            font-size: 14px;
+            font-style: italic;
+            color: #666;
+            margin-top: 16px;
+            font-weight: normal;
+        }
 
-    .meta span {
-      margin: 0 15px;
-    }
+        .data-viz {
+            background-color: var(--light-gray);
+            padding: 50px 30px;
+            margin: 60px 0;
+            border-left: 5px solid var(--accent-color);
+        }
 
-    /* Content sections */
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
+        .data-viz h3 {
+            font-family: 'Georgia', 'Garamond', serif;
+            font-size: 24px;
+            margin: 0 0 40px 0;
+            color: var(--primary-color);
+        }
 
-    .text-section {
-      opacity: 0;
-      transition: opacity 0.8s ease-out;
-      padding: 50px 0;
-      border-bottom: 1px solid #e9ecef;
-    }
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
 
-    .text-section.fade-in {
-      opacity: 1;
-    }
+        .data-item {
+            padding: 20px;
+            background-color: white;
+            border-radius: 4px;
+        }
 
-    .text-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      margin-bottom: 25px;
-      color: var(--text-dark);
-    }
+        .data-number {
+            font-family: 'Georgia', 'Garamond', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 0 0 8px 0;
+        }
 
-    .text-section p {
-      margin-bottom: 18px;
-      font-size: 1.05rem;
-      line-height: 1.8;
-    }
+        .data-label {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
 
-    .pullquote {
-      opacity: 0;
-      transition: opacity 0.8s ease-out;
-      border-left: 4px solid var(--primary-color);
-      padding: 25px 30px;
-      margin: 40px 0;
-      background-color: #f8f9fa;
-      font-family: 'Source Serif 4', serif;
-      font-size: 1.2rem;
-      font-style: italic;
-      color: var(--text-dark);
-    }
+        .back-link {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
 
-    .pullquote.fade-in {
-      opacity: 1;
-    }
+        .back-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    /* Stats Section */
-    .stats-section {
-      opacity: 0;
-      transition: opacity 0.8s ease-out;
-      padding: 60px 20px;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      margin: 60px 0;
-    }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
 
-    .stats-section.fade-in {
-      opacity: 1;
-    }
+        .lang-toggle {
+            position: fixed;
+            top: 60px;
+            right: 20px;
+            z-index: 100;
+        }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
+        .lang-toggle button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            margin: 0 4px;
+            transition: background-color 0.2s;
+        }
 
-    .stat-card {
-      background: white;
-      padding: 30px;
-      text-align: center;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-    }
+        .lang-toggle button:hover {
+            background-color: var(--accent-color);
+        }
 
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    }
+        .lang-toggle button.active {
+            background-color: var(--accent-color);
+        }
 
-    .stat-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      color: var(--primary-color);
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
+        [data-lang="en"].hidden,
+        [data-lang="pt"].hidden {
+            display: none !important;
+        }
 
-    .stat-label {
-      font-size: 0.95rem;
-      color: #666;
-      line-height: 1.4;
-    }
+        @media (max-width: 768px) {
+            .hero {
+                height: 350px;
+            }
 
-    /* Timeline */
-    .timeline-section {
-      padding: 80px 20px;
-      background-color: #fafafa;
-    }
+            .hero h1 {
+                font-size: 32px;
+            }
 
-    .timeline-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      text-align: center;
-      margin-bottom: 60px;
-    }
+            .section h2 {
+                font-size: 24px;
+            }
 
-    .timeline {
-      position: relative;
-      max-width: 800px;
-      margin: 0 auto;
-    }
+            .section p {
+                font-size: 16px;
+            }
 
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 100%;
-      background: linear-gradient(to bottom, var(--primary-color), transparent);
-    }
+            .pullquote {
+                font-size: 18px;
+                padding: 30px 0 30px 24px;
+            }
 
-    .timeline-item {
-      margin-bottom: 50px;
-      position: relative;
-    }
+            .data-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
 
-    .timeline-item:nth-child(odd) .timeline-content {
-      margin-left: 0;
-      margin-right: auto;
-      width: 45%;
-      text-align: right;
-    }
+            .lang-toggle {
+                top: 55px;
+                right: 10px;
+            }
 
-    .timeline-item:nth-child(even) .timeline-content {
-      margin-left: auto;
-      margin-right: 0;
-      width: 45%;
-      text-align: left;
-    }
+            .lang-toggle button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
 
-    .timeline-marker {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 10px;
-      width: 16px;
-      height: 16px;
-      background-color: var(--primary-color);
-      border: 4px solid white;
-      border-radius: 50%;
-      z-index: 1;
-    }
+            .disclaimer-bar {
+                font-size: 12px;
+                padding: 10px 15px;
+            }
+        }
 
-    .timeline-content {
-      background: white;
-      padding: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 24px;
+            }
 
-    .timeline-date {
-      font-weight: 700;
-      color: var(--primary-color);
-      font-size: 0.95rem;
-      margin-bottom: 8px;
-    }
+            .hero {
+                height: 280px;
+            }
 
-    .timeline-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: var(--text-dark);
-    }
+            .section {
+                margin-bottom: 50px;
+            }
 
-    .timeline-description {
-      font-size: 0.95rem;
-      color: #666;
-      line-height: 1.6;
-    }
+            .section h2 {
+                font-size: 20px;
+            }
 
-    /* Footer */
-    footer {
-      background-color: #1a1a1a;
-      color: white;
-      padding: 60px 20px 40px;
-    }
+            .section p {
+                font-size: 15px;
+            }
 
-    .footer-disclaimer {
-      max-width: 800px;
-      margin: 0 auto 40px;
-      padding: 30px;
-      background-color: rgba(212, 175, 55, 0.1);
-      border-left: 4px solid var(--accent-color);
-      border-radius: 4px;
-    }
-
-    .footer-disclaimer p {
-      margin-bottom: 15px;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    .footer-disclaimer a {
-      color: var(--accent-color);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .footer-disclaimer a:hover {
-      text-decoration: underline;
-    }
-
-    .footer-nav {
-      text-align: center;
-      padding-top: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .footer-nav a {
-      color: var(--accent-color);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .footer-nav a:hover {
-      text-decoration: underline;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      #hero h1 {
-        font-size: 2.2rem;
-      }
-
-      #hero .deck {
-        font-size: 1.1rem;
-      }
-
-      .timeline::before {
-        left: 20px;
-      }
-
-      .timeline-marker {
-        left: 20px;
-      }
-
-      .timeline-item:nth-child(odd) .timeline-content,
-      .timeline-item:nth-child(even) .timeline-content {
-        width: calc(100% - 60px);
-        margin-left: 60px;
-        margin-right: 0;
-        text-align: left;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 480px) {
-      #hero h1 {
-        font-size: 1.8rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      #hero {
-        padding: 60px 15px 50px;
-      }
-    }
-  </style>
+            .pullquote {
+                font-size: 16px;
+                padding: 20px 0 20px 20px;
+            }
+        }
+    </style>
 </head>
-<body class="lang-en">
-  <!-- Disclaimer Bar -->
-  <div id="disclaimerBar">
-    <div>
-      <span class="warning-icon">⚠</span>
-      <span data-lang="en">This is an investigative journalism portfolio piece based on BBC News Brasil reporting. </span>
-      <span data-lang="pt">Esta é uma peça de portfólio de jornalismo investigativo baseada em reportagem da BBC News Brasil.</span>
-      <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="en">Original</a>
-      <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="pt">Original</a>
+<body>
+    <div class="progress-bar"></div>
+
+    <div class="disclaimer-bar" data-lang="en">
+        This is a portfolio presentation of published journalism. Original article: BBC News Brasil, October 2025.
     </div>
-    <button id="disclaimerClose" aria-label="Close disclaimer">✕</button>
-  </div>
-
-  <!-- Language Toggle Bar -->
-  <div id="langBar">
-    <button id="btnEn" class="lang-btn active" data-lang="en">English</button>
-    <button id="btnPt" class="lang-btn" data-lang="pt">Português</button>
-  </div>
-
-  <!-- Progress Bar -->
-  <div id="progressBar"></div>
-
-  <!-- Hero Section -->
-  <section id="hero">
-    <div class="container">
-      <div class="series-tag" data-lang="en">Investigative Report</div>
-      <div class="series-tag" data-lang="pt">Reportagem Investigativa</div>
-
-      <h1 data-lang="en">Fake Seals, Real Deaths: Inside Brazil's Counterfeit Alcohol Market</h1>
-      <h1 data-lang="pt">Lacres Falsos, Mortes Reais: Por Dentro do Mercado Clandestino de Bebidas Falsificadas</h1>
-
-      <div class="deck" data-lang="en">How Facebook groups openly sold the materials to create counterfeit bottles—until the BBC investigation and subsequent government action shut them down.</div>
-      <div class="deck" data-lang="pt">Como grupos no Facebook vendiam abertamente os materiais para criar garrafas falsificadas — até a investigação da BBC e subsequente ação governamental fechá-los.</div>
-
-      <div class="meta">
-        <span data-lang="en">BBC News Brasil, October 2025</span>
-        <span data-lang="pt">BBC News Brasil, Outubro de 2025</span>
-        <span>•</span>
-        <span data-lang="en">By Luiz Fernando Toledo</span>
-        <span data-lang="pt">Por Luiz Fernando Toledo</span>
-        <span>•</span>
-        <span data-lang="en">12 min read</span>
-        <span data-lang="pt">12 min de leitura</span>
-      </div>
+    <div class="disclaimer-bar hidden" data-lang="pt">
+        Esta é uma apresentação de portfólio do jornalismo publicado. Artigo original: BBC News Brasil, outubro de 2025.
     </div>
-  </section>
 
-  <!-- Main Content -->
-  <main class="container">
-    <!-- Section 1: The Crisis -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">A Nation in Crisis</h2>
-      <h2 data-lang="pt">Uma Nação em Crise</h2>
-<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
-  <img src="imgs/photo-01.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
-</figure>
-
-
-      <p data-lang="en">In 2025, Brazil faced an unprecedented public health emergency. Deaths from counterfeit alcoholic beverages swept across the country, with families losing loved ones to a poison that had infiltrated the supply chain of some of Brazil's most trusted brands. The culprit was methanol—a highly toxic substance that causes blindness and death even in minuscule quantities.</p>
-      <p data-lang="pt">Em 2025, o Brasil enfrentou uma emergência de saúde pública sem precedentes. Mortes por bebidas alcoólicas falsificadas assolaram o país, com famílias perdendo entes queridos para um veneno que havia se infiltrado na cadeia de suprimentos de algumas das marcas mais confiáveis do Brasil. O culpado era o metanol — uma substância altamente tóxica que causa cegueira e morte mesmo em quantidades minúsculas.</p>
-
-      <p data-lang="en">The victims were not wealthy consumers seeking premium spirits. They were Brazilian families in economic hardship, buying what they believed were genuine bottles of gin, vodka, and whisky at prices that seemed too good to be true. Because they were.</p>
-      <p data-lang="pt">As vítimas não eram consumidores ricos procurando bebidas premium. Eram famílias brasileiras em dificuldades econômicas, comprando o que acreditavam serem garrafas genuínas de gim, vodca e uísque a preços que pareciam bons demais para serem verdade. Porque eram.</p>
-    </section>
-
-    <!-- Stats Section 1 -->
-    <section class="stats-section fade-in">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">2025</div>
-          <div class="stat-number" data-lang="pt">2025</div>
-          <div class="stat-label" data-lang="en">Year of Brazil's methanol outbreak</div>
-          <div class="stat-label" data-lang="pt">Ano do surto de metanol no Brasil</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">Meta</div>
-          <div class="stat-number" data-lang="pt">Meta</div>
-          <div class="stat-label" data-lang="en">Ordered by AGU to remove fake-goods groups</div>
-          <div class="stat-label" data-lang="pt">Ordenada pela AGU a remover grupos de bens falsificados</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">Oct 3</div>
-          <div class="stat-number" data-lang="pt">3 de Out</div>
-          <div class="stat-label" data-lang="en">BBC report published & arrests made</div>
-          <div class="stat-label" data-lang="pt">Reportagem da BBC publicada e prisões realizadas</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">0ml</div>
-          <div class="stat-number" data-lang="pt">0ml</div>
-          <div class="stat-label" data-lang="en">Safe amount of methanol to consume</div>
-          <div class="stat-label" data-lang="pt">Quantidade segura de metanol para consumir</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 2: The Investigation -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">The BBC Investigation Reveals the Supply Chain</h2>
-      <h2 data-lang="pt">A Investigação da BBC Revela a Cadeia de Suprimentos</h2>
-<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
-  <img src="imgs/photo-02.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
-</figure>
-
-
-      <p data-lang="en">BBC News Brasil journalists began investigating and uncovered a shocking discovery: Facebook groups—some open to the public, others closed and private—were brazenly selling the materials needed to create counterfeit bottles. They weren't hiding. They were operating in plain sight.</p>
-      <p data-lang="pt">Os jornalistas da BBC News Brasil começaram a investigar e descobriram algo chocante: grupos do Facebook — alguns abertos ao público, outros fechados e privados — vendiam abertamente os materiais necessários para criar garrafas falsificadas. Não estavam se escondendo. Estavam operando à vista de todos.</p>
-
-      <div class="pullquote" data-lang="en">"The materials were not hidden or difficult to find. Fake bottle caps, security seals imitating Federal Revenue Service stamps, professionally printed labels, and empty bottles of gin, vodka, and whisky were all available for purchase on Facebook."</div>
-      <div class="pullquote" data-lang="pt">"Os materiais não estavam escondidos nem eram difíceis de encontrar. Tampas falsas, lacres de segurança imitando selos da Receita Federal, rótulos impressos profissionalmente e garrafas vazias de gim, vodca e uísque estavam todos disponíveis para compra no Facebook."</div>
-
-      <p data-lang="en">The business model was simple and efficient: suppliers would sell cheap ethanol adulterated with methanol to counterfeiters. The counterfeiters would pour this toxic mixture into fake branded bottles using materials purchased openly from Facebook groups. The bottles would then be distributed through informal channels and sold to unsuspecting consumers.</p>
-      <p data-lang="pt">O modelo de negócio era simples e eficiente: os fornecedores vendiam etanol barato adulterado com metanol aos falsificadores. Os falsificadores derramavam essa mistura tóxica em garrafas falsas de marcas usando materiais comprados abertamente em grupos do Facebook. As garrafas eram então distribuídas através de canais informais e vendidas para consumidores desavisados.</p>
-    </section>
-
-    <!-- Pullquote Section -->
-    <section class="text-section fade-in">
-      <div class="pullquote" data-lang="en">"Every step of this chain exploited the economic desperation of working Brazilians. Cheap ethanol, rock-bottom counterfeit prices, and a population so economically vulnerable that they would buy a bottle of vodka for a third of the legitimate price without questioning where it came from."</div>
-      <div class="pullquote" data-lang="pt">"Cada etapa dessa cadeia explorava o desespero econômico dos trabalhadores brasileiros. Etanol barato, preços de falsificados muito baixos, e uma população tão economicamente vulnerável que compraria uma garrafa de vodca por um terço do preço legítimo sem questionar de onde veio."</div>
-    </section>
-
-    <!-- Section 3: Government Action -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">October 3, 2025: The Breaking Point</h2>
-      <h2 data-lang="pt">3 de Outubro de 2025: O Ponto de Ruptura</h2>
-<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
-  <img src="imgs/photo-03.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
-</figure>
-
-
-      <p data-lang="en">On October 3, 2025, the BBC News Brasil report was published. The same day, Brazil's Attorney General's Office (AGU) ordered Meta Platforms to remove the groups actively selling counterfeiting materials from Facebook and Instagram. It was a significant victory for public health and justice.</p>
-      <p data-lang="pt">Em 3 de outubro de 2025, a reportagem da BBC News Brasil foi publicada. No mesmo dia, o Gabinete do Procurador-Geral do Brasil (AGU) ordenou à Meta Platforms remover os grupos que vendiam ativamente materiais de falsificação do Facebook e Instagram. Foi uma vitória significativa para a saúde pública e a justiça.</p>
-
-      <p data-lang="en">On the same day, police from DEIC-SP (Departamento Estadual de Investigações Criminais de São Paulo) arrested the main supplier of counterfeit materials. Thousands of fake bottles, caps, labels, and packaging materials were seized in the raid.</p>
-      <p data-lang="pt">No mesmo dia, a polícia do DEIC-SP (Departamento Estadual de Investigações Criminais de São Paulo) prendeu o principal fornecedor de materiais de falsificação. Milhares de garrafas falsas, tampas, rótulos e materiais de embalagem foram apreendidos na operação.</p>
-    </section>
-
-    <!-- Stats Section 2 -->
-    <section class="stats-section fade-in">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">Thousands</div>
-          <div class="stat-number" data-lang="pt">Milhares</div>
-          <div class="stat-label" data-lang="en">Counterfeit items seized in raid</div>
-          <div class="stat-label" data-lang="pt">Itens falsificados apreendidos na operação</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">1</div>
-          <div class="stat-number" data-lang="pt">1</div>
-          <div class="stat-label" data-lang="en">Main supplier arrested October 3</div>
-          <div class="stat-label" data-lang="pt">Principal fornecedor preso em 3 de outubro</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">Multiple</div>
-          <div class="stat-number" data-lang="pt">Múltiplos</div>
-          <div class="stat-label" data-lang="en">Facebook groups shut down by AGU order</div>
-          <div class="stat-label" data-lang="pt">Grupos do Facebook fechados por ordem da AGU</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">24h</div>
-          <div class="stat-number" data-lang="pt">24h</div>
-          <div class="stat-label" data-lang="en">Time from publication to action</div>
-          <div class="stat-label" data-lang="pt">Tempo entre publicação e ação</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4: Why This Happened -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">The Economics of Desperation</h2>
-      <h2 data-lang="pt">A Economia do Desespero</h2>
-<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
-  <img src="imgs/photo-04.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
-</figure>
-
-
-      <p data-lang="en">The counterfeit alcohol crisis did not emerge in a vacuum. It was born from economic desperation. Brazil's economic hardship in recent years has created a large population of consumers who cannot afford premium alcoholic beverages at their legitimate prices. A bottle of imported vodka might cost 150 reais at a licensed retailer. A counterfeit version might sell for 30 to 50 reais on the informal market.</p>
-      <p data-lang="pt">A crise do álcool falsificado não surgiu do nada. Nasceu do desespero econômico. A dificuldade econômica do Brasil nos últimos anos criou uma grande população de consumidores que não pode pagar bebidas alcoólicas premium aos seus preços legítimos. Uma garrafa de vodca importada poderia custar 150 reais em um varejista licenciado. Uma versão falsificada poderia ser vendida por 30 a 50 reais no mercado informal.</p>
-
-      <p data-lang="en">This price gap is the engine of the counterfeit market. Falsifiers exploit it ruthlessly. Suppliers exploit the desperation of workers who want to buy alcohol at a price they can afford. And most callously, distributors exploit the trust that consumers place in familiar brand names.</p>
-      <p data-lang="pt">Essa diferença de preço é o motor do mercado de falsificação. Os falsificadores a exploram impiedosamente. Os fornecedores exploram o desespero dos trabalhadores que querem comprar álcool por um preço que podem pagar. E mais cruelmente, os distribuidores exploram a confiança que os consumidores depositam em marcas conhecidas.</p>
-    </section>
-
-    <!-- Section 5: The Danger -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">Why Methanol is So Dangerous</h2>
-      <h2 data-lang="pt">Por Que o Metanol É Tão Perigoso</h2>
-<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
-  <img src="imgs/photo-05.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
-</figure>
-
-
-      <p data-lang="en">Methanol is a colorless, odorless liquid that is chemically similar to ethanol (the alcohol in legitimate beverages) but profoundly toxic to humans. The human body cannot safely metabolize methanol. Even tiny amounts can cause severe damage.</p>
-      <p data-lang="pt">O metanol é um líquido incolor e inodoro que é quimicamente semelhante ao etanol (o álcool em bebidas legítimas), mas profundamente tóxico para humanos. O corpo humano não pode metabolizar o metanol com segurança. Até pequenas quantidades podem causar danos severos.</p>
-
-      <p data-lang="en">Exposure to methanol causes: blindness (through optic nerve damage), seizures, metabolic acidosis, coma, and death. The victims of the 2025 outbreak did not simply get sick. Many lost their vision permanently. Many died.</p>
-      <p data-lang="pt">A exposição ao metanol causa: cegueira (através de dano ao nervo óptico), convulsões, acidose metabólica, coma e morte. As vítimas do surto de 2025 não ficaram simplesmente doentes. Muitas perderam a visão permanentemente. Muitas morreram.</p>
-
-      <div class="pullquote" data-lang="en">"There is no safe amount of methanol to consume. The lethal dose is shockingly low. The tragedy of the 2025 outbreak is that these deaths were entirely preventable—they occurred because criminals prioritized profit over human life."</div>
-      <div class="pullquote" data-lang="pt">"Não há uma quantidade segura de metanol para consumir. A dose letal é surpreendentemente baixa. A tragédia do surto de 2025 é que essas mortes eram totalmente preveníveis — ocorreram porque criminosos priorizaram lucro sobre vida humana."</div>
-    </section>
-  </main>
-
-  <!-- Timeline Section -->
-  <section class="timeline-section">
-    <div class="container">
-      <h2 data-lang="en">Timeline of Events</h2>
-      <h2 data-lang="pt">Cronograma de Eventos</h2>
-<figure class="article-figure" style="margin: 2rem 0; max-width: 100%;">
-  <img src="imgs/photo-06.jpg" alt="" style="width: 100%; border-radius: 4px; display: block;">
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="en">Photo from the investigation</figcaption>
-  <figcaption style="font-size: 0.8rem; color: #666; margin-top: 0.5rem; font-style: italic; text-align: center;" data-lang="pt">Foto da investigação</figcaption>
-</figure>
-
-
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">Early 2025</div>
-            <div class="timeline-date" data-lang="pt">Início de 2025</div>
-            <div class="timeline-title" data-lang="en">Outbreak Begins</div>
-            <div class="timeline-title" data-lang="pt">Surto Começa</div>
-            <div class="timeline-description" data-lang="en">Reports of deaths and poisonings from counterfeit alcoholic beverages begin emerging across Brazil, particularly in working-class communities.</div>
-            <div class="timeline-description" data-lang="pt">Reportagens de mortes e envenenamentos por bebidas alcoólicas falsificadas começam a surgir em todo o Brasil, particularmente em comunidades de trabalhadores.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">Spring 2025</div>
-            <div class="timeline-date" data-lang="pt">Primavera 2025</div>
-            <div class="timeline-title" data-lang="en">Investigations Begin</div>
-            <div class="timeline-title" data-lang="pt">Investigações Começam</div>
-            <div class="timeline-description" data-lang="en">BBC News Brasil journalists begin investigating the source of the counterfeit bottles and the supply chain delivering them to consumers.</div>
-            <div class="timeline-description" data-lang="pt">Jornalistas da BBC News Brasil começam a investigar a origem das garrafas falsificadas e a cadeia de suprimentos que as entregam aos consumidores.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">Summer 2025</div>
-            <div class="timeline-date" data-lang="pt">Verão 2025</div>
-            <div class="timeline-title" data-lang="en">Facebook Groups Discovered</div>
-            <div class="timeline-title" data-lang="pt">Grupos do Facebook Descobertos</div>
-            <div class="timeline-description" data-lang="en">Investigators find Facebook and Instagram groups openly selling counterfeit materials: fake seals, labels, empty bottles, and caps.</div>
-            <div class="timeline-description" data-lang="pt">Investigadores encontram grupos do Facebook e Instagram vendendo abertamente materiais de falsificação: lacres falsos, rótulos, garrafas vazias e tampas.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">October 1-2, 2025</div>
-            <div class="timeline-date" data-lang="pt">1-2 de Outubro, 2025</div>
-            <div class="timeline-title" data-lang="en">Report Finalized</div>
-            <div class="timeline-title" data-lang="pt">Relatório Finalizado</div>
-            <div class="timeline-description" data-lang="en">BBC News Brasil prepares the investigative report for publication, coordinating with authorities and verifying all sources.</div>
-            <div class="timeline-description" data-lang="pt">BBC News Brasil prepara a reportagem investigativa para publicação, coordenando com autoridades e verificando todas as fontes.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">October 3, 2025</div>
-            <div class="timeline-date" data-lang="pt">3 de Outubro, 2025</div>
-            <div class="timeline-title" data-lang="en">Report Published & Action Taken</div>
-            <div class="timeline-title" data-lang="pt">Relatório Publicado e Ação Tomada</div>
-            <div class="timeline-description" data-lang="en">BBC News Brasil publishes the investigation. The same day, AGU orders Meta to remove the groups, and DEIC-SP arrests the main supplier of counterfeit materials.</div>
-            <div class="timeline-description" data-lang="pt">BBC News Brasil publica a investigação. No mesmo dia, a AGU ordena à Meta remover os grupos, e DEIC-SP prende o principal fornecedor de materiais de falsificação.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">October 2025 onwards</div>
-            <div class="timeline-date" data-lang="pt">Outubro de 2025 em diante</div>
-            <div class="timeline-title" data-lang="en">Ongoing Investigation</div>
-            <div class="timeline-title" data-lang="pt">Investigação Contínua</div>
-            <div class="timeline-description" data-lang="en">Federal and state authorities continue investigation into the full scope of the counterfeit operation and the criminal networks involved.</div>
-            <div class="timeline-description" data-lang="pt">Autoridades federais e estaduais continuam investigando o escopo completo da operação de falsificação e das redes criminosas envolvidas.</div>
-          </div>
-        </div>
-      </div>
+    <div class="lang-toggle">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="pt">PT</button>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-disclaimer">
-        <p data-lang="en"><strong>About this version:</strong> This is an alternative layout of an original BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalism, reporting and content is the work of BBC News Brasil and journalist Luiz Fernando Toledo. This page is not affiliated with or endorsed by BBC News Brasil.</p>
-        <p data-lang="pt"><strong>Sobre esta versão:</strong> Esta é uma versão com layout alternativo de uma reportagem original da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o jornalismo, apuração e conteúdo é trabalho da BBC News Brasil e do jornalista Luiz Fernando Toledo. Esta página não é afiliada nem endossada pela BBC News Brasil.</p>
-        <p>
-          <a href="https://www.bbc.com/portuguese/articles" target="_blank" rel="noopener" data-lang="en">Read the original BBC News Brasil report ↗</a>
-          <a href="https://www.bbc.com/portuguese/articles" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC News Brasil ↗</a>
-        </p>
-      </div>
+    <!-- ENGLISH VERSION -->
+    <article data-lang="en">
+        <header class="hero">
+            <div class="hero-content">
+                <h1 data-lang="en">How counterfeit seals, caps, and alcohol bottles are sold online</h1>
+                <p class="hero-meta" data-lang="en">Luiz Fernando Toledo | BBC News Brasil | October 3, 2025</p>
+            </div>
+        </header>
 
-      <div class="footer-nav">
-        <a href="../index.html" data-lang="en">← Back to Portfolio</a>
-        <a href="../index.html" data-lang="pt">← Voltar ao Portfólio</a>
-      </div>
-    </div>
-  </footer>
+        <div class="article-content">
+            <div class="container">
+                <!-- INTRODUCTION SECTION -->
+                <section class="section">
+                    <p data-lang="en">Labels and caps from famous beverages, seals presented as if they were from Brazil's Federal Revenue Authority, and bottles of gin, vodka, and whisky brands circulate freely in Facebook groups, both open and closed, dedicated to buying and selling these items, according to an investigation by BBC News Brasil.</p>
 
-  <!-- Shared JS -->
-  <script src="../shared/base.js"></script>
+                    <p data-lang="en">The advertisements promise delivery to "all of Brazil" and sales on a large scale, with thousands of products. Among those interested are profiles with the names and logos of liquor stores from different states across the country. In just one of these groups there are more than 10,000 participants, in addition to other smaller groups with restricted access.</p>
+
+                    <p data-lang="en">A seller with a Rio de Janeiro area code, for example, offers bottles of an international brand of whisky for R$ 5 to R$ 10 per unit, depending on the quantity purchased. The value is practically ten times what one could get from a recycling company, for example.</p>
+
+                    <p data-lang="en">In a WhatsApp conversation with BBC, a seal vendor says the product sells for R$ 1.30 per seal, and offered a package with 1,000 units. He did not confirm the origin of the material and did not want to provide further details.</p>
+
+                    <p data-lang="en">In recent days, Brazilian authorities have warned about an atypical number of cases of people poisoned by methanol due to consumption of alcoholic beverages contaminated with the substance — which can cause deaths and irreversible damage, such as blindness.</p>
+
+                    <p data-lang="en">According to the Health Ministry's assessment from Saturday, October 4th, there are 14 confirmed cases of methanol ingestion, including two deaths, and another 181 cases under investigation.</p>
+
+                    <p data-lang="en">There is suspicion that beverages may have been adulterated with methanol, since many of the reported cases are from people who drank in bars. Authorities are also working with the hypothesis of some contamination problem in the bottling of bottles.</p>
+
+                    <p data-lang="en">In one of the groups seen by BBC, a profile of a liquor store in the interior of Mato Grosso do Sul says it is looking for seals and caps from a famous whisky brand — and in the same post, other buyers appear interested.</p>
+                </section>
+
+                <div class="image-block">
+                    <img src="imgs/photo-02.jpg" alt="Screenshot of Facebook advertisement for alcohol bottle caps">
+                    <p class="image-caption" data-lang="en">Screenshots show advertisements for alcohol bottle caps on Facebook groups</p>
+                </div>
+
+                <section class="section">
+                    <p data-lang="en">Bottles described as "zero" are also advertised, as well as boxes, caps, and stickers. Vendors even publish videos to demonstrate the supposed quality of the products and offer shipping through the postal service.</p>
+
+                    <p data-lang="en">In practice, these groups function as a virtual street market: vendors and buyers display their WhatsApp numbers, with area codes from various states.</p>
+
+                    <p data-lang="en">In some cases, there is moderation and permission is required to enter. In others, access is completely open.</p>
+
+                    <p data-lang="en">The sale of bottles, in itself, is not a crime, but various experts warn that it is a common practice in the parallel market for the falsification of alcoholic beverages.</p>
+
+                    <p data-lang="en">Vendors contacted by the report say they do not know what the destination of the bottles is. Among advertisers there are also recycling companies and even people who present themselves as collectors.</p>
+
+                    <p data-lang="en">BBC News Brasil approached Meta, responsible for Facebook, but there has been no positioning on the case yet.</p>
+
+                    <p data-lang="en">On Sunday, October 5th, the Federal Attorney General's Office (AGU) cited this BBC report and ordered Meta to remove content and groups that promote illegal sales.</p>
+                </section>
+
+                <div class="image-block">
+                    <img src="imgs/photo-03.jpg" alt="Facebook profile of liquor store looking for whisky seals">
+                    <p class="image-caption" data-lang="en">Liquor store profile advertises purchase of whisky seals on Facebook</p>
+                </div>
+
+                <!-- SECTION 2: WHOEVER SELLS KNOWS -->
+                <section class="section">
+                    <h2 data-lang="en">"whoever sells knows the goal is smuggling"</h2>
+
+                    <p data-lang="en">A report by the Brazilian Public Security Forum (FBSP) pointed out that the illegal market for alcoholic beverages moved R$ 56.9 billion in Brazil, an increase of 224% compared to 2017.</p>
+
+                    <p data-lang="en">The modus operandi of falsification involves the reuse of bottles from legitimate brands, according to the entity. According to the Forum, it is common in falsification to practice refill, with the reuse of containers for bottling adulterated beverages. In 2023 alone, 1.3 million beverage bottles were seized.</p>
+
+                    <p data-lang="en">A recent action by the Civil Police in Mogi das Cruzes, in the metropolitan region of São Paulo, found a warehouse where at least 20,000 bottles were being cleaned.</p>
+
+                    <div class="image-block">
+                        <img src="imgs/photo-04.jpg" alt="Evidence of seized bottles in police operation">
+                        <p class="image-caption" data-lang="en">Police operations have seized millions of fake bottles</p>
+                    </div>
+
+                    <p data-lang="en">For Lucien Belmonte, executive president of the Brazilian Glass Industry Association (Abividro), the lack of inspection makes crime profitable in this sector.</p>
+
+                    <p data-lang="en">He says that the correct procedure would be for establishments that sell alcoholic beverages to send bottles to recycling containers or hire a collection service.</p>
+
+                    <div class="pullquote" data-lang="en">
+                        "I've seen bottles with caps being sold for R$ 450. Obviously this is not to make a lamp, but to send for falsification. Whoever sells knows the goal is smuggling, which is for a falsification scheme."
+                        <div class="pullquote-attribution" data-lang="en">— Lucien Belmonte, Brazilian Glass Industry Association</div>
+                    </div>
+
+                    <p data-lang="en">He highlighted a bill of law, placed on an urgent regime by the House of Deputies, that classifies the adulteration of food, including beverages, as a heinous crime and evaluates that this commerce of bottles with the purpose of falsification should also be punished.</p>
+
+                    <p data-lang="en">"Today there is no specific crime. It is necessary to have a broad interpretation of the law to typify it."</p>
+                </section>
+
+                <div class="image-block">
+                    <img src="imgs/photo-05.jpg" alt="Detection and control of distilled beverages">
+                    <p class="image-caption" data-lang="en">Federal seals are supposed to authenticate imported distilled beverages</p>
+                </div>
+
+                <!-- SECTION 3: HOW CONTROL WORKS -->
+                <section class="section">
+                    <h2 data-lang="en">How are distilled beverages controlled?</h2>
+
+                    <p data-lang="en">The control of imported distillates, such as gin or vodka, is done through the use of seals, which are printed by the Mint and applied to the caps of bottles. The authentic seal has a hologram that shows the letters R, F, or B.</p>
+
+                    <p data-lang="en">According to the Federal Revenue Authority, the seal is related to tax aspects, without specific concern with the contents of the bottles or product composition.</p>
+
+                    <p data-lang="en">The authorization for the entry into the country of imported beverages is the responsibility of the Ministry of Agriculture and Livestock (MAPA), which is responsible for verifying and authorizing the import of these products in advance and evaluating their identity, quality, and safety.</p>
+
+                    <p data-lang="en">Entities complain about the suspension of a beverage tracking system, the Sicobe, which had been implemented in 2008, but was deactivated in 2016 under the claim of high maintenance costs (around R$ 1.4 billion per year). There was a determination from the Federal Audit Court (TCU) last year to reconnect it, but the case was litigated and is pending a decision from the Supreme Federal Court.</p>
+
+                    <p data-lang="en">A 2023 study signed by two economists from Fia Consultoria explains how Sicobe worked: sensors installed in the production line recorded the number of beverages bottled in cans or in bottles. The data was then sent to the Federal Revenue Authority, without depending on voluntary notifications from beverage producers.</p>
+
+                    <p data-lang="en">"The system reduces fraud and prevents underreporting of production," the study says.</p>
+
+                    <p data-lang="en">This system, however, monitored beer and soft drinks, not distillates, according to a note released by the Federal Revenue Authority.</p>
+
+                    <p data-lang="en">Still, experts evaluate that some type of tracking needs to occur to prevent falsification, even if through another system.</p>
+
+                    <div class="pullquote" data-lang="en">
+                        "A ill-intentioned merchant can buy the original drink, sell it, and then, instead of sending the container for recycling, sell it to this parallel market, for a higher price."
+                        <div class="pullquote-attribution" data-lang="en">— Sérgio Pereira da Silva, Brazilian Association to Combat Counterfeiting</div>
+                    </div>
+
+                    <p data-lang="en">Silva evaluates that there needs to be some kind of product traceability and that seals alone do not address the problem.</p>
+
+                    <p data-lang="en">"Today you can easily find counterfeit seals to buy. The same printing company that counterfeits the label also counterfeits the seal."</p>
+
+                    <p data-lang="en">For retired Federal Police delegate and compliance and security consultant Jorge Pontes, there is a lack of control over beverage production in Brazil.</p>
+
+                    <p data-lang="en">"Before, the control was much better. There has to be some kind of government control. You can't leave it only in the hands of private parties, because it creates an environment conducive to crime."</p>
+
+                    <p data-lang="en">"Today the so-called 'follow the product' is just as important as 'follow the money' in investigations. The government needs to know what is being produced, how much is being produced."</p>
+                </section>
+
+                <div class="image-block">
+                    <img src="imgs/photo-06.jpg" alt="Experts discuss counterfeiting control mechanisms">
+                    <p class="image-caption" data-lang="en">Experts warn that current control mechanisms are insufficient</p>
+                </div>
+
+                <section class="section">
+                    <p data-lang="en">Senior researcher at the Brazilian Public Security Forum (FBSP) Nívio Nascimento, who participated in an entity study that cites the smuggling of alcoholic beverages, emphasizes that this type of crime has always existed, but the new phenomenon observed in recent years is the insertion and increasing interest of organized crime.</p>
+
+                    <p data-lang="en">"Often we associate factions with the trade of cocaine, marijuana, and other illicit goods. But today the scenario is to diversify operations. There has been a robust infiltration of organized crime in various sectors of the economy, such as the beverage industry."</p>
+
+                    <p data-lang="en">It is worth noting that there is still no evidence that the contamination cases in São Paulo are linked to factions.</p>
+
+                    <p data-lang="en">"At this moment there is little information available to conclude if there is PCC participation. It is necessary to wait for investigations to understand what happened."</p>
+                </section>
+
+                <!-- DATA VISUALIZATION -->
+                <div class="data-viz" data-lang="en">
+                    <h3 data-lang="en">Key numbers from the investigation</h3>
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <div class="data-number">R$ 56.9 billion</div>
+                            <div class="data-label" data-lang="en">Illegal beverage market size in Brazil (2023)</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">224%</div>
+                            <div class="data-label" data-lang="en">Increase from 2017 to 2023</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">1.3 million</div>
+                            <div class="data-label" data-lang="en">Bottles seized in 2023</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">14</div>
+                            <div class="data-label" data-lang="en">Confirmed methanol poisoning cases</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">2</div>
+                            <div class="data-label" data-lang="en">Deaths confirmed</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">181</div>
+                            <div class="data-label" data-lang="en">Cases under investigation</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">R$ 1.30</div>
+                            <div class="data-label" data-lang="en">Cost per counterfeit seal</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">20,000</div>
+                            <div class="data-label" data-lang="en">Bottles found in Mogi das Cruzes warehouse</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="back-link">
+                    <a href="../../../index.html" data-lang="en">← Back to portfolio</a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- PORTUGUESE VERSION -->
+    <article data-lang="pt" class="hidden">
+        <header class="hero">
+            <div class="hero-content">
+                <h1 data-lang="pt">Como funciona a venda na internet de lacres falsos, tampas e garrafas de bebidas alcoólicas</h1>
+                <p class="hero-meta" data-lang="pt">Luiz Fernando Toledo | BBC News Brasil | 3 de outubro de 2025</p>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <div class="container">
+                <!-- INTRODUCTION SECTION -->
+                <section class="section">
+                    <p data-lang="pt">Rótulos e tampas de bebidas famosas, selos apresentados como se fossem da Receita Federal e garrafas de marcas de gin, vodka e whisky circulam livremente em grupos de Facebook, abertos ou fechados, dedicados à compra e venda desses itens, segundo apurou a BBC News Brasil.</p>
+
+                    <p data-lang="pt">Os anúncios prometem entrega para "todo o Brasil" e venda em grande escala, de milhares de produtos. Entre os interessados estão perfis com nomes e logotipos de adegas de diferentes estados do país. Em apenas um desses grupos há mais de 10 mil participantes, além de outros menores e com acesso restrito.</p>
+
+                    <p data-lang="pt">Um vendedor com DDD do Rio de Janeiro, por exemplo, oferece garrafas de um whisky de marca internacional por R$ 5 a R$ 10 a unidade, a depender da quantidade comprada. O valor é praticamente dez vezes o que se conseguiria em uma empresa de reciclagem, por exemplo.</p>
+
+                    <p data-lang="pt">Em conversa por WhatsApp com a BBC, um vendedor de selos diz que o produto sai a R$ 1,30 por selo, e ofereceu um pacote com 1 mil unidades. Ele não confirmou a origem do material e não quis fornecer mais detalhes.</p>
+
+                    <p data-lang="pt">Nos últimos dias, autoridades brasileiras advertiram sobre um número atípico de casos de pessoas intoxicadas por metanol devido ao consumo de bebidas alcoólicas contaminadas com a substância — que pode provocar mortes e danos irreversíveis, como cegueira.</p>
+
+                    <p data-lang="pt">Segundo o balanço do Ministério da Saúde deste sábado (4/10), há 14 casos confirmados de ingestão de metanol, incluindo duas mortes, e outros 181 casos em investigação.</p>
+
+                    <p data-lang="pt">Existe a suspeita de que bebidas possam ter sido adulteradas com metanol, já que muitos dos casos relatados são de pessoas que beberam em bares. As autoridades também trabalham com a hipótese de algum problema de contaminação no envase de garrafas.</p>
+
+                    <p data-lang="pt">Em um dos grupos vistos pela BBC, um perfil de uma adega no interior do Mato Grosso do Sul diz procurar lacres e tampas de uma famosa marca de whisky — e, na mesma publicação, aparecem outros compradores interessados.</p>
+                </section>
+
+                <div class="image-block">
+                    <img src="imgs/photo-02.jpg" alt="Screenshot de anúncio no Facebook de tampas de garrafas de bebidas alcoólicas">
+                    <p class="image-caption" data-lang="pt">Screenshots mostram anúncios de tampas de garrafas de bebidas alcoólicas em grupos do Facebook</p>
+                </div>
+
+                <section class="section">
+                    <p data-lang="pt">Também são anunciadas garrafas descritas como "zero", além de caixas, tampas e adesivos. Os vendedores chegam a publicar vídeos para demonstrar a suposta qualidade dos produtos e oferecem envio pelos Correios.</p>
+
+                    <p data-lang="pt">Na prática, esses grupos funcionam como uma feira livre virtual: vendedores e compradores expõem seus números de WhatsApp, com DDDs de vários estados.</p>
+
+                    <p data-lang="pt">Em alguns casos, há moderação e é preciso pedir autorização para entrar. Em outros, o acesso é totalmente aberto.</p>
+
+                    <p data-lang="pt">A venda de garrafas, em si, não é um crime, mas diversos especialistas alertam que é uma prática comum no mercado paralelo de falsificação de bebidas alcoólicas.</p>
+
+                    <p data-lang="pt">Vendedores contatados pela reportagem dizem não saber qual é o destino das garrafas. Entre os anunciantes há também empresas de reciclagem e até pessoas que se apresentam como colecionadores.</p>
+
+                    <p data-lang="pt">A BBC News Brasil procurou a Meta, responsável pelo Facebook, mas ainda não houve um posicionamento sobre o caso.</p>
+
+                    <p data-lang="pt">No domingo (5/10), a Advocacia-Geral da União (AGU) citou esta reportagem da BBC e determinou que a Meta retire do ar conteúdos e grupos que promovem a venda ilegal.</p>
+                </section>
+
+                <div class="image-block">
+                    <img src="imgs/photo-03.jpg" alt="Perfil de adega procurando lacres de whisky no Facebook">
+                    <p class="image-caption" data-lang="pt">Perfil de adega anuncia compra de lacres de whisky no Facebook</p>
+                </div>
+
+                <!-- SECTION 2: WHOEVER SELLS KNOWS -->
+                <section class="section">
+                    <h2 data-lang="pt">"quem vende sabe que o objetivo é o descaminho"</h2>
+
+                    <p data-lang="pt">Um relatório do Fórum Brasileiro de Segurança Pública (FBSP) apontou que o mercado ilegal das bebidas alcoólicas movimentou R$ 56,9 bilhões no Brasil, aumento de 224% em relação a 2017.</p>
+
+                    <p data-lang="pt">O modus operandi da falsificação passa pela reutilização de garrafas de marcas legítimas, segundo a entidade. De acordo com o Fórum, é comum na falsificação a prática do refil, com a reutilização dos vasilhames para envasamento das bebidas adulteradas. Só em 2023 foram apreendidas 1,3 milhão de garrafas de bebidas.</p>
+
+                    <p data-lang="pt">Uma ação recente da Polícia Civil em Mogi das Cruzes, região metropolitana de São Paulo, encontrou um depósito em que estavam sendo higienizadas ao menos 20 mil garrafas.</p>
+
+                    <div class="image-block">
+                        <img src="imgs/photo-04.jpg" alt="Evidência de garrafas apreendidas em operação policial">
+                        <p class="image-caption" data-lang="pt">Operações policiais apreenderam milhões de garrafas falsas</p>
+                    </div>
+
+                    <p data-lang="pt">Para Lucien Belmonte, presidente-executivo da Associação Brasileira da Indústria de Vidro (Abividro), a falta de fiscalização faz com que o crime compense nesse setor.</p>
+
+                    <p data-lang="pt">Ele diz que o correto seria que estabelecimentos que vendem bebidas alcoólicas destinem as garrafas para contêineres de reciclagem ou contratem um serviço de coleta.</p>
+
+                    <div class="pullquote" data-lang="pt">
+                        "Já vi garrafas com tampa sendo vendidas a R$ 450. Obviamente isso não é para fazer abajur, mas para encaminhar para falsificação. Quem vende sabe que o objetivo é o descaminho, que é para esquema de falsificação."
+                        <div class="pullquote-attribution" data-lang="pt">— Lucien Belmonte, Associação Brasileira da Indústria de Vidro</div>
+                    </div>
+
+                    <p data-lang="pt">Ele destacou um projeto de lei, colocado no regime de urgência pela Câmara dos Deputados, que classifica como crime hediondo a adulteração de alimentos, incluindo bebidas, e avalia que esse comércio das garrafas com o objetivo de falsificação também deveria ser punido.</p>
+
+                    <p data-lang="pt">"Hoje não há um crime específico. É preciso ter uma interpretação alargada da lei para tipificar."</p>
+                </section>
+
+                <div class="image-block">
+                    <img src="imgs/photo-05.jpg" alt="Detecção e controle de bebidas destiladas">
+                    <p class="image-caption" data-lang="pt">Selos federais deveriam autenticar bebidas destiladas importadas</p>
+                </div>
+
+                <!-- SECTION 3: HOW CONTROL WORKS -->
+                <section class="section">
+                    <h2 data-lang="pt">Como é o controle das bebidas destiladas?</h2>
+
+                    <p data-lang="pt">O controle de destilados importados, como gin ou vodka, é feito pela utilização de selos, que são impressos pela Casa da Moeda e aplicados nas tampas das garrafas. O selo autêntico tem uma holografia que mostra as letras R, F ou B.</p>
+
+                    <p data-lang="pt">Segundo a Receita Federal, o selo está relacionado a aspectos tributários, sem preocupação específica com o conteúdo das garrafas ou composição do produto.</p>
+
+                    <p data-lang="pt">Já a autorização de entrada no país de bebidas importadas cabe ao Ministério da Agricultura e Pecuária (MAPA), que é responsável por verificar e autorizar previamente a importação desses produtos e avaliar identidade, qualidade e segurança.</p>
+
+                    <p data-lang="pt">Entidades reclamam da suspensão de um sistema de rastreamento de bebidas, o Sicobe, que tinha sido implementado em 2008, mas foi desativado em 2016 sob alegação de altos custos de manutenção (cerca de R$ 1,4 bilhão ao ano). Houve uma determinação do Tribunal de Contas da União (TCU) no ano passado para religá-lo, mas o caso foi judicializado e está pendente de uma decisão no Supremo Tribunal Federal.</p>
+
+                    <p data-lang="pt">Um estudo feito em 2023 e assinado por dois economistas da Fia Consultoria explica como funcionava o Sicobe: sensores instalados na linha de produção registravam a quantidade de bebidas engarrafadas em lata ou em garrafas. Os dados eram então encaminhados à Receita Federal, sem depender de notificações voluntárias das produtoras de bebidas.</p>
+
+                    <p data-lang="pt">"O sistema reduz fraudes e evita subnotificação da produção," diz o estudo.</p>
+
+                    <p data-lang="pt">Esse sistema, no entanto, fazia o monitoramento de cervejas e refrigerantes, não dos destilados, segundo nota divulgada pela Receita Federal.</p>
+
+                    <p data-lang="pt">Ainda assim, especialistas avaliam que algum tipo de rastreamento precisa ocorrer para coibir a falsificação, mesmo que por meio de outro sistema.</p>
+
+                    <div class="pullquote" data-lang="pt">
+                        "Um comerciante mal-intencionado pode comprar a bebida original, vendê-la e depois, ao invés de mandar o vasilhame pra reciclagem, vender pra esse mercado paralelo, por um valor mais caro."
+                        <div class="pullquote-attribution" data-lang="pt">— Sérgio Pereira da Silva, Associação Brasileira de Combate à Falsificação</div>
+                    </div>
+
+                    <p data-lang="pt">Silva avalia que é necessário que haja algum tipo de rastreabilidade dos produtos e que só os selos não dão conta do problema.</p>
+
+                    <p data-lang="pt">"Hoje você encontra facilmente selos falsificados pra comprar. A mesma gráfica que falsifica o rótulo também falsifica o selo."</p>
+
+                    <p data-lang="pt">Para o delegado aposentado da Polícia Federal e consultor em compliance e segurança, Jorge Pontes, falta controle da produção de bebida no Brasil.</p>
+
+                    <p data-lang="pt">"Antes o controle era muito melhor. Tem que ter algum tipo de controle estatal. Não dá pra deixar só na mão de particulares, pois cria-se um ambiente propício para a criminalidade."</p>
+
+                    <p data-lang="pt">"Hoje o chamado 'follow the product' [siga o produto] é tão importante quanto o 'follow the money' [siga o dinheiro] em investigações. O poder público precisa saber o que está sendo produzido, quanto está sendo produzido."</p>
+                </section>
+
+                <div class="image-block">
+                    <img src="imgs/photo-06.jpg" alt="Especialistas discutem mecanismos de controle de falsificação">
+                    <p class="image-caption" data-lang="pt">Especialistas alertam que os mecanismos atuais de controle são insuficientes</p>
+                </div>
+
+                <section class="section">
+                    <p data-lang="pt">O pesquisador-sênior do Fórum Brasileiro de Segurança Pública (FBSP) Nívio Nascimento, que participou de um estudo da entidade que cita o contrabando de bebidas alcoólicas, ressalta que esse tipo de crime sempre existiu, mas a novidade percebida nos últimos anos é a inserção e o interesse cada vez maior do crime organizado.</p>
+
+                    <p data-lang="pt">"Muitas vezes associamos facções ao comércio de cocaína, maconha e outros ilícitos. Mas hoje o cenário é de diversificar a atuação. Houve uma infiltração robusta do crime organizado em diversos setores da economia, como o da bebida."</p>
+
+                    <p data-lang="pt">Ainda não há evidências, vale lembrar, de que os casos de contaminação em São Paulo estejam ligados a facções.</p>
+
+                    <p data-lang="pt">"Nesse momento há pouca informação disponível para concluir se há participação do PCC. É preciso esperar investigações para entender o que aconteceu."</p>
+                </section>
+
+                <!-- DATA VISUALIZATION -->
+                <div class="data-viz" data-lang="pt">
+                    <h3 data-lang="pt">Números-chave da investigação</h3>
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <div class="data-number">R$ 56,9 bilhões</div>
+                            <div class="data-label" data-lang="pt">Tamanho do mercado ilegal de bebidas no Brasil (2023)</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">224%</div>
+                            <div class="data-label" data-lang="pt">Aumento de 2017 a 2023</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">1,3 milhão</div>
+                            <div class="data-label" data-lang="pt">Garrafas apreendidas em 2023</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">14</div>
+                            <div class="data-label" data-lang="pt">Casos confirmados de envenenamento por metanol</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">2</div>
+                            <div class="data-label" data-lang="pt">Mortes confirmadas</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">181</div>
+                            <div class="data-label" data-lang="pt">Casos em investigação</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">R$ 1,30</div>
+                            <div class="data-label" data-lang="pt">Custo por lacre falsificado</div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-number">20 mil</div>
+                            <div class="data-label" data-lang="pt">Garrafas encontradas no depósito de Mogi das Cruzes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="back-link">
+                    <a href="../../../index.html" data-lang="pt">← Voltar ao portfólio</a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <script src="../shared/base.js"></script>
+    <script>
+        // Language toggle functionality
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const langElements = document.querySelectorAll('[data-lang]');
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+
+            langElements.forEach(el => {
+                if (el.dataset.lang === lang) {
+                    el.classList.remove('hidden');
+                } else if (el.dataset.lang !== lang && el.tagName !== 'TITLE') {
+                    el.classList.add('hidden');
+                }
+            });
+
+            langButtons.forEach(btn => {
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            document.documentElement.lang = lang;
+        }
+
+        // Initialize language from localStorage or default to English
+        const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+        setLanguage(savedLang);
+
+        // Event listeners for language buttons
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                setLanguage(e.target.dataset.lang);
+            });
+        });
+
+        // Progress bar on scroll
+        window.addEventListener('scroll', () => {
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = window.scrollY;
+            const scrollPercent = (scrolled / windowHeight) * 100;
+            document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+        });
+    </script>
 </body>
 </html>

@@ -1,393 +1,394 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-lang="en">The Brazilians who go to Ireland to work in precarious conditions in slaughterhouses</title>
-  <title data-lang="pt">Os brasileiros que vão para a Irlanda trabalhar em condições precárias e abusivas em frigoríficos</title>
-
+  <title>Irlanda: brasileiros em frigoríficos com condições abusivas | Investigativo Luiz Fernando Toledo</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../shared/base.css">
-
   <style>
     :root {
-      --hero-bg: linear-gradient(135deg, rgba(13, 26, 42, 0.85), rgba(26, 26, 46, 0.85));
-      --primary-accent: #1a4d6d;
-      --secondary-accent: #5ba3c3;
+      --primary-blue: #1a4d6d;
+      --accent-blue: #5ba3c3;
+      --text-dark: #1a1a1a;
+      --bg-light: #f8f9fa;
     }
+
+    body { font-family: 'Source Sans 3', sans-serif; line-height: 1.7; color: var(--text-dark); }
 
     #hero {
       position: relative;
       height: 100vh;
-      min-height: 600px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: var(--hero-bg), url('imgs/photo-01.jpg') center/cover;
+      background: linear-gradient(135deg, rgba(26, 77, 109, 0.85), rgba(26, 26, 46, 0.85)), url('imgs/photo-01.jpg') center/cover;
       background-attachment: fixed;
       text-align: center;
       color: white;
       padding: 40px 20px;
-      overflow: hidden;
     }
 
-    #hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.4);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 10;
-      max-width: 900px;
-      animation: fadeInUp 1s ease-out;
-    }
-
-    .series-label {
-      display: inline-block;
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--secondary-accent);
-      margin-bottom: 24px;
-      background: rgba(91, 163, 195, 0.2);
-      padding: 8px 16px;
-      border: 1px solid var(--secondary-accent);
-      border-radius: 3px;
-    }
+    .hero-content { position: relative; max-width: 900px; }
+    .series-label { display: inline-block; background: rgba(91, 163, 195, 0.2); border: 1px solid #5ba3c3; color: #5ba3c3; padding: 8px 16px; border-radius: 4px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; }
 
     #hero h1 {
-      font-family: var(--display);
-      font-size: clamp(32px, 8vw, 64px);
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
       font-weight: 900;
       line-height: 1.2;
-      margin: 24px 0;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      margin: 20px 0;
+      max-width: 900px;
     }
 
-    .hero-subtitle {
-      font-family: var(--serif);
-      font-size: clamp(18px, 2.5vw, 24px);
-      font-weight: 400;
-      line-height: 1.6;
-      margin: 24px 0 32px;
-      color: rgba(255, 255, 255, 0.95);
+    #hero .deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.3rem;
+      margin: 30px 0 40px;
       max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.95);
     }
 
-    .hero-meta {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+    .meta {
+      font-size: 0.95rem;
       color: rgba(255, 255, 255, 0.8);
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
+      margin-top: 30px;
     }
 
-    main {
-      max-width: 740px;
-      margin: 0 auto;
-      padding: 80px 40px;
-    }
-
-    .section-chapter {
-      margin-bottom: 100px;
-      padding-bottom: 60px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .section-chapter:last-child {
-      border-bottom: none;
-    }
-
-    .section-chapter h2 {
-      font-family: var(--display);
-      font-size: clamp(28px, 6vw, 42px);
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 32px;
-      color: var(--text-dark);
-    }
-
-    .section-chapter p {
-      font-family: var(--serif);
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 20px;
-      color: var(--text-dark);
-    }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+    .text-section { opacity: 0; transition: opacity 0.8s ease-out; padding: 50px 0; border-bottom: 1px solid #e9ecef; }
+    .text-section.fade-in { opacity: 1; }
+    .text-section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 25px; color: var(--text-dark); }
+    .text-section h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-top: 35px; margin-bottom: 18px; }
+    .text-section p { margin-bottom: 18px; font-size: 1.05rem; line-height: 1.8; }
 
     .pullquote {
-      border-left: 4px solid var(--primary-accent);
-      padding: 32px 40px;
-      margin: 50px 0;
-      background-color: var(--bg-light);
-      font-family: var(--serif);
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      border-left: 4px solid var(--primary-blue);
+      padding: 25px 30px;
+      margin: 40px 0;
+      background-color: #f8f9fa;
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.2rem;
       font-style: italic;
-      font-size: 22px;
-      line-height: 1.7;
       color: var(--text-dark);
     }
+    .pullquote.fade-in { opacity: 1; }
 
-    .image-block {
+    .article-image { opacity: 0; transition: opacity 0.8s ease-out; width: 100%; max-width: 800px; margin: 40px auto; border-radius: 4px; display: block; }
+    .article-image.fade-in { opacity: 1; }
+    .image-caption { font-size: 0.9rem; color: #666; margin-top: 12px; font-style: italic; text-align: center; }
+
+    .stats-section {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #e8f4f8 0%, #d4e9f0 100%);
       margin: 60px 0;
-      text-align: center;
+    }
+    .stats-section.fade-in { opacity: 1; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; max-width: 900px; margin: 0 auto; }
+    .stat-card { background: white; padding: 30px; text-align: center; border-radius: 4px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--primary-blue); font-weight: 900; margin-bottom: 10px; }
+    .stat-label { font-size: 0.95rem; color: #666; line-height: 1.4; }
+
+    #disclaimerBar {
+      background-color: #e3f2fd;
+      border-bottom: 2px solid #1a4d6d;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
-    .image-block img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 2px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    #langBar {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      position: sticky;
+      top: 44px;
+      z-index: 999;
     }
 
-    .image-credit {
-      font-family: var(--sans);
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 12px;
-      font-style: italic;
-    }
+    .lang-btn { background-color: #ffffff; border: 1px solid #ddd; padding: 8px 16px; cursor: pointer; font-weight: 600; font-size: 0.9rem; border-radius: 4px; transition: all 0.3s ease; }
+    .lang-btn.active { background-color: var(--primary-blue); color: white; border-color: var(--primary-blue); }
+    .lang-btn:hover { border-color: var(--primary-blue); }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      margin: 80px 0;
-    }
-
-    .stat-card {
-      background-color: var(--bg-light);
-      padding: 40px 30px;
-      text-align: center;
-      border-radius: 3px;
-      border-top: 3px solid var(--primary-accent);
-    }
-
-    .stat-number {
-      font-family: var(--display);
-      font-size: 42px;
-      font-weight: 900;
-      color: var(--primary-accent);
-      line-height: 1;
-      margin-bottom: 12px;
-    }
-
-    .stat-label {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      line-height: 1.5;
-    }
+    [data-lang="en"] { display: none; }
+    body.lang-en [data-lang="en"] { display: inline; }
+    body.lang-en [data-lang="pt"] { display: none; }
 
     footer {
-      background-color: var(--primary);
-      color: var(--text-light);
-      padding: 80px 40px;
-      margin-top: 100px;
+      background-color: #1a1a1a;
+      color: white;
+      padding: 60px 20px 40px;
     }
-
-    .footer-disclaimer p {
-      font-family: var(--sans);
-      font-size: 13px;
-      line-height: 1.6;
-      margin-bottom: 12px;
-      opacity: 0.85;
-    }
-
-    .back-link {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .back-link a {
-      color: var(--secondary-accent);
-      text-decoration: none;
-    }
+    .footer-nav { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.2); }
+    .footer-nav a { color: var(--accent-blue); text-decoration: none; font-weight: 600; }
+    .footer-nav a:hover { text-decoration: underline; }
 
     @media (max-width: 768px) {
-      main {
-        padding: 60px 24px;
-      }
-      #hero h1 {
-        font-size: 36px;
-      }
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 480px) {
-      main {
-        padding: 40px 16px;
-      }
-      .pullquote {
-        font-size: 18px;
-        padding: 24px 20px;
-      }
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
+      #hero h1 { font-size: 2.2rem; }
+      #hero .deck { font-size: 1.1rem; }
     }
   </style>
 </head>
 <body class="lang-en">
 
-  <div class="disclaimer-bar">
-    <div class="disclaimer-inner">
-      <div class="disclaimer-icon">⚠</div>
-      <div class="disclaimer-text">
-        <span data-lang="en">This is an enhanced portfolio presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span>
-        <span data-lang="pt">Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span>
-        <a href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank" rel="noopener" class="disclaimer-link" data-lang="en">Read original ↗</a>
-        <a href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank" rel="noopener" class="disclaimer-link" data-lang="pt">Leia original ↗</a>
+<div id="disclaimerBar">
+  <div>
+    <span class="warning-icon">⚠</span>
+    <span data-lang="en">Portfolio presentation of published journalism. Original: BBC News Brasil</span>
+    <span data-lang="pt">Apresentação de portfólio do jornalismo publicado. Original: BBC News Brasil</span>
+  </div>
+</div>
+
+<div id="langBar">
+  <button id="btnEn" class="lang-btn active" data-lang="en">English</button>
+  <button id="btnPt" class="lang-btn" data-lang="pt">Português</button>
+</div>
+
+<section id="hero">
+  <div class="hero-content">
+    <div class="series-label" data-lang="en">Investigative Report</div>
+    <div class="series-label" data-lang="pt">Reportagem Investigativa</div>
+
+    <h1 data-lang="en">Brazilians in Ireland: "Abusive and precarious" work conditions in slaughterhouses</h1>
+    <h1 data-lang="pt">Os brasileiros que vão para a Irlanda trabalhar em "condições precárias e abusivas" em frigoríficos</h1>
+
+    <div class="deck" data-lang="en">Embassy telegrams reveal workplace abuses and labor violations faced by Brazilian migrant workers in Ireland's meat processing industry</div>
+    <div class="deck" data-lang="pt">Telegramas da Embaixada revelam abusos e violações trabalhistas enfrentadas por trabalhadores migrantes brasileiros na indústria de processamento de carne</div>
+
+    <div class="meta">
+      <span data-lang="en">BBC News Brasil, January 2025</span>
+      <span data-lang="pt">BBC News Brasil, Janeiro de 2025</span>
+      <span>•</span>
+      <span data-lang="en">By Luiz Fernando Toledo and Laís Alegretti</span>
+      <span data-lang="pt">Por Luiz Fernando Toledo e Laís Alegretti</span>
+    </div>
+  </div>
+</section>
+
+<main class="container">
+  <section class="text-section fade-in">
+    <p data-lang="pt">Cada vez mais brasileiros se mudam para a Irlanda para trabalhar em um mercado com mão de obra interna escassa: a indústria da carne, que abastece também outros países europeus.</p>
+    <p data-lang="en">More and more Brazilians are moving to Ireland to work in a market with scarce internal labor: the meat industry, which also supplies other European countries.</p>
+
+    <p data-lang="pt">Esse movimento é acompanhado de uma preocupação crescente com abusos trabalhistas — um problema relatado não só por organizações que estudam o setor, mas evidente em comunicações internas do governo brasileiro.</p>
+    <p data-lang="en">This movement is accompanied by growing concern about labor abuses—a problem reported not only by organizations studying the sector but evident in internal communications from the Brazilian government.</p>
+
+    <p data-lang="pt">A BBC News Brasil teve acesso a um conjunto de telegramas da Embaixada do Brasil em Dublin que revelam preocupação com migrantes brasileiros sujeitos a: "Condições de trabalho precárias", "insalubres" e "abusivas por parte dos empregadores"; "Desempenhar múltiplas funções no ambiente de trabalho, em condições de segurança precárias"; "Turnos de trabalho prolongados", às vezes com "salário inferior ao mínimo".</p>
+    <p data-lang="en">BBC News Brasil had access to a set of telegrams from the Brazilian Embassy in Dublin that reveal concerns about Brazilian migrants subject to: "Precarious," "unhealthy," and "abusive" working conditions; "Performing multiple functions in the workplace in precarious safety conditions"; "Prolonged work shifts," sometimes with "below-minimum wages."</p>
+
+    <p data-lang="pt">Os relatos da embaixada apontam que "a maioria dos brasileiros nessa situação teme protestar" e, como consequência, serem "obrigados, junto com seus familiares, a voltar imediatamente para o Brasil".</p>
+    <p data-lang="en">Embassy reports point out that "most Brazilians in this situation fear protesting" and, as a consequence, being "forced, along with their families, to return immediately to Brazil."</p>
+
+    <img src="imgs/photo-02.jpg" alt="Brazilian workers Ireland" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Trabalhadores brasileiros relatam abusos em frigoríficos irlandeses</div>
+    <div class="image-caption" data-lang="en">Brazilian workers report abuses in Irish slaughterhouses</div>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">"a arma disparou na minha mão"</h2>
+    <h2 data-lang="en">"the gun fired in my hand"</h2>
+
+    <p data-lang="pt">Poucas semanas após mudar para a Irlanda para trabalhar em um frigorífico, o tocantinense Guilherme dos Santos, hoje com 34 anos, sofreu em 2021 um acidente que levou à amputação de um dedo.</p>
+    <p data-lang="en">A few weeks after moving to Ireland to work in a slaughterhouse, Guilherme dos Santos from Tocantins, now 34, suffered an accident in 2021 that led to the amputation of a finger.</p>
+
+    <p data-lang="pt">"Sofri um acidente, com dois ou três meses de serviço. Fui atirar para matar um animal, ele mexeu com a cabeça, e a arma disparou na minha mão. Atingiu o tendão na palma da mão e tive que passar por três cirurgias. Duas foram para tentar reconstituir, mas tive que amputar um dedo", contou à BBC News Brasil.</p>
+    <p data-lang="en">"I had an accident, two or three months into the job. I was shooting to kill an animal, it moved its head, and the gun fired in my hand. It hit the tendon in my palm and I had to have three surgeries. Two were attempts to repair it, but I had to amputate a finger," he told BBC News Brasil.</p>
+
+    <p data-lang="pt">Santos conta que perdeu a força na mão — além do mindinho lesionado, também teve fratura no anelar. Ele diz que inicialmente teve apoio da empresa com os tratamentos. Depois, decidiu colocar o caso na Justiça — ele conta que não tinha o treinamento para trabalhar com a arma usada no processo de sangria do animal.</p>
+    <p data-lang="en">Santos says he lost strength in his hand—besides the injured pinky, he also fractured his ring finger. He says he initially received company support for treatment. Later, he decided to take the case to court—he says he didn't have training to work with the weapon used in the animal bleeding process.</p>
+
+    <img src="imgs/photo-03.jpg" alt="Work accident" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Acidentes de trabalho são comuns entre brasileiros nos frigoríficos</div>
+    <div class="image-caption" data-lang="en">Work accidents are common among Brazilians in slaughterhouses</div>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">"aprende ou te mando de volta pro Brasil"</h2>
+    <h2 data-lang="en">"learn or i'll send you back to Brazil"</h2>
+
+    <p data-lang="pt">Os profissionais brasileiros contratados por empresas na Irlanda já possuem experiência prévia como desossadores, cortadores, operadores de linha, limpadores, dentre outras funções. Uma das etapas de seleção, inclusive, envolve a gravação de um vídeo do profissional no processo de desossar um animal abatido.</p>
+    <p data-lang="en">Brazilian professionals hired by companies in Ireland already have prior experience as boners, cutters, line operators, cleaners, among other functions. One of the selection steps even involves recording a video of the professional in the process of deboning a slaughtered animal.</p>
+
+    <p data-lang="pt">No entanto, um primeiro "tombo", segundo os relatos ouvidos pela reportagem, acontece quando alguns deles descobrem que o visto de trabalho recebido não é o equivalente a um cargo com essa experiência, para que possam pagar menos, ou quando, na prática, acabam trabalhando em um posto no qual não têm treinamento.</p>
+    <p data-lang="en">However, a first "setback," according to reports, happens when some of them discover that the work visa they received is not equivalent to a position with that experience, so they can be paid less, or when, in practice, they end up working in a position for which they have no training.</p>
+
+    <p data-lang="pt">Lucas dos Anjos, de 27 anos, se mudou para Irlanda em 2020, após ser selecionado por uma entrevistadora no Brasil. A empresa pagou passagem e hospedagem, além de suporte inicial, como acomodação, e um adiantamento de 100 euros.</p>
+    <p data-lang="en">Lucas dos Anjos, 27, moved to Ireland in 2020 after being selected by an interviewer in Brazil. The company paid for passage and accommodation, plus initial support, including housing and a 100-euro advance.</p>
+
+    <p data-lang="pt">Inicialmente destinado à desossa, Lucas acabou trabalhando no abate. "Logo na recepção, o pessoal já falava da fama dos supervisores de serem tiranos, mal-educados." Ele chegou em um grupo com 20 pessoas e que elas tinham de aprender pelo menos três funções diferentes. "Se a pessoa nunca trabalhou no abate, por exemplo, é difícil de aprender. E então o supervisor dizia: ou você aprende, ou te mando de volta para o Brasil."</p>
+    <p data-lang="en">Initially assigned to boning, Lucas ended up working in slaughter. "Right at reception, people were already talking about supervisors having a reputation for being tyrants, rude." He arrived in a group of 20 people who had to learn at least three different functions. "If a person never worked in slaughter, for example, it's hard to learn. And then the supervisor would say: either you learn or I'll send you back to Brazil."</p>
+
+    <p data-lang="pt">Depois de desentendimentos e muita frustração, Lucas conta que deixou a empresa após um ano. Conseguiu outro trabalho em um frigorífico menor, que depois descobriu que era conhecido por colegas brasileiros como "pela jegue" por suas condições ainda mais degradantes.</p>
+    <p data-lang="en">After disagreements and much frustration, Lucas says he left the company after a year. He got another job at a smaller slaughterhouse, which he later discovered was known by Brazilian colleagues as "pela jegue" for its even more degrading conditions.</p>
+
+    <div class="pull-quote" data-lang="pt">"Não tinha hora para acabar. Era um trabalho escravo. Já tive de trabalhar mais de 12 horas em um dia. Se fosse embora, era punido depois e não nos chamavam pra trabalhar."</div>
+    <div class="pull-quote" data-lang="en">"There was no end time. It was slave labor. I've had to work more than 12 hours in a day. If I left, I was punished afterward and they wouldn't call me to work."</div>
+
+    <img src="imgs/photo-04.jpg" alt="Processing line" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Linhas de processamento onde trabalham os brasileiros</div>
+    <div class="image-caption" data-lang="en">Processing lines where Brazilians work</div>
+  </section>
+
+  <section class="stats-section fade-in">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">4.553</div>
+        <div class="stat-label" data-lang="pt">Autorizações de trabalho a brasileiros em 2024</div>
+        <div class="stat-label" data-lang="en">Work authorizations for Brazilians in 2024</div>
       </div>
-      <button class="disclaimer-close" id="disclaimerClose">×</button>
-    </div>
-  </div>
-
-  <div class="lang-toggle-bar">
-    <div class="lang-toggle-inner">
-      <span class="lang-toggle-label" data-lang="en">Language:</span>
-      <span class="lang-toggle-label" data-lang="pt">Idioma:</span>
-      <button class="lang-btn active" id="btnEn" data-lang="en">English</button>
-      <button class="lang-btn" id="btnPt" data-lang="pt">Português</button>
-    </div>
-  </div>
-
-  <div class="progress-bar" id="progressBar"></div>
-
-  <section id="hero">
-    <div class="hero-content">
-      <div class="series-label" data-lang="en">Investigative Report</div>
-      <div class="series-label" data-lang="pt">Reportagem Investigativa</div>
-      <h1 data-lang="en">The Brazilians who go to Ireland to work in precarious conditions in slaughterhouses</h1>
-      <h1 data-lang="pt">Os brasileiros que vão para a Irlanda trabalhar em condições precárias e abusivas em frigoríficos</h1>
-      <div class="hero-subtitle" data-lang="en">How Brazilian workers are systematically exploited in Irish meat processing facilities—documented in embassy telegrams obtained exclusively by BBC News Brasil.</div>
-      <div class="hero-subtitle" data-lang="pt">Como trabalhadores brasileiros são explorados sistematicamente em instalações de processamento de carne irlandesas—documentado em telegramas da embaixada obtidos exclusivamente pela BBC News Brasil.</div>
-      <div class="hero-meta">
-        <span data-lang="en">BBC News Brasil</span>
-        <span data-lang="pt">BBC News Brasil</span>
-        <span>•</span>
-        <span data-lang="en">January 2025</span>
-        <span data-lang="pt">Janeiro de 2025</span>
-        <span>•</span>
-        <span data-lang="en">Luiz Fernando Toledo</span>
-        <span data-lang="pt">Luiz Fernando Toledo</span>
+      <div class="stat-card">
+        <div class="stat-number">66%</div>
+        <div class="stat-label" data-lang="pt">De autorizações em processamento de carne</div>
+        <div class="stat-label" data-lang="en">Of authorizations in meat processing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">80.000</div>
+        <div class="stat-label" data-lang="pt">Brasileiros estimados na Irlanda</div>
+        <div class="stat-label" data-lang="en">Estimated Brazilians in Ireland</div>
       </div>
     </div>
   </section>
 
-  <main>
-    <section class="section-chapter fade-in">
-      <h2 data-lang="en">A new destination for migrants</h2>
-      <h2 data-lang="pt">Um novo destino para migrantes</h2>
-      <p data-lang="en">Each year, thousands of Brazilians board planes heading for Ireland, hoping to escape economic hardship. The Irish meat processing industry is hungry for workers. Jobs in slaughterhouses and meat facilities promise wages in euros—a currency that holds enormous purchasing power in Brazil. For families living in poverty or precarious employment, the arithmetic is simple: earn money in Ireland, send remittances home, save enough to buy property or start a business, eventually achieve the dream of financial security that seemed impossible at home.</p>
-      <p data-lang="pt">A cada ano, milhares de brasileiros embarcam em voos com destino à Irlanda, esperando escapar da dificuldade econômica. A indústria de processamento de carne irlandesa é faminta por trabalhadores. Empregos em matadouros e instalações de carne prometem salários em euros—uma moeda que possui enorme poder de compra no Brasil. Para famílias vivendo na pobreza ou em empregos precários, a aritmética é simples: ganhar dinheiro na Irlanda, enviar remessas para casa, economizar o suficiente para comprar propriedade ou começar um negócio, eventualmente alcançar o sonho de segurança financeira que parecia impossível em casa.</p>
-      <p data-lang="en">What they often discover, however, is a system of exploitation that was designed specifically to take advantage of their vulnerability. The meat processing industry in Ireland, desperate for low-cost labor, has developed a clear preference for Brazilian workers. And the reasons reveal something troubling about how international labor markets exploit migrant desperation.</p>
-      <p data-lang="pt">O que muitos descobrem, no entanto, é um sistema de exploração que foi projetado especificamente para aproveitar sua vulnerabilidade. A indústria de processamento de carne na Irlanda, desesperada por mão de obra de baixo custo, desenvolveu uma clara preferência por trabalhadores brasileiros. E as razões revelam algo perturbador sobre como os mercados de trabalho internacionais exploram o desespero dos migrantes.</p>
-    </section>
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">"favoritos" do mercado</h2>
+    <h2 data-lang="en">"favorites" of the market</h2>
 
-    <div class="image-block fade-in">
-      <img src="imgs/photo-02.jpg" alt="Meat processing facility workers">
-      <div class="image-credit" data-lang="en">Workers in Irish meat processing facilities often work under dangerous conditions</div>
-      <div class="image-credit" data-lang="pt">Trabalhadores em instalações de processamento de carne irlandesas frequentemente trabalham em condições perigosas</div>
+    <p data-lang="pt">Brasileiros são considerados favoritos nesse setor, segundo recrutadores e especialistas em imigração ouvidos pela reportagem, por uma série de fatores: trabalham muito, têm experiência prévia em frigoríficos no Brasil e, como outros imigrantes que dependem do visto de trabalho, têm receio de demonstrar insatisfação e perder oportunidades.</p>
+    <p data-lang="en">Brazilians are considered favorites in this sector, according to recruiters and immigration experts interviewed for this report, for a series of reasons: they work hard, have prior experience in slaughterhouses in Brazil, and, like other immigrants who depend on work visas, fear expressing dissatisfaction and losing opportunities.</p>
+
+    <p data-lang="pt">O número de permissões de trabalho a brasileiros em diversas áreas do mercado de trabalho nunca foi tão alto quanto nos últimos 3 anos, segundo dados do governo irlandês. Só em 2024, foram 4,5 mil novas autorizações. Há dez anos, esse número não chegava a 1 mil por ano.</p>
+    <p data-lang="en">The number of work permits for Brazilians in various areas of the job market has never been as high as in the last 3 years, according to Irish government data. In 2024 alone, there were 4,500 new authorizations. Ten years ago, this number didn't reach 1,000 per year.</p>
+
+    <p data-lang="pt">Ao olhar especificamente para o mercado do processamento da carne, de 8 mil autorizações de trabalho emitidas desde 2020 pelo governo irlandês para pessoas de fora da União Europeia e do Espaço Econômico Europeu (EEA), 66% foram para brasileiros.</p>
+    <p data-lang="en">Looking specifically at the meat processing market, of 8,000 work authorizations issued since 2020 by the Irish government for people from outside the European Union and European Economic Area (EEA), 66% went to Brazilians.</p>
+
+    <p data-lang="pt">O Itamaraty estima que há 80 mil brasileiros na Irlanda, e diz que o número é uma avaliação aproximada, que inclui todos os brasileiros residentes, ainda que temporariamente, e independentemente da situação migratória.</p>
+    <p data-lang="en">The Brazilian Foreign Ministry estimates there are 80,000 Brazilians in Ireland, and says the number is an approximate assessment that includes all Brazilians residing there, even temporarily, regardless of migration status.</p>
+
+    <img src="imgs/photo-05.jpg" alt="Recruitment" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Recrutadores atraem milhares de brasileiros para a Irlanda</div>
+    <div class="image-caption" data-lang="en">Recruiters attract thousands of Brazilians to Ireland</div>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">"medo de demissão"</h2>
+    <h2 data-lang="en">"fear of dismissal"</h2>
+
+    <p data-lang="pt">O temor da demissão após reclamação por melhorias é uma das preocupações relatadas nos documentos da embaixada. Os telegramas mostram que a comunidade que trabalha em frigoríficos é vista pela diplomacia brasileira como "especialmente vulnerável" por uma combinação de fatores, que inclui falta de domínio do inglês, relativo isolamento no interior do país (onde estão as empresas) e "limitada capacidade de mobilizar-se em defesa dos seus interesses."</p>
+    <p data-lang="en">Fear of dismissal after complaining about improvements is one of the concerns reported in embassy documents. The telegrams show that the community working in slaughterhouses is seen by Brazilian diplomacy as "especially vulnerable" due to a combination of factors, including lack of English proficiency, relative isolation in the interior of the country (where the companies are located), and "limited capacity to mobilize in defense of their interests."</p>
+
+    <p data-lang="pt">Em resposta, o governo irlandês lançou no fim de 2024 uma pesquisa com trabalhadores do setor, cujos resultados ainda não foram divulgados.</p>
+    <p data-lang="en">In response, the Irish government launched a survey of sector workers at the end of 2024, whose results have not yet been released.</p>
+
+    <p data-lang="pt">"A pesquisa certamente terá sido motivada por uma série de incidentes envolvendo direitos trabalhistas na indústria da carne irlandesa nos últimos anos", disse a embaixada brasileira à reportagem, em nota. "A Embaixada vem atuando há muitos anos nesse tema, algumas vezes acompanhando negociações entre trabalhadores brasileiros e as empresas, em outras exigindo das autoridades irlandesas medidas contra casos abusivos."</p>
+    <p data-lang="en">"The survey was certainly motivated by a series of incidents involving labor rights in Ireland's meat industry in recent years," the Brazilian Embassy told the report in a statement. "The Embassy has been working on this issue for many years, sometimes accompanying negotiations between Brazilian workers and companies, other times demanding Irish authorities take action against abusive cases."</p>
+
+    <img src="imgs/photo-06.jpg" alt="Worker conditions" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Condições precárias nos frigoríficos irlandeses</div>
+    <div class="image-caption" data-lang="en">Precarious conditions in Irish slaughterhouses</div>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">"xingam a gente dando risada"</h2>
+    <h2 data-lang="en">"they curse at us and laugh"</h2>
+
+    <p data-lang="pt">Entre as reclamações de um brasileiro que se mudou em 2022 para a Irlanda para trabalhar em uma empresa tradicional do setor, está a falta de fiscalização. Ele diz que era mais rigorosa em seu emprego anterior, no Brasil. Ele — que pediu para não ser identificado, pois trabalha na mesma empresa e teme perder o visto — também reclama que não recebe pelas horas extras trabalhadas. "Ganham muito dinheiro em cima da gente."</p>
+    <p data-lang="en">Among the complaints of a Brazilian who moved to Ireland in 2022 to work in a traditional company in the sector is the lack of oversight. He says it was more rigorous in his previous job in Brazil. He—who asked not to be identified because he works for the same company and fears losing his visa—also complains that he isn't paid for overtime. "They make a lot of money off us."</p>
+
+    <p data-lang="pt">Além de salário e jornada, ele também reclama das condições no local. "Não tem um bebedouro dentro da fábrica. A gente tem que sair, tirar o uniforme que usamos lá dentro, e ir em uma cantina. De vez em quando, a gente vai e o gerente começa a gritar com a gente, [reclamar] que estamos fazendo pausa."</p>
+    <p data-lang="en">Beyond wages and hours, he also complains about conditions on-site. "There's no water fountain inside the factory. We have to go out, remove the uniform we wear in there, and go to a canteen. Every once in a while, we go and the manager starts yelling at us, [complaining] that we're taking a break."</p>
+
+    <p data-lang="pt">Ele também afirmou que escuta xingamentos, que muitos colegas sequer entendem por não falar inglês. "Não tem um tradutor na empresa. Quando cheguei, a empresa falou que pagaria um curso, mas nunca pagou. O que sei hoje foi aprendendo no dia a dia, com o chefe botando pressão. Às vezes, xingam a gente dando risada."</p>
+    <p data-lang="en">He also said he hears cursing, which many coworkers don't even understand because they don't speak English. "There's no translator at the company. When I arrived, the company said it would pay for a course, but it never did. What I know today I learned on the job, with the boss putting pressure on me. Sometimes they curse at us and laugh."</p>
+
+    <img src="imgs/photo-07.jpg" alt="Factory conditions" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Ambiente de trabalho nos frigoríficos</div>
+    <div class="image-caption" data-lang="en">Work environment in slaughterhouses</div>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">"ganho financeiro"</h2>
+    <h2 data-lang="en">"financial gain"</h2>
+
+    <p data-lang="pt">O interesse de brasileiros em migrar para trabalhar na indústria da carne irlandesa fica evidente nas redes sociais, onde perfis e grupos dividem informações sobre processos seletivos, que chegam a ter centenas de candidatos por uma única vaga. No Youtube e no Instagram, há até venda de "métodos" para conseguir o trabalho, que exige experiência comprovada. Também há agências que prometem passagem, moradia e salários cinco vezes maiores do que é pago por um mesmo cargo no Brasil.</p>
+    <p data-lang="en">The interest of Brazilians in migrating to work in the Irish meat industry is evident on social media, where profiles and groups share information about selection processes that can have hundreds of candidates for a single position. On YouTube and Instagram, there's even sale of "methods" to get the job, which requires proven experience. There are also agencies that promise passage, housing, and salaries five times higher than what is paid for the same position in Brazil.</p>
+
+    <p data-lang="pt">Micheline Oliveira é recrutadora para alguns dos maiores frigoríficos irlandeses desde 2018, após mais de dez anos atuando em empresas do mesmo setor no Brasil. A empresa para a qual ela trabalha oferece contrato inicial de dois anos, documentação e passagem aérea pagas pela empresa, e salário anual de 30 mil euros (cerca de R$ 16 mil por mês).</p>
+    <p data-lang="en">Micheline Oliveira has been a recruiter for some of Ireland's largest slaughterhouses since 2018, after more than ten years working for companies in the same sector in Brazil. The company she works for offers an initial two-year contract, documentation and airfare paid by the company, and an annual salary of 30,000 euros (about R$16,000 per month).</p>
+
+    <div class="pull-quote" data-lang="pt">"O que mais atrai os brasileiros é o ganho financeiro mesmo. Quando me abordam, muitos falam que querem mudar de vida, ter possibilidades maiores. Uma boa parte fala que quer ter casa própria, e que na Irlanda conseguiria [juntar dinheiro] mais rápido."</div>
+    <div class="pull-quote" data-lang="en">"What most attracts Brazilians is the financial gain. When they approach me, many say they want to change their lives, have greater possibilities. A good portion say they want to own a home, and that in Ireland they could [save money] faster."</div>
+
+    <img src="imgs/photo-08.jpg" alt="Migrant life" class="article-image fade-in">
+    <div class="image-caption" data-lang="pt">Vida de migrante na Irlanda</div>
+    <div class="image-caption" data-lang="en">Life as a migrant in Ireland</div>
+  </section>
+
+  <section class="text-section fade-in">
+    <h2 data-lang="pt">"ascensão social"</h2>
+    <h2 data-lang="en">"social ascension"</h2>
+
+    <p data-lang="pt">Mestre em Antropologia Social e doutor em Ciências Sociais pela Unicamp, Igor Machado, que fez trabalho de pesquisa com brasileiros na Irlanda, relata que o trabalho em frigoríficos irlandeses representa uma "ascensão social" para muitos brasileiros que trabalharam no mesmo setor no Brasil.</p>
+    <p data-lang="en">A Master's in Social Anthropology and PhD in Social Sciences from Unicamp, Igor Machado, who conducted research with Brazilians in Ireland, reports that work in Irish slaughterhouses represents "social ascension" for many Brazilians who worked in the same sector in Brazil.</p>
+
+    <p data-lang="pt">"A diferença salarial na Irlanda é menos intensa que no Brasil, é um país menos desigual. Mesmo com o salário mínimo, há mais acesso a determinadas políticas sociais. Isso faz com que a vida seja menos dura do que no Brasil", diz. Em relação ao dia a dia no trabalho, no entanto, Machado observa que "o trabalho em frigoríficos mói as pessoas".</p>
+    <p data-lang="en">"The salary difference in Ireland is less intense than in Brazil, it's a less unequal country. Even with minimum wage, there's more access to certain social policies. This makes life less hard than in Brazil," he says. Regarding daily work life, however, Machado observes that "work in slaughterhouses grinds people down."</p>
+
+    <p data-lang="pt">"É um trabalho brutal. Se você ficar dois, três anos, inevitavelmente terá problemas físicos. É uma atividade repetitiva, violenta. Exige força. Os acidentes de trabalho são muito intensos", diz ele, que aponta que imigrantes que trabalham neste setor no Brasil, como haitianos, sofrem situações similares.</p>
+    <p data-lang="en">"It's brutal work. If you stay two, three years, you'll inevitably have physical problems. It's repetitive, violent work. It requires strength. Work accidents are very intense," he says, noting that immigrants working in this sector in Brazil, such as Haitians, suffer similar situations.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-nav">
+      <a href="../../index.html" data-lang="en">← Back to portfolio</a>
+      <a href="../../index.html" data-lang="pt">← Voltar ao portfólio</a>
     </div>
+  </div>
+</footer>
 
-    <div class="stats-grid fade-in">
-      <div class="stat-card">
-        <div class="stat-number">4,553</div>
-        <div class="stat-label" data-lang="en">Work permits issued to Brazilians in Ireland in 2024</div>
-        <div class="stat-label" data-lang="pt">Permissões de trabalho emitidas para brasileiros na Irlanda em 2024</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">3x</div>
-        <div class="stat-label" data-lang="en">Growth in permits over 10 years</div>
-        <div class="stat-label" data-lang="pt">Crescimento em permissões em 10 anos</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">80k</div>
-        <div class="stat-label" data-lang="en">Estimated Brazilians in Ireland</div>
-        <div class="stat-label" data-lang="pt">Brasileiros estimados na Irlanda</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">66%</div>
-        <div class="stat-label" data-lang="en">Of non-EU meat processing permits went to Brazilians since 2020</div>
-        <div class="stat-label" data-lang="pt">De permissões de processamento de carne não-UE foram para brasileiros desde 2020</div>
-      </div>
-    </div>
+<script src="../shared/base.js"></script>
+<script>
+  document.getElementById('btnEn').addEventListener('click', () => {
+    document.body.classList.remove('lang-en');
+    localStorage.setItem('language', 'pt');
+    updateLangButtons();
+  });
+  document.getElementById('btnPt').addEventListener('click', () => {
+    document.body.classList.add('lang-en');
+    localStorage.setItem('language', 'en');
+    updateLangButtons();
+  });
 
-    <section class="section-chapter fade-in">
-      <h2 data-lang="en">Confidential warnings from inside the government</h2>
-      <h2 data-lang="pt">Avisos confidenciais do interior do governo</h2>
-      <p data-lang="en">BBC News Brasil obtained a collection of confidential telegrams sent between the Brazilian Embassy in Dublin and the Ministry of Foreign Affairs in Brasília. These documents, which were meant to remain internal government communications, reveal something the public wasn't meant to see: a systematic, documented pattern of exploitation of Brazilian workers in Irish meat processing facilities.</p>
-      <p data-lang="pt">BBC News Brasil obteve uma coleção de telegramas confidenciais trocados entre a Embaixada Brasileira em Dublin e o Ministério de Relações Exteriores em Brasília. Estes documentos, que se destinavam a permanecer comunicações internas do governo, revelam algo que o público não deveria ver: um padrão sistemático e documentado de exploração de trabalhadores brasileiros em instalações de processamento de carne irlandesas.</p>
-      <p data-lang="en">The telegrams describe working conditions as "unhealthy," "abusive by employers," and involving "extended working shifts" sometimes with "wages below minimum." They detail how Brazilian workers are forced to perform multiple job functions in conditions with "precarious safety measures." The Embassy's assessment was clear: these workers are "especially vulnerable" to exploitation because of limited English proficiency, relative isolation in the interior where facilities are located, and their dependence on visa sponsorship.</p>
-      <p data-lang="pt">Os telegramas descrevem condições de trabalho como "insalubres," "abusivas por empregadores," e envolvendo "turnos de trabalho estendidos" às vezes com "salários abaixo do mínimo." Detalham como trabalhadores brasileiros são forçados a desempenhar múltiplas funções em condições com "medidas de segurança precárias." A avaliação da Embaixada foi clara: estes trabalhadores são "especialmente vulneráveis" à exploração por causa da proficiência limitada em inglês, isolamento relativo no interior onde as instalações estão localizadas, e sua dependência do patrocínio de visto.</p>
-    </section>
+  function updateLangButtons() {
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    if (document.body.classList.contains('lang-en')) {
+      document.getElementById('btnPt').classList.add('active');
+    } else {
+      document.getElementById('btnEn').classList.add('active');
+    }
+  }
 
-    <div class="pullquote fade-in">
-      <span data-lang="en">"The majority of Brazilians in this situation fear to protest, and consequently fear being obligated, together with their families, to return immediately to Brazil."</span>
-      <span data-lang="pt">"A maioria dos brasileiros nessa situação teme protestar, e consequentemente teme ser obrigada, junto com suas famílias, a voltar imediatamente para o Brasil."</span>
-      <div class="pullquote-citation" data-lang="en">— Brazilian Embassy in Dublin, confidential telegram</div>
-      <div class="pullquote-citation" data-lang="pt">— Embaixada Brasileira em Dublin, telegrama confidencial</div>
-    </div>
+  if (localStorage.getItem('language') === 'en') {
+    document.body.classList.add('lang-en');
+  }
+  updateLangButtons();
+</script>
 
-    <section class="section-chapter fade-in">
-      <h2 data-lang="en">A perfect system of exploitation</h2>
-      <h2 data-lang="pt">Um sistema perfeito de exploração</h2>
-      <p data-lang="en">Why has the Irish meat processing industry developed such a clear preference for Brazilian workers? The answer lies in a dangerous combination of factors that make Brazilian migrants uniquely exploitable. First, workers come with years of experience in harsh conditions—Brazil's own meat processing industry is notoriously exploitative. Second, the wage differential is so extreme that workers are willing to accept conditions they would never tolerate at home. Third, and most critically, workers are on employer-sponsored visas. This creates a profound power imbalance. A worker cannot complain about unsafe conditions without risking their visa status and their ability to remain in the country. The employer holds ultimate leverage.</p>
-      <p data-lang="pt">Por que a indústria de processamento de carne irlandesa desenvolveu tal clara preferência por trabalhadores brasileiros? A resposta reside em uma combinação perigosa de fatores que tornam os migrantes brasileiros uniquamente exploráveis. Primeiro, trabalhadores vêm com anos de experiência em condições duras—a própria indústria de processamento de carne do Brasil é notoriamente exploratória. Segundo, o diferencial salarial é tão extremo que trabalhadores estão dispostos a aceitar condições que nunca tolerariam em casa. Terceiro, e mais criticamente, trabalhadores estão em vistos de trabalho patrocinados pelo empregador. Isso cria uma assimetria profunda de poder. Um trabalhador não pode reclamar sobre condições inseguras sem arriscar seu status de visto e sua capacidade de permanecer no país. O empregador detém alavancagem final.</p>
-    </section>
-
-    <div class="image-block fade-in">
-      <img src="imgs/photo-05.jpg" alt="Facility conditions">
-      <div class="image-credit" data-lang="en">Many facilities lack proper safety equipment and training for workers</div>
-      <div class="image-credit" data-lang="pt">Muitas instalações carecem de equipamento de segurança adequado e treinamento para trabalhadores</div>
-    </div>
-
-    <section class="section-chapter fade-in">
-      <h2 data-lang="en">The human cost of the system</h2>
-      <h2 data-lang="pt">O custo humano do sistema</h2>
-      <p data-lang="en">Over three months, this investigation spoke with more than a dozen Brazilian workers in different Irish cities. Their stories reveal the systematic nature of the abuse. Workers report consistently earning less than colleagues of other nationalities doing identical work. They describe constant verbal abuse and humiliation in the workplace, often in English—a language many don't understand. They report shifts lasting 12+ hours with no additional compensation. And they describe systematic safety failures that have led to serious injuries.</p>
-      <p data-lang="pt">Durante três meses, esta investigação conversou com mais de uma dúzia de trabalhadores brasileiros em diferentes cidades irlandesas. Suas histórias revelam a natureza sistemática do abuso. Trabalhadores relatam consistentemente ganhar menos que colegas de outras nacionalidades fazendo trabalho idêntico. Descrevem abuso verbal constante e humilhação no local de trabalho, frequentemente em inglês—uma língua que muitos não entendem. Relatam turnos durando 12+ horas sem compensação adicional. E descrevem falhas sistemáticas de segurança que levaram a ferimentos sérios.</p>
-    </section>
-
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-disclaimer">
-        <p data-lang="en"><strong>About this presentation:</strong> This is an enhanced layout version of investigative journalism originally published by BBC News Brasil. The original reporting and all journalistic content are the work of BBC News Brasil and journalist Luiz Fernando Toledo. This presentation is created for portfolio purposes.</p>
-        <p data-lang="pt"><strong>Sobre esta apresentação:</strong> Esta é uma versão de layout aprimorado de jornalismo investigativo originalmente publicado pela BBC News Brasil. A reportagem original e todo conteúdo jornalístico são trabalho da BBC News Brasil e do jornalista Luiz Fernando Toledo. Esta apresentação é criada para fins de portfólio.</p>
-        <p><a href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank" rel="noopener" data-lang="en">Read the original BBC News Brasil investigation ↗</a>
-          <a href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank" rel="noopener" data-lang="pt">Leia a investigação original da BBC News Brasil ↗</a></p>
-      </div>
-      <div class="back-link">
-        <a href="../index.html" data-lang="en">← Back to portfolio</a>
-        <a href="../index.html" data-lang="pt">← Voltar ao portfólio</a>
-      </div>
-    </div>
-  </footer>
-
-  <script src="../shared/base.js"></script>
 </body>
 </html>
