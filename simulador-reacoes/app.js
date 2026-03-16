@@ -40,76 +40,152 @@ const PROVIDERS = {
 };
 
 // ——— Personas ——————————————————————————————————————————————
+// Based on: Reuters Institute Digital News Report, Pew Research social media typologies,
+// academic studies on online commenting behavior (lurkers, trolls, self-promoters, engagers)
+// and Brazilian political media consumption patterns.
 const PERSONAS = [
+  // ── Political spectrum ─────────────────────────────────
   {
     id: 'leitor_neutro',
     emoji: '🗣️',
     name: 'Leitor neutro',
     role: 'Cidadão sem filiação política clara',
-    sentiment_hint: 'pragmatic, neither strongly supportive nor critical, asks practical questions',
+    sentiment_hint: 'pragmatic, neither strongly supportive nor critical, asks practical questions about what will change in practice',
   },
   {
     id: 'leitor_petista',
     emoji: '🔴',
     name: 'Leitor petista',
     role: 'Apoiador do PT / esquerda brasileira',
-    sentiment_hint: 'supports the investigation if it exposes right-wing corruption, suspicious if it involves PT allies, uses leftist framing',
+    sentiment_hint: 'supports the investigation if it exposes right-wing corruption, suspicious if it involves PT allies; uses leftist class-struggle framing',
   },
   {
     id: 'leitor_bolsonarista',
     emoji: '🟡',
     name: 'Leitor bolsonarista',
     role: 'Apoiador de Bolsonaro / direita conservadora',
-    sentiment_hint: 'accuses media bias (especially BBC/Globo), defends the right-wing, suspicious of "communism" or left-wing motives, may use terms like "mídia podre"',
+    sentiment_hint: 'accuses media bias (especially BBC/Globo/folha), defends the right-wing; uses terms like "mídia podre", "comunismo", "globolixo"',
   },
   {
     id: 'leitor_liberal',
     emoji: '🎩',
     name: 'Leitor liberal',
     role: 'Direita liberal, pró-mercado, antipetista e antiBolsonaro',
-    sentiment_hint: 'criticizes both sides, focus on rule of law and institutions, uses economic and institutional framing, frustrated with Brazilian politics overall',
+    sentiment_hint: 'criticizes both PT and Bolsonaro camps, focuses on institutional rule of law, fiscal responsibility; frustrated with Brazilian political dysfunction',
   },
   {
     id: 'leitor_conspiracao',
     emoji: '🕳️',
     name: 'Leitor conspiração',
     role: 'Adepto de teorias da conspiração',
-    sentiment_hint: 'dismisses the article as a distraction from the "real" story, accuses globalists or powerful elites, references globalism, deep state or "agenda oculta", uses memes and sarcasm',
+    sentiment_hint: 'dismisses the article as a distraction from the "real" story controlled by globalists or elites; references "agenda oculta", deep state, Davos, NWO; uses sarcasm and all-caps',
   },
+  // ── Professional voices ────────────────────────────────
   {
     id: 'advogado',
     emoji: '⚖️',
     name: 'Especialista jurídico',
     role: 'Advogado / jurista',
-    sentiment_hint: 'analytical, focuses on legal implications, constitutional angles, and due process, neutral or mixed',
+    sentiment_hint: 'analytical, focuses precisely on legal implications, due process, constitutional angles; may point out what the reporting gets legally wrong or right',
   },
   {
     id: 'abordado',
     emoji: '🛡️',
     name: 'Pessoa abordada',
-    role: 'Sujeito da matéria (defesa)',
-    sentiment_hint: 'defensive, denying wrongdoing, reframing the narrative, accusing the journalist of bias or selective use of data',
+    role: 'Sujeito direto da matéria (nota de defesa)',
+    sentiment_hint: 'defensive, denying wrongdoing; attacks the journalist\'s methodology or cherry-picking; claims to have been misquoted or that context is missing',
   },
   {
     id: 'ativista',
     emoji: '📢',
     name: 'Ativista / ONG',
     role: 'Ativista de direitos humanos ou meio ambiente',
-    sentiment_hint: 'positive about exposure, calls for accountability and concrete action, references systemic failures',
+    sentiment_hint: 'celebrates the exposure, calls for concrete policy action; references systemic failures and structural causes beyond the individual story',
   },
   {
     id: 'jornalista',
     emoji: '🎙️',
     name: 'Jornalista concorrente',
     role: 'Colega de imprensa',
-    sentiment_hint: 'professional tone, notes what the story confirms or what it might be missing methodologically, may be impressed or subtly competitive',
+    sentiment_hint: 'professional tone; notes methodologically what the story confirms or is missing; subtly competitive; may link to their own related coverage',
   },
   {
     id: 'academico',
     emoji: '🎓',
     name: 'Acadêmico / analista',
     role: 'Pesquisador / professor universitário',
-    sentiment_hint: 'neutral, analytical, contextualizes the story within broader historical or structural patterns in Brazil',
+    sentiment_hint: 'neutral, measured; contextualizes the story within broader historical patterns in Brazil; may cite data or academic studies; avoids emotional language',
+  },
+  // ── Social media behavior typologies (research-based) ─
+  {
+    id: 'humorista',
+    emoji: '😂',
+    name: 'Comentarista humorista',
+    role: 'Usuário que usa humor e memes para reagir',
+    sentiment_hint: 'reacts with jokes, irony, memes or puns about the story; humor can be sympathetic or critical; never takes a serious stance; short comment, very informal, emoji-heavy',
+  },
+  {
+    id: 'auto_promotor',
+    emoji: '📣',
+    name: 'Auto-promotor',
+    role: 'Usuário que usa a notícia para se promover',
+    sentiment_hint: 'barely engages with the actual story; pivot to promoting themselves, their newsletter, podcast or "thread" on the topic; ends with a follow/subscribe CTA',
+  },
+  {
+    id: 'especialista_autoproclamado',
+    emoji: '🧠',
+    name: 'Especialista autoproclamado',
+    role: 'Usuário que alega saber mais do que o jornalista',
+    sentiment_hint: 'condescending, claims insider knowledge or experience; points out things the journalist "missed" or "got wrong"; may be right about some things but overstates their expertise',
+  },
+  {
+    id: 'compartilhador_sem_ler',
+    emoji: '🔁',
+    name: 'Compartilhador sem ler',
+    role: 'Usuário que reage só à manchete',
+    sentiment_hint: 'very short comment, clearly based only on the headline; gets at least one factual detail visibly wrong or asks something answered in the article body; shares anyway',
+  },
+  {
+    id: 'engajado_emocional',
+    emoji: '😢',
+    name: 'Leitor emocionalmente engajado',
+    role: 'Usuário com reação emocional intensa',
+    sentiment_hint: 'reacts emotionally and empathetically, identifying with victims or affected parties; personal anecdote or family reference; calls for empathy from others; not necessarily political',
+  },
+  {
+    id: 'debatedor',
+    emoji: '💬',
+    name: 'Debatedor compulsivo',
+    role: 'Usuário que quer brigar nos comentários',
+    sentiment_hint: 'intentionally provocative; challenges other commenters or the journalist directly; asks aggressive or rhetorical questions; wants to start or sustain an argument',
+  },
+  {
+    id: 'gen_z',
+    emoji: '📱',
+    name: 'Leitor Gen Z / jovem',
+    role: 'Jovem brasileiro de 18-25 anos, muito online',
+    sentiment_hint: 'very informal language, uses internet slang ("mds", "isso aí", "surreal", "absurdo"), brief reactions, dark humor, may reference internet culture or memes; politically aware but cynical',
+  },
+  {
+    id: 'diaspora',
+    emoji: '🌍',
+    name: 'Brasileiro da diáspora',
+    role: 'Brasileiro vivendo no exterior',
+    sentiment_hint: 'compares Brazil to their host country; frustrated but hopeful; notes how the story resonates or differs from international coverage; may comment in mixed PT/EN',
+  },
+  {
+    id: 'conservador_tradicional',
+    emoji: '👴',
+    name: 'Conservador tradicional',
+    role: 'Leitor mais velho, valores tradicionais',
+    sentiment_hint: 'not explicitly partisan; reacts through a moral/religious lens ("onde foi parar os valores?"); nostalgic about a perceived better past; cautious about conclusions; formal language',
+  },
+  {
+    id: 'lurker_ativado',
+    emoji: '👀',
+    name: 'Lurker ativado',
+    role: 'Leitor silencioso que raramente comenta',
+    sentiment_hint: 'explicitly says they rarely comment but this story made them break the silence; brief, direct, earnest; no political posturing; focused on one specific fact that shocked them',
   },
 ];
 
@@ -234,6 +310,7 @@ formEl.addEventListener('submit', async (e) => {
   } catch (err) {
     showError(humanizeError(err, provider));
   } finally {
+    clearLoader();
     submitBtn.disabled = false;
     submitBtn.textContent = 'Simular reações';
   }
@@ -358,12 +435,25 @@ function renderPostPreview(article, outlet) {
   postPreview.classList.remove('hidden');
 }
 
-// ——— Skeleton ————————————————————————————————————————————
+// ——— Animated loading state —————————————————————————————
+let _loaderInterval = null;
+
 function showSkeleton() {
+  if (_loaderInterval) clearInterval(_loaderInterval);
+
   resultsArea.innerHTML = `
+    <div class="loader-state">
+      <div class="loader-header">
+        <span class="loader-label" id="loaderLabel">Consultando a IA…</span>
+        <span class="loader-count" id="loaderCount">0 / ${PERSONAS.length}</span>
+      </div>
+      <div class="loader-bar-track">
+        <div class="loader-bar-fill" id="loaderBarFill"></div>
+      </div>
+    </div>
     <div class="skeleton-feed">
-      ${Array.from({length: 5}, () => `
-      <div class="skeleton-card">
+      ${Array.from({length: 6}, (_, i) => `
+      <div class="skeleton-card" style="animation-delay:${i * 0.12}s">
         <div class="skeleton-avatar"></div>
         <div class="skeleton-lines">
           <div class="skeleton-line s"></div>
@@ -373,7 +463,29 @@ function showSkeleton() {
         </div>
       </div>`).join('')}
     </div>`;
+
+  // Cycle through persona names in the status label
+  const label   = document.getElementById('loaderLabel');
+  const counter = document.getElementById('loaderCount');
+  const bar     = document.getElementById('loaderBarFill');
+  let   idx     = 0;
+  const total   = PERSONAS.length;
+
+  _loaderInterval = setInterval(() => {
+    if (!label || !counter || !bar) { clearInterval(_loaderInterval); return; }
+    const p = PERSONAS[idx % total];
+    label.textContent   = `Gerando reação de ${p.emoji} ${p.name}…`;
+    counter.textContent = `${idx + 1} / ${total}`;
+    bar.style.width     = `${Math.round(((idx + 1) / total) * 100)}%`;
+    idx++;
+    if (idx >= total) clearInterval(_loaderInterval);
+  }, 900);
 }
+
+function clearLoader() {
+  if (_loaderInterval) { clearInterval(_loaderInterval); _loaderInterval = null; }
+}
+
 
 // ——— Render comments ————————————————————————————————————
 function renderComments(comments) {
