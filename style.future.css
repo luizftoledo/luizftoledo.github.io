@@ -1742,3 +1742,45 @@ html[data-theme='light'] {
 .story-link:hover .story-link-icon {
   transform: translateX(2px);
 }
+
+/* ─── Scrollytelling / EN button ─── */
+.story-link-en {
+  background: rgba(255, 180, 0, 0.05);
+  border-color: rgba(255, 180, 0, 0.18);
+}
+
+.story-link-en .story-link-icon {
+  color: #ffb400;
+}
+
+.story-link-en:hover {
+  background: rgba(255, 180, 0, 0.12);
+  border-color: #ffb400;
+}
+
+.story-link-series {
+  background: rgba(255, 180, 0, 0.07);
+  border: 1px solid rgba(255, 180, 0, 0.25);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 16px;
+  transition: all 0.2s ease;
+}
+
+.story-link-series:hover {
+  background: rgba(255, 180, 0, 0.18);
+  border-color: #ffb400;
+  transform: translateX(4px);
+}
+
+.story-link-series .story-link-icon {
+  color: #ffb400;
+  font-size: 1.1em;
+}

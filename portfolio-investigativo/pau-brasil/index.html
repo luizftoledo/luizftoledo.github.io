@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang="en">The Endangered National Symbol Being Smuggled to Europe for Violin Bows</title>
+    <title data-lang="pt">O Símbolo Nacional Ameaçado de Extinção que É Contrabandeado para Virar Arco de Violino na Europa</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../shared/base.css">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1a0a00 0%, #1a2a0a 100%);
+            --accent-color: #8b6b47;
+            --text-dark: #1a1a1a;
+            --text-light: #f5f5f5;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .hero-section {
+            background: var(--primary-gradient);
+            color: var(--text-light);
+            padding: 120px 20px 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .series-tag {
+            display: inline-block;
+            background: rgba(139, 107, 71, 0.2);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent-color);
+        }
+
+        .hero-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .hero-section .deck {
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .meta {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        .meta span[data-lang] {
+            display: none;
+        }
+
+        body.lang-en .meta span[data-lang="en"],
+        body.lang-pt .meta span[data-lang="pt"] {
+            display: inline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .text-section {
+            margin: 60px 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+
+        .text-section.visible {
+            opacity: 1;
+        }
+
+        .text-section p {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .pullquote {
+            background: #f9f9f9;
+            border-left: 4px solid var(--accent-color);
+            padding: 30px 20px;
+            margin: 40px 0;
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #333;
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+
+        .pullquote.visible {
+            opacity: 1;
+        }
+
+        .stats-section {
+            background: #f5f5f5;
+            padding: 60px 20px;
+            margin: 80px 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+
+        .stats-section.visible {
+            opacity: 1;
+        }
+
+        .stats-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .timeline {
+            margin: 80px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            opacity: 0;
+            transition: opacity 0.6s ease-in;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            margin-right: 50%;
+            text-align: right;
+            padding-right: 30px;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: 50%;
+            text-align: left;
+            padding-left: 30px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 10px;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-color);
+            border: 3px solid white;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+
+        .timeline-text {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .footer {
+            background: #2a2a2a;
+            color: var(--text-light);
+            padding: 60px 20px;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .footer-disclaimer {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .footer-nav {
+            margin-top: 20px;
+        }
+
+        .footer-nav a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-nav a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section .deck {
+                font-size: 1.1rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                margin: 0;
+                margin-left: 60px;
+                text-align: left;
+                padding-left: 30px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="lang-en">
+    <!-- Disclaimer Bar -->
+    <div id="disclaimerBar" class="disclaimer-bar">
+        <span>⚠</span>
+        <span id="disclaimerText" data-lang="en">This is an alternative layout version of an investigative article by journalist Luiz Fernando Toledo (in partnership with Data Fixers), created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to Piauí magazine and Luiz Fernando Toledo.</span>
+        <span id="disclaimerText" data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem investigativa do jornalista Luiz Fernando Toledo (em parceria com Data Fixers), criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente à revista Piauí e a Luiz Fernando Toledo.</span>
+        <a href="https://piaui.folha.uol.com.br" target="_blank" data-lang="en">Original Article</a>
+        <a href="https://piaui.folha.uol.com.br" target="_blank" data-lang="pt">Artigo Original</a>
+        <button id="disclaimerClose">&times;</button>
+    </div>
+
+    <!-- Language Toggle Bar -->
+    <div id="langBar" class="lang-bar">
+        <button id="btnEn" class="lang-btn active" data-lang="en">EN</button>
+        <button id="btnPt" class="lang-btn" data-lang="pt">PT</button>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progressBar" class="progress-bar"></div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="series-tag" data-lang="en">Piauí Magazine & Data Fixers</div>
+        <div class="series-tag" data-lang="pt">Revista Piauí & Data Fixers</div>
+
+        <h1 data-lang="en">The Endangered National Symbol Being Smuggled to Europe for Violin Bows</h1>
+        <h1 data-lang="pt">O Símbolo Nacional Ameaçado de Extinção que É Contrabandeado para Virar Arco de Violino na Europa</h1>
+
+        <div class="deck" data-lang="en">Pau-brasil, the tree that gave Brazil its name, is being trafficked globally to supply the world's violin bow makers, despite international protection laws and near-extinction in its native Atlantic Forest.</div>
+        <div class="deck" data-lang="pt">Pau-brasil, a árvore que deu nome ao Brasil, está sendo traficada globalmente para abastecer os fabricantes de arcos de violino do mundo, apesar das leis de proteção internacional e quase extinção em sua Mata Atlântica nativa.</div>
+
+        <div class="meta">
+            <span data-lang="en">Luiz Fernando Toledo (with Data Fixers) • Piauí Magazine • April 2023</span>
+            <span data-lang="pt">Luiz Fernando Toledo (com Data Fixers) • Revista Piauí • Abril de 2023</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Text Section 1 -->
+        <section class="text-section fade-in">
+            <p data-lang="en">Paubrasilia echinata—pau-brasil—is the rarest wood in the luthier's arsenal. Its weight, density, and acoustic properties make it the premium material for violin bows. A single pau-brasil bow can cost €800 to €2,000. A single tree can yield dozens of bows. But pau-brasil is also Brazil's national symbol, named the tree that gave the country its name. It is also critically endangered, reduced to scattered fragments in the Atlantic Forest, and protected under CITES (Convention on International Trade in Endangered Species) since 1992.</p>
+            <p data-lang="pt">Paubrasilia echinata—pau-brasil—é a madeira mais rara no arsenal do luthier. Seu peso, densidade e propriedades acústicas a tornam o material premium para arcos de violino. Um único arco de pau-brasil pode custar de €800 a €2.000. Uma única árvore pode render dezenas de arcos. Mas pau-brasil é também o símbolo nacional do Brasil, nomeado a árvore que deu nome ao país. É também criticamente ameaçada de extinção, reduzida a fragmentos dispersos na Mata Atlântica, e protegida sob CITES (Convenção sobre o Comércio Internacional de Espécies Ameaçadas) desde 1992.</p>
+        </section>
+
+        <!-- Pullquote -->
+        <div class="pullquote fade-in">
+            <span data-lang="en">"The classical music world has a supply chain problem it hasn't fully acknowledged. Most bow makers and players don't know where their bows come from, or they choose not to ask."</span>
+            <span data-lang="pt">"O mundo da música clássica tem um problema de cadeia de suprimentos que não foi totalmente reconhecido. A maioria dos fabricantes e tocadores de arcos não sabe de onde seus arcos vêm, ou escolhem não perguntar."</span>
+        </div>
+
+        <!-- Text Section 2 -->
+        <section class="text-section fade-in">
+            <p data-lang="en">Despite CITES protection, pau-brasil continues to be trafficked internationally. This investigation, published in Piauí magazine in April 2023 in partnership with Data Fixers, identified companies and individuals penalized for illegal trafficking of pau-brasil bows and wood. Some traders claim to use "legally sourced" pau-brasil from plantations, but verification is difficult. International enforcement is patchy. The incentives are enormous: a kilogram of pau-brasil wood can sell for €500 to €1,000 in Europe.</p>
+            <p data-lang="pt">Apesar da proteção CITES, pau-brasil continua sendo traficado internacionalmente. Esta investigação, publicada na revista Piauí em abril de 2023 em parceria com Data Fixers, identificou empresas e indivíduos penalizados por tráfico ilegal de arcos e madeira de pau-brasil. Alguns comerciantes afirmam usar pau-brasil "legalmente obtido" de plantações, mas a verificação é difícil. A aplicação internacional é esporádica. Os incentivos são enormes: um quilograma de madeira de pau-brasil pode ser vendido por €500 a €1.000 na Europa.</p>
+
+            <p data-lang="en">The tree's natural habitat—the Atlantic Forest, or Mata Atlântica—has been reduced to fragments totaling less than 12% of its original extent. Pau-brasil was once the most abundant tree in this forest. Today, it survives in protected pockets, but illegal harvesting continues. IBAMA raids have found illegal stocks, but enforcement is inadequate. The musical world has been slow to address the supply chain problem. Many luthiers and performers are unaware of the sourcing of their bows, or they prioritize acoustic quality over environmental responsibility.</p>
+            <p data-lang="pt">O habitat natural da árvore—a Mata Atlântica—foi reduzido a fragmentos totalizando menos de 12% de sua extensão original. Pau-brasil era uma vez a árvore mais abundante dessa floresta. Hoje, sobrevive em bolsões protegidos, mas a colheita ilegal continua. Operações da IBAMA encontraram estoques ilegais, mas a aplicação é inadequada. O mundo musical foi lento em resolver o problema da cadeia de suprimentos. Muitos luthiers e músicos desconhecem a origem de seus arcos, ou priorizam a qualidade acústica sobre a responsabilidade ambiental.</p>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section fade-in">
+            <h2 data-lang="en">Critical Facts</h2>
+            <h2 data-lang="pt">Fatos Críticos</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" data-count="500">500+</div>
+                    <div class="stat-label" data-lang="en">Years of pau-brasil exploitation since Portuguese arrival</div>
+                    <div class="stat-label" data-lang="pt">Anos de exploração de pau-brasil desde a chegada portuguesa</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" data-count="2023">2023</div>
+                    <div class="stat-label" data-lang="en">Year investigation was published</div>
+                    <div class="stat-label" data-lang="pt">Ano em que a investigação foi publicada</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" data-count="1">1</div>
+                    <div class="stat-label" data-lang="en">National symbol: the tree that named Brazil</div>
+                    <div class="stat-label" data-lang="pt">Símbolo nacional: a árvore que nomeou o Brasil</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" data-lang="en">CITES</div>
+                    <div class="stat-number" data-lang="pt">CITES</div>
+                    <div class="stat-label" data-lang="en">International protection status since 1992</div>
+                    <div class="stat-label" data-lang="pt">Status de proteção internacional desde 1992</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Text Section 3 -->
+        <section class="text-section fade-in">
+            <p data-lang="en">The investigation traced specific shipments and identified traders operating across multiple countries. Some companies process pau-brasil in Europe and sell finished bows without documenting the origin of the wood. Others work with suppliers in Brazil who harvest illegally or falsify CITES permits. The supply chain is fragmented and opaque—deliberately so. As long as the classical music world values pau-brasil bows above all other materials, and as long as enforcement remains weak, the trafficking will continue.</p>
+            <p data-lang="pt">A investigação rastreou remessas específicas e identificou comerciantes operando em vários países. Algumas empresas processam pau-brasil na Europa e vendem arcos acabados sem documentar a origem da madeira. Outras trabalham com fornecedores no Brasil que colhem ilegalmente ou falsificam permissões CITES. A cadeia de suprimentos é fragmentada e opaca—deliberadamente. Enquanto o mundo da música clássica valorizar arcos de pau-brasil acima de todos os outros materiais, e enquanto a aplicação permanecer fraca, o tráfico continuará.</p>
+
+            <p data-lang="en">International bodies including CITES, the IUCN (International Union for Conservation of Nature), and the Brazilian government have recognized pau-brasil's endangered status. Yet demand from the global bow-making industry remains strong. Some luthiers have experimented with alternative woods, but pau-brasil's acoustic properties remain unmatched in the eyes of many professionals. The question facing the classical music world is whether it can transition away from pau-brasil before the species disappears entirely from the wild.</p>
+            <p data-lang="pt">Organismos internacionais, incluindo CITES, a IUCN (União Internacional para a Conservação da Natureza), e o governo brasileiro, reconheceram o status ameaçado de pau-brasil. Mas a demanda da indústria global de fabricação de arcos permanece forte. Alguns luthiers experimentaram madeiras alternativas, mas as propriedades acústicas de pau-brasil permanecem inigualáveis aos olhos de muitos profissionais. A questão que enfrenta o mundo da música clássica é se conseguirá se afastar de pau-brasil antes que a espécie desapareça completamente da natureza.</p>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="timeline">
+            <h2 style="text-align: center; margin-bottom: 40px;" data-lang="en">Timeline of Pau-Brasil: From Abundance to Crisis</h2>
+            <h2 style="text-align: center; margin-bottom: 40px;" data-lang="pt">Cronologia do Pau-Brasil: Da Abundância à Crise</h2>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">1500s</div>
+                    <div class="timeline-text" data-lang="en">Portuguese colonizers exploit pau-brasil for red dye; it becomes Brazil's first major export commodity</div>
+                    <div class="timeline-text" data-lang="pt">Colonizadores portugueses exploram pau-brasil para corante vermelho; torna-se a primeira grande mercadoria de exportação do Brasil</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">1800s</div>
+                    <div class="timeline-text" data-lang="en">Pau-brasil populations decimated; the tree becomes rare; Atlantic Forest habitat shrinks dramatically</div>
+                    <div class="timeline-text" data-lang="pt">Populações de pau-brasil decimadas; a árvore torna-se rara; habitat da Mata Atlântica encolhe dramaticamente</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">1961</div>
+                    <div class="timeline-text" data-lang="en">Pau-brasil is declared Brazil's national tree; ecological protection begins</div>
+                    <div class="timeline-text" data-lang="pt">Pau-brasil é declarada árvore nacional do Brasil; proteção ecológica começa</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">1992</div>
+                    <div class="timeline-text" data-lang="en">Pau-brasil is added to CITES Appendix II; international trade monitoring begins</div>
+                    <div class="timeline-text" data-lang="pt">Pau-brasil é adicionada ao Apêndice II do CITES; monitoramento internacional do comércio começa</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-text" data-lang="en">Piauí/Data Fixers investigation reveals ongoing illegal trafficking to European bow makers</div>
+                    <div class="timeline-text" data-lang="pt">Investigação Piauí/Data Fixers revela tráfico ilegal contínuo para fabricantes de arcos europeus</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-disclaimer">
+            <p data-lang="en">This is an alternative layout version of an investigative article by journalist Luiz Fernando Toledo (in partnership with Data Fixers), created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to Piauí magazine and Luiz Fernando Toledo.</p>
+            <p data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem investigativa do jornalista Luiz Fernando Toledo (em parceria com Data Fixers), criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente à revista Piauí e a Luiz Fernando Toledo.</p>
+        </div>
+        <div class="footer-nav">
+            <a href="../index.html" data-lang="en">← Back to Portfolio</a>
+            <a href="../index.html" data-lang="pt">← Voltar ao Portfólio</a>
+        </div>
+    </div>
+
+    <script src="../shared/base.js"></script>
+</body>
+</html>

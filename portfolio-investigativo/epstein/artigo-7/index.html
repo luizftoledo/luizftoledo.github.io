@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Epstein Series — Part 7: Mother Saved Brazilian Model | BBC News Brasil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared/base.css">
+  <style>
+    .hero {
+      background: linear-gradient(160deg, #1a1a2e 0%, #2d1b3d 40%, #1a1a2e 100%);
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 60%, rgba(196,30,58,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 40%, rgba(100,60,130,0.1) 0%, transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .hero-series-tag {
+      display: inline-block;
+      background: rgba(196,30,58,0.2);
+      border: 1px solid rgba(196,30,58,0.4);
+      color: #e8a0aa;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-deck {
+      font-family: var(--serif);
+      font-size: clamp(17px, 2vw, 21px);
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+    .hero-meta {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.5px;
+    }
+    .hero-meta strong { color: rgba(255,255,255,0.75); }
+
+    .breadcrumb {
+      padding: 20px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .breadcrumb a {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .text-section {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 40px;
+      opacity: 0;
+    }
+    .text-section p {
+      font-family: var(--serif);
+      font-size: 19px;
+      line-height: 1.8;
+      color: #1a1a2e;
+      margin-bottom: 22px;
+    }
+    .text-section h2 {
+      font-family: var(--display);
+      font-size: 30px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 48px 0 20px;
+      line-height: 1.25;
+    }
+
+    .chapter-divider {
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .chapter-divider::before, .chapter-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(26,26,46,0.15);
+    }
+    .chapter-num {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .pullquote {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 48px 60px;
+      background: #1a1a2e;
+      position: relative;
+      opacity: 0;
+    }
+    .pullquote::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      font-family: var(--display);
+      font-size: 100px;
+      color: var(--accent);
+      line-height: 1;
+      opacity: 0.4;
+    }
+    .pullquote blockquote {
+      font-family: var(--display);
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-style: italic;
+      color: #fff;
+      line-height: 1.4;
+      margin: 0 0 20px;
+    }
+    .pullquote cite {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .stats-section {
+      background: #f8f6f3;
+      padding: 80px 40px;
+      opacity: 0;
+    }
+    .stats-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .stats-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+    }
+    .stat-card {
+      background: #fff;
+      border-top: 3px solid var(--accent);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: var(--display);
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat-label {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .timeline-section {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 60px 40px;
+    }
+    .timeline-title {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 40px;
+    }
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), rgba(196,30,58,0.2));
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .timeline-date {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .timeline-event {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: #1a1a2e;
+      line-height: 1.5;
+    }
+
+    .doc-box {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 40px;
+      opacity: 0;
+    }
+    .doc-box-inner {
+      background: #f0f4f8;
+      border-left: 4px solid #3a7bd5;
+      padding: 28px 32px;
+    }
+    .doc-box-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #3a7bd5;
+      margin-bottom: 12px;
+    }
+    .doc-box-text {
+      font-family: var(--sans);
+      font-size: 15px;
+      color: #2d3748;
+      line-height: 1.6;
+    }
+
+    .photo-credit {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 40px 12px;
+    }
+    .photo-credit-bar {
+      background: #1a1a2e;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-credit-text {
+      font-family: var(--sans);
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      font-style: italic;
+    }
+
+    footer { background: var(--primary, #1a1a2e); color: #fff; padding: 60px 40px; }
+    .footer-inner { max-width: 800px; margin: 0 auto; }
+    .footer-disclaimer {
+      border-left: 4px solid var(--accent);
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      background: rgba(255,255,255,0.05);
+    }
+    .footer-disclaimer p {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      margin: 0 0 8px;
+    }
+    .footer-disclaimer a { color: #e8a0aa; }
+    .footer-nav {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .footer-nav a {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+    }
+    .footer-nav a:hover { color: #fff; }
+    .footer-copy {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    @media (max-width: 600px) {
+      .pullquote { padding: 32px 28px; }
+      .text-section, .timeline-section { padding: 28px 20px; }
+      .breadcrumb { padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body class="lang-en">
+
+  <!-- Disclaimer Bar -->
+  <div class="disclaimer-bar" id="disclaimerBar">
+    <div class="disclaimer-inner">
+      <div class="disclaimer-icon">⚠</div>
+      <p class="disclaimer-text">
+        <strong data-lang="en">Important notice:</strong>
+        <strong data-lang="pt">Aviso importante:</strong>
+        <span data-lang="en">This is an alternative layout version of a BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to BBC News Brasil. &nbsp;</span>
+        <span data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente à BBC News Brasil. &nbsp;</span>
+        <a href="https://www.bbc.com/portuguese/articles/c5y6g6yzev5o" target="_blank" rel="noopener" data-lang="en">Read original BBC report ↗</a>
+        <a href="https://www.bbc.com/portuguese/articles/c5y6g6yzev5o" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC ↗</a>
+      </p>
+      <button class="disclaimer-close" id="disclaimerClose" aria-label="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle-bar" id="langBar">
+    <div class="lang-toggle-inner">
+      <span class="lang-toggle-label" data-lang="en">Language:</span>
+      <span class="lang-toggle-label" data-lang="pt">Idioma:</span>
+      <button class="lang-btn active" id="btnEn">EN</button>
+      <button class="lang-btn" id="btnPt">PT</button>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-series-tag" data-lang="en">EPSTEIN SERIES — PART 7 · BBC NEWS BRASIL</div>
+      <div class="hero-series-tag" data-lang="pt">SÉRIE EPSTEIN — PARTE 7 · BBC NEWS BRASIL</div>
+      <h1 class="hero-title" data-lang="en">The Mother Who Saved Her Daughter from Epstein's Network</h1>
+      <h1 class="hero-title" data-lang="pt">A Mãe Que Salvou a Filha da Rede de Epstein</h1>
+      <p class="hero-deck" data-lang="en">At 16, Gláucia Fekete was recruited to a modeling contest in Ecuador organized by Jean-Luc Brunel — while Epstein himself was present. Only her mother's refusal kept her out of the network.</p>
+      <p class="hero-deck" data-lang="pt">Aos 16 anos, Gláucia Fekete foi recrutada para um concurso de modelos no Equador organizado por Jean-Luc Brunel — enquanto o próprio Epstein estava presente. Apenas a recusa de sua mãe a manteve fora da rede.</p>
+      <div class="hero-meta">
+        <strong data-lang="en">By Luiz Fernando Toledo</strong>
+        <strong data-lang="pt">Por Luiz Fernando Toledo</strong>
+        &nbsp;·&nbsp;
+        <span data-lang="en">BBC News Brasil · February 26, 2026 · 15 min read</span>
+        <span data-lang="pt">BBC News Brasil · 26 de fevereiro de 2026 · 15 min de leitura</span>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="breadcrumb">
+      <a href="../index.html" data-lang="en">← Epstein Series</a>
+      <a href="../index.html" data-lang="pt">← Série Epstein</a>
+    </div>
+
+    <!-- Stats -->
+    <section class="stats-section fade-in">
+      <div class="stats-inner">
+        <p class="stats-label" data-lang="en">Key figures from this investigation</p>
+        <p class="stats-label" data-lang="pt">Números-chave desta investigação</p>
+        <div class="stats-grid">
+          <div class="stat-card" data-count="16">
+            <div class="stat-number">16</div>
+            <div class="stat-label" data-lang="en">Age of Gláucia when recruited</div>
+            <div class="stat-label" data-lang="pt">Idade de Gláucia quando recrutada</div>
+          </div>
+          <div class="stat-card" data-count="300000">
+            <div class="stat-number">$300k</div>
+            <div class="stat-label" data-lang="en">Prize money offered to lure models</div>
+            <div class="stat-label" data-lang="pt">Prêmio oferecido para atrair modelos</div>
+          </div>
+          <div class="stat-card" data-count="2004">
+            <div class="stat-number">2004</div>
+            <div class="stat-label" data-lang="en">Year of the Ecuador contest</div>
+            <div class="stat-label" data-lang="pt">Ano do concurso no Equador</div>
+          </div>
+          <div class="stat-card" data-count="15">
+            <div class="stat-number">15</div>
+            <div class="stat-label" data-lang="en">Age of contest winner Aline Weber</div>
+            <div class="stat-label" data-lang="pt">Idade da vencedora Aline Weber</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 1 -->
+    <div class="chapter-divider">
+      <span class="chapter-num" data-lang="en">Chapter I — Discovery</span>
+      <span class="chapter-num" data-lang="pt">Capítulo I — Descoberta</span>
+    </div>
+
+    <div class="text-section fade-in">
+      <p data-lang="en">Gláucia Fekete was 13 years old when she was first noticed. The scout who approached her was Dilson Stein — the same man who had launched the career of Gisele Bündchen, Brazil's most celebrated supermodel. Growing up in Santa Rosa, a small city 500 kilometres from Porto Alegre in Rio Grande do Sul, Gláucia had few reasons to suspect the world of high fashion would ever reach her doorstep.</p>
+      <p data-lang="pt">Gláucia Fekete tinha 13 anos quando foi notada pela primeira vez. O olheiro que a abordou foi Dilson Stein — o mesmo homem que havia lançado a carreira de Gisele Bündchen, a supermodelo mais celebrada do Brasil. Crescendo em Santa Rosa, uma pequena cidade a 500 quilômetros de Porto Alegre no Rio Grande do Sul, Gláucia tinha poucos motivos para suspeitar que o mundo da alta moda algum dia chegaria à sua porta.</p>
+
+      <p data-lang="en">Three years later, in 2004, Stein came to her family with an extraordinary opportunity: a modelling contest in Ecuador with a prize of US$300,000 — and a direct pathway to New York contracts. The competition was called Models New Generation. But the man behind the contest was not just another talent scout.</p>
+      <p data-lang="pt">Três anos depois, em 2004, Stein chegou à família com uma oportunidade extraordinária: um concurso de modelos no Equador com um prêmio de US$ 300 mil — e um caminho direto para contratos em Nova York. A competição se chamava Models New Generation. Mas o homem por trás do concurso não era apenas mais um caça-talentos.</p>
+
+      <h2 data-lang="en">A Visit to the Interior</h2>
+      <h2 data-lang="pt">Uma Visita ao Interior</h2>
+
+      <p data-lang="en">Jean-Luc Brunel wanted to convince the family personally. The French modelling agent — who years later would be accused of being a procurer of young women for Jeffrey Epstein — travelled to Santa Rosa and spent an afternoon at the Fekete home. He was charming. He was professional. He presented the contest as a legitimate launch pad.</p>
+      <p data-lang="pt">Jean-Luc Brunel quis convencer a família pessoalmente. O agente de modelos francês — que anos depois seria acusado de ser um aliciador de jovens para Jeffrey Epstein — viajou até Santa Rosa e passou uma tarde na casa dos Fekete. Era carismático. Era profissional. Apresentou o concurso como uma plataforma legítima de lançamento.</p>
+
+      <p data-lang="en">In 2004, Brunel was not yet under police investigation. His name would only later become synonymous with systematic abuse. Gláucia's mother, Bárbara, allowed her daughter to travel.</p>
+      <p data-lang="pt">Em 2004, Brunel ainda não estava sob investigação policial. Seu nome só mais tarde se tornaria sinônimo de abuso sistemático. A mãe de Gláucia, Bárbara, permitiu que a filha viajasse.</p>
+    </div>
+
+    <!-- Pullquote -->
+    <div class="pullquote fade-in">
+      <blockquote data-lang="en">"Without knowing it, I was right in the middle of that whole hurricane."</blockquote>
+      <blockquote data-lang="pt">"Sem saber, eu estava bem no meio desse furacão todo."</blockquote>
+      <cite>— Gláucia Fekete, now 38</cite>
+    </div>
+
+    <!-- Chapter 2 -->
+    <div class="chapter-divider">
+      <span class="chapter-num" data-lang="en">Chapter II — Guayaquil</span>
+      <span class="chapter-num" data-lang="pt">Capítulo II — Guayaquil</span>
+    </div>
+
+    <div class="text-section fade-in">
+      <p data-lang="en">Gláucia travelled to Guayaquil, Ecuador with Brunel's team. The contest, Models New Generation, was held there in August 2004. The Ecuadorian newspaper El Universo photographed the event, noting that contestants were aged between 15 and 19 years old.</p>
+      <p data-lang="pt">Gláucia viajou para Guayaquil, Equador, com a equipe de Brunel. O concurso Models New Generation foi realizado lá em agosto de 2004. O jornal equatoriano El Universo fotografou o evento, registrando que as concorrentes tinham entre 15 e 19 anos.</p>
+
+      <p data-lang="en">The winner was Aline Weber — a 15-year-old Brazilian who would go on to build a significant international modelling career. For Gláucia, the contest passed without incident. But something felt wrong almost immediately.</p>
+      <p data-lang="pt">A vencedora foi Aline Weber — uma brasileira de 15 anos que posteriormente construiria uma significativa carreira internacional de modelos. Para Gláucia, o concurso transcorreu sem incidentes. Mas algo pareceu errado quase imediatamente.</p>
+
+      <p data-lang="en">She had no phone. The family had agreed there would be constant calls and video messages during the trip — but communication was impossible. "I couldn't reach anyone," she recalled.</p>
+      <p data-lang="pt">Ela não tinha telefone. A família havia combinado que haveria ligações constantes e mensagens em vídeo durante a viagem — mas a comunicação era impossível. "Eu não conseguia falar com ninguém", ela recordou.</p>
+
+      <h2 data-lang="en">Epstein Was There</h2>
+      <h2 data-lang="pt">Epstein Estava Lá</h2>
+
+      <p data-lang="en">BBC News Brasil's investigation uncovered documents showing that Jeffrey Epstein was in Guayaquil on August 24 and 25, 2004 — the same days as the contest's final round. Flight records and customs documents placed him there at exactly that moment.</p>
+      <p data-lang="pt">A investigação da BBC News Brasil descobriu documentos mostrando que Jeffrey Epstein estava em Guayaquil nos dias 24 e 25 de agosto de 2004 — os mesmos dias da final do concurso. Registros de voos e documentos alfandegários o colocaram lá naquele exato momento.</p>
+
+      <p data-lang="en">Furthermore, the investigation found that at least one model under the age of 16 who had participated in the event flew on Epstein's private plane at least twice later that same year.</p>
+      <p data-lang="pt">Além disso, a investigação descobriu que pelo menos uma modelo menor de 16 anos que havia participado do evento voou no avião particular de Epstein pelo menos duas vezes no mesmo ano.</p>
+    </div>
+
+    <!-- Document box -->
+    <div class="doc-box fade-in">
+      <div class="doc-box-inner">
+        <p class="doc-box-label" data-lang="en">From the investigation</p>
+        <p class="doc-box-label" data-lang="pt">Da investigação</p>
+        <p class="doc-box-text" data-lang="en">Documents confirmed that Jeffrey Epstein was in Guayaquil on August 24–25, 2004, during the Models New Generation final. At least one underage contestant flew aboard Epstein's jet later that year.</p>
+        <p class="doc-box-text" data-lang="pt">Documentos confirmam que Jeffrey Epstein estava em Guayaquil nos dias 24 e 25 de agosto de 2004, durante a final do Models New Generation. Pelo menos uma concorrente menor de idade voou a bordo do jato de Epstein mais tarde naquele ano.</p>
+      </div>
+    </div>
+
+    <!-- Chapter 3 -->
+    <div class="chapter-divider">
+      <span class="chapter-num" data-lang="en">Chapter III — The Refusal</span>
+      <span class="chapter-num" data-lang="pt">Capítulo III — A Recusa</span>
+    </div>
+
+    <div class="text-section fade-in">
+      <p data-lang="en">At the end of the contest, Brunel approached Gláucia with a new offer: an all-expenses-paid trip to New York to participate in fashion shows. It sounded like the next step in a promising career. But to proceed, they needed permission from her mother.</p>
+      <p data-lang="pt">Ao final do concurso, Brunel se aproximou de Gláucia com uma nova oferta: uma viagem com todas as despesas pagas para Nova York para participar de desfiles. Parecia o próximo passo numa carreira promissora. Mas para prosseguir, precisavam da permissão de sua mãe.</p>
+
+      <p data-lang="en">Bárbara said no. Her words to investigators were direct: "They were looking for children, minors. Unfortunately, they found my daughter."</p>
+      <p data-lang="pt">Bárbara disse não. Suas palavras aos investigadores foram diretas: "Procuravam só crianças, menores. Infelizmente acharam a minha filha."</p>
+
+      <p data-lang="en">Bárbara severed all contact with Brunel's network and pulled Gláucia out of the world that had courted her. It was a decision whose full significance would only become clear years later, after Brunel was arrested in France in connection with Epstein's crimes and later found dead in his cell in 2022.</p>
+      <p data-lang="pt">Bárbara cortou todo o contato com a rede de Brunel e retirou Gláucia do mundo que a havia cortejado. Foi uma decisão cujo pleno significado só se tornaria claro anos depois, quando Brunel foi preso na França em conexão com os crimes de Epstein e posteriormente encontrado morto em sua cela em 2022.</p>
+    </div>
+
+    <!-- Pullquote 2 -->
+    <div class="pullquote fade-in">
+      <blockquote data-lang="en">"They were looking for children, minors. Unfortunately, they found my daughter."</blockquote>
+      <blockquote data-lang="pt">"Procuravam só crianças, menores. Infelizmente acharam a minha filha."</blockquote>
+      <cite>— Bárbara, Gláucia's mother</cite>
+    </div>
+
+    <!-- Timeline -->
+    <section class="timeline-section fade-in">
+      <p class="timeline-title" data-lang="en">TIMELINE OF EVENTS</p>
+      <p class="timeline-title" data-lang="pt">LINHA DO TEMPO</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date" data-lang="en">2001</div>
+          <div class="timeline-date" data-lang="pt">2001</div>
+          <div class="timeline-event" data-lang="en">Gláucia, aged 13, is discovered by scout Dilson Stein — who had also launched Gisele Bündchen's career</div>
+          <div class="timeline-event" data-lang="pt">Gláucia, aos 13 anos, é descoberta pelo olheiro Dilson Stein — que também havia lançado a carreira de Gisele Bündchen</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date" data-lang="en">Early 2004</div>
+          <div class="timeline-date" data-lang="pt">Início de 2004</div>
+          <div class="timeline-event" data-lang="en">Jean-Luc Brunel personally visits the Fekete family in Santa Rosa, RS, to pitch the Ecuador contest</div>
+          <div class="timeline-event" data-lang="pt">Jean-Luc Brunel visita pessoalmente a família Fekete em Santa Rosa, RS, para apresentar o concurso no Equador</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date" data-lang="en">August 2004</div>
+          <div class="timeline-date" data-lang="pt">Agosto de 2004</div>
+          <div class="timeline-event" data-lang="en">Models New Generation contest held in Guayaquil, Ecuador. Gláucia, 16, participates. Aline Weber, 15, wins. Epstein confirmed present on August 24–25</div>
+          <div class="timeline-event" data-lang="pt">Concurso Models New Generation realizado em Guayaquil, Equador. Gláucia, 16, participa. Aline Weber, 15, vence. Epstein confirmado presente nos dias 24 e 25</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date" data-lang="en">Late 2004</div>
+          <div class="timeline-date" data-lang="pt">Final de 2004</div>
+          <div class="timeline-event" data-lang="en">Brunel offers Gláucia a trip to New York. Her mother Bárbara refuses and severs contact with the network</div>
+          <div class="timeline-event" data-lang="pt">Brunel oferece a Gláucia uma viagem a Nova York. Sua mãe Bárbara recusa e corta o contato com a rede</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date" data-lang="en">January 2022</div>
+          <div class="timeline-date" data-lang="pt">Janeiro de 2022</div>
+          <div class="timeline-event" data-lang="en">Jean-Luc Brunel is found dead in a Paris prison cell while awaiting trial on rape and human trafficking charges connected to Epstein</div>
+          <div class="timeline-event" data-lang="pt">Jean-Luc Brunel é encontrado morto em uma cela de prisão em Paris enquanto aguardava julgamento por estupro e tráfico de pessoas ligados a Epstein</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date" data-lang="en">February 26, 2026</div>
+          <div class="timeline-date" data-lang="pt">26 de fevereiro de 2026</div>
+          <div class="timeline-event" data-lang="en">BBC News Brasil publishes Gláucia's testimony as part of the Epstein Brazil investigation. Gláucia speaks publicly for the first time</div>
+          <div class="timeline-event" data-lang="pt">BBC News Brasil publica o depoimento de Gláucia como parte da investigação sobre o Epstein no Brasil. Gláucia fala publicamente pela primeira vez</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final section -->
+    <div class="text-section fade-in">
+      <h2 data-lang="en">The Pipeline That Remained Hidden</h2>
+      <h2 data-lang="pt">O Pipeline Que Permaneceu Oculto</h2>
+
+      <p data-lang="en">Gláucia's story reveals a systematic pattern that BBC News Brasil has been documenting since January 2026. Brunel used modelling agencies and competitions as a funnel: events promising legitimate careers were used to identify, isolate and evaluate young women for Epstein.</p>
+      <p data-lang="pt">A história de Gláucia revela um padrão sistemático que a BBC News Brasil vem documentando desde janeiro de 2026. Brunel usava agências de modelos e competições como funil: eventos prometendo carreiras legítimas eram usados para identificar, isolar e avaliar jovens mulheres para Epstein.</p>
+
+      <p data-lang="en">The Brazilian Federal Public Ministry has opened an investigation into whether a recruitment network for Epstein operated in Brazil. The prosecutor leading the case has said she wants to hear from women who had contact with Epstein's circle — as witnesses, not suspects.</p>
+      <p data-lang="pt">O Ministério Público Federal brasileiro abriu uma investigação sobre se uma rede de recrutamento para Epstein operou no Brasil. A promotora que lidera o caso disse que quer ouvir mulheres que tiveram contato com o círculo de Epstein — como testemunhas, não suspeitas.</p>
+
+      <p data-lang="en">Now 38, Gláucia has finally been able to name what nearly happened to her. "My mother saved me," she says, simply. Without her refusal, the story might have ended differently — as it did for others whose names appear in documents the BBC is still working to understand.</p>
+      <p data-lang="pt">Agora com 38 anos, Gláucia finalmente conseguiu nomear o que quase aconteceu com ela. "A minha mãe me salvou", ela diz, simplesmente. Sem a recusa dela, a história poderia ter terminado de forma diferente — como aconteceu com outras cujos nomes aparecem em documentos que a BBC ainda trabalha para entender.</p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p data-lang="en"><strong>About this version:</strong> This is an alternative layout of an original BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalism, reporting and content is the work of BBC News Brasil and journalist Luiz Fernando Toledo. This page is not affiliated with or endorsed by BBC News Brasil.</p>
+        <p data-lang="pt"><strong>Sobre esta versão:</strong> Esta é uma versão com layout alternativo de uma reportagem original da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o jornalismo, apuração e conteúdo é trabalho da BBC News Brasil e do jornalista Luiz Fernando Toledo. Esta página não é afiliada nem endossada pela BBC News Brasil.</p>
+        <p>
+          <a href="https://www.bbc.com/portuguese/articles/c5y6g6yzev5o" target="_blank" rel="noopener" data-lang="en">Read the original BBC News Brasil report ↗</a>
+          <a href="https://www.bbc.com/portuguese/articles/c5y6g6yzev5o" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC News Brasil ↗</a>
+        </p>
+      </div>
+      <div class="footer-nav">
+        <a href="../index.html" data-lang="en">← Back to Epstein Series</a>
+        <a href="../index.html" data-lang="pt">← Voltar à Série Epstein</a>
+        <a href="../../index.html" data-lang="en">Portfolio Home</a>
+        <a href="../../index.html" data-lang="pt">Início do Portfólio</a>
+      </div>
+      <p class="footer-copy">© BBC News Brasil · <span data-lang="en">All rights reserved</span><span data-lang="pt">Todos os direitos reservados</span></p>
+    </div>
+  </footer>
+
+  <script src="../../shared/base.js"></script>
+</body>
+</html>

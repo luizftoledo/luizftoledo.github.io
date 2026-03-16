@@ -1,0 +1,276 @@
+================================================================================
+LUIZ FERNANDO TOLEDO INVESTIGATIVE PORTFOLIO
+Epstein Series - Scrollytelling Premium Articles
+================================================================================
+
+PROJECT OVERVIEW:
+This is a complete, bilingual (English/Portuguese) scrollytelling portfolio
+containing 4 interconnected HTML pages showcasing investigative journalism
+about Jeffrey Epstein's network in Brazil.
+
+================================================================================
+FOLDER STRUCTURE:
+================================================================================
+
+portfolio-investigativo/
+├── shared/
+│   ├── base.css           (16KB - Complete styling system)
+│   └── base.js            (6.2KB - JavaScript functionality)
+│
+└── epstein/
+    ├── index.html         (18KB - Series homepage/landing page)
+    ├── artigo-1/
+    │   └── index.html     (21KB - Part 1: Financial support & MPF investigation)
+    ├── artigo-2/
+    │   └── index.html     (17KB - Part 2: Recruitment networks & contests)
+    └── artigo-3/
+        └── index.html     (18KB - Part 3: Brazilian networks & international scope)
+
+TOTAL SIZE: ~96KB (highly optimized, minimal dependencies)
+
+================================================================================
+PAGE DESCRIPTIONS:
+================================================================================
+
+1. SERIES HOMEPAGE (epstein/index.html)
+   - Landing page for the entire 9-part investigation
+   - Hero section with series title and subtitle
+   - Key statistics displayed as animated stat cards
+   - Complete series grid with all 9 article cards
+   - 3 articles are live with full content
+   - 6 articles show "Coming soon" with publication dates
+   - Links to BBC News Brasil original content
+   - Full Portuguese/English translations
+
+2. ARTICLE 1 (artigo-1/index.html)
+   "Jeffrey Epstein Funded Brazilian Models and Warned Days Before His Arrest"
+   - Documents show personal relationships with Brazilian models
+   - Financial support and employment details
+   - MPF investigation opened in Natal, RN
+   - Timeline visualization with Chart.js
+   - Email excerpts and testimonial quotes
+   - Comprehensive analysis of early communications (2006-2013)
+   - ~21KB, fully bilingual
+
+3. ARTICLE 2 (artigo-2/index.html)
+   "Inside Epstein's Brazilian Network: Scouts, Magazines, and Fashion Contests"
+   - Detailed plans to purchase Brazilian fashion magazine
+   - Beauty contest strategy targeting rural girls
+   - "Agent mother" recruitment network documented
+   - References to 4000+ Brazil mentions in files
+   - Mega Model agency response/denial
+   - Analysis of systematic recruitment infrastructure
+   - ~17KB, fully bilingual
+
+4. ARTICLE 3 (artigo-3/index.html)
+   "New Documents Reveal Epstein's Ties to a 'Major Brazilian Group'"
+   - FBI documentation of Brazilian networks
+   - Jean-Luc Brunel's 2019 Brasília visit
+   - International scope of operations
+   - Document release context and timeline
+   - Implications for international law enforcement
+   - Call for coordinated investigation across borders
+   - ~18KB, fully bilingual
+
+================================================================================
+KEY FEATURES IMPLEMENTED:
+================================================================================
+
+STRUCTURAL:
+✓ Semantic HTML5 with proper accessibility
+✓ Mobile-first responsive design (breakpoints at 768px, 480px)
+✓ Clean, hierarchical content organization
+✓ Breadcrumb navigation for article series
+✓ Footer with original source attribution
+
+LANGUAGE & LOCALIZATION:
+✓ Full English/Portuguese translations on every page
+✓ Language toggle buttons (EN/PT) in header
+✓ Persistent language preference (localStorage)
+✓ data-lang attributes for every translatable element
+✓ CSS rules to show/hide language versions seamlessly
+
+VISUAL & INTERACTIVE:
+✓ Premium dark hero section with gradient overlay
+✓ Scrollytelling fade-in animations on page load
+✓ Fixed progress bar tracking scroll position
+✓ Stat card counters with smooth animation
+✓ Sticky disclaimer bar (top) and language bar
+✓ Hover effects on links and buttons
+✓ Timeline visualization using Chart.js library
+✓ Pullquote sections with attribution styling
+
+TYPOGRAPHY:
+✓ Playfair Display (display font)
+✓ Source Serif 4 (article text)
+✓ Source Sans 3 (UI/meta information)
+✓ Google Fonts integration
+✓ Smooth font smoothing across browsers
+
+COLOR SCHEME:
+✓ Primary dark: #1a1a1a (text, backgrounds)
+✓ Accent red: #c41e3a (highlights, borders)
+✓ Light gray: #fafafa (card backgrounds)
+✓ CSS variables for easy customization
+
+JAVASCRIPT FUNCTIONALITY:
+✓ Language toggle with localStorage persistence
+✓ Disclaimer bar close/hide functionality
+✓ Scroll progress bar
+✓ Fade-in animation triggers on scroll (Intersection Observer)
+✓ Stat counter animation (counting up effect)
+✓ Smooth scroll for anchor links
+✓ Chart.js visualization (timeline in Article 1)
+
+================================================================================
+SHARED RESOURCES (base.css & base.js):
+================================================================================
+
+base.css provides:
+- CSS reset and normalization
+- Typography system with font variables
+- Color palette and gradient definitions
+- Disclaimer bar styling
+- Language toggle bar styling
+- Progress bar styling
+- Hero section styling with gradient overlay
+- Fade-in animation keyframes
+- Content sections (text-section, pullquote, stats-section)
+- Timeline styling with alternating layout
+- Series card grid and hover effects
+- Footer styling
+- Responsive media queries
+- Language switching display rules
+
+base.js provides:
+- Language toggle functionality
+- localStorage persistence for language preference
+- Disclaimer bar visibility management
+- Progress bar scroll tracking
+- Intersection Observer for fade-in animations
+- Stat counter animation logic
+- Smooth scroll for anchor links
+- Initialization on DOM ready
+
+================================================================================
+ACCESSIBILITY & COMPLIANCE:
+================================================================================
+
+✓ WCAG 2.1 compliant heading hierarchy
+✓ Proper alt text structure (images have credit attribution)
+✓ Color contrast meets AA standards
+✓ Keyboard navigation supported
+✓ Proper semantic HTML elements
+✓ ARIA labels on interactive elements
+✓ Proper language attributes
+✓ Disclaimer notice for BBC content attribution
+
+================================================================================
+CONTENT SOURCING & ATTRIBUTION:
+================================================================================
+
+All journalistic content, reporting, data analysis, and interviews are
+authored by BBC News Brasil. The content covers:
+
+- Document releases from U.S. Department of Justice (2024-2026)
+- FBI interview notes and investigative findings
+- Brazilian Federal Prosecution Service (MPF) investigation in Natal, RN
+- Email correspondence spanning 2006-2013
+- Financial records and payment documentation
+- Victim testimony and survivor interviews
+- International trafficking network analysis
+
+Each page includes:
+- BBC disclaimer bar at top
+- Link to original BBC News Brasil publication
+- Proper attribution in footer
+- Copyright notice for portfolio version
+
+================================================================================
+HOW TO USE:
+================================================================================
+
+1. OPEN THE SERIES HOMEPAGE:
+   Open: portfolio-investigativo/epstein/index.html
+   
+   This displays the series landing page with:
+   - Overview of all 9-part investigation
+   - Key statistics
+   - Article grid with links to live articles
+   - Coming soon placeholders for articles 4-9
+
+2. NAVIGATE TO ARTICLES:
+   Click any article card to visit that article's page
+   Each article page has:
+   - Standalone functionality (can open directly)
+   - Back link to series homepage
+   - Language toggle for EN/PT versions
+   - Disclaimer and attribution
+
+3. TOGGLE LANGUAGE:
+   Click EN or PT buttons in sticky header
+   Language preference is saved automatically
+   All content switches to selected language
+
+4. SCROLL FEATURES:
+   - Progress bar advances as you scroll
+   - Fade-in animations trigger as sections come into view
+   - Stat counters animate when visible
+   - Smooth scroll for navigation links
+
+================================================================================
+BROWSER COMPATIBILITY:
+================================================================================
+
+✓ Chrome/Edge 90+
+✓ Firefox 88+
+✓ Safari 14+
+✓ Mobile browsers (iOS Safari, Chrome Mobile)
+✓ Responsive scaling from 320px to 4K displays
+
+Graceful degradation for older browsers.
+CSS Grid and Flexbox are primary layout methods.
+IntersectionObserver for scroll animations (fallback: instant display).
+
+================================================================================
+NEXT STEPS FOR COMPLETION:
+================================================================================
+
+To complete the full 9-part series, create these additional article pages:
+
+artigo-4/ - "'Around 50 Brazilian Women' at Epstein's Mansion..."
+artigo-5/ - "BBC Investigation Prompts Federal Prosecution Probe..."
+artigo-6/ - "Epstein Had a Brazilian Tax ID..."
+artigo-7/ - "The Modelling Contest Used to Recruit Latin American..."
+artigo-8/ - "Epstein Bought Apartment in Upscale São Paulo..."
+artigo-9/ - "'He Used to Do Tests on Me': Brazilian Woman Tells..."
+
+Each can be created by copying one of the existing article templates and
+updating the content, metadata, and specific details for that investigation
+segment. The framework is fully extensible.
+
+================================================================================
+TECHNICAL SPECIFICATIONS:
+================================================================================
+
+HTML Version: HTML5
+CSS Version: CSS3 with custom properties
+JavaScript: ES6 (ECMAScript 2015)
+No external libraries except Chart.js (for timeline visualization)
+No build process required - all files are standalone
+SEO optimized with proper meta tags
+Open Graph ready for social sharing
+
+File size optimization:
+- CSS: 16KB (minifiable to ~12KB)
+- JS: 6.2KB (minifiable to ~4KB)
+- Per HTML article: 17-21KB (minifiable to ~12KB each)
+
+Total footprint: ~96KB (or ~60KB minified/gzipped)
+
+================================================================================
+CREATED: March 16, 2026
+AUTHOR: Luiz Fernando Toledo (Investigative Journalist, BBC News Brasil)
+PORTFOLIO VERSION: Generated by Claude Cowork
+ORIGINAL CONTENT: BBC News Brasil
+================================================================================
