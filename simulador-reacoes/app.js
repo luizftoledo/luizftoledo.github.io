@@ -34,9 +34,9 @@ const PROVIDERS = {
     models: [
       { value: 'gemini-1.5-flash',      label: 'gemini-1.5-flash — mais rápido ⭐' },
       { value: 'gemini-1.5-pro',        label: 'gemini-1.5-pro — mais preciso' },
-      { value: 'gemini-2.0-flash-exp',  label: 'gemini-2.0-flash-exp — nova geração' },
+      { value: 'gemini-2.0-flash-exp',  label: 'gemini-2.0-flash-exp — experimental' },
     ],
-    modelHint: 'Obtenha sua chave gratuita em aistudio.google.com. O modelo Flash é o mais estável.',
+    modelHint: 'Obtenha sua chave gratuita em aistudio.google.com. O modelo 1.5 Flash é o padrão.',
   },
   anthropic: {
     label: 'Anthropic (Claude)',
@@ -278,7 +278,7 @@ const addPersonaBtn = document.getElementById('addPersonaBtn');
 
 // ——— Init ————————————————————————————————————————————————
 window.addEventListener('DOMContentLoaded', () => {
-  const savedProvider = localStorage.getItem('sim_provider') || 'openai';
+  const savedProvider = localStorage.getItem('sim_provider') || 'gemini';
   providerSelect.value = savedProvider;
   updateProviderUI(savedProvider);
 
