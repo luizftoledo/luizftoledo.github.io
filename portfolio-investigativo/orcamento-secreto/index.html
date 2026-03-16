@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-lang="en">The Secret Budget That Funded Slave Labour in a Public Works Project</title>
+  <title data-lang="pt">A Emenda do Orçamento Secreto Que Foi Parar em Obra com Produto de Trabalho Escravo</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="../shared/base.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    :root {
+      --hero-gradient: linear-gradient(135deg, #1a2a1a 0%, #2a2a1a 100%);
+      --primary-color: #4a3728;
+      --accent-color: #d4a373;
+      --text-dark: #1a1a1a;
+      --text-light: #ffffff;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      line-height: 1.7;
+      color: var(--text-dark);
+    }
+
+    #disclaimerBar {
+      background-color: #fce4ec;
+      border-bottom: 2px solid #e91e63;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    #disclaimerBar .warning-icon {
+      margin-right: 12px;
+      font-size: 1.2rem;
+    }
+
+    #disclaimerBar a {
+      color: #6a1b1b;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    #disclaimerClose {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #333;
+    }
+
+    #langBar {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      position: sticky;
+      top: 44px;
+      z-index: 999;
+    }
+
+    .lang-btn {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .lang-btn:hover {
+      border-color: var(--primary-color);
+    }
+
+    #progressBar {
+      height: 3px;
+      background-color: #e9ecef;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      z-index: 1001;
+      transition: width 0.2s ease;
+    }
+
+    /* Hero Section */
+    #hero {
+      background: var(--hero-gradient);
+      color: white;
+      padding: 100px 20px 80px;
+      text-align: center;
+      margin-top: 44px;
+    }
+
+    .series-tag {
+      display: inline-block;
+      background-color: rgba(212, 163, 115, 0.2);
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    #hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin: 20px 0;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #hero .deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.3rem;
+      margin: 30px 0 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .meta {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 30px;
+    }
+
+    .meta span {
+      margin: 0 15px;
+    }
+
+    /* Content sections */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .text-section {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      padding: 50px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .text-section.fade-in {
+      opacity: 1;
+    }
+
+    .text-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 25px;
+      color: var(--text-dark);
+    }
+
+    .text-section p {
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .pullquote {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      border-left: 4px solid var(--primary-color);
+      padding: 25px 30px;
+      margin: 40px 0;
+      background-color: #f8f9fa;
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--text-dark);
+    }
+
+    .pullquote.fade-in {
+      opacity: 1;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #faf8f3 0%, #f5f1eb 100%);
+      margin: 60px 0;
+    }
+
+    .stats-section.fade-in {
+      opacity: 1;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    /* Timeline */
+    .timeline-section {
+      padding: 80px 20px;
+      background-color: #fafafa;
+    }
+
+    .timeline-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary-color), transparent);
+    }
+
+    .timeline-item {
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+      margin-left: 0;
+      margin-right: auto;
+      width: 45%;
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+      margin-left: auto;
+      margin-right: 0;
+      width: 45%;
+      text-align: left;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 10px;
+      width: 16px;
+      height: 16px;
+      background-color: var(--primary-color);
+      border: 4px solid white;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .timeline-content {
+      background: white;
+      padding: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .timeline-date {
+      font-weight: 700;
+      color: var(--primary-color);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .timeline-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+
+    .timeline-description {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 60px 20px 40px;
+    }
+
+    .footer-disclaimer {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      padding: 30px;
+      background-color: rgba(212, 163, 115, 0.1);
+      border-left: 4px solid var(--accent-color);
+      border-radius: 4px;
+    }
+
+    .footer-disclaimer p {
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .footer-disclaimer a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-disclaimer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-nav {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-nav a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #hero h1 {
+        font-size: 2.2rem;
+      }
+
+      #hero .deck {
+        font-size: 1.1rem;
+      }
+
+      .timeline::before {
+        left: 20px;
+      }
+
+      .timeline-marker {
+        left: 20px;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+        margin-right: 0;
+        text-align: left;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      #hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #hero {
+        padding: 60px 15px 50px;
+      }
+    }
+  </style>
+</head>
+<body class="lang-en">
+  <!-- Disclaimer Bar -->
+  <div id="disclaimerBar">
+    <div>
+      <span class="warning-icon">⚠</span>
+      <span data-lang="en">This is an investigative journalism portfolio piece based on BBC News Brasil reporting. </span>
+      <span data-lang="pt">Esta é uma peça de portfólio de jornalismo investigativo baseada em reportagem da BBC News Brasil.</span>
+      <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="en">Original</a>
+      <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="pt">Original</a>
+    </div>
+    <button id="disclaimerClose" aria-label="Close disclaimer">✕</button>
+  </div>
+
+  <!-- Language Toggle Bar -->
+  <div id="langBar">
+    <button id="btnEn" class="lang-btn active" data-lang="en">English</button>
+    <button id="btnPt" class="lang-btn" data-lang="pt">Português</button>
+  </div>
+
+  <!-- Progress Bar -->
+  <div id="progressBar"></div>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="container">
+      <div class="series-tag" data-lang="en">Investigative Report</div>
+      <div class="series-tag" data-lang="pt">Reportagem Investigativa</div>
+
+      <h1 data-lang="en">The Secret Budget That Funded Slave Labour in a Public Works Project</h1>
+      <h1 data-lang="pt">A Emenda do Orçamento Secreto Que Foi Parar em Obra com Produto de Trabalho Escravo</h1>
+
+      <div class="deck" data-lang="en">How opaque budget allocations enabled a supply chain involving labor abuses—a case that won Brazil's most prestigious journalism prize.</div>
+      <div class="deck" data-lang="pt">Como alocações orçamentárias opacas possibilitaram uma cadeia de suprimentos envolvendo abuso de mão de obra — um caso que ganhou o prêmio de jornalismo mais prestigiado do Brasil.</div>
+
+      <div class="meta">
+        <span data-lang="en">BBC News Brasil, May 2025</span>
+        <span data-lang="pt">BBC News Brasil, Maio de 2025</span>
+        <span>•</span>
+        <span data-lang="en">By Luiz Fernando Toledo</span>
+        <span data-lang="pt">Por Luiz Fernando Toledo</span>
+        <span>•</span>
+        <span data-lang="en">IREE Prize Winner</span>
+        <span data-lang="pt">Vencedor do Prêmio IREE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Section 1: The System -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">Understanding Brazil's "Secret Budget"</h2>
+      <h2 data-lang="pt">Entendendo o "Orçamento Secreto" do Brasil</h2>
+
+      <p data-lang="en">In Brazil, the national budget process includes a mechanism known as "emendas de relator" (rapporteur amendments), or informally, the "orçamento secreto" (secret budget). This system allows individual parliamentarians to direct federal funding to specific projects without requiring full transparency or public disclosure of their identities. The mechanism was created to provide flexibility in budget allocation but became a vehicle for political patronage and opaque spending.</p>
+      <p data-lang="pt">No Brasil, o processo orçamentário nacional inclui um mecanismo conhecido como "emendas de relator" (emendas do relator), ou informalmente, o "orçamento secreto" (orçamento secreto). Este sistema permite que parlamentares individuais direcionem financiamento federal para projetos específicos sem exigir divulgação completa da transparência ou identidades públicas. O mecanismo foi criado para fornecer flexibilidade na alocação orçamentária, mas se tornou um veículo para clientelismo político e gastos opacos.</p>
+
+      <p data-lang="en">For years, the "orçamento secreto" operated with minimal oversight. Billions of reais were allocated through this channel. Nobody could easily trace where the money was going or who was benefiting. In 2022, Brazil's Supreme Court declared the system unconstitutional. But it continued, in modified forms, with funding still flowing through opaque channels.</p>
+      <p data-lang="pt">Por anos, o "orçamento secreto" operou com supervisão mínima. Bilhões de reais foram alocados através deste canal. Ninguém conseguia rastrear facilmente onde o dinheiro ia ou quem se beneficiava. Em 2022, o Supremo Tribunal Federal do Brasil declarou o sistema inconstitucional. Mas continuou, em formas modificadas, com financiamento ainda fluindo através de canais opacos.</p>
+    </section>
+
+    <!-- Stats Section 1 -->
+    <section class="stats-section fade-in">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">Billions</div>
+          <div class="stat-number" data-lang="pt">Bilhões</div>
+          <div class="stat-label" data-lang="en">Allocated through orçamento secreto annually</div>
+          <div class="stat-label" data-lang="pt">Alocados através do orçamento secreto anualmente</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">2022</div>
+          <div class="stat-number" data-lang="pt">2022</div>
+          <div class="stat-label" data-lang="en">Year Supreme Court declared unconstitutional</div>
+          <div class="stat-label" data-lang="pt">Ano em que o Supremo Tribunal declarou inconstitucional</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">0%</div>
+          <div class="stat-number" data-lang="pt">0%</div>
+          <div class="stat-label" data-lang="en">Initial transparency before investigation</div>
+          <div class="stat-label" data-lang="pt">Transparência inicial antes da investigação</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">1</div>
+          <div class="stat-number" data-lang="pt">1</div>
+          <div class="stat-label" data-lang="en">IREE Prize won for reporting series</div>
+          <div class="stat-label" data-lang="pt">Prêmio IREE ganho pela série de reportagem</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: The Case -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">The Paving Stones of Paraíba</h2>
+      <h2 data-lang="pt">Os Paralelepípedos da Paraíba</h2>
+
+      <p data-lang="en">In the municipality of Juazeirinho, in the state of Paraíba, a paving project was approved and funded. The project was straightforward: repave streets using decorative paving stones. But the origin of those paving stones revealed something deeply troubling.</p>
+      <p data-lang="pt">No município de Juazeirinho, no estado da Paraíba, um projeto de pavimentação foi aprovado e financiado. O projeto era simples: repavimentar ruas usando paralelepípedos decorativos. Mas a origem desses paralelepípedos revelou algo profundamente preocupante.</p>
+
+      <p data-lang="en">An amendment from the "orçamento secreto" (secret budget) was traced to this project. The amendment had been directed by politicians from Paraíba. But the paving stones themselves had been cut by workers in conditions that labor inspectors would later characterize as "analogous to slavery."</p>
+      <p data-lang="pt">Uma emenda do "orçamento secreto" foi rastreada para este projeto. A emenda havia sido direcionada por políticos da Paraíba. Mas os paralelepípedos foram cortados por trabalhadores em condições que inspetores de trabalho caracterizariam posteriormente como "análogas à escravidão".</p>
+
+      <div class="pullquote" data-lang="en">"The public budget was being used to finance a project whose supply chain involved the exploitation of workers. Federal money was channeled to local politicians, who directed it to projects built with materials produced through labor abuses."</div>
+      <div class="pullquote" data-lang="pt">"O orçamento público estava sendo usado para financiar um projeto cuja cadeia de suprimentos envolvia a exploração de trabalhadores. Dinheiro federal foi canalizado para políticos locais, que o direcionaram para projetos construídos com materiais produzidos através de abusos de mão de obra."</div>
+    </section>
+
+    <!-- Section 3: The Labor Abuse -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">Conditions of Slavery</h2>
+      <h2 data-lang="pt">Condições de Escravidão</h2>
+
+      <p data-lang="en">Labor inspectors who investigated the conditions where the paving stones were cut documented systematic abuse. Workers were exposed to dangerous conditions without adequate safety equipment. They worked extended shifts with no breaks for water or shade. Wages were stolen. Workers were not provided with the most basic protections required by Brazilian labor law.</p>
+      <p data-lang="pt">Inspetores de trabalho que investigaram as condições onde os paralelepípedos foram cortados documentaram abuso sistemático. Os trabalhadores foram expostos a condições perigosas sem equipamento de segurança adequado. Eles trabalhavam turnos estendidos sem pausas para água ou sombra. Salários foram roubados. Os trabalhadores não foram fornecidos com as proteções mais básicas exigidas pela lei de trabalho do Brasil.</p>
+
+      <p data-lang="en">The definition of "slavery" in Brazil includes not just chattel ownership but conditions of extreme exploitation and deprivation. The conditions documented at this paving stone quarry met that definition. The workers were not technically enslaved, but they were enslaved in practice—trapped by debt, unable to leave, subjected to coercion, and denied basic human dignity.</p>
+      <p data-lang="pt">A definição de "escravidão" no Brasil inclui não apenas a propriedade de pessoas, mas condições de exploração e privação extremas. As condições documentadas nesta pedreira de paralelepípedos atendiam a essa definição. Os trabalhadores não eram tecnicamente escravizados, mas eram escravizados na prática — presos por dívida, incapazes de sair, sujeitos a coerção, e negados de dignidade humana básica.</p>
+
+      <p data-lang="en">This connection—between opaque public budget allocation and labor abuses in the supply chain—is what made this case so significant. It was not simply a story about labor exploitation. It was a story about how the failure to oversee public spending created a pathway for that exploitation to occur.</p>
+      <p data-lang="pt">Essa conexão — entre alocação orçamentária pública opaca e abusos de mão de obra na cadeia de suprimentos — é o que tornou este caso tão significativo. Não era simplesmente uma história sobre exploração de mão de obra. Era uma história sobre como a falha em supervisionar gastos públicos criou um caminho para que essa exploração ocorresse.</p>
+    </section>
+
+    <!-- Pullquote Section -->
+    <section class="text-section fade-in">
+      <div class="pullquote" data-lang="en">"When you trace the money from federal budget, through local politicians, to projects, to supply chains, you find not just inefficiency or waste. You find exploitation. You find human suffering enabled by systemic opacity."</div>
+      <div class="pullquote" data-lang="pt">"Quando você rastreia o dinheiro do orçamento federal, através de políticos locais, para projetos, para cadeias de suprimentos, você encontra não apenas ineficiência ou desperdício. Você encontra exploração. Você encontra sofrimento humano possibilitado pela opacidade sistêmica."</div>
+    </section>
+
+    <!-- Section 4: The Pattern -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">A Broader Pattern of Opacity</h2>
+      <h2 data-lang="pt">Um Padrão Mais Amplo de Opacidade</h2>
+
+      <p data-lang="en">The Juazeirinho paving project was not an isolated incident. The investigation revealed a pattern: the "orçamento secreto" was systematically used to finance projects in ways that obscured accountability. Money flowed from federal budget to specific constituencies, directed by individual politicians, often without clear public oversight of what those funds would be used for or how those projects would be executed.</p>
+      <p data-lang="pt">O projeto de pavimentação de Juazeirinho não foi um incidente isolado. A investigação revelou um padrão: o "orçamento secreto" foi sistematicamente usado para financiar projetos de maneiras que obscureciam responsabilidade. O dinheiro fluiu do orçamento federal para constituintes específicas, direcionado por políticos individuais, muitas vezes sem supervisão pública clara do que esses fundos seriam usados ou como esses projetos seriam executados.</p>
+
+      <p data-lang="en">This opacity created the conditions for abuse. Without transparency, it was possible for money designated for a "public works project" to finance the exploitation of vulnerable workers. Without oversight, no one was accountable. Without traceability, the connection between budget allocation and harm remained hidden.</p>
+      <p data-lang="pt">Esta opacidade criou as condições para abuso. Sem transparência, era possível que dinheiro designado para um "projeto de obra pública" financiasse a exploração de trabalhadores vulneráveis. Sem supervisão, ninguém era responsável. Sem rastreabilidade, a conexão entre alocação orçamentária e dano permanecia oculta.</p>
+
+      <p data-lang="en">Toledo's investigation, which won the IREE Prize for journalism, traced this specific case and revealed the systemic problem. The reporting was not just about one incident of labor abuse. It was about how structural opacity in government spending enables exploitation to persist.</p>
+      <p data-lang="pt">A investigação de Toledo, que ganhou o Prêmio IREE de jornalismo, rastreou este caso específico e revelou o problema sistêmico. A reportagem não era apenas sobre um incidente de abuso de mão de obra. Era sobre como a opacidade estrutural nos gastos do governo permite que a exploração persista.</p>
+    </section>
+
+    <!-- Stats Section 2 -->
+    <section class="stats-section fade-in">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">R$0</div>
+          <div class="stat-number" data-lang="pt">R$0</div>
+          <div class="stat-label" data-lang="en">Paid to enslaved stone cutters in Paraíba</div>
+          <div class="stat-label" data-lang="pt">Pago aos cortadores de pedra escravizados na Paraíba</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">2022</div>
+          <div class="stat-number" data-lang="pt">2022</div>
+          <div class="stat-label" data-lang="en">Year Supreme Court declared unconstitutional</div>
+          <div class="stat-label" data-lang="pt">Ano em que o Supremo Tribunal declarou inconstitucional</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">2</div>
+          <div class="stat-number" data-lang="pt">2</div>
+          <div class="stat-label" data-lang="en">Parliamentarians behind the funding</div>
+          <div class="stat-label" data-lang="pt">Parlamentares por trás do financiamento</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">1</div>
+          <div class="stat-number" data-lang="pt">1</div>
+          <div class="stat-label" data-lang="en">IREE Prize won by Toledo</div>
+          <div class="stat-label" data-lang="pt">Prêmio IREE ganho por Toledo</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: The Impact -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">Accountability and Reform</h2>
+      <h2 data-lang="pt">Responsabilidade e Reforma</h2>
+
+      <p data-lang="en">The investigation and its publication had real impact. The case drew attention to the systemic problems with the "orçamento secreto" and similar budget mechanisms. It provided concrete evidence of how opacity in public spending could directly enable labor exploitation. It became a case study in accountability journalism—showing how investigative reporting could connect seemingly distant dots: federal budget allocations, local political decisions, supply chain practices, and human suffering.</p>
+      <p data-lang="pt">A investigação e sua publicação tiveram impacto real. O caso chamou atenção para os problemas sistêmicos com o "orçamento secreto" e mecanismos de orçamento similares. Forneceu evidência concreta de como opacidade em gastos públicos poderia diretamente possibilitar exploração de mão de obra. Tornou-se um estudo de caso em jornalismo de responsabilidade — mostrando como reportagem investigativa poderia conectar pontos aparentemente distantes: alocações de orçamento federal, decisões políticas locais, práticas de cadeia de suprimentos, e sofrimento humano.</p>
+
+      <div class="pullquote" data-lang="en">"This is why investigative journalism matters. Not to expose a single crime, but to reveal the systems that enable crime to persist. The 'secret budget' was not created to exploit workers—but its opacity created the conditions for that exploitation to occur hidden from public view."</div>
+      <div class="pullquote" data-lang="pt">"É por isso que o jornalismo investigativo importa. Não para expor um único crime, mas para revelar os sistemas que permitem que o crime persista. O 'orçamento secreto' não foi criado para explorar trabalhadores — mas sua opacidade criou as condições para que essa exploração ocorresse oculta da vista pública."</div>
+    </section>
+  </main>
+
+  <!-- Timeline Section -->
+  <section class="timeline-section">
+    <div class="container">
+      <h2 data-lang="en">Timeline of the Orçamento Secreto System</h2>
+      <h2 data-lang="pt">Cronograma do Sistema de Orçamento Secreto</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">1990s-2000s</div>
+            <div class="timeline-date" data-lang="pt">1990-2000</div>
+            <div class="timeline-title" data-lang="en">System Created</div>
+            <div class="timeline-title" data-lang="pt">Sistema Criado</div>
+            <div class="timeline-description" data-lang="en">The "emendas de relator" (rapporteur amendments) system is created as a mechanism to provide flexibility in budget allocation. Initially intended for administrative purposes.</div>
+            <div class="timeline-description" data-lang="pt">O sistema de "emendas de relator" é criado como mecanismo para fornecer flexibilidade na alocação orçamentária. Inicialmente destinado para fins administrativos.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">2000s-2020</div>
+            <div class="timeline-date" data-lang="pt">2000-2020</div>
+            <div class="timeline-title" data-lang="en">Expansion of Opacity</div>
+            <div class="timeline-title" data-lang="pt">Expansão da Opacidade</div>
+            <div class="timeline-description" data-lang="en">The "orçamento secreto" grows in scale and secrecy. Billions of reais flow through the channel with minimal public oversight. The identity of parliamentarians directing funds is not disclosed.</div>
+            <div class="timeline-description" data-lang="pt">O "orçamento secreto" cresce em escala e sigilo. Bilhões de reais fluem pelo canal com supervisão pública mínima. A identidade dos parlamentares direcionando fundos não é divulgada.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">2021</div>
+            <div class="timeline-date" data-lang="pt">2021</div>
+            <div class="timeline-title" data-lang="en">Public Outcry Begins</div>
+            <div class="timeline-title" data-lang="pt">Revolta Pública Começa</div>
+            <div class="timeline-description" data-lang="en">Media and civil society begin challenging the constitutionality and ethics of the "orçamento secreto." Public pressure mounts for transparency and accountability.</div>
+            <div class="timeline-description" data-lang="pt">Mídia e sociedade civil começam a desafiar a constitucionalidade e ética do "orçamento secreto". Pressão pública aumenta por transparência e responsabilidade.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">August 2022</div>
+            <div class="timeline-date" data-lang="pt">Agosto 2022</div>
+            <div class="timeline-title" data-lang="en">Supreme Court Rules Unconstitutional</div>
+            <div class="timeline-title" data-lang="pt">Supremo Tribunal Decide Inconstitucional</div>
+            <div class="timeline-description" data-lang="en">Brazil's Supreme Court declares the "emendas de relator" system unconstitutional. However, modified forms of the system continue to operate.</div>
+            <div class="timeline-description" data-lang="pt">O Supremo Tribunal Federal do Brasil declara o sistema de "emendas de relator" inconstitucional. No entanto, formas modificadas do sistema continuam a operar.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">2025</div>
+            <div class="timeline-date" data-lang="pt">2025</div>
+            <div class="timeline-title" data-lang="en">Toledo's Investigation Published</div>
+            <div class="timeline-title" data-lang="pt">Investigação de Toledo Publicada</div>
+            <div class="timeline-description" data-lang="en">BBC News Brasil publishes the Juazeirinho paving project investigation, connecting budget allocations to labor exploitation. The series wins the IREE Prize.</div>
+            <div class="timeline-description" data-lang="pt">BBC News Brasil publica a investigação do projeto de pavimentação de Juazeirinho, conectando alocações orçamentárias com exploração de mão de obra. A série ganha o Prêmio IREE.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">2025 onwards</div>
+            <div class="timeline-date" data-lang="pt">2025 em diante</div>
+            <div class="timeline-title" data-lang="en">Continued Debate on Reform</div>
+            <div class="timeline-title" data-lang="pt">Debate Contínuo sobre Reforma</div>
+            <div class="timeline-description" data-lang="en">The case contributes to ongoing debate over budget transparency and accountability mechanisms in Brazil's government.</div>
+            <div class="timeline-description" data-lang="pt">O caso contribui para debate contínuo sobre mecanismos de transparência orçamentária e responsabilidade no governo do Brasil.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-disclaimer">
+        <p data-lang="en"><strong>About this version:</strong> This is an alternative layout of an original BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalism, reporting and content is the work of BBC News Brasil and journalist Luiz Fernando Toledo. This page is not affiliated with or endorsed by BBC News Brasil.</p>
+        <p data-lang="pt"><strong>Sobre esta versão:</strong> Esta é uma versão com layout alternativo de uma reportagem original da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o jornalismo, apuração e conteúdo é trabalho da BBC News Brasil e do jornalista Luiz Fernando Toledo. Esta página não é afiliada nem endossada pela BBC News Brasil.</p>
+        <p>
+          <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="en">Read the original BBC News Brasil report ↗</a>
+          <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC News Brasil ↗</a>
+        </p>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../index.html" data-lang="en">← Back to Portfolio</a>
+        <a href="../index.html" data-lang="pt">← Voltar ao Portfólio</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Shared JS -->
+  <script src="../shared/base.js"></script>
+</body>
+</html>

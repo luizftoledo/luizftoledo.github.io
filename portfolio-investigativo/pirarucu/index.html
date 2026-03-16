@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-lang="en">The Amazon Fish That Becomes a Luxury Handbag — But Profits Don't Reach Fishermen</title>
+  <title data-lang="pt">O Peixe Gigante da Amazônia Que Vira Bolsa de Luxo — Mas o Lucro Não Chega aos Pescadores</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="../shared/base.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    :root {
+      --hero-gradient: linear-gradient(135deg, #0d2a1a 0%, #1a1a2e 100%);
+      --primary-color: #1d5a3d;
+      --accent-color: #7cb342;
+      --text-dark: #1a1a1a;
+      --text-light: #ffffff;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      line-height: 1.7;
+      color: var(--text-dark);
+    }
+
+    #disclaimerBar {
+      background-color: #e8f5e9;
+      border-bottom: 2px solid #4caf50;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    #disclaimerBar .warning-icon {
+      margin-right: 12px;
+      font-size: 1.2rem;
+    }
+
+    #disclaimerBar a {
+      color: #1d5a3d;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    #disclaimerClose {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #333;
+    }
+
+    #langBar {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      position: sticky;
+      top: 44px;
+      z-index: 999;
+    }
+
+    .lang-btn {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .lang-btn:hover {
+      border-color: var(--primary-color);
+    }
+
+    #progressBar {
+      height: 3px;
+      background-color: #e9ecef;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      z-index: 1001;
+      transition: width 0.2s ease;
+    }
+
+    /* Hero Section */
+    #hero {
+      background: var(--hero-gradient);
+      color: white;
+      padding: 100px 20px 80px;
+      text-align: center;
+      margin-top: 44px;
+    }
+
+    .series-tag {
+      display: inline-block;
+      background-color: rgba(124, 179, 66, 0.2);
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    #hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin: 20px 0;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #hero .deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.3rem;
+      margin: 30px 0 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .meta {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 30px;
+    }
+
+    .meta span {
+      margin: 0 15px;
+    }
+
+    /* Content sections */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .text-section {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      padding: 50px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .text-section.fade-in {
+      opacity: 1;
+    }
+
+    .text-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 25px;
+      color: var(--text-dark);
+    }
+
+    .text-section p {
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .pullquote {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      border-left: 4px solid var(--primary-color);
+      padding: 25px 30px;
+      margin: 40px 0;
+      background-color: #f8f9fa;
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--text-dark);
+    }
+
+    .pullquote.fade-in {
+      opacity: 1;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #f1f8f4 0%, #e8f5e9 100%);
+      margin: 60px 0;
+    }
+
+    .stats-section.fade-in {
+      opacity: 1;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    /* Timeline */
+    .timeline-section {
+      padding: 80px 20px;
+      background-color: #fafafa;
+    }
+
+    .timeline-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary-color), transparent);
+    }
+
+    .timeline-item {
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+      margin-left: 0;
+      margin-right: auto;
+      width: 45%;
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+      margin-left: auto;
+      margin-right: 0;
+      width: 45%;
+      text-align: left;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 10px;
+      width: 16px;
+      height: 16px;
+      background-color: var(--primary-color);
+      border: 4px solid white;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .timeline-content {
+      background: white;
+      padding: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .timeline-date {
+      font-weight: 700;
+      color: var(--primary-color);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .timeline-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+
+    .timeline-description {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 60px 20px 40px;
+    }
+
+    .footer-disclaimer {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      padding: 30px;
+      background-color: rgba(124, 179, 66, 0.1);
+      border-left: 4px solid var(--accent-color);
+      border-radius: 4px;
+    }
+
+    .footer-disclaimer p {
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .footer-disclaimer a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-disclaimer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-nav {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-nav a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #hero h1 {
+        font-size: 2.2rem;
+      }
+
+      #hero .deck {
+        font-size: 1.1rem;
+      }
+
+      .timeline::before {
+        left: 20px;
+      }
+
+      .timeline-marker {
+        left: 20px;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+        margin-right: 0;
+        text-align: left;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      #hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #hero {
+        padding: 60px 15px 50px;
+      }
+    }
+  </style>
+</head>
+<body class="lang-en">
+  <!-- Disclaimer Bar -->
+  <div id="disclaimerBar">
+    <div>
+      <span class="warning-icon">⚠</span>
+      <span data-lang="en">This is an investigative journalism portfolio piece based on BBC News Brasil reporting. </span>
+      <span data-lang="pt">Esta é uma peça de portfólio de jornalismo investigativo baseada em reportagem da BBC News Brasil.</span>
+      <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="en">Original</a>
+      <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="pt">Original</a>
+    </div>
+    <button id="disclaimerClose" aria-label="Close disclaimer">✕</button>
+  </div>
+
+  <!-- Language Toggle Bar -->
+  <div id="langBar">
+    <button id="btnEn" class="lang-btn active" data-lang="en">English</button>
+    <button id="btnPt" class="lang-btn" data-lang="pt">Português</button>
+  </div>
+
+  <!-- Progress Bar -->
+  <div id="progressBar"></div>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="container">
+      <div class="series-tag" data-lang="en">Investigative Report</div>
+      <div class="series-tag" data-lang="pt">Reportagem Investigativa</div>
+
+      <h1 data-lang="en">The Amazon Fish That Becomes a Luxury Handbag — But Profits Don't Reach Fishermen</h1>
+      <h1 data-lang="pt">O Peixe Gigante da Amazônia Que Vira Bolsa de Luxo — Mas o Lucro Não Chega aos Pescadores</h1>
+
+      <div class="deck" data-lang="en">How sustainable fishing practices are being exploited by an opaque supply chain that enriches luxury brands while keeping fishermen in poverty.</div>
+      <div class="deck" data-lang="pt">Como práticas de pesca sustentável estão sendo exploradas por uma cadeia de suprimentos opaca que enriquece marcas de luxo enquanto mantém os pescadores na pobreza.</div>
+
+      <div class="meta">
+        <span data-lang="en">BBC News Brasil, August 2025</span>
+        <span data-lang="pt">BBC News Brasil, Agosto de 2025</span>
+        <span>•</span>
+        <span data-lang="en">By Luiz Fernando Toledo</span>
+        <span data-lang="pt">Por Luiz Fernando Toledo</span>
+        <span>•</span>
+        <span data-lang="en">10 min read</span>
+        <span data-lang="pt">10 min de leitura</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Section 1: The Pirarucu -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">The Giant of the Rivers</h2>
+      <h2 data-lang="pt">O Gigante dos Rios</h2>
+
+      <p data-lang="en">The pirarucu is one of the largest freshwater fish in the world. A single specimen can grow to nearly three meters in length and weigh over 200 kilograms. For centuries, the pirarucu was central to Amazonian life—indigenous peoples hunted it for food, and fishermen depended on it for their survival. But by the late 20th century, overhunting had pushed the species to the brink of extinction.</p>
+      <p data-lang="pt">O pirarucu é um dos maiores peixes de água doce do mundo. Um único espécime pode crescer para quase três metros de comprimento e pesar mais de 200 quilogramas. Por séculos, o pirarucu foi central para a vida amazônica — povos indígenas o caçavam para alimentação, e pescadores dependiam dele para sua sobrevivência. Mas no final do século XX, a caça excessiva havia levado a espécie à beira da extinção.</p>
+
+      <p data-lang="en">Then came a transformation. Starting in the 1990s, Brazil and conservation organizations implemented a bold management system in the Mamirauá Sustainable Development Reserve. Fishing communities became "manejadores" (managers)—licensed fishermen who would catch pirarucu according to strict scientific protocols. The system worked. The pirarucu population recovered. It became a global success story in sustainable resource management.</p>
+      <p data-lang="pt">Então veio uma transformação. A partir de 1990, o Brasil e organizações de conservação implementaram um sistema de gestão audacioso na Reserva de Desenvolvimento Sustentável Mamirauá. Comunidades de pesca se tornaram "manejadores" (gestores) — pescadores licenciados que capturariam pirarucu de acordo com protocolos científicos rigorosos. O sistema funcionou. A população de pirarucu se recuperou. Tornou-se uma história de sucesso global em gestão sustentável de recursos.</p>
+    </section>
+
+    <!-- Stats Section 1 -->
+    <section class="stats-section fade-in">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">3m</div>
+          <div class="stat-number" data-lang="pt">3m</div>
+          <div class="stat-label" data-lang="en">Maximum length of pirarucu fish</div>
+          <div class="stat-label" data-lang="pt">Comprimento máximo do peixe pirarucu</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">200kg</div>
+          <div class="stat-number" data-lang="pt">200kg</div>
+          <div class="stat-label" data-lang="en">Maximum weight of pirarucu fish</div>
+          <div class="stat-label" data-lang="pt">Peso máximo do peixe pirarucu</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">30yr</div>
+          <div class="stat-number" data-lang="pt">30 anos</div>
+          <div class="stat-label" data-lang="en">Years of successful sustainable management</div>
+          <div class="stat-label" data-lang="pt">Anos de gestão sustentável bem-sucedida</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">1990s</div>
+          <div class="stat-number" data-lang="pt">1990</div>
+          <div class="stat-label" data-lang="en">When recovery program began</div>
+          <div class="stat-label" data-lang="pt">Quando o programa de recuperação começou</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: The Luxury Market -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">From River to Runway: The Luxury Transformation</h2>
+      <h2 data-lang="pt">Do Rio à Passarela: A Transformação do Luxo</h2>
+
+      <p data-lang="en">In recent years, pirarucu leather has become fashionable in the luxury goods industry. The fish's scales create a distinctive, visually striking texture that luxury brands have embraced for handbags, wallets, and other accessories. These products command premium prices. A pirarucu leather handbag can retail for 3,000 reais or more—a price that puts it in the same category as designer goods from Paris and Milan.</p>
+      <p data-lang="pt">Nos últimos anos, o couro de pirarucu se tornou moda na indústria de bens de luxo. As escamas do peixe criam uma textura distinta e visualmente impressionante que as marcas de luxo abraçaram para bolsas, carteiras e outros acessórios. Esses produtos comandam preços premium. Uma bolsa de couro de pirarucu pode ser vendida por 3.000 reais ou mais — um preço que a coloca na mesma categoria que bens de designer de Paris e Milão.</p>
+
+      <div class="pullquote" data-lang="en">"The fashion industry discovered pirarucu leather and suddenly it was desirable. It became a status symbol. But the fishermen who harvest the fish? They see almost nothing of that value."</div>
+      <div class="pullquote" data-lang="pt">"A indústria da moda descobriu o couro de pirarucu e de repente era desejável. Tornou-se um símbolo de status. Mas os pescadores que colhem o peixe? Eles veem quase nada desse valor."</div>
+
+      <p data-lang="en">The business has grown internationally. Luxury companies in the United States and Europe source pirarucu leather from Brazil. The supply chains stretch across continents. Retailers in New York and London market pirarucu-leather products as symbols of sustainable luxury—connecting the conservation success of the Mamirauá Reserve to fashionable goods.</p>
+      <p data-lang="pt">O negócio cresceu internacionalmente. Empresas de luxo nos EUA e Europa adquirem couro de pirarucu do Brasil. As cadeias de suprimentos se estendem por continentes. Varejistas em Nova York e Londres comercializam produtos de couro de pirarucu como símbolos de luxo sustentável — conectando o sucesso da conservação da Reserva Mamirauá a bens na moda.</p>
+    </section>
+
+    <!-- Section 3: The Fisherman's Share -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">The Forgotten Harvesters</h2>
+      <h2 data-lang="pt">Os Colhedores Esquecidos</h2>
+
+      <p data-lang="en">Yet the fishermen who actually catch the pirarucu remain in poverty. A manejador might receive at most 11 reais per kilogram of whole pirarucu—a price set by middlemen and processors who control the supply chain. For context, that means a 100-kilogram fish generates at most 1,100 reais in payment to the fisherman. The same fish, processed and sold as leather goods, might generate thousands of reais in retail sales.</p>
+      <p data-lang="pt">Mas os pescadores que realmente capturam o pirarucu permanecem na pobreza. Um manejador pode receber no máximo 11 reais por quilograma de pirarucu inteiro — um preço definido por intermediários e processadores que controlam a cadeia de suprimentos. Para contexto, isso significa que um peixe de 100 quilogramas gera no máximo 1.100 reais em pagamento ao pescador. O mesmo peixe, processado e vendido como bens de couro, pode gerar milhares de reais em vendas no varejo.</p>
+
+      <p data-lang="en">Pedro Canízio, vice-president of FEMAPAM (the Federation of Pirarucu Managers of Mamirauá), articulated the absurdity of this situation with painful clarity: "The manager can't even come close to buying one of these products because it's too expensive." A fisherman whose labor directly enables the creation of a 3,000-reais handbag cannot afford to purchase a single one.</p>
+      <p data-lang="pt">Pedro Canízio, vice-presidente da FEMAPAM (Federação dos Manejadores de Pirarucu de Mamirauá), articulou o absurdo dessa situação com clareza dolorosa: "O manejador não consegue nem chegar perto de comprar um desses produtos porque é muito caro." Um pescador cuja mão de obra diretamente possibilita a criação de uma bolsa de 3.000 reais não consegue pagar para comprar uma.</p>
+
+      <div class="pullquote" data-lang="en">"We preserve the fish. We manage the species. We live in the Amazon where the pirarucu exists. But we see almost no financial benefit from the luxury market that our fish enables."</div>
+      <div class="pullquote" data-lang="pt">"Preservamos o peixe. Gerenciamos a espécie. Vivemos na Amazônia onde o pirarucu existe. Mas não vemos quase nenhum benefício financeiro do mercado de luxo que nosso peixe possibilita."</div>
+    </section>
+
+    <!-- Section 4: The Opacity Problem -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">A Supply Chain Built on Opacity</h2>
+      <h2 data-lang="pt">Uma Cadeia de Suprimentos Construída sobre Opacidade</h2>
+
+      <p data-lang="en">The supply chain connecting Amazon fishermen to luxury consumers remains fundamentally opaque. Luxury brands source pirarucu leather from leather suppliers, who source from processors, who source from middlemen, who source from fishermen. Each intermediary takes a margin. None of them are required to verify that the leather comes exclusively from legally managed zones.</p>
+      <p data-lang="pt">A cadeia de suprimentos conectando pescadores amazônicos a consumidores de luxo permanece fundamentalmente opaca. Marcas de luxo adquirem couro de pirarucu de fornecedores de couro, que adquirem de processadores, que adquirem de intermediários, que adquirem de pescadores. Cada intermediário tira um margem. Nenhum deles é obrigado a verificar que o couro vem exclusivamente de zonas legalmente gerenciadas.</p>
+
+      <p data-lang="en">There is no guarantee that a pirarucu leather bag sold by a luxury brand in New York actually came from the Mamirauá Sustainable Development Reserve. There is no system in place to trace leather back to its source. And there is no enforcement mechanism to prevent illegal or semi-legal pirarucu from entering the supply chain.</p>
+      <p data-lang="pt">Não há garantia de que uma bolsa de couro de pirarucu vendida por uma marca de luxo em Nova York veio realmente da Reserva de Desenvolvimento Sustentável Mamirauá. Não existe um sistema para rastrear o couro até sua fonte. E não há mecanismo de aplicação para evitar que pirarucu ilegal ou semi-legal entre na cadeia de suprimentos.</p>
+
+      <p data-lang="en">A consultant who studied the market described the productive chain relationships as "questionable." There are no regular inspections in rivers where pirarucu is caught. There are no regular inspections in slaughterhouses where the fish is processed. The result is a supply chain that officially trades in sustainable, legal pirarucu but has no real way to verify that claim.</p>
+      <p data-lang="pt">Um consultor que estudou o mercado descreveu as relações da cadeia produtiva como "questionáveis". Não há inspeções regulares nos rios onde o pirarucu é capturado. Não há inspeções regulares nos matadouros onde o peixe é processado. O resultado é uma cadeia de suprimentos que oficialmente negocia em pirarucu sustentável e legal, mas não tem uma maneira real de verificar essa alegação.</p>
+    </section>
+
+    <!-- Stats Section 2 -->
+    <section class="stats-section fade-in">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">R$11</div>
+          <div class="stat-number" data-lang="pt">R$11</div>
+          <div class="stat-label" data-lang="en">Max price per kg paid to fishermen</div>
+          <div class="stat-label" data-lang="pt">Preço máximo por kg pago aos pescadores</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">R$3k+</div>
+          <div class="stat-number" data-lang="pt">R$3k+</div>
+          <div class="stat-label" data-lang="en">Price of luxury pirarucu bags</div>
+          <div class="stat-label" data-lang="pt">Preço de bolsas de pirarucu de luxo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">273x</div>
+          <div class="stat-number" data-lang="pt">273x</div>
+          <div class="stat-label" data-lang="en">Price markup from catch to retail</div>
+          <div class="stat-label" data-lang="pt">Aumento de preço de captura a varejo</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">0%</div>
+          <div class="stat-number" data-lang="pt">0%</div>
+          <div class="stat-label" data-lang="en">Traceability guarantee in supply chain</div>
+          <div class="stat-label" data-lang="pt">Garantia de rastreabilidade na cadeia de suprimentos</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: The Contradiction -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">A Contradiction at the Heart of "Sustainable Luxury"</h2>
+      <h2 data-lang="pt">Uma Contradição no Coração do "Luxo Sustentável"</h2>
+
+      <p data-lang="en">The pirarucu leather market exemplifies a profound contradiction in modern luxury goods marketing. Brands position themselves as champions of sustainability and environmental conservation. They tell stories about protecting the Amazon rainforest and empowering indigenous communities. They charge premium prices justified, in part, by claims of ethical sourcing and conservation impact.</p>
+      <p data-lang="pt">O mercado de couro de pirarucu exemplifica uma contradição profunda no marketing de bens de luxo moderno. As marcas se posicionam como campeãs da sustentabilidade e conservação ambiental. Elas contam histórias sobre proteger a floresta amazônica e empoderar comunidades indígenas. Elas cobram preços premium justificados, em parte, por alegações de fornecimento ético e impacto de conservação.</p>
+
+      <p data-lang="en">Yet the fishermen who perform the actual conservation work—the labor of sustainably managing the species that enables these luxury goods to exist—remain among the poorest people in Brazil. The wealth generated by the market does not flow back to the communities that make it possible.</p>
+      <p data-lang="pt">No entanto, os pescadores que realizam o trabalho real de conservação — a mão de obra de gerenciar sustentavelmente a espécie que permite que esses bens de luxo existam — permanecem entre os povos mais pobres do Brasil. A riqueza gerada pelo mercado não flui de volta para as comunidades que o tornam possível.</p>
+
+      <div class="pullquote" data-lang="en">"The conservation story is real. The sustainability practices are real. But the economic benefit? That stays in the cities, in the hands of processors, exporters, and luxury brands. The fishermen who made it all possible are left behind."</div>
+      <div class="pullquote" data-lang="pt">"A história de conservação é real. As práticas de sustentabilidade são reais. Mas o benefício econômico? Fica nas cidades, nas mãos de processadores, exportadores e marcas de luxo. Os pescadores que tornaram tudo possível ficam para trás."</div>
+    </section>
+  </main>
+
+  <!-- Timeline Section -->
+  <section class="timeline-section">
+    <div class="container">
+      <h2 data-lang="en">Timeline of Pirarucu Management and Market Development</h2>
+      <h2 data-lang="pt">Cronograma da Gestão de Pirarucu e Desenvolvimento do Mercado</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">Late 1900s</div>
+            <div class="timeline-date" data-lang="pt">Final de 1900</div>
+            <div class="timeline-title" data-lang="en">Species Near Extinction</div>
+            <div class="timeline-title" data-lang="pt">Espécie Próxima à Extinção</div>
+            <div class="timeline-description" data-lang="en">Overhunting pushes pirarucu to the brink of extinction. The species faces complete commercial loss and ecological collapse.</div>
+            <div class="timeline-description" data-lang="pt">A caça excessiva leva o pirarucu à beira da extinção. A espécie enfrenta perda comercial completa e colapso ecológico.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">1990s</div>
+            <div class="timeline-date" data-lang="pt">1990</div>
+            <div class="timeline-title" data-lang="en">Sustainable Management Begins</div>
+            <div class="timeline-title" data-lang="pt">Gestão Sustentável Começa</div>
+            <div class="timeline-description" data-lang="en">Brazil and conservation groups establish the Mamirauá Sustainable Development Reserve with a managed fishing system. Fishermen become "manejadores" (managers).</div>
+            <div class="timeline-description" data-lang="pt">Brasil e grupos de conservação estabelecem a Reserva de Desenvolvimento Sustentável Mamirauá com um sistema de pesca gerenciada. Pescadores se tornam "manejadores" (gestores).</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">2000s-2010s</div>
+            <div class="timeline-date" data-lang="pt">2000-2010</div>
+            <div class="timeline-title" data-lang="en">Population Recovery</div>
+            <div class="timeline-title" data-lang="pt">Recuperação da População</div>
+            <div class="timeline-description" data-lang="en">Strict management protocols allow pirarucu populations to recover. The management system becomes a global success story in sustainable resource management.</div>
+            <div class="timeline-description" data-lang="pt">Protocolos de gestão rigorosos permitem a recuperação das populações de pirarucu. O sistema de gestão se torna uma história de sucesso global em gestão de recursos sustentável.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">2010s</div>
+            <div class="timeline-date" data-lang="pt">2010</div>
+            <div class="timeline-title" data-lang="en">Luxury Market Emerges</div>
+            <div class="timeline-title" data-lang="pt">Mercado de Luxo Emerge</div>
+            <div class="timeline-description" data-lang="en">Fashion industry discovers pirarucu leather. Luxury brands begin sourcing and marketing pirarucu leather products internationally.</div>
+            <div class="timeline-description" data-lang="pt">Indústria da moda descobre couro de pirarucu. Marcas de luxo começam a adquirir e comercializar produtos de couro de pirarucu internacionalmente.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">2015-2025</div>
+            <div class="timeline-date" data-lang="pt">2015-2025</div>
+            <div class="timeline-title" data-lang="en">Market Growth & Inequality</div>
+            <div class="timeline-title" data-lang="pt">Crescimento de Mercado e Desigualdade</div>
+            <div class="timeline-description" data-lang="en">Pirarucu leather becomes fashionable globally. Supply chains grow opaque. Prices for handbags reach 3,000+ reais while fishermen earn 11 reais per kilogram.</div>
+            <div class="timeline-description" data-lang="pt">Couro de pirarucu se torna moda globalmente. Cadeias de suprimentos se tornam opacas. Preços para bolsas atingem 3.000+ reais enquanto pescadores ganham 11 reais por quilograma.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">August 2025</div>
+            <div class="timeline-date" data-lang="pt">Agosto de 2025</div>
+            <div class="timeline-title" data-lang="en">BBC Investigation Published</div>
+            <div class="timeline-title" data-lang="pt">Investigação da BBC Publicada</div>
+            <div class="timeline-description" data-lang="en">BBC News Brasil publishes investigation exposing the price disparity, supply chain opacity, and lack of traceability in the pirarucu leather market.</div>
+            <div class="timeline-description" data-lang="pt">BBC News Brasil publica investigação expondo a disparidade de preços, opacidade da cadeia de suprimentos e falta de rastreabilidade no mercado de couro de pirarucu.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-disclaimer">
+        <p data-lang="en"><strong>About this version:</strong> This is an alternative layout of an original BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalism, reporting and content is the work of BBC News Brasil and journalist Luiz Fernando Toledo. This page is not affiliated with or endorsed by BBC News Brasil.</p>
+        <p data-lang="pt"><strong>Sobre esta versão:</strong> Esta é uma versão com layout alternativo de uma reportagem original da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o jornalismo, apuração e conteúdo é trabalho da BBC News Brasil e do jornalista Luiz Fernando Toledo. Esta página não é afiliada nem endossada pela BBC News Brasil.</p>
+        <p>
+          <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="en">Read the original BBC News Brasil report ↗</a>
+          <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC News Brasil ↗</a>
+        </p>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../index.html" data-lang="en">← Back to Portfolio</a>
+        <a href="../index.html" data-lang="pt">← Voltar ao Portfólio</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Shared JS -->
+  <script src="../shared/base.js"></script>
+</body>
+</html>

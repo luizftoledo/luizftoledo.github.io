@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Epstein Series — Part 9: "They Traded Me Like Merchandise" | BBC News Brasil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../shared/base.css">
+  <style>
+    .hero {
+      background: linear-gradient(150deg, #1a0a0a 0%, #2d0f1a 40%, #1a1a2e 100%);
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(196,30,58,0.18) 0%, transparent 65%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+    .hero-series-tag {
+      display: inline-block;
+      background: rgba(196,30,58,0.25);
+      border: 1px solid rgba(196,30,58,0.5);
+      color: #e8a0aa;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(34px, 5vw, 62px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-deck {
+      font-family: var(--serif);
+      font-size: clamp(16px, 2vw, 20px);
+      color: rgba(255,255,255,0.72);
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+    .hero-meta {
+      font-family: var(--sans);
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+    }
+    .hero-meta strong { color: rgba(255,255,255,0.72); }
+
+    .hero-cw {
+      display: inline-block;
+      background: rgba(255,200,100,0.15);
+      border: 1px solid rgba(255,200,100,0.4);
+      color: #ffd080;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb { padding: 20px 40px; max-width: 900px; margin: 0 auto; }
+    .breadcrumb a { font-family: var(--sans); font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 600; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .text-section {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 40px;
+      opacity: 0;
+    }
+    .text-section p {
+      font-family: var(--serif);
+      font-size: 19px;
+      line-height: 1.8;
+      color: #1a1a2e;
+      margin-bottom: 22px;
+    }
+    .text-section h2 {
+      font-family: var(--display);
+      font-size: 30px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin: 48px 0 20px;
+      line-height: 1.25;
+    }
+
+    .chapter-divider {
+      max-width: 700px;
+      margin: 20px auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .chapter-divider::before, .chapter-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(26,26,46,0.15);
+    }
+    .chapter-num {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .pullquote {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 48px 60px;
+      background: #1a1a2e;
+      position: relative;
+      opacity: 0;
+    }
+    .pullquote::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 30px;
+      font-family: var(--display);
+      font-size: 100px;
+      color: var(--accent);
+      line-height: 1;
+      opacity: 0.4;
+    }
+    .pullquote blockquote {
+      font-family: var(--display);
+      font-size: clamp(20px, 2.5vw, 27px);
+      font-style: italic;
+      color: #fff;
+      line-height: 1.4;
+      margin: 0 0 20px;
+    }
+    .pullquote cite {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .stats-section { background: #f8f6f3; padding: 80px 40px; opacity: 0; }
+    .stats-inner { max-width: 900px; margin: 0 auto; }
+    .stats-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; }
+    .stat-card { background: #fff; border-top: 3px solid var(--accent); padding: 32px 24px; text-align: center; }
+    .stat-number { font-family: var(--display); font-size: 48px; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+    .stat-label { font-family: var(--sans); font-size: 13px; color: #555; line-height: 1.4; }
+
+    .doc-box { max-width: 700px; margin: 40px auto; padding: 0 40px; opacity: 0; }
+    .doc-box-inner { background: #f0f4f8; border-left: 4px solid #3a7bd5; padding: 28px 32px; }
+    .doc-box-label { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #3a7bd5; margin-bottom: 12px; }
+    .doc-box-text { font-family: var(--sans); font-size: 15px; color: #2d3748; line-height: 1.6; }
+
+    .warning-box { max-width: 700px; margin: 0 auto 40px; padding: 0 40px; }
+    .warning-box-inner {
+      background: #fffbf0;
+      border-left: 4px solid #f59e0b;
+      padding: 20px 24px;
+    }
+    .warning-box-text {
+      font-family: var(--sans);
+      font-size: 14px;
+      color: #78350f;
+      line-height: 1.6;
+    }
+
+    footer { background: var(--primary, #1a1a2e); color: #fff; padding: 60px 40px; }
+    .footer-inner { max-width: 800px; margin: 0 auto; }
+    .footer-disclaimer {
+      border-left: 4px solid var(--accent);
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      background: rgba(255,255,255,0.05);
+    }
+    .footer-disclaimer p { font-family: var(--sans); font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0 0 8px; }
+    .footer-disclaimer a { color: #e8a0aa; }
+    .footer-nav { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
+    .footer-nav a { font-family: var(--sans); font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; }
+    .footer-nav a:hover { color: #fff; }
+    .footer-copy { font-family: var(--sans); font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 600px) {
+      .pullquote { padding: 32px 28px; }
+      .text-section { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body class="lang-en">
+
+  <!-- Disclaimer Bar -->
+  <div class="disclaimer-bar" id="disclaimerBar">
+    <div class="disclaimer-inner">
+      <div class="disclaimer-icon">⚠</div>
+      <p class="disclaimer-text">
+        <strong data-lang="en">Important notice:</strong>
+        <strong data-lang="pt">Aviso importante:</strong>
+        <span data-lang="en">This is an alternative layout version of a BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to BBC News Brasil. &nbsp;</span>
+        <span data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente à BBC News Brasil. &nbsp;</span>
+        <a href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener" data-lang="en">Read original BBC report ↗</a>
+        <a href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC ↗</a>
+      </p>
+      <button class="disclaimer-close" id="disclaimerClose" aria-label="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- Language Toggle -->
+  <div class="lang-toggle-bar" id="langBar">
+    <div class="lang-toggle-inner">
+      <span class="lang-toggle-label" data-lang="en">Language:</span>
+      <span class="lang-toggle-label" data-lang="pt">Idioma:</span>
+      <button class="lang-btn active" id="btnEn">EN</button>
+      <button class="lang-btn" id="btnPt">PT</button>
+    </div>
+  </div>
+
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-cw" data-lang="en">Content warning: sexual exploitation, trafficking</div>
+      <div class="hero-cw" data-lang="pt">Aviso de conteúdo: exploração sexual, tráfico de pessoas</div>
+      <div class="hero-series-tag" data-lang="en">EPSTEIN SERIES — PART 9 · BBC NEWS BRASIL</div>
+      <div class="hero-series-tag" data-lang="pt">SÉRIE EPSTEIN — PARTE 9 · BBC NEWS BRASIL</div>
+      <h1 class="hero-title" data-lang="en">"They Traded Me Like Merchandise for US$10,000"</h1>
+      <h1 class="hero-title" data-lang="pt">"Me Negociaram por US$ 10 Mil"</h1>
+      <p class="hero-deck" data-lang="en">Ana left her home in southern Brazil at 16, lured by the promise of a modelling career in São Paulo. What awaited her was exploitation — and one of her clients was Jeffrey Epstein.</p>
+      <p class="hero-deck" data-lang="pt">Ana saiu de casa no sul do Brasil aos 16 anos, atraída pela promessa de uma carreira de modelo em São Paulo. O que a esperava era exploração sexual — e um de seus clientes era Jeffrey Epstein.</p>
+      <div class="hero-meta">
+        <strong data-lang="en">By Luiz Fernando Toledo</strong>
+        <strong data-lang="pt">Por Luiz Fernando Toledo</strong>
+        &nbsp;·&nbsp;
+        <span data-lang="en">BBC News Brasil · March 11, 2026 · 15 min read</span>
+        <span data-lang="pt">BBC News Brasil · 11 de março de 2026 · 15 min de leitura</span>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <div class="breadcrumb">
+      <a href="../index.html" data-lang="en">← Epstein Series</a>
+      <a href="../index.html" data-lang="pt">← Série Epstein</a>
+    </div>
+
+    <!-- Content warning box -->
+    <div class="warning-box">
+      <div class="warning-box-inner">
+        <p class="warning-box-text" data-lang="en"><strong>Editor's note:</strong> Ana's last name has been withheld to protect her identity. Her account has been verified against documents and other sources by BBC News Brasil. This article describes sexual exploitation and human trafficking.</p>
+        <p class="warning-box-text" data-lang="pt"><strong>Nota da redação:</strong> O sobrenome de Ana foi omitido para proteger sua identidade. Seu relato foi verificado contra documentos e outras fontes pela BBC News Brasil. Este artigo descreve exploração sexual e tráfico de pessoas.</p>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <section class="stats-section fade-in">
+      <div class="stats-inner">
+        <p class="stats-label" data-lang="en">Key facts</p>
+        <p class="stats-label" data-lang="pt">Fatos principais</p>
+        <div class="stats-grid">
+          <div class="stat-card" data-count="16">
+            <div class="stat-number">16</div>
+            <div class="stat-label" data-lang="en">Ana's age when she left home</div>
+            <div class="stat-label" data-lang="pt">Idade de Ana quando saiu de casa</div>
+          </div>
+          <div class="stat-card" data-count="10000">
+            <div class="stat-number">$10k</div>
+            <div class="stat-label" data-lang="en">Amount Epstein paid her intermediary</div>
+            <div class="stat-label" data-lang="pt">Valor pago por Epstein à intermediária</div>
+          </div>
+          <div class="stat-card" data-count="3">
+            <div class="stat-number">3</div>
+            <div class="stat-label" data-lang="en">Girls brought for Epstein to choose from</div>
+            <div class="stat-label" data-lang="pt">Garotas levadas para Epstein escolher</div>
+          </div>
+          <div class="stat-card" data-count="1">
+            <div class="stat-number">1</div>
+            <div class="stat-label" data-lang="en">MPF investigation now open in Brazil</div>
+            <div class="stat-label" data-lang="pt">Investigação do MPF aberta no Brasil</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chapter 1 -->
+    <div class="chapter-divider">
+      <span class="chapter-num" data-lang="en">Chapter I — The Promise of São Paulo</span>
+      <span class="chapter-num" data-lang="pt">Capítulo I — A Promessa de São Paulo</span>
+    </div>
+
+    <div class="text-section fade-in">
+      <p data-lang="en">Ana grew up in the south of Brazil. At 16, she left home to pursue a modelling career — a path that many young women from her region had tried before her. A local agency had failed to find her work, and after a year of waiting, a woman appeared with a proposition: come to São Paulo. There was work there. The ticket would be paid for.</p>
+      <p data-lang="pt">Ana cresceu no sul do Brasil. Aos 16 anos, saiu de casa para seguir uma carreira de modelo — um caminho que muitas jovens mulheres de sua região já haviam tentado antes dela. Uma agência local não havia conseguido encontrar trabalho para ela e, após um ano de espera, uma mulher apareceu com uma proposta: vir para São Paulo. Havia trabalho lá. A passagem seria paga.</p>
+
+      <p data-lang="en">She travelled to São Paulo just before her 18th birthday. Upon arriving, she discovered that her documents had been retained. There was no modelling career. There was no agency. There was only Lúcia — the woman who had brought her — and a network of clients Lúcia had already arranged.</p>
+      <p data-lang="pt">Ela viajou para São Paulo pouco antes de completar 18 anos. Ao chegar, descobriu que seus documentos haviam sido retidos. Não havia carreira de modelo. Não havia agência. Havia apenas Lúcia — a mulher que a havia trazido — e uma rede de clientes que Lúcia já havia arranjado.</p>
+
+      <p data-lang="en">"They negotiated me for prostitution," Ana told BBC News Brasil. "I had no idea that's what I was going to."</p>
+      <p data-lang="pt">"Me negociaram para a prostituição", Ana contou à BBC News Brasil. "Eu não tinha ideia de que era para isso que estava indo."</p>
+    </div>
+
+    <!-- Pullquote 1 -->
+    <div class="pullquote fade-in">
+      <blockquote data-lang="en">"They negotiated me for prostitution. I had no idea that's what I was going to."</blockquote>
+      <blockquote data-lang="pt">"Me negociaram para a prostituição. Eu não tinha ideia de que era para isso que estava indo."</blockquote>
+      <cite>— Ana, speaking to BBC News Brasil</cite>
+    </div>
+
+    <!-- Chapter 2 -->
+    <div class="chapter-divider">
+      <span class="chapter-num" data-lang="en">Chapter II — The Hotel in Jardim Paulista</span>
+      <span class="chapter-num" data-lang="pt">Capítulo II — O Hotel no Jardim Paulista</span>
+    </div>
+
+    <div class="text-section fade-in">
+      <p data-lang="en">One of Ana's appointments — arranged and profited from by Lúcia — was with an American man at a luxury hotel in the Jardim Paulista neighbourhood of São Paulo. She did not know his name. She was brought along with two other girls. The man would choose.</p>
+      <p data-lang="pt">Um dos encontros de Ana — arranjado e lucrativo para Lúcia — foi com um homem americano em um hotel de luxo no bairro do Jardim Paulista, em São Paulo. Ela não sabia o nome dele. Foi levada junto com outras duas garotas. O homem escolheria.</p>
+
+      <p data-lang="en">The client chose Ana. He paid Lúcia US$10,000 for the encounter. Ana received nothing.</p>
+      <p data-lang="pt">O cliente escolheu Ana. Pagou US$ 10 mil a Lúcia pelo encontro. Ana não recebeu nada.</p>
+
+      <p data-lang="en">Only later — after Epstein's arrest in the United States in 2019, after his death in jail, after documents began to emerge — did Ana come to understand who that American had been. She told her story to BBC News Brasil as part of the network's ongoing investigation into Epstein's connections to Brazil.</p>
+      <p data-lang="pt">Só mais tarde — após a prisão de Epstein nos Estados Unidos em 2019, após sua morte na prisão, após os documentos começarem a surgir — Ana passou a entender quem havia sido aquele americano. Ela contou sua história à BBC News Brasil como parte da investigação em andamento da rede sobre as conexões de Epstein com o Brasil.</p>
+
+      <h2 data-lang="en">Maxwell Confirmed the Visit</h2>
+      <h2 data-lang="pt">Maxwell Confirmou a Visita</h2>
+
+      <p data-lang="en">BBC News Brasil found, in the archive of US Department of Justice documents, an email from Ghislaine Maxwell — Epstein's longtime associate and convicted sex trafficker — referencing a visit to São Paulo at the same time described by Ana. In the email, Maxwell mentions staying at a luxury hotel in the city and meetings with a senior executive at a multinational company.</p>
+      <p data-lang="pt">A BBC News Brasil encontrou, no arquivo de documentos do Departamento de Justiça dos EUA, um e-mail de Ghislaine Maxwell — associada de longa data de Epstein e condenada por tráfico sexual — fazendo referência a uma visita a São Paulo no mesmo período descrito por Ana. No e-mail, Maxwell menciona se hospedar em um hotel de luxo na cidade e reuniões com um executivo sênior de uma multinacional.</p>
+
+      <p data-lang="en">The email does not mention Ana. But it independently confirms that Epstein and Maxwell were in São Paulo during the period Ana describes. It corroborates her account without identifying her.</p>
+      <p data-lang="pt">O e-mail não menciona Ana. Mas confirma independentemente que Epstein e Maxwell estavam em São Paulo durante o período que Ana descreve. Corrobora seu relato sem identificá-la.</p>
+    </div>
+
+    <!-- Pullquote 2 -->
+    <div class="pullquote fade-in">
+      <blockquote data-lang="en">"He chose me. Lúcia received US$10,000. I received nothing."</blockquote>
+      <blockquote data-lang="pt">"Ele me escolheu. A Lúcia recebeu US$ 10 mil. Eu não recebi nada."</blockquote>
+      <cite>— Ana</cite>
+    </div>
+
+    <!-- Chapter 3 -->
+    <div class="chapter-divider">
+      <span class="chapter-num" data-lang="en">Chapter III — Trafficking, Law and Accountability</span>
+      <span class="chapter-num" data-lang="pt">Capítulo III — Tráfico, Lei e Responsabilização</span>
+    </div>
+
+    <div class="text-section fade-in">
+      <p data-lang="en">A labour auditor consulted by BBC News Brasil said that Ana's situation — lured from her home with false promises, documents retained, exploited financially by an intermediary — could theoretically be classified as human trafficking under Brazilian law. If proven, those involved in Brazil could still face accountability, as international standards generally indicate this type of crime carries no statute of limitations.</p>
+      <p data-lang="pt">Um auditor trabalhista consultado pela BBC News Brasil disse que a situação de Ana — atraída de casa com falsas promessas, documentos retidos, explorada financeiramente por uma intermediária — poderia, em teoria, ser classificada como tráfico de pessoas segundo a legislação brasileira. Se comprovado, os envolvidos no Brasil ainda poderiam ser responsabilizados, já que os padrões internacionais geralmente indicam que esse tipo de crime não prescreve.</p>
+
+      <p data-lang="en">Following the publication of earlier BBC News Brasil reports in this series, the Federal Public Ministry opened a formal investigation. Prosecutor Cinthia Gabriela Borges, of the national anti-trafficking unit, said she wants to hear from women who had contact with Epstein or his associates in Brazil.</p>
+      <p data-lang="pt">Após a publicação das reportagens anteriores da BBC News Brasil nesta série, o Ministério Público Federal abriu uma investigação formal. A promotora Cinthia Gabriela Borges, da unidade nacional de combate ao tráfico, disse que quer ouvir mulheres que tiveram contato com Epstein ou seus associados no Brasil.</p>
+
+      <p data-lang="en">"The women who come forward are witnesses," the prosecutor told BBC. "Not suspects. Not people in trouble. We want to understand how the system worked."</p>
+      <p data-lang="pt">"As mulheres que se apresentam são testemunhas", disse a promotora à BBC. "Não são suspeitas. Não são pessoas em apuros. Queremos entender como o sistema funcionava."</p>
+
+      <h2 data-lang="en">The Toll of Speaking Out</h2>
+      <h2 data-lang="pt">O Custo de Falar</h2>
+
+      <p data-lang="en">Ana has spent years carrying what happened in that hotel room. She told BBC News Brasil that she is speaking now because she wants people to understand that the pipeline that brought her to São Paulo was not an accident. It was a system. Young women from the south of Brazil, from rural cities, with few opportunities — they were the target.</p>
+      <p data-lang="pt">Ana passou anos carregando o que aconteceu naquele quarto de hotel. Ela disse à BBC News Brasil que está falando agora porque quer que as pessoas entendam que o caminho que a trouxe a São Paulo não foi acidente. Era um sistema. Jovens mulheres do sul do Brasil, de cidades do interior, com poucas oportunidades — elas eram o alvo.</p>
+
+      <p data-lang="en">"No one told me I could say no," she said. "No one told me I had any rights at all."</p>
+      <p data-lang="pt">"Ninguém me disse que eu podia dizer não", ela disse. "Ninguém me disse que eu tinha qualquer direito."</p>
+    </div>
+
+    <!-- Doc box -->
+    <div class="doc-box fade-in">
+      <div class="doc-box-inner">
+        <p class="doc-box-label" data-lang="en">Document confirmation</p>
+        <p class="doc-box-label" data-lang="pt">Confirmação documental</p>
+        <p class="doc-box-text" data-lang="en">BBC News Brasil found an email from Ghislaine Maxwell in the US Department of Justice archive referencing a visit to São Paulo at the same time described by Ana. The email corroborates her account and confirms that Epstein and Maxwell were present in São Paulo during that period.</p>
+        <p class="doc-box-text" data-lang="pt">A BBC News Brasil encontrou um e-mail de Ghislaine Maxwell no arquivo do Departamento de Justiça dos EUA referenciando uma visita a São Paulo no mesmo período descrito por Ana. O e-mail corrobora seu relato e confirma que Epstein e Maxwell estavam presentes em São Paulo durante aquele período.</p>
+      </div>
+    </div>
+
+    <div class="text-section fade-in">
+      <h2 data-lang="en">A Series That Is Not Finished</h2>
+      <h2 data-lang="pt">Uma Série Que Não Terminou</h2>
+
+      <p data-lang="en">Ana's testimony is the ninth and most recent chapter in BBC News Brasil's investigation into Jeffrey Epstein's connections to Brazil — a project that began with the publication of US Department of Justice files in January 2026 and has since uncovered Brazilian tax records, property deeds, modelling contest participants, and accounts from women across southern Brazil.</p>
+      <p data-lang="pt">O depoimento de Ana é o nono e mais recente capítulo na investigação da BBC News Brasil sobre as conexões de Jeffrey Epstein com o Brasil — um projeto que começou com a publicação de arquivos do Departamento de Justiça dos EUA em janeiro de 2026 e desde então descobriu registros fiscais brasileiros, escrituras de imóveis, participantes de concursos de modelos e relatos de mulheres em todo o sul do Brasil.</p>
+
+      <p data-lang="en">The investigation is continuing. If you have information relevant to this reporting, BBC News Brasil can be reached through secure channels.</p>
+      <p data-lang="pt">A investigação continua. Se você tiver informações relevantes para esta reportagem, a BBC News Brasil pode ser contactada por canais seguros.</p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p data-lang="en"><strong>About this version:</strong> This is an alternative layout of an original BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalism, reporting and content is the work of BBC News Brasil and journalist Luiz Fernando Toledo. This page is not affiliated with or endorsed by BBC News Brasil.</p>
+        <p data-lang="pt"><strong>Sobre esta versão:</strong> Esta é uma versão com layout alternativo de uma reportagem original da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o jornalismo, apuração e conteúdo é trabalho da BBC News Brasil e do jornalista Luiz Fernando Toledo. Esta página não é afiliada nem endossada pela BBC News Brasil.</p>
+        <p>
+          <a href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener" data-lang="en">Read the original BBC News Brasil report ↗</a>
+          <a href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC News Brasil ↗</a>
+        </p>
+      </div>
+      <div class="footer-nav">
+        <a href="../index.html" data-lang="en">← Back to Epstein Series</a>
+        <a href="../index.html" data-lang="pt">← Voltar à Série Epstein</a>
+        <a href="../../index.html" data-lang="en">Portfolio Home</a>
+        <a href="../../index.html" data-lang="pt">Início do Portfólio</a>
+      </div>
+      <p class="footer-copy">© BBC News Brasil · <span data-lang="en">All rights reserved</span><span data-lang="pt">Todos os direitos reservados</span></p>
+    </div>
+  </footer>
+
+  <script src="../../shared/base.js"></script>
+</body>
+</html>

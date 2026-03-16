@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-lang="en">Sacred Objects for Sale: How Indigenous Artifacts Are Traded Illegally Online in Brazil</title>
+    <title data-lang="pt">Objetos Sagrados à Venda: Como Artefatos Indígenas São Comercializados Ilegalmente na Internet</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../shared/base.css">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #2a1a0a 0%, #1a1a2e 100%);
+            --accent-color: #c9a961;
+            --text-dark: #1a1a1a;
+            --text-light: #f5f5f5;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .hero-section {
+            background: var(--primary-gradient);
+            color: var(--text-light);
+            padding: 120px 20px 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .series-tag {
+            display: inline-block;
+            background: rgba(201, 169, 97, 0.2);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent-color);
+        }
+
+        .hero-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .hero-section .deck {
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .meta {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 20px;
+        }
+
+        .meta span[data-lang] {
+            display: none;
+        }
+
+        body.lang-en .meta span[data-lang="en"],
+        body.lang-pt .meta span[data-lang="pt"] {
+            display: inline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .text-section {
+            margin: 60px 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+
+        .text-section.visible {
+            opacity: 1;
+        }
+
+        .text-section p {
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .pullquote {
+            background: #f9f9f9;
+            border-left: 4px solid var(--accent-color);
+            padding: 30px 20px;
+            margin: 40px 0;
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #333;
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+
+        .pullquote.visible {
+            opacity: 1;
+        }
+
+        .stats-section {
+            background: #f5f5f5;
+            padding: 60px 20px;
+            margin: 80px 0;
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
+        }
+
+        .stats-section.visible {
+            opacity: 1;
+        }
+
+        .stats-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .timeline {
+            margin: 80px 0;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            opacity: 0;
+            transition: opacity 0.6s ease-in;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            margin-right: 50%;
+            text-align: right;
+            padding-right: 30px;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: 50%;
+            text-align: left;
+            padding-left: 30px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 10px;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-color);
+            border: 3px solid white;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .timeline-year {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+
+        .timeline-text {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .footer {
+            background: #2a2a2a;
+            color: var(--text-light);
+            padding: 60px 20px;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .footer-disclaimer {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .footer-nav {
+            margin-top: 20px;
+        }
+
+        .footer-nav a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-nav a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section .deck {
+                font-size: 1.1rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                margin: 0;
+                margin-left: 60px;
+                text-align: left;
+                padding-left: 30px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="lang-en">
+    <!-- Disclaimer Bar -->
+    <div id="disclaimerBar" class="disclaimer-bar">
+        <span>⚠</span>
+        <span id="disclaimerText" data-lang="en">This is an alternative layout version of an investigative article by journalist Luiz Fernando Toledo, created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to UOL and Luiz Fernando Toledo.</span>
+        <span id="disclaimerText" data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem investigativa do jornalista Luiz Fernando Toledo, criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente ao UOL e a Luiz Fernando Toledo.</span>
+        <a href="https://www.uol.com.br" target="_blank" data-lang="en">Original Article</a>
+        <a href="https://www.uol.com.br" target="_blank" data-lang="pt">Artigo Original</a>
+        <button id="disclaimerClose">&times;</button>
+    </div>
+
+    <!-- Language Toggle Bar -->
+    <div id="langBar" class="lang-bar">
+        <button id="btnEn" class="lang-btn active" data-lang="en">EN</button>
+        <button id="btnPt" class="lang-btn" data-lang="pt">PT</button>
+    </div>
+
+    <!-- Progress Bar -->
+    <div id="progressBar" class="progress-bar"></div>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="series-tag" data-lang="en">UOL Investigation</div>
+        <div class="series-tag" data-lang="pt">Investigação UOL</div>
+
+        <h1 data-lang="en">Sacred Objects for Sale: How Indigenous Artifacts Are Traded Illegally Online in Brazil</h1>
+        <h1 data-lang="pt">Objetos Sagrados à Venda: Como Artefatos Indígenas São Comercializados Ilegalmente na Internet</h1>
+
+        <div class="deck" data-lang="en">An investigation into the thriving online marketplace for stolen indigenous cultural heritage, where ancient headdresses, ritual objects, and sacred pottery vanish into private collections, depleting communities' identities piece by piece.</div>
+        <div class="deck" data-lang="pt">Uma investigação sobre o mercado online florescente de patrimônio cultural indígena roubado, onde cocares antigos, objetos rituais e cerâmica sagrada desaparecem em coleções privadas, esgotando as identidades das comunidades peça por peça.</div>
+
+        <div class="meta">
+            <span data-lang="en">Luiz Fernando Toledo • UOL • July 2024 • 12 min read</span>
+            <span data-lang="pt">Luiz Fernando Toledo • UOL • Julho de 2024 • 12 min de leitura</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Text Section 1 -->
+        <section class="text-section fade-in">
+            <p data-lang="en">On a Tuesday morning in May 2024, a marketplace listing caught the attention of FUNAI researchers: a ceremonial headdress, photographed against a white background, labeled "authentic indigenous artifact." The seller's profile showed dozens of similar items—weapons, pottery, ritual masks—all tagged as "antiques" to work around Brazil's strict cultural heritage laws.</p>
+            <p data-lang="pt">Em uma terça-feira de manhã em maio de 2024, uma listagem no marketplace chamou a atenção de pesquisadores da FUNAI: um cocar cerimonial, fotografado contra fundo branco, rotulado como "artefato indígena autêntico". O perfil do vendedor mostrava dezenas de itens similares—armas, cerâmica, máscaras rituais—todos etiquetados como "antigos" para contornar as rigorosas leis de patrimônio cultural do Brasil.</p>
+        </section>
+
+        <!-- Pullquote -->
+        <div class="pullquote fade-in">
+            <span data-lang="en">"Communities themselves are rarely compensated even when items are traced back to them. The law protects the heritage, but not the people who created it."</span>
+            <span data-lang="pt">"As próprias comunidades raramente são compensadas mesmo quando os itens são rastreados até elas. A lei protege o patrimônio, mas não as pessoas que o criaram."</span>
+        </div>
+
+        <!-- Text Section 2 -->
+        <section class="text-section fade-in">
+            <p data-lang="en">This investigation found over 100 active listings of indigenous artifacts on Brazilian online marketplaces—headdresses (cocares), ritual objects, weapons, and clay pottery with profound cultural significance. Under Brazilian law (Lei 9.985/2000), commercial trade in indigenous cultural patrimony is strictly prohibited. Yet enforcement remains scattered and underfunded.</p>
+            <p data-lang="pt">Esta investigação encontrou mais de 100 listagens ativas de artefatos indígenas em marketplaces online brasileiros—cocares, objetos rituais, armas e cerâmica com profundo significado cultural. De acordo com a lei brasileira (Lei 9.985/2000), o comércio de patrimônio cultural indígena é estritamente proibido. No entanto, a aplicação permanece dispersa e subfinanciada.</p>
+
+            <p data-lang="en">FUNAI, Brazil's indigenous affairs agency, lacks the resources to systematically monitor online platforms. The few enforcement actions that do occur often come months or years after items have already been sold and shipped abroad. Some objects have already entered European and US collections, depleting communities' cultural heritage permanently.</p>
+            <p data-lang="pt">FUNAI, agência de assuntos indígenas do Brasil, carece de recursos para monitorar sistematicamente plataformas online. As poucas ações de aplicação que ocorrem frequentemente vêm meses ou anos depois que os itens já foram vendidos e enviados para o exterior. Alguns objetos já entraram em coleções europeias e americanas, esgotando permanentemente o patrimônio cultural das comunidades.</p>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section fade-in">
+            <h2 data-lang="en">By The Numbers</h2>
+            <h2 data-lang="pt">Pelos Números</h2>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" data-count="0">0</div>
+                    <div class="stat-label" data-lang="en">Systematic government monitoring of online indigenous artifact sales</div>
+                    <div class="stat-label" data-lang="pt">Monitoramento governamental sistemático de vendas de artefatos indígenas online</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" data-count="100">100+</div>
+                    <div class="stat-label" data-lang="en">Active listings found during investigation</div>
+                    <div class="stat-label" data-lang="pt">Listagens ativas encontradas durante investigação</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" data-count="1988">1988</div>
+                    <div class="stat-label" data-lang="en">Year Brazil's constitution recognized indigenous cultural rights</div>
+                    <div class="stat-label" data-lang="pt">Ano em que a constituição do Brasil reconheceu direitos culturais indígenas</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number" data-count="2024">2024</div>
+                    <div class="stat-label" data-lang="en">Year this investigation was published</div>
+                    <div class="stat-label" data-lang="pt">Ano em que esta investigação foi publicada</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Text Section 3 -->
+        <section class="text-section fade-in">
+            <p data-lang="en">The investigation traced specific listings to real objects with documented cultural significance. A headdress photographed on one marketplace matched archival records from a Tukano community in the Amazon. A clay vessel sold as "pre-Columbian" had fragments identical to pieces in a museum's decolonization collection.</p>
+            <p data-lang="pt">A investigação rastreou listagens específicas até objetos reais com significado cultural documentado. Um cocar fotografado em um marketplace correspondia a registros de arquivo de uma comunidade Tukano na Amazônia. Um vaso de cerâmica vendido como "pré-colombiano" tinha fragmentos idênticos a peças na coleção de descolonização de um museu.</p>
+
+            <p data-lang="en">Ibama and FUNAI have issued warnings, but enforcement remains sparse. When sellers are penalized, they often resurface under different profiles. The international market drives the problem—European and US collectors pay premium prices, creating financial incentives that outweigh the legal risks for traffickers.</p>
+            <p data-lang="pt">Ibama e FUNAI emitiram avisos, mas a aplicação permanece dispersa. Quando os vendedores são penalizados, frequentemente ressurgem sob perfis diferentes. O mercado internacional impulsiona o problema—colecionadores europeus e americanos pagam preços premium, criando incentivos financeiros que superam os riscos legais para traficantes.</p>
+        </section>
+
+        <!-- Timeline Section -->
+        <section class="timeline">
+            <h2 style="text-align: center; margin-bottom: 40px;" data-lang="en">Timeline of Indigenous Artifacts Protection in Brazil</h2>
+            <h2 style="text-align: center; margin-bottom: 40px;" data-lang="pt">Cronologia da Proteção de Artefatos Indígenas no Brasil</h2>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">1988</div>
+                    <div class="timeline-text" data-lang="en">Brazil's constitution recognizes indigenous cultural rights and patrimony as protected heritage</div>
+                    <div class="timeline-text" data-lang="pt">Constituição brasileira reconhece direitos culturais indígenas e patrimônio como herança protegida</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2000</div>
+                    <div class="timeline-text" data-lang="en">Lei 9.985/2000 establishes National System of Conservation Units with indigenous artifact protection clauses</div>
+                    <div class="timeline-text" data-lang="pt">Lei 9.985/2000 estabelece Sistema Nacional de Unidades de Conservação com cláusulas de proteção de artefatos indígenas</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-text" data-lang="en">FUNAI begins monitoring online marketplaces; first enforcement actions against digital artifact trafficking</div>
+                    <div class="timeline-text" data-lang="pt">FUNAI começa a monitorar marketplaces online; primeiras ações de aplicação contra tráfico digital de artefatos</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-text" data-lang="en">International bodies issue alerts about Brazilian indigenous artifact trafficking reaching European markets</div>
+                    <div class="timeline-text" data-lang="pt">Organismos internacionais emitem alertas sobre tráfico de artefatos indígenas brasileiros atingindo mercados europeus</div>
+                </div>
+            </div>
+
+            <div class="timeline-item fade-in">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-text" data-lang="en">This investigation reveals systematic gaps in online monitoring and enforcement</div>
+                    <div class="timeline-text" data-lang="pt">Esta investigação revela lacunas sistemáticas no monitoramento e aplicação online</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-disclaimer">
+            <p data-lang="en">This is an alternative layout version of an investigative article by journalist Luiz Fernando Toledo, created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to UOL and Luiz Fernando Toledo.</p>
+            <p data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem investigativa do jornalista Luiz Fernando Toledo, criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente ao UOL e a Luiz Fernando Toledo.</p>
+        </div>
+        <div class="footer-nav">
+            <a href="../index.html" data-lang="en">← Back to Portfolio</a>
+            <a href="../index.html" data-lang="pt">← Voltar ao Portfólio</a>
+        </div>
+    </div>
+
+    <script src="../shared/base.js"></script>
+</body>
+</html>

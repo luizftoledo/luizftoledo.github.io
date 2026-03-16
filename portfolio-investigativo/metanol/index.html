@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-lang="en">Fake Seals, Real Deaths: Inside Brazil's Counterfeit Alcohol Market</title>
+  <title data-lang="pt">Lacres Falsos, Mortes Reais: Por Dentro do Mercado Clandestino de Bebidas Falsificadas</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Shared CSS -->
+  <link rel="stylesheet" href="../shared/base.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    :root {
+      --hero-gradient: linear-gradient(135deg, #1a1a2e 0%, #2d0a0a 100%);
+      --primary-color: #8b0000;
+      --accent-color: #d4af37;
+      --text-dark: #1a1a1a;
+      --text-light: #ffffff;
+    }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      line-height: 1.7;
+      color: var(--text-dark);
+    }
+
+    #disclaimerBar {
+      background-color: #fff3cd;
+      border-bottom: 2px solid #ffc107;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    #disclaimerBar .warning-icon {
+      margin-right: 12px;
+      font-size: 1.2rem;
+    }
+
+    #disclaimerBar a {
+      color: #8b0000;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    #disclaimerClose {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #333;
+    }
+
+    #langBar {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #e9ecef;
+      padding: 12px 20px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      position: sticky;
+      top: 44px;
+      z-index: 999;
+    }
+
+    .lang-btn {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn.active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    .lang-btn:hover {
+      border-color: var(--primary-color);
+    }
+
+    #progressBar {
+      height: 3px;
+      background-color: #e9ecef;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      z-index: 1001;
+      transition: width 0.2s ease;
+    }
+
+    /* Hero Section */
+    #hero {
+      background: var(--hero-gradient);
+      color: white;
+      padding: 100px 20px 80px;
+      text-align: center;
+      margin-top: 44px;
+    }
+
+    .series-tag {
+      display: inline-block;
+      background-color: rgba(212, 175, 55, 0.2);
+      border: 1px solid var(--accent-color);
+      color: var(--accent-color);
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    #hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      line-height: 1.2;
+      margin: 20px 0;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    #hero .deck {
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.3rem;
+      margin: 30px 0 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .meta {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-top: 30px;
+    }
+
+    .meta span {
+      margin: 0 15px;
+    }
+
+    /* Content sections */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .text-section {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      padding: 50px 0;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .text-section.fade-in {
+      opacity: 1;
+    }
+
+    .text-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      margin-bottom: 25px;
+      color: var(--text-dark);
+    }
+
+    .text-section p {
+      margin-bottom: 18px;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .pullquote {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      border-left: 4px solid var(--primary-color);
+      padding: 25px 30px;
+      margin: 40px 0;
+      background-color: #f8f9fa;
+      font-family: 'Source Serif 4', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--text-dark);
+    }
+
+    .pullquote.fade-in {
+      opacity: 1;
+    }
+
+    /* Stats Section */
+    .stats-section {
+      opacity: 0;
+      transition: opacity 0.8s ease-out;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      margin: 60px 0;
+    }
+
+    .stats-section.fade-in {
+      opacity: 1;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.4;
+    }
+
+    /* Timeline */
+    .timeline-section {
+      padding: 80px 20px;
+      background-color: #fafafa;
+    }
+
+    .timeline-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--primary-color), transparent);
+    }
+
+    .timeline-item {
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+      margin-left: 0;
+      margin-right: auto;
+      width: 45%;
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+      margin-left: auto;
+      margin-right: 0;
+      width: 45%;
+      text-align: left;
+    }
+
+    .timeline-marker {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 10px;
+      width: 16px;
+      height: 16px;
+      background-color: var(--primary-color);
+      border: 4px solid white;
+      border-radius: 50%;
+      z-index: 1;
+    }
+
+    .timeline-content {
+      background: white;
+      padding: 20px;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .timeline-date {
+      font-weight: 700;
+      color: var(--primary-color);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    .timeline-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+
+    .timeline-description {
+      font-size: 0.95rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1a1a1a;
+      color: white;
+      padding: 60px 20px 40px;
+    }
+
+    .footer-disclaimer {
+      max-width: 800px;
+      margin: 0 auto 40px;
+      padding: 30px;
+      background-color: rgba(212, 175, 55, 0.1);
+      border-left: 4px solid var(--accent-color);
+      border-radius: 4px;
+    }
+
+    .footer-disclaimer p {
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .footer-disclaimer a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-disclaimer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-nav {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-nav a {
+      color: var(--accent-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #hero h1 {
+        font-size: 2.2rem;
+      }
+
+      #hero .deck {
+        font-size: 1.1rem;
+      }
+
+      .timeline::before {
+        left: 20px;
+      }
+
+      .timeline-marker {
+        left: 20px;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content {
+        width: calc(100% - 60px);
+        margin-left: 60px;
+        margin-right: 0;
+        text-align: left;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      #hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #hero {
+        padding: 60px 15px 50px;
+      }
+    }
+  </style>
+</head>
+<body class="lang-en">
+  <!-- Disclaimer Bar -->
+  <div id="disclaimerBar">
+    <div>
+      <span class="warning-icon">⚠</span>
+      <span data-lang="en">This is an investigative journalism portfolio piece based on BBC News Brasil reporting. </span>
+      <span data-lang="pt">Esta é uma peça de portfólio de jornalismo investigativo baseada em reportagem da BBC News Brasil.</span>
+      <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="en">Original</a>
+      <a href="https://www.bbc.com/portuguese/brasil" target="_blank" rel="noopener" data-lang="pt">Original</a>
+    </div>
+    <button id="disclaimerClose" aria-label="Close disclaimer">✕</button>
+  </div>
+
+  <!-- Language Toggle Bar -->
+  <div id="langBar">
+    <button id="btnEn" class="lang-btn active" data-lang="en">English</button>
+    <button id="btnPt" class="lang-btn" data-lang="pt">Português</button>
+  </div>
+
+  <!-- Progress Bar -->
+  <div id="progressBar"></div>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="container">
+      <div class="series-tag" data-lang="en">Investigative Report</div>
+      <div class="series-tag" data-lang="pt">Reportagem Investigativa</div>
+
+      <h1 data-lang="en">Fake Seals, Real Deaths: Inside Brazil's Counterfeit Alcohol Market</h1>
+      <h1 data-lang="pt">Lacres Falsos, Mortes Reais: Por Dentro do Mercado Clandestino de Bebidas Falsificadas</h1>
+
+      <div class="deck" data-lang="en">How Facebook groups openly sold the materials to create counterfeit bottles—until the BBC investigation and subsequent government action shut them down.</div>
+      <div class="deck" data-lang="pt">Como grupos no Facebook vendiam abertamente os materiais para criar garrafas falsificadas — até a investigação da BBC e subsequente ação governamental fechá-los.</div>
+
+      <div class="meta">
+        <span data-lang="en">BBC News Brasil, October 2025</span>
+        <span data-lang="pt">BBC News Brasil, Outubro de 2025</span>
+        <span>•</span>
+        <span data-lang="en">By Luiz Fernando Toledo</span>
+        <span data-lang="pt">Por Luiz Fernando Toledo</span>
+        <span>•</span>
+        <span data-lang="en">12 min read</span>
+        <span data-lang="pt">12 min de leitura</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Section 1: The Crisis -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">A Nation in Crisis</h2>
+      <h2 data-lang="pt">Uma Nação em Crise</h2>
+
+      <p data-lang="en">In 2025, Brazil faced an unprecedented public health emergency. Deaths from counterfeit alcoholic beverages swept across the country, with families losing loved ones to a poison that had infiltrated the supply chain of some of Brazil's most trusted brands. The culprit was methanol—a highly toxic substance that causes blindness and death even in minuscule quantities.</p>
+      <p data-lang="pt">Em 2025, o Brasil enfrentou uma emergência de saúde pública sem precedentes. Mortes por bebidas alcoólicas falsificadas assolaram o país, com famílias perdendo entes queridos para um veneno que havia se infiltrado na cadeia de suprimentos de algumas das marcas mais confiáveis do Brasil. O culpado era o metanol — uma substância altamente tóxica que causa cegueira e morte mesmo em quantidades minúsculas.</p>
+
+      <p data-lang="en">The victims were not wealthy consumers seeking premium spirits. They were Brazilian families in economic hardship, buying what they believed were genuine bottles of gin, vodka, and whisky at prices that seemed too good to be true. Because they were.</p>
+      <p data-lang="pt">As vítimas não eram consumidores ricos procurando bebidas premium. Eram famílias brasileiras em dificuldades econômicas, comprando o que acreditavam serem garrafas genuínas de gim, vodca e uísque a preços que pareciam bons demais para serem verdade. Porque eram.</p>
+    </section>
+
+    <!-- Stats Section 1 -->
+    <section class="stats-section fade-in">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">2025</div>
+          <div class="stat-number" data-lang="pt">2025</div>
+          <div class="stat-label" data-lang="en">Year of Brazil's methanol outbreak</div>
+          <div class="stat-label" data-lang="pt">Ano do surto de metanol no Brasil</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">Meta</div>
+          <div class="stat-number" data-lang="pt">Meta</div>
+          <div class="stat-label" data-lang="en">Ordered by AGU to remove fake-goods groups</div>
+          <div class="stat-label" data-lang="pt">Ordenada pela AGU a remover grupos de bens falsificados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">Oct 3</div>
+          <div class="stat-number" data-lang="pt">3 de Out</div>
+          <div class="stat-label" data-lang="en">BBC report published & arrests made</div>
+          <div class="stat-label" data-lang="pt">Reportagem da BBC publicada e prisões realizadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">0ml</div>
+          <div class="stat-number" data-lang="pt">0ml</div>
+          <div class="stat-label" data-lang="en">Safe amount of methanol to consume</div>
+          <div class="stat-label" data-lang="pt">Quantidade segura de metanol para consumir</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: The Investigation -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">The BBC Investigation Reveals the Supply Chain</h2>
+      <h2 data-lang="pt">A Investigação da BBC Revela a Cadeia de Suprimentos</h2>
+
+      <p data-lang="en">BBC News Brasil journalists began investigating and uncovered a shocking discovery: Facebook groups—some open to the public, others closed and private—were brazenly selling the materials needed to create counterfeit bottles. They weren't hiding. They were operating in plain sight.</p>
+      <p data-lang="pt">Os jornalistas da BBC News Brasil começaram a investigar e descobriram algo chocante: grupos do Facebook — alguns abertos ao público, outros fechados e privados — vendiam abertamente os materiais necessários para criar garrafas falsificadas. Não estavam se escondendo. Estavam operando à vista de todos.</p>
+
+      <div class="pullquote" data-lang="en">"The materials were not hidden or difficult to find. Fake bottle caps, security seals imitating Federal Revenue Service stamps, professionally printed labels, and empty bottles of gin, vodka, and whisky were all available for purchase on Facebook."</div>
+      <div class="pullquote" data-lang="pt">"Os materiais não estavam escondidos nem eram difíceis de encontrar. Tampas falsas, lacres de segurança imitando selos da Receita Federal, rótulos impressos profissionalmente e garrafas vazias de gim, vodca e uísque estavam todos disponíveis para compra no Facebook."</div>
+
+      <p data-lang="en">The business model was simple and efficient: suppliers would sell cheap ethanol adulterated with methanol to counterfeiters. The counterfeiters would pour this toxic mixture into fake branded bottles using materials purchased openly from Facebook groups. The bottles would then be distributed through informal channels and sold to unsuspecting consumers.</p>
+      <p data-lang="pt">O modelo de negócio era simples e eficiente: os fornecedores vendiam etanol barato adulterado com metanol aos falsificadores. Os falsificadores derramavam essa mistura tóxica em garrafas falsas de marcas usando materiais comprados abertamente em grupos do Facebook. As garrafas eram então distribuídas através de canais informais e vendidas para consumidores desavisados.</p>
+    </section>
+
+    <!-- Pullquote Section -->
+    <section class="text-section fade-in">
+      <div class="pullquote" data-lang="en">"Every step of this chain exploited the economic desperation of working Brazilians. Cheap ethanol, rock-bottom counterfeit prices, and a population so economically vulnerable that they would buy a bottle of vodka for a third of the legitimate price without questioning where it came from."</div>
+      <div class="pullquote" data-lang="pt">"Cada etapa dessa cadeia explorava o desespero econômico dos trabalhadores brasileiros. Etanol barato, preços de falsificados muito baixos, e uma população tão economicamente vulnerável que compraria uma garrafa de vodca por um terço do preço legítimo sem questionar de onde veio."</div>
+    </section>
+
+    <!-- Section 3: Government Action -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">October 3, 2025: The Breaking Point</h2>
+      <h2 data-lang="pt">3 de Outubro de 2025: O Ponto de Ruptura</h2>
+
+      <p data-lang="en">On October 3, 2025, the BBC News Brasil report was published. The same day, Brazil's Attorney General's Office (AGU) ordered Meta Platforms to remove the groups actively selling counterfeiting materials from Facebook and Instagram. It was a significant victory for public health and justice.</p>
+      <p data-lang="pt">Em 3 de outubro de 2025, a reportagem da BBC News Brasil foi publicada. No mesmo dia, o Gabinete do Procurador-Geral do Brasil (AGU) ordenou à Meta Platforms remover os grupos que vendiam ativamente materiais de falsificação do Facebook e Instagram. Foi uma vitória significativa para a saúde pública e a justiça.</p>
+
+      <p data-lang="en">On the same day, police from DEIC-SP (Departamento Estadual de Investigações Criminais de São Paulo) arrested the main supplier of counterfeit materials. Thousands of fake bottles, caps, labels, and packaging materials were seized in the raid.</p>
+      <p data-lang="pt">No mesmo dia, a polícia do DEIC-SP (Departamento Estadual de Investigações Criminais de São Paulo) prendeu o principal fornecedor de materiais de falsificação. Milhares de garrafas falsas, tampas, rótulos e materiais de embalagem foram apreendidos na operação.</p>
+    </section>
+
+    <!-- Stats Section 2 -->
+    <section class="stats-section fade-in">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">Thousands</div>
+          <div class="stat-number" data-lang="pt">Milhares</div>
+          <div class="stat-label" data-lang="en">Counterfeit items seized in raid</div>
+          <div class="stat-label" data-lang="pt">Itens falsificados apreendidos na operação</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">1</div>
+          <div class="stat-number" data-lang="pt">1</div>
+          <div class="stat-label" data-lang="en">Main supplier arrested October 3</div>
+          <div class="stat-label" data-lang="pt">Principal fornecedor preso em 3 de outubro</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">Multiple</div>
+          <div class="stat-number" data-lang="pt">Múltiplos</div>
+          <div class="stat-label" data-lang="en">Facebook groups shut down by AGU order</div>
+          <div class="stat-label" data-lang="pt">Grupos do Facebook fechados por ordem da AGU</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-lang="en">24h</div>
+          <div class="stat-number" data-lang="pt">24h</div>
+          <div class="stat-label" data-lang="en">Time from publication to action</div>
+          <div class="stat-label" data-lang="pt">Tempo entre publicação e ação</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Why This Happened -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">The Economics of Desperation</h2>
+      <h2 data-lang="pt">A Economia do Desespero</h2>
+
+      <p data-lang="en">The counterfeit alcohol crisis did not emerge in a vacuum. It was born from economic desperation. Brazil's economic hardship in recent years has created a large population of consumers who cannot afford premium alcoholic beverages at their legitimate prices. A bottle of imported vodka might cost 150 reais at a licensed retailer. A counterfeit version might sell for 30 to 50 reais on the informal market.</p>
+      <p data-lang="pt">A crise do álcool falsificado não surgiu do nada. Nasceu do desespero econômico. A dificuldade econômica do Brasil nos últimos anos criou uma grande população de consumidores que não pode pagar bebidas alcoólicas premium aos seus preços legítimos. Uma garrafa de vodca importada poderia custar 150 reais em um varejista licenciado. Uma versão falsificada poderia ser vendida por 30 a 50 reais no mercado informal.</p>
+
+      <p data-lang="en">This price gap is the engine of the counterfeit market. Falsifiers exploit it ruthlessly. Suppliers exploit the desperation of workers who want to buy alcohol at a price they can afford. And most callously, distributors exploit the trust that consumers place in familiar brand names.</p>
+      <p data-lang="pt">Essa diferença de preço é o motor do mercado de falsificação. Os falsificadores a exploram impiedosamente. Os fornecedores exploram o desespero dos trabalhadores que querem comprar álcool por um preço que podem pagar. E mais cruelmente, os distribuidores exploram a confiança que os consumidores depositam em marcas conhecidas.</p>
+    </section>
+
+    <!-- Section 5: The Danger -->
+    <section class="text-section fade-in">
+      <h2 data-lang="en">Why Methanol is So Dangerous</h2>
+      <h2 data-lang="pt">Por Que o Metanol É Tão Perigoso</h2>
+
+      <p data-lang="en">Methanol is a colorless, odorless liquid that is chemically similar to ethanol (the alcohol in legitimate beverages) but profoundly toxic to humans. The human body cannot safely metabolize methanol. Even tiny amounts can cause severe damage.</p>
+      <p data-lang="pt">O metanol é um líquido incolor e inodoro que é quimicamente semelhante ao etanol (o álcool em bebidas legítimas), mas profundamente tóxico para humanos. O corpo humano não pode metabolizar o metanol com segurança. Até pequenas quantidades podem causar danos severos.</p>
+
+      <p data-lang="en">Exposure to methanol causes: blindness (through optic nerve damage), seizures, metabolic acidosis, coma, and death. The victims of the 2025 outbreak did not simply get sick. Many lost their vision permanently. Many died.</p>
+      <p data-lang="pt">A exposição ao metanol causa: cegueira (através de dano ao nervo óptico), convulsões, acidose metabólica, coma e morte. As vítimas do surto de 2025 não ficaram simplesmente doentes. Muitas perderam a visão permanentemente. Muitas morreram.</p>
+
+      <div class="pullquote" data-lang="en">"There is no safe amount of methanol to consume. The lethal dose is shockingly low. The tragedy of the 2025 outbreak is that these deaths were entirely preventable—they occurred because criminals prioritized profit over human life."</div>
+      <div class="pullquote" data-lang="pt">"Não há uma quantidade segura de metanol para consumir. A dose letal é surpreendentemente baixa. A tragédia do surto de 2025 é que essas mortes eram totalmente preveníveis — ocorreram porque criminosos priorizaram lucro sobre vida humana."</div>
+    </section>
+  </main>
+
+  <!-- Timeline Section -->
+  <section class="timeline-section">
+    <div class="container">
+      <h2 data-lang="en">Timeline of Events</h2>
+      <h2 data-lang="pt">Cronograma de Eventos</h2>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">Early 2025</div>
+            <div class="timeline-date" data-lang="pt">Início de 2025</div>
+            <div class="timeline-title" data-lang="en">Outbreak Begins</div>
+            <div class="timeline-title" data-lang="pt">Surto Começa</div>
+            <div class="timeline-description" data-lang="en">Reports of deaths and poisonings from counterfeit alcoholic beverages begin emerging across Brazil, particularly in working-class communities.</div>
+            <div class="timeline-description" data-lang="pt">Reportagens de mortes e envenenamentos por bebidas alcoólicas falsificadas começam a surgir em todo o Brasil, particularmente em comunidades de trabalhadores.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">Spring 2025</div>
+            <div class="timeline-date" data-lang="pt">Primavera 2025</div>
+            <div class="timeline-title" data-lang="en">Investigations Begin</div>
+            <div class="timeline-title" data-lang="pt">Investigações Começam</div>
+            <div class="timeline-description" data-lang="en">BBC News Brasil journalists begin investigating the source of the counterfeit bottles and the supply chain delivering them to consumers.</div>
+            <div class="timeline-description" data-lang="pt">Jornalistas da BBC News Brasil começam a investigar a origem das garrafas falsificadas e a cadeia de suprimentos que as entregam aos consumidores.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">Summer 2025</div>
+            <div class="timeline-date" data-lang="pt">Verão 2025</div>
+            <div class="timeline-title" data-lang="en">Facebook Groups Discovered</div>
+            <div class="timeline-title" data-lang="pt">Grupos do Facebook Descobertos</div>
+            <div class="timeline-description" data-lang="en">Investigators find Facebook and Instagram groups openly selling counterfeit materials: fake seals, labels, empty bottles, and caps.</div>
+            <div class="timeline-description" data-lang="pt">Investigadores encontram grupos do Facebook e Instagram vendendo abertamente materiais de falsificação: lacres falsos, rótulos, garrafas vazias e tampas.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">October 1-2, 2025</div>
+            <div class="timeline-date" data-lang="pt">1-2 de Outubro, 2025</div>
+            <div class="timeline-title" data-lang="en">Report Finalized</div>
+            <div class="timeline-title" data-lang="pt">Relatório Finalizado</div>
+            <div class="timeline-description" data-lang="en">BBC News Brasil prepares the investigative report for publication, coordinating with authorities and verifying all sources.</div>
+            <div class="timeline-description" data-lang="pt">BBC News Brasil prepara a reportagem investigativa para publicação, coordenando com autoridades e verificando todas as fontes.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">October 3, 2025</div>
+            <div class="timeline-date" data-lang="pt">3 de Outubro, 2025</div>
+            <div class="timeline-title" data-lang="en">Report Published & Action Taken</div>
+            <div class="timeline-title" data-lang="pt">Relatório Publicado e Ação Tomada</div>
+            <div class="timeline-description" data-lang="en">BBC News Brasil publishes the investigation. The same day, AGU orders Meta to remove the groups, and DEIC-SP arrests the main supplier of counterfeit materials.</div>
+            <div class="timeline-description" data-lang="pt">BBC News Brasil publica a investigação. No mesmo dia, a AGU ordena à Meta remover os grupos, e DEIC-SP prende o principal fornecedor de materiais de falsificação.</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="timeline-date" data-lang="en">October 2025 onwards</div>
+            <div class="timeline-date" data-lang="pt">Outubro de 2025 em diante</div>
+            <div class="timeline-title" data-lang="en">Ongoing Investigation</div>
+            <div class="timeline-title" data-lang="pt">Investigação Contínua</div>
+            <div class="timeline-description" data-lang="en">Federal and state authorities continue investigation into the full scope of the counterfeit operation and the criminal networks involved.</div>
+            <div class="timeline-description" data-lang="pt">Autoridades federais e estaduais continuam investigando o escopo completo da operação de falsificação e das redes criminosas envolvidas.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-disclaimer">
+        <p data-lang="en"><strong>About this version:</strong> This is an alternative layout of an original BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalism, reporting and content is the work of BBC News Brasil and journalist Luiz Fernando Toledo. This page is not affiliated with or endorsed by BBC News Brasil.</p>
+        <p data-lang="pt"><strong>Sobre esta versão:</strong> Esta é uma versão com layout alternativo de uma reportagem original da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o jornalismo, apuração e conteúdo é trabalho da BBC News Brasil e do jornalista Luiz Fernando Toledo. Esta página não é afiliada nem endossada pela BBC News Brasil.</p>
+        <p>
+          <a href="https://www.bbc.com/portuguese/articles" target="_blank" rel="noopener" data-lang="en">Read the original BBC News Brasil report ↗</a>
+          <a href="https://www.bbc.com/portuguese/articles" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC News Brasil ↗</a>
+        </p>
+      </div>
+
+      <div class="footer-nav">
+        <a href="../index.html" data-lang="en">← Back to Portfolio</a>
+        <a href="../index.html" data-lang="pt">← Voltar ao Portfólio</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Shared JS -->
+  <script src="../shared/base.js"></script>
+</body>
+</html>
