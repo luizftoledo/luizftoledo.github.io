@@ -118,11 +118,11 @@ const PERSONAS = [
   },
   // ── Social media behavior typologies (research-based) ─
   {
-    id: 'humorista',
-    emoji: '😂',
-    name: 'Comentarista humorista',
-    role: 'Usuário que usa humor e memes para reagir',
-    sentiment_hint: 'reacts with jokes, irony, memes or puns about the story; humor can be sympathetic or critical; never takes a serious stance; short comment, very informal, emoji-heavy',
+    id: 'leitor_duvida',
+    emoji: '🧐',
+    name: 'Leitor em dúvida',
+    role: 'Leitor focado em clareza e didatismo',
+    sentiment_hint: 'asks for clarification on complex terms or logical gaps; wants to truly understand the facts before forming an opinion; polite but demanding of the journalist\'s clarity; points out if something remained confusing',
   },
   {
     id: 'auto_promotor',
