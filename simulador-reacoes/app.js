@@ -344,7 +344,7 @@ function updateProviderUI(provider) {
   proxyGroup.classList.toggle('hidden', !isAnthropic);
 }
 
-const resultsContent     = document.getElementById('results-content');
+const resultsArea        = document.getElementById('resultsArea');
 const analysisReport     = document.getElementById('analysis-report');
 const socialModeToggle   = document.getElementById('socialMode');
 
@@ -737,15 +737,23 @@ function renderComments(reactions, threads = {}, analysis = null) {
     return `
       <div class="thread-block">
         <div class="thread-header">${isTop ? 'Respostas em destaque' : 'Mais respostas'}</div>
-        ${thread.map(r => `
+        ${thread.map(r => {
+          const pData = PERSONAS.find(p => p.name === r.name) || { description: r.role || 'Participante do debate.' };
+          return `
           <div class="thread-reply">
             <span class="thread-avatar">${escHtml(r.emoji || '💬')}</span>
             <div class="thread-reply-body">
-              <span class="thread-reply-name">${escHtml(r.name || 'Anônimo')}</span>
+              <span class="thread-reply-name">
+                ${escHtml(r.name || 'Anônimo')}
+                <span class="info-icon">?
+                  <span class="tooltip">${escHtml(pData.description)}</span>
+                </span>
+              </span>
               <span class="thread-reply-role">${escHtml(r.role || '')}</span>
               <p class="thread-reply-text">${escHtml(r.comment || '')}</p>
             </div>
-          </div>`).join('')}
+          </div>`;
+        }).join('')}
       </div>`;
   };
 
@@ -753,12 +761,19 @@ function renderComments(reactions, threads = {}, analysis = null) {
     const sentiment = ['positive','critical','neutral','mixed'].includes(c.sentiment) ? c.sentiment : 'neutral';
     const isTop     = c.id === topId;
     const likes     = likesLabel(c.likes);
+    const pData     = PERSONAS.find(p => p.id === c.id) || { description: c.role || 'Leitor simulado.' };
+    
     return `
       <div class="comment-card${isTop ? ' comment-card--top' : ''}" data-sentiment="${escHtml(sentiment)}">
         <div class="comment-avatar">${escHtml(c.emoji || '💬')}</div>
         <div class="comment-body">
           <div class="comment-meta">
-            <span class="comment-name">${escHtml(c.name || 'Anônimo')}</span>
+            <span class="comment-name">
+              ${escHtml(c.name || 'Anônimo')}
+              <span class="info-icon">?
+                <span class="tooltip">${escHtml(pData.description)}</span>
+              </span>
+            </span>
             <span class="comment-role">${escHtml(c.role || '')}</span>
             ${isTop ? '<span class="top-badge">🔥 mais curtido</span>' : ''}
           </div>
@@ -815,12 +830,3 @@ function humanizeError(err, provider) {
   return msg;
 }
 
-// ——— Util ————————————————————————————————————————————————
-function escHtml(str) {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
