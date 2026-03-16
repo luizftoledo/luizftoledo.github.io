@@ -367,6 +367,48 @@ body {
 }
 .comment-text { font-size: 0.84rem; color: var(--subdued); line-height: 1.6; }
 
+/* Likes */
+.comment-likes {
+  margin-top: 8px;
+  font-size: 0.72rem; color: var(--muted);
+  display: flex; align-items: center; gap: 4px;
+}
+
+/* Top comment badge */
+.top-badge {
+  font-size: 0.65rem; font-weight: 600;
+  background: rgba(255,180,0,0.12);
+  color: #ffc840;
+  border: 1px solid rgba(255,180,0,0.25);
+  padding: 1px 7px; border-radius: 20px;
+}
+.comment-card--top {
+  border-color: rgba(255,180,0,0.25);
+  background: rgba(255,180,0,0.03);
+}
+
+/* Thread replies */
+.thread-block {
+  margin: 4px 0 8px 40px;
+  border-left: 2px solid var(--border-mid);
+  padding-left: 14px;
+  display: flex; flex-direction: column; gap: 10px;
+  animation: fadeUp 0.35s ease both;
+}
+.thread-header {
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.3px; color: var(--muted);
+  text-transform: uppercase; margin-bottom: 2px;
+}
+.thread-reply {
+  display: flex; gap: 9px; align-items: flex-start;
+}
+.thread-avatar { font-size: 1rem; line-height: 1.4; }
+.thread-reply-body { flex: 1; }
+.thread-reply-name { font-size: 0.78rem; font-weight: 600; color: var(--text); margin-right: 6px; }
+.thread-reply-role { font-size: 0.65rem; color: var(--muted); }
+.thread-reply-text { font-size: 0.8rem; color: var(--subdued); line-height: 1.55; margin-top: 3px; }
+
 /* ——— LEGEND ————————————————————————————————————————— */
 .legend {
   display: flex; flex-wrap: wrap; gap: 12px;
