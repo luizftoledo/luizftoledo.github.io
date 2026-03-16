@@ -1,59 +1,92 @@
 /**
  * Journalistic Reaction Simulator — app.js
- * Calls the OpenAI API from the browser to generate simulated comments
+ * Supports OpenAI, Google Gemini, and Anthropic (via CORS proxy)
  */
 
-// ——— Constants ——————————————————————————————————————————
-const LS_KEY_API = 'sim_openai_key';
-const LS_KEY_MODEL = 'sim_model';
+// ——— Provider config —————————————————————————————————————
+const PROVIDERS = {
+  openai: {
+    label: 'OpenAI',
+    placeholder: 'sk-...',
+    hint: 'Salva só no seu navegador. Nunca enviada a nenhum servidor.',
+    models: [
+      { value: 'gpt-4o-mini',  label: 'gpt-4o-mini — mais econômico ⭐' },
+      { value: 'gpt-4o',       label: 'gpt-4o — mais preciso' },
+      { value: 'gpt-4-turbo',  label: 'gpt-4-turbo' },
+    ],
+    modelHint: 'gpt-4o-mini custa ~$0,01 por simulação completa.',
+  },
+  gemini: {
+    label: 'Google Gemini',
+    placeholder: 'AIza...',
+    hint: 'Chave do Google AI Studio. Salva só no seu navegador.',
+    models: [
+      { value: 'gemini-2.0-flash',       label: 'gemini-2.0-flash — mais econômico ⭐' },
+      { value: 'gemini-2.0-flash-lite',  label: 'gemini-2.0-flash-lite — ultrabarato' },
+      { value: 'gemini-1.5-pro',         label: 'gemini-1.5-pro — mais preciso' },
+    ],
+    modelHint: 'Gemini 2.0 Flash tem cota gratuita generosa. Obtenha sua chave em aistudio.google.com.',
+  },
+  anthropic: {
+    label: 'Anthropic (Claude)',
+    placeholder: 'sk-ant-...',
+    hint: 'A API da Anthropic bloqueia chamadas diretas do navegador. Você precisa de um proxy CORS.',
+    models: [
+      { value: 'claude-haiku-3-5',  label: 'claude-3-5-haiku — mais econômico ⭐' },
+      { value: 'claude-sonnet-3-7', label: 'claude-3-7-sonnet — mais preciso' },
+    ],
+    modelHint: 'Requer um servidor proxy por limitações CORS da Anthropic.',
+  },
+};
 
+// ——— Personas ——————————————————————————————————————————————
 const PERSONAS = [
   {
     id: 'leitor_neutro',
     emoji: '🗣️',
-    name: 'Leitor Neutro',
+    name: 'Leitor neutro',
     role: 'Cidadão sem filiação política clara',
     sentiment_hint: 'pragmatic, neither strongly supportive nor critical, asks practical questions',
   },
   {
     id: 'leitor_petista',
     emoji: '🔴',
-    name: 'Leitor Petista',
+    name: 'Leitor petista',
     role: 'Apoiador do PT / esquerda brasileira',
     sentiment_hint: 'supports the investigation if it exposes right-wing corruption, suspicious if it involves PT allies, uses leftist framing',
   },
   {
     id: 'leitor_bolsonarista',
     emoji: '🟡',
-    name: 'Leitor Bolsonarista',
+    name: 'Leitor bolsonarista',
     role: 'Apoiador de Bolsonaro / direita conservadora',
     sentiment_hint: 'accuses media bias (especially BBC/Globo), defends the right-wing, suspicious of "communism" or left-wing motives, may use terms like "mídia podre"',
   },
   {
     id: 'leitor_liberal',
     emoji: '🎩',
-    name: 'Leitor Liberal',
+    name: 'Leitor liberal',
     role: 'Direita liberal, pró-mercado, antipetista e antiBolsonaro',
     sentiment_hint: 'criticizes both sides, focus on rule of law and institutions, uses economic and institutional framing, frustrated with Brazilian politics overall',
   },
   {
     id: 'leitor_conspiracao',
     emoji: '🕳️',
-    name: 'Leitor Conspiração',
+    name: 'Leitor conspiração',
     role: 'Adepto de teorias da conspiração',
     sentiment_hint: 'dismisses the article as a distraction from the "real" story, accuses globalists or powerful elites, references globalism, deep state or "agenda oculta", uses memes and sarcasm',
   },
   {
     id: 'advogado',
     emoji: '⚖️',
-    name: 'Especialista Jurídico',
+    name: 'Especialista jurídico',
     role: 'Advogado / jurista',
     sentiment_hint: 'analytical, focuses on legal implications, constitutional angles, and due process, neutral or mixed',
   },
   {
     id: 'abordado',
     emoji: '🛡️',
-    name: 'Pessoa Abordada',
+    name: 'Pessoa abordada',
     role: 'Sujeito da matéria (defesa)',
     sentiment_hint: 'defensive, denying wrongdoing, reframing the narrative, accusing the journalist of bias or selective use of data',
   },
@@ -67,75 +100,125 @@ const PERSONAS = [
   {
     id: 'jornalista',
     emoji: '🎙️',
-    name: 'Jornalista Concorrente',
+    name: 'Jornalista concorrente',
     role: 'Colega de imprensa',
     sentiment_hint: 'professional tone, notes what the story confirms or what it might be missing methodologically, may be impressed or subtly competitive',
   },
   {
     id: 'academico',
     emoji: '🎓',
-    name: 'Acadêmico / Analista',
+    name: 'Acadêmico / analista',
     role: 'Pesquisador / professor universitário',
     sentiment_hint: 'neutral, analytical, contextualizes the story within broader historical or structural patterns in Brazil',
   },
 ];
 
 // ——— DOM refs ————————————————————————————————————————————
-const formEl        = document.getElementById('simForm');
-const apiKeyInput   = document.getElementById('apiKey');
-const modelSelect   = document.getElementById('modelSelect');
-const articleInput  = document.getElementById('articleText');
-const contextInput  = document.getElementById('contextText');
-const outletInput   = document.getElementById('outletName');
-const keyToggleBtn  = document.getElementById('keyToggle');
-const submitBtn     = document.getElementById('submitBtn');
-const resultsArea   = document.getElementById('resultsArea');
-const postPreview   = document.getElementById('postPreview');
-const previewTitle  = document.getElementById('previewTitle');
-const previewBody   = document.getElementById('previewBody');
-const previewOutlet = document.getElementById('previewOutlet');
+const formEl          = document.getElementById('simForm');
+const providerSelect  = document.getElementById('providerSelect');
+const modelSelect     = document.getElementById('modelSelect');
+const modelHint       = document.getElementById('modelHint');
+const apiKeyInput     = document.getElementById('apiKey');
+const keyHint         = document.getElementById('keyHint');
+const keyToggleBtn    = document.getElementById('keyToggle');
+const articleInput    = document.getElementById('articleText');
+const contextInput    = document.getElementById('contextText');
+const outletInput     = document.getElementById('outletName');
+const submitBtn       = document.getElementById('submitBtn');
+const resultsArea     = document.getElementById('resultsArea');
+const postPreview     = document.getElementById('postPreview');
+const previewTitle    = document.getElementById('previewTitle');
+const previewBody     = document.getElementById('previewBody');
+const previewOutlet   = document.getElementById('previewOutlet');
+const corsWarning     = document.getElementById('corsWarning');
+const proxyGroup      = document.getElementById('proxyGroup');
+const proxyUrlInput   = document.getElementById('proxyUrl');
 
-// ——— Init: restore saved values ——————————————————————————
+// ——— Init ————————————————————————————————————————————————
 window.addEventListener('DOMContentLoaded', () => {
-  const savedKey   = localStorage.getItem(LS_KEY_API) || '';
-  const savedModel = localStorage.getItem(LS_KEY_MODEL) || 'gpt-4o-mini';
-  if (savedKey)   apiKeyInput.value = savedKey;
-  if (modelSelect) modelSelect.value = savedModel;
+  const savedProvider = localStorage.getItem('sim_provider') || 'openai';
+  providerSelect.value = savedProvider;
+  updateProviderUI(savedProvider);
+
+  const savedKey = localStorage.getItem(`sim_key_${savedProvider}`) || '';
+  if (savedKey) apiKeyInput.value = savedKey;
+
+  const savedProxy = localStorage.getItem('sim_proxy') || '';
+  if (proxyUrlInput && savedProxy) proxyUrlInput.value = savedProxy;
 });
 
-// ——— API key visibility toggle ——————————————————————————
-keyToggleBtn.addEventListener('click', () => {
-  const isPassword = apiKeyInput.type === 'password';
-  apiKeyInput.type = isPassword ? 'text' : 'password';
-  keyToggleBtn.innerHTML = isPassword ? '🙈' : '👁️';
+// ——— Provider change ————————————————————————————————————
+providerSelect.addEventListener('change', () => {
+  const provider = providerSelect.value;
+  localStorage.setItem('sim_provider', provider);
+  updateProviderUI(provider);
+  // Restore saved key for this provider
+  apiKeyInput.value = localStorage.getItem(`sim_key_${provider}`) || '';
 });
 
-// ——— Persist settings on change ——————————————————————————
+function updateProviderUI(provider) {
+  const cfg = PROVIDERS[provider];
+
+  // Update model list
+  modelSelect.innerHTML = cfg.models
+    .map(m => `<option value="${m.value}">${m.label}</option>`)
+    .join('');
+
+  // Restore saved model
+  const savedModel = localStorage.getItem(`sim_model_${provider}`);
+  if (savedModel) modelSelect.value = savedModel;
+
+  // Update hints and placeholder
+  modelHint.textContent  = cfg.modelHint;
+  keyHint.textContent    = cfg.hint;
+  apiKeyInput.placeholder = cfg.placeholder;
+
+  // Show/hide Anthropic proxy warning
+  const isAnthropic = provider === 'anthropic';
+  corsWarning.classList.toggle('hidden', !isAnthropic);
+  proxyGroup.classList.toggle('hidden', !isAnthropic);
+}
+
+// ——— Persist settings ———————————————————————————————————
 apiKeyInput.addEventListener('change', () => {
-  localStorage.setItem(LS_KEY_API, apiKeyInput.value.trim());
+  const provider = providerSelect.value;
+  localStorage.setItem(`sim_key_${provider}`, apiKeyInput.value.trim());
 });
 modelSelect.addEventListener('change', () => {
-  localStorage.setItem(LS_KEY_MODEL, modelSelect.value);
+  const provider = providerSelect.value;
+  localStorage.setItem(`sim_model_${provider}`, modelSelect.value);
+});
+if (proxyUrlInput) {
+  proxyUrlInput.addEventListener('change', () => {
+    localStorage.setItem('sim_proxy', proxyUrlInput.value.trim());
+  });
+}
+
+// ——— API key toggle ——————————————————————————————————————
+keyToggleBtn.addEventListener('click', () => {
+  const isPwd = apiKeyInput.type === 'password';
+  apiKeyInput.type = isPwd ? 'text' : 'password';
+  keyToggleBtn.innerHTML = isPwd ? '🙈' : '👁️';
 });
 
 // ——— Form submit ——————————————————————————————————————————
 formEl.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const apiKey  = apiKeyInput.value.trim();
-  const model   = modelSelect.value;
-  const article = articleInput.value.trim();
-  const context = contextInput.value.trim();
-  const outlet  = outletInput.value.trim() || 'Veículo jornalístico';
+  const provider = providerSelect.value;
+  const model    = modelSelect.value;
+  const apiKey   = apiKeyInput.value.trim();
+  const article  = articleInput.value.trim();
+  const context  = contextInput.value.trim();
+  const outlet   = outletInput.value.trim() || 'Veículo jornalístico';
+  const proxyUrl = proxyUrlInput ? proxyUrlInput.value.trim() : '';
 
-  // Basic validation
-  if (!apiKey) return showError('Insira sua chave de API OpenAI para continuar.');
+  if (!apiKey)                       return showError('Insira sua chave de API para continuar.');
   if (!article || article.length < 40) return showError('Insira o texto jornalístico completo (ao menos 40 caracteres).');
+  if (provider === 'anthropic' && !proxyUrl) return showError('Informe a URL do proxy CORS para usar a API da Anthropic.');
 
-  // Persist
-  localStorage.setItem(LS_KEY_API, apiKey);
+  localStorage.setItem(`sim_key_${provider}`, apiKey);
 
-  // Update UI
   submitBtn.disabled = true;
   submitBtn.textContent = 'Simulando reações…';
 
@@ -143,86 +226,125 @@ formEl.addEventListener('submit', async (e) => {
   showSkeleton();
 
   try {
-    const comments = await callLLM(apiKey, model, article, context, outlet);
+    let comments;
+    if (provider === 'openai')     comments = await callOpenAI(apiKey, model, article, context, outlet);
+    else if (provider === 'gemini') comments = await callGemini(apiKey, model, article, context, outlet);
+    else                            comments = await callAnthropic(apiKey, model, proxyUrl, article, context, outlet);
     renderComments(comments);
   } catch (err) {
-    showError(err.message || 'Erro desconhecido. Verifique sua chave de API e tente novamente.');
+    showError(err.message || 'Erro desconhecido. Verifique sua chave e tente novamente.');
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Simular reações';
   }
 });
 
-// ——— Build + call LLM ————————————————————————————————————
-async function callLLM(apiKey, model, article, context, outlet) {
+// ——— Prompt builder ——————————————————————————————————————
+function buildPrompt(article, context, outlet) {
   const personaDescriptions = PERSONAS.map(p =>
     `{"id":"${p.id}","emoji":"${p.emoji}","name":"${p.name}","role":"${p.role}","sentiment_hint":"${p.sentiment_hint}"}`
   ).join(',\n');
 
-  const systemPrompt = `You are a social simulation engine for investigative journalism.
-Your task is to generate realistic, distinct simulated reactions to a journalistic article.
-Each reaction must be from a DIFFERENT persona type with a unique voice, tone and perspective.
+  const system = `You are a social simulation engine for investigative journalism.
+Generate realistic, distinct simulated reactions to a journalistic article.
+Each reaction must be from a DIFFERENT persona with a unique voice and perspective.
 Comments must be in Brazilian Portuguese.
-Return ONLY a valid JSON array with exactly ${PERSONAS.length} objects. No markdown. No explanation.
-Each object must have these keys: id (string), emoji (string), name (string), role (string), sentiment (one of: positive/critical/neutral/mixed), comment (string, 2-4 realistic sentences).`;
+Return ONLY a valid JSON object with a key "reactions" containing an array of exactly ${PERSONAS.length} objects.
+No markdown. No explanation.
+Each object must have: id (string), emoji (string), name (string), role (string), sentiment (one of: positive/critical/neutral/mixed), comment (string, 2-4 realistic sentences in the persona's authentic voice).`;
 
-  const userPrompt = `Article / journalistic text:
+  const user = `Artigo / texto jornalístico:
 """
 ${article}
 """
 
-${context ? `Additional context about people/organizations mentioned:\n"""\n${context}\n"""\n` : ''}
-Outlet / publication: ${outlet}
+${context ? `Contexto adicional:\n"""\n${context}\n"""\n` : ''}Veículo: ${outlet}
 
-Generate one realistic comment for each of these ${PERSONAS.length} personas:
+Gere um comentário realista para cada uma das ${PERSONAS.length} personas:
 [${personaDescriptions}]
 
-Return a JSON array. Each element: { "id", "emoji", "name", "role", "sentiment", "comment" }.`;
+Retorne um objeto JSON: { "reactions": [ ... ] }`;
 
+  return { system, user };
+}
+
+function parseResponse(raw) {
+  let obj;
+  try { obj = JSON.parse(raw); } catch { throw new Error('A IA retornou um formato inválido. Tente novamente.'); }
+  if (Array.isArray(obj))                                  return obj;
+  const arr = obj.reactions ?? Object.values(obj).find(v => Array.isArray(v));
+  if (!arr) throw new Error('Formato de resposta inesperado da IA.');
+  return arr;
+}
+
+// ——— OpenAI ——————————————————————————————————————————————
+async function callOpenAI(apiKey, model, article, context, outlet) {
+  const { system, user } = buildPrompt(article, context, outlet);
   const resp = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-    },
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
     body: JSON.stringify({
       model,
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user',   content: userPrompt },
-      ],
+      messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
       temperature: 0.85,
       response_format: { type: 'json_object' },
     }),
   });
-
   if (!resp.ok) {
-    const errBody = await resp.json().catch(() => ({}));
-    const msg = errBody?.error?.message || `Erro HTTP ${resp.status}`;
-    throw new Error(msg);
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `Erro HTTP ${resp.status}`);
   }
-
   const data = await resp.json();
-  const raw  = data.choices?.[0]?.message?.content || '';
+  return parseResponse(data.choices?.[0]?.message?.content || '');
+}
 
-  // Parse JSON — the model may wrap in a key
-  let parsed;
-  try {
-    const obj = JSON.parse(raw);
-    // Some models return { "comments": [...] } or { "reactions": [...] } or the array directly
-    if (Array.isArray(obj)) {
-      parsed = obj;
-    } else {
-      // find first array value
-      const arr = Object.values(obj).find(v => Array.isArray(v));
-      if (!arr) throw new Error('Formato de resposta inesperado da IA.');
-      parsed = arr;
-    }
-  } catch {
-    throw new Error('A IA retornou um formato inválido. Tente novamente.');
+// ——— Google Gemini ———————————————————————————————————————
+async function callGemini(apiKey, model, article, context, outlet) {
+  const { system, user } = buildPrompt(article, context, outlet);
+  const fullPrompt = `${system}\n\n${user}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  const resp = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: fullPrompt }] }],
+      generationConfig: { responseMimeType: 'application/json', temperature: 0.85 },
+    }),
+  });
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `Erro HTTP ${resp.status}`);
   }
+  const data = await resp.json();
+  const raw  = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  return parseResponse(raw);
+}
 
-  return parsed;
+// ——— Anthropic (via proxy) ———————————————————————————————
+async function callAnthropic(apiKey, model, proxyBase, article, context, outlet) {
+  const { system, user } = buildPrompt(article, context, outlet);
+  const base = proxyBase.replace(/\/$/, '');
+  const resp = await fetch(`${base}/messages`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+    },
+    body: JSON.stringify({
+      model,
+      max_tokens: 4000,
+      system,
+      messages: [{ role: 'user', content: user }],
+    }),
+  });
+  if (!resp.ok) {
+    const err = await resp.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `Erro HTTP ${resp.status}`);
+  }
+  const data = await resp.json();
+  const raw  = data.content?.[0]?.text || '';
+  return parseResponse(raw);
 }
 
 // ——— Render post preview ————————————————————————————————
@@ -230,14 +352,13 @@ function renderPostPreview(article, outlet) {
   const lines = article.split('\n').filter(l => l.trim());
   const title = lines[0].length > 100 ? lines[0].substring(0, 97) + '…' : lines[0];
   const body  = lines.slice(1).join(' ');
-
   previewOutlet.textContent = outlet;
   previewTitle.textContent  = title;
   previewBody.textContent   = body || '(sem lead adicional)';
   postPreview.classList.remove('hidden');
 }
 
-// ——— Skeleton loader —————————————————————————————————————
+// ——— Skeleton ————————————————————————————————————————————
 function showSkeleton() {
   resultsArea.innerHTML = `
     <div class="skeleton-feed">
@@ -254,14 +375,10 @@ function showSkeleton() {
     </div>`;
 }
 
-// ——— Render comment cards ————————————————————————————————
+// ——— Render comments ————————————————————————————————————
 function renderComments(comments) {
-  if (!comments || !comments.length) {
-    showError('A IA não retornou comentários. Tente novamente.');
-    return;
-  }
+  if (!comments?.length) { showError('A IA não retornou comentários. Tente novamente.'); return; }
 
-  // Sentiment legend
   const legendHtml = `
     <div class="legend">
       <span class="legend-item"><span class="legend-dot" style="background:var(--s-pos)"></span> Positivo</span>
@@ -294,7 +411,7 @@ function renderComments(comments) {
     <div class="comments-feed">${cardsHtml}</div>`;
 }
 
-// ——— Error state —————————————————————————————————————————
+// ——— Error ———————————————————————————————————————————————
 function showError(msg) {
   resultsArea.innerHTML = `
     <div class="error-state">
@@ -304,7 +421,7 @@ function showError(msg) {
     </div>`;
 }
 
-// ——— Helpers —————————————————————————————————————————————
+// ——— Util ————————————————————————————————————————————————
 function escHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')

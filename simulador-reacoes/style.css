@@ -360,6 +360,18 @@ body {
   border-top: 1px solid var(--border); padding-top: 24px;
 }
 
+/* ——— CORS warning ——————————————————————————————————————— */
+.cors-warning {
+  font-size: 0.78rem;
+  color: #ffc840;
+  background: rgba(255,180,0,0.06);
+  border: 1px solid rgba(255,180,0,0.2);
+  border-radius: var(--radius);
+  padding: 10px 13px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
 /* ——— UTILS —————————————————————————————————————————— */
 .hidden { display: none !important; }
 ::-webkit-scrollbar { width: 5px; }
