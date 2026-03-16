@@ -262,6 +262,9 @@ const contextInput    = document.getElementById('contextText');
 const outletInput     = document.getElementById('outletName');
 const submitBtn       = document.getElementById('submitBtn');
 const resultsArea     = document.getElementById('resultsArea');
+const resultsContent  = document.getElementById('results-content');
+const analysisReport  = document.getElementById('analysis-report');
+const socialModeToggle = document.getElementById('socialMode');
 const postPreview     = document.getElementById('postPreview');
 const previewTitle    = document.getElementById('previewTitle');
 const previewBody     = document.getElementById('previewBody');
@@ -344,9 +347,6 @@ function updateProviderUI(provider) {
   proxyGroup.classList.toggle('hidden', !isAnthropic);
 }
 
-const resultsArea        = document.getElementById('resultsArea');
-const analysisReport     = document.getElementById('analysis-report');
-const socialModeToggle   = document.getElementById('socialMode');
 
 function renderPersonaChips() {
   if (!personaChipsContainer) return;
@@ -622,7 +622,7 @@ function showSkeleton() {
 
   if (_loaderInterval) clearInterval(_loaderInterval);
 
-  resultsArea.innerHTML = `
+  resultsContent.innerHTML = `
     <div class="loader-state">
       <div class="loader-header">
         <span class="loader-label" id="loaderLabel">Consultando a IA…</span>
@@ -784,7 +784,7 @@ function renderComments(reactions, threads = {}, analysis = null) {
       ${renderThread(threads[c.id], isTop)}`;
   }).join('');
 
-  resultsArea.innerHTML = `
+  resultsContent.innerHTML = `
     <div class="comments-header">
       <span>reações simuladas</span>
       <span class="comments-count">${reactions.length} personas</span>
@@ -796,7 +796,7 @@ function renderComments(reactions, threads = {}, analysis = null) {
 
 // ——— Error ———————————————————————————————————————————————
 function showError(msg) {
-  resultsArea.innerHTML = `
+  resultsContent.innerHTML = `
     <div class="error-state">
       <span class="err-icon">⚠️</span>
       <span class="err-title">Algo deu errado</span>
