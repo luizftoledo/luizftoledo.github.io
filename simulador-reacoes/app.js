@@ -19,13 +19,14 @@ const PROVIDERS = {
   gemini: {
     label: 'Google Gemini',
     placeholder: 'AIza...',
-    hint: 'Chave do Google AI Studio. Salva só no seu navegador.',
+    hint: 'Chave do Google AI Studio (aistudio.google.com). Salva só no seu navegador.',
     models: [
-      { value: 'gemini-2.0-flash',       label: 'gemini-2.0-flash — mais econômico ⭐' },
+      { value: 'gemini-1.5-flash',       label: 'gemini-1.5-flash — cota gratuita mais ampla ⭐' },
+      { value: 'gemini-2.0-flash',       label: 'gemini-2.0-flash — mais rápido' },
       { value: 'gemini-2.0-flash-lite',  label: 'gemini-2.0-flash-lite — ultrabarato' },
       { value: 'gemini-1.5-pro',         label: 'gemini-1.5-pro — mais preciso' },
     ],
-    modelHint: 'Gemini 2.0 Flash tem cota gratuita generosa. Obtenha sua chave em aistudio.google.com.',
+    modelHint: 'Se receber erro de cota com gemini-2.0, troque para gemini-1.5-flash — tem cota gratuita mais ampla.',
   },
   anthropic: {
     label: 'Anthropic (Claude)',
@@ -232,7 +233,7 @@ formEl.addEventListener('submit', async (e) => {
     else                            comments = await callAnthropic(apiKey, model, proxyUrl, article, context, outlet);
     renderComments(comments);
   } catch (err) {
-    showError(err.message || 'Erro desconhecido. Verifique sua chave e tente novamente.');
+    showError(humanizeError(err, provider));
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = 'Simular reações';
@@ -419,6 +420,32 @@ function showError(msg) {
       <span class="err-title">Algo deu errado</span>
       <span class="err-desc">${escHtml(msg)}</span>
     </div>`;
+}
+
+// ——— Error humanizer ————————————————————————————————————
+function humanizeError(err, provider) {
+  const msg = err.message || '';
+  // Gemini quota / rate limit
+  if (msg.includes('free_tier') || msg.includes('Quota exceeded') || msg.includes('RESOURCE_EXHAUSTED')) {
+    return 'Cota gratuita do Gemini atingida. Tente trocar para gemini-1.5-flash no seletor de modelo, ou aguarde alguns minutos e tente novamente.';
+  }
+  if (msg.includes('retry') && msg.includes('s.')) {
+    // extract seconds from message like "retry in 16.9s"
+    const match = msg.match(/(\d+\.?\d*)\s*s/);
+    const secs  = match ? Math.ceil(parseFloat(match[1])) : 30;
+    return `Limite de requisições atingido. Aguarde ${secs} segundo${secs !== 1 ? 's' : ''} e tente novamente.`;
+  }
+  if (msg.includes('API key') || msg.includes('invalid') || msg.includes('401')) {
+    return 'Chave de API inválida. Verifique se você copiou a chave corretamente.';
+  }
+  if (msg.includes('CORS') || msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+    return `Erro de rede ao conectar à API${provider === 'anthropic' ? ' — a Anthropic bloqueia chamadas diretas do navegador (precisa de proxy CORS)' : '. Verifique sua conexão'}.`;
+  }
+  // Trim long technical messages (e.g. Gemini quota dumps)
+  if (msg.length > 200) {
+    return msg.substring(0, 197) + '…';
+  }
+  return msg;
 }
 
 // ——— Util ————————————————————————————————————————————————
