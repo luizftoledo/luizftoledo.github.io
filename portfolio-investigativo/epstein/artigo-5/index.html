@@ -1,534 +1,193 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MPF abre investigação sobre rede de aliciamento de mulheres | BBC News Brasil</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../shared/base.css">
-  <style>
-    .nav-chapters {
-      position: sticky;
-      top: 108px;
-      background: white;
-      border-bottom: 1px solid var(--border);
-      z-index: 99;
-      padding: 0;
-    }
-
-    .nav-chapters-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 12px 40px;
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-    }
-
-    .nav-chapter-link {
-      padding: 8px 16px;
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      text-decoration: none;
-      white-space: nowrap;
-      border-bottom: 2px solid transparent;
-      transition: all 0.3s;
-    }
-
-    .nav-chapter-link:hover,
-    .nav-chapter-link.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    .series-indicator {
-      background: var(--bg-light);
-      padding: 20px 40px;
-      margin-bottom: 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .series-indicator-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .series-indicator-text {
-      font-family: var(--sans);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--accent);
-      font-weight: 600;
-      margin: 0;
-    }
-
-    .victim-quote {
-      border-left: 4px solid var(--accent);
-      padding: 32px;
-      margin: 60px 0;
-      background: linear-gradient(135deg, rgba(196, 30, 58, 0.05) 0%, transparent 100%);
-      font-family: var(--serif);
-      font-size: 24px;
-      line-height: 1.7;
-      color: var(--text-dark);
-      font-weight: 600;
-    }
-
-    .victim-quote-attr {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-style: normal;
-      margin-top: 16px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .chapter {
-      scroll-margin-top: 140px;
-    }
-
-    .visualization {
-      margin: 80px 0;
-      padding: 60px 40px;
-      background: linear-gradient(135deg, var(--bg-light) 0%, rgba(196, 30, 58, 0.03) 100%);
-      border-radius: 4px;
-    }
-
-    .viz-title {
-      font-family: var(--display);
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 40px;
-      color: var(--text-dark);
-      text-align: center;
-    }
-
-    .timeline-container {
-      position: relative;
-      padding: 40px 0;
-    }
-
-    .timeline-item-mini {
-      margin-bottom: 40px;
-      position: relative;
-      padding-left: 40px;
-    }
-
-    .timeline-item-mini::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 4px;
-      width: 12px;
-      height: 12px;
-      background-color: var(--accent);
-      border-radius: 50%;
-      border: 3px solid white;
-      box-shadow: 0 0 0 2px var(--accent);
-    }
-
-    .timeline-year {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--accent);
-      letter-spacing: 1px;
-      margin-bottom: 4px;
-    }
-
-    .timeline-text {
-      font-family: var(--serif);
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--text-dark);
-    }
-
-    .navigation-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 100px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-
-    .nav-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--sans);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-      transition: opacity 0.3s;
-    }
-
-    .nav-link:hover {
-      opacity: 0.8;
-    }
-
-    .nav-prev::before {
-      content: '←';
-      font-size: 18px;
-    }
-
-    .nav-next::after {
-      content: '→';
-      font-size: 18px;
-    }
-
-    .warning-box {
-      background: rgba(196, 30, 58, 0.1);
-      border-left: 4px solid var(--accent);
-      padding: 24px;
-      margin: 40px 0;
-      border-radius: 2px;
-    }
-
-    .warning-box-title {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-      letter-spacing: 0.5px;
-    }
-
-    .warning-box-text {
-      font-family: var(--serif);
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--text-dark);
-    }
-
-    @media (max-width: 768px) {
-      .nav-chapters-inner {
-        padding: 12px 24px;
-        gap: 10px;
-      }
-
-      .series-indicator {
-        padding: 16px 24px;
-      }
-
-      .visualization {
-        padding: 40px 24px;
-        margin: 60px 0;
-      }
-
-      .victim-quote {
-        font-size: 20px;
-        padding: 24px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBC investigation prompts federal prosecution probe into Epstein's Brazil network</title>
+    <link rel="stylesheet" href="../../shared/base.css">
+    <style>
+        :root { --accent-color: #8b0000; --primary-color: #1a1a1a; --text-color: #333; --max-width: 740px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--text-color); background: #fff; line-height: 1.6; margin: 0; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-color); width: 0%; z-index: 999; }
+        .disclaimer-bar { background: var(--accent-color); color: #fff; padding: 10px 20px; font-size: 13px; text-align: center; }
+        .disclaimer-bar a { color: #fff; }
+        .lang-toggle { position: fixed; top: 40px; right: 20px; z-index: 100; }
+        .lang-toggle button { background: var(--primary-color); color: #fff; border: none; padding: 7px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; margin: 0 2px; }
+        .lang-toggle button.active { background: var(--accent-color); }
+        .hero { min-height: 460px; background: linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.65)), url("imgs/photo-01.jpg") center/cover; display: flex; align-items: flex-end; color: #fff; }
+        .hero-content { max-width: var(--max-width); margin: 0 auto; padding: 50px 20px 40px; }
+        .hero h1 { font-family: Georgia, serif; font-size: 38px; line-height: 1.2; margin: 0 0 15px; }
+        .hero-meta { font-size: 15px; opacity: .9; margin: 0; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+        .article-content { padding: 50px 0; }
+        .section { margin-bottom: 50px; }
+        .section h2 { font-family: Georgia, serif; font-size: 26px; line-height: 1.3; margin: 50px 0 20px; color: var(--primary-color); }
+        .section p { font-family: Georgia, serif; font-size: 18px; line-height: 1.85; margin: 0 0 22px; }
+        .image-block { margin: 50px 0; text-align: center; }
+        .image-block img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        .image-caption { font-size: 14px; color: #666; margin-top: 10px; font-style: italic; }
+        .pullquote { font-family: Georgia, serif; font-size: 22px; font-weight: 700; line-height: 1.4; border-left: 5px solid var(--accent-color); padding: 28px 0 28px 26px; margin: 50px 0; max-width: 600px; }
+        .pullquote-attr { font-size: 14px; font-style: italic; color: #666; margin-top: 10px; font-weight: normal; }
+        .original-link { text-align: center; margin: 40px 0; }
+        .original-link a { display: inline-block; background: var(--accent-color); color: #fff; padding: 12px 28px; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 3px; }
+        .back-link { margin-top: 60px; padding-top: 30px; border-top: 1px solid #ddd; }
+        .back-link a { color: var(--accent-color); text-decoration: none; font-weight: 500; }
+        @media(max-width:768px){ .hero h1{font-size:26px;} .section p{font-size:16px;} .pullquote{font-size:18px;} }
+    </style>
 </head>
-<body data-lang="en">
-  <div id="progressBar" class="progress-bar"></div>
-
-  <div id="disclaimerBar" class="disclaimer-bar">
-    <div class="disclaimer-inner">
-      <div class="disclaimer-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="16" x2="12" y2="12"></line>
-          <line x1="12" y1="8" x2="12.01" y2="8"></line>
-        </svg>
-      </div>
-      <div class="disclaimer-text">
-        <span data-lang="en"><strong>Disclaimer:</strong> This is an enhanced portfolio presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span>
-        <span data-lang="pt"><strong>Aviso:</strong> Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span>
-      </div>
-      <button id="disclaimerClose" class="disclaimer-close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div class="lang-toggle-bar">
-    <div class="lang-toggle-inner">
-      <span class="lang-toggle-label" data-lang="en">Language</span>
-      <span class="lang-toggle-label" data-lang="pt">Idioma</span>
-      <button id="btnEn" class="lang-btn active">English</button>
-      <button id="btnPt" class="lang-btn">Português</button>
-    </div>
-  </div>
-
-  <div class="series-indicator">
-    <div class="series-indicator-inner">
-      <p class="series-indicator-text">
-        <span data-lang="en">Part 5 of 9 — The Epstein Brazil connection</span>
-        <span data-lang="pt">Parte 5 de 9 — A conexão Epstein-Brasil</span>
-      </p>
-    </div>
-  </div>
-
-  <section class="hero" style="background-image: linear-gradient(135deg, rgba(26, 26, 26, 0.92), rgba(45, 45, 45, 0.92)), url('imgs/photo-01.jpg'); background-size: cover; background-position: center;">
-    <div class="hero-content">
-      <div class="hero-label" data-lang="en">Investigation</div>
-      <div class="hero-label" data-lang="pt" style="display: none;">Investigação</div>
-      <h1 class="hero-title" data-lang="en">Brazil's Federal Prosecution opens investigation</h1>
-      <h1 class="hero-title" data-lang="pt" style="display: none;">Ministério Público Federal abre investigação</h1>
-      <p class="hero-subtitle" data-lang="en">MPF investigates Epstein trafficking network in Brazil following BBC reporting</p>
-      <p class="hero-subtitle" data-lang="pt" style="display: none;">MPF investiga rede de tráfico de Epstein no Brasil após reportagem da BBC</p>
-      <div class="hero-meta">
-        <span>Luiz Fernando Toledo</span>
-        <span>•</span>
-        <span data-lang="en">BBC News Brasil, London</span>
-        <span data-lang="pt" style="display: none;">BBC News Brasil, Londres</span>
-        <span>•</span>
-        <span>February 12, 2026</span>
-      </div>
-    </div>
-  </section>
-
-  <nav class="nav-chapters">
-    <div class="nav-chapters-inner">
-      <a href="#intro" class="nav-chapter-link active" data-lang="en">Start</a>
-      <a href="#investigation" class="nav-chapter-link" data-lang="en">Investigation</a>
-      <a href="#messages" class="nav-chapter-link" data-lang="en">Messages</a>
-      <a href="#challenges" class="nav-chapter-link" data-lang="en">Challenges</a>
-      <a href="#implications" class="nav-chapter-link" data-lang="en">Implications</a>
-    </div>
-  </nav>
-
-  <main>
-    <article>
-      <section id="intro" class="text-section chapter">
-        <h2 data-lang="en">Brazil's federal prosecution launches formal investigation</h2>
-        <h2 data-lang="pt" style="display: none;">Ministério público federal instaura investigação formal</h2>
-
-        <p data-lang="en">The Brazilian Federal Prosecution (Ministério Público Federal, or MPF) has initiated a formal investigation into possible attempts to recruit women in Brazil connected to convicted sex offender Jeffrey Epstein. The development follows BBC News Brasil's investigation revealing Epstein's previously undocumented connections to the country and Brazilian victims.</p>
-
-        <p data-lang="pt" style="display: none;">O Ministério Público Federal (MPF) instaurou uma investigação formal em possíveis tentativas de aliciamento de mulheres no Brasil relacionadas ao condenado por crimes sexuais Jeffrey Epstein. O desenvolvimento segue a investigação da BBC News Brasil revelando as conexões anteriormente não documentadas de Epstein com o país e vítimas brasileiras.</p>
-
-        <p data-lang="en">Prosecutor Cinthia Gabriela Borges, speaking exclusively to BBC News Brasil, stated that the objective is to analyze all situations where Brazilian women may have been recruited and to determine if there were organized recruitment networks operating in the country.</p>
-
-        <p data-lang="pt" style="display: none;">A procuradora Cinthia Gabriela Borges, falando exclusivamente à BBC News Brasil, afirmou que o objetivo é analisar todas as situações em que mulheres brasileiras possam ter sido aliciadas e determinar se havia redes organizadas de aliciamento operando no país.</p>
-
-        <div class="victim-quote" data-lang="en">"The MPF is vigilant regarding situations of women who were in Brazil and who may have been taken to the USA with intent of sexual exploitation, because this could characterize the crime of international human trafficking."</div>
-        <div class="victim-quote" data-lang="pt" style="display: none;">"O MPF está atento a essa situação de mulheres que estavam no Brasil e que foram levadas para os EUA com alguma intenção de exploração sexual, porque isso pode vir a caracterizar o crime de tráfico internacional de pessoas."</div>
-        <div class="victim-quote-attr">Cinthia Gabriela Borges, Federal Prosecution</div>
-      </section>
-
-      <div class="image-block">
-        <img src="imgs/photo-02.jpg" alt="Brazilian Federal Prosecution building">
-        <div class="image-credit" data-lang="en">Getty Images</div>
-        <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
-      </div>
-
-      <section id="investigation" class="text-section chapter">
-        <h2 data-lang="en">From denunciation to formal investigation</h2>
-        <h2 data-lang="pt" style="display: none;">De denúncia a investigação formal</h2>
-
-        <p data-lang="en">The investigation was formally launched on Tuesday, February 10, 2026, at the National Unit for Combating International Human Trafficking and Migrant Smuggling—a specialized structure within the MPF that centralizes all investigations and judicial actions in this area across Brazil.</p>
-
-        <p data-lang="pt" style="display: none;">A investigação foi formalmente instaurada na terça-feira, 10 de fevereiro de 2026, na Unidade Nacional de Enfrentamento ao Tráfico Internacional de Pessoas e ao Contrabando de Migrantes—uma estrutura especializada no MPF que centraliza todas as investigações e ações judiciais nessa área em todo o Brasil.</p>
-
-        <p data-lang="en">According to BBC News Brasil reporting, the MPF received a formal complaint last week regarding email exchanges between a Brazilian woman and Epstein dating to 2010. The messages detail a proposed trip for a woman from Natal, described as being from a "simple family," to the United States.</p>
-
-        <p data-lang="pt" style="display: none;">De acordo com reportagem da BBC News Brasil, o MPF recebeu uma denúncia formal na semana passada sobre trocas de emails entre uma mulher brasileira e Epstein datadas de 2010. As mensagens detalham uma viagem proposta para uma mulher de Natal, descrita como sendo de uma "família simples", para os Estados Unidos.</p>
-
-        <p data-lang="en">In these exchanges, Epstein requested photographs of the Brazilian woman in bikini or lingerie. While the messages are extensive, it remains unclear whether the trip occurred or what its ultimate purpose was.</p>
-
-        <p data-lang="pt" style="display: none;">Nessas trocas, Epstein solicitou fotografias da mulher brasileira em biquíni ou lingerie. Embora as mensagens sejam extensas, permanece incerto se a viagem ocorreu ou qual era seu objetivo final.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-03.jpg" alt="Document archive">
-          <div class="image-credit" data-lang="en">Reuters</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Reuters</div>
-        </div>
-      </section>
-
-      <section id="messages" class="text-section chapter">
-        <h2 data-lang="en">Patterns in the messaging evidence</h2>
-        <h2 data-lang="pt" style="display: none;">Padrões na evidência das mensagens</h2>
-
-        <p data-lang="en">Email evidence obtained by BBC News Brasil reveals multiple Brazilian women who maintained personal contact with Epstein and received financial support. The messages demonstrate patterns of financial dependence in relation to the financier:</p>
-
-        <p data-lang="pt" style="display: none;">Evidência de email obtida pela BBC News Brasil revela múltiplas mulheres brasileiras que mantiveram contato pessoal com Epstein e receberam suporte financeiro. As mensagens demonstram padrões de dependência financeira em relação ao financista:</p>
-
-        <ul style="margin-left: 40px; margin-bottom: 20px;">
-          <li data-lang="en">Payments for cosmetic procedures and haircuts</li>
-          <li data-lang="pt" style="display: none;">Pagamentos por procedimentos cosméticos e cortes de cabelo</li>
-
-          <li data-lang="en">Funding for travel arrangements</li>
-          <li data-lang="pt" style="display: none;">Financiamento para arranjos de viagem</li>
-
-          <li data-lang="en">Purchase of mobile phones</li>
-          <li data-lang="pt" style="display: none;">Compra de telefones celulares</li>
-
-          <li data-lang="en">In exchange, Epstein received photographs and contact information for other women</li>
-          <li data-lang="pt" style="display: none;">Em troca, Epstein recebeu fotografias e informações de contato de outras mulheres</li>
-        </ul>
-
-        <div class="pullquote" data-lang="en">"Participation of victims is fundamental to this investigation. How girls were recruited, who recruited them, and whether there were organized networks for the purpose of recruiting women for sexual exploitation."<div class="pullquote-citation">Cinthia Gabriela Borges, Federal Prosecution</div></div>
-
-        <div class="pullquote" data-lang="pt" style="display: none;">"Participação das vítimas é fundamental. Como foram recrutadas, quem as recrutou, e se havia redes organizadas para fins de recrutamento de mulheres para exploração sexual."<div class="pullquote-citation">Cinthia Gabriela Borges, Ministério Público Federal</div></div>
-
-        <p data-lang="en">The evidence indicates email communications dating back to at least 2006, before Epstein's first arrest. These exchanges show him being invited to parties, discussing visits to São Paulo, arranging money transfers, requesting introductions to other women, and in one case, warning a Brazilian woman that he would be arrested within days—a warning that preceded his 2008 detention.</p>
-
-        <p data-lang="pt" style="display: none;">A evidência indica comunicações por email datando de pelo menos 2006, antes da primeira prisão de Epstein. Essas trocas mostram-o sendo convidado para festas, discutindo visitas a São Paulo, arranjando transferências de dinheiro, solicitando introduções a outras mulheres, e em um caso, avisando uma mulher brasileira que seria preso em dias—um aviso que precedeu sua detenção em 2008.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-04.jpg" alt="Computer showing documents">
-          <div class="image-credit" data-lang="en">Getty Images</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
-        </div>
-      </section>
-
-      <section class="visualization">
-        <h2 class="viz-title" data-lang="en">Investigation timeline</h2>
-        <h2 class="viz-title" data-lang="pt" style="display: none;">Cronograma da investigação</h2>
-
-        <div class="timeline-container">
-          <div class="timeline-item-mini">
-            <div class="timeline-year" data-lang="en">2006+</div>
-            <div class="timeline-year" data-lang="pt" style="display: none;">2006+</div>
-            <div class="timeline-text" data-lang="en">Email communications between Epstein and Brazilian women begin</div>
-            <div class="timeline-text" data-lang="pt" style="display: none;">Comunicações por email entre Epstein e mulheres brasileiras começam</div>
-          </div>
-
-          <div class="timeline-item-mini">
-            <div class="timeline-year" data-lang="en">2008</div>
-            <div class="timeline-year" data-lang="pt" style="display: none;">2008</div>
-            <div class="timeline-text" data-lang="en">Epstein arrested in United States; FBI interviews Brazilian women in New York</div>
-            <div class="timeline-text" data-lang="pt" style="display: none;">Epstein é preso nos Estados Unidos; FBI entrevista mulheres brasileiras em Nova York</div>
-          </div>
-
-          <div class="timeline-item-mini">
-            <div class="timeline-year" data-lang="en">2009-2013</div>
-            <div class="timeline-year" data-lang="pt" style="display: none;">2009-2013</div>
-            <div class="timeline-text" data-lang="en">Continued correspondence between Epstein and Brazilian women from Natal</div>
-            <div class="timeline-text" data-lang="pt" style="display: none;">Correspondência continuada entre Epstein e mulheres brasileiras de Natal</div>
-          </div>
-
-          <div class="timeline-item-mini">
-            <div class="timeline-year" data-lang="en">2019</div>
-            <div class="timeline-year" data-lang="pt" style="display: none;">2019</div>
-            <div class="timeline-text" data-lang="en">Epstein dies in prison; FBI re-interviews Marina Lacerda and other victims</div>
-            <div class="timeline-text" data-lang="pt" style="display: none;">Epstein morre na prisão; FBI entrevista novamente Marina Lacerda e outras vítimas</div>
-          </div>
-
-          <div class="timeline-item-mini">
-            <div class="timeline-year" data-lang="en">September 2025</div>
-            <div class="timeline-year" data-lang="pt" style="display: none;">Setembro de 2025</div>
-            <div class="timeline-text" data-lang="en">Marina Lacerda and other victims go public with allegations</div>
-            <div class="timeline-text" data-lang="pt" style="display: none;">Marina Lacerda e outras vítimas vêm a público com acusações</div>
-          </div>
-
-          <div class="timeline-item-mini">
-            <div class="timeline-year" data-lang="en">February 2026</div>
-            <div class="timeline-year" data-lang="pt" style="display: none;">Fevereiro de 2026</div>
-            <div class="timeline-text" data-lang="en">BBC News Brasil reveals Epstein's Brazil connections; MPF opens formal investigation</div>
-            <div class="timeline-text" data-lang="pt" style="display: none;">BBC News Brasil revela conexões Brasil de Epstein; MPF abre investigação formal</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="challenges" class="text-section chapter">
-        <h2 data-lang="en">Obstacles to investigation and prosecution</h2>
-        <h2 data-lang="pt" style="display: none;">Obstáculos à investigação e processamento</h2>
-
-        <p data-lang="en">Prosecutors acknowledge significant challenges in building cases against Epstein's network. The time elapsed since the crimes—many emails are over 10 years old—complicates evidence gathering and witness testimony. Additionally, much of the activity occurred in U.S. territory.</p>
-
-        <p data-lang="pt" style="display: none;">Promotores reconhecem desafios significativos na construção de casos contra a rede de Epstein. O tempo decorrido desde os crimes—muitos emails têm mais de 10 anos—complica a coleta de evidências e depoimento de testemunhas. Além disso, muita da atividade ocorreu em território dos EUA.</p>
-
-        <div class="pullquote" data-lang="en">"These are facts of great magnitude and worldwide interest, but they date back to approximately 2011, 2012. [The investigation] involves significant evidentiary complexity not only due to the passage of time but also the extraterritorial nature—much of the activity involving Brazilian women occurred in American territory."<div class="pullquote-citation">Cinthia Gabriela Borges</div></div>
-
-        <div class="pullquote" data-lang="pt" style="display: none;">"Embora sejam fatos de grande magnitude e muito interesse mundial, esses fatos remontam a mais ou menos 2011, 2012. [A investigação] envolve uma complexidade probatória muito acentuada não só pelo decurso do tempo como também de extraterritorialidade—boa parte dos fatos envolvendo mulheres brasileiras aconteceram em território americano."<div class="pullquote-citation">Cinthia Gabriela Borges</div></div>
-
-        <p data-lang="en">A critical legal change in Brazil's trafficking law occurred in 2016. Previously, the crime was characterized solely by the fact of a victim being recruited and taken abroad. Under the new standard, prosecutors must prove "defects of consent"—that the victim suffered fraud, coercion, violence, or exploitation of vulnerability.</p>
-
-        <p data-lang="pt" style="display: none;">Uma mudança legal crítica na lei de tráfico do Brasil ocorreu em 2016. Anteriormente, o crime era caracterizado apenas pelo fato de uma vítima ser aliciada e levada para o exterior. Sob o novo padrão, promotores devem provar "vícios de consentimento"—que a vítima sofreu fraude, coação, violência, ou exploração de vulnerabilidade.</p>
-
-        <p data-lang="en">The Federal Prosecution emphasizes that women who maintained contact with Epstein are not themselves under investigation. "Victims, as a rule, are not considered responsible for any acts they may have committed in a situation of human trafficking victimization."</p>
-
-        <p data-lang="pt" style="display: none;">O Ministério Público Federal enfatiza que mulheres que mantiveram contato com Epstein não estão sendo investigadas. "Vítimas, em regra, não são consideradas responsáveis por eventuais atos que venham a praticar na situação de vítima de tráfico de pessoas."</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-05.jpg" alt="Federal courthouse">
-          <div class="image-credit" data-lang="en">Reuters</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Reuters</div>
-        </div>
-      </section>
-
-      <section id="implications" class="text-section chapter">
-        <h2 data-lang="en">Implications for Brazilian justice system</h2>
-        <h2 data-lang="pt" style="display: none;">Implicações para o sistema de justiça brasileiro</h2>
-
-        <p data-lang="en">The investigation represents a significant development in how Brazil's Federal Prosecution addresses international crimes against Brazilian women. It signals heightened vigilance regarding international trafficking networks and the exploitation of vulnerable immigrant populations.</p>
-
-        <p data-lang="pt" style="display: none;">A investigação representa um desenvolvimento significativo em como o Ministério Público Federal do Brasil aborda crimes internacionais contra mulheres brasileiras. Sinaliza maior vigilância quanto a redes de tráfico internacional e exploração de populações imigrantes vulneráveis.</p>
-
-        <p data-lang="en">The Federal Prosecution will continue monitoring the release of additional case files by the U.S. government and searching for further mentions of Brazilian nationals in Epstein's archives. Each case will be analyzed individually to understand the relationships with Epstein and whether specialized recruitment networks existed.</p>
-
-        <p data-lang="pt" style="display: none;">O Ministério Público Federal continuará monitorando a divulgação de arquivos adicionais do caso pelo governo dos EUA e buscando mais menções de brasileiros nos arquivos de Epstein. Cada caso será analisado individualmente para entender os relacionamentos com Epstein e se redes de recrutamento especializadas existiam.</p>
-
-        <p data-lang="en">The prosecution's call for victim participation underscores a crucial reality: without the testimony and cooperation of victims themselves, building comprehensive cases remains extremely difficult, particularly given the time elapsed and international dimensions.</p>
-
-        <p data-lang="pt" style="display: none;">O apelo do Ministério Público Federal pela participação das vítimas ressalta uma realidade crucial: sem o depoimento e cooperação das próprias vítimas, construir casos abrangentes permanece extremamente difícil, particularmente dado o tempo decorrido e dimensões internacionais.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-06.jpg" alt="Brazilian flag">
-          <div class="image-credit" data-lang="en">Getty Images</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
-        </div>
-      </section>
-
-      <section class="text-section">
-        <h2 data-lang="en">A new chapter for Brazilian justice</h2>
-        <h2 data-lang="pt" style="display: none;">Um novo capítulo para a justiça brasileira</h2>
-
-        <p data-lang="en">The Federal Prosecution's investigation marks the first formal Brazilian legal action related to Epstein's alleged crimes. While the challenges are substantial, the commitment to investigate signals Brazil's determination to pursue accountability and protect victims of international trafficking.</p>
-
-        <p data-lang="pt" style="display: none;">A investigação do Ministério Público Federal marca a primeira ação legal formal brasileira relacionada aos alegados crimes de Epstein. Embora os desafios sejam substanciais, o compromisso de investigar sinaliza a determinação do Brasil em buscar responsabilidade e proteger vítimas de tráfico internacional.</p>
-
-        <p data-lang="en">For Brazilian women who were victimized, the investigation offers a potential path to justice in their home country—if they are willing to come forward and share their experiences with authorities.</p>
-
-        <p data-lang="pt" style="display: none;">Para as mulheres brasileiras que foram vitimizadas, a investigação oferece um possível caminho para justiça em seu país de origem—se estiverem dispostas a vir a público e compartilhar suas experiências com as autoridades.</p>
-      </section>
-    </article>
-
-    <div class="navigation-footer">
-      <a href="../artigo-4/index.html" class="nav-link nav-prev" data-lang="en">Previous</a>
-      <a href="../artigo-4/index.html" class="nav-link nav-prev" data-lang="pt" style="display: none;">Anterior</a>
-
-      <a href="../index.html" class="nav-link" data-lang="en">← Back to series</a>
-      <a href="../index.html" class="nav-link" data-lang="pt" style="display: none;">← Voltar para série</a>
-
-      <a href="../artigo-6/index.html" class="nav-link nav-next" data-lang="en">Next</a>
-      <a href="../artigo-6/index.html" class="nav-link nav-next" data-lang="pt" style="display: none;">Próximo</a>
-    </div>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-disclaimer">
-        <p data-lang="en"><strong>About this series:</strong> A 9-part investigative series exploring Jeffrey Epstein's previously undocumented ties to Brazil, Brazilian victims, business interests, and his network of enablers and contacts.</p>
-        <p data-lang="pt" style="display: none;"><strong>Sobre esta série:</strong> Uma série investigativa de 9 partes explorando os laços anteriormente não documentados de Jeffrey Epstein com o Brasil, vítimas brasileiras, interesses comerciais, e sua rede de facilitadores e contatos.</p>
-
-        <p data-lang="en">Original reporting by Luiz Fernando Toledo for BBC News Brasil. Enhanced portfolio presentation.</p>
-        <p data-lang="pt" style="display: none;">Reportagem original de Luiz Fernando Toledo para BBC News Brasil. Apresentação aprimorada para portfólio.</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="../../shared/base.js"></script>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="disclaimer-bar" id="disc-en">Portfolio presentation of published journalism. Original: BBC News Brasil, February 2026. <a href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank">Read the original ↗</a></div>
+<div class="disclaimer-bar" id="disc-pt" style="display:none">Apresentação de portfólio do jornalismo publicado. Original: BBC News Brasil, fevereiro de 2026. <a href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank">Leia o original ↗</a></div>
+
+<div class="lang-toggle">
+    <button id="btnEn" class="active">EN</button>
+    <button id="btnPt">PT</button>
+</div>
+
+<!-- ENGLISH -->
+<article id="art-en">
+<header class="hero">
+<div class="hero-content">
+<h1>BBC investigation prompts federal prosecution probe into Epstein's Brazil network</h1>
+<p class="hero-meta">Luiz Fernando Toledo | BBC News Brasil | February 12, 2026</p>
+</div>
+</header>
+<div class="article-content"><div class="container">
+<section class="section">
+<p>Brazil's Federal Prosecution Service (MPF) opened a confidential procedure on Tuesday, February 10th, to investigate possible attempts to recruit women in Brazil linked to convicted sex offender Jeffrey Epstein.</p>
+<p>Prosecutor Cinthia Gabriela Borges told BBC News Brasil in an exclusive interview that the intention is to analyze all situations in which Brazilian women may have been recruited and to try to identify whether there were recruitment networks in the country.</p>
+<p>As BBC News Brasil revealed, the MPF received a complaint in the previous week about an exchange of emails between a Brazilian woman and Epstein, from 2010, in which they discussed a trip by a woman from Natal, described as someone from a "simple family," to the United States.</p>
+<p>In the exchange of messages, Epstein asked for photos of the Brazilian woman in a bikini or bra. It is not possible to know from the messages what the purpose of the trip was, or whether it actually occurred.</p>
+<p>This complaint resulted in a formal procedure, now opened at the National Unit to Combat International Trafficking in Persons and Migrant Smuggling — a specialized structure within the MPF that centralizes all investigations and court actions in the country in this area.</p>
+<p>The Natal case, the focus of the complaint made to the MPF, will not be the only one analyzed.</p>
+<p>On Monday, February 9th, BBC News Brasil revealed that Epstein maintained personal relationships with Brazilian models, helped them financially, and may even have employed some of them at some point as assistants.</p>
+<p>The agency said, in response to the report about these new conversations, that it would follow the release of files from the case published by the American government and seek other mentions of Brazilians.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-02.jpg" alt="Epstein documents"><p class="image-caption">Messages show payments by Epstein to Brazilian women, travel logistics, and exchanges of favors</p></div>
+<section class="section">
+<p>"The MPF is paying attention to this situation of women who were in Brazil and were taken to the U.S. with some intention of sexual exploitation, because this could characterize the crime of international trafficking in persons," said Borges.</p>
+<p>Various messages show financial dependence of the women on the billionaire, such as payments for cosmetic procedures, haircuts, travel, and even cell phone purchases. In exchange, he would receive photos and contacts of other women, whose ages were not disclosed in the documents.</p>
+<p>There is no information in the messages about the ages of the people involved.</p>
+<p>The report identified email conversations dated at least as early as 2006, before Epstein was first arrested. In these conversations, he is invited to parties, talks of visits to São Paulo, says he will send money, asks to be introduced to other women, receives photos of those women (their ages are not mentioned), and even warns one of them that he was going to be arrested a few days before it happened, in 2008.</p>
+<p>BBC News Brasil showed, during the previous week, that a partner of Epstein spoke with him about the intention to buy a fashion magazine in Brazil and that they had a direct contact in the country to get girls, including minors. The investigation also revealed, through an interview with a victim, that several Brazilian women had been at his mansion in the U.S.</p>
+</section>
+<section class="section">
+<h2>'Victims' participation is fundamental'</h2>
+<p>In the previous week, news sites from Rio Grande do Norte published that there were references to a woman from Natal in the Epstein files released by the American government.</p>
+<p>Dated 2011, the messages, obtained by BBC News Brasil, do not confirm whether there was recruitment nor reveal the age of the person cited. But they show Epstein's interest in a Brazilian woman after she was introduced by an acquaintance.</p>
+<p>They also show that this person in Brazil also tried to introduce him to other friends and made several requests for financial help, although it is not possible to identify what their relationship was from the messages.</p>
+<p>The dialogues detail the organization for the issuance of a passport, the plan to take her to the United States, and Epstein's explicit requests for photos in swimwear and lingerie.</p>
+<p>The lead prosecutor Gilberto Barroso de Carvalho Júnior, from Natal (RN), communicated having received information "giving account of the recruitment and sending of a woman from the outskirts of Natal/RN possibly to engage in sexual acts with Jeffrey Epstein, in the U.S."</p>
+<p>Prosecutor Cinthia Gabriela Borges tells BBC News Brasil that the date of the messages could be a challenge in the investigation, since many of them are from more than 10 years ago and may have occurred outside Brazil.</p>
+<p>"Although these are facts of great magnitude and much worldwide interest, these facts go back to approximately 2011, 2012."</p>
+<p>She evaluates that the case "involves very pronounced evidential complexity, not only due to the passage of time but also because of extraterritoriality, since a good part of the facts involving Brazilian women happened on American territory."</p>
+<p>Borges emphasizes that the cases will be analyzed individually, seeking to understand the relationship of the people with Epstein and whether there was a network specialized in the recruitment of women and whether they were of legal age or minors.</p>
+<div class="pullquote">"It is a quite embryonic situation, an investigation that is at its beginning. Victims' participation in the investigation is fundamental in cases like these, so that they can bring to light the elements of how the recruitment took place."<div class="pullquote-attr">— Cinthia Gabriela Borges, federal prosecutor</div></div>
+<p>Another challenge she cites is a legislative change that occurred in Brazil in 2016, in relation to international trafficking in persons. Before, the crime was configured simply by the fact that the victim was recruited and taken abroad. With the new rule, that is no longer sufficient: it became fundamental to prove that there was some vice of consent, that is, that the victim suffered fraud, coercion, violence, or abuse of their vulnerability.</p>
+<p>The prosecutor emphasizes that the women who maintained contact with Epstein are not being investigated in the process. "The victims, as a rule, are not considered responsible for any acts they may commit, in the situation of being a victim of human trafficking."</p>
+<p>She says the investigation will focus on understanding whether there were people specialized in recruiting and recruiting women for sexual purposes. "The victims cannot be considered guilty in this case."</p>
+</section>
+<div class="image-block"><img src="imgs/photo-03.jpg" alt="Epstein archive files"><p class="image-caption">New Epstein archive messages were released by the American government in recent months</p></div>
+<section class="section">
+<h2>How the exchange of messages in Natal unfolded</h2>
+<p>Conversations between a Brazilian woman and Epstein between 2009 and 2013 gave rise to the complaint.</p>
+<p>The messages show that she not only requested funds for personal expenses and cosmetic procedures, but also introduced other women to the billionaire. The ages of those women are not mentioned in the conversations.</p>
+<p>In 2009, the exchanges of messages detail requests for money for a breast implant surgery; the woman postponed the procedure while awaiting payment, stating she intended to "show herself off in Palm Beach [a city in Florida, in the United States]" after the result.</p>
+<p>To enable the request, Epstein instructed employees to make bank transfers, including in Brazilian currency.</p>
+<p>The financial support extended to other requests: an Epstein employee reported that the Brazilian woman had come to his office requesting US$ 450 for the purchase of a cell phone, and at another time, records show assistants coordinating payments for luxury beauty services both for the young woman and for her mother.</p>
+<p>The role of the Brazilian woman in intermediating contacts appears in records from January 2011, when she discussed the trip of a young woman from Natal to the United States — this is the case that the MPF is addressing in the procedure that was opened.</p>
+<p>In one message, she described that the young woman did not speak English, had never traveled, and came from a simple family, suggesting that she travel on the same flight to make the journey easier. The young woman's age is not mentioned in the records.</p>
+<p>Along with the account, the Brazilian woman sent photos of the young woman and stated that Epstein was going to "love her." Epstein's response was a request for more images, specifying that they should be "lingerie or bikini."</p>
+<p>Although the billionaire subsequently wrote that the help could be "misinterpreted," the Brazilian woman continued to suggest the meeting, proposing that it take place in Paris, France, and reinforcing that the young woman was his "type."</p>
+<p>Natal is also mentioned in another context, when modeling agent Jean-Luc Brunel tells Epstein he had been in the city, in 2010. Brunel was a known partner of Epstein. He was found dead in prison in Paris in 2022, detained since the beginning of a formal investigation, after being accused of sexual harassment and rape of young people between 15 and 18 years of age in France. He denied the accusations.</p>
+<p>In a message in 2013, from the same Brazilian woman, she asks Epstein for help. She says she has an eviction notice, has no resources to pay a lawyer, and asks for a place to stay. In the same text, she mentioned a new friend who had recently arrived from Brazil and would be interested in meeting him.</p>
+</section>
+<div class="original-link"><a href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank" rel="noopener">Read the original article on BBC News Brasil ↗</a></div>
+<div class="back-link"><a href="../../../../index.html">← Back to portfolio</a></div>
+</div></div>
+</article>
+
+<!-- PORTUGUESE -->
+<article id="art-pt" style="display:none">
+<header class="hero">
+<div class="hero-content">
+<h1>Atuação de Epstein no Brasil é alvo de investigação aberta pelo MPF após reportagem da BBC: 'Participação das vítimas é fundamental'</h1>
+<p class="hero-meta">Luiz Fernando Toledo | BBC News Brasil | 12 de fevereiro de 2026</p>
+</div>
+</header>
+<div class="article-content"><div class="container">
+<section class="section">
+<p>O Ministério Público Federal (MPF) instaurou um procedimento sigiloso na terça-feira (10/2) para investigar possíveis tentativas de aliciamento de mulheres no Brasil relacionadas ao criminoso sexual Jeffrey Epstein.</p>
+<p>A procuradora da República Cinthia Gabriela Borges disse, em entrevista exclusiva à BBC News Brasil, que a intenção é analisar todas as situações em que mulheres brasileiras possam ter sido aliciadas e tentar identificar se havia redes de aliciamento no país.</p>
+<p>Conforme mostrou a BBC News Brasil, o MPF recebeu uma denúncia na última semana sobre uma troca de emails entre uma brasileira e Epstein, ocorrida em 2010, em que eles tratavam de uma viagem de uma mulher de Natal, descrita como alguém de "família simples", aos Estados Unidos.</p>
+<p>Na troca de mensagens, Epstein pediu fotos da brasileira de biquíni ou sutiã. Não é possível saber, pelas mensagens, o objetivo da viagem ou se ela ocorreu, de fato.</p>
+<p>Essa denúncia resultou em um procedimento formal, agora instaurado na Unidade Nacional de Enfrentamento ao Tráfico Internacional de Pessoas e ao Contrabando de Migrantes. O órgão é uma estrutura especializada no MPF que centraliza todas as investigações e ações judiciais do país nessa área.</p>
+<p>O caso em Natal, foco da denúncia feita ao MPF, não será o único analisado.</p>
+<p>Na segunda-feira (9/2), a BBC News Brasil revelou que Epstein manteve relações pessoais com modelos brasileiras, ajudou-as financeiramente e até pode tê-las empregado em algum momento como assistentes.</p>
+<p>O órgão disse, em resposta à reportagem sobre essas novas conversas, que vai acompanhar a divulgação dos arquivos do caso publicados pelo governo americano e buscar outras menções a brasileiros.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-02.jpg" alt="Documentos do caso Epstein"><p class="image-caption">Mensagens mostram pagamentos de Epstein a brasileiras, ajuda com logística em viagens e troca de favores</p></div>
+<section class="section">
+<p>"O MPF está atento a essa situação de mulheres que estavam no Brasil e que foram levadas para os EUA com alguma intenção de exploração sexual, porque isso pode vir a caracterizar o crime de tráfico internacional de pessoas", disse Borges.</p>
+<p>Diversas mensagens demonstram dependência financeira delas em relação ao bilionário, como pagamento de procedimentos estéticos, cortes de cabelo, viagens e até compra de celulares. Em troca, ele receberia fotos e contatos de outras mulheres, de idade não divulgada nos documentos.</p>
+<p>Não há, nas mensagens, informação sobre a idade das pessoas envolvidas.</p>
+<p>A reportagem identificou conversas por email datadas pelo menos desde 2006, antes de Epstein ter sido preso pela primeira vez. Nessas conversas, ele é convidado para festas, fala de visitas a São Paulo, diz que vai mandar dinheiro, pede para que apresentem outras mulheres a ele, recebe fotos dessas mulheres (suas idades não são mencionadas) e até mesmo avisa a uma delas que seria preso pela primeira vez poucos dias antes de isso ocorrer, em 2008.</p>
+<p>A BBC News Brasil mostrou, na última semana, que um parceiro de Epstein conversou com ele sobre a intenção de comprar uma revista de moda no Brasil e que teriam um contato direto no país para conseguir garotas, inclusive menores de idade. Revelou também, por meio de entrevista com uma vítima, que diversas brasileiras estiveram em sua mansão nos EUA.</p>
+</section>
+<section class="section">
+<h2>'Participação das vítimas é fundamental'</h2>
+<p>Na última semana, sites de notícias do Rio Grande do Norte divulgaram que havia citações a uma mulher de Natal nos arquivos de Epstein divulgados pelo governo americano.</p>
+<p>Datadas de 2011, as mensagens, obtidas pela BBC News Brasil, não confirmam se houve aliciamento nem revelam a idade da pessoa citada. Mas mostram o interesse de Epstein por uma brasileira após ela ser apresentada por uma conhecida.</p>
+<p>Mostram ainda que esta pessoa no Brasil também tentou apresentá-lo a outras amigas e fez diversos pedidos de ajuda financeira, embora não seja possível identificar qual era a relação deles pelas mensagens.</p>
+<p>Os diálogos detalham a organização para a emissão de um passaporte, o plano de levá-la aos Estados Unidos e pedidos explícitos de Epstein por fotos em trajes de banho e lingerie.</p>
+<p>O procurador-chefe Gilberto Barroso de Carvalho Júnior, de Natal (RN), comunicou ter recebido informações "dando conta do aliciamento e envio de mulher residente nos arredores de Natal/RN possivelmente para a prática de atos sexuais com a pessoa de Jeffrey Epstein, nos EUA".</p>
+<p>A procuradora Cinthia Gabriela Borges, da Unidade Nacional de Enfrentamento ao Tráfico Internacional de Pessoas e ao Contrabando de Migrantes, diz à BBC News Brasil que a data das mensagens pode ser um desafio na investigação, já que muitas delas são de mais de 10 anos atrás e podem ter ocorrido fora do Brasil.</p>
+<p>"Embora sejam fatos de grande magnitude e muito interesse mundial, esses fatos remontam a mais ou menos 2011, 2012."</p>
+<p>Ela avalia que o caso "envolve uma complexidade probatória muito acentuada não só pelo decurso do tempo como também de extraterritorialidade, já que boa parte dos fatos envolvendo mulheres brasileiras aconteceram em território americano."</p>
+<p>Borges ressalta que os casos serão analisados individualmente, buscando entender o relacionamento das pessoas com Epstein e se havia uma rede especializada no aliciamento de mulheres e se elas eram maiores ou menores de idade.</p>
+<div class="pullquote">"É uma situação bastante embrionária, uma investigação que está no seu início. É fundamental nesses casos a participação das vítimas na investigação, para que possam trazer à luz os elementos de como foi o recrutamento."<div class="pullquote-attr">— Cinthia Gabriela Borges, procuradora da República</div></div>
+<p>Outro desafio que ela cita é uma mudança legislativa que houve no Brasil em 2016, em relação ao tráfico internacional de pessoas. Antes, o crime se configurava apenas pelo fato de a vítima ser aliciada e levada para o exterior. Com a nova regra, isso não é mais suficiente: tornou-se fundamental provar que houve algum vício de consentimento, ou seja, que a vítima sofreu fraude, coação, violência ou abuso de sua vulnerabilidade.</p>
+<p>A procuradora da República reforça que as mulheres que mantiveram contato com Epstein não estão sendo investigadas no processo. "As vítimas, em regra, não são consideradas responsáveis por eventuais atos que elas venham a praticar, na situação de vítima de tráfico de pessoas."</p>
+<p>Ela diz que a investigação vai se concentrar em entender se havia pessoas especializadas em aliciar e recrutar mulheres para fins sexuais. "As vítimas não podem ser consideradas culpadas neste caso."</p>
+</section>
+<div class="image-block"><img src="imgs/photo-03.jpg" alt="Arquivos do caso Epstein"><p class="image-caption">Novas mensagens do arquivo Epstein foram divulgadas pelo governo americano nos últimos meses</p></div>
+<section class="section">
+<h2>Como foi a troca de mensagens em Natal</h2>
+<p>Conversas entre uma brasileira e Epstein entre 2009 e 2013 deram origem à denúncia.</p>
+<p>As mensagens mostram que ela não apenas solicitava recursos para despesas pessoais e procedimentos estéticos, mas também apresentava outras mulheres ao bilionário. As idades dessas mulheres não são mencionadas nas conversas.</p>
+<p>Em 2009, as trocas de mensagens detalham pedidos de dinheiro para uma cirurgia de implante de silicone; a mulher adiou o procedimento enquanto aguardava o pagamento, afirmando que pretendia "se exibir em Palm Beach [cidade da Flórida, nos Estados Unidos]" após o resultado.</p>
+<p>Para viabilizar o pedido, Epstein instruiu funcionários a realizarem transferências bancárias, inclusive em moeda brasileira.</p>
+<p>O suporte financeiro estendia-se a outros pedidos: uma funcionária de Epstein relatou que a brasileira esteve em seu escritório solicitando US$ 450 para a compra de um celular, e, em outro momento, registros mostram assistentes coordenando pagamentos para serviços de beleza de luxo tanto para a jovem quanto para sua mãe.</p>
+<p>O papel da brasileira na intermediação de contatos consta em registros de janeiro de 2011, quando ela tratou da ida de uma jovem de Natal para os Estados Unidos — é esse o caso que trata o MPF no procedimento aberto.</p>
+<p>Em uma mensagem, ela descreveu que a moça não falava inglês, nunca havia viajado e vinha de uma família simples, sugerindo que ela viajasse no mesmo voo para facilitar o trajeto. A idade da jovem não é mencionada nos registros.</p>
+<p>Acompanhando o relato, a brasileira enviou fotos da jovem e afirmou que Epstein iria "adorá-la". A resposta de Epstein foi um pedido por mais imagens, especificando que deveriam ser de "lingerie ou biquíni".</p>
+<p>Embora o bilionário tenha escrito posteriormente que a ajuda poderia ser "mal interpretada", a brasileira continuou a sugerir o encontro, propondo que ocorresse em Paris, na França, e reforçando que a jovem era o "tipo" dele.</p>
+<p>Natal é mencionada também em outro contexto, quando o agente de modelos Jean-Luc Brunel diz a Epstein que esteve na cidade, em 2010. Brunel era um conhecido parceiro de Epstein. Brunel foi encontrado morto na prisão em Paris, em 2022. Estava detido desde o início de uma investigação formal, após ser acusado de assédio sexual e estupro contra jovens com idades entre 15 e 18 anos na França. Ele negava as acusações.</p>
+<p>Em uma mensagem em 2013, da mesma brasileira, ela pede ajuda a Epstein. Diz que está com ordem de despejo, não tem recursos para pagar um advogado e pede um lugar para ficar. No mesmo texto, ela mencionou uma nova amiga recém-chegada do Brasil que teria interesse em conhecê-lo.</p>
+</section>
+<div class="original-link"><a href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank" rel="noopener">Leia o artigo original na BBC News Brasil ↗</a></div>
+<div class="back-link"><a href="../../../../index.html">← Voltar ao portfólio</a></div>
+</div></div>
+</article>
+
+<script src="../../shared/base.js"></script>
+<script>
+(function(){
+    var btnEn=document.getElementById("btnEn"),btnPt=document.getElementById("btnPt");
+    var artEn=document.getElementById("art-en"),artPt=document.getElementById("art-pt");
+    var dEn=document.getElementById("disc-en"),dPt=document.getElementById("disc-pt");
+    function setLang(l){
+        if(l==="pt"){artEn.style.display="none";artPt.style.display="";dEn.style.display="none";dPt.style.display="";btnEn.classList.remove("active");btnPt.classList.add("active");}
+        else{artPt.style.display="none";artEn.style.display="";dPt.style.display="none";dEn.style.display="";btnPt.classList.remove("active");btnEn.classList.add("active");}
+        localStorage.setItem("portfolio-lang",l);
+    }
+    setLang(localStorage.getItem("portfolio-lang")||"en");
+    btnEn.addEventListener("click",function(){setLang("en");});
+    btnPt.addEventListener("click",function(){setLang("pt");});
+    window.addEventListener("scroll",function(){var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById("progressBar").style.width=(window.scrollY/h*100)+"%";});
+})();
+</script>
 </body>
 </html>
