@@ -452,3 +452,57 @@ body {
 .hidden { display: none !important; }
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+
+/* ——— CUSTOM PERSONAS ———————————————————————————————— */
+.custom-personas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.custom-persona-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: var(--radius);
+  position: relative;
+  animation: fadeUp 0.3s ease both;
+}
+.btn-remove-persona {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px;
+  font-size: 0.75rem;
+  transition: color 0.18s;
+}
+.btn-remove-persona:hover { color: var(--danger); }
+
+.btn-add-persona {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 1px dashed var(--border-mid);
+  color: var(--subdued);
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-add-persona:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(0,212,160,0.03);
+}

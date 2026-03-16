@@ -216,6 +216,8 @@ const previewOutlet   = document.getElementById('previewOutlet');
 const corsWarning     = document.getElementById('corsWarning');
 const proxyGroup      = document.getElementById('proxyGroup');
 const proxyUrlInput   = document.getElementById('proxyUrl');
+const customPersonasContainer = document.getElementById('custom-personas-container');
+const addPersonaBtn = document.getElementById('addPersonaBtn');
 
 // ——— Init ————————————————————————————————————————————————
 window.addEventListener('DOMContentLoaded', () => {
@@ -228,6 +230,30 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const savedProxy = localStorage.getItem('sim_proxy') || '';
   if (proxyUrlInput && savedProxy) proxyUrlInput.value = savedProxy;
+
+  // Custom persona logic
+  if (addPersonaBtn) {
+    addPersonaBtn.addEventListener('click', () => {
+      const row = document.createElement('div');
+      row.className = 'custom-persona-row';
+      row.innerHTML = `
+        <button type="button" class="btn-remove-persona" title="Remover"><i class="fas fa-times"></i></button>
+        <div class="form-group">
+          <label class="form-label">Nome do perfil</label>
+          <input type="text" class="form-input custom-persona-name" placeholder="Ex: Engenheiro civil / Crítico de arte">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Comportamento (Personalidade)</label>
+          <textarea class="form-textarea short custom-persona-role" placeholder="Ex: Analisa a viabilidade técnica / Foca no impacto estético..."></textarea>
+        </div>
+      `;
+      customPersonasContainer.appendChild(row);
+      
+      row.querySelector('.btn-remove-persona').addEventListener('click', () => {
+        row.remove();
+      });
+    });
+  }
 });
 
 // ——— Provider change ————————————————————————————————————
@@ -305,14 +331,25 @@ formEl.addEventListener('submit', async (e) => {
   submitBtn.disabled = true;
   submitBtn.textContent = 'Simulando reações…';
 
+  // Collect custom personas
+  const customPersonaRows = document.querySelectorAll('.custom-persona-row');
+  const customPersonas = [];
+  customPersonaRows.forEach(row => {
+    const name = row.querySelector('.custom-persona-name').value.trim();
+    const role = row.querySelector('.custom-persona-role').value.trim();
+    if (name && role) {
+      customPersonas.push({ name, role });
+    }
+  });
+
   renderPostPreview(article, outlet);
   showSkeleton();
 
   try {
     let result;
-    if (provider === 'openai')      result = await callOpenAI(apiKey, model, article, context, outlet);
-    else if (provider === 'gemini') result = await callGemini(apiKey, model, article, context, outlet);
-    else                            result = await callAnthropic(apiKey, model, proxyUrl, article, context, outlet);
+    if (provider === 'openai')      result = await callOpenAI(apiKey, model, article, context, outlet, customPersonas);
+    else if (provider === 'gemini') result = await callGemini(apiKey, model, article, context, outlet, customPersonas);
+    else                            result = await callAnthropic(apiKey, model, proxyUrl, article, context, outlet, customPersonas);
     const { reactions, thread } = result;
     renderComments(reactions, thread);
   } catch (err) {
@@ -325,10 +362,21 @@ formEl.addEventListener('submit', async (e) => {
 });
 
 // ——— Prompt builder ——————————————————————————————————————
-function buildPrompt(article, context, outlet) {
+function buildPrompt(article, context, outlet, customPersonas = []) {
   const personaDescriptions = PERSONAS.map(p =>
     `{"id":"${p.id}","emoji":"${p.emoji}","name":"${p.name}","role":"${p.role}","sentiment_hint":"${p.sentiment_hint}"}`
   ).join(',\n');
+
+  // Add custom personas to the description list for the AI
+  const customDescriptions = customPersonas.map((cp, idx) => 
+    `{"id":"custom_${idx}","emoji":"👤","name":"${cp.name}","role":"${cp.role}","sentiment_hint":"comentário baseado estritamente nesta personalidade definida pelo usuário"}`
+  ).join(',\n');
+
+  const totalPersonaDescriptions = customDescriptions 
+    ? personaDescriptions + ',\n' + customDescriptions
+    : personaDescriptions;
+
+  const totalCount = PERSONAS.length + customPersonas.length;
 
   const system = `You are a social simulation engine for investigative journalism.
 Generate realistic, distinct simulated reactions to a journalistic article.
@@ -365,10 +413,10 @@ ${article}
 
 ${context ? `Contexto adicional:\n"""\n${context}\n"""\n` : ''}Veículo: ${outlet}
 
-Gere um comentário realista para cada uma das ${PERSONAS.length} personas:
-[${personaDescriptions}]
+Gere um comentário realista para cada uma das ${totalCount} personas:
+[${totalPersonaDescriptions}]
 
-Retorne o JSON com "reactions" (${PERSONAS.length} itens com likes) e "thread" (3 respostas ao comentário com mais likes).`;
+Retorne o JSON com "reactions" (${totalCount} itens com likes) e "thread" (3 respostas ao comentário com mais likes).`;
 
   return { system, user };
 }
@@ -385,8 +433,8 @@ function parseResponse(raw) {
 
 
 // ——— OpenAI ——————————————————————————————————————————————
-async function callOpenAI(apiKey, model, article, context, outlet) {
-  const { system, user } = buildPrompt(article, context, outlet);
+async function callOpenAI(apiKey, model, article, context, outlet, customPersonas) {
+  const { system, user } = buildPrompt(article, context, outlet, customPersonas);
   const resp = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
@@ -406,8 +454,8 @@ async function callOpenAI(apiKey, model, article, context, outlet) {
 }
 
 // ——— Google Gemini ———————————————————————————————————————
-async function callGemini(apiKey, model, article, context, outlet) {
-  const { system, user } = buildPrompt(article, context, outlet);
+async function callGemini(apiKey, model, article, context, outlet, customPersonas) {
+  const { system, user } = buildPrompt(article, context, outlet, customPersonas);
   const fullPrompt = `${system}\n\n${user}`;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
   const resp = await fetch(url, {
@@ -428,8 +476,8 @@ async function callGemini(apiKey, model, article, context, outlet) {
 }
 
 // ——— Anthropic (via proxy) ———————————————————————————————
-async function callAnthropic(apiKey, model, proxyBase, article, context, outlet) {
-  const { system, user } = buildPrompt(article, context, outlet);
+async function callAnthropic(apiKey, model, proxyBase, article, context, outlet, customPersonas) {
+  const { system, user } = buildPrompt(article, context, outlet, customPersonas);
   const base = proxyBase.replace(/\/$/, '');
   const resp = await fetch(`${base}/messages`, {
     method: 'POST',
@@ -469,13 +517,16 @@ function renderPostPreview(article, outlet) {
 let _loaderInterval = null;
 
 function showSkeleton() {
+  const customCount = document.querySelectorAll('.custom-persona-row').length;
+  const total = PERSONAS.length + customCount;
+
   if (_loaderInterval) clearInterval(_loaderInterval);
 
   resultsArea.innerHTML = `
     <div class="loader-state">
       <div class="loader-header">
         <span class="loader-label" id="loaderLabel">Consultando a IA…</span>
-        <span class="loader-count" id="loaderCount">0 / ${PERSONAS.length}</span>
+        <span class="loader-count" id="loaderCount">0 / ${total}</span>
       </div>
       <div class="loader-bar-track">
         <div class="loader-bar-fill" id="loaderBarFill"></div>
@@ -499,11 +550,22 @@ function showSkeleton() {
   const counter = document.getElementById('loaderCount');
   const bar     = document.getElementById('loaderBarFill');
   let   idx     = 0;
-  const total   = PERSONAS.length;
+  
+  // Combine native personas and custom ones for the label cycle
+  const customPersonaNames = Array.from(document.querySelectorAll('.custom-persona-row'))
+    .map(row => ({ 
+      emoji: '👤', 
+      name: row.querySelector('.custom-persona-name').value.trim() || 'Persona Customizada' 
+    }));
+  
+  const allDisplayPersonas = [
+    ...PERSONAS.map(p => ({ emoji: p.emoji, name: p.name })),
+    ...customPersonaNames
+  ];
 
   _loaderInterval = setInterval(() => {
     if (!label || !counter || !bar) { clearInterval(_loaderInterval); return; }
-    const p = PERSONAS[idx % total];
+    const p = allDisplayPersonas[idx % total];
     label.textContent   = `Gerando reação de ${p.emoji} ${p.name}…`;
     counter.textContent = `${idx + 1} / ${total}`;
     bar.style.width     = `${Math.round(((idx + 1) / total) * 100)}%`;
