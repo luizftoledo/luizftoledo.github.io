@@ -1,871 +1,272 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pirarucu: o peixe gigante que virou bolsa de luxo | Investigativo Luiz Fernando Toledo</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
-
-  <!-- Shared CSS -->
-  <link rel="stylesheet" href="../shared/base.css">
-
-  <!-- Page-specific styles -->
-  <style>
-    :root {
-      --hero-gradient: linear-gradient(135deg, #0d2a1a 0%, #1a1a2e 100%);
-      --primary-color: #1d5a3d;
-      --accent-color: #7cb342;
-      --text-dark: #1a1a1a;
-      --text-light: #ffffff;
-    }
-
-    body {
-      font-family: 'Source Sans 3', sans-serif;
-      line-height: 1.7;
-      color: var(--text-dark);
-    }
-
-    #disclaimerBar {
-      background-color: #e8f5e9;
-      border-bottom: 2px solid #4caf50;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.95rem;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    #disclaimerBar .warning-icon {
-      margin-right: 12px;
-      font-size: 1.2rem;
-    }
-
-    #disclaimerBar a {
-      color: #1d5a3d;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    #disclaimerClose {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #333;
-    }
-
-    #langBar {
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #e9ecef;
-      padding: 12px 20px;
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      position: sticky;
-      top: 44px;
-      z-index: 999;
-    }
-
-    .lang-btn {
-      background-color: #ffffff;
-      border: 1px solid #ddd;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-    }
-
-    .lang-btn.active {
-      background-color: var(--primary-color);
-      color: white;
-      border-color: var(--primary-color);
-    }
-
-    .lang-btn:hover {
-      border-color: var(--primary-color);
-    }
-
-    #progressBar {
-      height: 3px;
-      background-color: #e9ecef;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 0%;
-      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-      z-index: 1001;
-      transition: width 0.2s ease;
-    }
-
-    /* Hero Section */
-    #hero {
-      background: var(--hero-gradient);
-      color: white;
-      padding: 100px 20px 80px;
-      text-align: center;
-    }
-
-    .series-tag {
-      display: inline-block;
-      background-color: rgba(124, 179, 66, 0.2);
-      border: 1px solid var(--accent-color);
-      color: var(--accent-color);
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    #hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-      font-weight: 900;
-      line-height: 1.2;
-      margin: 20px 0;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    #hero .deck {
-      font-family: 'Source Serif 4', serif;
-      font-size: 1.3rem;
-      margin: 30px 0 40px;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 0.95);
-    }
-
-    .meta {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-top: 30px;
-    }
-
-    .meta span {
-      margin: 0 15px;
-    }
-
-    /* Content sections */
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    .text-section {
-      opacity: 0;
-      transition: opacity 0.8s ease-out;
-      padding: 50px 0;
-      border-bottom: 1px solid #e9ecef;
-    }
-
-    .text-section.fade-in {
-      opacity: 1;
-    }
-
-    .text-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      margin-bottom: 25px;
-      color: var(--text-dark);
-    }
-
-    .text-section h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      margin-top: 35px;
-      margin-bottom: 18px;
-      color: var(--text-dark);
-    }
-
-    .text-section p {
-      margin-bottom: 18px;
-      font-size: 1.05rem;
-      line-height: 1.8;
-    }
-
-    .pullquote {
-      opacity: 0;
-      transition: opacity 0.8s ease-out;
-      border-left: 4px solid var(--primary-color);
-      padding: 25px 30px;
-      margin: 40px 0;
-      background-color: #f8f9fa;
-      font-family: 'Source Serif 4', serif;
-      font-size: 1.2rem;
-      font-style: italic;
-      color: var(--text-dark);
-    }
-
-    .pullquote.fade-in {
-      opacity: 1;
-    }
-
-    /* Image styles */
-    .article-image {
-      opacity: 0;
-      transition: opacity 0.8s ease-out;
-      width: 100%;
-      max-width: 800px;
-      margin: 40px auto;
-      border-radius: 4px;
-      display: block;
-    }
-
-    .article-image.fade-in {
-      opacity: 1;
-    }
-
-    .image-caption {
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 12px;
-      font-style: italic;
-      text-align: center;
-    }
-
-    /* Supply chain diagram */
-    .supply-chain {
-      opacity: 0;
-      transition: opacity 0.8s ease-out;
-      background: white;
-      padding: 40px;
-      margin: 40px 0;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .supply-chain.fade-in {
-      opacity: 1;
-    }
-
-    .chain-step {
-      text-align: center;
-      margin: 20px 0;
-      padding: 20px;
-      background: #f8f9fa;
-      border-radius: 4px;
-      position: relative;
-    }
-
-    .chain-step:not(:last-child)::after {
-      content: '↓';
-      position: absolute;
-      bottom: -25px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 1.5rem;
-      color: var(--primary-color);
-      font-weight: bold;
-    }
-
-    .chain-label {
-      font-weight: 700;
-      color: var(--primary-color);
-      margin-bottom: 8px;
-    }
-
-    .chain-value {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #333;
-    }
-
-    .chain-description {
-      font-size: 0.85rem;
-      color: #666;
-      margin-top: 8px;
-    }
-
-    /* Stats Section */
-    .stats-section {
-      opacity: 0;
-      transition: opacity 0.8s ease-out;
-      padding: 60px 20px;
-      background: linear-gradient(135deg, #f1f8f4 0%, #e8f5e9 100%);
-      margin: 60px 0;
-    }
-
-    .stats-section.fade-in {
-      opacity: 1;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .stat-card {
-      background: white;
-      padding: 30px;
-      text-align: center;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    }
-
-    .stat-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-      color: var(--primary-color);
-      font-weight: 900;
-      margin-bottom: 10px;
-    }
-
-    .stat-label {
-      font-size: 0.95rem;
-      color: #666;
-      line-height: 1.4;
-    }
-
-    /* Timeline */
-    .timeline-section {
-      padding: 80px 20px;
-      background-color: #fafafa;
-    }
-
-    .timeline-section h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      text-align: center;
-      margin-bottom: 60px;
-    }
-
-    .timeline {
-      position: relative;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 2px;
-      height: 100%;
-      background: linear-gradient(to bottom, var(--primary-color), transparent);
-    }
-
-    .timeline-item {
-      margin-bottom: 50px;
-      position: relative;
-    }
-
-    .timeline-item:nth-child(odd) .timeline-content {
-      margin-left: 0;
-      margin-right: auto;
-      width: 45%;
-      text-align: right;
-    }
-
-    .timeline-item:nth-child(even) .timeline-content {
-      margin-left: auto;
-      margin-right: 0;
-      width: 45%;
-      text-align: left;
-    }
-
-    .timeline-marker {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: 10px;
-      width: 16px;
-      height: 16px;
-      background-color: var(--primary-color);
-      border: 4px solid white;
-      border-radius: 50%;
-      z-index: 1;
-    }
-
-    .timeline-content {
-      background: white;
-      padding: 20px;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-
-    .timeline-date {
-      font-weight: 700;
-      color: var(--primary-color);
-      font-size: 0.95rem;
-      margin-bottom: 8px;
-    }
-
-    .timeline-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: var(--text-dark);
-    }
-
-    .timeline-description {
-      font-size: 0.95rem;
-      color: #666;
-      line-height: 1.6;
-    }
-
-    /* Footer */
-    footer {
-      background-color: #1a1a1a;
-      color: white;
-      padding: 60px 20px 40px;
-    }
-
-    .footer-disclaimer {
-      max-width: 800px;
-      margin: 0 auto 40px;
-      padding: 30px;
-      background-color: rgba(124, 179, 66, 0.1);
-      border-left: 4px solid var(--accent-color);
-      border-radius: 4px;
-    }
-
-    .footer-disclaimer p {
-      margin-bottom: 15px;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-
-    .footer-disclaimer a {
-      color: var(--accent-color);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .footer-disclaimer a:hover {
-      text-decoration: underline;
-    }
-
-    .footer-nav {
-      text-align: center;
-      padding-top: 30px;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .footer-nav a {
-      color: var(--accent-color);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .footer-nav a:hover {
-      text-decoration: underline;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      #hero h1 {
-        font-size: 2.2rem;
-      }
-
-      #hero .deck {
-        font-size: 1.1rem;
-      }
-
-      .timeline::before {
-        left: 20px;
-      }
-
-      .timeline-marker {
-        left: 20px;
-      }
-
-      .timeline-item:nth-child(odd) .timeline-content,
-      .timeline-item:nth-child(even) .timeline-content {
-        width: calc(100% - 60px);
-        margin-left: 60px;
-        margin-right: 0;
-        text-align: left;
-      }
-
-      .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .chain-step:not(:last-child)::after {
-        bottom: -20px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      #hero h1 {
-        font-size: 1.8rem;
-      }
-
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-
-      #hero {
-        padding: 60px 15px 50px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pirarucu: the giant that could disappear — luxury bag but fishers see little of the profit</title>
+    <link rel="stylesheet" href="../shared/base.css">
+    <style>
+        :root { --accent-color: #2c6e49; --primary-color: #1a1a1a; --text-color: #333; --max-width: 740px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--text-color); background: #fff; line-height: 1.6; margin: 0; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-color); width: 0%; z-index: 999; }
+        .disclaimer-bar { background: var(--accent-color); color: #fff; padding: 10px 20px; font-size: 13px; text-align: center; }
+        .disclaimer-bar a { color: #fff; }
+        .lang-toggle { position: fixed; top: 40px; right: 20px; z-index: 100; }
+        .lang-toggle button { background: var(--primary-color); color: #fff; border: none; padding: 7px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; margin: 0 2px; }
+        .lang-toggle button.active { background: var(--accent-color); }
+        .hero { min-height: 500px; background: linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.6)), url("imgs/photo-01.jpg") center/cover; display: flex; align-items: flex-end; color: #fff; }
+        .hero-content { max-width: var(--max-width); margin: 0 auto; padding: 50px 20px 40px; }
+        .hero h1 { font-family: Georgia, serif; font-size: 38px; line-height: 1.2; margin: 0 0 15px; }
+        .hero-meta { font-size: 15px; opacity: .9; margin: 0; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+        .article-content { padding: 50px 0; }
+        .section { margin-bottom: 50px; }
+        .section h2 { font-family: Georgia, serif; font-size: 26px; line-height: 1.3; margin: 50px 0 20px; color: var(--primary-color); }
+        .section p { font-family: Georgia, serif; font-size: 18px; line-height: 1.85; margin: 0 0 22px; }
+        .image-block { margin: 50px 0; text-align: center; }
+        .image-block img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        .image-caption { font-size: 14px; color: #666; margin-top: 10px; font-style: italic; }
+        .pullquote { font-family: Georgia, serif; font-size: 22px; font-weight: 700; line-height: 1.4; border-left: 5px solid var(--accent-color); padding: 28px 0 28px 26px; margin: 50px 0; max-width: 600px; }
+        .pullquote-attr { font-size: 14px; font-style: italic; color: #666; margin-top: 10px; font-weight: normal; }
+        .data-viz { background: #f5f5f5; padding: 40px 30px; margin: 50px 0; border-left: 5px solid var(--accent-color); }
+        .data-viz h3 { font-family: Georgia, serif; font-size: 22px; margin: 0 0 30px; }
+        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .data-item { background: #fff; padding: 18px; border-radius: 4px; }
+        .data-number { font-family: Georgia, serif; font-size: 32px; font-weight: 700; color: var(--accent-color); margin: 0 0 6px; }
+        .data-label { font-size: 14px; color: #666; line-height: 1.4; }
+        .original-link { text-align: center; margin: 40px 0; }
+        .original-link a { display: inline-block; background: var(--accent-color); color: #fff; padding: 12px 28px; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 3px; }
+        .back-link { margin-top: 60px; padding-top: 30px; border-top: 1px solid #ddd; }
+        .back-link a { color: var(--accent-color); text-decoration: none; font-weight: 500; }
+        @media(max-width:768px){ .hero h1{font-size:26px;} .section p{font-size:16px;} .pullquote{font-size:18px;} .data-grid{grid-template-columns:1fr;} }
+    </style>
 </head>
-<body class="lang-en">
-  <!-- Disclaimer Bar -->
-  <div id="disclaimerBar">
-    <div>
-      <span class="warning-icon">⚠</span>
-      <span data-lang="en">This is an enhanced portfolio presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span>
-      <span data-lang="pt">Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="disclaimer-bar" id="disc-en">Portfolio presentation of published journalism. Original: BBC News Brasil, August 2025. <a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o" target="_blank">Read the original ↗</a></div>
+<div class="disclaimer-bar" id="disc-pt" style="display:none">Apresentação de portfólio do jornalismo publicado. Original: BBC News Brasil, agosto de 2025. <a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o" target="_blank">Leia o original ↗</a></div>
+
+<div class="lang-toggle">
+    <button id="btnEn" class="active">EN</button>
+    <button id="btnPt">PT</button>
+</div>
+
+<!-- ENGLISH -->
+<article id="art-en">
+<header class="hero">
+<div class="hero-content">
+<h1>Pirarucu: the giant that could disappear — luxury bags but profit doesn't reach the fishers</h1>
+<p class="hero-meta">Luiz Fernando Toledo | BBC News Brasil | August 18, 2025</p>
+</div>
+</header>
+<div class="article-content"><div class="container">
+<section class="section">
+<p>Luxury bags and leather accessories costing thousands of reais, sold in Brazil and in stores in the United States. The use of the thick and resistant skin of the pirarucu — a fish that was once considered threatened with extinction and whose fishing and trade are now controlled — receives support from both the fashion industry and environmental authorities.</p>
+<p>The fishing of the species was once prohibited due to predatory exploitation, but today it is seen as an example of sustainable management: the current model involves counting the animals and authorizing the capture of only a portion, guaranteeing the conservation of populations and income for indigenous and riverside communities.</p>
+<p>National and international brands emphasize these social and environmental gains to their customers. Osklen, a pioneer in this market, says on its website that the initiative collaborates with the circular economy, "generating income for riverside populations and contributing to the preservation of the Amazon."</p>
+<p>But representatives of communities involved in management and experts interviewed by BBC News Brasil say that, although they defend the model as genuinely helping to recover the fish population, most of the money received from this trade in the skin does not reach those who ensure that preservation.</p>
+<p>Amazonian fisherman and vice-president of the Federation of Pirarucu Managers of Mamirauá (Femapam), Pedro Canízio, says he was shocked when he saw the price of one of those luxury items for sale, for the first time, on a trip he took to Rio de Janeiro a few years ago.</p>
+
+<div class="pullquote">"The manager [the one who participates in the pirarucu management plan] doesn't come anywhere close to buying one of those products, because they're very expensive. Fishermen have a lot of work, but the kilo of pirarucu [whole] is sold here, at the highest value, for R$ 11."<div class="pullquote-attr">— Pedro Canízio, Femapam</div></div>
+
+<p>Consultant Fernanda Alvarenga, author of a study on the pirarucu leather market, says this is a common problem among Amazonian products. "Most of these relationships [in the supply chain] are questionable," says Alvarenga. "We joke that if pirarucu management doesn't work as an Amazon conservation strategy, nothing will. It is the most well-rounded economic activity in terms of the greatest number of social and environmental benefits."</p>
+<p>"It's important for this to come to light not as a way to destroy commercial relationships, but to have a more careful and conscious look at the importance of this economic activity as a conservation strategy."</p>
+<p>Companies in the sector interviewed by BBC News Brasil say they recognize the challenges, but are actively seeking to strengthen these communities. They also say that the luxury market represents only a small part of the demand and that the segment played a fundamental role as an international showcase for the pirarucu.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-02.jpg" alt="Pirarucu leather accessories"><p class="image-caption">Accessories with pirarucu leather costing thousands of reais are advertised on the Osklen brand website</p></div>
+<section class="section">
+<h2>An exotic and sustainable leather</h2>
+<p>Pirarucu leather plays an important role in the fashion market by conveying this message of environmental protection. Leathers, in general, are celebrated for their durability and also for a cultural issue linked to ancestry, says Lilyan Berlim, a sustainability specialist in fashion and professor of luxury management at the Escola Superior de Propaganda e Marketing (ESPM).</p>
+<p>"It was one of the first forms of clothing we had. There's an association with quality and efficiency." But the link with environmental damage has made the industry a constant target of criticism.</p>
+<p>Pirarucu entered as an exception. "There's a whole cultural question. It's the food of riverside communities in the Amazon. When you use pirarucu leather, in a sense you're generating income for the communities," says the professor.</p>
+<p>New brands emerge in this market every year, always incorporating the idea of sustainability into their discourse. "We thought of a business model that wasn't just about the leather, but about sustainability and environmental impact," says Bruna Freitas, founder of one of these new brands in the national market, Yara Couro, based in Macapá (AP). The idea came after she became aware of the large amount of fishing waste in her region. "There isn't as much use of the fishing chain as there already is in cattle," she says.</p>
+<p>In the case of the pirarucu, the fish is consumed as food. Until recently, its skin was discarded. With the growth of this market, this part of the animal began to be reused. Freitas says that the pirarucu stands out for having a skin with a pattern difficult to imitate, in addition to being a symbol of the Amazon. "It's a fish that survived many environmental challenges."</p>
+</section>
+<div class="image-block"><img src="imgs/photo-01.jpg" alt="Pirarucu fishing in the Amazon"><p class="image-caption">A fisherman carries a pirarucu in the Mamirauá Sustainable Development Reserve, in Fonte Boa, Amazonas</p></div>
+<section class="section">
+<h2>From management to display windows</h2>
+<p>The pirarucu fishing occurs during a fixed period of the year in so-called management areas, in the state of Amazonas, and only 30% of adults can be captured; the rest is left to maintain stocks. Control is exercised by the Brazilian Institute of the Environment and Renewable Natural Resources (Ibama).</p>
+<p>In the management system, the communities themselves are responsible for guarding and protecting the lakes in the areas where they live to prevent invasions. With this, they also supplement their incomes.</p>
+<p>The species was once among those threatened with extinction, and for this reason its extractive fishing was prohibited in Amazonas in the 1990s. With the development of management projects, the fish population began to grow again.</p>
+<p>After authorization from Ibama, the communities gather to organize fishing and commercialization through community associations in the management areas.</p>
+</section>
+<section class="section">
+<h2>'What is missing is recognition of the fisher'</h2>
+<p>After fishing, the largest portion of the pirarucu goes to refrigerating plants, where skin and meat are separated. Only then can these skins go to tanneries, where they are turned into leather for footwear manufacturers, bags, and other accessories.</p>
+<p>It is in this final stage that the greatest value added to the product occurs, according to research conducted by the non-profit organization Operação Amazônia Nativa (Opan) and published in 2018. The study explains that processing the skin is complex and involves several stages, such as washing, soaking, descaling, removing the epidermis and fats, dyeing, drying, cutting, and sewing. There are also a series of legal requirements.</p>
+<p>The research identified a market concentration: 95% of the skins were commercialized by seven refrigerating plants and only 5% by community associations.</p>
+<p>"The work with skins is difficult to learn. The managers are learning how to do the cutting. It is work with a lot of technology involved," says Cristina Isis Buck Silva, responsible for coordinating sustainable use of fauna and biodiversity at Ibama.</p>
+<p>Pedro Canízio, of the Federation of Pirarucu Managers of Mamirauá, says he would consider a fairer system in which managers received a portion of what is earned from the sale of the skins. "But today, we can't. With the little we earn from management, we do the surveillance [of the lakes]," says Canízio.</p>
+
+<div class="pullquote">"Pirarucu management worked. What is missing is recognition of the fisher, both in the sale of meat and in byproducts such as the skin. So that communities have quality of life."<div class="pullquote-attr">— Pedro Canízio, Femapam</div></div>
+</section>
+<div class="image-block"><img src="imgs/photo-02.jpg" alt="Pirarucu leather products"><p class="image-caption">Pirarucu leather is used by luxury brands in Brazil and abroad to make accessories such as bags and boots</p></div>
+<section class="section">
+<h2>Community creates its own brand, but lacks resources to process leather</h2>
+<p>There are attempts to carry out leather processing closer to the communities, but those involved say resources are lacking. "It's an expensive industry, it would be a new business. In the future, perhaps, in addition to selling the fish meat, we can also process the leather," says Ana Alice Oliveira de Britto, from the Association of Rural Producers of Carauari (Asproc), an organization representing 800 families in 55 riverside communities.</p>
+<p>One of the ways to promote and value the work of the managers was the creation of Coletivo do Pirarucu in 2018, which brings together local communities, research institutes, and government organizations, such as Ibama itself. The group launched the brand Gosto da Amazônia, managed by Asproc, with sales to other regions of the country, but focusing on meat.</p>
+<p>"The fisher can receive 40% more for the fish than the average commercialized in the region," says Britto of Asproc. The entity wants this model to be replicated in the future for fish skin. For this, Britto believes public policies are needed that invest in the sector, helping the fishers themselves to develop technology to make the conversion to leather.</p>
+<p>"If this activity doesn't remunerate fairly and stops being attractive to managers, society could lose an important ally in the conservation of the Amazon territory, who could migrate to other activities more harmful to the environment to support their families."</p>
+</section>
+<section class="section">
+<h2>'We do not buy fish directly from fishers nor define prices for fish or skins'</h2>
+<p>A Brazilian company, Nova Kaeru, dominates the pirarucu leather market. Data from the Panjiva platform, which contains export information, obtained by BBC News Brasil, show that 70% of the export value of pirarucu and its derivatives in 2024 and 2025 was concentrated in this company. Another study, with Ibama data from 2011 to 2018, reached a similar number: 68% of exports.</p>
+<p>The brand is a supplier to most companies that manufacture accessories with this type of leather. In its catalogue are pieces from luxury brands such as Giorgio Armani, Dolce & Gabbana, and Givenchy. Nova Kaeru arose from a technological innovation: Eduardo Filgueiras, one of its founders, created a technique to weld different types of materials or leathers, creating large and continuous surfaces. "He is one of those scientists who truly transform and create new things," says marketing manager André de Castro.</p>
+<p>Most of Nova Kaeru's production is aimed at export, with the largest customers being the U.S. and Mexico, where country-style boots are manufactured for the American consumer. The luxury market, they say, represents only 5% of demand.</p>
+<p>This market concentration is viewed with reservations. One of the critics is Adevaldo Dias, president of Memorial Chico Mendes, an organization based in Manaus that supports managers. "What bothers us most in the pirarucu skin market is the lack of competition," he says. "There are cases where the skin is delivered and it takes more than six months to receive payment. And there is no other option. It's a low-demand market."</p>
+<p>He believes that, for companies to use the image of sustainability and social responsibility, they must give greater visibility to the demands of the communities. "If there is a communication about a fair relationship with the community, that relationship should, in fact, happen. Companies need to accompany what happens throughout the entire supply chain."</p>
+</section>
+<section class="section">
+<h2>'Our role is not just to buy the skin, but to invest in the Amazon'</h2>
+<p>José Leal Marques, commercial director of Nova Kaeru in the Amazon, says that the company began, in the past decade, the process of utilizing the skin, previously discarded. And that the communities still do not have the technical capacity to do this separation, something they hope to make viable in the future, allowing direct purchases.</p>
+<p>"Our role is not just to buy the skin, but to invest in the Amazon, in workforce qualification, in fishing and capturing the pirarucu," he says.</p>
+<p>He emphasizes that removing the raw material from Amazonas, transporting it, and transforming it is a long and expensive process, involving weeks of transport and up to six months of production before generating financial return. According to him, given these costs, the price paid by Nova Kaeru is high compared to other leathers and skins in the market.</p>
+<p>Marques evaluates that there is competition, but that it comes from abroad: "Bolivia today fishes year-round, because there the pirarucu is considered an invasive fish." "They compete with us in the international market at prices below what we work with. Even so, we continue to maintain our purchase price."</p>
+<p>Nova Kaeru's position also highlighted that the luxury fashion segment represented less than 5% of pirarucu demand, that the largest portion goes to country boots in the U.S., and that the sale price of leather is the same in both situations. "The higher prices in the luxury market do not reflect any difference in the value received by Nova Kaeru."</p>
+</section>
+<section class="section">
+<h2>Enforcement against smuggling admits failures</h2>
+<p>Another problem that concerns experts, beyond market inequalities, is the lack of control over pirarucu smuggling. The investigation into illegal fishing in the Amazon was among the motivations for the murder of British journalist Dom Phillips and indigenous rights defender Bruno Pereira, killed on June 5, 2022, in the region of the Vale do Javari Indigenous Territory.</p>
+<p>An analysis by BBC News Brasil of Ibama data identified 1,100 environmental fines related to pirarucu since the 2000s — 70% of them in Amazonas. The most common cases are related to illegal fishing and transporting the fish without authorization, but BBC also found violations for unauthorized trade in the leather.</p>
+<p>The head of Ibama's Fishery Activity Enforcement Unit, Igor de Brito, says that this area around the Dom Phillips and Bruno Pereira crime scene has constant seizures of the fish — an operation was launched after the murders to investigate fishing activity in the area. "We have been conducting operations there every year and in almost all of them, pirarucu is seized, both in the river and in the local market," says Brito. "In one of the actions we managed to collect around a ton, in a relatively small market."</p>
+<p>He acknowledges that seizure numbers may not be representative. "We lack manpower to be able to combat all the irregularity. The lack of manpower and inspectors certainly makes effective confrontation very difficult."</p>
+
+<div class="pullquote">"With so much illegal fish being caught, someone is receiving it, processing it, buying that fish and that skin."<div class="pullquote-attr">— Fernanda Alvarenga, researcher</div></div>
+
+<p>For Fernanda Alvarenga, author of the study on the pirarucu leather market in Amazonas, there is no certainty that the leather purchased by companies in the sector comes exclusively from legal management. And she alerts to the lack of enforcement in rivers and at refrigerating plants.</p>
+</section>
+<div class="data-viz">
+    <h3>Key numbers</h3>
+    <div class="data-grid">
+        <div class="data-item"><div class="data-number">R$ 11/kg</div><div class="data-label">Maximum price paid to fishers for whole pirarucu</div></div>
+        <div class="data-item"><div class="data-number">95%</div><div class="data-label">Skins commercialized by only 7 refrigerating plants (Opan study, 2018)</div></div>
+        <div class="data-item"><div class="data-number">70%</div><div class="data-label">Exports concentrated in a single company (Nova Kaeru)</div></div>
+        <div class="data-item"><div class="data-number">1,100</div><div class="data-label">Environmental fines related to pirarucu since the 2000s (70% in Amazonas)</div></div>
+        <div class="data-item"><div class="data-number">30%</div><div class="data-label">Maximum adult pirarucu that can be captured per management cycle</div></div>
+        <div class="data-item"><div class="data-number">800</div><div class="data-label">Families represented by Asproc in 55 riverside communities</div></div>
     </div>
-    <button id="disclaimerClose" aria-label="Close disclaimer">✕</button>
-  </div>
+</div>
+<div class="original-link"><a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o" target="_blank" rel="noopener">Read the original article on BBC News Brasil ↗</a></div>
+<div class="back-link"><a href="../../../index.html">← Back to portfolio</a></div>
+</div></div>
+</article>
 
-  <!-- Language Toggle Bar -->
-  <div id="langBar">
-    <button id="btnEn" class="lang-btn active" data-lang="en">English</button>
-    <button id="btnPt" class="lang-btn" data-lang="pt">Português</button>
-  </div>
+<!-- PORTUGUESE -->
+<article id="art-pt" style="display:none">
+<header class="hero">
+<div class="hero-content">
+<h1>Pele de peixe gigante da Amazônia vira bolsa de luxo, mas ganho não chega a pescadores</h1>
+<p class="hero-meta">Luiz Fernando Toledo | BBC News Brasil | 18 de agosto de 2025</p>
+</div>
+</header>
+<div class="article-content"><div class="container">
+<section class="section">
+<p>Bolsas de luxo e acessórios de couro que chegam a custar milhares de reais, no Brasil e em lojas nos Estados Unidos. O uso da pele espessa e resistente do pirarucu, peixe que já foi considerado ameaçado de extinção e tem hoje sua pesca e comércio controlados, recebe apoio tanto da indústria da moda quanto de autoridades ambientais.</p>
+<p>A pesca da espécie já foi proibida por causa da exploração predatória, mas hoje é vista como exemplo de manejo sustentável: o modelo atual envolve a contagem dos animais e a autorização da captura de apenas uma parte, garantindo a conservação das populações e remuneração para comunidades indígenas e ribeirinhas.</p>
+<p>Marcas nacionais e internacionais enfatizam esses ganhos socioambientais a seus clientes. A Osklen, pioneira neste mercado, diz em seu site que a iniciativa colabora com a economia circular, "gerando renda para as populações ribeirinhas e contribuindo para a preservação da Amazônia."</p>
+<p>Mas representantes de comunidades envolvidas no manejo e especialistas ouvidos pela BBC News Brasil afirmam que, embora defendam que o modelo de fato ajudou a recuperar a população do peixe, a maior parte do dinheiro recebida com esse comércio da pele não chega a quem garante essa preservação.</p>
+<p>O pescador amazonense e vice-presidente da Federação dos Manejadores e Manejadoras de Pirarucu de Mamirauá (Femapam) Pedro Canízio diz que se assustou ao ver o preço de um desses itens de luxo à venda, pela primeira vez, em uma viagem que fez ao Rio de Janeiro há alguns anos.</p>
 
-  <!-- Progress Bar -->
-  <div id="progressBar"></div>
+<div class="pullquote">"O manejador [aquele que participa do plano de manejo do pirarucu] não chega nem perto de comprar um produto desse, porque é muito caro. Pescadores têm muito trabalho, mas o quilo do pirarucu [inteiro] é vendido por aqui, no maior valor, a R$ 11."<div class="pullquote-attr">— Pedro Canízio, Femapam</div></div>
 
-  <!-- Hero Section -->
-  <section id="hero">
-    <div class="container">
-      <div class="series-tag" data-lang="en">Investigative Report</div>
-      <div class="series-tag" data-lang="pt">Reportagem Investigativa</div>
+<p>A consultora Fernanda Alvarenga, autora de um estudo sobre o mercado do couro do pirarucu, diz que esse é um problema comum entre os produtos da Amazônia. "A maioria dessas relações [da cadeia produtiva] são questionáveis", diz Alvarenga. "Brincamos que, se o manejo do pirarucu não der certo como estratégia de conservação da Amazônia, nada vai. É a atividade econômica mais redonda em termos de maior número de benefícios socioambientais."</p>
+<p>"É importante que isso venha à tona não como uma maneira de destruir relações comerciais, mas de ter um olhar mais cuidadoso e consciente sobre a importância dessa atividade econômica como estratégia de conservação."</p>
+<p>Empresas do setor ouvidas pela BBC News Brasil dizem que reconhecem os desafios, mas que buscam ativamente o fortalecimento dessas comunidades. Afirmam também que o mercado de luxo representa só uma pequena parte da demanda e que o segmento teve papel fundamental como vitrine internacional do pirarucu.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-02.jpg" alt="Acessórios de couro de pirarucu"><p class="image-caption">Acessórios com couro de pirarucu que custam milhares de reais são anunciados no site da marca Osklen</p></div>
+<section class="section">
+<h2>Um couro exótico e sustentável</h2>
+<p>O couro do pirarucu cumpre um papel considerado importante no mercado da moda, por passar essa mensagem de proteção ao meio ambiente. Couros, em geral, são celebrados por sua durabilidade e também por uma questão cultural ligada à ancestralidade, diz Lilyan Berlim, especialista em sustentabilidade na moda e professora de gestão de luxo na Escola Superior de Propaganda e Marketing (ESPM).</p>
+<p>"Foi uma das primeiras formas de roupa que tivemos. Há uma associação com qualidade e eficiência." Mas a ligação com danos ao meio ambiente tem feito com que a indústria virasse alvo constante de críticas.</p>
+<p>O pirarucu entrou como uma exceção. "Tem toda uma questão cultural. Ele é alimento das comunidades ribeirinhas da Amazônia. Quando você usa o couro do pirarucu, de certa forma está gerando renda para as comunidades", diz a professora.</p>
+<p>Novas marcas surgem neste mercado a cada ano, sempre incorporando a ideia de sustentabilidade ao discurso. "Pensamos em um modelo de negócio que não fosse só sobre o couro, mas sobre sustentabilidade e impacto ambiental", diz Bruna Freitas, fundadora de uma dessas novas marcas no mercado nacional, a Yara Couro, baseada em Macapá (AP). A ideia surgiu depois de ter tomado conhecimento da grande quantidade de resíduos da pesca em sua região. "Não há um aproveitamento tão grande da cadeia do pescado como já há na bovina", diz.</p>
+<p>No caso do pirarucu, o peixe é consumido como alimento. Até pouco tempo atrás, sua pele era descartada. Com o crescimento desse mercado, essa parte do animal passou a ser reaproveitada. Freitas diz que o pirarucu se destaca por possuir uma pele com um padrão difícil de ser imitado, além de ser um símbolo da Amazônia. "É um peixe que sobreviveu a muitas questões ambientais."</p>
+</section>
+<div class="image-block"><img src="imgs/photo-01.jpg" alt="Pesca do pirarucu na Amazônia"><p class="image-caption">Um pescador carrega um pirarucu na Reserva de Desenvolvimento Sustentável (RDS) Mamirauá, em Fonte Boa, estado do Amazonas</p></div>
+<section class="section">
+<h2>Do manejo às vitrines</h2>
+<p>A pesca do pirarucu ocorre em período fixo do ano nas chamadas áreas de manejo, no estado do Amazonas, e só 30% dos adultos podem ser capturados; o restante fica para manter os estoques. O controle é do Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis (Ibama).</p>
+<p>No sistema de manejo, as próprias comunidades ficam responsáveis por vigiar e proteger os lagos nas áreas em que vivem para evitar invasões. Com isso, também complementam suas rendas.</p>
+<p>A espécie já esteve entre as ameaçadas com risco de extinção e, por isso, sua pesca extrativa foi proibida no Amazonas nos anos 1990. Com o desenvolvimento dos projetos de manejo, a população de peixes voltou a crescer.</p>
+<p>Depois da autorização do Ibama, as comunidades se reúnem para organizar a pesca e a comercialização por associações comunitárias das áreas de manejo.</p>
+</section>
+<section class="section">
+<h2>'Falta o reconhecimento do pescador'</h2>
+<p>Depois da pesca, a maior parcela do pirarucu vai para frigoríficos, onde pele e carne são separadas. Só então essas peles podem seguir para curtumes, onde são transformadas em couro para fabricantes de calçados, bolsas e outros acessórios.</p>
+<p>É nesta última etapa que há a maior valoração do produto, segundo uma pesquisa conduzida pela organização sem fins lucrativos Operação Amazônia Nativa (Opan) e publicada em 2018. O estudo explica que o processamento da pele é complexo e envolve várias etapas, como lavagem, molhos e banhos, retirada de escama, epiderme e gorduras, tingimento, secagem, recorte e costura. Também há uma série de exigências legais. Daí a dificuldade em se implementar a confecção desse material diretamente nas comunidades.</p>
+<p>A pesquisa identificou uma concentração de mercado: 95% das peles foram comercializadas por sete frigoríficos e só 5% pelas associações comunitárias.</p>
+<p>"O trabalho com as peles é difícil de aprender. Os manejadores estão aprendendo como fazer o corte. É um trabalho com muita tecnologia envolvida", diz Cristina Isis Buck Silva, responsável pela coordenação de uso sustentável da fauna e da biodiversidade do Ibama.</p>
+<p>Pedro Canízio, da Federação dos Manejadores e Manejadoras de Pirarucu de Mamirauá, diz que consideraria um sistema mais justo no qual os manejadores recebessem uma parte do que é ganho com a venda das peles. "Mas, hoje, a gente não consegue. Com o pouco que lucramos com o manejo fazemos a vigilância [dos lagos]", afirma Canízio.</p>
 
-      <h1 data-lang="en">The giant Amazon fish that became a luxury handbag—but fishermen stay poor</h1>
-      <h1 data-lang="pt">O peixe gigante da Amazônia que virou bolsa de luxo — mas o pescador continua pobre</h1>
+<div class="pullquote">"O manejo do pirarucu deu certo. Falta o reconhecimento do pescador, tanto na venda da carne como dos subprodutos, como a pele. Para que as comunidades tenham qualidade de vida."<div class="pullquote-attr">— Pedro Canízio, Femapam</div></div>
+</section>
+<div class="image-block"><img src="imgs/photo-02.jpg" alt="Couro de pirarucu"><p class="image-caption">Couro de pirarucu é usado por marcas de luxo, no Brasil e no exterior, para fazer acessórios como bolsas e botas</p></div>
+<section class="section">
+<h2>Comunidade cria marca própria, mas faltam recursos para processar couro</h2>
+<p>Há tentativas de fazer o processamento do couro de forma mais próxima às comunidades, mas os envolvidos dizem que faltam recursos. "É uma indústria cara, seria um novo negócio. No futuro, talvez, além de vender a carne do peixe, também possamos processar o couro", diz Ana Alice Oliveira de Britto, da Associação dos Produtores Rurais de Carauari (Asproc), organização que representa 800 famílias em 55 comunidades ribeirinhas.</p>
+<p>Uma das formas de fomentar e valorizar o trabalho dos manejadores foi a criação do Coletivo do Pirarucu, em 2018, que reúne comunidades locais, institutos de pesquisa e organizações governamentais, como o próprio Ibama. O grupo lançou a marca Gosto da Amazônia, gerida pela Asproc, com venda para outras regiões do país, como sul e sudeste, mas com foco na carne.</p>
+<p>"O pescador chega a receber 40% a mais pelo peixe do que a média comercializada na região", diz Britto, da Asproc. A entidade quer que futuramente esse modelo seja replicado para a pele do peixe. Para isso, Britto acredita que são necessárias políticas públicas que invistam no setor, que ajudem os próprios pescadores a desenvolver tecnologia para fazer a conversão em couro.</p>
+<p>"Se essa atividade não remunerar com justiça e deixar de ser atraentes aos manejadores, a sociedade pode perder um importante aliado na conservação do território amazônico, que poderá migrar pra outras atividades mais danosas ao meio ambiente pra sustentar suas famílias."</p>
+</section>
+<section class="section">
+<h2>'Não compramos peixe diretamente de pescadores nem definimos preços do peixe ou das peles'</h2>
+<p>Uma empresa brasileira, a Nova Kaeru, domina o mercado do couro de pirarucu. Dados da plataforma Panjiva, que contém informações sobre exportações, obtidos pela BBC News Brasil, mostram que 70% do valor exportado de pirarucu e seus derivados em 2024 e 2025 estava concentrado nesta empresa. Um outro estudo, com dados do Ibama de 2011 a 2018, chegou a um número semelhante, de 68% das exportações.</p>
+<p>A marca é fornecedora da maior parte das empresas que fabricam os acessórios com este tipo de couro. Em seu catálogo estão expostas peças de marcas de luxo como Giorgio Armani, Dolce & Gabbana e Givenchy. A Nova Kaeru surgiu a partir de uma inovação tecnológica: Eduardo Filgueiras, um de seus fundadores, criou uma técnica para que diferentes tipos de materiais ou couros fossem soldados, criando superfícies amplas e contínuas. "Ele é desses cientistas que transformam e criam coisas verdadeiramente novas", diz o gerente de marketing André de Castro.</p>
+<p>A maior parte da produção da Nova Kaeru é voltada à exportação, tendo como maiores clientes os EUA e o México, onde são fabricadas botas do estilo country para o consumidor americano. O mercado de luxo, afirmam, representa só 5% da demanda.</p>
+<p>Essa concentração de mercado é vista com ressalvas. Um dos críticos é Adevaldo Dias, presidente do Memorial Chico Mendes, organização sediada em Manaus (AM) que atua no apoio aos manejadores. "O que mais nos incomoda no mercado da pele do pirarucu é a não concorrência", afirma Dias. "Tem casos em que a pele é entregue e leva mais de seis meses para receber o pagamento. E não há outra opção. É um mercado pouco aquecido."</p>
+<p>Ele acredita que, para que as empresas façam uso da imagem de sustentabilidade e responsabilidade social, devem dar maior visibilidade às demandas das comunidades. "Se há uma comunicação sobre uma relação justa com a comunidade, essa relação deveria, de fato, acontecer. As empresas precisam acompanhar o que acontece em toda a cadeia produtiva."</p>
+</section>
+<section class="section">
+<h2>'Nosso papel não é só comprar a pele, mas investir na Amazônia'</h2>
+<p>José Leal Marques, diretor comercial da Nova Kaeru na Amazônia, diz que a empresa iniciou, na década passada, o processo de aproveitamento da pele, antes descartada. E que as comunidades ainda não têm capacidade técnica para fazer essa separação, algo que esperam viabilizar no futuro, permitindo compras diretas.</p>
+<p>"Nosso papel não é só comprar a pele, mas investir na Amazônia, na qualificação de mão de obra, na pesca e captura do pirarucu", diz.</p>
+<p>Ele ressalta que retirar a matéria-prima no Amazonas, transportá-la e transformá-la é um processo demorado e caro, envolvendo semanas de transporte e até seis meses de produção antes de gerar retorno financeiro. Segundo ele, diante desses custos, o preço pago pela Nova Kaeru é alto em comparação a outros couros e peles no mercado.</p>
+<p>Marques avalia que há sim concorrência, mas que ela vem do exterior: "A Bolívia hoje pesca o ano todo, porque lá o pirarucu é considerado um peixe invasor [um organismo introduzido fora de sua área natural]". "Eles concorrem conosco no mercado internacional com preços abaixo do que trabalhamos. Mesmo assim continuamos mantendo nosso preço de compra."</p>
+<p>A Nova Kaeru também enviou, por e-mail, duas notas em que diz que não define preços do peixe ou das peles, e que os valores "são negociados localmente entre associações de pescadores e unidades de processamento." O posicionamento da empresa também destacou que "o preço da pele, quilo por quilo, é superior ao da carne, o que representou ganho real de renda para as comunidades envolvidas no manejo." E que o segmento de moda de luxo representa menos de 5% da demanda do pirarucu. "Os preços mais elevados do mercado de luxo não refletem qualquer diferença no valor recebido pela Nova Kaeru."</p>
+</section>
+<section class="section">
+<h2>Fiscalização ao contrabando admite falhas</h2>
+<p>Outro problema que preocupa especialistas, além das desigualdades de mercado, é a falta de controle sobre o contrabando do pirarucu. A investigação sobre a pesca ilegal no Amazonas estava entre as motivações do assassinato do jornalista britânico Dom Phillips e do indigenista Bruno Pereira, mortos em 5 de junho de 2022, na região da Terra Indígena Vale do Javari.</p>
+<p>Um levantamento feito pela BBC News Brasil nos dados do Ibama identificou 1,1 mil multas ambientais relacionadas ao pirarucu desde os anos 2000 — 70% delas no Amazonas. Os casos mais comuns são relacionados à pesca ilegal e transporte do peixe sem autorização, mas a BBC também encontrou infrações por comércio não autorizado do couro.</p>
+<p>O chefe do Núcleo de Fiscalização da Atividade Pesqueira do Ibama, Igor de Brito, diz que essa área tem apreensões constantes do peixe. "A gente tem feito operação lá todo ano e, praticamente em todas, apreende pirarucu, tanto no rio quanto no mercado local", afirma Brito. "Em uma das ações chegamos a recolher cerca de uma tonelada, num mercado relativamente pequeno."</p>
+<p>Ele reconhece que os números de apreensões podem não ser representativos. "Nos faltam pernas para poder combater toda a irregularidade. A falta de mão de obra e de fiscais com certeza dificulta muito o enfrentamento efetivo. Queria, por exemplo, poder realizar uma operação toda semana no mercado do peixe de Manaus. Mas não damos conta, dada a demanda."</p>
 
-      <div class="deck" data-lang="en">How sustainable fishing practices are being exploited by an opaque supply chain that enriches luxury brands while keeping fishermen in poverty.</div>
-      <div class="deck" data-lang="pt">Como práticas de pesca sustentável estão sendo exploradas por uma cadeia de suprimentos opaca que enriquece marcas de luxo enquanto mantém os pescadores na pobreza.</div>
+<div class="pullquote">"Com tanto peixe ilegal sendo capturado, alguém está recebendo, processando, comprando esse peixe e essa pele."<div class="pullquote-attr">— Fernanda Alvarenga, pesquisadora</div></div>
 
-      <div class="meta">
-        <span data-lang="en">BBC News Brasil, August 2025</span>
-        <span data-lang="pt">BBC News Brasil, Agosto de 2025</span>
-        <span>•</span>
-        <span data-lang="en">By Luiz Fernando Toledo</span>
-        <span data-lang="pt">Por Luiz Fernando Toledo</span>
-      </div>
+<p>Para Fernanda Alvarenga, autora do estudo sobre o mercado do couro do pirarucu no Amazonas, não há segurança de que o couro comprado pelas empresas do setor vem exclusivamente do manejo legal. E alerta para a falta de fiscalização nos rios e nos frigoríficos.</p>
+</section>
+<div class="data-viz">
+    <h3>Números da investigação</h3>
+    <div class="data-grid">
+        <div class="data-item"><div class="data-number">R$ 11/kg</div><div class="data-label">Maior preço pago ao pescador pelo pirarucu inteiro</div></div>
+        <div class="data-item"><div class="data-number">95%</div><div class="data-label">Peles comercializadas por apenas 7 frigoríficos (estudo Opan, 2018)</div></div>
+        <div class="data-item"><div class="data-number">70%</div><div class="data-label">Exportações concentradas em uma única empresa (Nova Kaeru)</div></div>
+        <div class="data-item"><div class="data-number">1,1 mil</div><div class="data-label">Multas ambientais relacionadas ao pirarucu desde os anos 2000 (70% no Amazonas)</div></div>
+        <div class="data-item"><div class="data-number">30%</div><div class="data-label">Máximo de adultos que pode ser capturado por ciclo de manejo</div></div>
+        <div class="data-item"><div class="data-number">800</div><div class="data-label">Famílias representadas pela Asproc em 55 comunidades ribeirinhas</div></div>
     </div>
-  </section>
+</div>
+<div class="original-link"><a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o" target="_blank" rel="noopener">Leia o artigo original na BBC News Brasil ↗</a></div>
+<div class="back-link"><a href="../../../index.html">← Voltar ao portfólio</a></div>
+</div></div>
+</article>
 
-  <!-- Main Content -->
-  <main class="container">
-    <!-- Section 1: The Fish -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">The giant of the rivers</h2>
-      <h2 data-lang="pt">O gigante dos rios</h2>
-
-      <p data-lang="en">The pirarucu is one of the largest freshwater fish in the world. A single specimen can grow to nearly three meters in length and weigh over 200 kilograms. For centuries, the pirarucu was central to Amazonian life—indigenous peoples hunted it for food, and fishermen depended on it for their survival. But by the late 20th century, overhunting had pushed the species to the brink of extinction.</p>
-      <p data-lang="pt">O pirarucu é um dos maiores peixes de água doce do mundo. Um único espécime pode crescer para quase três metros de comprimento e pesar mais de 200 quilogramas. Por séculos, o pirarucu foi central para a vida amazônica — povos indígenas o caçavam para alimentação, e pescadores dependiam dele para sua sobrevivência. Mas no final do século XX, a caça excessiva havia levado a espécie à beira da extinção.</p>
-
-      <img src="imgs/photo-01.jpg" alt="Pirarucu in the Amazon" class="article-image fade-in">
-      <div class="image-caption" data-lang="en">The pirarucu can grow to 3 meters long and weigh over 200 kilograms, making it one of the world's largest freshwater fish.</div>
-      <div class="image-caption" data-lang="pt">O pirarucu pode crescer até 3 metros de comprimento e pesar mais de 200 quilogramas, tornando-o um dos maiores peixes de água doce do mundo.</div>
-
-      <p data-lang="en">Then came a transformation. Starting in the 1990s, Brazil and conservation organizations implemented a bold management system in the Mamirauá Sustainable Development Reserve. Fishing communities became "manejadores" (managers)—licensed fishermen who would catch pirarucu according to strict scientific protocols. Only 30% of adult fish could be caught each year; the rest remained protected. The system worked. The pirarucu population recovered. It became a global success story in sustainable resource management.</p>
-      <p data-lang="pt">Então veio uma transformação. A partir de 1990, o Brasil e organizações de conservação implementaram um sistema de gestão audacioso na Reserva de Desenvolvimento Sustentável Mamirauá. Comunidades de pesca se tornaram "manejadores" (gestores) — pescadores licenciados que capturariam pirarucu de acordo com protocolos científicos rigorosos. Apenas 30% dos peixes adultos podiam ser capturados a cada ano; o resto permanecia protegido. O sistema funcionou. A população de pirarucu se recuperou. Tornou-se uma história de sucesso global em gestão sustentável de recursos.</p>
-
-      <div class="pullquote" data-lang="en">"The manager can't even come close to buying one of these products because it's too expensive. Fishermen have very hard work, but a kilogram of pirarucu is sold at the highest value, at R$ 11."</div>
-      <div class="pullquote" data-lang="pt">"O manejador não chega nem perto de comprar um produto desse, porque é muito caro. Pescadores têm muito trabalho, mas o quilo do pirarucu é vendido, aqui, no maior valor, a R$ 11."</div>
-    </section>
-
-    <!-- Stats Section 1 -->
-    <section class="stats-section fade-in">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">3m</div>
-          <div class="stat-number" data-lang="pt">3m</div>
-          <div class="stat-label" data-lang="en">Maximum fish length</div>
-          <div class="stat-label" data-lang="pt">Comprimento máximo do peixe</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">200kg+</div>
-          <div class="stat-number" data-lang="pt">200kg+</div>
-          <div class="stat-label" data-lang="en">Maximum fish weight</div>
-          <div class="stat-label" data-lang="pt">Peso máximo do peixe</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">30%</div>
-          <div class="stat-number" data-lang="pt">30%</div>
-          <div class="stat-label" data-lang="en">Allowed annual catch rate</div>
-          <div class="stat-label" data-lang="pt">Taxa de captura anual permitida</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">1990s</div>
-          <div class="stat-number" data-lang="pt">1990</div>
-          <div class="stat-label" data-lang="en">When recovery began</div>
-          <div class="stat-label" data-lang="pt">Quando começou a recuperação</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 2: The Luxury Market -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">From river to luxury boutique</h2>
-      <h2 data-lang="pt">Do rio até a boutique de luxo</h2>
-
-      <p data-lang="en">In recent years, pirarucu leather has become fashionable in the luxury goods industry. The fish's scales create a distinctive, visually striking texture that luxury brands have embraced for handbags, wallets, boots, and other accessories. These products command premium prices. A pirarucu leather handbag can retail for 3,000 reais or more—a price that puts it in the same category as designer goods from Paris and Milan.</p>
-      <p data-lang="pt">Nos últimos anos, o couro de pirarucu se tornou moda na indústria de bens de luxo. As escamas do peixe criam uma textura distinta e visualmente impressionante que as marcas de luxo abraçaram para bolsas, carteiras, botas e outros acessórios. Esses produtos comandam preços premium. Uma bolsa de couro de pirarucu pode ser vendida por 3.000 reais ou mais — um preço que a coloca na mesma categoria que bens de designer de Paris e Milão.</p>
-
-      <p data-lang="en">The business has grown internationally. Luxury companies in the United States and Europe source pirarucu leather from Brazil. The supply chains stretch across continents. Major retailers in New York and London market pirarucu-leather products as symbols of sustainable luxury—connecting the conservation success of the Mamirauá Reserve to fashionable goods.</p>
-      <p data-lang="pt">O negócio cresceu internacionalmente. Empresas de luxo nos EUA e Europa adquirem couro de pirarucu do Brasil. As cadeias de suprimentos se estendem por continentes. Grandes varejistas em Nova York e Londres comercializam produtos de couro de pirarucu como símbolos de luxo sustentável — conectando o sucesso da conservação da Reserva Mamirauá a bens na moda.</p>
-
-      <img src="imgs/photo-02.jpg" alt="Pirarucu leather products" class="article-image fade-in">
-      <div class="image-caption" data-lang="en">Luxury brands sell pirarucu leather goods for thousands of reais, claiming to support sustainable practices in the Amazon.</div>
-      <div class="image-caption" data-lang="pt">Marcas de luxo vendem produtos de couro de pirarucu por milhares de reais, alegando apoiar práticas sustentáveis na Amazônia.</div>
-    </section>
-
-    <!-- Section 3: The Fisherman's Plight -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">The forgotten harvesters</h2>
-      <h2 data-lang="pt">Os colhedores esquecidos</h2>
-
-      <p data-lang="en">Yet the fishermen who actually catch the pirarucu remain in poverty. A manejador might receive at most 11 reais per kilogram of whole pirarucu—a price set by middlemen and processors who control the supply chain. For context, that means a 100-kilogram fish generates at most 1,100 reais in payment to the fisherman. The same fish, processed and sold as leather goods, might generate 300,000 reais or more in retail sales.</p>
-      <p data-lang="pt">Mas os pescadores que realmente capturam o pirarucu permanecem na pobreza. Um manejador pode receber no máximo 11 reais por quilograma de pirarucu inteiro — um preço definido por intermediários e processadores que controlam a cadeia de suprimentos. Para contexto, isso significa que um peixe de 100 quilogramas gera no máximo 1.100 reais em pagamento ao pescador. O mesmo peixe, processado e vendido como bens de couro, pode gerar 300.000 reais ou mais em vendas no varejo.</p>
-
-      <p data-lang="en">Pedro Canízio, vice-president of FEMAPAM (the Federation of Pirarucu Managers of Mamirauá), articulated the absurdity of this situation with painful clarity: "The manager can't even come close to buying one of these products because it's too expensive." A fisherman whose labor directly enables the creation of a 3,000-reais handbag cannot afford to purchase a single one.</p>
-      <p data-lang="pt">Pedro Canízio, vice-presidente da FEMAPAM (Federação dos Manejadores de Pirarucu de Mamirauá), articulou o absurdo dessa situação com clareza dolorosa: "O manejador não consegue nem chegar perto de comprar um desses produtos porque é muito caro." Um pescador cuja mão de obra diretamente possibilita a criação de uma bolsa de 3.000 reais não consegue pagar para comprar uma.</p>
-
-      
-      <div class="image-caption" data-lang="en">Fishermen who manage the pirarucu sustainably remain among Brazil's poorest workers.</div>
-      <div class="image-caption" data-lang="pt">Pescadores que gerenciam o pirarucu de forma sustentável permanecem entre os trabalhadores mais pobres do Brasil.</div>
-    </section>
-
-    <!-- Supply Chain Section -->
-    <section class="supply-chain fade-in">
-      <h3 style="text-align: center; font-family: 'Playfair Display', serif; margin-bottom: 40px;">
-        <span data-lang="en">From fisherman to luxury consumer: the price explosion</span>
-        <span data-lang="pt">Do pescador ao consumidor de luxo: a explosão de preço</span>
-      </h3>
-
-      <div class="chain-step">
-        <div class="chain-label" data-lang="en">Fisherman catches pirarucu</div>
-        <div class="chain-label" data-lang="pt">Pescador captura pirarucu</div>
-        <div class="chain-value">R$ 11</div>
-        <div class="chain-description" data-lang="en">per kilogram for whole fish</div>
-        <div class="chain-description" data-lang="pt">por quilograma de peixe inteiro</div>
-      </div>
-
-      <div class="chain-step">
-        <div class="chain-label" data-lang="en">Processors / slaughterhouses</div>
-        <div class="chain-label" data-lang="pt">Processadores / frigoríficos</div>
-        <div class="chain-value">R$ 35-50</div>
-        <div class="chain-description" data-lang="en">per kilogram of skin</div>
-        <div class="chain-description" data-lang="pt">por quilograma de couro</div>
-      </div>
-
-      <div class="chain-step">
-        <div class="chain-label" data-lang="en">Leather tanneries</div>
-        <div class="chain-label" data-lang="pt">Curtumes de couro</div>
-        <div class="chain-value">R$ 200-400</div>
-        <div class="chain-description" data-lang="en">per finished skin</div>
-        <div class="chain-description" data-lang="pt">por couro acabado</div>
-      </div>
-
-      <div class="chain-step">
-        <div class="chain-label" data-lang="en">Luxury brand retail</div>
-        <div class="chain-label" data-lang="pt">Varejo de marca de luxo</div>
-        <div class="chain-value">R$ 3,000+</div>
-        <div class="chain-description" data-lang="en">per finished handbag</div>
-        <div class="chain-description" data-lang="pt">por bolsa acabada</div>
-      </div>
-    </section>
-
-    <!-- Stats Section 2 -->
-    <section class="stats-section fade-in">
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">R$11</div>
-          <div class="stat-number" data-lang="pt">R$11</div>
-          <div class="stat-label" data-lang="en">Price per kg to fishermen</div>
-          <div class="stat-label" data-lang="pt">Preço por kg aos pescadores</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">R$3k+</div>
-          <div class="stat-number" data-lang="pt">R$3k+</div>
-          <div class="stat-label" data-lang="en">Retail handbag price</div>
-          <div class="stat-label" data-lang="pt">Preço de bolsa no varejo</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">273x</div>
-          <div class="stat-number" data-lang="pt">273x</div>
-          <div class="stat-label" data-lang="en">Price markup from catch to sale</div>
-          <div class="stat-label" data-lang="pt">Aumento de preço de captura a venda</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number" data-lang="en">70%</div>
-          <div class="stat-number" data-lang="pt">70%</div>
-          <div class="stat-label" data-lang="en">Of exports controlled by one company</div>
-          <div class="stat-label" data-lang="pt">De exportações controladas por uma empresa</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4: The Opacity Problem -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">A supply chain built on opacity</h2>
-      <h2 data-lang="pt">Uma cadeia de suprimentos construída sobre opacidade</h2>
-
-      <p data-lang="en">The supply chain connecting Amazon fishermen to luxury consumers remains fundamentally opaque. Luxury brands source pirarucu leather from leather suppliers, who source from processors, who source from middlemen, who source from fishermen. Each intermediary takes a margin. None of them are required to verify that the leather comes exclusively from legally managed zones.</p>
-      <p data-lang="pt">A cadeia de suprimentos conectando pescadores amazônicos a consumidores de luxo permanece fundamentalmente opaca. Marcas de luxo adquirem couro de pirarucu de fornecedores de couro, que adquirem de processadores, que adquirem de intermediários, que adquirem de pescadores. Cada intermediário tira uma margem. Nenhum deles é obrigado a verificar que o couro vem exclusivamente de zonas legalmente gerenciadas.</p>
-
-      <p data-lang="en">A consultant who studied the market described the productive chain relationships as "questionable." There are no regular inspections in rivers where pirarucu is caught. There are no regular inspections in slaughterhouses where the fish is processed. The result is a supply chain that officially trades in sustainable, legal pirarucu but has no real way to verify that claim.</p>
-      <p data-lang="pt">Um consultor que estudou o mercado descreveu as relações da cadeia produtiva como "questionáveis". Não há inspeções regulares nos rios onde o pirarucu é capturado. Não há inspeções regulares nos matadouros onde o peixe é processado. O resultado é uma cadeia de suprimentos que oficialmente negocia em pirarucu sustentável e legal, mas não tem uma maneira real de verificar essa alegação.</p>
-
-      <div class="pullquote" data-lang="en">"With so much illegal fish being caught, someone is receiving it, processing it, buying this fish and this skin. The supply chain control for pirarucu is far below what we'd like."</div>
-      <div class="pullquote" data-lang="pt">"Com tanto peixe ilegal sendo capturado, alguém está recebendo, processando, comprando esse peixe e essa pele. O controle da cadeia produtiva do pirarucu está muito aquém do que gostaríamos."</div>
-    </section>
-
-    <!-- Section 5: The Contradiction -->
-    <section class="text-section fade-in">
-      <h2 data-lang="en">A contradiction at the heart of sustainable luxury</h2>
-      <h2 data-lang="pt">Uma contradição no coração do luxo sustentável</h2>
-
-      <p data-lang="en">The pirarucu leather market exemplifies a profound contradiction in modern luxury goods marketing. Brands position themselves as champions of sustainability and environmental conservation. They tell stories about protecting the Amazon rainforest and empowering indigenous communities. They charge premium prices justified, in part, by claims of ethical sourcing and conservation impact.</p>
-      <p data-lang="pt">O mercado de couro de pirarucu exemplifica uma contradição profunda no marketing de bens de luxo moderno. As marcas se posicionam como campeãs da sustentabilidade e conservação ambiental. Elas contam histórias sobre proteger a floresta amazônica e empoderar comunidades indígenas. Elas cobram preços premium justificados, em parte, por alegações de fornecimento ético e impacto de conservação.</p>
-
-      <p data-lang="en">Yet the fishermen who perform the actual conservation work—the labor of sustainably managing the species that enables these luxury goods to exist—remain among the poorest people in Brazil. The wealth generated by the market does not flow back to the communities that make it possible.</p>
-      <p data-lang="pt">No entanto, os pescadores que realizam o trabalho real de conservação — a mão de obra de gerenciar sustentavelmente a espécie que permite que esses bens de luxo existam — permanecem entre os povos mais pobres do Brasil. A riqueza gerada pelo mercado não flui de volta para as comunidades que o tornam possível.</p>
-
-      
-      <div class="image-caption" data-lang="en">Luxury brands market pirarucu products as sustainable and socially responsible, but fishermen see minimal benefits.</div>
-      <div class="image-caption" data-lang="pt">Marcas de luxo comercializam produtos de pirarucu como sustentáveis e socialmente responsáveis, mas pescadores veem benefícios mínimos.</div>
-
-      
-      <div class="image-caption" data-lang="en">Processing and tanning pirarucu leather for luxury goods</div>
-      <div class="image-caption" data-lang="pt">Processamento e curtimento do couro de pirarucu para bens de luxo</div>
-
-      
-      <div class="image-caption" data-lang="en">Leather production facilities handling pirarucu skin</div>
-      <div class="image-caption" data-lang="pt">Instalações de produção de couro processando pele de pirarucu</div>
-
-      
-      <div class="image-caption" data-lang="en">Handbags and accessories made from pirarucu leather in luxury production</div>
-      <div class="image-caption" data-lang="pt">Bolsas e acessórios feitos de couro de pirarucu em produção de luxo</div>
-
-      
-      <div class="image-caption" data-lang="en">The global supply chain from Amazon fishing to luxury retail markets</div>
-      <div class="image-caption" data-lang="pt">A cadeia de suprimentos global da pesca amazônica aos mercados de varejo de luxo</div>
-    </section>
-  </main>
-
-  <!-- Timeline Section -->
-  <section class="timeline-section">
-    <div class="container">
-      <h2 data-lang="en">The long road to recovery and inequality</h2>
-      <h2 data-lang="pt">O longo caminho da recuperação e desigualdade</h2>
-
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">Late 1900s</div>
-            <div class="timeline-date" data-lang="pt">Final de 1900</div>
-            <div class="timeline-title" data-lang="en">Extinction crisis</div>
-            <div class="timeline-title" data-lang="pt">Crise de extinção</div>
-            <div class="timeline-description" data-lang="en">Overhunting pushes pirarucu to the brink of extinction in the Amazon.</div>
-            <div class="timeline-description" data-lang="pt">A caça excessiva leva o pirarucu à beira da extinção na Amazônia.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">1990s</div>
-            <div class="timeline-date" data-lang="pt">1990</div>
-            <div class="timeline-title" data-lang="en">Conservation success begins</div>
-            <div class="timeline-title" data-lang="pt">Sucesso de conservação começa</div>
-            <div class="timeline-description" data-lang="en">Brazil establishes Mamirauá Sustainable Development Reserve with managed fishing system.</div>
-            <div class="timeline-description" data-lang="pt">Brasil estabelece a Reserva de Desenvolvimento Sustentável Mamirauá.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">2000s-2010s</div>
-            <div class="timeline-date" data-lang="pt">2000-2010</div>
-            <div class="timeline-title" data-lang="en">Population recovery</div>
-            <div class="timeline-title" data-lang="pt">Recuperação da população</div>
-            <div class="timeline-description" data-lang="en">Strict protocols allow pirarucu populations to recover. Global conservation success story.</div>
-            <div class="timeline-description" data-lang="pt">Protocolos rigorosos permitem recuperação. História de sucesso global.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">2010s</div>
-            <div class="timeline-date" data-lang="pt">2010</div>
-            <div class="timeline-title" data-lang="en">Luxury market emerges</div>
-            <div class="timeline-title" data-lang="pt">Mercado de luxo emerge</div>
-            <div class="timeline-description" data-lang="en">Fashion industry discovers pirarucu leather for luxury goods.</div>
-            <div class="timeline-description" data-lang="pt">Indústria da moda descobre couro de pirarucu.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">2015-2025</div>
-            <div class="timeline-date" data-lang="pt">2015-2025</div>
-            <div class="timeline-title" data-lang="en">Market boom and inequality widens</div>
-            <div class="timeline-title" data-lang="pt">Boom de mercado e desigualdade aumenta</div>
-            <div class="timeline-description" data-lang="en">Pirarucu leather becomes globally fashionable. Handbag prices reach 3,000+ reais while fishermen earn R$ 11/kg.</div>
-            <div class="timeline-description" data-lang="pt">Couro se torna moda global. Preços alcançam 3.000+ reais enquanto pescadores ganham R$ 11/kg.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content">
-            <div class="timeline-date" data-lang="en">August 2025</div>
-            <div class="timeline-date" data-lang="pt">Agosto de 2025</div>
-            <div class="timeline-title" data-lang="en">BBC investigation published</div>
-            <div class="timeline-title" data-lang="pt">Investigação da BBC publicada</div>
-            <div class="timeline-description" data-lang="en">BBC News Brasil publishes investigation exposing price disparity and supply chain opacity.</div>
-            <div class="timeline-description" data-lang="pt">BBC News Brasil publica investigação expondo disparidade de preços.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="footer-disclaimer">
-        <p data-lang="en"><strong>About this presentation:</strong> This is an enhanced portfolio presentation of my journalism. The article was originally published by BBC News Brasil in August 2025. All reporting, research, and journalism is the work of BBC News Brasil and correspondent Luiz Fernando Toledo. This page is created for portfolio demonstration and is not affiliated with BBC News Brasil.</p>
-        <p data-lang="pt"><strong>Sobre esta apresentação:</strong> Esta é uma apresentação aprimorada do meu jornalismo. O artigo foi originalmente publicado pela BBC News Brasil em agosto de 2025. Todo o jornalismo, apuração e conteúdo é trabalho da BBC News Brasil e do correspondente Luiz Fernando Toledo. Esta página é criada para fins de demonstração de portfólio e não é afiliada à BBC News Brasil.</p>
-      </div>
-
-      <div class="footer-nav">
-        <a href="../index.html" data-lang="en">← Back to portfolio</a>
-        <a href="../index.html" data-lang="pt">← Voltar ao portfólio</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Shared JS -->
-  <script src="../shared/base.js"></script>
+<script src="../shared/base.js"></script>
+<script>
+(function(){
+    var btnEn=document.getElementById("btnEn"),btnPt=document.getElementById("btnPt");
+    var artEn=document.getElementById("art-en"),artPt=document.getElementById("art-pt");
+    var dEn=document.getElementById("disc-en"),dPt=document.getElementById("disc-pt");
+    function setLang(l){
+        if(l==="pt"){artEn.style.display="none";artPt.style.display="";dEn.style.display="none";dPt.style.display="";btnEn.classList.remove("active");btnPt.classList.add("active");}
+        else{artPt.style.display="none";artEn.style.display="";dPt.style.display="none";dEn.style.display="";btnPt.classList.remove("active");btnEn.classList.add("active");}
+        localStorage.setItem("portfolio-lang",l);
+    }
+    setLang(localStorage.getItem("portfolio-lang")||"en");
+    btnEn.addEventListener("click",function(){setLang("en");});
+    btnPt.addEventListener("click",function(){setLang("pt");});
+    window.addEventListener("scroll",function(){var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById("progressBar").style.width=(window.scrollY/h*100)+"%";});
+})();
+</script>
 </body>
 </html>

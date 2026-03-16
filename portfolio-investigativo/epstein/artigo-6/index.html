@@ -1,534 +1,217 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Epstein tentou ponte com empresários brasileiros | BBC News Brasil</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../shared/base.css">
-  <style>
-    .nav-chapters {
-      position: sticky;
-      top: 108px;
-      background: white;
-      border-bottom: 1px solid var(--border);
-      z-index: 99;
-      padding: 0;
-    }
-
-    .nav-chapters-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 12px 40px;
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-    }
-
-    .nav-chapter-link {
-      padding: 8px 16px;
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      text-decoration: none;
-      white-space: nowrap;
-      border-bottom: 2px solid transparent;
-      transition: all 0.3s;
-    }
-
-    .nav-chapter-link:hover,
-    .nav-chapter-link.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    .series-indicator {
-      background: var(--bg-light);
-      padding: 20px 40px;
-      margin-bottom: 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .series-indicator-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .series-indicator-text {
-      font-family: var(--sans);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--accent);
-      font-weight: 600;
-      margin: 0;
-    }
-
-    .chapter {
-      scroll-margin-top: 140px;
-    }
-
-    .visualization {
-      margin: 80px 0;
-      padding: 60px 40px;
-      background: linear-gradient(135deg, var(--bg-light) 0%, rgba(196, 30, 58, 0.03) 100%);
-      border-radius: 4px;
-    }
-
-    .viz-title {
-      font-family: var(--display);
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 40px;
-      color: var(--text-dark);
-      text-align: center;
-    }
-
-    .network-diagram {
-      background: white;
-      padding: 40px;
-      border-radius: 4px;
-      text-align: center;
-    }
-
-    .network-node {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
-      color: white;
-      padding: 20px 24px;
-      border-radius: 4px;
-      margin: 16px 8px;
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .network-label {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .navigation-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 100px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-
-    .nav-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--sans);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-      transition: opacity 0.3s;
-    }
-
-    .nav-link:hover {
-      opacity: 0.8;
-    }
-
-    .nav-prev::before {
-      content: '←';
-      font-size: 18px;
-    }
-
-    .nav-next::after {
-      content: '→';
-      font-size: 18px;
-    }
-
-    .fact-box {
-      background: var(--bg-light);
-      border-left: 4px solid var(--accent);
-      padding: 24px;
-      margin: 40px 0;
-      border-radius: 2px;
-    }
-
-    .fact-box-title {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
-    }
-
-    .fact-box-text {
-      font-family: var(--serif);
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--text-dark);
-    }
-
-    @media (max-width: 768px) {
-      .nav-chapters-inner {
-        padding: 12px 24px;
-        gap: 10px;
-      }
-
-      .series-indicator {
-        padding: 16px 24px;
-      }
-
-      .visualization {
-        padding: 40px 24px;
-        margin: 60px 0;
-      }
-
-      .network-node {
-        display: block;
-        margin: 12px 0;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epstein had a Brazilian tax ID and sought connections to businessmen</title>
+    <link rel="stylesheet" href="../../shared/base.css">
+    <style>
+        :root { --accent-color: #8b0000; --primary-color: #1a1a1a; --text-color: #333; --max-width: 740px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--text-color); background: #fff; line-height: 1.6; margin: 0; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-color); width: 0%; z-index: 999; }
+        .disclaimer-bar { background: var(--accent-color); color: #fff; padding: 10px 20px; font-size: 13px; text-align: center; }
+        .disclaimer-bar a { color: #fff; }
+        .lang-toggle { position: fixed; top: 40px; right: 20px; z-index: 100; }
+        .lang-toggle button { background: var(--primary-color); color: #fff; border: none; padding: 7px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; margin: 0 2px; }
+        .lang-toggle button.active { background: var(--accent-color); }
+        .hero { min-height: 460px; background: linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.65)), url("imgs/photo-01.jpg") center/cover; display: flex; align-items: flex-end; color: #fff; }
+        .hero-content { max-width: var(--max-width); margin: 0 auto; padding: 50px 20px 40px; }
+        .hero h1 { font-family: Georgia, serif; font-size: 36px; line-height: 1.2; margin: 0 0 15px; }
+        .hero-meta { font-size: 15px; opacity: .9; margin: 0; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+        .article-content { padding: 50px 0; }
+        .section { margin-bottom: 50px; }
+        .section h2 { font-family: Georgia, serif; font-size: 26px; line-height: 1.3; margin: 50px 0 20px; color: var(--primary-color); }
+        .section p { font-family: Georgia, serif; font-size: 18px; line-height: 1.85; margin: 0 0 22px; }
+        .image-block { margin: 50px 0; text-align: center; }
+        .image-block img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        .image-caption { font-size: 14px; color: #666; margin-top: 10px; font-style: italic; }
+        .pullquote { font-family: Georgia, serif; font-size: 22px; font-weight: 700; line-height: 1.4; border-left: 5px solid var(--accent-color); padding: 28px 0 28px 26px; margin: 50px 0; max-width: 600px; }
+        .pullquote-attr { font-size: 14px; font-style: italic; color: #666; margin-top: 10px; font-weight: normal; }
+        .original-link { text-align: center; margin: 40px 0; }
+        .original-link a { display: inline-block; background: var(--accent-color); color: #fff; padding: 12px 28px; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 3px; }
+        .back-link { margin-top: 60px; padding-top: 30px; border-top: 1px solid #ddd; }
+        .back-link a { color: var(--accent-color); text-decoration: none; font-weight: 500; }
+        @media(max-width:768px){ .hero h1{font-size:24px;} .section p{font-size:16px;} .pullquote{font-size:18px;} }
+    </style>
 </head>
-<body data-lang="en">
-  <div id="progressBar" class="progress-bar"></div>
-
-  <div id="disclaimerBar" class="disclaimer-bar">
-    <div class="disclaimer-inner">
-      <div class="disclaimer-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="16" x2="12" y2="12"></line>
-          <line x1="12" y1="8" x2="12.01" y2="8"></line>
-        </svg>
-      </div>
-      <div class="disclaimer-text">
-        <span data-lang="en"><strong>Disclaimer:</strong> This is an enhanced portfolio presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span>
-        <span data-lang="pt"><strong>Aviso:</strong> Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span>
-      </div>
-      <button id="disclaimerClose" class="disclaimer-close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div class="lang-toggle-bar">
-    <div class="lang-toggle-inner">
-      <span class="lang-toggle-label" data-lang="en">Language</span>
-      <span class="lang-toggle-label" data-lang="pt">Idioma</span>
-      <button id="btnEn" class="lang-btn active">English</button>
-      <button id="btnPt" class="lang-btn">Português</button>
-    </div>
-  </div>
-
-  <div class="series-indicator">
-    <div class="series-indicator-inner">
-      <p class="series-indicator-text">
-        <span data-lang="en">Part 6 of 9 — The Epstein Brazil connection</span>
-        <span data-lang="pt">Parte 6 de 9 — A conexão Epstein-Brasil</span>
-      </p>
-    </div>
-  </div>
-
-  <section class="hero" style="background-image: linear-gradient(135deg, rgba(26, 26, 26, 0.92), rgba(45, 45, 45, 0.92)), url('imgs/photo-01.jpg'); background-size: cover; background-position: center;">
-    <div class="hero-content">
-      <div class="hero-label" data-lang="en">Investigation</div>
-      <div class="hero-label" data-lang="pt" style="display: none;">Investigação</div>
-      <h1 class="hero-title" data-lang="en">Epstein had Brazilian tax ID and sought business meetings</h1>
-      <h1 class="hero-title" data-lang="pt" style="display: none;">Epstein tinha CPF e buscava reuniões de negócios</h1>
-      <p class="hero-subtitle" data-lang="en">Documents reveal systematic effort to penetrate Brazil's business elite</p>
-      <p class="hero-subtitle" data-lang="pt" style="display: none;">Documentos revelam esforço sistemático para penetrar elite comercial do Brasil</p>
-      <div class="hero-meta">
-        <span>Luiz Fernando Toledo & Leandro Prazeres</span>
-        <span>•</span>
-        <span data-lang="en">BBC News Brasil, London & Brasília</span>
-        <span data-lang="pt" style="display: none;">BBC News Brasil, Londres & Brasília</span>
-        <span>•</span>
-        <span>February 12, 2026</span>
-      </div>
-    </div>
-  </section>
-
-  <nav class="nav-chapters">
-    <div class="nav-chapters-inner">
-      <a href="#intro" class="nav-chapter-link active" data-lang="en">Start</a>
-      <a href="#cpf" class="nav-chapter-link" data-lang="en">CPF</a>
-      <a href="#citizenship" class="nav-chapter-link" data-lang="en">Citizenship</a>
-      <a href="#investments" class="nav-chapter-link" data-lang="en">Investments</a>
-      <a href="#network" class="nav-chapter-link" data-lang="en">Network</a>
-    </div>
-  </nav>
-
-  <main>
-    <article>
-      <section id="intro" class="text-section chapter">
-        <h2 data-lang="en">Epstein's Brazilian interests went far beyond victim exploitation</h2>
-        <h2 data-lang="pt" style="display: none;">Interesses brasileiros de Epstein iam muito além da exploração de vítimas</h2>
-
-        <p data-lang="en">Documents released by the U.S. Department of Justice reveal that Jeffrey Epstein's interest in Brazil extended well beyond his involvement with models and alleged human trafficking networks. The evidence shows a calculated attempt to develop legitimate business interests and connections in the country, including registering a Brazilian tax identification number.</p>
-
-        <p data-lang="pt" style="display: none;">Documentos divulgados pelo Departamento de Justiça dos EUA revelam que o interesse de Jeffrey Epstein no Brasil se estendeu muito além de seu envolvimento com modelos e redes de tráfico humano alegadas. As evidências mostram uma tentativa calculada de desenvolver interesses comerciais legítimos e conexões no país, incluindo o registro de um número de identificação fiscal brasileiro.</p>
-
-        <p data-lang="en">BBC News Brasil identified the existence of a CPF (Cadastro de Pessoas Físicas)—Brazil's tax identification number—registered in Epstein's name. Additionally, documents show that Epstein had a team of consultants monitoring the Brazilian economy and suggesting investment opportunities tied to the country.</p>
-
-        <p data-lang="pt" style="display: none;">BBC News Brasil identificou a existência de um CPF (Cadastro de Pessoas Físicas)—número de identificação fiscal do Brasil—registrado em nome de Epstein. Além disso, documentos mostram que Epstein tinha uma equipe de consultores monitorando a economia brasileira e sugerindo oportunidades de investimento.</p>
-
-        <div class="fact-box">
-          <div class="fact-box-title" data-lang="en">Key evidence</div>
-          <div class="fact-box-title" data-lang="pt" style="display: none;">Evidência principal</div>
-          <div class="fact-box-text" data-lang="en">Epstein held a Brazilian CPF registered in 2003; entertained becoming a Brazilian citizen; had financial consultants tracking Brazilian economic opportunities; and attempted to establish meetings with top Brazilian entrepreneurs.</div>
-          <div class="fact-box-text" data-lang="pt" style="display: none;">Epstein tinha um CPF brasileiro registrado em 2003; considerou se tornar cidadão brasileiro; tinha consultores financeiros rastreando oportunidades econômicas brasileiras; e tentou estabelecer reuniões com principais empresários brasileiros.</div>
-        </div>
-      </section>
-
-      <div class="image-block">
-        <img src="imgs/photo-02.jpg" alt="Official documents">
-        <div class="image-credit" data-lang="en">Getty Images</div>
-        <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
-      </div>
-
-      <section id="cpf" class="text-section chapter">
-        <h2 data-lang="en">The Brazilian tax identification registration</h2>
-        <h2 data-lang="pt" style="display: none;">O registro de identificação fiscal brasileiro</h2>
-
-        <p data-lang="en">According to Brazil's Federal Revenue Service (Receita Federal), Epstein's CPF was registered in 2003. The timing is significant: this was the same year that Ghislaine Maxwell, Epstein's alleged accomplice and later convicted co-conspirator, exchanged emails with a Brazilian businessman about a trip Epstein and Maxwell planned to Brazil between late 2002 and early 2003.</p>
-
-        <p data-lang="pt" style="display: none;">De acordo com a Receita Federal, o CPF de Epstein foi registrado em 2003. O momento é significativo: foi o mesmo ano em que Ghislaine Maxwell, alegada cúmplice de Epstein e posteriormente cúmplice condenada, trocou emails com um empresário brasileiro sobre uma viagem que Epstein e Maxwell planejavam para o Brasil.</p>
-
-        <p data-lang="en">BBC News Brasil confirmed that the CPF was registered with Epstein's correct birth date and remains in good standing with Brazilian authorities.</p>
-
-        <p data-lang="pt" style="display: none;">BBC News Brasil confirmou que o CPF foi registrado com a data de nascimento correta de Epstein e permanece em situação regular com as autoridades brasileiras.</p>
-
-        <div class="pullquote" data-lang="en">"The CPF is necessary for opening bank accounts, conducting stock exchange operations in an individual's name, or acquiring property requiring public registration. It is common for foreign investors to have CPFs."<div class="pullquote-citation">Alexandre Tortato, tax attorney</div></div>
-
-        <div class="pullquote" data-lang="pt" style="display: none;">"O CPF é necessário para aberturas de contas em bancos brasileiros, para a realização de operações na bolsa de valores ou mesmo para adquirir bens que precisam de registro público. É comum que investidores estrangeiros tenham CPFs."<div class="pullquote-citation">Alexandre Tortato, advogado tributário</div></div>
-
-        <p data-lang="en">For tax attorney Alexandre Tortato, the existence of a CPF in Epstein's name signals more than casual tourism. "A tourist doesn't need a CPF. Normally, a foreigner who issues a CPF has commercial interests here."</p>
-
-        <p data-lang="pt" style="display: none;">Para o advogado tributário Alexandre Tortato, a existência de um CPF em nome de Epstein sinaliza mais que turismo casual. "Um turista não precisa ter CPF. Normalmente, o estrangeiro que emite um CPF em seu nome tem interesses comerciais por aqui."</p>
-
-        <p data-lang="en">A notation in U.S. government documents provides further confirmation: "Brazilian CPF (has old POA in it)." POA stands for Power of Attorney, a legal mechanism that, according to Brazil's Federal Revenue Service, is one common way for foreigners to obtain a CPF.</p>
-
-        <p data-lang="pt" style="display: none;">Uma anotação em documentos do governo dos EUA oferece confirmação adicional. POA significa Procuração, um mecanismo legal que, de acordo com a Receita Federal, é uma maneira comum para estrangeiros obterem um CPF.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-03.jpg" alt="Document">
-          <div class="image-credit" data-lang="en">Getty Images</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
-        </div>
-      </section>
-
-      <section id="citizenship" class="text-section chapter">
-        <h2 data-lang="en">Brazilian citizenship: an 'interesting idea'</h2>
-        <h2 data-lang="pt" style="display: none;">Cidadania brasileira: uma ideia 'interessante'</h2>
-
-        <p data-lang="en">Email exchanges between Epstein and German businesswoman Nicole Junkermann reveal discussions about obtaining Brazilian citizenship. On October 5, 2011, Junkermann asked Epstein: "What do you think of getting Brazilian citizenship?"</p>
-
-        <p data-lang="pt" style="display: none;">Trocas de email entre Epstein e a empresária alemã Nicole Junkermann revelam discussões sobre obter cidadania brasileira. Em 5 de outubro de 2011, Junkermann perguntou a Epstein: "O que você acha de tirar a cidadania brasileira?"</p>
-
-        <p data-lang="en">That same day, Epstein responded: "Interesting idea, however visas could be a problem when traveling to other countries." The correspondence does not clarify the context or motivation for the suggestion, but the exchange occurred two years after Epstein had served 13 months in prison following a plea agreement with Florida authorities.</p>
-
-        <p data-lang="pt" style="display: none;">Naquele mesmo dia, Epstein respondeu: "Ideia interessante, entretanto vistos podem ser um problema, quando viajar para outros países." A correspondência não esclarece o contexto ou motivação da sugestão, mas a troca ocorreu dois anos após Epstein ter servido 13 meses na prisão.</p>
-
-        <p data-lang="en">A former Epstein employee testified to U.S. authorities in 2010 that he made regular trips to Brazil to visit clients and maintain contact with a woman who introduced him to girls, including minors.</p>
-
-        <p data-lang="pt" style="display: none;">Uma ex-funcionária de Epstein testemunhou a autoridades dos EUA em 2010 que ele fazia viagens regulares ao Brasil para visitar clientes e manter contato com uma mulher que o apresentava a meninas, incluindo menores.</p>
-
-        <p data-lang="en">Brazilian citizenship would have streamlined his travel, eliminating the need for visa applications to the Brazilian government. When questioned, the Ministry of Justice confirmed that no naturalization record exists in Epstein's name.</p>
-
-        <p data-lang="pt" style="display: none;">A cidadania brasileira teria simplificado suas viagens, eliminando a necessidade de solicitar vistos. O Ministério da Justiça confirmou que nenhum registro de naturalização existe em nome de Epstein.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-04.jpg" alt="Building">
-          <div class="image-credit" data-lang="en">Reuters</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Reuters</div>
-        </div>
-      </section>
-
-      <section id="investments" class="text-section chapter">
-        <h2 data-lang="en">Currency speculation and economic monitoring</h2>
-        <h2 data-lang="pt" style="display: none;">Especulação cambial e monitoramento econômico</h2>
-
-        <p data-lang="en">Beyond establishing a business presence, Epstein had financial consultants monitoring the Brazilian economy for investment opportunities. On March 12, 2013, Epstein received currency investment recommendations from Paul Barret, then working at JP Morgan, regarding the Brazilian Real.</p>
-
-        <p data-lang="pt" style="display: none;">Além de estabelecer presença comercial, Epstein tinha consultores financeiros monitorando a economia brasileira para oportunidades de investimento. Em 12 de março de 2013, Epstein recebeu recomendações de investimento em moeda de Paul Barret, que trabalhava no JP Morgan, sobre o Real brasileiro.</p>
-
-        <div class="pullquote" data-lang="en">"I really think we should put some money in this note. Being long in BRL ahead of the World Cup makes sense. Domestic inflation should allow them to accept mild currency appreciation. They probably should raise interest rates by 150 basis points this year."<div class="pullquote-citation">Paul Barret, JP Morgan</div></div>
-
-        <div class="pullquote" data-lang="pt" style="display: none;">"Eu realmente acho que deveríamos colocar algum dinheiro nesta nota. Estar comprado em BRL para a Copa do Mundo faz sentido. A inflação doméstica deve permitir que eles aceitem uma leve valorização cambial. Devem aumentar os juros em 150 pontos-base este ano."<div class="pullquote-citation">Paul Barret, JP Morgan</div></div>
-
-        <p data-lang="en">Barret advised investing $1 million. Epstein's response was simple: "Ok." The investment would have been made through Southern Trust, one of Epstein's business entities. While BBC News Brasil found no emails confirming transaction completion, the prediction was accurate: Brazilian interest rates rose from 7.5% in 2013 to 11% by July 2014, the month of the World Cup.</p>
-
-        <p data-lang="pt" style="display: none;">Barret aconselhou investir US$ 1 milhão. A resposta de Epstein foi simples: "Ok." O investimento teria sido feito através da Southern Trust. A previsão se mostrou precisa: as taxas de juros brasileiras subiram de 7,5% para 11% em julho de 2014.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-05.jpg" alt="Stock exchange">
-          <div class="image-credit" data-lang="en">Getty Images</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
-        </div>
-      </section>
-
-      <section id="network" class="text-section chapter">
-        <h2 data-lang="en">Building networks among brazil's economic elite</h2>
-        <h2 data-lang="pt" style="display: none;">Construindo redes entre a elite econômica do Brasil</h2>
-
-        <p data-lang="en">Most revealing are Epstein's apparent efforts to establish direct relationships with prominent Brazilian businessmen. Email exchanges spanning 2002-2003 and 2012-2013 show deliberate attempts to arrange meetings with Brazil's economic elite.</p>
-
-        <p data-lang="pt" style="display: none;">Mais revelador são os aparentes esforços de Epstein para estabelecer relacionamentos diretos com empresários brasileiros proeminentes. Trocas de email mostram tentativas deliberadas de arranjar reuniões.</p>
-
-        <p data-lang="en">In December 2002, Ghislaine Maxwell corresponded with Brazilian businessman Marcelo de Andrade, requesting introductions to prominent figures. De Andrade subsequently suggested three key business leaders:</p>
-
-        <p data-lang="pt" style="display: none;">Em dezembro de 2002, Ghislaine Maxwell correspondeu com empresário brasileiro Marcelo de Andrade, solicitando introduções. De Andrade sugeriu três líderes empresariais importantes:</p>
-
-        <ul style="margin-left: 40px; margin-bottom: 30px;">
-          <li data-lang="en">Arminio Fraga, then president of Brazil's Central Bank</li>
-          <li data-lang="pt" style="display: none;">Arminio Fraga, então presidente do Banco Central</li>
-
-          <li data-lang="en">Jorge Paulo Lemann, now Brazil's third-wealthiest person</li>
-          <li data-lang="pt" style="display: none;">Jorge Paulo Lemann, agora a terceira pessoa mais rica do Brasil</li>
-
-          <li data-lang="en">Luiz Fernando Levy, then publisher of Gazeta Mercantil newspaper</li>
-          <li data-lang="pt" style="display: none;">Luiz Fernando Levy, então publisher do jornal Gazeta Mercantil</li>
-        </ul>
-
-        <p data-lang="en">De Andrade confirmed a dinner meeting with Epstein and Maxwell in São Paulo between late 2002 and early 2003, but stated he believed the suggested meetings did not occur. When confronted with evidence by BBC News Brasil, he said: "I didn't have the slightest idea. When the news came out, years later, I was quite surprised. It's really a shame when we see people using their power and influence for such terrible things."</p>
-
-        <p data-lang="pt" style="display: none;">De Andrade confirmou um jantar em São Paulo, mas afirmou que acreditava que as reuniões sugeridas não ocorreram. Quando confrontado, ele disse: "Eu não tinha a menor ideia. Quando as notícias saíram, anos depois, eu fiquei bastante surpreso. É realmente uma pena quando vemos pessoas usando seu poder para coisas tão terríveis."</p>
-
-        <p data-lang="en">Arminio Fraga, when contacted by BBC News Brasil, denied meeting with Epstein: "They gave my name as someone to meet, in a list with others. It didn't happen."</p>
-
-        <p data-lang="pt" style="display: none;">Arminio Fraga, quando contatado, negou: "Deram meu nome como alguém a conhecer. Não aconteceu."</p>
-
-        <p data-lang="en">Jorge Paulo Lemann's office stated: "We reiterate that Jorge Paulo Lemann never knew Jeffrey Epstein." The statement also clarified that a separate connection with Epstein adviser Boris Nikolic resulted from a Bill Gates introduction and had no connection to Epstein.</p>
-
-        <p data-lang="pt" style="display: none;">O gabinete de Lemann afirmou: "Reiterar que Jorge Paulo Lemann nunca conheceu Jeffrey Epstein."</p>
-      </section>
-
-      <section class="visualization">
-        <h2 class="viz-title" data-lang="en">Epstein's network of attempted contacts</h2>
-        <h2 class="viz-title" data-lang="pt" style="display: none;">Rede de contatos tentados de Epstein</h2>
-
-        <div class="network-diagram">
-          <div class="network-label" data-lang="en">Attempted connections 2002-2013</div>
-          <div class="network-label" data-lang="pt" style="display: none;">Conexões tentadas 2002-2013</div>
-
-          <div>
-            <div class="network-node">Jeffrey Epstein</div>
-          </div>
-
-          <div style="margin: 40px 0;">
-            <div class="network-node" data-lang="en">Arminio Fraga<br>Central Bank</div>
-            <div class="network-node" data-lang="en">Jorge Paulo Lemann<br>Entrepreneur</div>
-            <div class="network-node" data-lang="en">Eike Batista<br>Former Billionaire</div>
-
-            <div class="network-node" data-lang="pt" style="display: none;">Arminio Fraga<br>Banco Central</div>
-            <div class="network-node" data-lang="pt" style="display: none;">Jorge Paulo Lemann<br>Empresário</div>
-            <div class="network-node" data-lang="pt" style="display: none;">Eike Batista<br>Ex-bilionário</div>
-          </div>
-
-          <div style="margin: 40px 0;">
-            <div class="network-node" data-lang="en">Ghislaine Maxwell</div>
-            <div class="network-node" data-lang="en">Marcelo de Andrade</div>
-            <div class="network-node" data-lang="en">Ian Osborne</div>
-
-            <div class="network-node" data-lang="pt" style="display: none;">Ghislaine Maxwell</div>
-            <div class="network-node" data-lang="pt" style="display: none;">Marcelo de Andrade</div>
-            <div class="network-node" data-lang="pt" style="display: none;">Ian Osborne</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="text-section">
-        <h2 data-lang="en">The Eike Batista connection</h2>
-        <h2 data-lang="pt" style="display: none;">A conexão Eike Batista</h2>
-
-        <p data-lang="en">Another prominent target was Eike Batista, who once ranked among the world's seven wealthiest individuals. Throughout 2012, emails show Epstein attempting to establish contact with Batista through British entrepreneur Ian Osborne.</p>
-
-        <p data-lang="pt" style="display: none;">Outro alvo proeminente foi Eike Batista. Durante 2012, emails mostram Epstein tentando estabelecer contato através do empresário britânico Ian Osborne.</p>
-
-        <p data-lang="en">On August 28, 2012, Epstein wrote to DP World CEO Sultan bin Sulayem demonstrating knowledge of Batista's business: "I know Eike Batista approached Hutchinson for a JV on a new port in Brazil. He has cash flow problems. Any interest?"</p>
-
-        <p data-lang="pt" style="display: none;">Em 28 de agosto de 2012, Epstein escreveu demonstrando conhecimento dos negócios de Batista sobre portos no Brasil.</p>
-
-        <p data-lang="en">On March 6, 2012, Osborne consulted Batista's executive Marcelo Horcades about arranging a meeting. The following day, Osborne sent Epstein a file titled "Eike Batista 120225 final.doc"—suggesting a potential business proposal—though the document itself was not located.</p>
-
-        <p data-lang="pt" style="display: none;">No dia seguinte, Osborne enviou um arquivo intitulado "Eike Batista 120225 final.doc"—sugerindo uma proposta comercial—embora o documento não tenha sido localizado.</p>
-
-        <p data-lang="en">Batista's office confirmed that Osborne did approach him with proposals, but that "the proposals had no concrete result." Batista reaffirmed: "The businessman Eike Batista once again reaffirms that he does not know, never conversed with, or exchanged messages with Epstein."</p>
-
-        <p data-lang="pt" style="display: none;">O escritório de Batista reafirmou: "O empresário Eike Batista reafirma que não conhece, nunca conversou ou trocou mensagens com Epstein."</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-06.jpg" alt="Brazilian businessman">
-          <div class="image-credit" data-lang="en">Reuters</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Reuters</div>
-        </div>
-      </section>
-
-      <section class="text-section">
-        <h2 data-lang="en">Strategic planning and calculated infiltration</h2>
-        <h2 data-lang="pt" style="display: none;">Planejamento estratégico e infiltração calculada</h2>
-
-        <p data-lang="en">This body of evidence reveals a sophisticated dimension to Epstein's Brazilian involvement beyond simply exploiting women. It demonstrates deliberate efforts to develop legitimate business interests and to infiltrate Brazil's economic and business elite—potentially to build cover for illicit activities and to expand his networks of influence and access.</p>
-
-        <p data-lang="pt" style="display: none;">Este corpo de evidências revela uma dimensão sofisticada do envolvimento brasileiro de Epstein além de simplesmente explorar mulheres. Demonstra esforços deliberados de desenvolver interesses comerciais legítimos e infiltração na elite econômica e comercial do Brasil.</p>
-
-        <p data-lang="en">The CPF registration, Brazilian citizenship inquiry, economic monitoring by consultants, and carefully orchestrated business introductions paint a picture of strategic calculation rather than casual tourism. Epstein was building infrastructure in Brazil—financial, legal, and social—to facilitate his operations.</p>
-
-        <p data-lang="pt" style="display: none;">O registro do CPF, investigação de cidadania, monitoramento econômico, e introduções comerciais cuidadosamente orquestradas pintam um quadro de cálculo estratégico. Epstein estava construindo infraestrutura no Brasil para facilitar suas operações.</p>
-
-        <p data-lang="en">That none of the businessmen claim to have met with Epstein, and no concrete business deals are documented, does not negate the clear intent: Epstein wanted access to Brazil's most powerful and wealthy individuals, and he mobilized significant resources in pursuit of that goal.</p>
-
-        <p data-lang="pt" style="display: none;">Que nenhum dos empresários afirmem ter se encontrado com Epstein não nega a clara intenção: Epstein queria acesso aos indivíduos mais poderosos e ricos do Brasil.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-07.jpg" alt="Brazilian street">
-          <div class="image-credit" data-lang="en">Getty Images</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
-        </div>
-      </section>
-    </article>
-
-    <div class="navigation-footer">
-      <a href="../artigo-5/index.html" class="nav-link nav-prev" data-lang="en">Previous</a>
-      <a href="../artigo-5/index.html" class="nav-link nav-prev" data-lang="pt" style="display: none;">Anterior</a>
-
-      <a href="../index.html" class="nav-link" data-lang="en">← Back to series</a>
-      <a href="../index.html" class="nav-link" data-lang="pt" style="display: none;">← Voltar para série</a>
-
-      <a href="../artigo-7/index.html" class="nav-link nav-next" data-lang="en">Next</a>
-      <a href="../artigo-7/index.html" class="nav-link nav-next" data-lang="pt" style="display: none;">Próximo</a>
-    </div>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-disclaimer">
-        <p data-lang="en"><strong>About this series:</strong> A 9-part investigative series exploring Jeffrey Epstein's previously undocumented ties to Brazil, Brazilian victims, business interests, and his network of enablers and contacts.</p>
-        <p data-lang="pt" style="display: none;"><strong>Sobre esta série:</strong> Uma série investigativa de 9 partes explorando os laços anteriormente não documentados de Jeffrey Epstein com o Brasil, vítimas brasileiras, interesses comerciais, e sua rede de facilitadores e contatos.</p>
-
-        <p data-lang="en">Original reporting by Luiz Fernando Toledo and Leandro Prazeres for BBC News Brasil. Enhanced portfolio presentation.</p>
-        <p data-lang="pt" style="display: none;">Reportagem original de Luiz Fernando Toledo e Leandro Prazeres para BBC News Brasil. Apresentação aprimorada para portfólio.</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="../../shared/base.js"></script>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="disclaimer-bar" id="disc-en">Portfolio presentation of published journalism. Original: BBC News Brasil, February 2026. <a href="https://www.bbc.com/portuguese/articles/c2047g008dgo" target="_blank">Read the original ↗</a></div>
+<div class="disclaimer-bar" id="disc-pt" style="display:none">Apresentação de portfólio do jornalismo publicado. Original: BBC News Brasil, fevereiro de 2026. <a href="https://www.bbc.com/portuguese/articles/c2047g008dgo" target="_blank">Leia o original ↗</a></div>
+
+<div class="lang-toggle">
+    <button id="btnEn" class="active">EN</button>
+    <button id="btnPt">PT</button>
+</div>
+
+<!-- ENGLISH -->
+<article id="art-en">
+<header class="hero">
+<div class="hero-content">
+<h1>Epstein had a Brazilian tax ID and sought connections to businessmen, documents reveal</h1>
+<p class="hero-meta">Leandro Prazeres e Luiz Fernando Toledo | BBC News Brasil | February 12, 2026</p>
+</div>
+</header>
+<div class="article-content"><div class="container">
+<section class="section">
+<p>Documents released by the United States government about convicted sex offender Jeffrey Epstein indicate that his interest in Brazil went beyond his ties to models and the alleged financing of a prostitution network that included Brazilian women.</p>
+<p>BBC News Brasil identified, for example, the existence of a CPF (Brazilian individual taxpayer registration) in Epstein's name at the Federal Revenue Authority. The report also found an email in which Epstein called "interesting" a suggestion made to him to obtain Brazilian citizenship. There are no records, however, that he actually became a Brazilian citizen.</p>
+<p>The emails, bank statements, and other documents released by the American government in recent weeks also indicate that Epstein had a team of consultants who monitored the Brazilian economy and suggested investments linked to Brazil.</p>
+<p>The emails also show that he intended to get closer to Brazilian businessmen such as Eike Batista, Jorge Paulo Lemann, and the former president of the Central Bank, Armínio Fraga — in the documents, the names were cited by third parties as people of great relevance in the country's scenario.</p>
+<p>Being mentioned or having one's image included in the files released by the American government does not necessarily imply a crime.</p>
+<p>No documents were found proving that Epstein actually met with the three or had business with them. When approached, Fraga, Batista, and Lemann said they did not meet and had no business of any kind with the American found dead in prison in New York in 2019.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-01 2.jpg" alt="Receita Federal CPF document"><p class="image-caption">The Brazilian CPF in Epstein's name was registered in 2003, according to the Federal Revenue Authority</p></div>
+<section class="section">
+<h2>The Brazilian CPF</h2>
+<p>The Brazilian CPF in Epstein's name was registered, according to the Federal Revenue Authority, in 2003. The year coincides with the time when Ghislaine Maxwell — considered Epstein's accomplice and convicted of recruiting minors for sexual exploitation — exchanged emails with a Brazilian businessman about a trip that the couple would make to Brazil between the end of 2002 and the beginning of 2003.</p>
+<p>BBC News Brasil identified that the CPF was registered with the same date of birth as Epstein and is in regular status.</p>
+<p>Tax attorney and master of tax law Alexandre Tortato explains that in 2003, any foreigner could obtain a CPF from the Federal Revenue Authority by presenting the required documents. He says that in 2003, it was necessary for the foreigner or a proxy to go to a Brazilian diplomatic representation abroad or to a Federal Revenue service point in Brazil.</p>
+<p>According to him, it is common for foreign investors to have CPFs. "The CPF is necessary for opening accounts in Brazilian banks, for conducting operations on the stock exchange in the name of an individual, or even for acquiring assets that require public registration," says Tortato.</p>
+<p>In his view, obtaining a CPF indicates that Epstein had interests in Brazil beyond tourism. "A tourist does not need to have a CPF. Normally, the foreigner who issues a CPF in their name has commercial interests here," he says.</p>
+<p>When approached, the Federal Revenue Authority said, initially, that it could not provide details about the CPF in Epstein's name because the "request for information or confirmation of registration data linked to the Individual Taxpayer Registration (CPF) is restricted to the holder of the registration or their legal representative." In a subsequent note, the Revenue said that "registration in the CPF, including for a foreigner, can be requested by the person themselves or their proxy, as provided for in Annex IV of Normative Instruction RFB 2.172/2024."</p>
+<p>Another indication that the CPF in Epstein's name actually belonged to the financier is a list of documents collected by American authorities that was also released by the U.S. Department of State. The document states: "Brazilian CPF (has old POA in it)." The annotation indicates that a Brazilian CPF was found with a "POA" attached to it. "POA" is an acronym commonly used in English for "power of attorney," or procuração. As mentioned by the Federal Revenue Authority, the use of proxies is one of the ways a foreigner can obtain a CPF.</p>
+</section>
+<section class="section">
+<h2>Brazilian nationality: "interesting idea"</h2>
+<p>In an exchange of emails between Epstein and German businesswoman Nicole Junkermann, the two comment on the possibility of the American obtaining Brazilian citizenship.</p>
+<p>"What do you think of getting Brazilian citizenship?" Junkermann asked in an email sent on October 5, 2011.</p>
+<p>On the same day, Epstein responded: "Interesting idea, however visas might be a problem, when traveling to other countries," said the American.</p>
+<p>The released emails do not make clear the context in which the suggestion was given. The correspondence occurred two years after he had served 13 months in prison following an agreement with the Florida justice system in which he acknowledged having engaged in sexual exploitation of minors.</p>
+<p>In testimony given to American authorities in 2010, a former Epstein employee said that the businessman made constant trips to Brazil to visit clients and that, when he was in Brazil, he made contact with a woman who presented him with girls, including minors.</p>
+<p>Brazilian nationality would therefore facilitate the formalities for Epstein to travel to Brazil, since as an American, he would need to go through the visa process with the Brazilian government.</p>
+<p>BBC News Brasil attempted to contact Nicole Junkermann by email, but received no response. A note attributed to her published by the British news portal The Tab says that a spokesperson for Junkermann stated that she was "deceived and misled" by Epstein and described the crimes committed by him as "terrible."</p>
+<p>When approached, the Ministry of Justice and Public Security sent a note informing that there is no record of naturalization in the name of Jeffrey Edward Epstein in Brazil.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-03 2.jpg" alt="US Department of Justice Epstein documents"><p class="image-caption">Documents from the U.S. Department of Justice, released in recent weeks</p></div>
+<section class="section">
+<h2>Betting on the Real's appreciation ahead of the World Cup</h2>
+<p>Another email identified by BBC News Brasil indicates that Jeffrey Epstein received information about the Brazilian economy and suggestions for investments involving Brazilian assets.</p>
+<p>On March 12, 2013, Epstein received suggestions to invest in currency notes linked to the Real with the expectation of appreciation due to the likely increase in the Brazilian interest rate. "I really think we should put some money in this note. Being long BRL (real) for the World Cup makes sense. Domestic inflation should allow them to accept a slight currency appreciation. And they should probably raise rates by 150 basis points this year," says an excerpt from the email sent by Paul Barrett, who at the time worked at JP Morgan bank.</p>
+<p>Barrett then advised Epstein to invest US$ 1 million. In response, the American wrote: "Ok."</p>
+<p>Under Brazilian law, there is no prohibition for foreigners to make investments in currency notes linked to the real. BBC News Brasil found no emails proving that the transaction was carried out. According to the email, the investment would have been made through the company Southern Trust, one of the companies used by Epstein to do business.</p>
+<p>The bet, however, would have been correct if it was actually made. As predicted by Epstein's consultants, the Brazilian base interest rate rose in the following months. By July 2014, the month of the World Cup, it had already risen from 7.5% to 11% per year.</p>
+</section>
+<section class="section">
+<h2>Visit to Brazil and attempts to meet</h2>
+<p>Epstein's interest in Brazil also led him to try to get closer to Brazilian businessmen, according to documents released in recent weeks.</p>
+<p>These attempts are recorded in email exchanges that occurred between the years 2002 and 2003, and between 2012 and 2013.</p>
+<p>In the first, Ghislaine Maxwell — sentenced to 20 years in prison for recruiting minors for sexual exploitation — spoke with Brazilian businessman Marcelo de Andrade in December 2002 about a trip she and Epstein would make to Brazil in the following months.</p>
+<p>In the emails, Andrade, who runs an environmental non-governmental organization, suggests the names of Brazilian businessmen with whom Epstein and Maxwell could meet during their stay in Brazil. Andrade suggested meetings with Armínio Fraga, who was at the time leaving the leadership of the Central Bank; with businessman Jorge Paulo Lemann, currently considered the third richest Brazilian on the Forbes list; and with the then owner of the newspaper Gazeta Mercantil, Luiz Fernando Levy, who died in 2017.</p>
+<p>Andrade told BBC News Brasil that a mutual friend asked him to help a "very rich couple" during their trip to Brazil. "Ghislaine sent me an email asking who were the people I admired most in Brazil and I made a list of people I thought were interesting," says Andrade.</p>
+<p>In an email sent by Andrade to Ghislaine Maxwell on December 16, 2002, the Brazilian says he had managed to confirm a first appointment. "I managed to confirm the first meeting: Luis Fernando Levy, president of Gazeta Mercantil, on Friday at 10am, at his office. Jorge Paulo Lemann is coming back from a trip tonight, so I will confirm tomorrow. Arminio Fraga, president of the Central Bank (Soros's star pupil) is handing over his position this week to Meirelles, his successor and perhaps unable to participate, maybe on Saturday, would you be available?"</p>
+<p>Andrade says he met the couple at a restaurant in São Paulo, between late 2002 and 2003. On that occasion, he says, the three discussed the possible meetings with the names he suggested. He says that at the time of the meeting and the emails, he had no knowledge of the crimes for which Epstein and Ghislaine were convicted. "I had no idea. When the news came out, years later, I was quite surprised. It's really a pity when we see people using their power and influence for such terrible things," says Andrade. He says he does not believe the suggested meetings took place. "They never told me anything about whether the meetings happened or not."</p>
+</section>
+<div class="image-block"><img src="imgs/photo-05 2.jpg" alt="Documents from US Department of Justice"><p class="image-caption">Email exchanges between Ghislaine Maxwell and a Brazilian businessman, dated December 2002</p></div>
+<section class="section">
+<h2>Invitation to Eike Batista</h2>
+<p>Another Brazilian businessman who was targeted by Epstein was former billionaire Eike Batista. Emails exchanged throughout 2012 between Epstein and British businessman Ian Osborne show attempts to bring the American closer to Eike Batista.</p>
+<p>In one of the revealed emails, Epstein indicates that Osborne would be the person indicated to establish contact with Eike Batista. In another email, on August 28, 2012, Epstein demonstrates being informed about Batista's businesses and writes to executive Sultan bin Sulayem, CEO of logistics group DP World, asking if he would be interested in doing business with the Brazilian. "I know that Eike Batista approached Hutchinson for a JV (abbreviation for joint-venture) in a new port in Brazil. He has cash flow problems. Any interest?" said Epstein.</p>
+<p>In another email, on March 6, 2012, Ian Osborne consulted Batista's then-executive Marcelo Horcades about the possibility of a meeting with the Brazilian. In response, Horcades says: "Eike is completely busy on Thursday. Let's hold the meeting with Eike on Friday."</p>
+<p>There are no documents, however, proving that the meeting took place. On the following day, Osborne sent an email to Epstein with the title "Eike Batista 120225 final.doc", indicating an attempted commercial agreement between Epstein and Batista. The document, however, was not found.</p>
+<p>In the following year, in 2013, Epstein tells Osborne he will be going to the island of St. Barth, in the Caribbean, and says the Briton could invite Eike Batista for lunch with Epstein and Elon Musk. "I'm going to St. Barth, I believe Ike (sic) is still on his yacht. if he wants to have lunch with me and elon musk, feel free to invite him," said Epstein.</p>
+
+<div class="pullquote">"No início da década passada, quando Eike estava entre os 7 maiores bilionários do planeta, muitos investidores internacionais o procuravam com interesse no Super Porto do Açu… Entre estes investidores internacionais estava Ian Osbourne, mas as propostas dele não tiveram qualquer resultado concreto."<div class="pullquote-attr">— Eike Batista's communications team</div></div>
+
+<p>In another excerpt, Batista's communications team denies he had contact with Epstein: "Businessman Eike Batista reaffirms once again that he does not know, has never spoken or exchanged messages with Epstein. The references to Eike's name are merely incidental and without any relevance."</p>
+<p>BBC News Brasil also approached Armínio Fraga, who denied meeting Epstein: "My name was given as someone to meet, in a list with others. It did not happen." The communications team of Jorge Paulo Lemann said that "Jorge Paulo Lemann never knew Jeffrey Epstein."</p>
+</section>
+<div class="original-link"><a href="https://www.bbc.com/portuguese/articles/c2047g008dgo" target="_blank" rel="noopener">Read the original article on BBC News Brasil ↗</a></div>
+<div class="back-link"><a href="../../../../index.html">← Back to portfolio</a></div>
+</div></div>
+</article>
+
+<!-- PORTUGUESE -->
+<article id="art-pt" style="display:none">
+<header class="hero">
+<div class="hero-content">
+<h1>Epstein tentou ponte com empresários brasileiros para negócios, revelam documentos obtidos pela BBC</h1>
+<p class="hero-meta">Leandro Prazeres e Luiz Fernando Toledo | BBC News Brasil | 12 de fevereiro de 2026</p>
+</div>
+</header>
+<div class="article-content"><div class="container">
+<section class="section">
+<p>Documentos divulgados pelo governo dos Estados Unidos sobre o criminoso sexual condenado Jeffrey Epstein indicam que seu interesse pelo Brasil ia além do seu vínculo com modelos e o suposto financiamento de uma rede de prostituição que incluía mulheres brasileiras.</p>
+<p>A BBC News Brasil identificou, por exemplo, a existência de um CPF em nome de Epstein junto à Receita Federal. A reportagem também encontrou um e-mail em que Epstein classificou como uma "interessante" a sugestão feita a ele para obter a cidadania brasileira. Não há registros, porém, de que ele tenha, de fato, se naturalizado como brasileiro.</p>
+<p>Os e-mails, extratos bancários e outros documentos divulgados pelo governo norte-americano nas últimas semanas também apontam que Epstein tinha uma equipe de consultores que monitorava a economia brasileira e lhe sugeria investimentos ligados ao Brasil.</p>
+<p>Os e-mails também mostram que ele tinha intenção de se aproximar de empresários brasileiros como Eike Batista, Jorge Paulo Lemann e do ex-presidente do Banco Central, Armínio Fraga — nos documentos, os nomes foram citados por terceiros como pessoas de grande relevância no cenário do país.</p>
+<p>Ser mencionado ou ter sua imagem incluída nos arquivos divulgados pelo governo americano não implica, necessariamente, um delito.</p>
+<p>Não foram encontrados documentos que comprovem que Epstein de fato se encontrou com os três ou que teve negócios com eles. Procurados, Fraga, Batista e Lemann disseram que não se encontraram e que não tiveram nenhum tipo de negócio com o norte-americano encontrado morto na prisão, em Nova York, em 2019.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-01 2.jpg" alt="Documento CPF"><p class="image-caption">O CPF brasileiro em nome de Epstein foi registrado em 2003, segundo a Receita Federal</p></div>
+<section class="section">
+<h2>O CPF brasileiro</h2>
+<p>O CPF brasileiro em nome de Epstein foi registrado, segundo a Receita Federal, em 2003. O ano coincide com a época em que Ghislaine Maxwell, considerada cúmplice de Epstein e condenada por aliciamento de menores de idade para exploração sexual, trocou e-mails com um empresário brasileiro a respeito de uma viagem que o casal faria ao Brasil entre o final de 2002 e o início de 2003.</p>
+<p>A BBC News Brasil identificou que o CPF foi registrado com a mesma data de nascimento de Epstein e está em situação regular.</p>
+<p>O advogado e mestre em Direito tributário Alexandre Tortato explica que, em 2003, qualquer estrangeiro pode obter um CPF junto à Receita Federal desde que apresente os documentos requeridos. Ele afirma que em 2003, era necessário que o estrangeiro ou algum procurador fosse a uma representação diplomática brasileira no exterior ou a algum posto de atendimento da Receita Federal no Brasil.</p>
+<p>Segundo ele, é comum que investidores estrangeiros tenham CPFs. "O CPF é necessário para aberturas de contas em bancos brasileiros, para a realização de operações na bolsa de valores em nome de pessoa física ou mesmo para adquirir bens que precisam de registro público", afirma Tortato.</p>
+<p>Para o advogado, obter um CPF indica que Epstein tinha interesses no Brasil para além do turismo. "Um turista não precisa ter CPF. Normalmente, o estrangeiro que emite um CPF em seu nome tem interesses comerciais por aqui", afirma.</p>
+<p>Procurada, a Receita Federal disse, inicialmente, que não poderia fornecer detalhes sobre o CPF em nome de Epstein porque a "solicitação de informações ou a confirmação de dados cadastrais vinculados ao Cadastro de Pessoas Físicas (CPF) está restrita ao próprio titular da inscrição ou ao seu representante legal". Em uma nova nota, a Receita disse que "a inscrição no CPF, inclusive a de estrangeiro, pode ser solicitada pela própria pessoa ou seu procurador, conforme dispõe o Anexo IV da Instrução Normativa RFB 2.172/2024".</p>
+<p>Um outro indício de que o CPF em nome de Epstein pertencia, de fato, ao financista é uma relação de documentos coletados por autoridades norte-americanas e que também foi divulgada pelo Departamento de Estado dos Estados Unidos. No documento, consta: "Brazilian CPF (has old POA in it)". Na tradução livre, a anotação indica que foi encontrado um CPF brasileiro com um "POA" anexado a ele. "POA" é uma sigla frequentemente usada em inglês que significa "procuração". Como mencionado pela Receita Federal, o uso de procurações é uma das formas de um estrangeiro obter um CPF.</p>
+</section>
+<section class="section">
+<h2>Nacionalidade brasileira: "ideia interessante"</h2>
+<p>Em uma troca de e-mails entre Epstein e a empresária alemã Nicole Junkermann, os dois comentam sobre a possibilidade de o norte-americano obter a cidadania brasileira.</p>
+<p>"O que você acha de tirar a cidadania brasileira?", indagou Junkermann em um e-mail enviado no dia 5 de outubro de 2011.</p>
+<p>No mesmo dia, Epstein respondeu: "Ideia interessante, entretanto vistos podem ser um problema, quando viajar para outros países", disse o norte-americano.</p>
+<p>Os e-mails divulgados não deixam claro qual o contexto no qual a sugestão foi dada. A correspondência aconteceu dois anos depois de ele ter cumprido 13 meses de prisão após um acordo com a justiça da Flórida em que ele reconheceu ter praticado exploração sexual de menores.</p>
+<p>Em depoimento prestado às autoridades norte-americanas em 2010, uma ex-funcionária de Epstein disse que o empresário fazia viagens constantes ao Brasil tanto para visitar clientes e que, quando estava no Brasil, fazia contato com uma mulher que lhe apresentava garotas, inclusive, menores de idade.</p>
+<p>A nacionalidade brasileira, portanto, facilitaria os trâmites para Epstein viajar ao Brasil, uma vez que como norte-americano, ele precisaria se submeter ao processo de obtenção de visto junto ao governo brasileiro.</p>
+<p>A BBC News Brasil tentou contato com Nicole Junkermann por e-mail, mas não obteve resposta. Uma nota atribuída a ela publicada pelo portal de notícias britânico The Tab diz que um porta-voz de Junkermann afirmou que ela foi "enganada e iludida" por Epstein e classificou os crimes cometidos por ele como "terríveis".</p>
+<p>Procurado, o Ministério da Justiça e Segurança Pública enviou uma nota informando que não consta nenhum registro de naturalização em nome de Jeffrey Edward Epstein no Brasil.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-03 2.jpg" alt="Departamento de Justiça dos EUA"><p class="image-caption">Documentos do Departamento de Justiça dos Estados Unidos divulgados nas últimas semanas</p></div>
+<section class="section">
+<h2>Aposta em valorização do Real às vésperas da Copa</h2>
+<p>Outro e-mail identificado pela BBC News Brasil aponta que Jeffrey Epstein recebia informações sobre a economia brasileira e sugestões de investimentos envolvendo ativos brasileiros.</p>
+<p>Em 12 de março de 2013, Epstein recebeu sugestões para investir em notas cambiais atreladas ao Real com a expectativa de valorização em função do provável aumento da taxa de juros brasileira. "Eu realmente acho que deveríamos colocar algum dinheiro nesta nota. Estar comprado em BRL (real) para a Copa do Mundo faz sentido. A inflação doméstica deve permitir que eles aceitem uma leve valorização cambial. E eles provavelmente devem aumentar os juros em 150 pontos-base este ano", diz um trecho do e-mail enviado por Paul Barret, que à época, trabalhava no banco JP Morgan.</p>
+<p>Barret, então, aconselha Epstein a investir US$ 1 milhão. Em seguida, o norte-americano responde: "Ok."</p>
+<p>Pela legislação brasileira, não há vedação para que estrangeiros possam fazer investimentos em notas cambiais atreladas ao real. A BBC News Brasil não encontrou e-mails que comprovem que a transação foi realizada. Ainda de acordo com o e-mail, o investimento teria sido feito por meio da empresa Southern Trust, uma das empresas usadas por Epstein para fazer negócios.</p>
+<p>A aposta, no entanto, teria sido acertada se foi de fato concretizada. Como previsto pelos consultores de Epstein, a taxa básica de juros brasileira subiu nos meses seguintes. Em julho de 2014, mês da Copa do Mundo, ela já havia subido de 7,5% para 11% ao ano.</p>
+</section>
+<section class="section">
+<h2>Visita ao Brasil e tentativas de reunião</h2>
+<p>O interesse pelo Brasil também fez com que Epstein tentasse se aproximar de empresários brasileiros, segundo documentos divulgados nas últimas semanas. As tentativas estão registradas em trocas de e-mails ocorridas entre os anos de 2002 e 2003 e entre 2012 e 2013.</p>
+<p>Na primeira, Ghislaine Maxwell, condenada a 20 anos de prisão por aliciamento de menores para fins de exploração sexual, conversa com o empresário brasileiro Marcelo de Andrade em dezembro de 2002 sobre uma viagem que ela e Epstein fariam ao Brasil nos meses seguintes.</p>
+<p>Nos e-mails, Andrade, que dirige uma organização não-governamental ambientalista, sugere o nome de empresários brasileiros com os quais Epstein e Maxwell poderiam se encontrar durante sua permanência no Brasil. Andrade sugeriu reuniões com Armínio Fraga, que à época estava deixando o comando do Banco Central; com o empresário Jorge Paulo Lemann, atualmente considerado o terceiro brasileiro mais rico pela lista da Forbes; e com o então dono do jornal Gazeta Mercantil, Luiz Fernando Levy, morto em 2017.</p>
+<p>Andrade contou à BBC News Brasil que um amigo em comum pediu que ele ajudasse um "casal muito rico" durante sua viagem ao Brasil. "A Ghislaine me mandou um e-mail perguntando quem eram as pessoas que eu mais admirava no Brasil e eu fiz uma lista com pessoas que eu achava bacana", diz Andrade.</p>
+<p>Em um e-mail enviado por Andrade a Ghislaine Maxwell no dia 16 de dezembro de 2002, o brasileiro diz ter conseguido confirmar uma primeira agenda. "Consegui confirmar o primeiro encontro: Luis Fernando Levy, presidente da Gazeta Mercantil, na sexta-feira, às 10h, no escritório dele. Jorge Paulo Lemann está voltando de viagem nesta noite, então vou confirmar amanhã. Arminio Fraga, presidente do Banco Central (garoto prodígio de Soros) está entregando seu cargo nesta semana para Meirelles, seu sucessor e talvez não seja capaz de participar, talvez no sábado, você estaria disponível?", diz o e-mail.</p>
+<p>Andrade conta que se encontrou com o casal em um restaurante em São Paulo, entre o final de 2002 e 2003. Na ocasião, segundo ele, os três discutiram sobre as possíveis reuniões com os nomes sugeridos por ele. O brasileiro diz que, na época do encontro e dos e-mails, ele não tinha conhecimento dos crimes pelos quais Epstein e Ghislaine foram condenados. "Eu não tinha a menor ideia. Quando as notícias saíram, anos depois, eu fiquei bastante surpreso. É realmente uma pena quando vemos pessoas usando seu poder e influência para coisas tão terríveis", diz Andrade. Ele diz não acreditar que os encontros sugeridos por ele aconteceram.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-05 2.jpg" alt="Departamento de Justiça dos EUA"><p class="image-caption">Troca de e-mails entre Ghislaine Maxwell e um empresário brasileiro, de dezembro de 2002</p></div>
+<section class="section">
+<h2>Convite a Eike Batista</h2>
+<p>Outro empresário brasileiro que esteve na mira de Epstein foi o ex-bilionário Eike Batista. E-mails trocados ao longo de 2012 entre Epstein e o empresário britânico Ian Osborne mostram tentativas de aproximar o norte-americano com Eike Batista.</p>
+<p>Em um dos e-mails revelados, Epstein indica que Osborne seria a pessoa indicada para estabelecer o contato com Eike Batista. Em outro e-mail, no dia 28 de agosto de 2012, Epstein demonstra estar informado sobre os negócios de Batista e escreve para o executivo Sultan bin Sulayem, CEO do grupo de logística DP World, se ele teria interesse em fazer negócios com o brasileiro. "Sei que Eike Batista abordou Hutchinson para uma JV (abreviação para joint-venture) em um novo porto no Brasil. Ele tem problemas de caixa. Algum interesse?", disse Epstein.</p>
+<p>Em outro e-mail, no dia 6 de março de 2012, Ian Osborne consulta o então executivo do grupo de Batista, Marcelo Horcades, sobre a possibilidade de um encontro com o brasileiro. Como resposta, Horcades diz: "Eike está completamente ocupado na quinta. Vamos fazer a reunião com Eike na sexta".</p>
+<p>Não há documentos, no entanto, que comprovem que o encontro aconteceu. No dia seguinte, Osborne enviou um e-mail a Epstein com o título "Eike Batista 120225 final.doc", indicando uma tentativa de acordo comercial entre Epstein e Batista. O documento, no entanto, não foi localizado.</p>
+<p>No ano seguinte, em 2013, Epstein avisa Osborne que estará indo à ilha de St. Barth, no Caribe e diz ao britânico que ele poderia convidar Eike Batista para um almoço com Epstein e Elon Musk. "Estou indo a St. Barth, eu acredito que Ike (sic) ainda está na sua lancha. se ele quiser almoçar comigo e elon musk, sinta-se à vontade para convidá-lo", disse Epstein.</p>
+<div class="pullquote">"No início da década passada, quando Eike estava entre os 7 maiores bilionários do planeta, muitos investidores internacionais o procuravam… Entre estes investidores internacionais estava Ian Osbourne, mas as propostas dele não tiveram qualquer resultado concreto."<div class="pullquote-attr">— Assessoria de Eike Batista</div></div>
+<p>Em outro trecho, a assessoria de Batista nega ter tido contato com Epstein: "O empresário Eike Batista reafirma mais uma vez que não conhece, nunca conversou ou trocou mensagens com Epstein. As citações aos nomes de Eike são meramente incidentais e sem qualquer relevância".</p>
+<p>Procurado pela BBC News Brasil, Armínio Fraga negou ter se encontrado com Epstein: "Deram meu nome como alguém a conhecer, em lista com outros. Não aconteceu." A assessoria de imprensa de Jorge Paulo Lemann disse, em nota, que "Jorge Paulo Lemann nunca conheceu Jeffrey Epstein".</p>
+</section>
+<div class="original-link"><a href="https://www.bbc.com/portuguese/articles/c2047g008dgo" target="_blank" rel="noopener">Leia o artigo original na BBC News Brasil ↗</a></div>
+<div class="back-link"><a href="../../../../index.html">← Voltar ao portfólio</a></div>
+</div></div>
+</article>
+
+<script src="../../shared/base.js"></script>
+<script>
+(function(){
+    var btnEn=document.getElementById("btnEn"),btnPt=document.getElementById("btnPt");
+    var artEn=document.getElementById("art-en"),artPt=document.getElementById("art-pt");
+    var dEn=document.getElementById("disc-en"),dPt=document.getElementById("disc-pt");
+    function setLang(l){
+        if(l==="pt"){artEn.style.display="none";artPt.style.display="";dEn.style.display="none";dPt.style.display="";btnEn.classList.remove("active");btnPt.classList.add("active");}
+        else{artPt.style.display="none";artEn.style.display="";dPt.style.display="none";dEn.style.display="";btnPt.classList.remove("active");btnEn.classList.add("active");}
+        localStorage.setItem("portfolio-lang",l);
+    }
+    setLang(localStorage.getItem("portfolio-lang")||"en");
+    btnEn.addEventListener("click",function(){setLang("en");});
+    btnPt.addEventListener("click",function(){setLang("pt");});
+    window.addEventListener("scroll",function(){var h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById("progressBar").style.width=(window.scrollY/h*100)+"%";});
+})();
+</script>
 </body>
 </html>
