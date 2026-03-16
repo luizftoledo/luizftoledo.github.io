@@ -32,11 +32,11 @@ const PROVIDERS = {
     placeholder: 'AIza...',
     hint: 'Chave do Google AI Studio (aistudio.google.com). Salva só no seu navegador.',
     models: [
-      { value: 'gemini-2.5-flash-lite', label: 'gemini-2.5-flash-lite — mais econômico ⭐' },
-      { value: 'gemini-2.5-flash',      label: 'gemini-2.5-flash — equilíbrio custo/qualidade' },
-      { value: 'gemini-2.5-pro',        label: 'gemini-2.5-pro — mais preciso' },
+      { value: 'gemini-1.5-flash',      label: 'gemini-1.5-flash — mais rápido ⭐' },
+      { value: 'gemini-1.5-pro',        label: 'gemini-1.5-pro — mais preciso' },
+      { value: 'gemini-2.0-flash-exp',  label: 'gemini-2.0-flash-exp — nova geração' },
     ],
-    modelHint: 'Obtenha sua chave gratuita em aistudio.google.com. Os modelos 1.5 foram descontinuados.',
+    modelHint: 'Obtenha sua chave gratuita em aistudio.google.com. O modelo Flash é o mais estável.',
   },
   anthropic: {
     label: 'Anthropic (Claude)',
