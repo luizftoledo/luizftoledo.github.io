@@ -84,7 +84,27 @@ body {
 .hero h1 span { color: var(--accent); }
 .hero p {
   font-size: 0.95rem; color: var(--subdued);
-  max-width: 500px; line-height: 1.7;
+  max-width: 600px; line-height: 1.7;
+}
+.hero-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 8px;
+  border-bottom: 1px solid rgba(0, 212, 160, 0.2);
+  transition: border-color 0.18s;
+}
+.hero-link:hover {
+  border-bottom-color: var(--accent);
+}
+.disclaimer a {
+  color: var(--subdued);
+  text-decoration: underline;
+  text-decoration-color: var(--border-mid);
+  transition: color 0.18s;
+}
+.disclaimer a:hover {
+  color: var(--accent);
 }
 
 /* ——— LAYOUT ————————————————————————————————————————— */
