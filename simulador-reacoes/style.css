@@ -151,6 +151,67 @@ body {
 .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
 .form-hint { font-size: 0.73rem; color: var(--muted); line-height: 1.5; }
 
+/* ——— Checkbox / Toggles ———————————————————————————— */
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  user-select: none;
+  margin: 15px 0;
+}
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0; width: 0;
+}
+.checkmark {
+  position: absolute;
+  top: 2px; left: 0;
+  height: 20px; width: 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--border-mid);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.checkbox-container:hover input ~ .checkmark {
+  border-color: var(--accent);
+}
+.checkbox-container input:checked ~ .checkmark {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+.checkbox-container .checkmark:after {
+  left: 6px; top: 2px;
+  width: 5px; height: 10px;
+  border: solid #0c0c0e;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.checkbox-label {
+  display: flex;
+  flex-direction: column;
+}
+.checkbox-label strong {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.checkbox-help {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
 .key-wrap { position: relative; display: flex; }
 .key-wrap .form-input { padding-right: 40px; font-family: monospace; letter-spacing: 0.5px; }
 .key-toggle {
@@ -506,3 +567,152 @@ body {
   color: var(--accent);
   background: rgba(0,212,160,0.03);
 }
+
+/* ——— TOOLTIPS —————————————————————————————————————— */
+.info-icon {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  width: 14px; height: 14px;
+  background: var(--border-mid);
+  color: var(--muted);
+  font-size: 0.65rem; font-weight: 700;
+  border-radius: 50%;
+  margin-left: 6px;
+  cursor: help;
+  transition: all 0.18s;
+  position: relative;
+}
+.info-icon:hover {
+  background: var(--accent);
+  color: #0c0c0e;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  width: 220px;
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--subdued);
+  font-weight: 400;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  white-space: normal;
+  text-align: left;
+  backdrop-filter: blur(8px);
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%; left: 50%;
+  border: 6px solid transparent;
+  border-top-color: var(--border-mid);
+  margin-left: -6px;
+}
+.info-icon:hover .tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Adjust tooltip position if it hits the edge */
+.persona-chips .tooltip {
+  bottom: auto;
+  top: 130%;
+}
+.persona-chips .tooltip::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--border-mid);
+}
+
+
+/* ——— ANALYSIS REPORT DASHBOARD ———————————————————————— */
+.analysis-report {
+  background: linear-gradient(135deg, rgba(0, 212, 160, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 15px 35px rgba(0,212,160,0.08);
+  animation: slideDown 0.4s ease-out;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.report-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 212, 160, 0.2);
+  padding-bottom: 12px;
+}
+.report-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 768px) {
+  .report-grid { grid-template-columns: 1fr; }
+}
+
+.report-card {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-mid);
+}
+.report-card h4 {
+  margin: 0 0 12px 0;
+  color: var(--subdued);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+.report-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.report-card li {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 20px;
+  line-height: 1.4;
+  color: var(--subdued);
+}
+.report-card li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+.report-verdict {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--border-mid);
+}
+.report-verdict h4 { color: var(--accent); margin-bottom: 8px; font-size: 0.85rem; text-transform: uppercase; }
+.report-verdict p { font-size: 0.95rem; line-height: 1.6; color: var(--text); font-style: italic; margin: 0; }

@@ -3,6 +3,17 @@
  * Supports OpenAI, Google Gemini, and Anthropic (via CORS proxy)
  */
 
+// ——— Utils ———————————————————————————————————————————————
+const escHtml = (str) => {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
 // ——— Provider config —————————————————————————————————————
 const PROVIDERS = {
   openai: {
@@ -49,42 +60,54 @@ const PERSONAS = [
     id: 'leitor_neutro',
     emoji: '🗣️',
     name: 'Leitor neutro',
+    category: 'Espectro político',
     role: 'Cidadão sem filiação política clara',
+    description: 'Um leitor que busca informações práticas e objetivas. Não costuma assumir lados em disputas ideológicas e foca no impacto direto da notícia no seu dia a dia.',
     sentiment_hint: 'pragmatic, neither strongly supportive nor critical, asks practical questions about what will change in practice',
   },
   {
     id: 'leitor_esq_gov',
     emoji: '🔴',
     name: 'Esquerda governista',
+    category: 'Espectro político',
     role: 'Leitor alinhado ao governo de esquerda atual',
+    description: 'Costuma apoiar investigações que exponham a oposição, mas pode ser cético ou defensivo se a notícia envolver aliados ou críticas ao governo atual.',
     sentiment_hint: 'supports the investigation if it exposes opposition corruption, suspicious if it involves gov allies; uses social justice framing',
   },
   {
     id: 'leitor_esq_rad',
     emoji: '🚩',
     name: 'Esquerda radical',
+    category: 'Espectro político',
     role: 'Leitor de esquerda crítica e radical',
+    description: 'Crítico tanto da direita quanto da esquerda institucional. Analisa as notícias sob a ótica da luta de classes e do anti-capitalismo sistêmico.',
     sentiment_hint: 'critical of both establishment right and institutional left; uses class-struggle and systemic anti-capitalist framing',
   },
   {
     id: 'leitor_dir_rad',
     emoji: '🟡',
     name: 'Direita radical',
+    category: 'Espectro político',
     role: 'Leitor alinhado à direita conservadora radical',
+    description: 'Desconfia da mídia tradicional e defende valores conservadores. Foca em temas como liberdade individual, patriotismo e combate à doutrinação.',
     sentiment_hint: 'accuses media bias, defends traditional values; uses terms like "mídia tradicional", "doutrinação", "conservadorismo"',
   },
   {
     id: 'leitor_dir_lib',
     emoji: '🎩',
     name: 'Direita liberal',
+    category: 'Espectro político',
     role: 'Leitor de direita liberal e pró-mercado',
+    description: 'Valoriza a responsabilidade fiscal, o estado de direito e a livre iniciativa. Costuma criticar intervenções estatais e o populismo.',
     sentiment_hint: 'focuses on institutional rule of law, fiscal responsibility; critical of state intervention and polarization',
   },
   {
     id: 'leitor_cético_rad',
     emoji: '🕳️',
     name: 'Cético radical',
+    category: 'Espectro político',
     role: 'Leitor que desconfia de narrativas oficiais',
+    description: 'Enxerga a notícia como uma possível distração ou parte de uma agenda oculta. Usa sarcasmo e questiona as verdadeiras intenções por trás da divulgação.',
     sentiment_hint: 'dismisses the article as a distraction from hidden agendas; references "élites", "ajuste de contas" or "distração planejada"; uses sarcasm',
   },
   // ── Professional voices ────────────────────────────────
@@ -92,106 +115,136 @@ const PERSONAS = [
     id: 'advogado',
     emoji: '⚖️',
     name: 'Especialista jurídico',
+    category: 'Vozes profissionais',
     role: 'Advogado / jurista',
+    description: 'Analisa o conteúdo sob o ponto de vista técnico-jurídico, focando em devido processo, constitucionalidade e precisão dos termos legais citados.',
     sentiment_hint: 'analytical, focuses precisely on legal implications, due process, constitutional angles; may point out what the reporting gets legally wrong or right',
   },
   {
     id: 'abordado',
     emoji: '🛡️',
     name: 'Pessoa abordada',
+    category: 'Vozes profissionais',
     role: 'Sujeito direto da matéria (nota de defesa)',
+    description: 'Representa a voz de quem é citado ou investigado. Tende a negar irregularidades, alegar falta de contexto ou atacar a metodologia da reportagem.',
     sentiment_hint: 'defensive, denying wrongdoing; attacks the journalist\'s methodology or cherry-picking; claims to have been misquoted or that context is missing',
   },
   {
     id: 'ativista',
     emoji: '📢',
     name: 'Ativista / ONG',
+    category: 'Vozes profissionais',
     role: 'Ativista de direitos humanos ou meio ambiente',
+    description: 'Celebra a exposição de problemas sociais e pede ações concretas. Foca nas falhas sistêmicas e nas causas estruturais do problema relatado.',
     sentiment_hint: 'celebrates the exposure, calls for concrete policy action; references systemic failures and structural causes beyond the individual story',
   },
   {
     id: 'jornalista',
     emoji: '🎙️',
     name: 'Jornalista concorrente',
+    category: 'Vozes profissionais',
     role: 'Colega de imprensa',
+    description: 'Observa a matéria com o olhar do ofício. Nota o que é novo, o que falta e como o método de apuração se compara ao de outros veículos.',
     sentiment_hint: 'professional tone; notes methodologically what the story confirms or is missing; subtly competitive; may link to their own related coverage',
   },
   {
     id: 'academico',
     emoji: '🎓',
     name: 'Acadêmico / analista',
+    category: 'Vozes profissionais',
     role: 'Pesquisador / professor universitário',
+    description: 'Contextualiza a notícia dentro de padrões históricos ou dados estatísticos. Evita linguagem emocional e foca na análise de longo prazo.',
     sentiment_hint: 'neutral, measured; contextualizes the story within broader historical patterns in Brazil; may cite data or academic studies; avoids emotional language',
   },
-  // ── Social media behavior typologies (research-based) ─
+  // ── Social media behavior typologies ──────────────────
   {
     id: 'leitor_duvida',
     emoji: '🧐',
     name: 'Leitor em dúvida',
+    category: 'Comportamentos online',
     role: 'Leitor focado em clareza e didatismo',
+    description: 'Representa o público que quer realmente entender os fatos. Pede explicações de termos difíceis e aponta lacunas lógicas na narrativa.',
     sentiment_hint: 'asks for clarification on complex terms or logical gaps; wants to truly understand the facts before forming an opinion; polite but demanding of the journalist\'s clarity; points out if something remained confusing',
   },
   {
     id: 'auto_promotor',
     emoji: '📣',
     name: 'Auto-promotor',
+    category: 'Comportamentos online',
     role: 'Usuário que usa a notícia para se promover',
+    description: 'Engaja pouco com o conteúdo da matéria e foca em direcionar o público para sua própria "thread", newsletter ou rede social.',
     sentiment_hint: 'barely engages with the actual story; pivot to promoting themselves, their newsletter, podcast or "thread" on the topic; ends with a follow/subscribe CTA',
   },
   {
     id: 'especialista_autoproclamado',
     emoji: '🧠',
     name: 'Especialista autoproclamado',
+    category: 'Comportamentos online',
     role: 'Usuário que alega saber mais do que o jornalista',
+    description: 'Frequentemente condescendente, alega possuir informações de bastidor ou experiências que invalidariam ou completariam o trabalho da imprensa.',
     sentiment_hint: 'condescending, claims insider knowledge or experience; points out things the journalist "missed" or "got wrong"; may be right about some things but overstates their expertise',
   },
   {
     id: 'compartilhador_sem_ler',
     emoji: '🔁',
     name: 'Compartilhador sem ler',
+    category: 'Comportamentos online',
     role: 'Usuário que reage só à manchete',
+    description: 'Reage impulsivamente a partir do título. Costuma errar fatos explicados no corpo do texto, mas compartilha a notícia para reforçar sua opinião.',
     sentiment_hint: 'very short comment, clearly based only on the headline; gets at least one factual detail visibly wrong or asks something answered in the article body; shares anyway',
   },
   {
     id: 'engajado_emocional',
     emoji: '😢',
     name: 'Leitor emocionalmente engajado',
+    category: 'Comportamentos online',
     role: 'Usuário com reação emocional intensa',
+    description: 'Identifica-se emocionalmente com as vítimas ou afetados pela história. Traz relatos pessoais e pede empatia da comunidade.',
     sentiment_hint: 'reacts emotionally and empathetically, identifying with victims or affected parties; personal anecdote or family reference; calls for empathy from others; not necessarily political',
   },
   {
     id: 'debatedor',
     emoji: '💬',
     name: 'Debatedor compulsivo',
+    category: 'Comportamentos online',
     role: 'Usuário que quer brigar nos comentários',
+    description: 'Busca o conflito direto com outros leitores ou com o veículo. Faz perguntas retóricas e provocações para manter o engajamento na briga.',
     sentiment_hint: 'intentionally provocative; challenges other commenters or the journalist directly; asks aggressive or rhetorical questions; wants to start or sustain an argument',
   },
   {
     id: 'gen_z',
     emoji: '📱',
     name: 'Leitor Gen Z / jovem',
+    category: 'Comportamentos online',
     role: 'Jovem brasileiro de 18-25 anos, muito online',
+    description: 'Usa gírias de internet e linguagem informal. Costuma ser cético em relação às instituições, usando humor ácido ou reações curtas.',
     sentiment_hint: 'very informal language, uses internet slang ("mds", "isso aí", "surreal", "absurdo"), brief reactions, dark humor, may reference internet culture or memes; politically aware but cynical',
   },
   {
     id: 'diaspora',
     emoji: '🌍',
     name: 'Brasileiro da diáspora',
+    category: 'Comportamentos online',
     role: 'Brasileiro vivendo no exterior',
+    description: 'Observa o Brasil comparando-o com o país onde vive. Traz uma perspectiva de quem está fora, às vezes misturando inglês ou filtrando pela visão estrangeira.',
     sentiment_hint: 'compares Brazil to their host country; frustrated but hopeful; notes how the story resonates or differs from international coverage; may comment in mixed PT/EN',
   },
   {
     id: 'conservador_tradicional',
     emoji: '👴',
     name: 'Conservador tradicional',
+    category: 'Comportamentos online',
     role: 'Leitor mais velho, valores tradicionais',
+    description: 'Reage a partir de uma ótica moral ou religiosa. Lamenta a "perda de valores" e é cauteloso com mudanças bruscas no status quo.',
     sentiment_hint: 'not explicitly partisan; reacts through a moral/religious lens ("onde foi parar os valores?"); nostalgic about a perceived better past; cautious about conclusions; formal language',
   },
   {
     id: 'lurker_ativado',
     emoji: '👀',
     name: 'Lurker ativado',
+    category: 'Comportamentos online',
     role: 'Leitor silencioso que raramente comenta',
+    description: 'Geralmente apenas lê, mas foi motivado a comentar por algo chocante ou muito relevante. Costuma ser direto e sério.',
     sentiment_hint: 'explicitly says they rarely comment but this story made them break the silence; brief, direct, earnest; no political posturing; focused on one specific fact that shocked them',
   },
 ];
@@ -216,6 +269,7 @@ const previewOutlet   = document.getElementById('previewOutlet');
 const corsWarning     = document.getElementById('corsWarning');
 const proxyGroup      = document.getElementById('proxyGroup');
 const proxyUrlInput   = document.getElementById('proxyUrl');
+const personaChipsContainer = document.querySelector('.persona-chips');
 const customPersonasContainer = document.getElementById('custom-personas-container');
 const addPersonaBtn = document.getElementById('addPersonaBtn');
 
@@ -230,6 +284,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const savedProxy = localStorage.getItem('sim_proxy') || '';
   if (proxyUrlInput && savedProxy) proxyUrlInput.value = savedProxy;
+
+  renderPersonaChips();
 
   // Custom persona logic
   if (addPersonaBtn) {
@@ -286,6 +342,38 @@ function updateProviderUI(provider) {
   const isAnthropic = provider === 'anthropic';
   corsWarning.classList.toggle('hidden', !isAnthropic);
   proxyGroup.classList.toggle('hidden', !isAnthropic);
+}
+
+const resultsContent     = document.getElementById('results-content');
+const analysisReport     = document.getElementById('analysis-report');
+const socialModeToggle   = document.getElementById('socialMode');
+
+function renderPersonaChips() {
+  if (!personaChipsContainer) return;
+
+  const categories = ['Espectro político', 'Vozes profissionais', 'Comportamentos online'];
+  let html = '';
+
+  categories.forEach(cat => {
+    html += `<span class="chip chip-section">${cat}</span>`;
+    const filtered = PERSONAS.filter(p => p.category === cat);
+    filtered.forEach(p => {
+      const chipClass = p.id.includes('esq') ? 'chip-red' : 
+                        p.id.includes('dir_rad') ? 'chip-yellow' :
+                        p.id.includes('dir_lib') ? 'chip-blue' :
+                        p.id.includes('cético') ? 'chip-dark' : '';
+      
+      html += `
+        <span class="chip ${chipClass}">
+          ${escHtml(p.emoji)} ${escHtml(p.name)}
+          <span class="info-icon">?
+            <span class="tooltip">${escHtml(p.description)}</span>
+          </span>
+        </span>`;
+    });
+  });
+
+  personaChipsContainer.innerHTML = html;
 }
 
 // ——— Persist settings ———————————————————————————————————
@@ -350,8 +438,8 @@ formEl.addEventListener('submit', async (e) => {
     if (provider === 'openai')      result = await callOpenAI(apiKey, model, article, context, outlet, customPersonas);
     else if (provider === 'gemini') result = await callGemini(apiKey, model, article, context, outlet, customPersonas);
     else                            result = await callAnthropic(apiKey, model, proxyUrl, article, context, outlet, customPersonas);
-    const { reactions, thread } = result;
-    renderComments(reactions, thread);
+    const { reactions, threads, analysis } = result;
+    renderComments(reactions, threads, analysis);
   } catch (err) {
     showError(humanizeError(err, provider));
   } finally {
@@ -378,27 +466,42 @@ function buildPrompt(article, context, outlet, customPersonas = []) {
 
   const totalCount = PERSONAS.length + customPersonas.length;
 
-  const system = `You are a social simulation engine for investigative journalism.
+  let system = `You are a social simulation engine for investigative journalism.
 Generate realistic, distinct simulated reactions to a journalistic article.
 Each reaction must be from a DIFFERENT persona with a unique voice and perspective.
 Comments must be in Brazilian Portuguese.
 Return ONLY a valid JSON object with this exact structure — no markdown, no explanation:
 {
   "reactions": [
-    ...
+    {
+      "id": string,
+      "emoji": string,
+      "name": string,
+      "role": string,
+      "sentiment": "positive" | "critical" | "neutral" | "mixed",
+      "comment": string (2-4 sentences in the persona's authentic voice),
+      "likes": integer (realistic number of likes)
+    }
   ],
   "threads": {
     "persona_id_X": [
-      {
-        "emoji": string,
-        "name": string,
-        "role": string,
-        "comment": string (1-2 sentences, responding to persona_id_X, in PT-BR)
-      }
+      { "emoji": string, "name": string, "role": string, "comment": string }
     ]
   }
-}
-The "threads" object should contain deep interactions for at least the 5 comments you assigned more likes. The personas in the threads should debate with each other, referencing previous points or the article. Make it feel like a real conversation.`;
+}`;
+
+  if (socialModeToggle?.checked) {
+    system += `\n\n### AGENTIC SOCIAL SIMULATION MODE (ACTIVE)
+You must simulate a dynamic social environment. 
+1. INITIAL REACTIONS: First, determine how personas react independently to the article.
+2. SOCIAL FRICTION: Then, simulate the "second wave" where personas see each other's reactions. Some will double down (polarization), others will cave to pressure (echo chamber), and some will start "dog-piling" on controversial comments.
+3. CONTAGION: If a critical or emotional comment gets early traction, show how it "infects" the mood of other segments.
+
+Your JSON must also include an "analysis" object with:
+- "risks": [3-5 succinct bullet points of political/social/legal risks for the reporter]
+- "impact": "Resumo do potencial de repercussão (positiva/negativa)"
+- "verdict": "Um relatório final sucinto (máx 1 página) sobre o 'termômetro' da matéria."`;
+  }
 
   const user = `Artigo / texto jornalístico:
 """
@@ -410,7 +513,7 @@ ${context ? `Contexto adicional:\n"""\n${context}\n"""\n` : ''}Veículo: ${outle
 Gere um comentário realista para cada uma das ${totalCount} personas:
 [${totalPersonaDescriptions}]
 
-Retorne o JSON com "reactions" (${totalCount} itens com likes) e "threads" (interações ricas nos 5 comentários mais populares).`;
+Retorne o JSON com "reactions" (${totalCount} itens com likes) e "threads" (interações ricas nos 5 comentários mais populares).${socialModeToggle?.checked ? ' Inclua o objeto "analysis".' : ''}`;
 
   return { system, user };
 }
@@ -419,18 +522,13 @@ function parseResponse(raw) {
   let obj;
   try { obj = JSON.parse(raw); } catch { throw new Error('A IA retornou um formato inválido. Tente novamente.'); }
   
-  if (Array.isArray(obj)) return { reactions: obj, threads: {} };
+  if (Array.isArray(obj)) return { reactions: obj, threads: {}, analysis: null };
   
   const reactions = obj.reactions ?? Object.values(obj).find(v => Array.isArray(v)) ?? [];
   const threads   = obj.threads || {};
+  const analysis  = obj.analysis || null;
   
-  // Backward compatibility with single 'thread' field
-  if (Array.isArray(obj.thread) && reactions.length > 0) {
-    const topId = [...reactions].sort((a,b) => (b.likes||0) - (a.likes||0))[0]?.id;
-    if (topId) threads[topId] = obj.thread;
-  }
-
-  return { reactions, threads };
+  return { reactions, threads, analysis };
 }
 
 
@@ -581,11 +679,42 @@ function clearLoader() {
 }
 
 
+function renderAnalysisReport(data) {
+  if (!analysisReport) return;
+  if (!data) { analysisReport.classList.add('hidden'); return; }
+
+  analysisReport.classList.remove('hidden');
+  analysisReport.innerHTML = `
+    <div class="report-header">
+      <span style="font-size:1.5rem">📊</span>
+      <h3 class="report-title">Relatório de Risco Social</h3>
+    </div>
+    <div class="report-grid">
+      <div class="report-card">
+        <h4>Principais Riscos</h4>
+        <ul>
+          ${(data.risks || []).map(r => `<li>${escHtml(r)}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="report-card">
+        <h4>Impacto e Repercussão</h4>
+        <p style="font-size:0.9rem; color:var(--subdued); line-height:1.5;">${escHtml(data.impact || '')}</p>
+      </div>
+    </div>
+    <div class="report-verdict">
+      <h4>Veredito Final</h4>
+      <p>${escHtml(data.verdict || '')}</p>
+    </div>
+  `;
+}
+
 // ——— Render comments ————————————————————————————————————
-function renderComments(reactions, threads = {}) {
+function renderComments(reactions, threads = {}, analysis = null) {
   if (!reactions?.length) { showError('A IA não retornou comentários. Tente novamente.'); return; }
 
-  // Sort descending by likes so highest engagement appears first
+  renderAnalysisReport(analysis);
+
+  // Sort descending by likes
   const sorted = [...reactions].sort((a, b) => (b.likes || 0) - (a.likes || 0));
   const topId  = sorted[0]?.id;
 
