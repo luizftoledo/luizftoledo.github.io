@@ -302,11 +302,12 @@ formEl.addEventListener('submit', async (e) => {
   showSkeleton();
 
   try {
-    let comments;
-    if (provider === 'openai')     comments = await callOpenAI(apiKey, model, article, context, outlet);
-    else if (provider === 'gemini') comments = await callGemini(apiKey, model, article, context, outlet);
-    else                            comments = await callAnthropic(apiKey, model, proxyUrl, article, context, outlet);
-    renderComments(comments);
+    let result;
+    if (provider === 'openai')      result = await callOpenAI(apiKey, model, article, context, outlet);
+    else if (provider === 'gemini') result = await callGemini(apiKey, model, article, context, outlet);
+    else                            result = await callAnthropic(apiKey, model, proxyUrl, article, context, outlet);
+    const { reactions, thread } = result;
+    renderComments(reactions, thread);
   } catch (err) {
     showError(humanizeError(err, provider));
   } finally {
@@ -326,9 +327,29 @@ function buildPrompt(article, context, outlet) {
 Generate realistic, distinct simulated reactions to a journalistic article.
 Each reaction must be from a DIFFERENT persona with a unique voice and perspective.
 Comments must be in Brazilian Portuguese.
-Return ONLY a valid JSON object with a key "reactions" containing an array of exactly ${PERSONAS.length} objects.
-No markdown. No explanation.
-Each object must have: id (string), emoji (string), name (string), role (string), sentiment (one of: positive/critical/neutral/mixed), comment (string, 2-4 realistic sentences in the persona's authentic voice).`;
+Return ONLY a valid JSON object with this exact structure — no markdown, no explanation:
+{
+  "reactions": [
+    {
+      "id": string,
+      "emoji": string,
+      "name": string,
+      "role": string,
+      "sentiment": "positive" | "critical" | "neutral" | "mixed",
+      "comment": string (2-4 sentences in the persona's authentic voice),
+      "likes": integer (realistic number of likes this comment would receive on a Brazilian news post. Use the engagement level typical for this persona: political/emotional comments tend to 50-2000 likes, professional ones 10-300, humoristas can go viral 500-5000, lurker/neutral 5-80)
+    }
+  ],
+  "thread": [
+    {
+      "emoji": string,
+      "name": string,
+      "role": string,
+      "comment": string (1-2 sentences, a direct reply to the top-liked comment, in PT-BR)
+    }
+  ]
+}
+The "thread" must contain exactly 3 reply comments FROM DIFFERENT personas responding directly to whichever reaction you assigned the most likes. Make the replies feel like a real comment thread — mix agreement, disagreement, and tangential responses.`;
 
   const user = `Artigo / texto jornalístico:
 """
@@ -340,7 +361,7 @@ ${context ? `Contexto adicional:\n"""\n${context}\n"""\n` : ''}Veículo: ${outle
 Gere um comentário realista para cada uma das ${PERSONAS.length} personas:
 [${personaDescriptions}]
 
-Retorne um objeto JSON: { "reactions": [ ... ] }`;
+Retorne o JSON com "reactions" (${PERSONAS.length} itens com likes) e "thread" (3 respostas ao comentário com mais likes).`;
 
   return { system, user };
 }
@@ -348,11 +369,13 @@ Retorne um objeto JSON: { "reactions": [ ... ] }`;
 function parseResponse(raw) {
   let obj;
   try { obj = JSON.parse(raw); } catch { throw new Error('A IA retornou um formato inválido. Tente novamente.'); }
-  if (Array.isArray(obj))                                  return obj;
-  const arr = obj.reactions ?? Object.values(obj).find(v => Array.isArray(v));
-  if (!arr) throw new Error('Formato de resposta inesperado da IA.');
-  return arr;
+  // Support both raw array and wrapped object
+  if (Array.isArray(obj)) return { reactions: obj, thread: [] };
+  const reactions = obj.reactions ?? Object.values(obj).find(v => Array.isArray(v)) ?? [];
+  const thread    = Array.isArray(obj.thread) ? obj.thread : [];
+  return { reactions, thread };
 }
+
 
 // ——— OpenAI ——————————————————————————————————————————————
 async function callOpenAI(apiKey, model, article, context, outlet) {
@@ -488,8 +511,12 @@ function clearLoader() {
 
 
 // ——— Render comments ————————————————————————————————————
-function renderComments(comments) {
-  if (!comments?.length) { showError('A IA não retornou comentários. Tente novamente.'); return; }
+function renderComments(reactions, thread = []) {
+  if (!reactions?.length) { showError('A IA não retornou comentários. Tente novamente.'); return; }
+
+  // Sort descending by likes so highest engagement appears first
+  const sorted = [...reactions].sort((a, b) => (b.likes || 0) - (a.likes || 0));
+  const topId  = sorted[0]?.id;
 
   const legendHtml = `
     <div class="legend">
@@ -499,29 +526,55 @@ function renderComments(comments) {
       <span class="legend-item"><span class="legend-dot" style="background:var(--s-mix)"></span> Misto</span>
     </div>`;
 
-  const cardsHtml = comments.map(c => {
+  const likesLabel = (n) => {
+    if (!n && n !== 0) return '';
+    if (n >= 1000) return `${(n/1000).toFixed(1).replace('.0','')}k`;
+    return String(n);
+  };
+
+  const threadHtml = thread?.length ? `
+    <div class="thread-block">
+      <div class="thread-header">Respostas ao comentário mais curtido</div>
+      ${thread.map(r => `
+        <div class="thread-reply">
+          <span class="thread-avatar">${escHtml(r.emoji || '💬')}</span>
+          <div class="thread-reply-body">
+            <span class="thread-reply-name">${escHtml(r.name || 'Anônimo')}</span>
+            <span class="thread-reply-role">${escHtml(r.role || '')}</span>
+            <p class="thread-reply-text">${escHtml(r.comment || '')}</p>
+          </div>
+        </div>`).join('')}
+    </div>` : '';
+
+  const cardsHtml = sorted.map((c, i) => {
     const sentiment = ['positive','critical','neutral','mixed'].includes(c.sentiment) ? c.sentiment : 'neutral';
+    const isTop     = c.id === topId;
+    const likes     = likesLabel(c.likes);
     return `
-      <div class="comment-card" data-sentiment="${escHtml(sentiment)}">
+      <div class="comment-card${isTop ? ' comment-card--top' : ''}" data-sentiment="${escHtml(sentiment)}">
         <div class="comment-avatar">${escHtml(c.emoji || '💬')}</div>
         <div class="comment-body">
           <div class="comment-meta">
             <span class="comment-name">${escHtml(c.name || 'Anônimo')}</span>
             <span class="comment-role">${escHtml(c.role || '')}</span>
+            ${isTop ? '<span class="top-badge">🔥 mais curtido</span>' : ''}
           </div>
           <p class="comment-text">${escHtml(c.comment || '')}</p>
+          ${likes ? `<div class="comment-likes">♥︎ ${likes} curtidas</div>` : ''}
         </div>
-      </div>`;
+      </div>
+      ${isTop && threadHtml ? threadHtml : ''}`;
   }).join('');
 
   resultsArea.innerHTML = `
     <div class="comments-header">
       <span>reações simuladas</span>
-      <span class="comments-count">${comments.length} personas</span>
+      <span class="comments-count">${reactions.length} personas</span>
     </div>
     ${legendHtml}
     <div class="comments-feed">${cardsHtml}</div>`;
 }
+
 
 // ——— Error ———————————————————————————————————————————————
 function showError(msg) {
