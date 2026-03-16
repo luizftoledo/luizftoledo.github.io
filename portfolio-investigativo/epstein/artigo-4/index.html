@@ -1,562 +1,244 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Umas 50 brasileiras na mansão de Epstein | BBC News Brasil</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../shared/base.css">
-  <style>
-    .nav-chapters {
-      position: sticky;
-      top: 108px;
-      background: white;
-      border-bottom: 1px solid var(--border);
-      z-index: 99;
-      padding: 0;
-    }
-
-    .nav-chapters-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 12px 40px;
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-    }
-
-    .nav-chapter-link {
-      padding: 8px 16px;
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--text-muted);
-      text-decoration: none;
-      white-space: nowrap;
-      border-bottom: 2px solid transparent;
-      transition: all 0.3s;
-    }
-
-    .nav-chapter-link:hover,
-    .nav-chapter-link.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-    }
-
-    .series-indicator {
-      background: var(--bg-light);
-      padding: 20px 40px;
-      margin-bottom: 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .series-indicator-inner {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .series-indicator-text {
-      font-family: var(--sans);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--accent);
-      font-weight: 600;
-      margin: 0;
-    }
-
-    .victim-quote {
-      border-left: 4px solid var(--accent);
-      padding: 32px;
-      margin: 60px 0;
-      background: linear-gradient(135deg, rgba(196, 30, 58, 0.05) 0%, transparent 100%);
-      font-family: var(--serif);
-      font-size: 24px;
-      line-height: 1.7;
-      color: var(--text-dark);
-      font-weight: 600;
-    }
-
-    .victim-quote-attr {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-style: normal;
-      margin-top: 16px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .chapter {
-      scroll-margin-top: 140px;
-    }
-
-    .visualization {
-      margin: 80px 0;
-      padding: 60px 40px;
-      background: linear-gradient(135deg, var(--bg-light) 0%, rgba(196, 30, 58, 0.03) 100%);
-      border-radius: 4px;
-    }
-
-    .viz-title {
-      font-family: var(--display);
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 40px;
-      color: var(--text-dark);
-      text-align: center;
-    }
-
-    .chart-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .bar-chart {
-      background: white;
-      padding: 30px;
-      border-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .bar-label {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .bar {
-      height: 30px;
-      background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
-      border-radius: 2px;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      padding: 0 12px;
-      color: white;
-      font-family: var(--sans);
-      font-weight: 600;
-      font-size: 12px;
-    }
-
-    .navigation-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 100px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-
-    .nav-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--sans);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-      transition: opacity 0.3s;
-    }
-
-    .nav-link:hover {
-      opacity: 0.8;
-    }
-
-    .nav-prev::before {
-      content: '←';
-      font-size: 18px;
-    }
-
-    .nav-next::after {
-      content: '→';
-      font-size: 18px;
-    }
-
-    .warning-box {
-      background: rgba(196, 30, 58, 0.1);
-      border-left: 4px solid var(--accent);
-      padding: 24px;
-      margin: 40px 0;
-      border-radius: 2px;
-    }
-
-    .warning-box-title {
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-      letter-spacing: 0.5px;
-    }
-
-    .warning-box-text {
-      font-family: var(--serif);
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--text-dark);
-    }
-
-    @media (max-width: 768px) {
-      .nav-chapters-inner {
-        padding: 12px 24px;
-        gap: 10px;
-      }
-
-      .series-indicator {
-        padding: 16px 24px;
-      }
-
-      .visualization {
-        padding: 40px 24px;
-        margin: 60px 0;
-      }
-
-      .victim-quote {
-        font-size: 20px;
-        padding: 24px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>'Around 50 Brazilian women' at Epstein's mansion, survivor says</title>
+    <link rel="stylesheet" href="../../shared/base.css">
+    <style>
+        :root { --accent-color: #8b0000; --primary-color: #1a1a1a; --text-color: #333; --max-width: 740px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: var(--text-color); background: #fff; line-height: 1.6; margin: 0; }
+        .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent-color); width: 0%; z-index: 999; }
+        .disclaimer-bar { background: var(--accent-color); color: #fff; padding: 10px 20px; font-size: 13px; text-align: center; }
+        .disclaimer-bar a { color: #fff; }
+        .lang-toggle { position: fixed; top: 40px; right: 20px; z-index: 100; }
+        .lang-toggle button { background: var(--primary-color); color: #fff; border: none; padding: 7px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; margin: 0 2px; }
+        .lang-toggle button.active { background: var(--accent-color); }
+        .hero { min-height: 480px; background: linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.65)), url("imgs/photo-01.jpg") center/cover; display: flex; align-items: flex-end; color: #fff; }
+        .hero-content { max-width: var(--max-width); margin: 0 auto; padding: 50px 20px 40px; }
+        .hero h1 { font-family: Georgia, serif; font-size: 40px; line-height: 1.2; margin: 0 0 15px; }
+        .hero-meta { font-size: 15px; opacity: .9; margin: 0; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+        .article-content { padding: 50px 0; }
+        .content-warning { background: #fff3cd; border-left: 4px solid #e6a817; padding: 15px 20px; margin: 30px 0; font-size: 15px; font-weight: 600; color: #7d4700; }
+        .section { margin-bottom: 50px; }
+        .section h2 { font-family: Georgia, serif; font-size: 26px; line-height: 1.3; margin: 50px 0 20px; color: var(--primary-color); }
+        .section p { font-family: Georgia, serif; font-size: 18px; line-height: 1.85; margin: 0 0 22px; }
+        .image-block { margin: 50px 0; text-align: center; }
+        .image-block img { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+        .image-caption { font-size: 14px; color: #666; margin-top: 10px; font-style: italic; }
+        .pullquote { font-family: Georgia, serif; font-size: 22px; font-weight: 700; line-height: 1.4; border-left: 5px solid var(--accent-color); padding: 28px 0 28px 26px; margin: 50px 0; max-width: 600px; }
+        .pullquote-attr { font-size: 14px; font-style: italic; color: #666; margin-top: 10px; font-weight: normal; }
+        .original-link { text-align: center; margin: 40px 0; }
+        .original-link a { display: inline-block; background: var(--accent-color); color: #fff; padding: 12px 28px; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 3px; }
+        .back-link { margin-top: 60px; padding-top: 30px; border-top: 1px solid #ddd; }
+        .back-link a { color: var(--accent-color); text-decoration: none; font-weight: 500; }
+        @media(max-width:768px){ .hero h1{font-size:26px;} .section p{font-size:16px;} .pullquote{font-size:18px;} }
+    </style>
 </head>
-<body data-lang="en">
-  <div id="progressBar" class="progress-bar"></div>
-
-  <div id="disclaimerBar" class="disclaimer-bar">
-    <div class="disclaimer-inner">
-      <div class="disclaimer-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="16" x2="12" y2="12"></line>
-          <line x1="12" y1="8" x2="12.01" y2="8"></line>
-        </svg>
-      </div>
-      <div class="disclaimer-text">
-        <span data-lang="en"><strong>Disclaimer:</strong> This is an enhanced portfolio presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span>
-        <span data-lang="pt"><strong>Aviso:</strong> Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span>
-      </div>
-      <button id="disclaimerClose" class="disclaimer-close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-    </div>
-  </div>
-
-  <div class="lang-toggle-bar">
-    <div class="lang-toggle-inner">
-      <span class="lang-toggle-label" data-lang="en">Language</span>
-      <span class="lang-toggle-label" data-lang="pt">Idioma</span>
-      <button id="btnEn" class="lang-btn active">English</button>
-      <button id="btnPt" class="lang-btn">Português</button>
-    </div>
-  </div>
-
-  <div class="series-indicator">
-    <div class="series-indicator-inner">
-      <p class="series-indicator-text">
-        <span data-lang="en">Part 4 of 9 — The Epstein Brazil connection</span>
-        <span data-lang="pt">Parte 4 de 9 — A conexão Epstein-Brasil</span>
-      </p>
-    </div>
-  </div>
-
-  <section class="hero" style="background-image: linear-gradient(135deg, rgba(26, 26, 26, 0.92), rgba(45, 45, 45, 0.92)), url('imgs/photo-01.jpg'); background-size: cover; background-position: center;">
-    <div class="hero-content">
-      <div class="hero-label" data-lang="en">Investigation</div>
-      <div class="hero-label" data-lang="pt" style="display: none;">Investigação</div>
-      <h1 class="hero-title" data-lang="en">'Around 50 Brazilian women' at Epstein's mansion</h1>
-      <h1 class="hero-title" data-lang="pt" style="display: none;">Umas 50 brasileiras estiveram na mansão de Epstein</h1>
-      <p class="hero-subtitle" data-lang="en">Brazilian victim reveals pattern of systematic exploitation</p>
-      <p class="hero-subtitle" data-lang="pt" style="display: none;">Vítima brasileira revela padrão de exploração sistemática</p>
-      <div class="hero-meta">
-        <span>Luiz Fernando Toledo</span>
-        <span>•</span>
-        <span data-lang="en">BBC News Brasil, London</span>
-        <span data-lang="pt" style="display: none;">BBC News Brasil, Londres</span>
-        <span>•</span>
-        <span>December 24, 2025</span>
-      </div>
-    </div>
-  </section>
-
-  <nav class="nav-chapters">
-    <div class="nav-chapters-inner">
-      <a href="#intro" class="nav-chapter-link active" data-lang="en">Start</a>
-      <a href="#first-visit" class="nav-chapter-link" data-lang="en">First visit</a>
-      <a href="#recruitment" class="nav-chapter-link" data-lang="en">Recruitment</a>
-      <a href="#testimony" class="nav-chapter-link" data-lang="en">FBI testimony</a>
-      <a href="#speaking-out" class="nav-chapter-link" data-lang="en">Speaking out</a>
-    </div>
-  </nav>
-
-  <main>
-    <section class="warning-box">
-      <div class="warning-box-title" data-lang="en">Content warning</div>
-      <div class="warning-box-title" data-lang="pt" style="display: none;">Aviso de conteúdo</div>
-      <div class="warning-box-text" data-lang="en">This article contains descriptions of sexual violence and exploitation of minors.</div>
-      <div class="warning-box-text" data-lang="pt" style="display: none;">Este artigo contém descrições de violência sexual e exploração de menores.</div>
-    </section>
-
-    <article>
-      <section id="intro" class="text-section chapter">
-        <h2 data-lang="en">Approximately 50 Brazilian women abused at epstein's mansion</h2>
-        <h2 data-lang="pt" style="display: none;">Aproximadamente 50 mulheres brasileiras abusadas na mansão de Epstein</h2>
-
-        <p data-lang="en">Marina Lacerda came forward in September 2025 to report being a victim of sexual violence by Jeffrey Epstein. Now, in an exclusive interview with BBC News Brasil, she reveals that many other Brazilian women may have suffered the same exploitation in Epstein's mansion.</p>
-
-        <p data-lang="pt" style="display: none;">Marina Lacerda veio a público em setembro de 2025 para relatar ter sido vítima de violência sexual por Jeffrey Epstein. Agora, em entrevista exclusiva à BBC News Brasil, ela revela que muitas outras mulheres brasileiras podem ter sofrido a mesma exploração na mansão de Epstein.</p>
-
-        <div class="victim-quote" data-lang="en">"At least around 50 Brazilian women, I think. I brought some of these girls, and they brought other girls."</div>
-        <div class="victim-quote" data-lang="pt" style="display: none;">"Pelo menos umas 50 brasileiras, eu acho. Eu levei algumas dessas meninas, e elas levaram outras meninas."</div>
-        <div class="victim-quote-attr">Marina Lacerda</div>
-
-        <p data-lang="en">Epstein died in a New York prison cell in August 2019 while awaiting trial on sex trafficking charges. His death came more than a decade after his first conviction for soliciting services from a minor.</p>
-
-        <p data-lang="pt" style="display: none;">Epstein morreu em uma cela de prisão em Nova York em agosto de 2019 enquanto aguardava julgamento por acusações de tráfico sexual. Sua morte ocorreu mais de uma década após sua primeira condenação por solicitar serviços de um menor.</p>
-      </section>
-
-      <div class="image-block">
-        <img src="imgs/photo-02.jpg" alt="Marina Lacerda">
-        <div class="image-credit" data-lang="en">Marina Lacerda tells BBC News Brasil her story</div>
-        <div class="image-credit" data-lang="pt" style="display: none;">Marina Lacerda conta sua história à BBC News Brasil</div>
-      </div>
-
-      <section id="first-visit" class="text-section chapter">
-        <h2 data-lang="en">From Queens to Manhattan</h2>
-        <h2 data-lang="pt" style="display: none;">De Queens a Manhattan</h2>
-
-        <p data-lang="en">Lacerda lived in Astoria, a neighborhood in Queens known for its large Brazilian community. She had arrived in the United States at age 8 and worked various jobs as a teenager, but the income was insufficient. "I was an immigrant and a minor," she recalls.</p>
-
-        <p data-lang="pt" style="display: none;">Lacerda morava em Astoria, bairro em Queens conhecido por sua grande comunidade brasileira. Ela havia chegado aos Estados Unidos aos 8 anos e trabalhou em vários empregos na adolescência, mas a renda era insuficiente. "Eu era imigrante e menor de idade", recorda.</p>
-
-        <p data-lang="en">She found a group of young Brazilian women connected to a church in Astoria. One day, one of them arrived with an invitation.</p>
-
-        <p data-lang="pt" style="display: none;">Ela encontrou um grupo de jovens mulheres brasileiras vinculadas a uma igreja em Astoria. Um dia, uma delas chegou com um convite.</p>
-
-        <div class="pullquote" data-lang="en">"There's a super-rich, powerful guy who lives in Manhattan, and he likes to get massages from young girls."<div class="pullquote-citation">Marina's friend, describing Epstein</div></div>
-
-        <div class="pullquote" data-lang="pt" style="display: none;">"Tem um cara super-rico, poderoso, que mora em Manhattan, e gosta de pegar massagem de menina nova."<div class="pullquote-citation">Amiga de Marina, descrevendo Epstein</div></div>
-
-        <p data-lang="en">Lacerda had briefly worked as a receptionist at a spa in Koreatown and had learned basic massage techniques. Her friend warned her to wear a bikini underneath. Despite finding the invitation strange, she agreed to go. She was 14 years old.</p>
-
-        <p data-lang="pt" style="display: none;">Lacerda havia trabalhado brevemente como recepcionista em um spa em Koreatown e havia aprendido técnicas básicas de massagem. Sua amiga a alertou para usar um biquíni por baixo. Apesar de achar o convite estranho, ela concordou em ir. Ela tinha 14 anos.</p>
-
-        <h3 data-lang="en">What happened in the mansion</h3>
-        <h3 data-lang="pt" style="display: none;">O que aconteceu na mansão</h3>
-
-        <p data-lang="en">The reality was very different from the story she had been told. "An employee picked me up, put us in an elevator, and we went to the third floor. We walked to a massage room with everything dark. The window was covered."</p>
-
-        <p data-lang="pt" style="display: none;">A realidade era muito diferente do que lhe tinham contado. "Uma empregada me pegou, colocou num elevador, e fomos até o terceiro andar. Andamos até um quarto de massagem com tudo escuro. A janela estava tampada."</p>
-
-        <p data-lang="en">Epstein asked where she was from, her age, and if she attended school. He spent much of the time on the phone. Then, according to Marina, he began touching her. When she refused and said she felt uncomfortable, her friend's demeanor changed dramatically.</p>
-
-        <p data-lang="pt" style="display: none;">Epstein perguntou de onde ela era, sua idade, e se frequentava a escola. Ele passou muito tempo ao telefone. Depois, de acordo com Marina, ele começou a tocá-la. Quando ela se recusou e disse que se sentia desconfortável, o comportamento de sua amiga mudou dramaticamente.</p>
-
-        <div class="victim-quote" data-lang="en">"Give it time and she'll feel comfortable with me."</div>
-        <div class="victim-quote" data-lang="pt" style="display: none;">"Dá um tempo que ela vai se sentir confortável comigo."</div>
-        <div class="victim-quote-attr">Epstein</div>
-
-        <p data-lang="en">Marina switched places with her friend. Epstein's behavior with the other girl became "super aggressive." The situation intensified rapidly. When it was over, they dressed, received money, and left.</p>
-
-        <p data-lang="pt" style="display: none;">Marina trocou de lugar com sua amiga. O comportamento de Epstein com a outra menina se tornou "super agressivo". A situação se intensificou rapidamente. Quando terminou, elas se vestiram, receberam dinheiro e saíram.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-03.jpg" alt="Manhattan building exterior">
-          <div class="image-credit" data-lang="en">Getty Images</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
-        </div>
-
-        <h3 data-lang="en">'you never made $300 in 40 minutes'</h3>
-        <h3 data-lang="pt" style="display: none;">'você nunca fez 300 dólares em 40 minutos'</h3>
-
-        <p data-lang="en">When they left, Marina complained about what had happened. Her friend responded: "You never made $300 in 40 minutes." She threw the money at Marina's face and told her to stop complaining. The promise of financial help was powerful leverage. Marina returned multiple times.</p>
-
-        <p data-lang="pt" style="display: none;">Quando saíram, Marina reclamou sobre o que havia acontecido. Sua amiga respondeu: "Você nunca ganhou 300 dólares em 40 minutos." Ela jogou o dinheiro na cara de Marina e lhe disse para parar de reclamar. A promessa de ajuda financeira era uma alavanca poderosa. Marina voltou várias vezes.</p>
-      </section>
-
-      <section id="recruitment" class="text-section chapter">
-        <h2 data-lang="en">Expanding the network: recruiting other girls</h2>
-        <h2 data-lang="pt" style="display: none;">Expandindo a rede: recrutando outras meninas</h2>
-
-        <p data-lang="en">After several visits, the situation escalated. "It started to become a mess. He started asking me to bring girls," Marina says. A friend who was being abused by her brother agreed to participate. From that point, Marina and this friend began recruiting other girls for Epstein.</p>
-
-        <p data-lang="pt" style="display: none;">Após várias visitas, a situação escalou. "Começou a virar uma bagunça. Ele começou a pedir para eu levar meninas," diz Marina. Uma amiga que estava sendo abusada por seu irmão concordou em participar. A partir daí, Marina e essa amiga começaram a recrutar outras meninas para Epstein.</p>
-
-        <div class="victim-quote" data-lang="en">"Girls who needed to work because they were immigrants, didn't have immigration documents, didn't have family. A lot of Brazilian girls, Russian, Hispanic. We brought several Brazilian girls, unfortunately."</div>
-        <div class="victim-quote" data-lang="pt" style="display: none;">"Meninas que estavam necessitando trabalhar porque eram imigrantes, não tinham documentos de imigração, não tinham família. Um montão de brasileiras, russa, hispânicas. Levamos várias brasileiras, infelizmente."</div>
-        <div class="victim-quote-attr">Marina Lacerda</div>
-
-        <p data-lang="en">She describes the vulnerability of immigrant girls: "A Brazilian arrives here and doesn't have documents. There's no way to make it in life. It's very difficult to be an immigrant here, especially a Brazilian woman who comes alone."</p>
-
-        <p data-lang="pt" style="display: none;">Ela descreve a vulnerabilidade das meninas imigrantes: "Brasileiro chega aqui e não tem documentos. Não tem como dar um jeito na vida. É muito difícil ser imigrante aqui, ainda mais brasileira quando vem sozinha."</p>
-
-        <p data-lang="en">Over time, Marina gained more freedom in the house. "He never said we were minors. He'd say he was getting massages from pretty, young girls." She also visited his office and he would give her money when she needed it.</p>
-
-        <p data-lang="pt" style="display: none;">Com o tempo, Marina ganhou mais liberdade na casa. "Ele nunca falava que éramos menores. Dizia que estava ganhando massagem de menina bonita, nova." Ela também ia ao seu escritório e ele dava dinheiro quando ela precisava.</p>
-
-        <div class="pullquote" data-lang="en">"He was very manipulative. He always said he owned the government, owned banks."<div class="pullquote-citation">Marina Lacerda</div></div>
-
-        <div class="pullquote" data-lang="pt" style="display: none;">"Ele foi muito manipulador. Sempre falava para a gente que era dono de governo, de banco."<div class="pullquote-citation">Marina Lacerda</div></div>
-
-        <p data-lang="en">Marina also reported an alleged episode of racism when she brought a Black Brazilian girl. "He got furious with me. Said I had to stop bringing dark-skinned girls. I think they didn't pay her."</p>
-
-        <p data-lang="pt" style="display: none;">Marina também relatou um suposto episódio de racismo quando trouxe uma menina brasileira negra. "Ele ficou puto comigo. Falou que tinha que parar de trazer menina escura. Acho que não a pagaram."</p>
-
-        <p data-lang="en">Over time, Epstein began complaining that Marina was bringing "old" girls and demanding younger ones. "I was already feeling very bad about bringing 15, 16-year-old girls."</p>
-
-        <p data-lang="pt" style="display: none;">Com o tempo, Epstein começou a reclamar que Marina estava levando meninas "velhas" e exigindo as mais jovens. "Eu já estava me sentindo muito mal de levar meninas de 15, 16 anos."</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-04.jpg" alt="Queens neighborhood street">
-          <div class="image-credit" data-lang="en">Getty Images</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
-        </div>
-      </section>
-
-      <section class="visualization">
-        <h2 class="viz-title" data-lang="en">The scale of exploitation</h2>
-        <h2 class="viz-title" data-lang="pt" style="display: none;">A escala da exploração</h2>
-
-        <div class="chart-container">
-          <div class="bar-chart">
-            <div class="bar-label" data-lang="en">Estimated Brazilian victims</div>
-            <div class="bar-label" data-lang="pt" style="display: none;">Vítimas brasileiras estimadas</div>
-            <div class="bar" style="width: 100%;">~50</div>
-          </div>
-
-          <div class="bar-chart">
-            <div class="bar-label" data-lang="en">Years of Marina's abuse</div>
-            <div class="bar-label" data-lang="pt" style="display: none;">Anos de abuso de Marina</div>
-            <div class="bar" style="width: 60%;">3 years</div>
-          </div>
-
-          <div class="bar-chart">
-            <div class="bar-label" data-lang="en">Marina's age at first visit</div>
-            <div class="bar-label" data-lang="pt" style="display: none;">Idade de Marina na primeira visita</div>
-            <div class="bar" style="width: 45%;">14 years</div>
-          </div>
-        </div>
-      </section>
-
-      <section id="testimony" class="text-section chapter">
-        <h2 data-lang="en">Testimony to the FBI</h2>
-        <h2 data-lang="pt" style="display: none;">Depoimento ao FBI</h2>
-
-        <p data-lang="en">Marina was contacted by the FBI in 2008. She was frightened and didn't fully cooperate. "They were very aggressive with me. They came asking to speak with me, saying I had to talk to them, that there was a case with Epstein. I had no idea what was happening."</p>
-
-        <p data-lang="pt" style="display: none;">Marina foi contatada pelo FBI em 2008. Ela estava assustada e não cooperou plenamente. "Eles foram muito agressivos comigo. Chegaram pedindo para falar comigo, dizendo que eu tinha que falar com eles, que havia um caso com Epstein. Eu não tinha ideia do que estava acontecendo."</p>
-
-        <p data-lang="en">She called one of Epstein's secretaries, who told her a lawyer would help her. She was instructed never to call that number again.</p>
-
-        <p data-lang="pt" style="display: none;">Ela ligou para uma secretária de Epstein, que lhe disse que um advogado a ajudaria. Ela foi orientada a nunca mais ligar para aquele número.</p>
-
-        <div class="victim-quote" data-lang="en">"I was very afraid, I didn't tell everything. The lawyer wasn't for me, it was for Epstein, to protect him."</div>
-        <div class="victim-quote" data-lang="pt" style="display: none;">"Fiquei com muito medo, não contei tudo. O advogado não era para mim, era para o Epstein, para proteger ele."</div>
-        <div class="victim-quote-attr">Marina Lacerda</div>
-
-        <p data-lang="en">In 2019, the FBI contacted her again. This time, she decided to speak more openly. Epstein died that same year in prison.</p>
-
-        <p data-lang="pt" style="display: none;">Em 2019, o FBI a contatou novamente. Desta vez, ela decidiu falar mais abertamente. Epstein morreu naquele mesmo ano na prisão.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-05.jpg" alt="Federal building">
-          <div class="image-credit" data-lang="en">Reuters</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">Reuters</div>
-        </div>
-      </section>
-
-      <section id="speaking-out" class="text-section chapter">
-        <h2 data-lang="en">Breaking silence: from victim to advocate</h2>
-        <h2 data-lang="pt" style="display: none;">Quebrando o silêncio: de vítima a ativista</h2>
-
-        <p data-lang="en">In September 2025, Marina came forward publicly for the first time. She gave an interview to ABC News and participated in a press conference with eight other women accusing Epstein. The event called for full disclosure of case documents in front of the U.S. Congress in Washington.</p>
-
-        <p data-lang="pt" style="display: none;">Em setembro de 2025, Marina veio a público pela primeira vez. Ela deu uma entrevista à ABC News e participou de uma coletiva com outras oito mulheres acusando Epstein. O evento pediu a divulgação completa de documentos do caso em frente ao Congresso dos EUA em Washington.</p>
-
-        <p data-lang="en">From that moment, she decided to expand her advocacy. She created Instagram and TikTok pages and hired someone to help manage content. Her goal is to raise awareness about physical and psychological abuse.</p>
-
-        <p data-lang="pt" style="display: none;">A partir daí, ela decidiu expandir seu ativismo. Criou páginas no Instagram e TikTok e contratou alguém para ajudar a gerenciar conteúdo. Seu objetivo é conscientizar sobre abuso físico e psicológico.</p>
-
-        <div class="pullquote" data-lang="en">"After I broke my silence, I haven't stopped. I opened platforms and started speaking on podcasts. I talk about how to teach our children to say no."<div class="pullquote-citation">Marina Lacerda</div></div>
-
-        <div class="pullquote" data-lang="pt" style="display: none;">"Depois que quebrei meu silêncio, eu não tenho parado. Abrir plataformas e comecei a falar em podcasts. Falo de como ensinar nossas crianças a falar não."<div class="pullquote-citation">Marina Lacerda</div></div>
-
-        <p data-lang="en">However, her public testimony has brought criticism on social media. "People attack, saying I stayed, that I went back. Why do you think other Brazilian [victims of Epstein] don't want to say anything? Family will attack."</p>
-
-        <p data-lang="pt" style="display: none;">Porém, seu testemunho público trouxe críticas nas redes sociais. "As pessoas atacam, dizendo que fiquei, que eu voltei. Por que acha que outras brasileiras [vítimas de Epstein] não querem falar nada? A família vai atacar."</p>
-
-        <p data-lang="en">Her family in Brazil questioned her motives, believing there was some political agenda. She emphasizes she has no interest in Brazilian or American politics.</p>
-
-        <p data-lang="pt" style="display: none;">Sua família no Brasil questionou seus motivos, acreditando haver alguma agenda política. Ela enfatiza que não tem interesse na política brasileira ou americana.</p>
-
-        <p data-lang="en">Marina reports receiving constant messages from other Latina women who were abused but fear speaking publicly due to similar criticism and stigma.</p>
-
-        <p data-lang="pt" style="display: none;">Marina relata receber mensagens constantes de outras mulheres latinas que foram abusadas mas temem falar publicamente devido à crítica e estigma semelhantes.</p>
-
-        <div class="image-block">
-          <img src="imgs/photo-06.jpg" alt="Marina Lacerda">
-          <div class="image-credit" data-lang="en">BBC News Brasil</div>
-          <div class="image-credit" data-lang="pt" style="display: none;">BBC News Brasil</div>
-        </div>
-      </section>
-
-      <section class="text-section">
-        <h2 data-lang="en">A testimony long overdue</h2>
-        <h2 data-lang="pt" style="display: none;">Um testemunho muito tempo esperado</h2>
-
-        <p data-lang="en">Marina's account provides unprecedented insight into the Brazilian victims connected to Epstein and the systematic nature of his exploitation. Her story illuminates the vulnerability of immigrant women and girls, their susceptibility to manipulation, and the networks of exploitation that crossed borders.</p>
-
-        <p data-lang="pt" style="display: none;">O relato de Marina oferece perspectiva sem precedentes sobre as vítimas brasileiras conectadas a Epstein e a natureza sistemática de sua exploração. Sua história ilumina a vulnerabilidade de mulheres e meninas imigrantes, sua suscetibilidade à manipulação, e as redes de exploração que cruzaram fronteiras.</p>
-
-        <div class="pullquote" data-lang="en">"I would have felt much better today if I could have spoken in 2008."<div class="pullquote-citation">Marina Lacerda</div></div>
-
-        <div class="pullquote" data-lang="pt" style="display: none;">"Eu teria me sentido muito melhor hoje se eu pudesse ter falado em 2008."<div class="pullquote-citation">Marina Lacerda</div></div>
-
-        <p data-lang="en">That moment has passed. But her courage in speaking today may help protect others and bring justice to the many women whose voices were silenced.</p>
-
-        <p data-lang="pt" style="display: none;">Aquele momento passou. Mas sua coragem em falar hoje pode ajudar a proteger outras pessoas e trazer justiça para as muitas mulheres cujas vozes foram silenciadas.</p>
-      </section>
-    </article>
-
-    <div class="navigation-footer">
-      <a href="../artigo-3/index.html" class="nav-link nav-prev" data-lang="en">Previous</a>
-      <a href="../artigo-3/index.html" class="nav-link nav-prev" data-lang="pt" style="display: none;">Anterior</a>
-
-      <a href="../index.html" class="nav-link" data-lang="en">← Back to series</a>
-      <a href="../index.html" class="nav-link" data-lang="pt" style="display: none;">← Voltar para série</a>
-
-      <a href="../artigo-5/index.html" class="nav-link nav-next" data-lang="en">Next</a>
-      <a href="../artigo-5/index.html" class="nav-link nav-next" data-lang="pt" style="display: none;">Próximo</a>
-    </div>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-disclaimer">
-        <p data-lang="en"><strong>About this series:</strong> A 9-part investigative series exploring Jeffrey Epstein's previously undocumented ties to Brazil, Brazilian victims, business interests, and his network of enablers and contacts.</p>
-        <p data-lang="pt" style="display: none;"><strong>Sobre esta série:</strong> Uma série investigativa de 9 partes explorando os laços anteriormente não documentados de Jeffrey Epstein com o Brasil, vítimas brasileiras, interesses comerciais, e sua rede de facilitadores e contatos.</p>
-
-        <p data-lang="en">Original reporting by Luiz Fernando Toledo for BBC News Brasil. Enhanced portfolio presentation.</p>
-        <p data-lang="pt" style="display: none;">Reportagem original de Luiz Fernando Toledo para BBC News Brasil. Apresentação aprimorada para portfólio.</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="../../shared/base.js"></script>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="disclaimer-bar" id="disc-en">Portfolio presentation of published journalism. Original: BBC News Brasil, December 2025. <a href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank">Read the original ↗</a></div>
+<div class="disclaimer-bar" id="disc-pt" style="display:none">Apresentação de portfólio do jornalismo publicado. Original: BBC News Brasil, dezembro de 2025. <a href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank">Leia o original ↗</a></div>
+
+<div class="lang-toggle">
+    <button id="btnEn" class="active">EN</button>
+    <button id="btnPt">PT</button>
+</div>
+
+<!-- ENGLISH -->
+<article id="art-en">
+<header class="hero">
+<div class="hero-content">
+<h1>'Around 50 Brazilian women' at Epstein's mansion, survivor says</h1>
+<p class="hero-meta">Luiz Fernando Toledo | BBC News Brasil | December 24, 2025</p>
+</div>
+</header>
+<div class="article-content"><div class="container">
+<div class="content-warning">CONTENT WARNING: This text contains accounts of sexual violence.</div>
+<section class="section">
+<p>Marina Lacerda came forward in September 2025 to report having been a victim of sexual violence by Jeffrey Epstein. Now, in an interview with BBC News Brasil, she says that many other Brazilian women like her would have been at the billionaire's mansion and would have been abused by him.</p>
+<p>"At least around 50 Brazilian women, I think. I brought some of those girls, and they brought other girls," Marina says.</p>
+<p>Epstein died in a prison cell in New York in August 2019, while awaiting trial — with no possibility of bail — on charges of sex trafficking, more than a decade after his conviction for soliciting prostitution from a minor, for which he registered as a sex offender.</p>
+<p>During the period of the abuse, Lacerda says she was living in Astoria, a neighborhood in the Queens district of New York, known for having a large Brazilian community.</p>
+<p>BBC News Brasil first revealed the connection of the Epstein case with Brazil through a document released by the U.S. Department of Justice, which spoke of a "major Brazilian group," but the names and details that could give more context were redacted.</p>
+<p>Marina is from Belo Horizonte (MG) and says she went to the United States when she was 8 years old to accompany her mother. She says that, still as a teenager, she worked in various different jobs, but the money was not enough to support herself. "I was an immigrant and a minor," she says.</p>
+<p>That is when she discovered a group of young people, linked to a church in Astoria, with other Brazilians. Until one of them arrived with an invitation.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-02.jpg" alt="Marina Lacerda"><p class="image-caption">Marina Lacerda says she was abused by Epstein from ages 14 to 17</p></div>
+<section class="section">
+<p>"That girl said: I know you are going through tremendous hardship at home and I wanted to help you. There's a super-rich, powerful guy who lives in Manhattan, and he likes to get massages from young girls."</p>
+<p>She says she had already worked temporarily as a receptionist at a spa in Koreatown, a Manhattan neighborhood, and that she had learned the basics of how to give a massage. "Of course I had no training, right? But I told that friend I knew how."</p>
+<p>The friend then warned her: "You have to wear a bikini underneath, because he likes girls who give massages in a bikini, in a bra."</p>
+</section>
+<section class="section">
+<h2>'You've never made $300 in 40 minutes'</h2>
+<p>Marina tells BBC News Brasil that she found the friend's invitation very strange, but decided to go anyway. She was 14 years old.</p>
+<p>When she arrived at the place, she saw that things would be very different from what her colleague had said. "I was very nervous and anxious, but this friend said he was super nice," she says.</p>
+<p>"An employee took me, took that friend, put us in an elevator, and we went to the third floor. Then a door opened with a corridor. We walked to a massage room with everything dark. The window was covered."</p>
+<p>Epstein reportedly introduced himself for the first time. "He asked where I was from, how old I was, if I went to school."</p>
+<p>Marina reports that Epstein spent a good part of the time on the phone and gave the impression of talking with important people. According to her, after ending one of the calls, he turned around and began to touch her.</p>
+<p>She says they asked her to take off her blouse. Epstein, trying to seem kind, wanted to touch her. "I said: 'no'. I said I didn't feel comfortable." She then noticed a change in atmosphere. The young woman who was with her supposedly reacted with irritation. "She looked at me with anger. I thought that was out of place," she recounts.</p>
+<p>According to Marina, Epstein then tried to minimize the situation. "He said: 'give it time, she'll feel comfortable with me.' At that point, I switched places with my friend, and he started touching her."</p>
+<p>She says that Epstein's behavior changed with her Brazilian colleague. "He was super aggressive."</p>
+<p>Marina says the situation escalated rapidly and that she was in shock. "It was a very intense thing. I didn't know that was going to happen."</p>
+<p>When Epstein finished, they got dressed, received the money, and left. "He said he would see me again. I stayed quiet, thinking I would never see that guy again."</p>
+<p>When they left, Marina says she complained to the friend about the situation. The colleague replied: "You've never made $300 in 40 minutes."</p>
+<p>"We argued, she threw the money in my face and told me to stop complaining, that I needed that money and it was going to help me a lot."</p>
+<p>She says the friend convinced her, and she went back to the place other times. "You live in Astoria, you're an immigrant, you don't know anyone. This guy is going to help you."</p>
+</section>
+<div class="image-block"><img src="imgs/photo-03.jpg" alt="Epstein documents"><p class="image-caption">Messages from the Epstein archive released by the U.S. government</p></div>
+<section class="section">
+<h2>'We brought several Brazilian women, unfortunately'</h2>
+<p>Marina Lacerda says that after a few visits, the situation "escalated."</p>
+<p>"It started becoming a mess. He [Epstein] started asking me to bring girls. I didn't want my friends to know about this. But there was a friend who was going through abuse from her brother and lived with me for a while." That friend agreed.</p>
+<p>From then on, the pair reportedly began to seek out other girls for Epstein, Marina recounts.</p>
+<p>"Girls who needed to work because they were immigrants, didn't have immigration documents, didn't have family. A lot of Brazilians, Russians, Hispanics. We brought several Brazilian women, unfortunately," she says.</p>
+<div class="pullquote">"Brazilian girls arrive here [in the U.S.] and have no documents. There's no way to make a living. It's very hard to be an immigrant here, especially Brazilian when you come alone."<div class="pullquote-attr">— Marina Lacerda, survivor</div></div>
+<p>She says that over time, she began to have more freedom at the house, and that new girls asked to come with her to the place. "He never said we were minors. He said he was getting massages from pretty, young girls."</p>
+<p>She also recounted going to Epstein's office and that he would give her money when she needed it. "He was very manipulative. He always told us he owned governments, banks."</p>
+<p>She also reported an alleged episode of racism, when she had brought a Black Brazilian woman to the house. "He got angry with me. Said I had to stop bringing dark-skinned girls. I think they didn't even pay her."</p>
+<p>Over time, Lacerda says Epstein began to complain that she was only bringing "old" girls and that she should look for younger ones. "I was already feeling very bad about bringing girls who were 15, 16."</p>
+<p>Recalling the situation, she laments the lack of support for teenagers like herself. "I went out to Brazilian clubs and saw girls 14, 15, 16 years old, with no ID. Where were our mothers? I think my mother made a lot of mistakes. If she had given me a proper upbringing, had found a way not to leave me loose, I wouldn't have done the things I did. I brought the girls and the girls brought other girls. I was abused there from 14 to 17 years old."</p>
+</section>
+<div class="image-block"><img src="imgs/photo-04.jpg" alt="FBI documents"><p class="image-caption">The FBI sought Marina Lacerda in 2008 and again in 2019</p></div>
+<section class="section">
+<h2>Testimonies to the FBI</h2>
+<p>Marina says she was approached by the FBI — the American federal police — to tell what she knew about Epstein as early as 2008, but at that time, she was afraid to speak. She recounts that she was living with other Brazilians in a house, also in Astoria.</p>
+<p>"They were very aggressive with me. They came asking to speak with me, that I had to talk to them, that there was a case with Epstein. I had no idea what was happening."</p>
+<p>Lacerda says she called a secretary of Epstein's at the time to ask what was happening and that he allegedly promised to send a lawyer to help. She was instructed never to call that number again.</p>
+<p>"I was very scared, I didn't tell everything. The lawyer wasn't for me, it was for Epstein, to protect him."</p>
+<p>In 2019, the FBI sought Marina again. This time, she decided to speak in more detail. Epstein would die that same year, in July, in a prison.</p>
+<p>"They wanted to know who I brought there [to the house]. When I gave my testimony, I didn't remember much at that point. Trauma destroys you. I was very nervous."</p>
+</section>
+<section class="section">
+<h2>Attacks after decision to go public</h2>
+<p>In September 2025, Marina Lacerda came forward publicly to tell her story for the first time. She gave an interview to the American ABC TV network and also participated in a press conference with eight other women who accuse Epstein of abuse.</p>
+<p>The act, which called for the revelation of all documents about the case, took place in front of the U.S. Congress in Washington. From then on, she decided she should speak more about the case: she created pages on Instagram and TikTok and hired a person to help her with the content. Her goal, she says, is to raise awareness about physical and psychological abuse.</p>
+<p>"After I broke my silence, I haven't stopped. Opening platforms and starting to speak on podcasts. I talk about how to teach our children to say no. Sexual abuse, emotional, financial, physical — it starts with us. What you allow to happen. Many parents don't have this knowledge."</p>
+<p>Since she began giving interviews, she laments that she has been criticized on social media.</p>
+<p>"People attack, saying I stayed, that I went back [to the house]. Why do you think other Brazilian women [victims of Epstein] don't want to say anything? The family will attack. When I spoke in Brazil, my family came down on me hard. And to think my family in Brazil never got involved in anything that happened here."</p>
+<p>She says the family believed her accounts had some political objective. "They thought it had something to do with Lula or Bolsonaro. I said, guys, I don't care about Lula and Bolsonaro. I don't care about Trump here."</p>
+<div class="pullquote">"There would be more than enough reason for them to say something, but I can't ask that of anyone."<div class="pullquote-attr">— Marina Lacerda</div></div>
+<p>She says she reads some of the comments on publications about her and many are offensive, which can discourage other victims from telling their stories. Marina says she constantly receives reports from other Latin American women who were abused but don't want to go public for fear of criticism.</p>
+</section>
+<div class="original-link"><a href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank" rel="noopener">Read the original article on BBC News Brasil ↗</a></div>
+<div class="back-link"><a href="../../../../index.html">← Back to portfolio</a></div>
+</div></div>
+</article>
+
+<!-- PORTUGUESE -->
+<article id="art-pt" style="display:none">
+<header class="hero">
+<div class="hero-content">
+<h1>'Umas 50 brasileiras' estiveram na mansão de Epstein, diz vítima do bilionário à BBC</h1>
+<p class="hero-meta">Luiz Fernando Toledo | BBC News Brasil | 24 de dezembro de 2025</p>
+</div>
+</header>
+<div class="article-content"><div class="container">
+<div class="content-warning">ATENÇÃO: Esse texto traz relatos de violência sexual.</div>
+<section class="section">
+<p>Marina Lacerda veio a público em setembro deste ano para relatar ter sido vítima de violência sexual por Jeffrey Epstein. Agora, em entrevista à BBC News Brasil, ela conta que muitas outras brasileiras como ela teriam estado na mansão do bilionário e que teriam sido abusadas por ele.</p>
+<p>"Pelo menos umas 50 brasileiras, eu acho. Eu levei algumas dessas meninas, e elas levaram outras meninas", diz Marina.</p>
+<p>Epstein morreu em uma cela de prisão em Nova York em agosto de 2019, enquanto aguardava, sem possibilidade de fiança, seu julgamento por acusações de tráfico sexual, mais de uma década após sua condenação por contratar serviços de prostituição de uma menor de idade, pelo qual ficou registrado como agressor sexual.</p>
+<p>Na época dos abusos, Lacerda conta que morava em Astoria, bairro do distrito de Queens, em Nova York, conhecido por ter uma grande comunidade de brasileiros.</p>
+<p>A BBC News Brasil revelou o elo do caso de Epstein com o Brasil a partir de um documento divulgado pelo Departamento de Justiça dos Estados Unidos, o qual falava em um "grande grupo brasileiro", mas os nomes e detalhes que poderiam dar maior contexto das informações estão tarjados.</p>
+<p>Marina é de Belo Horizonte (MG) e conta que foi para os Estados Unidos quando tinha 8 anos, para acompanhar a mãe. Ela diz que, ainda adolescente, trabalhou em vários empregos diferentes, mas que o dinheiro não era suficiente para se sustentar. "Eu era imigrante e menor de idade", afirma.</p>
+<p>Foi aí que ela descobriu um grupo de jovens, vinculado a uma igreja em Astoria, com outras brasileiras. Até que uma delas chegou com um convite.</p>
+</section>
+<div class="image-block"><img src="imgs/photo-02.jpg" alt="Marina Lacerda"><p class="image-caption">Marina Lacerda diz ter levado outras brasileiras para conhecer Jeffrey Epstein</p></div>
+<section class="section">
+<p>"Essa menina falou: sei que você está passando uma dificuldade imensa na sua casa e queria te ajudar. Tem um cara super-rico, poderoso, que mora em Manhattan, e gosta de pegar massagem de menina nova."</p>
+<p>Ela conta que já tinha trabalhado temporariamente como recepcionista em um spa em Koreatown, um bairro de Manhattan, e que teria aprendido o básico sobre como fazer uma massagem. "É claro que eu não tinha formação, né? Mas falei para essa amiga que sabia fazer."</p>
+<p>A amiga então a alertou: "Você tem que usar um biquíni por baixo, porque ele gosta de menina que faz massagem com biquíni, de sutiã".</p>
+</section>
+<section class="section">
+<h2>'Você nunca fez 300 dólares em 40 minutos'</h2>
+<p>Marina conta à BBC News Brasil que achou o convite da amiga muito estranho, mas decidiu ir mesmo assim. Ela tinha 14 anos.</p>
+<p>Quando chegou ao local, viu que as coisas seriam muito diferentes do que a colega contou. "Eu estava muito nervosa e ansiosa, mas essa amiga disse que ele era super gente boa", diz.</p>
+<p>"Uma empregada me pegou, pegou essa amiga, colocou num elevador, e fomos até o terceiro andar. Então, abriu uma porta, com um corredor. Andamos até um quarto de massagem com tudo escuro. A janela estava tampada."</p>
+<p>Epstein então teria se apresentado pela primeira vez. "Ele perguntou de onde eu era, quantos anos eu tinha, se eu ia para a escola."</p>
+<p>Marina relata que Epstein passava boa parte do tempo ao telefone e dava a impressão de estar falando com pessoas importantes. Segundo ela, ao encerrar uma das ligações, ele se virou e começou a tocá-la.</p>
+<p>Ela afirma que pediram para que tirasse a blusa. Diz que Epstein, tentando se mostrar gentil, quis tocá-la. "Eu falei: 'não'. Eu disse que não me sentia confortável." Em seguida, conta que percebeu uma mudança no clima. A jovem que estava com ela teria reagido com irritação. "Ela me olhou com raiva. Eu achei que aquilo não fazia parte", relata.</p>
+<p>Segundo Marina, Epstein então tentou minimizar a situação. "Ele disse: 'dá um tempo que ela vai se sentir confortável comigo'. Nisso, eu troquei de lugar com minha amiga, e ele começou a tocar nela."</p>
+<p>Ela diz que a postura de Epstein mudou com a colega brasileira. "Ele foi super agressivo."</p>
+<p>Marina afirma que a situação se intensificou rapidamente e que ficou em choque. "Foi uma coisa muito intensa. Não sabia que isso ia acontecer."</p>
+<p>Quando Epstein terminou, elas se vestiram, receberam o dinheiro e saíram. "Ele disse que me veria de novo. Eu fiquei calada, pensando que nunca mais veria esse cara."</p>
+<p>Quando saíram, Marina diz ter reclamado com a amiga da situação. Essa colega rebateu: "Você nunca ganhou 300 dólares em 40 minutos".</p>
+<p>"Discutimos, ela jogou o dinheiro na minha cara e falou para eu parar de reclamar, que eu precisava desse dinheiro e que ia me ajudar muito."</p>
+<p>Ela conta que a amiga a convenceu, e ela voltou ao local outras vezes. "Você mora em Astoria, é imigrante, não conhece ninguém. Esse cara vai te ajudar."</p>
+</section>
+<div class="image-block"><img src="imgs/photo-03.jpg" alt="Documentos do arquivo Epstein"><p class="image-caption">Novas mensagens do arquivo Epstein foram divulgadas pelo governo americano nos últimos meses</p></div>
+<section class="section">
+<h2>'Levamos várias brasileiras, infelizmente'</h2>
+<p>Marina Lacerda afirma que, após algumas visitas, a situação "escalou".</p>
+<p>"Começou a virar uma bagunça. Ele [Epstein] começou a pedir para eu levar meninas. Eu não queria que minhas amigas soubessem disso. Mas tinha uma amiga que estava passando por abuso pelo irmão dela e morou comigo por um tempo." A amiga topou.</p>
+<p>Dali em diante, a dupla teria começado a buscar outras meninas para Epstein, conta Marina.</p>
+<p>"Meninas que estavam necessitando trabalhar porque eram imigrantes, não tinham documentos de imigração, não tinham família. Um montão de brasileiras, russa, hispânicas. Levamos várias brasileiras, infelizmente", diz ela.</p>
+<div class="pullquote">"Brasileiro chega aqui [nos EUA] e não tem documentos. Não tem como dar um jeito na vida. É muito difícil ser imigrante aqui, ainda mais brasileira quando vem sozinha."<div class="pullquote-attr">— Marina Lacerda, sobrevivente</div></div>
+<p>Ela diz que, com o tempo, começou a ter mais liberdade na casa, e que novas meninas pediam para ir com ela ao local. "Ele nunca falava que éramos menores. Dizia que estava ganhando massagem de menina bonita, nova."</p>
+<p>Contou também que ia ao escritório de Epstein e que ele dava dinheiro quando ela precisava. "Ele foi muito manipulador. Sempre falava para a gente que era dono de governo, de banco."</p>
+<p>Ela relatou também um suposto episódio de racismo, quando teria levado uma brasileira negra para a casa. "Ele ficou puto comigo. Falou que tinha que parar de trazer menina escura. Acho que não a pagaram."</p>
+<p>Com o tempo, Lacerda diz que Epstein passou a reclamar que ela só estava levando meninas "velhas" e que ela deveria buscar garotas mais jovens. "Eu já estava me sentindo muito mal de levar meninas de 15, 16 anos."</p>
+<p>Ao lembrar da situação, ela reclama da falta de apoio de familiares com adolescentes como ela. "Eu saía para clubes brasileiros e via meninas com 14, 15, 16 anos, sem identidade. Cadê nossas mães? Acho que minha mãe errou muito. Se ela tivesse me dado uma estrada legal, tivesse feito um jeito de não me deixar solta, não iria fazer as coisas que ia fazer. Eu levei as meninas e as meninas levaram outras meninas. Fui abusada lá dos 14 até os 17 anos."</p>
+</section>
+<div class="image-block"><img src="imgs/photo-04.jpg" alt="FBI"><p class="image-caption">O FBI procurou Marina Lacerda em 2008 e novamente em 2019</p></div>
+<section class="section">
+<h2>Depoimentos ao FBI</h2>
+<p>Marina conta que foi procurada pelo FBI, a polícia federal americana, para contar o que sabia sobre Epstein ainda em 2008, mas, naquela época, ela teve medo de falar. Ela relata que morava então com outras brasileiras em uma casa, também em Astoria.</p>
+<p>"Eles foram muito agressivos comigo. Chegaram pedindo para falar comigo, que eu tinha que falar com eles, que havia um caso com Epstein. Eu não tinha ideia do que estava acontecendo."</p>
+<p>Lacerda diz que ligou para uma secretária de Epstein à época para perguntar o que estava acontecendo e que ele teria prometido enviar um advogado para ajudar. Ela foi orientada a nunca mais ligar para aquele número.</p>
+<p>"Fiquei com muito medo, não contei tudo. O advogado não era para mim, era para o Epstein, para proteger ele."</p>
+<p>Em 2019, o FBI buscou Marina de novo. Dessa vez, ela decidiu falar em mais detalhes. Epstein morreria no mesmo ano, em julho, em uma prisão.</p>
+<p>"Queriam saber quem eu levei lá [na casa]. Quando dei depoimento, não lembrava de muita coisa até então. O trauma acaba com você. Estava muito nervosa."</p>
+</section>
+<section class="section">
+<h2>Ataques após decisão de vir a público</h2>
+<p>Em setembro deste ano, Marina Lacerda veio a público contar sua história pela primeira vez. Deu uma entrevista à rede de TV americana ABC News e também participou de uma entrevista coletiva com outras oito mulheres que acusam Epstein de abusos.</p>
+<p>O ato, que pediu a revelação de todos os documentos sobre o caso, aconteceu em frente ao Congresso americano, em Washington. Dali em diante, ela decidiu que deveria falar mais sobre o caso: criou páginas no Instagram e no TikTok e contratou uma pessoa para ajudá-la com os conteúdos. Seu objetivo, conta, é conscientizar mais pessoas sobre abusos físicos e psicológicos.</p>
+<p>"Depois que quebrei meu silêncio, eu não tenho parado. Abrir plataformas e comecei a falar em podcasts. Falo de como ensinar nossas crianças a falar não. O abuso sexual, emocional, financeiro, físico, começa com a gente. O que você deixa acontecer. Muitos pais não têm esse conhecimento."</p>
+<p>Desde que começou a dar entrevistas, lamenta que tem sido criticada nas redes sociais.</p>
+<p>"As pessoas atacam, falando que fiquei, que eu voltei [na casa]. Por que acha que outras brasileiras [vítimas de Epstein] não querem falar nada? A família vai atacar. Quando falei no Brasil, minha família caiu em cima de mim feio. E olha que minha família no Brasil nunca entrou no meio de nada que aconteceu aqui."</p>
+<p>Ela diz que a família acreditava que seus relatos tinham algum objetivo político. "Pensaram que tinha alguma coisa a ver com o Lula ou o Bolsonaro. Falei, gente, não ligo para Lula e o Bolsonaro. Não ligo para o Trump aqui. Tem pessoas que me perguntam sobre o Lula. Não estou nem aí. Não sei nada do Brasil."</p>
+<div class="pullquote">"É só ver os ataques que eu recebo. Seria mais do que certo falarem alguma coisa, mas não posso pedir isso a ninguém."<div class="pullquote-attr">— Marina Lacerda</div></div>
+<p>Ela conta que lê alguns dos comentários das publicações sobre ela e muitos são ofensivos, o que pode desestimular outras vítimas de contar suas histórias. Marina diz que recebe relatos constantes de outras latinas que foram abusadas, mas que não querem vir a público por medo de críticas.</p>
+</section>
+<div class="original-link"><a href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank" rel="noopener">Leia o artigo original na BBC News Brasil ↗</a></div>
+<div class="back-link"><a href="../../../../index.html">← Voltar ao portfólio</a></div>
+</div></div>
+</article>
+
+<script src="../../shared/base.js"></script>
+<script>
+(function(){
+    var btnEn = document.getElementById("btnEn");
+    var btnPt = document.getElementById("btnPt");
+    var artEn = document.getElementById("art-en");
+    var artPt = document.getElementById("art-pt");
+    var discEn = document.getElementById("disc-en");
+    var discPt = document.getElementById("disc-pt");
+    function setLang(lang){
+        if(lang==="pt"){
+            artEn.style.display="none"; artPt.style.display="";
+            discEn.style.display="none"; discPt.style.display="";
+            btnEn.classList.remove("active"); btnPt.classList.add("active");
+        } else {
+            artPt.style.display="none"; artEn.style.display="";
+            discPt.style.display="none"; discEn.style.display="";
+            btnPt.classList.remove("active"); btnEn.classList.add("active");
+        }
+        localStorage.setItem("portfolio-lang", lang);
+    }
+    var saved = localStorage.getItem("portfolio-lang") || "en";
+    setLang(saved);
+    btnEn.addEventListener("click", function(){ setLang("en"); });
+    btnPt.addEventListener("click", function(){ setLang("pt"); });
+    window.addEventListener("scroll", function(){
+        var h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        document.getElementById("progressBar").style.width = (window.scrollY/h*100)+"%";
+    });
+})();
+</script>
 </body>
 </html>
