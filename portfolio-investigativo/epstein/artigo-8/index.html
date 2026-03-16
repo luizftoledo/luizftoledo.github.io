@@ -3,325 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Epstein Series — Part 8: The São Paulo Apartment | BBC News Brasil</title>
+  <meta name="description" content="Real estate records show Jeffrey Epstein purchased a luxury apartment in São Paulo. An investigation into his financial connections in Brazil.">
+  <title data-lang="en">Epstein purchased luxury apartment in São Paulo: property deed investigation</title>
+  <title data-lang="pt">Epstein comprou apartamento em bairro nobre de São Paulo, mostra escritura</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../shared/base.css">
   <style>
-    .hero {
-      background: linear-gradient(160deg, #0d1b2a 0%, #1e2d3d 50%, #0d1b2a 100%);
-      min-height: 88vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 40px 80px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 70%, rgba(196,30,58,0.12) 0%, transparent 60%);
-    }
-    .hero-content { position: relative; z-index: 1; max-width: 780px; }
-    .hero-series-tag {
-      display: inline-block;
-      background: rgba(196,30,58,0.2);
-      border: 1px solid rgba(196,30,58,0.4);
-      color: #e8a0aa;
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 2px;
-      margin-bottom: 28px;
-    }
-    .hero-title {
-      font-family: var(--display);
-      font-size: clamp(34px, 5vw, 60px);
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.1;
-      margin-bottom: 24px;
-    }
-    .hero-deck {
-      font-family: var(--serif);
-      font-size: clamp(16px, 2vw, 20px);
-      color: rgba(255,255,255,0.72);
-      line-height: 1.65;
-      margin-bottom: 36px;
-    }
-    .hero-meta {
-      font-family: var(--sans);
-      font-size: 13px;
-      color: rgba(255,255,255,0.45);
-    }
-    .hero-meta strong { color: rgba(255,255,255,0.72); }
-
-    .breadcrumb { padding: 20px 40px; max-width: 900px; margin: 0 auto; }
-    .breadcrumb a { font-family: var(--sans); font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 600; }
-    .breadcrumb a:hover { text-decoration: underline; }
-
-    .text-section {
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 40px 40px;
-      opacity: 0;
-    }
-    .text-section p {
-      font-family: var(--serif);
-      font-size: 19px;
-      line-height: 1.8;
-      color: #1a1a2e;
-      margin-bottom: 22px;
-    }
-    .text-section h2 {
-      font-family: var(--display);
-      font-size: 30px;
-      font-weight: 700;
-      color: #1a1a2e;
-      margin: 48px 0 20px;
-      line-height: 1.25;
-    }
-
-    .chapter-divider {
-      max-width: 700px;
-      margin: 20px auto;
-      padding: 0 40px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .chapter-divider::before, .chapter-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(26,26,46,0.15);
-    }
-    .chapter-num {
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-
-    /* Property card */
-    .property-card {
-      max-width: 700px;
-      margin: 50px auto;
-      padding: 0 40px;
-      opacity: 0;
-    }
-    .property-card-inner {
-      background: #1a1a2e;
-      color: #fff;
-      padding: 40px;
-      position: relative;
-    }
-    .property-card-inner::before {
-      content: '📄';
-      position: absolute;
-      top: -16px;
-      left: 40px;
-      font-size: 28px;
-    }
-    .property-label {
-      font-family: var(--sans);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .property-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .property-item label {
-      display: block;
-      font-family: var(--sans);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 4px;
-    }
-    .property-item value {
-      display: block;
-      font-family: var(--display);
-      font-size: 18px;
-      color: #fff;
-    }
-
-    .stats-section { background: #f8f6f3; padding: 80px 40px; opacity: 0; }
-    .stats-inner { max-width: 900px; margin: 0 auto; }
-    .stats-label {
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      text-align: center;
-      margin-bottom: 48px;
-    }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; }
-    .stat-card { background: #fff; border-top: 3px solid var(--accent); padding: 32px 24px; text-align: center; }
-    .stat-number { font-family: var(--display); font-size: 48px; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 10px; }
-    .stat-label { font-family: var(--sans); font-size: 13px; color: #555; line-height: 1.4; }
-
-    .pullquote {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 48px 60px;
-      background: #1a1a2e;
-      position: relative;
-      opacity: 0;
-    }
-    .pullquote::before {
-      content: '"';
-      position: absolute;
-      top: 10px;
-      left: 30px;
-      font-family: var(--display);
-      font-size: 100px;
-      color: var(--accent);
-      line-height: 1;
-      opacity: 0.4;
-    }
-    .pullquote blockquote {
-      font-family: var(--display);
-      font-size: clamp(20px, 2.5vw, 26px);
-      font-style: italic;
-      color: #fff;
-      line-height: 1.4;
-      margin: 0 0 20px;
-    }
-    .pullquote cite {
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-    }
-
-    .doc-box { max-width: 700px; margin: 40px auto; padding: 0 40px; opacity: 0; }
-    .doc-box-inner {
-      background: #f0f4f8;
-      border-left: 4px solid #3a7bd5;
-      padding: 28px 32px;
-    }
-    .doc-box-label {
-      font-family: var(--sans);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #3a7bd5;
-      margin-bottom: 12px;
-    }
-    .doc-box-text { font-family: var(--sans); font-size: 15px; color: #2d3748; line-height: 1.6; }
-
-    .map-section {
-      max-width: 700px;
-      margin: 48px auto;
-      padding: 0 40px;
-      opacity: 0;
-    }
-    .map-label {
-      font-family: var(--sans);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 20px;
-    }
-    .map-visual {
-      background: #e8edf5;
-      height: 220px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid #d0d8e8;
-      position: relative;
-    }
-    .map-pin {
-      position: absolute;
-      top: 50%;
-      left: 55%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-    }
-    .map-pin-dot {
-      width: 14px;
-      height: 14px;
-      background: var(--accent);
-      border-radius: 50%;
-      margin: 0 auto 6px;
-      box-shadow: 0 0 0 4px rgba(196,30,58,0.2);
-    }
-    .map-pin-label {
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 700;
-      color: #1a1a2e;
-      white-space: nowrap;
-    }
-    .map-caption { font-family: var(--sans); font-size: 11px; color: #666; margin-top: 8px; font-style: italic; }
-
-    footer { background: var(--primary, #1a1a2e); color: #fff; padding: 60px 40px; }
-    .footer-inner { max-width: 800px; margin: 0 auto; }
-    .footer-disclaimer {
-      border-left: 4px solid var(--accent);
-      padding: 20px 24px;
-      margin-bottom: 40px;
-      background: rgba(255,255,255,0.05);
-    }
-    .footer-disclaimer p { font-family: var(--sans); font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0 0 8px; }
-    .footer-disclaimer a { color: #e8a0aa; }
-    .footer-nav { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
-    .footer-nav a { font-family: var(--sans); font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; }
-    .footer-nav a:hover { color: #fff; }
-    .footer-copy { font-family: var(--sans); font-size: 12px; color: rgba(255,255,255,0.3); }
-
-    @media (max-width: 600px) {
-      .property-grid { grid-template-columns: 1fr; }
-      .pullquote { padding: 32px 28px; }
-      .text-section { padding: 28px 20px; }
-    }
+    .property-specs {display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin: 40px 0;}
+    .spec-item {background: var(--bg-light); padding: 20px; border-left: 4px solid var(--accent); border-radius: 2px;}
+    .spec-label {font-family: var(--sans); font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;}
+    .spec-value {font-family: var(--display); font-size: 24px; font-weight: 700; color: var(--text-dark);}
+    .timeline-custom {margin: 60px 0;}
+    .timeline-custom-item {display: grid; grid-template-columns: 140px 1fr; gap: 40px; margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid var(--border);}
+    .timeline-custom-item:last-child {border-bottom: none;}
+    .timeline-year {font-family: var(--display); font-size: 18px; font-weight: 700; color: var(--accent);}
+    .timeline-content {font-size: 16px; line-height: 1.7;}
+    .series-nav {display: flex; justify-content: space-between; gap: 20px; margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--border);}
+    .series-nav a {flex: 1; padding: 20px; background: var(--bg-light); border: 1px solid var(--border); border-radius: 2px; text-decoration: none; color: var(--text-dark); transition: all 0.3s;}
+    .series-nav a:hover {background: var(--primary); color: var(--text-light); border-color: var(--primary);}
+    .nav-label {font-family: var(--sans); font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.5px;}
+    .nav-title {font-family: var(--serif); font-size: 16px; line-height: 1.4; font-weight: 600;}
+    .series-nav a:hover .nav-label {color: rgba(255,255,255,0.8);}
+    .series-nav a.next {text-align: right;}
+    .back-link {display: inline-block; margin-bottom: 40px; font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; text-decoration: none; letter-spacing: 0.5px;}
+    .series-indicator {background: rgba(196, 30, 58, 0.1); padding: 12px 20px; margin-bottom: 40px; font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px;}
+    @media (max-width: 768px) {.series-nav {flex-direction: column;} .series-nav a {width: 100%;} .timeline-custom-item {grid-template-columns: 1fr; gap: 12px;}}
   </style>
 </head>
 <body class="lang-en">
-
-  <!-- Disclaimer Bar -->
   <div class="disclaimer-bar" id="disclaimerBar">
     <div class="disclaimer-inner">
-      <div class="disclaimer-icon">⚠</div>
-      <p class="disclaimer-text">
-        <strong data-lang="en">Important notice:</strong>
-        <strong data-lang="pt">Aviso importante:</strong>
-        <span data-lang="en">This is an alternative layout version of a BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalistic content belongs exclusively to BBC News Brasil. &nbsp;</span>
-        <span data-lang="pt">Esta é uma versão com layout alternativo de uma reportagem da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o conteúdo jornalístico pertence exclusivamente à BBC News Brasil. &nbsp;</span>
-        <a href="https://www.bbc.com/portuguese/articles/cm21e7gnx0ro" target="_blank" rel="noopener" data-lang="en">Read original BBC report ↗</a>
-        <a href="https://www.bbc.com/portuguese/articles/cm21e7gnx0ro" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC ↗</a>
-      </p>
-      <button class="disclaimer-close" id="disclaimerClose" aria-label="Close">✕</button>
+      <div class="disclaimer-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg></div>
+      <p class="disclaimer-text"><strong data-lang="en">Portfolio disclaimer:</strong><strong data-lang="pt">Aviso de portfólio:</strong> <span data-lang="en">This is an enhanced portfolio presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span><span data-lang="pt">Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span></p>
+      <button class="disclaimer-close" id="disclaimerClose" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
   </div>
-
-  <!-- Language Toggle -->
   <div class="lang-toggle-bar" id="langBar">
     <div class="lang-toggle-inner">
       <span class="lang-toggle-label" data-lang="en">Language:</span>
@@ -330,201 +48,168 @@
       <button class="lang-btn" id="btnPt">PT</button>
     </div>
   </div>
-
   <div class="progress-bar" id="progressBar"></div>
-
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-series-tag" data-lang="en">EPSTEIN SERIES — PART 8 · BBC NEWS BRASIL</div>
-      <div class="hero-series-tag" data-lang="pt">SÉRIE EPSTEIN — PARTE 8 · BBC NEWS BRASIL</div>
-      <h1 class="hero-title" data-lang="en">The Property Deed That Placed Epstein in São Paulo</h1>
-      <h1 class="hero-title" data-lang="pt">A Escritura Que Colocou Epstein em São Paulo</h1>
-      <p class="hero-deck" data-lang="en">A document obtained by BBC News Brasil shows that Jeffrey Epstein purchased a luxury apartment in Vila Olímpia — one of São Paulo's most expensive neighbourhoods — in May 2003.</p>
-      <p class="hero-deck" data-lang="pt">Um documento obtido pela BBC News Brasil mostra que Jeffrey Epstein comprou um apartamento de luxo em Vila Olímpia — um dos bairros mais caros de São Paulo — em maio de 2003.</p>
-      <div class="hero-meta">
-        <strong data-lang="en">By Luiz Fernando Toledo</strong>
-        <strong data-lang="pt">Por Luiz Fernando Toledo</strong>
-        &nbsp;·&nbsp;
-        <span data-lang="en">BBC News Brasil · February 14, 2026 · 6 min read</span>
-        <span data-lang="pt">BBC News Brasil · 14 de fevereiro de 2026 · 6 min de leitura</span>
-      </div>
-    </div>
-  </section>
-
-  <main>
-    <div class="breadcrumb">
-      <a href="../index.html" data-lang="en">← Epstein Series</a>
-      <a href="../index.html" data-lang="pt">← Série Epstein</a>
-    </div>
-
-    <!-- Stats -->
-    <section class="stats-section fade-in">
-      <div class="stats-inner">
-        <p class="stats-label" data-lang="en">The property at a glance</p>
-        <p class="stats-label" data-lang="pt">O imóvel em números</p>
-        <div class="stats-grid">
-          <div class="stat-card" data-count="93">
-            <div class="stat-number">93m²</div>
-            <div class="stat-label" data-lang="en">Private area of the apartment</div>
-            <div class="stat-label" data-lang="pt">Área privativa do apartamento</div>
-          </div>
-          <div class="stat-card" data-count="2003">
-            <div class="stat-number">2003</div>
-            <div class="stat-label" data-lang="en">Year of purchase by Epstein</div>
-            <div class="stat-label" data-lang="pt">Ano de compra por Epstein</div>
-          </div>
-          <div class="stat-card" data-count="245">
-            <div class="stat-number">R$245k</div>
-            <div class="stat-label" data-lang="en">Purchase price (May 2003)</div>
-            <div class="stat-label" data-lang="pt">Preço de compra (maio 2003)</div>
-          </div>
-          <div class="stat-card" data-count="2">
-            <div class="stat-number">2 yr</div>
-            <div class="stat-label" data-lang="en">Years the apartment remained in his name</div>
-            <div class="stat-label" data-lang="pt">Anos em que o imóvel ficou em seu nome</div>
-          </div>
+  <article>
+    <section class="hero" style="background: linear-gradient(135deg, rgba(26, 26, 26, 0.92), rgba(45, 45, 45, 0.92)), url('imgs/photo-01.jpg') center/cover;">
+      <div class="hero-content">
+        <div class="series-indicator fade-in" data-lang="en">Part 8 of 9 — The Epstein Brazil connection</div>
+        <div class="series-indicator fade-in" data-lang="pt">Parte 8 de 9 — A conexão Epstein-Brasil</div>
+        <h1 class="hero-title fade-in" data-lang="en">Epstein purchased luxury apartment in São Paulo: property deed reveals Brazil real estate connection</h1>
+        <h1 class="hero-title fade-in" data-lang="pt">Epstein comprou apartamento em bairro nobre de São Paulo: escritura revela conexão imobiliária</h1>
+        <p class="hero-subtitle fade-in" data-lang="en">Official property records confirm the American financier owned a high-value apartment in Vila Olímpia, São Paulo. Financial transfers and subsequent contact with Brazilian businesswomen deepen the picture of his operations in the country.</p>
+        <p class="hero-subtitle fade-in" data-lang="pt">Registros oficiais de propriedade confirmam que o financista americano possuía um apartamento de alto valor em Vila Olímpia, São Paulo. Transferências financeiras e contato subsequente com empresárias brasileiras aprofundam o quadro de suas operações no país.</p>
+        <div class="hero-meta fade-in">
+          <span data-lang="en">By Luiz Fernando Toledo | BBC News Brasil</span>
+          <span data-lang="pt">Por Luiz Fernando Toledo | BBC News Brasil</span>
+          <span>14 February 2026</span>
         </div>
       </div>
     </section>
-
-    <!-- Chapter 1 -->
-    <div class="chapter-divider">
-      <span class="chapter-num" data-lang="en">Chapter I — The Document</span>
-      <span class="chapter-num" data-lang="pt">Capítulo I — O Documento</span>
-    </div>
-
-    <div class="text-section fade-in">
-      <p data-lang="en">A property deed obtained by BBC News Brasil confirms that Jeffrey Epstein — the American financier convicted of sex crimes and found dead in a New York jail in 2019 — purchased an apartment in Vila Olímpia, one of São Paulo's most affluent neighbourhoods, in May 2003.</p>
-      <p data-lang="pt">Uma escritura obtida pela BBC News Brasil confirma que Jeffrey Epstein — o financeiro americano condenado por crimes sexuais e encontrado morto em uma prisão de Nova York em 2019 — comprou um apartamento em Vila Olímpia, um dos bairros mais abastados de São Paulo, em maio de 2003.</p>
-
-      <p data-lang="en">The apartment has 93 square metres of private area, two bedrooms, two bathrooms and rights to two parking spaces. In the documentation, Epstein is registered with the occupation of <em>consultor</em> — consultant.</p>
-      <p data-lang="pt">O apartamento tem 93 metros quadrados de área privativa, dois quartos, dois banheiros e direito a duas vagas de garagem. Na documentação, Epstein aparece registrado com a ocupação de <em>consultor</em>.</p>
-
-      <p data-lang="en">The sale was made by a Brazilian doctor. The purchase price was R$245,000 — equivalent at the time to approximately US$77,400. For Epstein, who managed a multi-billion dollar fortune, this was a negligible sum. For a São Paulo apartment in 2003, it was above average.</p>
-      <p data-lang="pt">A venda foi feita por um médico brasileiro. O preço de compra foi R$ 245 mil — equivalente na época a aproximadamente US$ 77,4 mil. Para Epstein, que administrava uma fortuna de vários bilhões de dólares, era uma quantia desprezível. Para um apartamento em São Paulo em 2003, estava acima da média.</p>
-    </div>
-
-    <!-- Property card -->
-    <div class="property-card fade-in">
-      <div class="property-card-inner">
-        <p class="property-label" data-lang="en">Property deed — key details</p>
-        <p class="property-label" data-lang="pt">Escritura do imóvel — detalhes principais</p>
-        <div class="property-grid">
-          <div class="property-item">
-            <label data-lang="en">Location</label>
-            <label data-lang="pt">Localização</label>
-            <value>Vila Olímpia, São Paulo</value>
+    <main>
+      <a href="../index.html" class="back-link" data-lang="en">← Back to Epstein series</a>
+      <a href="../index.html" class="back-link" data-lang="pt">← Voltar à série Epstein</a>
+      <section class="text-section">
+        <p data-lang="en">In 2003, Jeffrey Epstein purchased a luxury apartment in one of São Paulo's most expensive neighborhoods. The apartment deed, obtained by BBC News Brasil, shows his name as buyer and places him in one of Brazil's most upscale residential areas.</p>
+        <p data-lang="pt">Em 2003, Jeffrey Epstein comprou um apartamento de luxo em um dos bairros mais caros de São Paulo. A escritura do imóvel, obtida pela BBC News Brasil, mostra seu nome como comprador e o coloca em uma das áreas residenciais mais nobres do Brasil.</p>
+        <p data-lang="en">The property purchase is the most concrete evidence yet of Epstein's personal presence and financial investment in Brazil. It also raises questions about the network of Brazilian businesswomen and entrepreneurs who maintained contact with him during the years he owned the property.</p>
+        <p data-lang="pt">A compra da propriedade é a evidência mais concreta até agora da presença pessoal e investimento financeiro de Epstein no Brasil. Também levanta questões sobre a rede de mulheres brasileiras de negócios e empresárias que mantinham contato com ele durante os anos em que possuía a propriedade.</p>
+      </section>
+      <div class="image-block">
+        <img src="imgs/photo-02.jpg" alt="Vila Olímpia">
+        <p class="image-credit" data-lang="en">Vila Olímpia, São Paulo neighborhood where Epstein owned the apartment</p>
+        <p class="image-credit" data-lang="pt">Vila Olímpia, bairro de São Paulo onde Epstein possuía o apartamento</p>
+      </div>
+      <section class="text-section">
+        <h2 data-lang="en">The apartment: property specifications</h2>
+        <h2 data-lang="pt">O apartamento: especificações de propriedade</h2>
+        <p data-lang="en">According to property records, the apartment is located in a high-rise condominium in Vila Olímpia, one of São Paulo's most exclusive neighborhoods. The building remains one of the most prestigious residential addresses in the city. The deed shows the apartment contains 93 square meters of private area, two bedrooms, two bathrooms, and rights to two garage spaces. Epstein is listed in the document as a "consultant."</p>
+        <p data-lang="pt">De acordo com registros de propriedade, o apartamento está localizado em um condomínio de luxo em Vila Olímpia, um dos bairros mais exclusivos de São Paulo. O edifício permanece um dos endereços residenciais mais prestigiosos da cidade. A escritura mostra que o apartamento contém 93 metros quadrados de área privativa, dois quartos, dois banheiros e direito a duas vagas na garagem. Epstein é listado no documento como um "consultor."</p>
+        <div class="property-specs">
+          <div class="spec-item">
+            <div class="spec-label" data-lang="en">Neighborhood</div>
+            <div class="spec-label" data-lang="pt">Bairro</div>
+            <div class="spec-value">Vila Olímpia</div>
           </div>
-          <div class="property-item">
-            <label data-lang="en">Purchase date</label>
-            <label data-lang="pt">Data da compra</label>
-            <value data-lang="en">May 2003</value>
-            <value data-lang="pt">Maio de 2003</value>
+          <div class="spec-item">
+            <div class="spec-label" data-lang="en">Size</div>
+            <div class="spec-label" data-lang="pt">Tamanho</div>
+            <div class="spec-value">93 m²</div>
           </div>
-          <div class="property-item">
-            <label data-lang="en">Purchase price</label>
-            <label data-lang="pt">Preço de compra</label>
-            <value>R$245,000 (~US$77,400)</value>
+          <div class="spec-item">
+            <div class="spec-label" data-lang="en">Purchase</div>
+            <div class="spec-label" data-lang="pt">Compra</div>
+            <div class="spec-value">May 2003</div>
           </div>
-          <div class="property-item">
-            <label data-lang="en">Sale price</label>
-            <label data-lang="pt">Preço de venda</label>
-            <value>R$179,300 (2005)</value>
-          </div>
-          <div class="property-item">
-            <label data-lang="en">Size</label>
-            <label data-lang="pt">Tamanho</label>
-            <value>93m² · 2BR · 2 parking</value>
-          </div>
-          <div class="property-item">
-            <label data-lang="en">Epstein's registered occupation</label>
-            <label data-lang="pt">Ocupação registrada de Epstein</label>
-            <value>Consultor</value>
+          <div class="spec-item">
+            <div class="spec-label" data-lang="en">Sale</div>
+            <div class="spec-label" data-lang="pt">Venda</div>
+            <div class="spec-value">August 2005</div>
           </div>
         </div>
+      </section>
+      <section class="text-section">
+        <h2 data-lang="en">Financial transactions and transfers</h2>
+        <h2 data-lang="pt">Transações financeiras e transferências</h2>
+        <p data-lang="en">The purchase was executed on May 5, 2003. Epstein acquired the apartment from a Brazilian doctor, paying in American dollars through direct bank transfers. The US government documents contain bank statements showing two transfers to the previous owner's account, totaling US$77,400—approximately R$255,000 at 2003 exchange rates.</p>
+        <p data-lang="pt">A compra foi executada em 5 de maio de 2003. Epstein adquiriu o apartamento de um médico brasileiro, pagando em dólares americanos através de transferências bancárias diretas. Os documentos do governo dos EUA contêm extratos bancários mostrando duas transferências para a conta do proprietário anterior, totalizando US$77.400—aproximadamente R$255 mil em valores de 2003.</p>
+        <p data-lang="en">Two years later, on August 1, 2005, Epstein sold the property. Notably, he sold it for significantly less than he had paid. The new owner, Ana Maria Gomes Macedo, a fashion industry entrepreneur and model, purchased the apartment for R$179,300—approximately US$70,000 at 2005 exchange rates.</p>
+        <p data-lang="pt">Dois anos depois, em 1º de agosto de 2005, Epstein vendeu a propriedade. Notavelmente, ele a vendeu por significativamente menos do que havia pago. A nova proprietária, Ana Maria Gomes Macedo, uma empresária e modelo do setor de moda, comprou o apartamento por R$179.300—aproximadamente US$70 mil em valores de 2005.</p>
+      </section>
+      <div class="image-block">
+        <img src="imgs/photo-03.jpg" alt="Property deed">
+        <p class="image-credit" data-lang="en">Official property deed showing purchase details</p>
+        <p class="image-credit" data-lang="pt">Escritura oficial mostrando detalhes da compra</p>
       </div>
-    </div>
-
-    <!-- Chapter 2 -->
-    <div class="chapter-divider">
-      <span class="chapter-num" data-lang="en">Chapter II — Two Years in Vila Olímpia</span>
-      <span class="chapter-num" data-lang="pt">Capítulo II — Dois Anos em Vila Olímpia</span>
-    </div>
-
-    <div class="text-section fade-in">
-      <p data-lang="en">The apartment remained in Epstein's name for approximately two years. In August 2005 — by which point Epstein was already under investigation in the United States for sex crimes — the property was sold for R$179,300 to Ana Maria Gomes Macedo, described in documents as a model and businesswoman.</p>
-      <p data-lang="pt">O apartamento permaneceu em nome de Epstein por aproximadamente dois anos. Em agosto de 2005 — quando Epstein já estava sendo investigado nos Estados Unidos por crimes sexuais — o imóvel foi vendido por R$ 179,3 mil para Ana Maria Gomes Macedo, descrita em documentos como modelo e empresária.</p>
-
-      <p data-lang="en">The sale at a loss — below the original purchase price — raises questions that remain unanswered. Why did Epstein buy the property at all? Who used it during those two years? The deed does not say.</p>
-      <p data-lang="pt">A venda com prejuízo — abaixo do preço original de compra — levanta questões que permanecem sem resposta. Por que Epstein comprou o imóvel? Quem o utilizou durante esses dois anos? A escritura não diz.</p>
-
-      <h2 data-lang="en">Part of a Larger Pattern</h2>
-      <h2 data-lang="pt">Parte de Um Padrão Maior</h2>
-
-      <p data-lang="en">The apartment is one piece of a broader picture that BBC News Brasil has been assembling. Earlier in this investigation, the BBC reported that Epstein had obtained a Brazilian tax identification number (CPF) — a document required for property transactions and financial activity in Brazil.</p>
-      <p data-lang="pt">O apartamento é uma peça de um quadro mais amplo que a BBC News Brasil vem montando. Anteriormente nesta investigação, a BBC reportou que Epstein havia obtido um número de CPF brasileiro — documento necessário para transações imobiliárias e atividades financeiras no Brasil.</p>
-
-      <p data-lang="en">US government documents obtained by the BBC show that Epstein expressed interest in purchasing Brazilian modelling agencies specifically to gain access to young women. The São Paulo apartment — in a high-income neighbourhood with a large population of models and fashion industry workers — fits that pattern.</p>
-      <p data-lang="pt">Documentos do governo dos EUA obtidos pela BBC mostram que Epstein expressou interesse em comprar agências de modelos brasileiras especificamente para ter acesso a jovens mulheres. O apartamento de São Paulo — em um bairro de alta renda com grande população de modelos e profissionais do setor da moda — se encaixa nesse padrão.</p>
-    </div>
-
-    <!-- Pullquote -->
-    <div class="pullquote fade-in">
-      <blockquote data-lang="en">Epstein obtained a Brazilian tax ID — the CPF — required for property purchases in Brazil. The Vila Olímpia apartment confirms he was not just passing through.</blockquote>
-      <blockquote data-lang="pt">Epstein obteve um CPF brasileiro — necessário para compras imobiliárias no Brasil. O apartamento em Vila Olímpia confirma que ele não estava apenas de passagem.</blockquote>
-      <cite data-lang="en">— BBC News Brasil investigation</cite>
-      <cite data-lang="pt">— Investigação BBC News Brasil</cite>
-    </div>
-
-    <!-- Chapter 3 -->
-    <div class="chapter-divider">
-      <span class="chapter-num" data-lang="en">Chapter III — Context and Significance</span>
-      <span class="chapter-num" data-lang="pt">Capítulo III — Contexto e Significado</span>
-    </div>
-
-    <div class="text-section fade-in">
-      <p data-lang="en">Vila Olímpia, where the apartment is located, is one of São Paulo's most expensive and well-connected districts. It is home to multinational corporations, upscale hotels, a major concert venue, and a high concentration of fashion agencies. In the early 2000s, it was the Brazilian hub for international modelling.</p>
-      <p data-lang="pt">Vila Olímpia, onde o apartamento está localizado, é um dos distritos mais caros e bem conectados de São Paulo. Abriga corporações multinacionais, hotéis sofisticados, uma grande casa de espetáculos e uma alta concentração de agências de moda. No início dos anos 2000, era o hub brasileiro para a modelagem internacional.</p>
-
-      <p data-lang="en">BBC News Brasil's broader investigation has established that Epstein had a Brazilian tax ID number, that his name appeared in documents from the US Department of Justice referencing a "large Brazilian group," and that his chief associate Jean-Luc Brunel was actively recruiting young women in Brazil as far back as the 1990s.</p>
-      <p data-lang="pt">A investigação mais ampla da BBC News Brasil estabeleceu que Epstein tinha um número de CPF brasileiro, que seu nome aparecia em documentos do Departamento de Justiça dos EUA referenciando um "grande grupo brasileiro", e que seu principal associado Jean-Luc Brunel estava ativamente recrutando jovens mulheres no Brasil desde a década de 1990.</p>
-
-      <p data-lang="en">The Brazilian Federal Public Ministry has opened an investigation following the BBC's reporting. Prosecutor Cinthia Gabriela Borges, head of the national human trafficking unit, said she wants to hear from women who had contact with Epstein's circle in Brazil. They are potential witnesses — not suspects.</p>
-      <p data-lang="pt">O Ministério Público Federal brasileiro abriu uma investigação após as reportagens da BBC. A promotora Cinthia Gabriela Borges, chefe da unidade nacional de combate ao tráfico de pessoas, disse que quer ouvir mulheres que tiveram contato com o círculo de Epstein no Brasil. Elas são potenciais testemunhas — não suspeitas.</p>
-    </div>
-
-    <div class="doc-box fade-in">
-      <div class="doc-box-inner">
-        <p class="doc-box-label" data-lang="en">Investigation timeline — the São Paulo connection</p>
-        <p class="doc-box-label" data-lang="pt">Linha do tempo da investigação — a conexão São Paulo</p>
-        <p class="doc-box-text" data-lang="en">2001 — Epstein obtains a Brazilian CPF (tax ID) · 2003 — Purchases apartment in Vila Olímpia for R$245,000 · 2004 — Epstein documented in Ecuador at a modelling contest for young Brazilians · 2005 — Apartment sold at a loss for R$179,300 · 2019 — Epstein dies in US jail · 2026 — BBC News Brasil uncovers the property deed and confirms his São Paulo footprint</p>
-        <p class="doc-box-text" data-lang="pt">2001 — Epstein obtém um CPF brasileiro · 2003 — Compra apartamento em Vila Olímpia por R$ 245 mil · 2004 — Epstein documentado no Equador em concurso de modelos com jovens brasileiras · 2005 — Apartamento vendido com prejuízo por R$ 179,3 mil · 2019 — Epstein morre na prisão nos EUA · 2026 — BBC News Brasil descobre a escritura e confirma a presença de Epstein em São Paulo</p>
+      <section class="text-section">
+        <h2 data-lang="en">Connection to Ana Maria Gomes Macedo</h2>
+        <h2 data-lang="pt">Conexão com Ana Maria Gomes Macedo</h2>
+        <p data-lang="en">Ana Maria Gomes Macedo, who purchased the apartment from Epstein, is a fashion entrepreneur and former model. According to US government documents, Macedo and Epstein maintained email contact between 2006 and 2011—a period after the sale was already complete.</p>
+        <p data-lang="pt">Ana Maria Gomes Macedo, que comprou o apartamento de Epstein, é uma empresária de moda e ex-modelo. De acordo com documentos do governo dos EUA, Macedo e Epstein mantinham contato por email entre 2006 e 2011—um período após a venda já estar concluída.</p>
+        <p data-lang="en">The emails reveal a relationship of relative proximity. In one message from July 1, 2010—shortly after Epstein's release from prison in 2009—Macedo wrote: "Great that you are back! I will never forget everything you did for me, my friend. I love you."</p>
+        <p data-lang="pt">Os emails revelam um relacionamento de proximidade relativa. Em uma mensagem de 1º de julho de 2010—pouco depois da libertação de Epstein da prisão em 2009—Macedo escreveu: "Ótimo que você está de volta! Eu nunca vou esquecer tudo o que você fez comigo, meu amigo. Te amo."</p>
+        <p data-lang="en">Macedo later requested financial assistance. In November 2011, she contacted Epstein asking for help with her fashion business, requesting that he purchase dresses from her new showroom to help with her cash flow.</p>
+        <p data-lang="pt">Macedo posteriormente solicitou assistência financeira. Em novembro de 2011, ela contactou Epstein pedindo ajuda com seu negócio de moda, solicitando que ele comprasse vestidos de seu novo showroom para ajudar com seu fluxo de caixa.</p>
+      </section>
+      <div class="pullquote">
+        <p data-lang="en">"The property purchase demonstrates that Epstein's interest in Brazil went far beyond casual tourism. This was a deliberate financial commitment to establishing a presence in the country."</p>
+        <p data-lang="pt">"A compra de propriedade demonstra que o interesse de Epstein no Brasil ia bem além do turismo casual. Este foi um compromisso financeiro deliberado para estabelecer uma presença no país."</p>
+        <p class="pullquote-citation">— BBC News Brasil investigation</p>
       </div>
-    </div>
-
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-disclaimer">
-        <p data-lang="en"><strong>About this version:</strong> This is an alternative layout of an original BBC News Brasil article, created by Claude Cowork for portfolio purposes only. All journalism, reporting and content is the work of BBC News Brasil and journalist Luiz Fernando Toledo. This page is not affiliated with or endorsed by BBC News Brasil.</p>
-        <p data-lang="pt"><strong>Sobre esta versão:</strong> Esta é uma versão com layout alternativo de uma reportagem original da BBC News Brasil, criada pelo Claude Cowork apenas para fins de portfólio. Todo o jornalismo, apuração e conteúdo é trabalho da BBC News Brasil e do jornalista Luiz Fernando Toledo. Esta página não é afiliada nem endossada pela BBC News Brasil.</p>
-        <p>
-          <a href="https://www.bbc.com/portuguese/articles/cm21e7gnx0ro" target="_blank" rel="noopener" data-lang="en">Read the original BBC News Brasil report ↗</a>
-          <a href="https://www.bbc.com/portuguese/articles/cm21e7gnx0ro" target="_blank" rel="noopener" data-lang="pt">Leia a reportagem original na BBC News Brasil ↗</a>
-        </p>
+      <section class="text-section">
+        <h2 data-lang="en">Timeline of property ownership</h2>
+        <h2 data-lang="pt">Cronograma de propriedade do imóvel</h2>
+        <div class="timeline-custom">
+          <div class="timeline-custom-item">
+            <div class="timeline-year">May 2003</div>
+            <div class="timeline-content">
+              <p data-lang="en"><strong>Purchase:</strong> Epstein acquires 93-square-meter apartment in Vila Olímpia from Brazilian physician. Purchase price approximately R$245,000 (US$77,400).</p>
+              <p data-lang="pt"><strong>Compra:</strong> Epstein adquire apartamento de 93 metros quadrados em Vila Olímpia de médico brasileiro. Preço de compra aproximadamente R$245 mil (US$77.400).</p>
+            </div>
+          </div>
+          <div class="timeline-custom-item">
+            <div class="timeline-year">2003–2005</div>
+            <div class="timeline-content">
+              <p data-lang="en"><strong>Ownership:</strong> Epstein owns property for approximately two years. Maintains business relationships with Brazilian women during this period.</p>
+              <p data-lang="pt"><strong>Propriedade:</strong> Epstein é proprietário do imóvel por aproximadamente dois anos. Mantém relacionamentos comerciais com mulheres brasileiras durante este período.</p>
+            </div>
+          </div>
+          <div class="timeline-custom-item">
+            <div class="timeline-year">August 2005</div>
+            <div class="timeline-content">
+              <p data-lang="en"><strong>Sale:</strong> Epstein sells to Ana Maria Gomes Macedo for R$179,300. This represents significant discount from original purchase price.</p>
+              <p data-lang="pt"><strong>Venda:</strong> Epstein vende para Ana Maria Gomes Macedo por R$179.300. Representa desconto significativo do preço de compra original.</p>
+            </div>
+          </div>
+          <div class="timeline-custom-item">
+            <div class="timeline-year">2006–2011</div>
+            <div class="timeline-content">
+              <p data-lang="en"><strong>Continued Contact:</strong> Macedo and Epstein maintain email correspondence. In 2010, Macedo expresses affection after his release. In 2011, requests financial assistance.</p>
+              <p data-lang="pt"><strong>Contato Contínuo:</strong> Macedo e Epstein mantêm correspondência por email. Em 2010, Macedo expressa afeto após sua libertação. Em 2011, solicita assistência financeira.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="image-block">
+        <img src="imgs/photo-04.jpg" alt="Financial records">
+        <p class="image-credit" data-lang="en">Bank transfer records documenting the transaction</p>
+        <p class="image-credit" data-lang="pt">Registros de transferência bancária documentando a transação</p>
       </div>
-      <div class="footer-nav">
-        <a href="../index.html" data-lang="en">← Back to Epstein Series</a>
-        <a href="../index.html" data-lang="pt">← Voltar à Série Epstein</a>
-        <a href="../../index.html" data-lang="en">Portfolio Home</a>
-        <a href="../../index.html" data-lang="pt">Início do Portfólio</a>
-      </div>
-      <p class="footer-copy">© BBC News Brasil · <span data-lang="en">All rights reserved</span><span data-lang="pt">Todos os direitos reservados</span></p>
-    </div>
-  </footer>
-
+      <section class="text-section">
+        <h2 data-lang="en">What this reveals about Epstein in Brazil</h2>
+        <h2 data-lang="pt">O que isso revela sobre Epstein no Brasil</h2>
+        <p data-lang="en">The property purchase demonstrates that Epstein's interest in Brazil went far beyond casual tourism or temporary business visits. Owning property in one of the city's most expensive neighborhoods indicates serious, long-term operations in the country.</p>
+        <p data-lang="pt">A compra de propriedade demonstra que o interesse de Epstein no Brasil ia bem além do turismo casual ou visitas comerciais temporárias. Possuir propriedade em um dos bairros mais caros da cidade indica operações sérias e de longo prazo no país.</p>
+        <p data-lang="en">Combined with testimony from Brazilian women, evidence of Jean-Luc Brunel's activities in Ecuador and Brazil, and the Brazilian Federal Public Ministry's investigation, the property deed forms part of a broader pattern of systematic operations.</p>
+        <p data-lang="pt">Combinado com testemunho de mulheres brasileiras, evidência das atividades de Jean-Luc Brunel no Equador e Brasil, e a investigação do Ministério Público Federal Brasileiro, a escritura de propriedade forma parte de um padrão mais amplo de operações sistemáticas.</p>
+      </section>
+      <section class="series-nav">
+        <a href="../artigo-7/index.html" class="prev" data-lang="en">
+          <div>
+            <div class="nav-label">← Previous</div>
+            <div class="nav-title">Model saved by mother's refusal</div>
+          </div>
+        </a>
+        <a href="../artigo-7/index.html" class="prev" data-lang="pt">
+          <div>
+            <div class="nav-label">← Anterior</div>
+            <div class="nav-title">Modelo salva pela recusa da mãe</div>
+          </div>
+        </a>
+        <a href="../artigo-9/index.html" class="next" data-lang="en">
+          <div>
+            <div class="nav-label">Next →</div>
+            <div class="nav-title">She was traded like merchandise</div>
+          </div>
+        </a>
+        <a href="../artigo-9/index.html" class="next" data-lang="pt">
+          <div>
+            <div class="nav-label">Próximo →</div>
+            <div class="nav-title">Ela foi negociada como mercadoria</div>
+          </div>
+        </a>
+      </section>
+    </main>
+  </article>
   <script src="../../shared/base.js"></script>
 </body>
 </html>

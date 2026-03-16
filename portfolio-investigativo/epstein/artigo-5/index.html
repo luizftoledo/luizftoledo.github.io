@@ -1,222 +1,534 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BBC Investigation Prompts Brazil's Federal Prosecution to Open Epstein Probe - Investigative Journalism by Luiz Fernando Toledo">
-  <title>Epstein & Brazil: Part 5 - BBC News Brasil Investigation</title>
+  <title>MPF abre investigação sobre rede de aliciamento de mulheres | BBC News Brasil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../../shared/base.css">
+  <style>
+    .nav-chapters {
+      position: sticky;
+      top: 108px;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 0;
+    }
+
+    .nav-chapters-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 12px 40px;
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+    }
+
+    .nav-chapter-link {
+      padding: 8px 16px;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .nav-chapter-link:hover,
+    .nav-chapter-link.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .series-indicator {
+      background: var(--bg-light);
+      padding: 20px 40px;
+      margin-bottom: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .series-indicator-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .series-indicator-text {
+      font-family: var(--sans);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .victim-quote {
+      border-left: 4px solid var(--accent);
+      padding: 32px;
+      margin: 60px 0;
+      background: linear-gradient(135deg, rgba(196, 30, 58, 0.05) 0%, transparent 100%);
+      font-family: var(--serif);
+      font-size: 24px;
+      line-height: 1.7;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .victim-quote-attr {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-style: normal;
+      margin-top: 16px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .chapter {
+      scroll-margin-top: 140px;
+    }
+
+    .visualization {
+      margin: 80px 0;
+      padding: 60px 40px;
+      background: linear-gradient(135deg, var(--bg-light) 0%, rgba(196, 30, 58, 0.03) 100%);
+      border-radius: 4px;
+    }
+
+    .viz-title {
+      font-family: var(--display);
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      color: var(--text-dark);
+      text-align: center;
+    }
+
+    .timeline-container {
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .timeline-item-mini {
+      margin-bottom: 40px;
+      position: relative;
+      padding-left: 40px;
+    }
+
+    .timeline-item-mini::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+
+    .timeline-year {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .timeline-text {
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-dark);
+    }
+
+    .navigation-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 100px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .nav-link:hover {
+      opacity: 0.8;
+    }
+
+    .nav-prev::before {
+      content: '←';
+      font-size: 18px;
+    }
+
+    .nav-next::after {
+      content: '→';
+      font-size: 18px;
+    }
+
+    .warning-box {
+      background: rgba(196, 30, 58, 0.1);
+      border-left: 4px solid var(--accent);
+      padding: 24px;
+      margin: 40px 0;
+      border-radius: 2px;
+    }
+
+    .warning-box-title {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .warning-box-text {
+      font-family: var(--serif);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-dark);
+    }
+
+    @media (max-width: 768px) {
+      .nav-chapters-inner {
+        padding: 12px 24px;
+        gap: 10px;
+      }
+
+      .series-indicator {
+        padding: 16px 24px;
+      }
+
+      .visualization {
+        padding: 40px 24px;
+        margin: 60px 0;
+      }
+
+      .victim-quote {
+        font-size: 20px;
+        padding: 24px;
+      }
+    }
+  </style>
 </head>
-<body class="lang-en">
+<body data-lang="en">
+  <div id="progressBar" class="progress-bar"></div>
 
-<!-- Disclaimer Bar -->
-<div class="disclaimer-bar" id="disclaimerBar">
-  <div class="disclaimer-inner">
-    <div class="disclaimer-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-    <p class="disclaimer-text">
-      <strong data-lang="en">Important notice:</strong><strong data-lang="pt">Aviso importante:</strong>
-      <span data-lang="en"> Alternative layout version for portfolio. All content authored by BBC News Brasil. Generated by Claude Cowork for demonstration.</span>
-      <span data-lang="pt"> Versão alternativa para portfólio. Todo conteúdo de autoria da BBC News Brasil. Gerada por Claude Cowork para demonstração.</span>
-      <a href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank" class="disclaimer-link" data-lang="en">Original BBC report ↗</a>
-      <a href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank" class="disclaimer-link" data-lang="pt">Reportagem original na BBC ↗</a>
-    </p>
-    <button class="disclaimer-close" id="disclaimerClose"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  </div>
-</div>
-
-<!-- Language Toggle Bar -->
-<div class="lang-toggle-bar" id="langBar">
-  <div class="lang-toggle-inner">
-    <span class="lang-toggle-label" data-lang="en">Language:</span>
-    <span class="lang-toggle-label" data-lang="pt">Idioma:</span>
-    <button class="lang-btn active" id="btnEn">EN</button>
-    <button class="lang-btn" id="btnPt">PT</button>
-  </div>
-</div>
-<div class="progress-bar" id="progressBar"></div>
-
-<!-- Breadcrumb Navigation -->
-<nav class="breadcrumb">
-  <a href="../index.html" data-lang="en">← Back to Epstein Series</a>
-  <a href="../index.html" data-lang="pt">← Voltar para Série Epstein</a>
-</nav>
-
-<!-- Hero Section -->
-<section class="hero">
-  <div class="hero-content">
-    <p class="hero-label" data-lang="en">EPSTEIN SERIES — PART 5 · BBC NEWS BRASIL</p>
-    <p class="hero-label" data-lang="pt">SÉRIE EPSTEIN — PARTE 5 · BBC NEWS BRASIL</p>
-
-    <h1 class="hero-title" data-lang="en">BBC Investigation Prompts Brazil's Federal Prosecution to Open Epstein Probe</h1>
-    <h1 class="hero-title" data-lang="pt">MPF abre investigação sobre rede de aliciamento de mulheres no Brasil após reportagem da BBC</h1>
-
-    <p class="hero-subtitle" data-lang="en">Days after BBC News Brasil published its investigation into Epstein's connections to Brazil, the Federal Prosecution formally opened an inquiry into a woman enticement network. The case raises questions about evidence, jurisdiction, and Brazil's human trafficking laws.</p>
-    <p class="hero-subtitle" data-lang="pt">Dias após a BBC News Brasil publicar sua investigação sobre as conexões de Epstein com o Brasil, o Ministério Público Federal abriu formalmente uma investigação sobre a rede de aliciamento de mulheres. O caso levanta questões sobre provas, jurisdição e as leis de tráfico de pessoas no Brasil.</p>
-
-    <div class="hero-meta">
-      <span data-lang="en">By Luiz Fernando Toledo · BBC News Brasil, London</span>
-      <span data-lang="pt">Por Luiz Fernando Toledo · BBC News Brasil em Londres</span>
-      <span data-lang="en">· February 12, 2026 · 7 min read</span>
-      <span data-lang="pt">· 12 de fevereiro de 2026 · 7 minutos de leitura</span>
+  <div id="disclaimerBar" class="disclaimer-bar">
+    <div class="disclaimer-inner">
+      <div class="disclaimer-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+      </div>
+      <div class="disclaimer-text">
+        <span data-lang="en"><strong>Disclaimer:</strong> This is an enhanced portfolio presentation of my journalism. The original article was published at BBC News Brasil. Content is reproduced for portfolio purposes.</span>
+        <span data-lang="pt"><strong>Aviso:</strong> Esta é uma apresentação aprimorada do meu jornalismo. O artigo original foi publicado na BBC News Brasil. O conteúdo é reproduzido para fins de portfólio.</span>
+      </div>
+      <button id="disclaimerClose" class="disclaimer-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
   </div>
-</section>
 
-<!-- Main Content -->
-<main class="article-content">
-
-  <!-- Section 1: An Investigation Opens -->
-  <section class="text-section">
-    <h2 data-lang="en">An Investigation Opens</h2>
-    <h2 data-lang="pt">Uma investigação se abre</h2>
-
-    <p data-lang="en">Brazil's Federal Prosecution (Ministério Público Federal, or MPF) formally opened an investigation into the recruitment and enticement of Brazilian women for Jeffrey Epstein following BBC News Brasil's comprehensive reporting on the case. The inquiry was officially assigned to the National Unit for Combating International Human Trafficking and Immigrant Smuggling (Núcleo de Combate ao Tráfico Internacional de Pessoas e ao Contrabando de Imigrantes).</p>
-    <p data-lang="pt">O Ministério Público Federal (MPF) abriu formalmente uma investigação sobre o aliciamento de mulheres brasileiras para Jeffrey Epstein após as reportagens abrangentes da BBC News Brasil sobre o caso. A investigação foi oficialmente encaminhada à Unidade Nacional de Enfrentamento ao Tráfico Internacional de pessoas e ao Contrabando de Imigrantes.</p>
-
-    <p data-lang="en">The investigation was directly triggered by coverage published by BBC News Brasil in the weeks prior, which documented email exchanges showing Epstein's intermediaries arranging travel for women from Brazil to the United States. The documents, obtained from the US Justice Department's release of Epstein files, provided specific evidence of what Brazilian authorities are now investigating as potential human trafficking.</p>
-    <p data-lang="pt">A investigação foi desencadeada diretamente pelas reportagens publicadas pela BBC News Brasil nas semanas anteriores, que documentaram trocas de e-mail mostrando que intermediários de Epstein organizavam viagens para mulheres do Brasil aos Estados Unidos. Os documentos, obtidos a partir da divulgação dos arquivos de Epstein pelo Departamento de Justiça dos EUA, forneceram provas específicas do que as autoridades brasileiras agora investigam como potencial tráfico de pessoas.</p>
-
-    <p data-lang="en">Officials at the MPF told BBC News Brasil that the formal opening of the inquiry demonstrates Brazil's commitment to investigating crimes of human trafficking, even when they occurred across international borders and many years in the past.</p>
-    <p data-lang="pt">Autoridades do MPF disseram à BBC News Brasil que a abertura formal da investigação demonstra o compromisso do Brasil em investigar crimes de tráfico de pessoas, mesmo quando ocorreram através de fronteiras internacionais e muitos anos no passado.</p>
-  </section>
-
-  <!-- Stats Section 1 -->
-  <section class="stats-section">
-    <div class="stat-card">
-      <div class="stat-number">1</div>
-      <p class="stat-label" data-lang="en">Formal MPF investigation opened</p>
-      <p class="stat-label" data-lang="pt">Investigação formal do MPF aberta</p>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number" data-lang="en">Natal, RN</div>
-      <div class="stat-number" data-lang="pt">Natal, RN</div>
-      <p class="stat-label" data-lang="en">City that triggered the probe</p>
-      <p class="stat-label" data-lang="pt">Cidade que disparou a investigação</p>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number">2026</div>
-      <p class="stat-label" data-lang="en">Year investigation opened</p>
-      <p class="stat-label" data-lang="pt">Ano em que a investigação foi aberta</p>
-    </div>
-  </section>
-
-  <!-- Section 2: Challenges Ahead -->
-  <section class="text-section">
-    <h2 data-lang="en">Challenges Ahead</h2>
-    <h2 data-lang="pt">Desafios pela frente</h2>
-
-    <p data-lang="en">Legal experts told BBC News Brasil that the investigation faces significant obstacles before any criminal convictions can be secured. The primary challenges include the considerable time elapsed since the alleged crimes occurred, complex questions of extraterritoriality and jurisdiction, and changes in Brazilian legislation on human trafficking since the relevant events took place.</p>
-    <p data-lang="pt">Especialistas jurídicos disseram à BBC News Brasil que a investigação enfrenta obstáculos significativos antes que qualquer condenação criminal possa ser garantida. Os principais desafios incluem o tempo considerável decorrido desde que os supostos crimes ocorreram, questões complexas de extraterritorialidade e jurisdição, e mudanças na legislação brasileira sobre tráfico de pessoas desde que os eventos relevantes ocorreram.</p>
-
-    <p data-lang="en">Jeffrey Epstein died in a New York prison in August 2019 while awaiting trial on federal sex trafficking charges in the United States. His main accomplice and associate, Jean-Luc Brunel — a Frenchman who worked in the modeling industry — died in May 2022 in a car accident in France. Without the primary figures available for prosecution, the case's legal pathway becomes significantly more complicated.</p>
-    <p data-lang="pt">Jeffrey Epstein morreu em uma prisão de Nova York em agosto de 2019, enquanto aguardava julgamento por acusações federais de tráfico sexual nos Estados Unidos. Seu principal cúmplice e associado, Jean-Luc Brunel — um francês que trabalhava na indústria da moda — morreu em maio de 2022 em um acidente de carro na França. Sem as figuras principais disponíveis para processamento, o caminho legal do caso se torna significativamente mais complicado.</p>
-
-    <p data-lang="en">The prospect of criminal conviction of other living individuals connected to the network in Brazil remains legally complex. Prosecutors will need to determine whether Brazilian law can be applied to crimes committed outside Brazilian territory, whether statutes of limitations have been exceeded, and whether sufficient evidence can be gathered to meet the standard for prosecution.</p>
-    <p data-lang="pt">A perspectiva de condenação criminal de outros indivíduos vivos conectados à rede no Brasil permanece juridicamente complexa. Os promotores precisarão determinar se a lei brasileira pode ser aplicada a crimes cometidos fora do território brasileiro, se os prazos de prescrição foram excedidos, e se provas suficientes podem ser reunidas para atender ao padrão para persecução.</p>
-
-    <!-- Pullquote -->
-    <blockquote class="pullquote">
-      <p data-lang="en">"Even if criminal prosecution proves difficult, the investigation serves to document Brazil's role in the Epstein case and identify potential victims."</p>
-      <p data-lang="pt">"Mesmo que a persecução criminal se mostre difícil, a investigação cumpre o propósito de documentar o papel do Brasil no caso e identificar potenciais vítimas."</p>
-      <div class="pullquote-citation">
-        <span data-lang="en">Legal experts, as told to BBC News Brasil</span>
-        <span data-lang="pt">Especialistas jurídicos, conforme dito à BBC News Brasil</span>
-      </div>
-    </blockquote>
-  </section>
-
-  <!-- Section 3: The Role of the BBC Investigation -->
-  <section class="text-section">
-    <h2 data-lang="en">The Role of the BBC Investigation</h2>
-    <h2 data-lang="pt">O papel da investigação da BBC</h2>
-
-    <p data-lang="en">The MPF explicitly acknowledged that BBC News Brasil's reporting was the direct trigger for opening the formal inquiry. This reflects a broader pattern in investigative journalism: when robust, evidence-based reporting brings international crimes into public view, it can mobilize law enforcement and government institutions to take action.</p>
-    <p data-lang="pt">O MPF reconheceu explicitamente que a reportagem da BBC News Brasil foi o gatilho direto para a abertura do inquérito formal. Isso reflete um padrão mais amplo no jornalismo investigativo: quando reportagens robustas e baseadas em evidências trazem crimes internacionais à vista do público, pode mobilizar agências de lei e instituições governamentais para agir.</p>
-
-    <p data-lang="en">The documents published by BBC News Brasil — obtained from the US Justice Department's release of Epstein files — showed specific references to a woman from Natal, Rio Grande do Norte, and detailed exchanges about how her travel to meet Epstein in New York was arranged. These documents provided prosecutors with tangible evidence of a recruitment operation with Brazilian connections.</p>
-    <p data-lang="pt">Os documentos publicados pela BBC News Brasil — obtidos a partir da divulgação dos arquivos de Epstein pelo Departamento de Justiça dos EUA — mostravam referências específicas a uma mulher de Natal, no Rio Grande do Norte, e trocas detalhadas sobre como sua viagem para encontrar Epstein em Nova York foi organizada. Esses documentos forneceram aos promotores provas tangíveis de uma operação de recrutamento com conexões brasileiras.</p>
-
-    <p data-lang="en">Officials said that even if criminal prosecution of living individuals in Brazil proves difficult or legally impossible, the investigation serves important purposes: it documents Brazil's role in the international trafficking case, creates an official record for future reference, and may help identify additional victims who could come forward with their own accounts of victimization.</p>
-    <p data-lang="pt">As autoridades disseram que, mesmo que a persecução criminal de indivíduos vivos no Brasil se mostre difícil ou legalmente impossível, a investigação cumpre propósitos importantes: documenta o papel do Brasil no caso de tráfico internacional, cria um registro oficial para referência futura, e pode ajudar a identificar vítimas adicionais que possam se apresentar com suas próprias contas de vitimização.</p>
-  </section>
-
-  <!-- Context Section -->
-  <section class="text-section">
-    <h2 data-lang="en">What This Means for Brazil</h2>
-    <h2 data-lang="pt">O que isto significa para o Brasil</h2>
-
-    <p data-lang="en">The opening of the MPF investigation signals that Brazil is taking international human trafficking seriously, even when the perpetrators are deceased or the crimes occurred years in the past. It also acknowledges the vulnerability of Brazilian women to international exploitation networks — a vulnerability rooted in economic inequality and limited opportunities in certain regions.</p>
-    <p data-lang="pt">A abertura da investigação do MPF sinaliza que o Brasil está levando o tráfico internacional de pessoas a sério, mesmo quando os perpetradores estão falecidos ou os crimes ocorreram anos no passado. Também reconhece a vulnerabilidade das mulheres brasileiras às redes de exploração internacional — uma vulnerabilidade enraizada na desigualdade econômica e oportunidades limitadas em certas regiões.</p>
-
-    <p data-lang="en">For the survivors like Marina Lacerda, the formal investigation by Brazilian authorities provides some validation that their experiences are being taken seriously by their own country's government. It may also encourage other victims to come forward, knowing that there is an official mechanism in place to receive and process their accounts.</p>
-    <p data-lang="pt">Para as sobreviventes como Marina Lacerda, a investigação formal das autoridades brasileiras oferece certa validação de que suas experiências estão sendo levadas a sério pelo governo de seu próprio país. Também pode encorajar outras vítimas a se apresentarem, sabendo que há um mecanismo oficial em vigor para receber e processar suas contas.</p>
-
-    <p data-lang="en">The case also underscores how journalism can intersect with law enforcement and public institutions — not by directing policy, but by ensuring that facts are in the public record and that official channels are activated when serious crimes are documented.</p>
-    <p data-lang="pt">O caso também ressalta como o jornalismo pode se cruzar com a aplicação da lei e instituições públicas — não direcionando a política, mas garantindo que os fatos estejam no registro público e que os canais oficiais sejam ativados quando crimes graves são documentados.</p>
-  </section>
-
-  <!-- Timeline Section -->
-  <section class="timeline">
-    <h2 data-lang="en">Timeline of Investigation</h2>
-    <h2 data-lang="pt">Cronologia da investigação</h2>
-
-    <div class="timeline-item">
-      <div class="timeline-marker">2024-2025</div>
-      <div class="timeline-content">
-        <h3 data-lang="en">US Justice Department releases Epstein files</h3>
-        <h3 data-lang="pt">Departamento de Justiça dos EUA libera arquivos de Epstein</h3>
-        <p data-lang="en">Following FOIA requests and court orders, the US government releases documents from the Epstein case, including correspondence, flight logs, and financial records. These documents become available to journalists and researchers worldwide.</p>
-        <p data-lang="pt">Seguindo solicitações de FOIA e ordens judiciais, o governo dos EUA libera documentos do caso Epstein, incluindo correspondência, registros de voos e registros financeiros. Esses documentos se tornam disponíveis para jornalistas e pesquisadores em todo o mundo.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-marker">January-February 2026</div>
-      <div class="timeline-content">
-        <h3 data-lang="en">BBC News Brasil publishes investigation series</h3>
-        <h3 data-lang="pt">BBC News Brasil publica série de investigação</h3>
-        <p data-lang="en">BBC News Brasil, through reporter Luiz Fernando Toledo, publishes a comprehensive investigation documenting Epstein's connections to Brazil, including survivor testimonies and documentary evidence from the released files.</p>
-        <p data-lang="pt">BBC News Brasil, através do repórter Luiz Fernando Toledo, publica uma investigação abrangente documentando as conexões de Epstein com o Brasil, incluindo depoimentos de sobreviventes e evidências documentárias dos arquivos divulgados.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-marker">February 2026</div>
-      <div class="timeline-content">
-        <h3 data-lang="en">MPF formally opens investigation</h3>
-        <h3 data-lang="pt">MPF abre formalmente investigação</h3>
-        <p data-lang="en">Days after BBC News Brasil's reporting is published, Brazil's Federal Prosecution announces the formal opening of a criminal investigation into the recruitment of Brazilian women. The case is assigned to the National Unit for Combating International Human Trafficking.</p>
-        <p data-lang="pt">Dias após a publicação da reportagem da BBC News Brasil, o Ministério Público Federal anuncia a abertura formal de uma investigação criminal sobre o aliciamento de mulheres brasileiras. O caso é encaminhado à Unidade Nacional de Enfrentamento ao Tráfico Internacional de Pessoas.</p>
-      </div>
-    </div>
-
-    <div class="timeline-item">
-      <div class="timeline-marker">2026 onwards</div>
-      <div class="timeline-content">
-        <h3 data-lang="en">Investigation develops; victims encouraged to come forward</h3>
-        <h3 data-lang="pt">Investigação se desenvolve; vítimas encorajadas a se apresentarem</h3>
-        <p data-lang="en">Brazilian authorities begin formally collecting evidence, interviewing witnesses, and inviting potential victims to provide statements to the MPF. The investigation may take months or years to fully develop.</p>
-        <p data-lang="pt">As autoridades brasileiras começam a coletar formalmente evidências, entrevistar testemunhas, e convidar potenciais vítimas a fornecer declarações ao MPF. A investigação pode levar meses ou anos para se desenvolver completamente.</p>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<!-- Footer -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-disclaimer">
-      <p data-lang="en"><strong>About this version:</strong> This page is an alternative layout (scrollytelling format) of an article originally published by <strong>BBC News Brasil</strong>. All journalistic content including text, data, and reporting is authored by BBC News Brasil and reporter Luiz Fernando Toledo. This version was produced by <strong>Claude Cowork (Anthropic)</strong> solely for portfolio demonstration purposes. It is not affiliated with BBC.</p>
-      <p data-lang="pt"><strong>Sobre esta versão:</strong> Esta página é uma versão com layout alternativo (formato scrollytelling) de uma reportagem publicada originalmente pela <strong>BBC News Brasil</strong>. Todo o conteúdo jornalístico é de autoria da BBC News Brasil e do repórter Luiz Fernando Toledo. Esta versão foi produzida pelo <strong>Claude Cowork (Anthropic)</strong> exclusivamente para fins de portfólio.</p>
-      <p><a href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank" data-lang="en">Read the original report on BBC News Brasil ↗</a><a href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank" data-lang="pt">Leia a reportagem original na BBC News Brasil ↗</a></p>
+  <div class="lang-toggle-bar">
+    <div class="lang-toggle-inner">
+      <span class="lang-toggle-label" data-lang="en">Language</span>
+      <span class="lang-toggle-label" data-lang="pt">Idioma</span>
+      <button id="btnEn" class="lang-btn active">English</button>
+      <button id="btnPt" class="lang-btn">Português</button>
     </div>
   </div>
-</footer>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="../../shared/base.js"></script>
+  <div class="series-indicator">
+    <div class="series-indicator-inner">
+      <p class="series-indicator-text">
+        <span data-lang="en">Part 5 of 9 — The Epstein Brazil connection</span>
+        <span data-lang="pt">Parte 5 de 9 — A conexão Epstein-Brasil</span>
+      </p>
+    </div>
+  </div>
 
+  <section class="hero" style="background-image: linear-gradient(135deg, rgba(26, 26, 26, 0.92), rgba(45, 45, 45, 0.92)), url('imgs/photo-01.jpg'); background-size: cover; background-position: center;">
+    <div class="hero-content">
+      <div class="hero-label" data-lang="en">Investigation</div>
+      <div class="hero-label" data-lang="pt" style="display: none;">Investigação</div>
+      <h1 class="hero-title" data-lang="en">Brazil's Federal Prosecution opens investigation</h1>
+      <h1 class="hero-title" data-lang="pt" style="display: none;">Ministério Público Federal abre investigação</h1>
+      <p class="hero-subtitle" data-lang="en">MPF investigates Epstein trafficking network in Brazil following BBC reporting</p>
+      <p class="hero-subtitle" data-lang="pt" style="display: none;">MPF investiga rede de tráfico de Epstein no Brasil após reportagem da BBC</p>
+      <div class="hero-meta">
+        <span>Luiz Fernando Toledo</span>
+        <span>•</span>
+        <span data-lang="en">BBC News Brasil, London</span>
+        <span data-lang="pt" style="display: none;">BBC News Brasil, Londres</span>
+        <span>•</span>
+        <span>February 12, 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <nav class="nav-chapters">
+    <div class="nav-chapters-inner">
+      <a href="#intro" class="nav-chapter-link active" data-lang="en">Start</a>
+      <a href="#investigation" class="nav-chapter-link" data-lang="en">Investigation</a>
+      <a href="#messages" class="nav-chapter-link" data-lang="en">Messages</a>
+      <a href="#challenges" class="nav-chapter-link" data-lang="en">Challenges</a>
+      <a href="#implications" class="nav-chapter-link" data-lang="en">Implications</a>
+    </div>
+  </nav>
+
+  <main>
+    <article>
+      <section id="intro" class="text-section chapter">
+        <h2 data-lang="en">Brazil's Federal Prosecution launches formal investigation</h2>
+        <h2 data-lang="pt" style="display: none;">Ministério Público Federal instaura investigação formal</h2>
+
+        <p data-lang="en">The Brazilian Federal Prosecution (Ministério Público Federal, or MPF) has initiated a formal investigation into possible attempts to recruit women in Brazil connected to convicted sex offender Jeffrey Epstein. The development follows BBC News Brasil's investigation revealing Epstein's previously undocumented connections to the country and Brazilian victims.</p>
+
+        <p data-lang="pt" style="display: none;">O Ministério Público Federal (MPF) instaurou uma investigação formal em possíveis tentativas de aliciamento de mulheres no Brasil relacionadas ao condenado por crimes sexuais Jeffrey Epstein. O desenvolvimento segue a investigação da BBC News Brasil revelando as conexões anteriormente não documentadas de Epstein com o país e vítimas brasileiras.</p>
+
+        <p data-lang="en">Prosecutor Cinthia Gabriela Borges, speaking exclusively to BBC News Brasil, stated that the objective is to analyze all situations where Brazilian women may have been recruited and to determine if there were organized recruitment networks operating in the country.</p>
+
+        <p data-lang="pt" style="display: none;">A procuradora Cinthia Gabriela Borges, falando exclusivamente à BBC News Brasil, afirmou que o objetivo é analisar todas as situações em que mulheres brasileiras possam ter sido aliciadas e determinar se havia redes organizadas de aliciamento operando no país.</p>
+
+        <div class="victim-quote" data-lang="en">"The MPF is vigilant regarding situations of women who were in Brazil and who may have been taken to the USA with intent of sexual exploitation, because this could characterize the crime of international human trafficking."</div>
+        <div class="victim-quote" data-lang="pt" style="display: none;">"O MPF está atento a essa situação de mulheres que estavam no Brasil e que foram levadas para os EUA com alguma intenção de exploração sexual, porque isso pode vir a caracterizar o crime de tráfico internacional de pessoas."</div>
+        <div class="victim-quote-attr">Cinthia Gabriela Borges, Federal Prosecution</div>
+      </section>
+
+      <div class="image-block">
+        <img src="imgs/photo-02.jpg" alt="Brazilian Federal Prosecution building">
+        <div class="image-credit" data-lang="en">Getty Images</div>
+        <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
+      </div>
+
+      <section id="investigation" class="text-section chapter">
+        <h2 data-lang="en">From denunciation to formal investigation</h2>
+        <h2 data-lang="pt" style="display: none;">De denúncia a investigação formal</h2>
+
+        <p data-lang="en">The investigation was formally launched on Tuesday, February 10, 2026, at the National Unit for Combating International Human Trafficking and Migrant Smuggling—a specialized structure within the MPF that centralizes all investigations and judicial actions in this area across Brazil.</p>
+
+        <p data-lang="pt" style="display: none;">A investigação foi formalmente instaurada na terça-feira, 10 de fevereiro de 2026, na Unidade Nacional de Enfrentamento ao Tráfico Internacional de Pessoas e ao Contrabando de Migrantes—uma estrutura especializada no MPF que centraliza todas as investigações e ações judiciais nessa área em todo o Brasil.</p>
+
+        <p data-lang="en">According to BBC News Brasil reporting, the MPF received a formal complaint last week regarding email exchanges between a Brazilian woman and Epstein dating to 2010. The messages detail a proposed trip for a woman from Natal, described as being from a "simple family," to the United States.</p>
+
+        <p data-lang="pt" style="display: none;">De acordo com reportagem da BBC News Brasil, o MPF recebeu uma denúncia formal na semana passada sobre trocas de emails entre uma mulher brasileira e Epstein datadas de 2010. As mensagens detalham uma viagem proposta para uma mulher de Natal, descrita como sendo de uma "família simples", para os Estados Unidos.</p>
+
+        <p data-lang="en">In these exchanges, Epstein requested photographs of the Brazilian woman in bikini or lingerie. While the messages are extensive, it remains unclear whether the trip occurred or what its ultimate purpose was.</p>
+
+        <p data-lang="pt" style="display: none;">Nessas trocas, Epstein solicitou fotografias da mulher brasileira em biquíni ou lingerie. Embora as mensagens sejam extensas, permanece incerto se a viagem ocorreu ou qual era seu objetivo final.</p>
+
+        <div class="image-block">
+          <img src="imgs/photo-03.jpg" alt="Document archive">
+          <div class="image-credit" data-lang="en">Reuters</div>
+          <div class="image-credit" data-lang="pt" style="display: none;">Reuters</div>
+        </div>
+      </section>
+
+      <section id="messages" class="text-section chapter">
+        <h2 data-lang="en">Patterns in the messaging evidence</h2>
+        <h2 data-lang="pt" style="display: none;">Padrões na evidência das mensagens</h2>
+
+        <p data-lang="en">Email evidence obtained by BBC News Brasil reveals multiple Brazilian women who maintained personal contact with Epstein and received financial support. The messages demonstrate patterns of financial dependence in relation to the financier:</p>
+
+        <p data-lang="pt" style="display: none;">Evidência de email obtida pela BBC News Brasil revela múltiplas mulheres brasileiras que mantiveram contato pessoal com Epstein e receberam suporte financeiro. As mensagens demonstram padrões de dependência financeira em relação ao financista:</p>
+
+        <ul style="margin-left: 40px; margin-bottom: 20px;">
+          <li data-lang="en">Payments for cosmetic procedures and haircuts</li>
+          <li data-lang="pt" style="display: none;">Pagamentos por procedimentos cosméticos e cortes de cabelo</li>
+
+          <li data-lang="en">Funding for travel arrangements</li>
+          <li data-lang="pt" style="display: none;">Financiamento para arranjos de viagem</li>
+
+          <li data-lang="en">Purchase of mobile phones</li>
+          <li data-lang="pt" style="display: none;">Compra de telefones celulares</li>
+
+          <li data-lang="en">In exchange, Epstein received photographs and contact information for other women</li>
+          <li data-lang="pt" style="display: none;">Em troca, Epstein recebeu fotografias e informações de contato de outras mulheres</li>
+        </ul>
+
+        <div class="pullquote" data-lang="en">"Participation of victims is fundamental to this investigation. How girls were recruited, who recruited them, and whether there were organized networks for the purpose of recruiting women for sexual exploitation."<div class="pullquote-citation">Cinthia Gabriela Borges, Federal Prosecution</div></div>
+
+        <div class="pullquote" data-lang="pt" style="display: none;">"Participação das vítimas é fundamental. Como foram recrutadas, quem as recrutou, e se havia redes organizadas para fins de recrutamento de mulheres para exploração sexual."<div class="pullquote-citation">Cinthia Gabriela Borges, Ministério Público Federal</div></div>
+
+        <p data-lang="en">The evidence indicates email communications dating back to at least 2006, before Epstein's first arrest. These exchanges show him being invited to parties, discussing visits to São Paulo, arranging money transfers, requesting introductions to other women, and in one case, warning a Brazilian woman that he would be arrested within days—a warning that preceded his 2008 detention.</p>
+
+        <p data-lang="pt" style="display: none;">A evidência indica comunicações por email datando de pelo menos 2006, antes da primeira prisão de Epstein. Essas trocas mostram-o sendo convidado para festas, discutindo visitas a São Paulo, arranjando transferências de dinheiro, solicitando introduções a outras mulheres, e em um caso, avisando uma mulher brasileira que seria preso em dias—um aviso que precedeu sua detenção em 2008.</p>
+
+        <div class="image-block">
+          <img src="imgs/photo-04.jpg" alt="Computer showing documents">
+          <div class="image-credit" data-lang="en">Getty Images</div>
+          <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
+        </div>
+      </section>
+
+      <section class="visualization">
+        <h2 class="viz-title" data-lang="en">Investigation timeline</h2>
+        <h2 class="viz-title" data-lang="pt" style="display: none;">Cronograma da investigação</h2>
+
+        <div class="timeline-container">
+          <div class="timeline-item-mini">
+            <div class="timeline-year" data-lang="en">2006+</div>
+            <div class="timeline-year" data-lang="pt" style="display: none;">2006+</div>
+            <div class="timeline-text" data-lang="en">Email communications between Epstein and Brazilian women begin</div>
+            <div class="timeline-text" data-lang="pt" style="display: none;">Comunicações por email entre Epstein e mulheres brasileiras começam</div>
+          </div>
+
+          <div class="timeline-item-mini">
+            <div class="timeline-year" data-lang="en">2008</div>
+            <div class="timeline-year" data-lang="pt" style="display: none;">2008</div>
+            <div class="timeline-text" data-lang="en">Epstein arrested in United States; FBI interviews Brazilian women in New York</div>
+            <div class="timeline-text" data-lang="pt" style="display: none;">Epstein é preso nos Estados Unidos; FBI entrevista mulheres brasileiras em Nova York</div>
+          </div>
+
+          <div class="timeline-item-mini">
+            <div class="timeline-year" data-lang="en">2009-2013</div>
+            <div class="timeline-year" data-lang="pt" style="display: none;">2009-2013</div>
+            <div class="timeline-text" data-lang="en">Continued correspondence between Epstein and Brazilian women from Natal</div>
+            <div class="timeline-text" data-lang="pt" style="display: none;">Correspondência continuada entre Epstein e mulheres brasileiras de Natal</div>
+          </div>
+
+          <div class="timeline-item-mini">
+            <div class="timeline-year" data-lang="en">2019</div>
+            <div class="timeline-year" data-lang="pt" style="display: none;">2019</div>
+            <div class="timeline-text" data-lang="en">Epstein dies in prison; FBI re-interviews Marina Lacerda and other victims</div>
+            <div class="timeline-text" data-lang="pt" style="display: none;">Epstein morre na prisão; FBI entrevista novamente Marina Lacerda e outras vítimas</div>
+          </div>
+
+          <div class="timeline-item-mini">
+            <div class="timeline-year" data-lang="en">September 2025</div>
+            <div class="timeline-year" data-lang="pt" style="display: none;">Setembro de 2025</div>
+            <div class="timeline-text" data-lang="en">Marina Lacerda and other victims go public with allegations</div>
+            <div class="timeline-text" data-lang="pt" style="display: none;">Marina Lacerda e outras vítimas vêm a público com acusações</div>
+          </div>
+
+          <div class="timeline-item-mini">
+            <div class="timeline-year" data-lang="en">February 2026</div>
+            <div class="timeline-year" data-lang="pt" style="display: none;">Fevereiro de 2026</div>
+            <div class="timeline-text" data-lang="en">BBC News Brasil reveals Epstein's Brazil connections; MPF opens formal investigation</div>
+            <div class="timeline-text" data-lang="pt" style="display: none;">BBC News Brasil revela conexões Brasil de Epstein; MPF abre investigação formal</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="challenges" class="text-section chapter">
+        <h2 data-lang="en">Obstacles to investigation and prosecution</h2>
+        <h2 data-lang="pt" style="display: none;">Obstáculos à investigação e processamento</h2>
+
+        <p data-lang="en">Prosecutors acknowledge significant challenges in building cases against Epstein's network. The time elapsed since the crimes—many emails are over 10 years old—complicates evidence gathering and witness testimony. Additionally, much of the activity occurred in U.S. territory.</p>
+
+        <p data-lang="pt" style="display: none;">Promotores reconhecem desafios significativos na construção de casos contra a rede de Epstein. O tempo decorrido desde os crimes—muitos emails têm mais de 10 anos—complica a coleta de evidências e depoimento de testemunhas. Além disso, muita da atividade ocorreu em território dos EUA.</p>
+
+        <div class="pullquote" data-lang="en">"These are facts of great magnitude and worldwide interest, but they date back to approximately 2011, 2012. [The investigation] involves significant evidentiary complexity not only due to the passage of time but also the extraterritorial nature—much of the activity involving Brazilian women occurred in American territory."<div class="pullquote-citation">Cinthia Gabriela Borges</div></div>
+
+        <div class="pullquote" data-lang="pt" style="display: none;">"Embora sejam fatos de grande magnitude e muito interesse mundial, esses fatos remontam a mais ou menos 2011, 2012. [A investigação] envolve uma complexidade probatória muito acentuada não só pelo decurso do tempo como também de extraterritorialidade—boa parte dos fatos envolvendo mulheres brasileiras aconteceram em território americano."<div class="pullquote-citation">Cinthia Gabriela Borges</div></div>
+
+        <p data-lang="en">A critical legal change in Brazil's trafficking law occurred in 2016. Previously, the crime was characterized solely by the fact of a victim being recruited and taken abroad. Under the new standard, prosecutors must prove "defects of consent"—that the victim suffered fraud, coercion, violence, or exploitation of vulnerability.</p>
+
+        <p data-lang="pt" style="display: none;">Uma mudança legal crítica na lei de tráfico do Brasil ocorreu em 2016. Anteriormente, o crime era caracterizado apenas pelo fato de uma vítima ser aliciada e levada para o exterior. Sob o novo padrão, promotores devem provar "vícios de consentimento"—que a vítima sofreu fraude, coação, violência, ou exploração de vulnerabilidade.</p>
+
+        <p data-lang="en">The Federal Prosecution emphasizes that women who maintained contact with Epstein are not themselves under investigation. "Victims, as a rule, are not considered responsible for any acts they may have committed in a situation of human trafficking victimization."</p>
+
+        <p data-lang="pt" style="display: none;">O Ministério Público Federal enfatiza que mulheres que mantiveram contato com Epstein não estão sendo investigadas. "Vítimas, em regra, não são consideradas responsáveis por eventuais atos que venham a praticar na situação de vítima de tráfico de pessoas."</p>
+
+        <div class="image-block">
+          <img src="imgs/photo-05.jpg" alt="Federal courthouse">
+          <div class="image-credit" data-lang="en">Reuters</div>
+          <div class="image-credit" data-lang="pt" style="display: none;">Reuters</div>
+        </div>
+      </section>
+
+      <section id="implications" class="text-section chapter">
+        <h2 data-lang="en">Implications for Brazilian justice system</h2>
+        <h2 data-lang="pt" style="display: none;">Implicações para o sistema de justiça brasileiro</h2>
+
+        <p data-lang="en">The investigation represents a significant development in how Brazil's Federal Prosecution addresses international crimes against Brazilian women. It signals heightened vigilance regarding international trafficking networks and the exploitation of vulnerable immigrant populations.</p>
+
+        <p data-lang="pt" style="display: none;">A investigação representa um desenvolvimento significativo em como o Ministério Público Federal do Brasil aborda crimes internacionais contra mulheres brasileiras. Sinaliza maior vigilância quanto a redes de tráfico internacional e exploração de populações imigrantes vulneráveis.</p>
+
+        <p data-lang="en">The Federal Prosecution will continue monitoring the release of additional case files by the U.S. government and searching for further mentions of Brazilian nationals in Epstein's archives. Each case will be analyzed individually to understand the relationships with Epstein and whether specialized recruitment networks existed.</p>
+
+        <p data-lang="pt" style="display: none;">O Ministério Público Federal continuará monitorando a divulgação de arquivos adicionais do caso pelo governo dos EUA e buscando mais menções de brasileiros nos arquivos de Epstein. Cada caso será analisado individualmente para entender os relacionamentos com Epstein e se redes de recrutamento especializadas existiam.</p>
+
+        <p data-lang="en">The prosecution's call for victim participation underscores a crucial reality: without the testimony and cooperation of victims themselves, building comprehensive cases remains extremely difficult, particularly given the time elapsed and international dimensions.</p>
+
+        <p data-lang="pt" style="display: none;">O apelo do Ministério Público Federal pela participação das vítimas ressalta uma realidade crucial: sem o depoimento e cooperação das próprias vítimas, construir casos abrangentes permanece extremamente difícil, particularmente dado o tempo decorrido e dimensões internacionais.</p>
+
+        <div class="image-block">
+          <img src="imgs/photo-06.jpg" alt="Brazilian flag">
+          <div class="image-credit" data-lang="en">Getty Images</div>
+          <div class="image-credit" data-lang="pt" style="display: none;">Getty Images</div>
+        </div>
+      </section>
+
+      <section class="text-section">
+        <h2 data-lang="en">A new chapter for Brazilian justice</h2>
+        <h2 data-lang="pt" style="display: none;">Um novo capítulo para a justiça brasileira</h2>
+
+        <p data-lang="en">The Federal Prosecution's investigation marks the first formal Brazilian legal action related to Epstein's alleged crimes. While the challenges are substantial, the commitment to investigate signals Brazil's determination to pursue accountability and protect victims of international trafficking.</p>
+
+        <p data-lang="pt" style="display: none;">A investigação do Ministério Público Federal marca a primeira ação legal formal brasileira relacionada aos alegados crimes de Epstein. Embora os desafios sejam substanciais, o compromisso de investigar sinaliza a determinação do Brasil em buscar responsabilidade e proteger vítimas de tráfico internacional.</p>
+
+        <p data-lang="en">For Brazilian women who were victimized, the investigation offers a potential path to justice in their home country—if they are willing to come forward and share their experiences with authorities.</p>
+
+        <p data-lang="pt" style="display: none;">Para as mulheres brasileiras que foram vitimizadas, a investigação oferece um possível caminho para justiça em seu país de origem—se estiverem dispostas a vir a público e compartilhar suas experiências com as autoridades.</p>
+      </section>
+    </article>
+
+    <div class="navigation-footer">
+      <a href="../artigo-4/index.html" class="nav-link nav-prev" data-lang="en">Previous</a>
+      <a href="../artigo-4/index.html" class="nav-link nav-prev" data-lang="pt" style="display: none;">Anterior</a>
+
+      <a href="../index.html" class="nav-link" data-lang="en">← Back to series</a>
+      <a href="../index.html" class="nav-link" data-lang="pt" style="display: none;">← Voltar para série</a>
+
+      <a href="../artigo-6/index.html" class="nav-link nav-next" data-lang="en">Next</a>
+      <a href="../artigo-6/index.html" class="nav-link nav-next" data-lang="pt" style="display: none;">Próximo</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-disclaimer">
+        <p data-lang="en"><strong>About this series:</strong> A 9-part investigative series exploring Jeffrey Epstein's previously undocumented ties to Brazil, Brazilian victims, business interests, and his network of enablers and contacts.</p>
+        <p data-lang="pt" style="display: none;"><strong>Sobre esta série:</strong> Uma série investigativa de 9 partes explorando os laços anteriormente não documentados de Jeffrey Epstein com o Brasil, vítimas brasileiras, interesses comerciais, e sua rede de facilitadores e contatos.</p>
+
+        <p data-lang="en">Original reporting by Luiz Fernando Toledo for BBC News Brasil. Enhanced portfolio presentation.</p>
+        <p data-lang="pt" style="display: none;">Reportagem original de Luiz Fernando Toledo para BBC News Brasil. Apresentação aprimorada para portfólio.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../shared/base.js"></script>
 </body>
 </html>
