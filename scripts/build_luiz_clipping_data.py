@@ -95,15 +95,19 @@ SOCIAL_DOMAINS = {
 }
 CATEGORY_LABELS = {
     "reportagem_autoral": "Reportagens publicadas por mim",
-    "eco_republicacao": "Republicacoes / ecos da minha apuracao",
-    "mencao": "Mencoes ao meu nome",
+    "republicacao": "Republicações / syndication",
+    "eco_repercussao": "Repercussão / interpretação de apuração minha",
+    "citacao_fonte": "Citado como fonte / especialista",
+    "mencao": "Menções ao meu nome",
     "entrevista": "Entrevistas / podcasts",
     "palestra_curso": "Palestras / cursos / workshops",
-    "perfil_bio": "Perfis / bios / paginas institucionais",
+    "perfil_bio": "Perfis / bios / páginas institucionais",
 }
 CATEGORY_ORDER = [
     "reportagem_autoral",
-    "eco_republicacao",
+    "republicacao",
+    "eco_repercussao",
+    "citacao_fonte",
     "mencao",
     "entrevista",
     "palestra_curso",
@@ -112,12 +116,31 @@ CATEGORY_ORDER = [
 DUCKDUCKGO_LITE_QUERIES = [
     '"Luiz Fernando Toledo"',
     '"Luiz Fernando Toledo Antunes"',
+    '"segundo reportagem" "Luiz Fernando Toledo"',
+    '"investigação da BBC" "Luiz Fernando Toledo"',
+    '"de acordo com" "Luiz Fernando Toledo"',
 ]
 GOOGLE_NEWS_QUERIES = [
     '"Luiz Fernando Toledo"',
     '"Luiz Fernando Toledo Antunes"',
+    '"segundo reportagem" "Luiz Fernando Toledo"',
+    '"levantamento" "Luiz Fernando Toledo"',
 ]
 JINA_PREFIX = "https://r.jina.ai/http://"
+# Domains from author pages — articles found here are considered "reportagem_autoral"
+AUTHOR_PAGE_DOMAINS = {
+    "bbc.com",
+    "bbc.co.uk",
+    "intercept.com.br",
+    "theintercept.com",
+    "piaui.folha.uol.com.br",
+    "apublica.org",
+    "ojoioeotrigo.com.br",
+    "estadao.com.br",
+    "g1.globo.com",
+    "noticias.uol.com.br",
+    "tab.uol.com.br",
+}
 KNOWN_SOURCE_PAGES = [
     {
         "url": "https://www.bbc.com/portuguese/topics/c5ydzy3vg0xt",
@@ -171,6 +194,15 @@ KNOWN_SOURCE_PAGES = [
         "relation_hint": "pagina de autor",
         "source_label": "known-source",
         "notes": "Pagina de autor descoberta por busca na web.",
+        "crawl_mode": "none",
+    },
+    {
+        "url": "https://g1.globo.com/busca/?q=%22Luiz+Fernando+Toledo%22&species=notícias",
+        "title": "Luiz Fernando Toledo - G1 Globo",
+        "category_hint": "perfil_bio",
+        "relation_hint": "busca de autor",
+        "source_label": "known-source",
+        "notes": "Busca de matérias no G1.",
         "crawl_mode": "none",
     },
 ]
@@ -621,8 +653,52 @@ def has_textual_authorship(item: Dict[str, Any]) -> bool:
         "por luiz fernando toledo",
         "author luiz fernando toledo",
         "author, luiz fernando toledo",
+        # BBC-style: "Author, Name1, Luiz Fernando Toledo"
+        "author,",  # will be checked with name below
+        # Video reporter patterns
+        "reporter luiz fernando toledo",
+        "reportera luiz fernando toledo",
+        # Credit patterns
+        "reportagem: luiz fernando toledo",
+        "reportagem de luiz fernando toledo",
+        "texto: luiz fernando toledo",
+        "texto de luiz fernando toledo",
+        "apuracao: luiz fernando toledo",
+        "apuracao de luiz fernando toledo",
     ]
-    return any(pattern in hay for pattern in patterns)
+    # Direct pattern match
+    for pattern in patterns:
+        if pattern == "author,":
+            # Special case: BBC format "Author, Name1[, Name2], Luiz Fernando Toledo"
+            if "author," in hay and any(normalize_text(name) in hay for name in NAME_VARIANTS):
+                # Check if the author section contains LFT's name
+                author_match = re.search(r"author,\s*(.{0,200}?)(?:role,|$)", hay)
+                if author_match and any(normalize_text(name) in author_match.group(1) for name in NAME_VARIANTS):
+                    return True
+        elif pattern in hay:
+            return True
+
+    # Also check: if the domain is a known author page domain AND the URL was crawled
+    # from an author page, treat as authorship
+    domain = domain_of(item.get("url", ""))
+    source_labels = " ".join(item.get("source_labels") or [])
+    if domain in AUTHOR_PAGE_DOMAINS and "crawl" in source_labels:
+        # Only if name appears in the page content
+        if any(normalize_text(name) in hay for name in NAME_VARIANTS):
+            return True
+
+    # Regex-based patterns: "o repórter [da BBC News Brasil] Luiz Fernando Toledo"
+    for name in NAME_VARIANTS:
+        name_norm = normalize_text(name)
+        if name_norm in hay:
+            # "reporter/repórter ... LFT" within 80 chars
+            if re.search(r"(?:reporter|reportera?)\b.{0,80}" + re.escape(name_norm), hay):
+                return True
+            # "neste video, o reporter LFT"
+            if re.search(r"neste video.{0,40}" + re.escape(name_norm), hay):
+                return True
+
+    return False
 
 
 class Fetcher:
@@ -1317,15 +1393,32 @@ def match_identity_score(item: Dict[str, Any]) -> Tuple[int, List[str], List[str
     return score, matched_names, matched_tokens
 
 
-def classify_item(item: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+def classify_item(item: Dict[str, Any], all_autoral_titles: Optional[set] = None) -> Optional[Dict[str, Any]]:
+    """Classify an item into one of the content categories.
+
+    Categories (in priority order):
+    - reportagem_autoral: articles authored by LFT (byline match or known author domain)
+    - republicacao: syndications/republications (same title as an autoral piece, different domain)
+    - eco_repercussao: repercussions/interpretations of LFT's reporting by third parties
+    - citacao_fonte: articles where LFT is cited as a source/expert (name in body + quoting verbs)
+    - entrevista: interviews/podcasts featuring LFT
+    - palestra_curso: talks/workshops/courses
+    - perfil_bio: profile pages / institutional pages
+    - mencao: other mentions of the name
+    """
     score, matched_names, matched_tokens = match_identity_score(item)
     title_only = normalize_text(item.get("title", ""))
     title_desc = normalize_text(" ".join([item.get("title", ""), item.get("description", ""), item.get("notes", "")]))
     body = normalize_text(item.get("text_excerpt", ""))
+    full_text = title_desc + " " + body
     domain = domain_of(item.get("url", ""))
     category_hint = item.get("category_hint") or ""
     byline_match = any(normalize_text(name) in normalize_text(" ".join(item.get("author_names") or [])) for name in NAME_VARIANTS)
     textual_authorship = has_textual_authorship(item)
+    is_author_domain = domain in AUTHOR_PAGE_DOMAINS or any(domain.endswith("." + d) for d in AUTHOR_PAGE_DOMAINS)
+
+    if all_autoral_titles is None:
+        all_autoral_titles = set()
 
     if domain == "news.google.com":
         return None
@@ -1341,90 +1434,161 @@ def classify_item(item: Dict[str, Any]) -> Optional[Dict[str, Any]]:
     category = category_hint or ""
     relation = item.get("relation_hint") or ""
 
+    # Migrate old category names
+    if category == "eco_republicacao":
+        category = "eco_repercussao"
+
     # A URL ter saído de uma página de autor é apenas pista de descoberta, não prova.
     if category == "reportagem_autoral" and not (byline_match or textual_authorship):
         category = ""
         relation = ""
 
+    # --- Keyword tuples for classification ---
     event_keywords = (
-        "palestra",
-        "palestrante",
-        "speaker",
-        "workshop",
-        "conference",
-        "congresso",
-        "seminar",
-        "seminario",
-        "webinar",
-        "training",
-        "udemy",
+        "palestra", "palestrante", "speaker", "workshop", "conference",
+        "congresso", "seminar", "seminario", "webinar", "training", "udemy",
     )
     interview_keywords = (
-        "entrevista",
-        "interview",
-        "podcast",
-        "episode",
-        "stage talks",
-        "youtube",
-        "spotify",
+        "entrevista", "interview", "podcast", "episode",
+        "stage talks", "youtube", "spotify",
     )
     profile_keywords = (
-        "speaker profile",
-        "resume",
-        "curriculo",
-        "portfolio",
-        "people",
-        "orcid",
-        "staff profile",
+        "speaker profile", "resume", "curriculo", "portfolio",
+        "people", "orcid", "staff profile",
     )
+
+    # Keywords indicating the article is a repercussion/interpretation of LFT's reporting
     echo_keywords = (
         "apos reportagem",
-        "após reportagem",
+        "apos investigacao",
+        "apos apuracao",
+        "apos levantamento",
+        "apos denuncia",
         "investigacao da bbc",
-        "investigação da bbc",
         "reportagem da bbc",
         "segundo reportagem",
+        "segundo levantamento",
+        "segundo apuracao",
+        "segundo investigacao",
+        "conforme reportagem",
+        "conforme apuracao",
+        "conforme levantamento",
+        "como mostrou reportagem",
+        "como revelou reportagem",
+        "como revelou investigacao",
+        "como revelou apuracao",
+        "como mostrou a bbc",
+        "como revelou a bbc",
+        "como mostrou o intercept",
+        "como revelou o intercept",
         "levantamento da datafixers",
+        "levantamento da fiquem sabendo",
         "reportagem de luiz fernando toledo",
+        "investigacao de luiz fernando toledo",
+        "apuracao de luiz fernando toledo",
+        "reportagem publicada pelo",
+        "reportagem publicada pela",
+    )
+
+    # Keywords indicating LFT is cited as a source/expert (NOT author)
+    citation_keywords = (
+        "segundo luiz fernando toledo",
+        "de acordo com luiz fernando toledo",
+        "afirma luiz fernando toledo",
+        "explica luiz fernando toledo",
+        "disse luiz fernando toledo",
+        "diz luiz fernando toledo",
+        "aponta luiz fernando toledo",
+        "destaca luiz fernando toledo",
+        "avalia luiz fernando toledo",
+        "analisa luiz fernando toledo",
+        "comenta luiz fernando toledo",
+        "observa luiz fernando toledo",
+        "ressalta luiz fernando toledo",
+        "segundo o jornalista luiz",
+        "segundo o pesquisador luiz",
+        "segundo o reporter luiz",
+        "o jornalista luiz fernando toledo",
+        "o reporter luiz fernando toledo",
+        "o pesquisador luiz fernando toledo",
+        "o diretor luiz fernando toledo",
+        "o cofundador luiz fernando toledo",
+        "o professor luiz fernando toledo",
+        "jornalista luiz fernando toledo",
+        "according to luiz fernando toledo",
+        "says luiz fernando toledo",
+        "said luiz fernando toledo",
+        "told luiz fernando toledo",
+        "luiz fernando toledo, who",
+        "luiz fernando toledo, diretor",
+        "luiz fernando toledo, cofundador",
+        "luiz fernando toledo, jornalista",
+        "luiz fernando toledo, pesquisador",
+        "luiz fernando toledo, reporter",
     )
 
     if not category:
+        # 1. REPORTAGEM AUTORAL: byline match or textual authorship
         if byline_match or textual_authorship:
             category = "reportagem_autoral"
             relation = relation or "autor"
+
+        # 2. EVENT / TALK
         elif any(keyword in title_only for keyword in event_keywords):
             category = "palestra_curso"
             relation = relation or "palestrante"
+
+        # 3. INTERVIEW / PODCAST
         elif any(keyword in title_only for keyword in interview_keywords):
             category = "entrevista"
             relation = relation or "entrevistado"
+
+        # 4. PROFILE / BIO PAGE
         elif is_profile_domain(domain) or "/staff/" in item.get("url", "") or any(keyword in title_only for keyword in profile_keywords):
             category = "perfil_bio"
             relation = relation or "perfil"
-        elif any(keyword in (title_desc + " " + body) for keyword in echo_keywords):
-            category = "eco_republicacao"
-            relation = relation or "eco de apuracao"
+
+        # 5. CITACAO COMO FONTE: Name in body with quoting verbs but NOT author
+        elif matched_names and any(keyword in full_text for keyword in citation_keywords):
+            category = "citacao_fonte"
+            relation = relation or "citado como fonte"
+
+        # 6. ECO / REPERCUSSAO: references to LFT's reporting
+        elif any(keyword in full_text for keyword in echo_keywords):
+            category = "eco_repercussao"
+            relation = relation or "repercussao de apuracao"
+
+        # 7. REPUBLICACAO: same title as an autoral piece on a different domain
+        elif all_autoral_titles and title_only and title_only in all_autoral_titles:
+            category = "republicacao"
+            relation = relation or "republicacao / syndication"
+
+        # 8. MENCAO: exact name match from a search query
         elif matched_names and any(query_is_exact_name(query) for query in (item.get("queries") or [])):
             category = "mencao"
             relation = relation or "mencionado"
+
+        # 9. MENCAO: name match + identity context tokens
         elif matched_names and matched_tokens:
             category = "mencao"
             relation = relation or "mencionado"
+
         else:
             return None
 
-    if category == "reportagem_autoral" and not relation:
-        relation = "autor"
-    if category == "entrevista" and not relation:
-        relation = "entrevistado"
-    if category == "palestra_curso" and not relation:
-        relation = "palestrante"
-    if category == "perfil_bio" and not relation:
-        relation = "perfil"
-    if category == "eco_republicacao" and not relation:
-        relation = "eco de apuracao"
-    if category == "mencao" and not relation:
-        relation = "mencionado"
+    # --- Default relations for each category ---
+    default_relations = {
+        "reportagem_autoral": "autor",
+        "republicacao": "republicacao / syndication",
+        "eco_repercussao": "repercussao de apuracao",
+        "citacao_fonte": "citado como fonte",
+        "entrevista": "entrevistado",
+        "palestra_curso": "palestrante",
+        "perfil_bio": "perfil",
+        "mencao": "mencionado",
+    }
+    if not relation:
+        relation = default_relations.get(category, "mencionado")
 
     item["category"] = category
     item["category_label"] = CATEGORY_LABELS.get(category, category)
@@ -1446,7 +1610,7 @@ def enrich_candidates(candidates: List[Dict[str, Any]], existing_items: Dict[str
         "domains": Counter(),
         "errors": [],
     }
-    items: List[Dict[str, Any]] = []
+    enriched_items: List[Dict[str, Any]] = []
 
     for idx, candidate in enumerate(candidates, start=1):
         key = canonicalize_url(candidate.get("url") or "")
@@ -1510,17 +1674,38 @@ def enrich_candidates(candidates: List[Dict[str, Any]], existing_items: Dict[str
         merged["first_seen_date"] = iso_to_date(merged.get("first_seen_at"))
         merged["last_seen_date"] = iso_to_date(merged.get("last_seen_at"))
         merged["id"] = existing.get("id") if existing else make_id(merged["url"])
-        merged = classify_item(merged)  # type: ignore[assignment]
-        if not merged:
-            diagnostics["dropped"] += 1
-            continue
-        diagnostics["kept"] += 1
-        diagnostics["categories"][merged["category"]] += 1
-        diagnostics["domains"][merged["domain"]] += 1
-        items.append(merged)
+        enriched_items.append(merged)
 
         if idx % 25 == 0:
             print(f"Processed {idx}/{len(candidates)} candidates", file=sys.stderr)
+
+    # --- Two-pass classification ---
+    # Pass 1: classify everything without republication detection to find autoral titles
+    autoral_titles: set = set()
+    pass1_items: List[Dict[str, Any]] = []
+    for item in enriched_items:
+        classified = classify_item(dict(item))  # type: ignore[assignment]
+        if not classified:
+            diagnostics["dropped"] += 1
+            continue
+        pass1_items.append(classified)
+        if classified.get("category") == "reportagem_autoral":
+            title_norm = normalize_text(classified.get("title", ""))
+            if title_norm:
+                autoral_titles.add(title_norm)
+
+    # Pass 2: reclassify with autoral titles for republication detection
+    items: List[Dict[str, Any]] = []
+    for item in pass1_items:
+        # Only reclassify items that were marked as "mencao" — they could be republications
+        if item.get("category") == "mencao" and autoral_titles:
+            reclassified = classify_item(dict(item), all_autoral_titles=autoral_titles)
+            if reclassified:
+                item = reclassified
+        diagnostics["kept"] += 1
+        diagnostics["categories"][item["category"]] += 1
+        diagnostics["domains"][item["domain"]] += 1
+        items.append(item)
 
     items.sort(
         key=lambda item: (
