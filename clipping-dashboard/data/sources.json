@@ -4,33 +4,32 @@
       "known_external_sources": 49
     },
     "searches": {
-      "duckduckgo-lite:\"Luiz Fernando Toledo\"": 10,
-      "google-news-rss:\"Luiz Fernando Toledo\"": 20,
+      "google-news-rss:\"Luiz Fernando Toledo\"": 40,
       "google-news-rss:\"Luiz Fernando Toledo Antunes\"": 2,
       "google-news-rss:\"segundo reportagem\" \"Luiz Fernando Toledo\"": 2,
       "google-news-rss:\"levantamento\" \"Luiz Fernando Toledo\"": 12
     }
   },
   "enrich": {
-    "fetched": 58,
-    "reused": 24,
-    "kept": 77,
-    "dropped": 5,
+    "fetched": 73,
+    "reused": 23,
+    "kept": 92,
+    "dropped": 4,
     "categories": {
-      "perfil_bio": 19,
-      "reportagem_autoral": 51,
+      "perfil_bio": 17,
+      "reportagem_autoral": 67,
       "mencao": 5,
       "entrevista": 1,
-      "citacao_fonte": 1
+      "citacao_fonte": 2
     },
     "domains": {
-      "bbc.com": 45,
+      "bbc.com": 60,
       "intercept.com.br": 2,
       "piaui.folha.uol.com.br": 1,
       "apublica.org": 3,
       "ojoioeotrigo.com.br": 2,
-      "estadao.com.br": 5,
-      "g1.globo.com": 1,
+      "estadao.com.br": 6,
+      "g1.globo.com": 2,
       "escavador.com": 1,
       "icfj.org": 1,
       "devstudies.cam.ac.uk": 1,
@@ -43,9 +42,7 @@
       "talks.ox.ac.uk": 1,
       "cima.ned.org": 1,
       "scielo.br": 1,
-      "uk.linkedin.com": 1,
-      "instagram.com": 1,
-      "congresso.abraji.org.br": 1,
+      "sbtnews.sbt.com.br": 1,
       "rollingstone.com.br": 1,
       "piaui.uol.com.br": 1,
       "cnnbrasil.com.br": 1
@@ -53,7 +50,7 @@
     "errors": [
       {
         "url": "https://devstudies.cam.ac.uk/news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil",
-        "error": "HTTPSConnectionPool(host='devstudies.cam.ac.uk', port=443): Max retries exceeded with url: /news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil (Caused by NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x10a222e50>: Failed to establish a new connection: [Errno 8] nodename nor servname provided, or not known')) | jina: 422 Client Error: Unprocessable Entity for url: https://r.jina.ai/http://https://devstudies.cam.ac.uk/news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil"
+        "error": "HTTPSConnectionPool(host='devstudies.cam.ac.uk', port=443): Max retries exceeded with url: /news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil (Caused by NameResolutionError(\"HTTPSConnection(host='devstudies.cam.ac.uk', port=443): Failed to resolve 'devstudies.cam.ac.uk' ([Errno -5] No address associated with hostname)\")) | jina: 422 Client Error: Unprocessable Entity for url: https://r.jina.ai/http://https://devstudies.cam.ac.uk/news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil"
       }
     ]
   }
