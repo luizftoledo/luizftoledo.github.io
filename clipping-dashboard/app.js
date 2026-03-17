@@ -1,6 +1,8 @@
 const CATEGORY_ORDER = [
   "reportagem_autoral",
-  "eco_republicacao",
+  "republicacao",
+  "eco_repercussao",
+  "citacao_fonte",
   "mencao",
   "entrevista",
   "palestra_curso",
@@ -9,7 +11,9 @@ const CATEGORY_ORDER = [
 
 const CATEGORY_LABELS = {
   reportagem_autoral: "Reportagens publicadas por mim",
-  eco_republicacao: "Republicações e ecos",
+  republicacao: "Republicações / syndication",
+  eco_repercussao: "Repercussão / interpretação de apuração minha",
+  citacao_fonte: "Citado como fonte / especialista",
   mencao: "Menções ao meu nome",
   entrevista: "Entrevistas e podcasts",
   palestra_curso: "Palestras e cursos",
