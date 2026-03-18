@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-12T14:13:49.406715+00:00",
+  "generated_at": "2026-03-18T14:45:40.773623+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -16,9 +16,9 @@
       "janja": 1,
       "senador": 81
     },
-    "mention_rows": 1094,
-    "mention_occurrences_total": 1641,
-    "mention_docs_total": 1094,
+    "mention_rows": 1093,
+    "mention_occurrences_total": 1640,
+    "mention_docs_total": 1093,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -8310,23 +8310,6 @@
       "occurrences": 1,
       "matched_aliases": [
         "Gervásio Maia"
-      ],
-      "snippet": "Aos deputados federais que estão aqui, companheiro Augusto Puppio [deputado federal], Bandeira de Mello [deputado federal], Douglas Viegas [deputado federal], Gervásio Maia [deputado federal], Ismael Alexandrino [deputado federal]."
-    },
-    {
-      "entity_id": "deputado-douglas-viegas",
-      "date": "2024-08-26",
-      "week": "2024-W35",
-      "month": "2024-08",
-      "year": "2024",
-      "type": "discurso",
-      "doc_id": "75917b3ab338793f4f04",
-      "title": "Pronunciamento do presidente Lula durante encontro com atletas olímpicos, em 26 de agosto de 2024",
-      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/08/pronunciamento-do-presidente-lula-durante-encontro-com-atletas-olimpicos-em-26-de-agosto-de-2024",
-      "location": "26 de agosto de 2024",
-      "occurrences": 1,
-      "matched_aliases": [
-        "Douglas Viegas"
       ],
       "snippet": "Aos deputados federais que estão aqui, companheiro Augusto Puppio [deputado federal], Bandeira de Mello [deputado federal], Douglas Viegas [deputado federal], Gervásio Maia [deputado federal], Ismael Alexandrino [deputado federal]."
     },

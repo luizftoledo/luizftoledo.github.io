@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-12T14:13:49.406715+00:00",
+  "generated_at": "2026-03-18T14:45:40.773623+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -16,9 +16,9 @@
       "janja": 1,
       "senador": 81
     },
-    "mention_rows": 1094,
-    "mention_occurrences_total": 1641,
-    "mention_docs_total": 1094,
+    "mention_rows": 1093,
+    "mention_occurrences_total": 1640,
+    "mention_docs_total": 1093,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -2483,7 +2483,7 @@
       "official_name": "Vitor Lippi",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/178992",
-      "party": "PSDB",
+      "party": "PSD",
       "state": "SP",
       "aliases_counted": [
         "Vitor Lippi"
@@ -2495,7 +2495,7 @@
           "docs": 2
         }
       ],
-      "search_text": "vitor lippi vitor lippi deputados federais deputado federal psdb sp vitor lippi",
+      "search_text": "vitor lippi vitor lippi deputados federais deputado federal psd sp vitor lippi",
       "mention_occurrences_total": 2,
       "mention_docs_total": 2
     },
@@ -2856,30 +2856,6 @@
         }
       ],
       "search_text": "diego garcia diego garcia deputados federais deputado federal republicanos pr diego garcia",
-      "mention_occurrences_total": 1,
-      "mention_docs_total": 1
-    },
-    {
-      "id": "deputado-douglas-viegas",
-      "kind": "deputado",
-      "group_label": "Deputados federais",
-      "name": "Douglas Viegas",
-      "official_name": "Douglas Viegas",
-      "role": "Deputado federal",
-      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/227433",
-      "party": "UNIÃO",
-      "state": "SP",
-      "aliases_counted": [
-        "Douglas Viegas"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Douglas Viegas",
-          "occurrences": 1,
-          "docs": 1
-        }
-      ],
-      "search_text": "douglas viegas douglas viegas deputados federais deputado federal uniao sp douglas viegas",
       "mention_occurrences_total": 1,
       "mention_docs_total": 1
     },
@@ -4186,6 +4162,24 @@
       ],
       "aliases_observed": [],
       "search_text": "alexandre guimaraes alexandre guimaraes deputados federais deputado federal mdb to alexandre guimaraes",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
+    },
+    {
+      "id": "deputado-alexandre-leite",
+      "kind": "deputado",
+      "group_label": "Deputados federais",
+      "name": "Alexandre Leite",
+      "official_name": "Alexandre Leite",
+      "role": "Deputado federal",
+      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/160545",
+      "party": "UNIÃO",
+      "state": "SP",
+      "aliases_counted": [
+        "Alexandre Leite"
+      ],
+      "aliases_observed": [],
+      "search_text": "alexandre leite alexandre leite deputados federais deputado federal uniao sp alexandre leite",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -10818,7 +10812,7 @@
       "official_name": "Alexandre Luiz Giordano",
       "role": "Senador",
       "source_url": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/6008",
-      "party": "S/Partido",
+      "party": "PODEMOS",
       "state": "SP",
       "aliases_counted": [
         "Alexandre Luiz Giordano"
@@ -10830,7 +10824,7 @@
           "docs": 3
         }
       ],
-      "search_text": "giordano alexandre luiz giordano senadores senador s partido sp alexandre luiz giordano",
+      "search_text": "giordano alexandre luiz giordano senadores senador podemos sp alexandre luiz giordano",
       "mention_occurrences_total": 3,
       "mention_docs_total": 3
     },
@@ -11041,7 +11035,7 @@
       "official_name": "Angelo Mario Coronel de Azevedo Martins",
       "role": "Senador",
       "source_url": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/5967",
-      "party": "PSD",
+      "party": "REPUBLICANOS",
       "state": "BA",
       "aliases_counted": [
         "Angelo Mario Coronel de Azevedo Martins",
@@ -11054,7 +11048,7 @@
           "docs": 1
         }
       ],
-      "search_text": "angelo coronel angelo mario coronel de azevedo martins senadores senador psd ba angelo mario coronel de azevedo martins angelo coronel",
+      "search_text": "angelo coronel angelo mario coronel de azevedo martins senadores senador republicanos ba angelo mario coronel de azevedo martins angelo coronel",
       "mention_occurrences_total": 1,
       "mention_docs_total": 1
     },
