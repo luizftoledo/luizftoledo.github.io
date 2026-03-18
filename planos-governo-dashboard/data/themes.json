@@ -1,0 +1,488 @@
+[
+  {
+    "name": "saúde",
+    "slug": "saude",
+    "keywords": [
+      "saúde",
+      "hospital",
+      "ubs",
+      "sus",
+      "médico",
+      "enfermagem",
+      "posto de saúde",
+      "vacina",
+      "urgência",
+      "emergência",
+      "atenção básica",
+      "agente de saúde"
+    ],
+    "count": 8518
+  },
+  {
+    "name": "educação",
+    "slug": "educacao",
+    "keywords": [
+      "educação",
+      "escola",
+      "ensino",
+      "professor",
+      "aluno",
+      "creche",
+      "infantil",
+      "fundamental",
+      "médio",
+      "evasão escolar",
+      "merenda",
+      "alfabetização"
+    ],
+    "count": 8510
+  },
+  {
+    "name": "saneamento básico",
+    "slug": "saneamento_basico",
+    "keywords": [
+      "saneamento",
+      "esgoto",
+      "água",
+      "abastecimento",
+      "tratamento de água",
+      "coleta de lixo",
+      "drenagem",
+      "córrego",
+      "fossas",
+      "pluvial"
+    ],
+    "count": 7713
+  },
+  {
+    "name": "segurança pública",
+    "slug": "seguranca_publica",
+    "keywords": [
+      "segurança",
+      "violência",
+      "crime",
+      "policial",
+      "câmera",
+      "guarda municipal",
+      "iluminação",
+      "monitoramento",
+      "patrulhamento",
+      "ocorrência"
+    ],
+    "count": 8261
+  },
+  {
+    "name": "infraestrutura",
+    "slug": "infraestrutura",
+    "keywords": [
+      "infraestrutura",
+      "asfalto",
+      "pavimentação",
+      "calçada",
+      "estrada",
+      "ponte",
+      "obras",
+      "viaduto",
+      "recape",
+      "bueiro",
+      "drenagem urbana"
+    ],
+    "count": 8388
+  },
+  {
+    "name": "meio ambiente",
+    "slug": "meio_ambiente",
+    "keywords": [
+      "meio ambiente",
+      "ambiental",
+      "reciclagem",
+      "lixo",
+      "resíduos",
+      "floresta",
+      "arborização",
+      "sustentável",
+      "rio",
+      "mata ciliar",
+      "desmatamento"
+    ],
+    "count": 8527
+  },
+  {
+    "name": "emprego e renda",
+    "slug": "emprego_e_renda",
+    "keywords": [
+      "emprego",
+      "trabalho",
+      "renda",
+      "economia",
+      "empreendedorismo",
+      "geração de emprego",
+      "microempreendedor",
+      "mei",
+      "qualificação profissional",
+      "capacitação"
+    ],
+    "count": 8491
+  },
+  {
+    "name": "habitação",
+    "slug": "habitacao",
+    "keywords": [
+      "habitação",
+      "moradia",
+      "casa",
+      "regularização fundiária",
+      "sem teto",
+      "aluguel social",
+      "conjuntos habitacionais",
+      "lotes",
+      "terrenos"
+    ],
+    "count": 7900
+  },
+  {
+    "name": "transporte e mobilidade",
+    "slug": "transporte_e_mobilidade",
+    "keywords": [
+      "transporte",
+      "ônibus",
+      "mobilidade",
+      "trânsito",
+      "ciclofaixa",
+      "bicicleta",
+      "van",
+      "lotação",
+      "mototáxi",
+      "calçada acessível",
+      "semáforo"
+    ],
+    "count": 8349
+  },
+  {
+    "name": "assistência social",
+    "slug": "assistencia_social",
+    "keywords": [
+      "assistência social",
+      "cras",
+      "creas",
+      "vulnerabilidade",
+      "família",
+      "bolsa família",
+      "benefício",
+      "proteção social",
+      "cesta básica",
+      "abrigo"
+    ],
+    "count": 8304
+  },
+  {
+    "name": "cultura, esporte e lazer",
+    "slug": "cultura_esporte_e_lazer",
+    "keywords": [
+      "cultura",
+      "esporte",
+      "lazer",
+      "biblioteca",
+      "museu",
+      "teatro",
+      "quadra",
+      "praça",
+      "academia ao ar livre",
+      "festival",
+      "arena",
+      "poliesportivo"
+    ],
+    "count": 8486
+  },
+  {
+    "name": "tecnologia e inovação",
+    "slug": "tecnologia_e_inovacao",
+    "keywords": [
+      "tecnologia",
+      "digital",
+      "inovação",
+      "startup",
+      "conectividade",
+      "wi-fi",
+      "internet",
+      "smart city",
+      "governo digital",
+      "app municipal"
+    ],
+    "count": 7213
+  },
+  {
+    "name": "agricultura e rural",
+    "slug": "agricultura_e_rural",
+    "keywords": [
+      "agricultura",
+      "agropecuária",
+      "produtor rural",
+      "campo",
+      "cooperativa",
+      "orgânico",
+      "irrigação",
+      "extensão rural",
+      "feira",
+      "agroindústria"
+    ],
+    "count": 8283
+  },
+  {
+    "name": "turismo",
+    "slug": "turismo",
+    "keywords": [
+      "turismo",
+      "turistas",
+      "hotel",
+      "pousada",
+      "patrimônio histórico",
+      "atrativo",
+      "roteiro turístico",
+      "parque",
+      "ecoturismo"
+    ],
+    "count": 7658
+  },
+  {
+    "name": "mulher",
+    "slug": "mulher",
+    "keywords": [
+      "mulher",
+      "feminino",
+      "feminicídio",
+      "gênero",
+      "machismo",
+      "violência doméstica",
+      "maria da penha",
+      "casa da mulher",
+      "equidade"
+    ],
+    "count": 6846
+  },
+  {
+    "name": "criança e adolescente",
+    "slug": "crianca_e_adolescente",
+    "keywords": [
+      "criança",
+      "adolescente",
+      "menor",
+      "proteção",
+      "eca",
+      "conselho tutelar",
+      "creche",
+      "brinquedoteca",
+      "reforço escolar",
+      "vulnerabilidade infantil"
+    ],
+    "count": 8350
+  },
+  {
+    "name": "idoso",
+    "slug": "idoso",
+    "keywords": [
+      "idoso",
+      "terceira idade",
+      "envelhecimento",
+      "longevidade",
+      "cuidado ao idoso",
+      "aposentado",
+      "centro de convivência",
+      "ilpi"
+    ],
+    "count": 7311
+  },
+  {
+    "name": "pessoa com deficiência",
+    "slug": "pessoa_com_deficiencia",
+    "keywords": [
+      "deficiência",
+      "pcd",
+      "acessibilidade",
+      "inclusão",
+      "cadeirante",
+      "libras",
+      "braille",
+      "rampa",
+      "adaptação",
+      "rede de apoio"
+    ],
+    "count": 7470
+  },
+  {
+    "name": "LGBTQIA+",
+    "slug": "lgbtqia",
+    "keywords": [
+      "lgbtqia",
+      "lgbt",
+      "diversidade",
+      "homofobia",
+      "orientação sexual",
+      "transexual",
+      "transfobia",
+      "direitos lgbtqia"
+    ],
+    "count": 3789
+  },
+  {
+    "name": "transparência e ética",
+    "slug": "transparencia_e_etica",
+    "keywords": [
+      "transparência",
+      "corrupção",
+      "ética",
+      "accountability",
+      "prestação de contas",
+      "portal da transparência",
+      "combate à corrupção"
+    ],
+    "count": 6558
+  },
+  {
+    "name": "finanças públicas",
+    "slug": "financas_publicas",
+    "keywords": [
+      "finanças",
+      "orçamento",
+      "fiscal",
+      "tributo",
+      "iptu",
+      "iss",
+      "dívida pública",
+      "responsabilidade fiscal",
+      "arrecadação"
+    ],
+    "count": 8428
+  },
+  {
+    "name": "saúde mental",
+    "slug": "saude_mental",
+    "keywords": [
+      "saúde mental",
+      "caps",
+      "psicológico",
+      "psiquiátrico",
+      "depressão",
+      "transtorno",
+      "bem-estar mental",
+      "ansiedade",
+      "suicídio"
+    ],
+    "count": 5544
+  },
+  {
+    "name": "racismo e igualdade racial",
+    "slug": "racismo_e_igualdade_racial",
+    "keywords": [
+      "racismo",
+      "racial",
+      "negro",
+      "afro",
+      "quilombola",
+      "discriminação racial",
+      "igualdade racial",
+      "cotas",
+      "comunidades quilombolas"
+    ],
+    "count": 2300
+  },
+  {
+    "name": "povos indígenas",
+    "slug": "povos_indigenas",
+    "keywords": [
+      "indígena",
+      "índio",
+      "aldeia",
+      "terra indígena",
+      "demarcação",
+      "povos originários",
+      "cultura indígena"
+    ],
+    "count": 1005
+  },
+  {
+    "name": "energia e iluminação",
+    "slug": "energia_e_iluminacao",
+    "keywords": [
+      "energia solar",
+      "renovável",
+      "iluminação pública",
+      "led",
+      "energia limpa",
+      "eficiência energética",
+      "painel solar"
+    ],
+    "count": 5506
+  },
+  {
+    "name": "combate às drogas",
+    "slug": "combate_as_drogas",
+    "keywords": [
+      "drogas",
+      "dependência química",
+      "tratamento",
+      "prevenção",
+      "crack",
+      "álcool",
+      "comunidade terapêutica",
+      "caps ad",
+      "vício"
+    ],
+    "count": 7615
+  },
+  {
+    "name": "gestão pública",
+    "slug": "gestao_publica",
+    "keywords": [
+      "gestão",
+      "eficiência",
+      "modernização",
+      "desburocratização",
+      "servidor público",
+      "concurso",
+      "reforma administrativa",
+      "planejamento"
+    ],
+    "count": 8255
+  },
+  {
+    "name": "segurança alimentar",
+    "slug": "seguranca_alimentar",
+    "keywords": [
+      "segurança alimentar",
+      "fome",
+      "nutricional",
+      "banco de alimentos",
+      "restaurante popular",
+      "horta",
+      "alimentação saudável"
+    ],
+    "count": 7379
+  },
+  {
+    "name": "regularização fundiária",
+    "slug": "regularizacao_fundiaria",
+    "keywords": [
+      "regularização fundiária",
+      "título",
+      "propriedade",
+      "documentação",
+      "usucapião",
+      "lote",
+      "habitação irregular",
+      "favela"
+    ],
+    "count": 5799
+  },
+  {
+    "name": "trabalho infantil",
+    "slug": "trabalho_infantil",
+    "keywords": [
+      "trabalho infantil",
+      "exploração infantil",
+      "menor trabalhando",
+      "erradicação do trabalho infantil"
+    ],
+    "count": 891
+  }
+]

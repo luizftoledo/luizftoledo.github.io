@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Planos de governo 2024 – Eleições Municipais</title>
+  <meta name="description" content="Busca e análise dos planos de governo de candidatos às eleições municipais brasileiras de 2024.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg:          #f5f5f2;
+      --panel:       #fffefb;
+      --ink:         #2f2f2d;
+      --muted:       #65645f;
+      --line:        #d6d4cc;
+      --accent:      #2660c6;
+      --accent-s:    #dde9ff;
+      --accent2:     #c17c3f;
+      --accent2-s:   #f5e9dc;
+      --good:        #2f7d59;
+      --bad:         #9a2e2e;
+      --warn:        #9b6a00;
+      --warn-s:      #fdf3d0;
+      --shadow:      0 6px 22px rgba(44,41,35,.08);
+      --radius:      14px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Albert Sans",sans-serif;background:linear-gradient(180deg,#f7f6f2 0%,#efede7 100%);color:var(--ink);min-height:100vh}
+
+    /* ── layout ──────────────────────────────────────────────────────── */
+    .page{width:min(1240px,96vw);margin:1.2rem auto 3rem;display:grid;gap:.9rem}
+
+    /* ── nav ──────────────────────────────────────────────────────────── */
+    .breadcrumb{display:flex;gap:.4rem;align-items:center;font-size:.82rem;color:var(--muted)}
+    .breadcrumb a{color:var(--accent);text-decoration:none}
+    .breadcrumb a:hover{text-decoration:underline}
+
+    /* ── hero ──────────────────────────────────────────────────────────── */
+    .hero{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.4rem 1.6rem;display:grid;gap:.8rem}
+    .hero-row{display:flex;flex-wrap:wrap;gap:.8rem;align-items:flex-start}
+    .hero-text{flex:1;min-width:200px}
+    h1{font-size:clamp(1.25rem,2.2vw,2rem);line-height:1.2;font-weight:700}
+    .tag{display:inline-block;padding:.18rem .55rem;border-radius:999px;font-size:.75rem;font-weight:600;background:var(--accent-s);color:var(--accent)}
+    .sub{color:var(--muted);font-size:.93rem;line-height:1.55}
+
+    /* ── KPI strip ────────────────────────────────────────────────────── */
+    .kpi-row{display:flex;flex-wrap:wrap;gap:.6rem}
+    .kpi{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:.8rem 1rem;flex:1;min-width:130px}
+    .kpi-val{font-size:1.7rem;font-weight:700;line-height:1;font-family:"IBM Plex Mono",monospace}
+    .kpi-lbl{font-size:.78rem;color:var(--muted);margin-top:.3rem}
+    .kpi-val.accent{color:var(--accent)}
+    .kpi-val.good{color:var(--good)}
+    .kpi-val.warn{color:var(--warn)}
+
+    /* ── tabs ──────────────────────────────────────────────────────────── */
+    .tab-bar{display:flex;gap:.35rem;flex-wrap:wrap;border-bottom:2px solid var(--line);padding-bottom:.5rem}
+    .tab-btn{border:none;background:none;cursor:pointer;padding:.45rem .9rem;border-radius:8px 8px 0 0;font-size:.9rem;font-weight:600;color:var(--muted);font-family:inherit;transition:all .15s}
+    .tab-btn:hover{background:var(--accent-s);color:var(--accent)}
+    .tab-btn.active{background:var(--accent);color:#fff}
+    .tab-pane{display:none}
+    .tab-pane.active{display:grid;gap:1rem}
+
+    /* ── panel ──────────────────────────────────────────────────────────── */
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:1.2rem 1.4rem;display:grid;gap:.9rem}
+    .panel-title{font-size:1rem;font-weight:700}
+    .panel-sub{font-size:.82rem;color:var(--muted)}
+
+    /* ── two-col ──────────────────────────────────────────────────────── */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+    @media(max-width:700px){.two-col{grid-template-columns:1fr}}
+
+    /* ── form controls ───────────────────────────────────────────────── */
+    .filter-row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-end}
+    label{font-size:.82rem;font-weight:600;display:flex;flex-direction:column;gap:.3rem}
+    input[type=text],select{
+      border:1px solid var(--line);border-radius:8px;padding:.45rem .7rem;
+      font-size:.88rem;font-family:inherit;background:#fff;color:var(--ink);
+      outline:none;transition:border .15s}
+    input[type=text]:focus,select:focus{border-color:var(--accent)}
+    input[type=text]{width:260px}
+    select{min-width:140px}
+    .btn{border:none;cursor:pointer;border-radius:8px;padding:.48rem 1rem;
+      font-size:.88rem;font-weight:700;font-family:inherit;transition:all .15s;white-space:nowrap}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-primary:hover{filter:brightness(1.15)}
+    .btn-ghost{background:var(--accent-s);color:var(--accent)}
+    .btn-ghost:hover{background:var(--accent);color:#fff}
+
+    /* ── table ───────────────────────────────────────────────────────── */
+    .tbl-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--line)}
+    table{width:100%;border-collapse:collapse;font-size:.86rem}
+    thead th{background:#f0efe9;padding:.55rem .8rem;text-align:left;font-weight:600;font-size:.8rem;color:var(--muted);border-bottom:1px solid var(--line)}
+    tbody tr{border-bottom:1px solid #eee}
+    tbody tr:last-child{border-bottom:none}
+    tbody td{padding:.5rem .8rem;vertical-align:top}
+    tbody tr:hover{background:#faf9f5}
+    .snippet{color:var(--muted);font-size:.81rem;margin-top:.2rem;font-style:italic;line-height:1.4}
+    mark{background:#fff3cd;border-radius:3px;padding:0 2px}
+    .pill{display:inline-block;padding:.1rem .42rem;border-radius:999px;font-size:.73rem;font-weight:600;background:var(--accent-s);color:var(--accent)}
+    .pill.warn{background:var(--warn-s);color:var(--warn)}
+    .no-data{color:var(--muted);font-size:.88rem;text-align:center;padding:1.4rem}
+
+    /* ── theme grid ──────────────────────────────────────────────────── */
+    .theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.55rem}
+    .theme-card{border:1px solid var(--line);border-radius:10px;padding:.65rem .8rem;cursor:pointer;background:#fff;transition:all .15s;text-align:left}
+    .theme-card:hover,.theme-card.active{border-color:var(--accent);background:var(--accent-s)}
+    .theme-card .tc-name{font-size:.88rem;font-weight:600}
+    .theme-card .tc-cnt{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+
+    /* ── bar chart ───────────────────────────────────────────────────── */
+    .chart-wrap{position:relative;height:300px}
+
+    /* ── progress bar ────────────────────────────────────────────────── */
+    .prog-row{display:grid;grid-template-columns:90px 1fr 60px;gap:.5rem;align-items:center;font-size:.84rem}
+    .prog-bar-bg{background:#ebe9e2;border-radius:999px;height:9px;overflow:hidden}
+    .prog-bar-fill{height:100%;border-radius:999px;background:var(--accent);transition:width .4s}
+    .prog-pct{color:var(--muted);font-family:"IBM Plex Mono",monospace;font-size:.8rem;text-align:right}
+
+    /* ── compare ──────────────────────────────────────────────────────── */
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    @media(max-width:700px){.compare-grid{grid-template-columns:1fr}}
+    .compare-col{border:1px solid var(--line);border-radius:var(--radius);padding:1rem;background:#fff}
+    .compare-header{font-weight:700;font-size:.95rem;margin-bottom:.6rem;border-bottom:2px solid var(--accent);padding-bottom:.4rem}
+    .compare-text{font-size:.83rem;line-height:1.6;max-height:420px;overflow-y:auto;white-space:pre-wrap;color:#333}
+    .theme-section{margin-bottom:.8rem}
+    .theme-section-title{font-size:.8rem;font-weight:700;color:var(--accent);margin-bottom:.3rem}
+
+    /* ── plagiarism ──────────────────────────────────────────────────── */
+    .plag-phrase{border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem;background:#fff}
+    .plag-phrase-text{font-family:"IBM Plex Mono",monospace;font-size:.82rem;background:#fdf6e3;border-radius:6px;padding:.5rem .7rem;margin-bottom:.6rem;line-height:1.5}
+    .plag-cnt{font-size:.8rem;font-weight:700;color:var(--warn)}
+    .plag-examples{margin-top:.5rem;display:grid;gap:.4rem}
+    .plag-ex{font-size:.8rem;border-left:3px solid var(--accent);padding-left:.6rem;color:var(--muted);line-height:1.45}
+    .plag-ex strong{color:var(--ink);display:block}
+    .plag-list{display:grid;gap:.7rem;max-height:600px;overflow-y:auto}
+
+    /* ── loading / alert ─────────────────────────────────────────────── */
+    .loading{display:flex;align-items:center;gap:.6rem;color:var(--muted);font-size:.9rem;padding:.8rem}
+    .spinner{width:18px;height:18px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .alert{border-radius:10px;padding:.7rem 1rem;font-size:.88rem}
+    .alert-warn{background:var(--warn-s);color:var(--warn);border:1px solid #e0c56a}
+    .alert-info{background:var(--accent-s);color:var(--accent);border:1px solid #a0bcf0}
+
+    /* ── pagination ──────────────────────────────────────────────────── */
+    .pager{display:flex;gap:.4rem;align-items:center;flex-wrap:wrap;font-size:.85rem}
+    .pager button{border:1px solid var(--line);border-radius:6px;padding:.3rem .65rem;cursor:pointer;background:#fff;font-family:inherit;font-size:.85rem}
+    .pager button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .pager button:hover:not(.active){background:var(--accent-s)}
+    .pager span{color:var(--muted)}
+
+    /* ── search result count ──────────────────────────────────────────── */
+    .result-info{font-size:.84rem;color:var(--muted)}
+
+    /* ── party compare ────────────────────────────────────────────────── */
+    .party-compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    @media(max-width:700px){.party-compare-grid{grid-template-columns:1fr}}
+    .party-theme-list{display:grid;gap:.35rem}
+    .ptl-row{display:flex;justify-content:space-between;align-items:center;font-size:.85rem;border-bottom:1px solid #eee;padding:.3rem 0}
+    .ptl-cnt{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--accent)}
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- breadcrumb -->
+  <div class="breadcrumb">
+    <a href="/">luizftoledo.github.io</a>
+    <span>›</span>
+    <span>Planos de governo 2024</span>
+  </div>
+
+  <!-- hero -->
+  <div class="hero">
+    <div class="hero-row">
+      <div class="hero-text">
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.5rem">
+          <span class="tag">Eleições Municipais 2024</span>
+          <span class="tag" style="background:var(--accent2-s);color:var(--accent2)">TSE – Dados Abertos</span>
+        </div>
+        <h1>Planos de governo dos candidatos</h1>
+        <p class="sub" style="margin-top:.4rem">
+          Busca, análise temática, comparação entre candidatos e detecção de plágio nos planos
+          de governo submetidos ao TSE para as eleições municipais de 2024. Dados extraídos dos
+          PDFs oficiais disponibilizados pelo Tribunal Superior Eleitoral.
+        </p>
+      </div>
+      <div id="hero-report" style="min-width:180px;font-size:.82rem;color:var(--muted)">
+        <div class="loading"><div class="spinner"></div> carregando…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi"><div class="kpi-val accent" id="kpi-total">—</div><div class="kpi-lbl">candidatos a prefeito</div></div>
+    <div class="kpi"><div class="kpi-val good"   id="kpi-with">—</div><div class="kpi-lbl">com plano de governo</div></div>
+    <div class="kpi"><div class="kpi-val"         id="kpi-pct">—</div><div class="kpi-lbl">% apresentaram plano</div></div>
+    <div class="kpi"><div class="kpi-val warn"    id="kpi-scan">—</div><div class="kpi-lbl">PDFs sem texto (scan)</div></div>
+    <div class="kpi"><div class="kpi-val"         id="kpi-plag">—</div><div class="kpi-lbl">% com trechos copiados</div></div>
+  </div>
+
+  <!-- tab bar -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="panorama">📊 Panorama</button>
+    <button class="tab-btn"        data-tab="busca">🔍 Buscador</button>
+    <button class="tab-btn"        data-tab="partidos">🏛️ Por partido</button>
+    <button class="tab-btn"        data-tab="vs">⚔️ Candidato vs candidato</button>
+    <button class="tab-btn"        data-tab="plagio">📋 Análise de plágio</button>
+    <button class="tab-btn"        data-tab="metodologia">📖 Metodologia</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- TAB: PANORAMA                                                      -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <div class="tab-pane active" id="tab-panorama">
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title">Cobertura por estado</div>
+        <div class="panel-sub">% de candidatos com plano de governo enviado ao TSE</div>
+        <div id="state-coverage"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Temas mais citados</div>
+        <div class="panel-sub">Total de candidatos que mencionam cada tema</div>
+        <div class="chart-wrap"><canvas id="chart-themes"></canvas></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Partidos com mais planos enviados</div>
+      <div class="chart-wrap"><canvas id="chart-parties"></canvas></div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- TAB: BUSCADOR                                                      -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <div class="tab-pane" id="tab-busca">
+
+    <!-- keyword search -->
+    <div class="panel">
+      <div class="panel-title">Buscar por palavra-chave</div>
+      <p class="panel-sub">Digite qualquer termo – a busca ignora maiúsculas e acentos. Selecione um estado para busca no texto completo; sem estado a busca usa o resumo.</p>
+      <div class="filter-row">
+        <label>Palavra-chave
+          <input type="text" id="kw-input" placeholder="ex: transporte, hospital…">
+        </label>
+        <label>Estado (UF)
+          <select id="kw-uf">
+            <option value="">Todos</option>
+          </select>
+        </label>
+        <label>Partido
+          <select id="kw-party">
+            <option value="">Todos</option>
+          </select>
+        </label>
+        <label>Município
+          <input type="text" id="kw-city" placeholder="cidade…" style="width:160px">
+        </label>
+        <button class="btn btn-primary" id="kw-search-btn">Buscar</button>
+      </div>
+      <div id="kw-status" class="result-info"></div>
+      <div id="kw-results"></div>
+      <div id="kw-pager" class="pager"></div>
+    </div>
+
+    <!-- pre-selected themes -->
+    <div class="panel">
+      <div class="panel-title">Temas pré-selecionados</div>
+      <p class="panel-sub">Clique em um tema para ver todos os candidatos que o mencionam nos planos.</p>
+      <div id="theme-grid" class="theme-grid">
+        <div class="loading"><div class="spinner"></div> carregando temas…</div>
+      </div>
+    </div>
+
+    <!-- theme results -->
+    <div class="panel" id="theme-results-panel" style="display:none">
+      <div class="panel-title" id="theme-results-title"></div>
+      <div class="filter-row">
+        <label>UF <select id="tr-uf"><option value="">Todos</option></select></label>
+        <label>Partido <select id="tr-party"><option value="">Todos</option></select></label>
+        <label>Município <input type="text" id="tr-city" placeholder="cidade…" style="width:160px"></label>
+        <button class="btn btn-ghost" id="tr-filter-btn">Filtrar</button>
+      </div>
+      <div id="tr-status" class="result-info"></div>
+      <div id="tr-results"></div>
+      <div id="tr-pager" class="pager"></div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- TAB: PARTIDOS                                                      -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <div class="tab-pane" id="tab-partidos">
+
+    <div class="panel">
+      <div class="panel-title">Análise por partido</div>
+      <p class="panel-sub">Selecione até dois partidos e um tema para comparar as propostas.</p>
+      <div class="filter-row">
+        <label>Partido A <select id="party-a"><option value="">selecione…</option></select></label>
+        <label>Partido B (opcional) <select id="party-b"><option value="">selecione…</option></select></label>
+        <label>Tema <select id="party-theme"><option value="">selecione…</option></select></label>
+        <button class="btn btn-primary" id="party-compare-btn">Comparar</button>
+      </div>
+    </div>
+
+    <div id="party-results"></div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- TAB: VS                                                            -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <div class="tab-pane" id="tab-vs">
+
+    <div class="panel">
+      <div class="panel-title">Candidato vs candidato</div>
+      <p class="panel-sub">Digite o nome ou município de cada candidato para comparar os planos lado a lado. Selecione o tema para ver o trecho específico.</p>
+      <div class="two-col">
+        <div>
+          <label>Candidato A (nome ou município)
+            <input type="text" id="vs-a-input" placeholder="ex: João Silva" style="width:100%">
+          </label>
+          <div id="vs-a-list" style="margin-top:.4rem"></div>
+          <div id="vs-a-chosen" class="pill" style="display:none;margin-top:.4rem"></div>
+        </div>
+        <div>
+          <label>Candidato B (nome ou município)
+            <input type="text" id="vs-b-input" placeholder="ex: Maria Souza" style="width:100%">
+          </label>
+          <div id="vs-b-list" style="margin-top:.4rem"></div>
+          <div id="vs-b-chosen" class="pill" style="display:none;margin-top:.4rem"></div>
+        </div>
+      </div>
+      <div class="filter-row" style="margin-top:.5rem">
+        <label>Filtrar por tema (opcional)
+          <select id="vs-theme"><option value="">Texto completo</option></select>
+        </label>
+        <button class="btn btn-primary" id="vs-compare-btn">Comparar</button>
+      </div>
+    </div>
+
+    <div id="vs-results" class="compare-grid" style="display:none">
+      <div class="compare-col">
+        <div class="compare-header" id="vs-a-header">Candidato A</div>
+        <div class="compare-text" id="vs-a-text"></div>
+      </div>
+      <div class="compare-col">
+        <div class="compare-header" id="vs-b-header">Candidato B</div>
+        <div class="compare-text" id="vs-b-text"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- TAB: PLÁGIO                                                        -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <div class="tab-pane" id="tab-plagio">
+
+    <div class="panel">
+      <div class="panel-title">Análise de plágio</div>
+      <p class="panel-sub">
+        Identificação de trechos idênticos (sequências de palavras) compartilhados entre planos de
+        diferentes candidatos. Trechos com 9 ou mais palavras iguais em ≥ 3 candidatos distintos
+        são marcados como cópia.
+      </p>
+      <div id="plag-kpis" class="kpi-row"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Filtrar plágio</div>
+      <div class="filter-row">
+        <label>UF <select id="plag-uf"><option value="">Todos</option></select></label>
+        <label>Partido <select id="plag-party"><option value="">Todos</option></select></label>
+        <label>Mín. de candidatos <input type="text" id="plag-min" value="3" style="width:80px"></label>
+        <button class="btn btn-ghost" id="plag-filter-btn">Filtrar</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Trechos mais copiados</div>
+      <div id="plag-list" class="plag-list">
+        <div class="loading"><div class="spinner"></div> carregando análise de plágio…</div>
+      </div>
+      <div id="plag-pager" class="pager" style="margin-top:.6rem"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Candidatos com mais cópias detectadas</div>
+      <div id="plag-cands-table"></div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <!-- TAB: METODOLOGIA                                                   -->
+  <!-- ══════════════════════════════════════════════════════════════════ -->
+  <div class="tab-pane" id="tab-metodologia">
+
+    <div class="panel">
+      <div class="panel-title">Sobre este projeto</div>
+      <p class="panel-sub">Como os dados foram coletados, processados e analisados</p>
+      <p style="font-size:.88rem;line-height:1.65;margin-top:.4rem">
+        Este painel reúne e analisa os planos de governo de candidatos a prefeito nas
+        <strong>Eleições Municipais Brasileiras de 2024</strong>. Os dados foram extraídos
+        dos PDFs oficiais disponibilizados pelo Tribunal Superior Eleitoral (TSE) no portal
+        de Dados Abertos, processados com Python e publicados aqui para consulta pública.
+        Todo o pipeline de coleta e processamento foi desenvolvido com o auxílio do
+        <strong>Claude Code</strong> (Anthropic).
+      </p>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title">1. Coleta dos PDFs</div>
+        <p style="font-size:.85rem;line-height:1.65">
+          Os arquivos foram baixados diretamente do CDN do TSE no formato ZIP, um por estado
+          (<code>proposta_governo_2024_{UF}.zip</code>), cobrindo todos os 26 estados
+          (o Distrito Federal não tem prefeito). Cada ZIP contém os PDFs dos planos de governo
+          de todos os candidatos registrados naquele estado.
+        </p>
+        <ul style="font-size:.83rem;line-height:1.8;margin-left:1.2rem;margin-top:.5rem">
+          <li>Fonte: <strong>TSE – Dados Abertos</strong> (dadosabertos.tse.jus.br)</li>
+          <li>Data de referência: setembro de 2024</li>
+          <li>Formato dos arquivos: <code>2024{UF}{SQ_CANDIDATO}_{sufixo}.pdf</code></li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">2. Extração de texto</div>
+        <p style="font-size:.85rem;line-height:1.65">
+          O texto foi extraído dos PDFs com a biblioteca <strong>pdfplumber</strong> (Python).
+          PDFs escaneados (imagens) retornaram texto vazio e foram contabilizados como
+          "PDFs sem texto (scan)". A extração foi feita página a página, concatenando
+          o conteúdo de cada documento.
+        </p>
+        <ul style="font-size:.83rem;line-height:1.8;margin-left:1.2rem;margin-top:.5rem">
+          <li>Biblioteca: <strong>pdfplumber</strong></li>
+          <li>PDFs processados por estado salvos em CSV intermediário</li>
+          <li>Resultado final: um CSV consolidado com todos os estados</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title">3. Cruzamento com cadastro de candidatos</div>
+        <p style="font-size:.85rem;line-height:1.65">
+          O texto extraído foi cruzado com o arquivo oficial de candidatos do TSE
+          (<code>consulta_cand_2024_BRASIL.csv</code>) usando o número sequencial do
+          candidato (<code>SQ_CANDIDATO</code>) como chave. Isso permitiu enriquecer
+          cada plano com nome, partido, município e estado do candidato.
+          A análise focou exclusivamente em candidatos ao cargo de <strong>prefeito</strong>.
+        </p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">4. Análise temática</div>
+        <p style="font-size:.85rem;line-height:1.65">
+          Os textos foram normalizados (remoção de acentos, conversão para minúsculas)
+          e verificados contra um dicionário de <strong>30 temas</strong> com palavras-chave
+          pré-definidas. Para cada candidato, foram registrados os temas mencionados e
+          os trechos correspondentes. A contagem representa o número de candidatos
+          cujo plano contém ao menos uma das palavras-chave do tema.
+        </p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">5. Cobertura dos dados</div>
+      <div id="metodologia-tabela"></div>
+    </div>
+
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title">6. Análise de plágio</div>
+        <p style="font-size:.85rem;line-height:1.65">
+          Foram identificados trechos idênticos entre planos de candidatos diferentes.
+          A metodologia usa sequências de palavras normalizadas: trechos com
+          <strong>9 ou mais palavras consecutivas iguais</strong> compartilhados por
+          ao menos 3 candidatos distintos são marcados como cópia. Isso captura tanto
+          planos gerados por partidos centralmente quanto cópias entre candidatos.
+        </p>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">7. Limitações conhecidas</div>
+        <ul style="font-size:.83rem;line-height:1.9;margin-left:1.2rem">
+          <li>PDFs escaneados (imagens) não têm texto extraível</li>
+          <li>Alguns candidatos submeteram múltiplos arquivos; apenas o primeiro foi usado</li>
+          <li>A análise cobre apenas candidatos a <strong>prefeito</strong> (não vereadores)</li>
+          <li>Planos em idiomas diferentes do português podem ter cobertura temática reduzida</li>
+          <li>A detecção de plágio identifica cópias textuais, não similiaridade semântica</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Ferramentas e tecnologias utilizadas</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.3rem">
+        <span class="pill">Python 3.9</span>
+        <span class="pill">pandas</span>
+        <span class="pill">pdfplumber</span>
+        <span class="pill">PyMuPDF</span>
+        <span class="pill">unidecode</span>
+        <span class="pill">Chart.js</span>
+        <span class="pill">Claude Code (Anthropic)</span>
+        <span class="pill">TSE – Dados Abertos</span>
+        <span class="pill">GitHub Pages</span>
+      </div>
+      <p style="font-size:.82rem;color:var(--muted);margin-top:.8rem">
+        O pipeline completo — desde o download dos ZIPs até a publicação dos JSONs —
+        foi construído de forma iterativa com o auxílio do <strong>Claude Code</strong>,
+        assistente de programação da Anthropic, rodando localmente via terminal.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- footer -->
+  <div style="font-size:.78rem;color:var(--muted);text-align:center;padding:.5rem 0">
+    Dados: <a href="https://dadosabertos.tse.jus.br/dataset/candidatos-2024" target="_blank" style="color:var(--accent)">TSE – Dados Abertos (candidatos 2024)</a> ·
+    Extração e análise: <a href="/" style="color:var(--accent)">luizftoledo.github.io</a>
+  </div>
+
+</div><!-- .page -->
+
+<script src="app.js"></script>
+</body>
+</html>

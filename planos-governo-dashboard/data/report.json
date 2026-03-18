@@ -1,0 +1,309 @@
+{
+  "generated_at": "2026-03-18T20:10:53.801314",
+  "total_candidates": 15509,
+  "with_plan": 15209,
+  "without_plan": 300,
+  "pct_with_plan": 98.1,
+  "extraction": {
+    "total_pdfs": 9238,
+    "with_text": 8632,
+    "empty_scan": 606,
+    "failed": 0,
+    "by_state": {
+      "AC": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "AL": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "AM": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "AP": {
+        "total": 61,
+        "with_text": 51,
+        "empty": 10,
+        "failed": 0
+      },
+      "BA": {
+        "total": 1174,
+        "with_text": 1102,
+        "empty": 72,
+        "failed": 0
+      },
+      "CE": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "DF": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "ES": {
+        "total": 289,
+        "with_text": 279,
+        "empty": 10,
+        "failed": 0
+      },
+      "GO": {
+        "total": 655,
+        "with_text": 602,
+        "empty": 53,
+        "failed": 0
+      },
+      "MA": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "MG": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "MS": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "MT": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "PA": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "PB": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "PE": {
+        "total": 517,
+        "with_text": 483,
+        "empty": 34,
+        "failed": 0
+      },
+      "PI": {
+        "total": 504,
+        "with_text": 463,
+        "empty": 41,
+        "failed": 0
+      },
+      "PR": {
+        "total": 1160,
+        "with_text": 1089,
+        "empty": 71,
+        "failed": 0
+      },
+      "RJ": {
+        "total": 389,
+        "with_text": 368,
+        "empty": 21,
+        "failed": 0
+      },
+      "RN": {
+        "total": 392,
+        "with_text": 366,
+        "empty": 26,
+        "failed": 0
+      },
+      "RO": {
+        "total": 171,
+        "with_text": 163,
+        "empty": 8,
+        "failed": 0
+      },
+      "RR": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "RS": {
+        "total": 1227,
+        "with_text": 1145,
+        "empty": 82,
+        "failed": 0
+      },
+      "SC": {
+        "total": 0,
+        "with_text": 0,
+        "empty": 0,
+        "failed": 0
+      },
+      "SE": {
+        "total": 223,
+        "with_text": 205,
+        "empty": 18,
+        "failed": 0
+      },
+      "SP": {
+        "total": 2146,
+        "with_text": 2004,
+        "empty": 142,
+        "failed": 0
+      },
+      "TO": {
+        "total": 330,
+        "with_text": 312,
+        "empty": 18,
+        "failed": 0
+      }
+    }
+  },
+  "by_state": {
+    "AC": {
+      "total": 63,
+      "with_plan": 60,
+      "pct": 95.2
+    },
+    "AL": {
+      "total": 259,
+      "with_plan": 257,
+      "pct": 99.2
+    },
+    "AM": {
+      "total": 205,
+      "with_plan": 203,
+      "pct": 99.0
+    },
+    "AP": {
+      "total": 54,
+      "with_plan": 53,
+      "pct": 98.1
+    },
+    "BA": {
+      "total": 1149,
+      "with_plan": 1119,
+      "pct": 97.4
+    },
+    "CE": {
+      "total": 485,
+      "with_plan": 473,
+      "pct": 97.5
+    },
+    "ES": {
+      "total": 279,
+      "with_plan": 278,
+      "pct": 99.6
+    },
+    "GO": {
+      "total": 643,
+      "with_plan": 628,
+      "pct": 97.7
+    },
+    "MA": {
+      "total": 634,
+      "with_plan": 626,
+      "pct": 98.7
+    },
+    "MG": {
+      "total": 2333,
+      "with_plan": 2284,
+      "pct": 97.9
+    },
+    "MS": {
+      "total": 233,
+      "with_plan": 230,
+      "pct": 98.7
+    },
+    "MT": {
+      "total": 367,
+      "with_plan": 354,
+      "pct": 96.5
+    },
+    "PA": {
+      "total": 469,
+      "with_plan": 460,
+      "pct": 98.1
+    },
+    "PB": {
+      "total": 526,
+      "with_plan": 517,
+      "pct": 98.3
+    },
+    "PE": {
+      "total": 521,
+      "with_plan": 502,
+      "pct": 96.4
+    },
+    "PI": {
+      "total": 494,
+      "with_plan": 490,
+      "pct": 99.2
+    },
+    "PR": {
+      "total": 1142,
+      "with_plan": 1119,
+      "pct": 98.0
+    },
+    "RJ": {
+      "total": 381,
+      "with_plan": 375,
+      "pct": 98.4
+    },
+    "RN": {
+      "total": 389,
+      "with_plan": 383,
+      "pct": 98.5
+    },
+    "RO": {
+      "total": 168,
+      "with_plan": 165,
+      "pct": 98.2
+    },
+    "RR": {
+      "total": 44,
+      "with_plan": 44,
+      "pct": 100.0
+    },
+    "RS": {
+      "total": 1213,
+      "with_plan": 1197,
+      "pct": 98.7
+    },
+    "SC": {
+      "total": 839,
+      "with_plan": 830,
+      "pct": 98.9
+    },
+    "SE": {
+      "total": 213,
+      "with_plan": 210,
+      "pct": 98.6
+    },
+    "SP": {
+      "total": 2081,
+      "with_plan": 2032,
+      "pct": 97.6
+    },
+    "TO": {
+      "total": 325,
+      "with_plan": 320,
+      "pct": 98.5
+    }
+  }
+}
