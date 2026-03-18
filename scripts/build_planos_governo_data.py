@@ -62,8 +62,11 @@ TXT_DIR  = ROOT / "data" / "planos_txt"
 OUT_DIR  = ROOT / "planos-governo-dashboard" / "data"
 
 for d in [RAW_DIR, TXT_DIR, OUT_DIR,
-          OUT_DIR / "states", OUT_DIR / "candidates", OUT_DIR / "themes"]:
+          OUT_DIR / "states", OUT_DIR / "themes"]:
     d.mkdir(parents=True, exist_ok=True)
+
+# Texto truncado no arquivo de estado (caracteres) – evita arquivos individuais
+TEXT_TRUNC = 12_000
 
 # ── Stop words (PT-BR) ────────────────────────────────────────────────────────
 
@@ -656,7 +659,11 @@ def export_all(candidates, theme_data, party_data, plagiarism, report):
         }
     dump(rpt, OUT_DIR / "report.json", indent=2)
 
-    # ── Por estado ─────────────────────────────────────────────────────────
+    # ── Por estado (inclui texto truncado – sem arquivos individuais) ──────
+    # Estratégia: texto completo até TEXT_TRUNC chars vai no arquivo de estado.
+    # Isso elimina a necessidade de ~15 mil arquivos individuais e mantém
+    # cada arquivo de estado em ~3-8 MB (viável para GitHub).
+    state_sizes = {}
     for uf in STATES:
         uf_c = [c for c in candidates if c.get("uf") == uf]
         uf_out = []
@@ -664,25 +671,18 @@ def export_all(candidates, theme_data, party_data, plagiarism, report):
             entry = {k: c.get(k, "") for k in
                      ("id","nome","nome_urna","partido","uf",
                       "municipio","cd_municipio","has_plan","text_len")}
-            entry["snippet"] = (c.get("text","")[:400]) if c.get("has_plan") else ""
+            text = c.get("text", "") if c.get("has_plan") else ""
+            entry["snippet"] = text[:400]
+            entry["text"]    = text[:TEXT_TRUNC]   # texto para comparação e busca
             uf_out.append(entry)
-        dump(uf_out, OUT_DIR / "states" / f"{uf}.json")
+        path = OUT_DIR / "states" / f"{uf}.json"
+        dump(uf_out, path)
+        state_sizes[uf] = round(path.stat().st_size / 1e6, 1)
 
-    # ── Candidatos individuais (full text) ─────────────────────────────────
-    ind_count = 0
-    for c in candidates:
-        if c.get("has_plan") and c.get("text"):
-            dump({
-                "id":        c["id"],
-                "nome":      c["nome"],
-                "nome_urna": c.get("nome_urna",""),
-                "partido":   c.get("partido",""),
-                "uf":        c.get("uf",""),
-                "municipio": c.get("municipio",""),
-                "text":      c["text"],
-            }, OUT_DIR / "candidates" / f"{c['id']}.json")
-            ind_count += 1
-    print(f"  Candidatos individuais: {ind_count:,}")
+    total_states_mb = sum(state_sizes.values())
+    print(f"  Arquivos de estado: {total_states_mb:.1f} MB total")
+    for uf, mb in sorted(state_sizes.items(), key=lambda x: -x[1])[:5]:
+        print(f"    {uf}: {mb} MB")
 
     # ── Temas ──────────────────────────────────────────────────────────────
     themes_index = []

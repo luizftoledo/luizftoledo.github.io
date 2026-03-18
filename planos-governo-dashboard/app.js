@@ -526,12 +526,19 @@ async function loadStateData(uf) {
 }
 
 async function loadCandidateText(id) {
-  if (!S.candCache[id]) {
-    try {
-      S.candCache[id] = await fetchJSON(`${DATA}/candidates/${id}.json`);
-    } catch {
-      S.candCache[id] = null;
-    }
+  if (S.candCache[id] !== undefined) return S.candCache[id];
+
+  // O texto completo (até 12.000 chars) está no arquivo do estado.
+  // Primeiro, descobrir o UF do candidato via metadata.
+  const meta = (S.metadata || []).find(c => c.id === id);
+  const uf   = meta?.uf;
+
+  if (uf) {
+    const stateData = await loadStateData(uf);
+    const entry = stateData.find(c => c.id === id);
+    S.candCache[id] = entry || null;
+  } else {
+    S.candCache[id] = null;
   }
   return S.candCache[id];
 }
