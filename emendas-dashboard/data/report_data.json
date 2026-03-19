@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-18T14:24:57.155434+00:00",
+  "generated_at": "2026-03-19T14:12:07.215429+00:00",
   "snapshot_date": "2026-03-18",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -1018,7 +1018,7 @@
     "total_liquidado": 13478904.66,
     "total_pago": 12826728.92
   },
-  "run_date": "2026-03-18",
+  "run_date": "2026-03-19",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -1048,7 +1048,7 @@
       "available": true,
       "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
       "last_update": "",
-      "base_siafi_date": "17/3/2026",
+      "base_siafi_date": "18/3/2026",
       "filters": {
         "year": 2026,
         "rp": [
@@ -1117,7 +1117,7 @@
         ]
       },
       "last_update": "",
-      "base_siafi_date": "17/3/2026",
+      "base_siafi_date": "18/3/2026",
       "rows": [],
       "rows_count": 0,
       "unique_nro_emendas": 0,
@@ -2646,6 +2646,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-03-19",
+      "last_update": "",
+      "base_siafi_date": "18/3/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
-  ]
+  ],
+  "updated_at": "2026-03-19T14:12:07.215429+00:00"
 }
