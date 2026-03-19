@@ -667,7 +667,7 @@ function setupVS() {
   document.getElementById("vs-compare-btn").addEventListener("click", runVS);
   fillThemeSelect("vs-theme");
 
-  // scroll sincronizado
+  // scroll sincronizado por proporção
   const elA = document.getElementById("vs-a-text");
   const elB = document.getElementById("vs-b-text");
   let syncing = false;
@@ -682,6 +682,17 @@ function setupVS() {
   }
   syncScroll(elA, elB);
   syncScroll(elB, elA);
+
+  // salto por seleção: selecionar texto num lado → o outro rola até a mesma passagem
+  function onSelectJump(src, dst) {
+    src.addEventListener("mouseup", () => {
+      const sel = window.getSelection().toString().trim();
+      if (sel.length < 3) return;
+      jumpToText(dst, sel);
+    });
+  }
+  onSelectJump(elA, elB);
+  onSelectJump(elB, elA);
 
   // comparar por cidade
   fillSelect("city-uf", STATES, true);
@@ -739,6 +750,7 @@ async function runVS() {
   }
 
   vsEl.style.display = "none";
+  document.getElementById("vs-hint").style.display = "none";
   document.getElementById("vs-a-header").textContent = `${cA.nome} (${cA.municipio}/${cA.uf})`;
   document.getElementById("vs-b-header").textContent = `${cB.nome} (${cB.municipio}/${cB.uf})`;
   document.getElementById("vs-a-text").textContent = "carregando…";
@@ -751,6 +763,8 @@ async function runVS() {
   ]);
 
   const themeSlug = document.getElementById("vs-theme").value;
+
+  document.getElementById("vs-hint").style.display = "block";
 
   if (themeSlug && S.themes) {
     // Mostrar só trechos do tema selecionado
@@ -827,6 +841,53 @@ async function runCityCompare() {
         <div class="city-card-text">${esc(display)}</div>
       </div>`;
   }).join("")}</div>`;
+}
+
+function jumpToText(container, query) {
+  if (!query || query.length < 3) return;
+
+  // remover highlights anteriores
+  container.querySelectorAll(".sync-hl").forEach(el => {
+    el.replaceWith(document.createTextNode(el.textContent));
+  });
+  container.normalize(); // reunir text nodes fragmentados
+
+  // coletar todos os text nodes e concatenar
+  const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+  let node, acc = "", nodeMap = [];
+  while ((node = walker.nextNode())) {
+    nodeMap.push({ node, start: acc.length });
+    acc += node.textContent;
+  }
+
+  const idx = norm(acc).indexOf(norm(query));
+  if (idx === -1) return;
+
+  // encontrar o text node que contém o início da ocorrência
+  for (const { node: n, start } of nodeMap) {
+    const end = start + n.textContent.length;
+    if (idx >= start && idx < end) {
+      const localIdx = idx - start;
+      const localEnd = Math.min(localIdx + query.length, n.textContent.length);
+      try {
+        const range = document.createRange();
+        range.setStart(n, localIdx);
+        range.setEnd(n, localEnd);
+        const hl = document.createElement("mark");
+        hl.className = "sync-hl";
+        range.surroundContents(hl);
+        // rolar o container até o highlight
+        const cRect = container.getBoundingClientRect();
+        const hRect = hl.getBoundingClientRect();
+        container.scrollTop += hRect.top - cRect.top - 60;
+        // remover highlight após animação
+        setTimeout(() => {
+          if (hl.parentNode) hl.replaceWith(document.createTextNode(hl.textContent));
+        }, 2500);
+      } catch { /* ignora se range cruzar elementos */ }
+      break;
+    }
+  }
 }
 
 function extractThemeText(text, keywords) {

@@ -150,6 +150,8 @@
     .loading{display:flex;align-items:center;gap:.6rem;color:var(--muted);font-size:.9rem;padding:.8rem}
     .spinner{width:18px;height:18px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
     @keyframes spin{to{transform:rotate(360deg)}}
+    @keyframes sync-flash{0%{background:#fde68a;outline:2px solid #d97706}80%{background:#fde68a;outline:2px solid #d97706}100%{background:transparent;outline:none}}
+    .sync-hl{border-radius:2px;animation:sync-flash 2s ease-out forwards}
     .alert{border-radius:10px;padding:.7rem 1rem;font-size:.88rem}
     .alert-warn{background:var(--warn-s);color:var(--warn);border:1px solid #e0c56a}
     .alert-info{background:var(--accent-s);color:var(--accent);border:1px solid #a0bcf0}
@@ -359,6 +361,9 @@
       </div>
     </div>
 
+    <div id="vs-hint" style="display:none;font-size:.78rem;color:var(--muted);margin:.4rem 0 .2rem;text-align:center">
+      💡 Selecione qualquer trecho num lado — o outro rolará automaticamente até a mesma passagem.
+    </div>
     <div id="vs-results" class="compare-grid" style="display:none">
       <div class="compare-col">
         <div class="compare-header" id="vs-a-header">Candidato A</div>
