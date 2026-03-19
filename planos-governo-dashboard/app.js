@@ -320,11 +320,15 @@ function renderThemeGrid() {
   if (!S.themes) return;
   el.innerHTML = S.themes
     .sort((a,b) => b.count - a.count)
-    .map(t => `
-      <button class="theme-card" data-slug="${esc(t.slug)}" data-name="${esc(t.name)}">
+    .map(t => {
+      const kws = (t.keywords || []).slice(0, 8).join(", ");
+      return `
+      <button class="theme-card" data-slug="${esc(t.slug)}" data-name="${esc(t.name)}" title="Palavras-chave: ${esc(kws)}">
         <div class="tc-name">${esc(t.name)}</div>
         <div class="tc-cnt">${nFmt.format(t.count)} candidatos</div>
-      </button>`).join("");
+        <div style="font-size:.72rem;color:var(--muted);margin-top:.25rem;line-height:1.3">${esc(kws)}</div>
+      </button>`;
+    }).join("");
 
   el.querySelectorAll(".theme-card").forEach(card => {
     card.addEventListener("click", () => {
@@ -373,11 +377,13 @@ function applyThemeFilter() {
   const uf     = document.getElementById("tr-uf").value;
   const party  = document.getElementById("tr-party").value;
   const city   = norm(document.getElementById("tr-city").value);
+  const cand   = norm((document.getElementById("tr-cand")?.value) || "");
 
   S.activeThemeFlt = S.activeThemeAll.filter(c =>
     (!uf    || c.uf      === uf) &&
     (!party || c.partido === party) &&
-    (!city  || norm(c.municipio || "").includes(city))
+    (!city  || norm(c.municipio || "").includes(city)) &&
+    (!cand  || norm(c.nome || "").includes(cand) || norm(c.nome_urna || "").includes(cand))
   );
   S.trPage = 0;
   renderThemeResults();
@@ -869,25 +875,20 @@ function renderPlagCandTable() {
   const el = document.getElementById("plag-cands-table");
   if (!S.plagiarism) return;
 
-  // Contar cópias por candidato
-  const copyCounts = {};
+  // Contar cópias por candidato usando o array `cands` enriquecido
+  const countMap = {};   // sq → { cnt, nome, partido, municipio, uf }
   (S.plagiarism.top_phrases || []).forEach(ph => {
-    (ph.cand_ids || []).forEach(id => {
-      copyCounts[id] = (copyCounts[id] || 0) + 1;
+    (ph.cands || []).forEach(c => {
+      if (!countMap[c.sq]) {
+        countMap[c.sq] = { cnt: 0, nome: c.nome, partido: c.partido, municipio: c.municipio, uf: c.uf };
+      }
+      countMap[c.sq].cnt += 1;
     });
   });
 
-  // Enriquecer com metadata
-  const metaMap = {};
-  (S.metadata || []).forEach(c => { metaMap[c.id] = c; });
-
-  const rows = Object.entries(copyCounts)
-    .sort((a,b) => b[1]-a[1])
-    .slice(0, 30)
-    .map(([id, cnt]) => {
-      const c = metaMap[id] || { nome:"?", partido:"?", municipio:"?", uf:"?" };
-      return { id, cnt, ...c };
-    });
+  const rows = Object.values(countMap)
+    .sort((a, b) => b.cnt - a.cnt)
+    .slice(0, 30);
 
   if (!rows.length) {
     el.innerHTML = `<div class="no-data">Sem dados.</div>`;
@@ -902,10 +903,10 @@ function renderPlagCandTable() {
           <th>Trechos copiados detectados</th>
         </tr></thead>
         <tbody>
-          ${rows.map((r,i) => `
+          ${rows.map((r, i) => `
             <tr>
-              <td>${i+1}</td>
-              <td>${esc(r.nome_urna||r.nome)}</td>
+              <td>${i + 1}</td>
+              <td>${esc(r.nome)}</td>
               <td><span class="pill">${esc(r.partido)}</span></td>
               <td>${esc(r.municipio)}</td>
               <td>${esc(r.uf)}</td>
