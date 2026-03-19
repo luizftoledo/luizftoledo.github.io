@@ -87,7 +87,7 @@
         <li><a href="#interviews">Interviews</a></li>
         <li><a href="#short-videos">Videos</a></li>
         <li><a href="#awards">Awards</a></li>
-        <li><a href="#course">Workshop</a></li>
+        <li><a href="#projects">Projects</a></li>
         <li><a href="resume.html">Resume</a></li>
         <li><a href="https://datafixers.org/index_en.html" target="_blank" rel="noopener noreferrer">Data journalism</a></li>
       </ul>
@@ -226,13 +226,13 @@
 
           <div class="impact-card" data-reveal>
             <h3><i class="fas fa-code"></i> Civil Tech</h3>
-            <p>Over the last three years, I have used generative AI in journalism for data analysis and
-              investigations. In 2025, I built a <a href="https://datafixers.org/l-ai-notebook.html" target="_blank"
-                rel="noopener noreferrer" class="highlight">tool</a> that helps reporters search millions of Brazilian
-              public records, as well as a <a href="https://luizftoledo.github.io/pesquisa_ampla/" target="_blank" rel="noopener noreferrer" class="highlight">platform to search across multiple public databases simultaneously</a>. In 2026, I launched an <a href="simulador-reacoes/index.html" class="highlight">AI-powered news reaction simulator</a> and public-interest data analysis <a href="https://datafixers.org/index_en.html#dashboards"
-                target="_blank" rel="noopener noreferrer" class="highlight">dashboards</a> on Datafixers.
-              I also built a <a href="planos-governo-dashboard/" class="highlight">searchable database of government plans</a>
-              submitted by all mayoral candidates in the 2024 Brazilian municipal elections — with keyword search, topic analysis, party comparisons and plagiarism detection across 50,000+ documents.
+            <p>I enjoy testing different technologies to improve my investigative reporting process and to help other
+              journalists. This has included founding a data journalism consultancy at Columbia University in 2023 —
+              <a href="https://datafixers.org/" target="_blank" rel="noopener noreferrer" class="highlight">Datafixers</a>
+              — and, later, a series of small scraping and data collection projects for various journalistic purposes.
+            </p>
+            <p style="margin-top:.6rem">
+              <a href="#projects" class="highlight" style="font-weight:600">See some of these projects below ↓</a>
             </p>
           </div>
         </div>
@@ -807,39 +807,112 @@
       </div>
     </section>
 
-    <section id="course" class="section" data-reveal>
+    <section id="projects" class="section" data-reveal>
       <div class="container">
-        <h2 class="section-title">Online Workshop</h2>
-        <div class="featured-article" data-reveal
-          style="grid-template-columns: 1fr; max-width: 900px; margin: 24px auto 0;">
-          <div class="featured-content" style="padding: 32px;">
-            <div class="tags">
-              <span class="tag">Udemy</span>
-              <span class="tag"
-                style="background: rgba(255,180,0,0.15); color: #ffb400; border-color: rgba(255,180,0,0.3);">Portuguese
-                🇧🇷</span>
-            </div>
-            <h3 style="font-size: 24px;">Investigate public spending with the Brazilian freedom of information act</h3>
-            <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 8px;"><i class="fas fa-star"
-                style="color: #ffb400;"></i> 4.6/5 · 428 students · 1.5 hours of video</p>
-            <p>Two powerful tools allow anyone today to search for information about public spending and those
-              responsible for deciding how these resources are used: transparency portals and freedom of information
-              laws.</p>
-            <p>These tools allow anyone to check public servants' salaries, ministry budgets, monitor the progress of
-              policies, and much more. They also allow any person to send questions — with a legally guaranteed
-              response — to any Brazilian government body.</p>
-            <p>This workshop is an introduction to the topic and is dedicated especially to professionals and students
-              who need public data and documents, whether for university research, office work, or even everyday
-              needs like learning more about how a local health clinic or public school operates.</p>
-            <div class="story-link-container" style="margin-top: 16px;">
-              <a href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/"
-                target="_blank" rel="noopener noreferrer" class="story-link">
-                <span class="story-link-icon">&rsaquo;</span>
-                <span>View workshop on Udemy</span>
-              </a>
-            </div>
-          </div>
+        <h2 class="section-title">Projects &amp; Courses</h2>
+
+        <!-- ── Dashboards & Tools ───────────────────────────────────────── -->
+        <h3 style="font-size:1.1rem;font-weight:700;margin:2rem 0 1rem;color:var(--text)">Data tools &amp; dashboards</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
+
+          <a href="planos-governo-dashboard/" class="story-link" style="display:block;background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">ELECTIONS · 2024</div>
+            <div style="font-weight:700;color:var(--text,#111);margin-bottom:.3rem">Government plans database</div>
+            <div style="font-size:.83rem;color:var(--muted)">Keyword search, topic analysis and plagiarism detection across 15,000+ mayoral candidates' plans.</div>
+          </a>
+
+          <a href="ibama-dashboard/" class="story-link" style="display:block;background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">ENVIRONMENT</div>
+            <div style="font-weight:700;color:var(--text,#111);margin-bottom:.3rem">Environmental fines (Ibama &amp; ICMBio)</div>
+            <div style="font-size:.83rem;color:var(--muted)">Search and filter environmental infraction notices by name, state and period.</div>
+          </a>
+
+          <a href="emendas-dashboard/" class="story-link" style="display:block;background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">CONGRESS</div>
+            <div style="font-weight:700;color:var(--text,#111);margin-bottom:.3rem">Parliamentary amendments</div>
+            <div style="font-size:.83rem;color:var(--muted)">Track Brazilian parliamentary amendments by lawmaker, party and destination.</div>
+          </a>
+
+          <a href="lai-dashboard/" class="story-link" style="display:block;background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">TRANSPARENCY</div>
+            <div style="font-weight:700;color:var(--text,#111);margin-bottom:.3rem">FOI requests tracker</div>
+            <div style="font-size:.83rem;color:var(--muted)">Monitor freedom of information requests and response rates across Brazilian federal agencies.</div>
+          </a>
+
+          <a href="basometro-dashboard/" class="story-link" style="display:block;background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">POLITICS</div>
+            <div style="font-weight:700;color:var(--text,#111);margin-bottom:.3rem">Basômetro</div>
+            <div style="font-size:.83rem;color:var(--muted)">How often do Brazilian lawmakers vote with the government? Interactive voting tracker.</div>
+          </a>
+
+          <a href="aeronaves-dashboard/" class="story-link" style="display:block;background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">TRANSPORT</div>
+            <div style="font-weight:700;color:var(--text,#111);margin-bottom:.3rem">Aircraft register</div>
+            <div style="font-size:.83rem;color:var(--muted)">Search aircraft ownership records in Brazil's civil aviation authority database.</div>
+          </a>
+
+          <a href="clipping-dashboard/" class="story-link" style="display:block;background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">MEDIA</div>
+            <div style="font-weight:700;color:var(--text,#111);margin-bottom:.3rem">Media citations dashboard</div>
+            <div style="font-size:.83rem;color:var(--muted)">Track how stories are picked up and cited across Brazilian news outlets.</div>
+          </a>
+
+          <a href="pesquisa_ampla/" target="_blank" rel="noopener noreferrer" class="story-link" style="display:block;background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">REPORTING TOOL</div>
+            <div style="font-weight:700;color:var(--text,#111);margin-bottom:.3rem">Multi-database search</div>
+            <div style="font-size:.83rem;color:var(--muted)">Search a name across multiple Brazilian public databases simultaneously.</div>
+          </a>
+
+          <a href="simulador-reacoes/index.html" class="story-link" style="display:block;background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
+            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">AI TOOL</div>
+            <div style="font-weight:700;color:var(--text,#111);margin-bottom:.3rem">News reaction simulator</div>
+            <div style="font-size:.83rem;color:var(--muted)">AI-powered tool that simulates how different audiences might react to a news story.</div>
+          </a>
+
         </div>
+
+        <!-- ── Courses & Workshops ──────────────────────────────────────── -->
+        <h3 style="font-size:1.1rem;font-weight:700;margin:2.5rem 0 1rem;color:var(--text)">Courses &amp; workshops</h3>
+        <div style="display:grid;gap:.75rem;max-width:860px">
+
+          <div style="background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem">
+            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">
+              <span class="tag">Udemy</span>
+              <span class="tag" style="background:rgba(255,180,0,.15);color:#ffb400;border-color:rgba(255,180,0,.3)">Portuguese 🇧🇷</span>
+            </div>
+            <div style="font-weight:700;margin-bottom:.2rem">Investigate public spending with the Brazilian Freedom of Information Act</div>
+            <div style="font-size:.83rem;color:var(--muted);margin-bottom:.6rem"><i class="fas fa-star" style="color:#ffb400"></i> 4.6/5 · 428 students · 1.5 hours</div>
+            <a href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank" rel="noopener noreferrer" class="story-link">
+              <span class="story-link-icon">&rsaquo;</span><span>View on Udemy</span>
+            </a>
+          </div>
+
+          <div style="background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem">
+            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">
+              <span class="tag">Abraji</span>
+              <span class="tag" style="background:rgba(255,180,0,.15);color:#ffb400;border-color:rgba(255,180,0,.3)">Portuguese 🇧🇷</span>
+            </div>
+            <div style="font-weight:700;margin-bottom:.2rem">Kit de Ferramentas Gemini para Jornalistas</div>
+            <div style="font-size:.83rem;color:var(--muted);margin-bottom:.6rem">Free initiative by Abraji with Google support — video tutorials, prompts, AI agents and workflows for investigative journalists.</div>
+            <a href="https://www.abraji.org.br/noticias/abraji-lanca-iniciativa-para-auxiliar-investigacoes-com-o-uso-da-ia" target="_blank" rel="noopener noreferrer" class="story-link">
+              <span class="story-link-icon">&rsaquo;</span><span>Read more</span>
+            </a>
+          </div>
+
+          <div style="background:var(--card-bg,#fff);border:1px solid var(--border,#e5e7eb);border-radius:10px;padding:1rem 1.2rem">
+            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">
+              <span class="tag">Jeduca · Abraji</span>
+              <span class="tag" style="background:rgba(255,180,0,.15);color:#ffb400;border-color:rgba(255,180,0,.3)">Portuguese 🇧🇷</span>
+            </div>
+            <div style="font-weight:700;margin-bottom:.2rem">Jornalismo de Educação: Bases para a Cobertura</div>
+            <div style="font-size:.83rem;color:var(--muted);margin-bottom:.6rem">Free online course covering evaluation systems, data analysis, AI tools and source development for education reporters. 11 sessions.</div>
+            <a href="https://jeduca.org.br/noticia/inscricoes-abertas-para-o-curso-especial-de-jornalismo-de-educacao-de-10-anos-da-jeduca" target="_blank" rel="noopener noreferrer" class="story-link">
+              <span class="story-link-icon">&rsaquo;</span><span>Read more</span>
+            </a>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
