@@ -11,13 +11,13 @@
     }
   },
   "enrich": {
-    "fetched": 66,
-    "reused": 25,
-    "kept": 88,
+    "fetched": 60,
+    "reused": 32,
+    "kept": 89,
     "dropped": 3,
     "categories": {
       "perfil_bio": 17,
-      "reportagem_autoral": 59,
+      "reportagem_autoral": 60,
       "mencao": 9,
       "entrevista": 1,
       "citacao_fonte": 2
@@ -28,7 +28,7 @@
       "piaui.folha.uol.com.br": 1,
       "apublica.org": 3,
       "ojoioeotrigo.com.br": 2,
-      "estadao.com.br": 10,
+      "estadao.com.br": 11,
       "g1.globo.com": 2,
       "escavador.com": 1,
       "icfj.org": 1,
