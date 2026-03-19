@@ -880,7 +880,7 @@ function renderPlagCandTable() {
   (S.plagiarism.top_phrases || []).forEach(ph => {
     (ph.cands || []).forEach(c => {
       if (!countMap[c.sq]) {
-        countMap[c.sq] = { cnt: 0, nome: c.nome, partido: c.partido, municipio: c.municipio, uf: c.uf };
+        countMap[c.sq] = { sq: c.sq, cnt: 0, nome: c.nome, partido: c.partido, municipio: c.municipio, uf: c.uf };
       }
       countMap[c.sq].cnt += 1;
     });
@@ -900,7 +900,7 @@ function renderPlagCandTable() {
       <table>
         <thead><tr>
           <th>#</th><th>Nome</th><th>Partido</th><th>Município</th><th>UF</th>
-          <th>Trechos copiados detectados</th>
+          <th>Trechos em comum</th><th></th>
         </tr></thead>
         <tbody>
           ${rows.map((r, i) => `
@@ -911,10 +911,37 @@ function renderPlagCandTable() {
               <td>${esc(r.municipio)}</td>
               <td>${esc(r.uf)}</td>
               <td><span class="pill warn">${nFmt.format(r.cnt)}</span></td>
+              <td><button class="btn btn-ghost" style="font-size:.78rem;padding:.2rem .55rem"
+                data-sq="${esc(r.sq)}" data-nome="${esc(r.nome)}"
+                onclick="window._showPlagCandPlan(this)">Ver plano ↗</button></td>
             </tr>`).join("")}
         </tbody>
       </table>
+    </div>
+    <div id="plag-plan-viewer" style="display:none;margin-top:1rem;padding:1rem;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem">
+        <strong id="plag-plan-name" style="font-size:.95rem"></strong>
+        <button class="btn btn-ghost" style="font-size:.78rem" onclick="document.getElementById('plag-plan-viewer').style.display='none'">✕ Fechar</button>
+      </div>
+      <div id="plag-plan-text" style="font-size:.83rem;line-height:1.65;white-space:pre-wrap;max-height:420px;overflow-y:auto;color:var(--ink)"></div>
     </div>`;
+
+  // handler global para os botões gerados dinamicamente
+  window._showPlagCandPlan = async function(btn) {
+    const sq   = btn.dataset.sq;
+    const nome = btn.dataset.nome;
+    const viewer = document.getElementById("plag-plan-viewer");
+    const nameEl = document.getElementById("plag-plan-name");
+    const textEl = document.getElementById("plag-plan-text");
+
+    nameEl.textContent = nome;
+    textEl.textContent = "carregando…";
+    viewer.style.display = "block";
+    viewer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+    const data = await loadCandidateText(sq);
+    textEl.textContent = data?.text || "(Texto do plano não disponível)";
+  };
 }
 
 /* ── paginação genérica ───────────────────────────────────────────────────── */
