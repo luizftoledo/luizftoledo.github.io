@@ -666,6 +666,30 @@ function setupVS() {
   setupVSInput("b");
   document.getElementById("vs-compare-btn").addEventListener("click", runVS);
   fillThemeSelect("vs-theme");
+
+  // scroll sincronizado
+  const elA = document.getElementById("vs-a-text");
+  const elB = document.getElementById("vs-b-text");
+  let syncing = false;
+  function syncScroll(src, dst) {
+    src.addEventListener("scroll", () => {
+      if (syncing) return;
+      syncing = true;
+      const pct = src.scrollTop / (src.scrollHeight - src.clientHeight || 1);
+      dst.scrollTop = pct * (dst.scrollHeight - dst.clientHeight);
+      syncing = false;
+    });
+  }
+  syncScroll(elA, elB);
+  syncScroll(elB, elA);
+
+  // comparar por cidade
+  fillSelect("city-uf", STATES, true);
+  fillThemeSelect("city-theme");
+  document.getElementById("city-compare-btn").addEventListener("click", runCityCompare);
+  document.getElementById("city-input").addEventListener("keydown", e => {
+    if (e.key === "Enter") runCityCompare();
+  });
 }
 
 function setupVSInput(side) {
@@ -745,6 +769,64 @@ async function runVS() {
     document.getElementById("vs-a-text").textContent = dataA?.text || "(Sem plano disponível)";
     document.getElementById("vs-b-text").textContent = dataB?.text || "(Sem plano disponível)";
   }
+}
+
+async function runCityCompare() {
+  const cityQ  = norm(document.getElementById("city-input").value.trim());
+  const uf     = document.getElementById("city-uf").value;
+  const slug   = document.getElementById("city-theme").value;
+  const status = document.getElementById("city-status");
+  const resEl  = document.getElementById("city-results");
+
+  if (!cityQ) { status.textContent = "Digite o nome de uma cidade."; return; }
+
+  status.textContent = "buscando candidatos…";
+  resEl.innerHTML = spinner();
+
+  // encontrar candidatos na metadata
+  let pool = (S.metadata || []).filter(c =>
+    c.has_plan &&
+    norm(c.municipio || "").includes(cityQ) &&
+    (!uf || c.uf === uf)
+  );
+
+  if (!pool.length) {
+    status.textContent = "Nenhum candidato com plano encontrado nesta cidade.";
+    resEl.innerHTML = "";
+    return;
+  }
+
+  status.textContent = `${pool.length} candidato(s) encontrado(s) — carregando planos…`;
+
+  // carregar textos em paralelo (máx 20)
+  const slice = pool.slice(0, 20);
+  const texts = await Promise.all(slice.map(c => loadCandidateText(c.id)));
+
+  let keywords = [];
+  let themeName = "";
+  if (slug) {
+    if (!S.themeCache[slug]) {
+      try { S.themeCache[slug] = await fetchJSON(`${DATA}/themes/${slug}.json`); } catch {}
+    }
+    keywords  = S.themeCache[slug]?.keywords || [];
+    themeName = (S.themes || []).find(t => t.slug === slug)?.name || slug;
+  }
+
+  status.textContent = `${slice.length} candidato(s)${pool.length > 20 ? " (exibindo primeiros 20)" : ""}${themeName ? " · tema: " + themeName : ""}`;
+
+  resEl.innerHTML = `<div class="city-grid">${slice.map((c, i) => {
+    const d = texts[i];
+    const raw = d?.text || "";
+    const display = slug
+      ? (extractThemeText(raw, keywords) || "(Sem menção a este tema)")
+      : (raw || "(Texto não disponível)");
+    return `
+      <div class="city-card">
+        <div class="city-card-header">${esc(c.nome_urna || c.nome)}</div>
+        <div class="city-card-meta">${esc(c.partido)} · ${esc(c.municipio)}/${esc(c.uf)}</div>
+        <div class="city-card-text">${esc(display)}</div>
+      </div>`;
+  }).join("")}</div>`;
 }
 
 function extractThemeText(text, keywords) {

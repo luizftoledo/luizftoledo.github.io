@@ -122,9 +122,14 @@
     /* ── compare ──────────────────────────────────────────────────────── */
     .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
     @media(max-width:700px){.compare-grid{grid-template-columns:1fr}}
-    .compare-col{border:1px solid var(--line);border-radius:var(--radius);padding:1rem;background:#fff}
+    .compare-col{border:1px solid var(--line);border-radius:var(--radius);padding:1rem;background:var(--panel)}
     .compare-header{font-weight:700;font-size:.95rem;margin-bottom:.6rem;border-bottom:2px solid var(--accent);padding-bottom:.4rem}
-    .compare-text{font-size:.83rem;line-height:1.6;max-height:420px;overflow-y:auto;white-space:pre-wrap;color:#333}
+    .compare-text{font-size:.83rem;line-height:1.6;max-height:520px;overflow-y:auto;white-space:pre-wrap;color:var(--ink)}
+    .city-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:.8rem}
+    .city-card{border:1px solid var(--line);border-radius:var(--radius);padding:.9rem;background:var(--panel)}
+    .city-card-header{font-weight:600;font-size:.88rem;margin-bottom:.3rem}
+    .city-card-meta{font-size:.78rem;color:var(--muted);margin-bottom:.55rem}
+    .city-card-text{font-size:.8rem;line-height:1.6;max-height:280px;overflow-y:auto;white-space:pre-wrap;color:var(--ink)}
     .theme-section{margin-bottom:.8rem}
     .theme-section-title{font-size:.8rem;font-weight:700;color:var(--accent);margin-bottom:.3rem}
 
@@ -353,12 +358,26 @@
     <div id="vs-results" class="compare-grid" style="display:none">
       <div class="compare-col">
         <div class="compare-header" id="vs-a-header">Candidato A</div>
-        <div class="compare-text" id="vs-a-text"></div>
+        <div class="compare-text sync-scroll" id="vs-a-text"></div>
       </div>
       <div class="compare-col">
         <div class="compare-header" id="vs-b-header">Candidato B</div>
-        <div class="compare-text" id="vs-b-text"></div>
+        <div class="compare-text sync-scroll" id="vs-b-text"></div>
       </div>
+    </div>
+
+    <!-- Comparar por cidade -->
+    <div class="panel" style="margin-top:.9rem">
+      <div class="panel-title">Comparar todos os candidatos de uma cidade</div>
+      <p class="panel-sub">Digite a cidade para ver os planos de todos os candidatos a prefeito lado a lado.</p>
+      <div class="filter-row">
+        <label>UF <select id="city-uf"><option value="">Todos</option></select></label>
+        <label>Cidade <input type="text" id="city-input" placeholder="ex: Recife" style="width:200px"></label>
+        <label>Tema (opcional) <select id="city-theme"><option value="">Texto completo</option></select></label>
+        <button class="btn btn-primary" id="city-compare-btn">Buscar</button>
+      </div>
+      <div id="city-status" class="result-info" style="margin-top:.5rem"></div>
+      <div id="city-results" style="margin-top:.7rem"></div>
     </div>
 
   </div>
