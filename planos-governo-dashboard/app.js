@@ -1017,13 +1017,81 @@ function renderPlagCandTable() {
     const textEl = document.getElementById("plag-plan-text");
 
     nameEl.textContent = nome;
-    textEl.textContent = "carregando…";
+    textEl.innerHTML   = "<em style='color:var(--muted)'>carregando…</em>";
     viewer.style.display = "block";
     viewer.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
     const data = await loadCandidateText(sq);
-    textEl.textContent = data?.text || "(Texto do plano não disponível)";
+    const rawText = data?.text || "";
+
+    if (!rawText) {
+      textEl.textContent = "(Texto do plano não disponível)";
+      return;
+    }
+
+    // coletar frases que este candidato compartilha
+    const phrases = [];
+    (S.plagiarism?.top_phrases || []).forEach(ph => {
+      if ((ph.cands || []).some(c => c.sq === sq)) {
+        phrases.push({ phrase: ph.phrase, count: ph.count });
+      }
+    });
+
+    textEl.innerHTML = phrases.length
+      ? highlightPlagPhrases(rawText, phrases)
+      : esc(rawText);
+
+    if (phrases.length) {
+      const legendEl = document.createElement("div");
+      legendEl.style.cssText = "font-size:.75rem;color:var(--muted);margin-top:.5rem";
+      legendEl.textContent = `★ ${phrases.length} trecho(s) com destaque em amarelo são compartilhados com outros planos — passe o mouse para ver quantos.`;
+      textEl.parentNode.insertBefore(legendEl, textEl.nextSibling);
+    }
   };
+}
+
+function highlightPlagPhrases(text, phrases) {
+  // Encontrar todas as ocorrências (case-insensitive) e marcar ranges
+  const lowerText = text.toLowerCase();
+  const ranges = [];
+
+  for (const { phrase, count } of phrases) {
+    const lp = phrase.toLowerCase();
+    let idx = 0;
+    while (true) {
+      const pos = lowerText.indexOf(lp, idx);
+      if (pos === -1) break;
+      ranges.push({ start: pos, end: pos + phrase.length, count });
+      idx = pos + 1;
+    }
+  }
+
+  if (!ranges.length) return esc(text);
+
+  // Ordenar e mesclar overlaps (mantém o maior count)
+  ranges.sort((a, b) => a.start - b.start);
+  const merged = [];
+  for (const r of ranges) {
+    const last = merged[merged.length - 1];
+    if (last && r.start < last.end) {
+      last.end   = Math.max(last.end, r.end);
+      last.count = Math.max(last.count, r.count);
+    } else {
+      merged.push({ ...r });
+    }
+  }
+
+  // Construir HTML
+  let html = "";
+  let pos = 0;
+  for (const r of merged) {
+    if (r.start > pos) html += esc(text.slice(pos, r.start));
+    const outros = nFmt.format(r.count - 1);
+    html += `<mark class="plag-mark"><span class="plag-tip">citado em outros ${outros} plano(s)</span>${esc(text.slice(r.start, r.end))}</mark>`;
+    pos = r.end;
+  }
+  if (pos < text.length) html += esc(text.slice(pos));
+  return html;
 }
 
 /* ── paginação genérica ───────────────────────────────────────────────────── */

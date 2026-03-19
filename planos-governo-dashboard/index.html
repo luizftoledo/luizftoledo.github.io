@@ -98,6 +98,10 @@
     tbody td{padding:.5rem .8rem;vertical-align:top}
     tbody tr:hover{background:#faf9f5}
     .snippet{color:var(--muted);font-size:.81rem;margin-top:.2rem;font-style:italic;line-height:1.4}
+    .plag-mark{background:#fff0b3;border-bottom:2px solid #d97706;border-radius:2px;cursor:help;position:relative}
+    .plag-mark .plag-tip{display:none;position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;font-size:.72rem;padding:.28rem .6rem;border-radius:6px;white-space:nowrap;z-index:200;pointer-events:none;font-style:normal;line-height:1.4}
+    .plag-mark .plag-tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a1a1a}
+    .plag-mark:hover .plag-tip{display:block}
     mark{background:#fff3cd;border-radius:3px;padding:0 2px}
     .pill{display:inline-block;padding:.1rem .42rem;border-radius:999px;font-size:.73rem;font-weight:600;background:var(--accent-s);color:var(--accent)}
     .pill.warn{background:var(--warn-s);color:var(--warn)}
