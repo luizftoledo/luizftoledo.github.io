@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guia: GitHub Pages do Zero</title>
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+window.GUIA_GITHUB_PAGES = {
+  "salt_b64": "NP9/yfi2SzdxZldebEXfOg==",
+  "iv_b64": "zGlnJ+btvq4ysu6zm9Islg==",
+  "ciphertext_b64": "Rrv2032VTqbvGF9YehyN7frXVxKC4Qd7aqpIMkF4DCCwpO3nvVqiZAghdZHRZpgY",
+  "iterations": 100000
+};
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --paper: #161b22;
+      --card: rgba(22, 27, 34, 0.95);
+      --ink: #e6edf3;
+      --muted: #8b949e;
+      --line: rgba(240, 246, 252, 0.1);
+      --accent: #238636;
+      --accent-2: #1f6feb;
+      --accent-3: #d29922;
+      --danger: #f85149;
+      --shadow: 0 16px 40px rgba(1, 4, 9, 0.55);
+    }
+    * { box-sizing: border-box; margin: 0; }
+    html, body {
+      min-height: 100%;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Public Sans", -apple-system, sans-serif;
+    }
+
+    /* ── GATE ── */
+    .gate-shell {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px 16px;
+      background:
+        radial-gradient(ellipse at 20% 0%, rgba(35, 134, 54, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, rgba(31, 111, 235, 0.1) 0%, transparent 50%),
+        var(--bg);
+    }
+    .gate-card {
+      width: min(520px, 100%);
+      padding: 40px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+    .gate-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .gate-logo svg { color: var(--ink); }
+    .gate-logo span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .gate-card h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .gate-card p {
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      font-size: 0.95rem;
+    }
+    .field-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .field-row {
+      display: flex;
+      gap: 10px;
+    }
+    .field-row input {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font: inherit;
+      font-size: 1rem;
+      background: var(--bg);
+      color: var(--ink);
+      outline: none;
+      transition: border-color 180ms;
+    }
+    .field-row input:focus { border-color: var(--accent-2); }
+    .field-row button {
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font: inherit;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+      transition: filter 180ms;
+      white-space: nowrap;
+    }
+    .field-row button:hover { filter: brightness(1.15); }
+    .error-text {
+      min-height: 1.2rem;
+      margin-top: 12px;
+      color: var(--danger);
+      font-size: 0.88rem;
+    }
+
+    /* ── APP ── */
+    .app-shell { display: none; }
+    body.ready .gate-shell { display: none; }
+    body.ready .app-shell {
+      display: block;
+      animation: fadeUp 380ms ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      width: min(900px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 40px 0 80px;
+    }
+
+    /* header */
+    .guide-header {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 28px;
+      margin-bottom: 40px;
+    }
+    .guide-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(35, 134, 54, 0.12);
+      color: #3fb950;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .guide-header h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .guide-header p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 70ch;
+    }
+
+    /* step */
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 0 20px;
+      margin-bottom: 56px;
+    }
+    .step-num {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-body {}
+    .step-body h2 {
+      font-family: "Fraunces", serif;
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+    .step-body p, .step-body li {
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 0.95rem;
+    }
+    .step-body ul {
+      margin: 12px 0;
+      padding-left: 20px;
+    }
+    .step-body li { margin-bottom: 6px; }
+
+    /* mock UI */
+    .mock {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #0d1117;
+      font-size: 0.88rem;
+    }
+    .mock-bar {
+      background: #161b22;
+      border-bottom: 1px solid var(--line);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .mock-dots { display: flex; gap: 6px; }
+    .mock-dot { width: 10px; height: 10px; border-radius: 50%; background: #30363d; }
+    .mock-url {
+      flex: 1;
+      background: #0d1117;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 4px 10px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: monospace;
+    }
+    .mock-body { padding: 20px; }
+
+    /* form mock */
+    .mock-form-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .mock-label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .mock-input {
+      flex: 1;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 7px 10px;
+      background: #010409;
+      color: var(--ink);
+      font-family: monospace;
+      font-size: 0.88rem;
+    }
+    .mock-input.highlight {
+      border-color: var(--accent-2);
+      background: rgba(31, 111, 235, 0.06);
+    }
+    .mock-input.ok {
+      border-color: var(--accent);
+    }
+    .mock-check-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding: 10px;
+      background: rgba(35, 134, 54, 0.06);
+      border: 1px solid rgba(35, 134, 54, 0.2);
+      border-radius: 8px;
+    }
+    .mock-check { color: var(--accent); font-size: 1rem; }
+    .mock-btn {
+      display: inline-block;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: default;
+    }
+    .mock-btn.green { background: #238636; color: #fff; }
+    .mock-btn.gray { background: #21262d; color: var(--muted); border: 1px solid var(--line); }
+
+    /* callout */
+    .callout {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .callout.info { background: rgba(31, 111, 235, 0.1); border-left: 3px solid var(--accent-2); color: var(--ink); }
+    .callout.tip  { background: rgba(35, 134, 54, 0.1);  border-left: 3px solid var(--accent);   color: var(--ink); }
+    .callout.warn { background: rgba(210, 153, 34, 0.1); border-left: 3px solid var(--accent-3); color: var(--ink); }
+    .callout-icon { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+
+    /* tabs mock */
+    .mock-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--line);
+      padding: 0 16px;
+      background: #161b22;
+    }
+    .mock-tab {
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      border-bottom: 2px solid transparent;
+      cursor: default;
+    }
+    .mock-tab.active {
+      color: var(--ink);
+      border-bottom-color: #f78166;
+    }
+
+    /* file tree mock */
+    .mock-tree { padding: 12px 16px; }
+    .mock-file {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .mock-file.selected { background: rgba(31, 111, 235, 0.12); color: var(--ink); }
+    .mock-file-icon { width: 16px; text-align: center; }
+
+    /* editor mock */
+    .mock-editor {
+      background: #010409;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #8b949e;
+    }
+    .mock-editor .kw { color: #ff7b72; }
+    .mock-editor .tag { color: #7ee787; }
+    .mock-editor .str { color: #a5d6ff; }
+    .mock-editor .cmt { color: #8b949e; opacity: 0.6; }
+    .mock-editor .ln { color: #30363d; margin-right: 16px; user-select: none; }
+
+    /* pages mock */
+    .mock-pages-success {
+      padding: 14px 18px;
+      background: rgba(35, 134, 54, 0.1);
+      border: 1px solid rgba(35, 134, 54, 0.3);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .mock-pages-url { color: #3fb950; font-weight: 700; }
+    .mock-visit-btn {
+      border: 1px solid rgba(35, 134, 54, 0.4);
+      border-radius: 6px;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      color: #3fb950;
+      white-space: nowrap;
+    }
+
+    /* menu mock */
+    .mock-menu {
+      position: relative;
+      display: inline-block;
+    }
+    .mock-menu-dropdown {
+      background: #161b22;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 8px;
+      min-width: 180px;
+    }
+    .mock-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      color: var(--ink);
+    }
+    .mock-menu-item:hover, .mock-menu-item.selected { background: rgba(31, 111, 235, 0.1); }
+
+    /* commit modal mock */
+    .mock-modal {
+      background: #161b22;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 12px;
+    }
+    .mock-modal h3 {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+    .mock-modal input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px 12px;
+      background: #010409;
+      color: var(--ink);
+      font-size: 0.88rem;
+      margin-bottom: 12px;
+    }
+    .mock-modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* claude mock */
+    .mock-claude {
+      background: #1a1a2e;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .mock-claude-header {
+      background: #16213e;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 12px 18px;
+      font-size: 0.85rem;
+      color: #a8b2d8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .mock-claude-body { padding: 20px; }
+    .mock-bubble {
+      border-radius: 14px;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      max-width: 85%;
+    }
+    .mock-bubble.user {
+      background: #1f6feb;
+      color: #fff;
+      margin-left: auto;
+    }
+    .mock-bubble.claude {
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+    }
+    .mock-code-block {
+      background: #010409;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-top: 8px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #7ee787;
+      overflow-x: auto;
+    }
+
+    /* step connector line */
+    .step::before {
+      content: "";
+      display: block;
+      grid-column: 1;
+      grid-row: 2;
+      width: 2px;
+      background: var(--line);
+      margin: 8px auto 0;
+      height: calc(100% + 24px);
+    }
+
+    /* divider */
+    hr.section-divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 0 0 40px;
+    }
+
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .tag-pill.blue { background: rgba(31,111,235,0.15); color: #79c0ff; }
+    .tag-pill.green { background: rgba(35,134,54,0.15); color: #3fb950; }
+    .tag-pill.orange { background: rgba(210,153,34,0.15); color: #d29922; }
+
+    @media (max-width: 600px) {
+      .step { grid-template-columns: 36px 1fr; gap: 0 14px; }
+      .step-num { width: 36px; height: 36px; font-size: 0.9rem; }
+      .gate-card { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ GATE ═══════════════ -->
+<section class="gate-shell">
+  <div class="gate-card">
+    <div class="gate-logo">
+      <svg width="28" height="28" viewBox="0 0 98 96" fill="currentColor">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69
+             2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59
+             2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324
+             -2.888.324-2.888 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378
+             14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378
+             -22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486
+             -13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0
+             8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97
+             11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06
+             -22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08
+             13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691
+             C97.707 22 75.788 0 48.854 0z"/>
+      </svg>
+      <span>Guia privado</span>
+    </div>
+    <h1>GitHub Pages<br>do Zero</h1>
+    <p>Passo a passo visual para criar sua página pessoal no GitHub, editar pelo navegador e publicar sem usar terminal.</p>
+    <label class="field-label" for="password-input">Senha de acesso</label>
+    <form id="unlock-form">
+      <div class="field-row">
+        <input id="password-input" type="password" autocomplete="current-password" placeholder="Digite a senha" />
+        <button type="submit">Abrir guia</button>
+      </div>
+      <div class="error-text" id="error-text" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ═══════════════ APP ═══════════════ -->
+<main class="app-shell">
+  <div class="container">
+
+    <header class="guide-header">
+      <div class="guide-eyebrow">
+        <span>📖</span> Guia visual
+      </div>
+      <h1>GitHub Pages do Zero</h1>
+      <p>Como criar sua página pessoal no GitHub, editar arquivos direto pelo navegador e publicar conteúdo — sem instalar nada no computador.</p>
+    </header>
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h2>Criar conta no GitHub</h2>
+        <p>Acesse <strong style="color:var(--ink)">github.com</strong> e clique em <strong style="color:var(--ink)">Sign up</strong>. Preencha e-mail, senha e escolha um nome de usuário.</p>
+        <ul>
+          <li>O nome de usuário vira parte do endereço do seu site.</li>
+          <li>Exemplo: usuário <code style="color:#a5d6ff">luizftoledo</code> → site em <code style="color:#3fb950">luizftoledo.github.io</code></li>
+          <li>Confirme o e-mail quando o GitHub mandar a verificação.</li>
+        </ul>
+        <div class="mock">
+          <div class="mock-bar">
+            <div class="mock-dots"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
+            <div class="mock-url">github.com/signup</div>
+          </div>
+          <div class="mock-body">
+            <div style="font-family:'Fraunces',serif;font-size:1.4rem;margin-bottom:18px;color:var(--ink)">Create your account</div>
+            <div class="mock-form-row">
+              <span class="mock-label">Username</span>
+              <div class="mock-input highlight" style="font-family:monospace">luizftoledo<span style="animation:blink 1s step-end infinite;color:var(--accent-2)">|</span></div>
+            </div>
+            <div class="mock-form-row">
+              <span class="mock-label">Email</span>
+              <div class="mock-input">seu@email.com</div>
+            </div>
+            <div class="mock-form-row">
+              <span class="mock-label">Password</span>
+              <div class="mock-input">••••••••</div>
+            </div>
+            <div style="margin-top:16px"><span class="mock-btn green">Create account</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h2>Criar o repositório do site</h2>
+        <p>No GitHub, clique no <strong style="color:var(--ink)">+</strong> no canto superior direito → <strong style="color:var(--ink)">New repository</strong>.</p>
+        <ul>
+          <li>No campo <strong style="color:var(--ink)">Repository name</strong>, digite exatamente: <code style="color:#3fb950">seunome.github.io</code></li>
+          <li>O padrão é sempre o seu nome de usuário + <code style="color:#a5d6ff">.github.io</code></li>
+          <li>Deixe <strong style="color:var(--ink)">Public</strong> marcado.</li>
+          <li>Ative a opção <strong style="color:var(--ink)">Add a README file</strong>.</li>
+          <li>Clique em <strong style="color:var(--ink)">Create repository</strong>.</li>
+        </ul>
+        <div class="mock">
+          <div class="mock-bar">
+            <div class="mock-dots"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
+            <div class="mock-url">github.com/new</div>
+          </div>
+          <div class="mock-body">
+            <div style="font-size:1.1rem;font-weight:700;margin-bottom:18px;color:var(--ink)">Create a new repository</div>
+            <div class="mock-form-row">
+              <span class="mock-label">Owner</span>
+              <div class="mock-input" style="max-width:140px">luizftoledo ▾</div>
+              <span style="color:var(--muted);font-size:1.1rem">/</span>
+              <div class="mock-input ok" style="flex:1;font-family:monospace">luizftoledo.github.io</div>
+            </div>
+            <div style="color:#3fb950;font-size:0.8rem;margin:4px 0 14px 130px">✓ luizftoledo.github.io is available.</div>
+            <div class="mock-check-row">
+              <span class="mock-check">☑</span>
+              <div>
+                <div style="font-weight:600;color:var(--ink);font-size:0.88rem">Add a README file</div>
+                <div style="color:var(--muted);font-size:0.8rem">Marque esta opção</div>
+              </div>
+            </div>
+            <div class="mock-form-row" style="margin-top:6px">
+              <span class="mock-label">Visibility</span>
+              <span class="tag-pill green">Public</span>
+            </div>
+            <div style="margin-top:16px"><span class="mock-btn green">Create repository</span></div>
+          </div>
+        </div>
+        <div class="callout info">
+          <span class="callout-icon">💡</span>
+          <span>O GitHub ativa o site automaticamente. Em até 2 minutos, <code>luizftoledo.github.io</code> já fica no ar.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h2>Confirmar que o site está ativo</h2>
+        <p>Dentro do repositório, clique em <strong style="color:var(--ink)">Settings</strong> (no menu superior) → depois em <strong style="color:var(--ink)">Pages</strong> na barra lateral esquerda.</p>
+        <div class="mock">
+          <div class="mock-tabs">
+            <span class="mock-tab">Code</span>
+            <span class="mock-tab">Issues</span>
+            <span class="mock-tab">Pull requests</span>
+            <span class="mock-tab active">Settings</span>
+          </div>
+          <div style="display:flex">
+            <div style="width:200px;border-right:1px solid var(--line);padding:16px;font-size:0.82rem">
+              <div style="color:var(--muted);font-size:0.72rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Code and automation</div>
+              <div style="padding:6px 10px;color:var(--muted)">Branches</div>
+              <div style="padding:6px 10px;color:var(--muted)">Actions</div>
+              <div style="padding:6px 10px;color:var(--muted)">Environments</div>
+              <div style="padding:6px 10px;background:rgba(31,111,235,.12);border-radius:6px;color:var(--ink);font-weight:600">📄 Pages</div>
+            </div>
+            <div style="flex:1;padding:20px">
+              <div style="font-size:1.1rem;font-weight:700;margin-bottom:16px;color:var(--ink)">GitHub Pages</div>
+              <div class="mock-pages-success">
+                <div>
+                  <div style="font-size:0.78rem;color:var(--muted);margin-bottom:4px">Seu site está no ar em</div>
+                  <div class="mock-pages-url">https://luizftoledo.github.io/</div>
+                </div>
+                <div class="mock-visit-btn">↗ Visit site</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h2>Gerar o HTML com o Claude</h2>
+        <p>Acesse <strong style="color:var(--ink)">claude.ai</strong> e peça para criar a página que você quer. Seja específico: nome, profissão, cores, seções.</p>
+        <div class="mock-claude">
+          <div class="mock-claude-header">
+            <span style="color:#d4a8ff">✦</span> Claude · claude.ai
+          </div>
+          <div class="mock-claude-body">
+            <div class="mock-bubble user">
+              Crie uma página HTML de "Sobre mim" para meu site pessoal. Me chamo Luiz Toledo, sou jornalista investigativo e roteirista. Quero fundo branco, meu nome em destaque, uma bio curta e links para redes sociais.
+            </div>
+            <div class="mock-bubble claude">
+              Aqui está sua página:
+              <div class="mock-code-block">&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-BR"&gt;
+&lt;head&gt;
+  &lt;title&gt;Luiz Toledo&lt;/title&gt;
+  ...
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Luiz Toledo&lt;/h1&gt;
+  ...
+&lt;/body&gt;
+&lt;/html&gt;</div>
+            </div>
+          </div>
+        </div>
+        <div class="callout tip">
+          <span class="callout-icon">✅</span>
+          <span>Selecione todo o código gerado (<strong>Ctrl+A</strong> dentro do bloco de código) e copie com <strong>Ctrl+C</strong>.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h2>Criar o arquivo no GitHub</h2>
+        <p>Volte para o seu repositório no GitHub. Clique no botão <strong style="color:var(--ink)">Add file</strong> → <strong style="color:var(--ink)">Create new file</strong>.</p>
+        <div class="mock">
+          <div class="mock-bar">
+            <div class="mock-dots"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
+            <div class="mock-url">github.com/luizftoledo/luizftoledo.github.io</div>
+          </div>
+          <div class="mock-body" style="text-align:right">
+            <div style="display:inline-flex;gap:8px;align-items:center">
+              <span class="mock-btn gray">Code ▾</span>
+              <div style="position:relative;display:inline-block">
+                <span class="mock-btn green">Add file ▾</span>
+                <div class="mock-menu-dropdown" style="position:absolute;right:0;top:36px;z-index:10">
+                  <div class="mock-menu-item selected">+ Create new file</div>
+                  <div class="mock-menu-item">↑ Upload files</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ul style="margin-top:14px">
+          <li>No campo do nome do arquivo (topo da tela), digite: <code style="color:#3fb950">index.html</code></li>
+          <li>Cole o código copiado do Claude na área grande de edição.</li>
+        </ul>
+        <div class="mock" style="margin-top:14px">
+          <div class="mock-bar">
+            <div class="mock-dots"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
+            <div class="mock-url" style="display:flex;align-items:center;gap:6px">
+              luizftoledo.github.io /
+              <span style="background:#010409;border:1px solid var(--accent-2);border-radius:4px;padding:2px 8px;color:var(--ink);font-size:0.82rem">index.html</span>
+              in main
+            </div>
+          </div>
+          <div class="mock-editor">
+            <div><span class="ln">1</span><span class="kw">&lt;!DOCTYPE</span> <span class="str">html</span><span class="kw">&gt;</span></div>
+            <div><span class="ln">2</span><span class="tag">&lt;html</span> <span class="str">lang</span>=<span class="str">"pt-BR"</span><span class="tag">&gt;</span></div>
+            <div><span class="ln">3</span>  <span class="tag">&lt;head&gt;</span></div>
+            <div><span class="ln">4</span>    <span class="tag">&lt;title&gt;</span><span class="str">Luiz Toledo</span><span class="tag">&lt;/title&gt;</span></div>
+            <div><span class="ln">5</span>  <span class="tag">&lt;/head&gt;</span></div>
+            <div><span class="ln">6</span>  <span class="tag">&lt;body&gt;</span></div>
+            <div><span class="ln">7</span>    <span class="tag">&lt;h1&gt;</span>Luiz Toledo<span class="tag">&lt;/h1&gt;</span></div>
+            <div><span class="ln">8</span>    <span class="cmt">&lt;!-- cole o código aqui --&gt;</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 6 -->
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h2>Salvar e publicar</h2>
+        <p>Clique no botão <strong style="color:var(--ink)">Commit changes…</strong> no canto superior direito do editor. Uma janela vai abrir.</p>
+        <div class="mock-modal">
+          <h3 style="color:var(--ink)">Commit changes</h3>
+          <div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px">Commit message</div>
+          <input value="Adiciona pagina inicial do site" style="font-size:0.85rem" readonly />
+          <div style="font-size:0.8rem;color:var(--muted);margin-bottom:16px">Deixe a mensagem padrão ou escreva o que preferir. Ela é só um registro do que você alterou.</div>
+          <div class="mock-modal-footer">
+            <span class="mock-btn gray">Cancel</span>
+            <span class="mock-btn green">Commit changes</span>
+          </div>
+        </div>
+        <div class="callout tip" style="margin-top:16px">
+          <span class="callout-icon">🚀</span>
+          <span>Após clicar em <strong>Commit changes</strong>, o GitHub publica a alteração em até 2 minutos. Acesse seu site para ver o resultado.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 7 -->
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <h2>Adicionar novas páginas</h2>
+        <p>Repita os passos 4 e 5 para cada nova página. Peça ao Claude o HTML de uma nova seção e crie um arquivo com nome diferente.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">
+          <div style="border:1px solid var(--line);border-radius:8px;padding:14px;background:var(--paper)">
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Arquivo</div>
+            <div style="font-family:monospace;font-size:0.88rem;color:#3fb950">index.html</div>
+            <div style="font-family:monospace;font-size:0.88rem;color:#3fb950">sobre.html</div>
+            <div style="font-family:monospace;font-size:0.88rem;color:#3fb950">trabalhos.html</div>
+            <div style="font-family:monospace;font-size:0.88rem;color:#3fb950">contato.html</div>
+          </div>
+          <div style="border:1px solid var(--line);border-radius:8px;padding:14px;background:var(--paper)">
+            <div style="font-size:0.8rem;color:var(--muted);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.06em">Endereço no site</div>
+            <div style="font-size:0.82rem;color:#a5d6ff">luizftoledo.github.io<strong style="color:var(--muted)">/</strong></div>
+            <div style="font-size:0.82rem;color:#a5d6ff">luizftoledo.github.io<strong style="color:var(--muted)">/sobre.html</strong></div>
+            <div style="font-size:0.82rem;color:#a5d6ff">luizftoledo.github.io<strong style="color:var(--muted)">/trabalhos.html</strong></div>
+            <div style="font-size:0.82rem;color:#a5d6ff">luizftoledo.github.io<strong style="color:var(--muted)">/contato.html</strong></div>
+          </div>
+        </div>
+        <div class="callout warn" style="margin-top:16px">
+          <span class="callout-icon">⚠️</span>
+          <span>O arquivo principal do site deve sempre se chamar <code>index.html</code>. É ele que o GitHub carrega quando alguém acessa o endereço raiz.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 8 -->
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <h2>Editar uma página existente</h2>
+        <p>No repositório, clique no arquivo que quer editar. No topo do arquivo, clique no ícone de <strong style="color:var(--ink)">lápis ✏️</strong> para abrir o editor.</p>
+        <div class="mock">
+          <div class="mock-bar">
+            <div class="mock-dots"><div class="mock-dot"></div><div class="mock-dot"></div><div class="mock-dot"></div></div>
+            <div class="mock-url">github.com/luizftoledo/luizftoledo.github.io/blob/main/index.html</div>
+          </div>
+          <div class="mock-body">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <div style="font-weight:600;color:var(--ink)">index.html</div>
+              <div style="display:flex;gap:8px">
+                <span style="padding:5px 10px;border:1px solid var(--line);border-radius:6px;font-size:0.8rem;color:var(--ink)">Raw</span>
+                <span style="padding:5px 10px;border:1px solid var(--accent-2);border-radius:6px;font-size:0.8rem;color:var(--accent-2);font-weight:700">✏️ Edit</span>
+              </div>
+            </div>
+            <div class="mock-editor" style="border-radius:8px">
+              <div><span class="ln">1</span><span class="kw">&lt;!DOCTYPE</span> <span class="str">html</span><span class="kw">&gt;</span></div>
+              <div><span class="ln">2</span><span class="tag">&lt;html</span> <span class="str">lang</span>=<span class="str">"pt-BR"</span><span class="tag">&gt;</span></div>
+              <div><span class="ln">3</span>  <span class="cmt">&lt;!-- clique no lápis para editar --&gt;</span></div>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:14px">Após editar, clique em <strong style="color:var(--ink)">Commit changes…</strong> e confirme. A atualização vai ao ar em instantes.</p>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <hr class="section-divider" />
+    <div style="color:var(--muted);font-size:0.88rem;line-height:1.7;text-align:center;padding-bottom:20px">
+      Guia criado com base no repositório
+      <a href="https://github.com/luizftoledo/luizftoledo.github.io" target="_blank" rel="noreferrer"
+         style="color:var(--accent-2);font-weight:700">luizftoledo/luizftoledo.github.io</a>
+      · Site ao vivo em
+      <a href="https://luizftoledo.github.io" target="_blank" rel="noreferrer"
+         style="color:#3fb950;font-weight:700">luizftoledo.github.io</a>
+    </div>
+
+  </div>
+</main>
+
+<script>
+const gateForm     = document.getElementById("unlock-form");
+const passwordInput = document.getElementById("password-input");
+const errorText    = document.getElementById("error-text");
+
+function b64ToArrayBuffer(base64) {
+  const binary = atob(base64);
+  const bytes  = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return bytes.buffer;
+}
+
+async function decryptPayload(password) {
+  const payload   = window.GUIA_GITHUB_PAGES;
+  const passKey   = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveKey"]
+  );
+  const aesKey    = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt: b64ToArrayBuffer(payload.salt_b64),
+      iterations: payload.iterations, hash: "SHA-256" },
+    passKey, { name: "AES-CBC", length: 256 }, false, ["decrypt"]
+  );
+  const plaintext = await crypto.subtle.decrypt(
+    { name: "AES-CBC", iv: b64ToArrayBuffer(payload.iv_b64) },
+    aesKey, b64ToArrayBuffer(payload.ciphertext_b64)
+  );
+  return JSON.parse(new TextDecoder().decode(plaintext));
+}
+
+gateForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  errorText.textContent = "";
+  try {
+    const password = passwordInput.value.trim();
+    if (!password) throw new Error("Digite a senha.");
+    await decryptPayload(password); // só valida — conteúdo está no HTML
+    document.body.classList.add("ready");
+  } catch {
+    errorText.textContent = "Senha incorreta.";
+  }
+});
+</script>
+</body>
+</html>
