@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-03-19T15:29:14.426266+00:00",
+  "generated_at": "2026-03-20T14:30:32.179745+00:00",
   "counts": {
-    "items": 89,
-    "domains": 25,
+    "items": 88,
+    "domains": 24,
     "categories": {
-      "reportagem_autoral": 60,
+      "reportagem_autoral": 59,
       "republicacao": 0,
       "eco_repercussao": 0,
       "citacao_fonte": 2,
-      "mencao": 9,
+      "mencao": 7,
       "entrevista": 1,
       "palestra_curso": 0,
-      "perfil_bio": 17
+      "perfil_bio": 19
     },
     "recent": {
       "last_1_day": 0,
@@ -44,13 +44,13 @@
     },
     "enrich": {
       "fetched": 60,
-      "reused": 32,
-      "kept": 89,
+      "reused": 31,
+      "kept": 88,
       "dropped": 3,
       "categories": {
-        "perfil_bio": 17,
-        "reportagem_autoral": 60,
-        "mencao": 9,
+        "perfil_bio": 19,
+        "reportagem_autoral": 59,
+        "mencao": 7,
         "entrevista": 1,
         "citacao_fonte": 2
       },
@@ -60,7 +60,7 @@
         "piaui.folha.uol.com.br": 1,
         "apublica.org": 3,
         "ojoioeotrigo.com.br": 2,
-        "estadao.com.br": 11,
+        "estadao.com.br": 10,
         "g1.globo.com": 2,
         "escavador.com": 1,
         "icfj.org": 1,
@@ -74,12 +74,11 @@
         "talks.ox.ac.uk": 1,
         "cima.ned.org": 1,
         "scielo.br": 1,
+        "theintercept.com": 1,
+        "cnnbrasil.com.br": 2,
         "sbtnews.sbt.com.br": 1,
-        "www1.folha.uol.com.br": 1,
         "gaz.com.br": 1,
-        "rollingstone.com.br": 1,
-        "piaui.uol.com.br": 1,
-        "cnnbrasil.com.br": 1
+        "rollingstone.com.br": 1
       },
       "errors": [
         {
