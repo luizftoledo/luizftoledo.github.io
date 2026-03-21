@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tradutor Multi-Agente | Luiz Fernando Toledo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    /* ── Password gate ── */
+    #gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0a0b0f;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gate-box {
+      background: rgba(14,17,23,0.95);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 40px 48px;
+      text-align: center;
+      max-width: 360px;
+      width: 100%;
+    }
+    .gate-box h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .gate-box p { font-size: 13px; color: #aab2c0; margin-bottom: 24px; }
+    .gate-box input {
+      width: 100%; padding: 10px 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; color: #e7e9ee;
+      font-family: inherit; font-size: 15px;
+      text-align: center; letter-spacing: 0.1em;
+      outline: none; margin-bottom: 14px;
+    }
+    .gate-box input:focus { border-color: #7cfff0; }
+    .gate-box button {
+      width: 100%; padding: 10px;
+      background: #7cfff0; color: #0a0b0f;
+      border: none; border-radius: 8px;
+      font-family: inherit; font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: filter .2s;
+    }
+    .gate-box button:hover { filter: brightness(1.1); }
+    .gate-error { color: #ff6464; font-size: 12px; margin-top: 8px; display: none; }
+
+    :root {
+      --bg: #0a0b0f;
+      --surface: #0e1117;
+      --card: rgba(14, 17, 23, 0.85);
+      --text: #e7e9ee;
+      --muted: #aab2c0;
+      --accent: #7cfff0;
+      --accent-2: #9f7cff;
+      --border: rgba(255, 255, 255, 0.08);
+      --radius: 14px;
+      --highlight: rgba(124, 255, 240, 0.12);
+      --highlight-active: rgba(124, 255, 240, 0.22);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(127,127,255,0.12), transparent),
+                  radial-gradient(900px 600px at -10% 20%, rgba(124,255,240,0.10), transparent),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px) 0 0/40px 40px,
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px) 0 0/40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px) saturate(140%);
+      background: rgba(10,11,15,0.7);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    .nav-inner {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand { font-weight: 900; font-size: 20px; letter-spacing: -0.02em; }
+    .brand span { color: var(--accent); }
+    nav a { color: var(--text); text-decoration: none; font-size: 14px; opacity: 0.7; transition: opacity .2s; }
+    nav a:hover { opacity: 1; }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    h1 span { color: var(--accent); }
+
+    .subtitle { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+
+    /* Setup panel */
+    .setup-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .setup-panel label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+
+    .setup-panel input[type="text"],
+    .setup-panel input[type="password"] {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      padding: 8px 12px;
+      width: 340px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .setup-panel input:focus { border-color: var(--accent); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      border: none;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0b0f;
+    }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+    /* Input area */
+    .input-area {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    .input-area label { display: block; font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 10px; }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 14px;
+      resize: vertical;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    textarea:focus { border-color: var(--accent); }
+
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* Progress */
+    .progress-bar-wrap {
+      margin-top: 14px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      height: 4px;
+      overflow: hidden;
+      display: none;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      display: none;
+    }
+
+    /* Side by side */
+    .side-by-side {
+      display: none;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .side-panel {
+      flex: 1;
+      overflow-y: auto;
+      max-height: 72vh;
+      padding: 0;
+    }
+
+    .side-panel:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .side-header {
+      position: sticky;
+      top: 0;
+      background: rgba(14,17,23,0.96);
+      backdrop-filter: blur(8px);
+      padding: 12px 20px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .side-header .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    .dot-en { background: #7cfff0; }
+    .dot-pt { background: #9f7cff; }
+
+    .paragraphs-list { padding: 16px; }
+
+    /* Paragraph blocks */
+    .para-block {
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background .15s;
+      border: 1px solid transparent;
+      position: relative;
+    }
+
+    .para-block:hover,
+    .para-block.hovered {
+      background: var(--highlight);
+      border-color: rgba(124,255,240,0.18);
+    }
+
+    .para-block.active {
+      background: var(--highlight-active);
+      border-color: rgba(124,255,240,0.35);
+    }
+
+    .para-block p {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text);
+    }
+
+    /* Translation block extras */
+    .para-translated .translation-text {
+      font-size: 14px;
+      line-height: 1.75;
+    }
+
+    .para-translated .edit-area {
+      display: none;
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.75;
+      padding: 10px;
+      resize: vertical;
+      outline: none;
+      margin-top: 8px;
+    }
+
+    .para-controls {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-micro {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .btn-micro:hover { background: rgba(255,255,255,0.10); color: var(--text); }
+    .btn-micro.edit-active { border-color: var(--accent); color: var(--accent); }
+    .btn-micro.save { border-color: #7cfff0; color: #7cfff0; }
+
+    /* Review badge */
+    .review-section {
+      margin-top: 10px;
+      background: rgba(159,124,255,0.08);
+      border: 1px solid rgba(159,124,255,0.2);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+
+    .review-header {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--accent-2);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .review-text {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .review-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 6px;
+    }
+
+    .status-ok { background: rgba(124,255,240,0.12); color: var(--accent); }
+    .status-warn { background: rgba(255,200,100,0.12); color: #ffc864; }
+    .status-fix { background: rgba(255,100,100,0.12); color: #ff6464; }
+
+    /* Loading spinner per paragraph */
+    .loading-para {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      padding: 14px 0;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { width: 16px; height: 16px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; }
+
+    /* Status pill */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+      color: var(--muted);
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+
+    .empty-state i { font-size: 32px; margin-bottom: 12px; display: block; opacity: 0.3; }
+    .empty-state p { font-size: 14px; opacity: 0.6; }
+
+    /* Scrollbar */
+    .side-panel::-webkit-scrollbar { width: 6px; }
+    .side-panel::-webkit-scrollbar-track { background: transparent; }
+    .side-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+    /* Agent log */
+    .agent-log {
+      margin-top: 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: none;
+    }
+
+    .agent-log-header {
+      padding: 12px 18px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .agent-log-body {
+      max-height: 200px;
+      overflow-y: auto;
+      padding: 14px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .log-line { color: var(--muted); }
+    .log-line .log-agent { color: var(--accent); }
+    .log-line .log-reviewer { color: var(--accent-2); }
+    .log-line .log-ok { color: #7cfff0; }
+    .log-line .log-warn { color: #ffc864; }
+    .log-line .log-fix { color: #ff6464; }
+  </style>
+</head>
+
+<body>
+
+  <!-- Password Gate -->
+  <div id="gate">
+    <div class="gate-box">
+      <h2>🔒 Acesso Restrito</h2>
+      <p>Digite a senha para acessar o tradutor</p>
+      <input type="password" id="gateInput" placeholder="••••••" onkeydown="if(event.key==='Enter')checkPassword()">
+      <button onclick="checkPassword()">Entrar</button>
+      <div class="gate-error" id="gateError">Senha incorreta. Tente novamente.</div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav-inner">
+      <div class="brand"><a href="index.html" style="text-decoration:none;color:inherit;">Luiz <span>Toledo</span></a></div>
+      <a href="index.html"><i class="fa fa-arrow-left" style="margin-right:6px;font-size:12px;"></i>Voltar ao portfólio</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Tradutor <span>Multi-Agente</span></h1>
+    <p class="subtitle">Tradução EN → PT com revisão automática por agentes Gemini • parágrafo a parágrafo</p>
+
+    <!-- API Key setup -->
+    <div class="setup-panel">
+      <div>
+        <label for="apiKey"><i class="fa fa-key" style="margin-right:5px;"></i>Gemini API Key</label>
+        <input type="password" id="apiKey" placeholder="AIza..." autocomplete="off">
+      </div>
+      <div>
+        <label for="modelSelect"><i class="fa fa-robot" style="margin-right:5px;"></i>Modelo</label>
+        <input type="text" id="modelSelect" value="gemini-1.5-flash" style="width:200px;">
+      </div>
+      <button class="btn btn-ghost" onclick="toggleKey()">
+        <i class="fa fa-eye" id="eyeIcon"></i> Mostrar
+      </button>
+    </div>
+
+    <!-- Text input -->
+    <div class="input-area">
+      <label><i class="fa fa-file-alt" style="margin-right:6px;"></i>Cole o texto em inglês aqui</label>
+      <textarea id="sourceText" placeholder="Paste your English text here. Each paragraph (separated by blank lines) will be translated and reviewed individually..."></textarea>
+      <div class="actions">
+        <button class="btn btn-primary" id="translateBtn" onclick="startTranslation()">
+          <i class="fa fa-language"></i> Traduzir & Revisar
+        </button>
+        <button class="btn btn-ghost" onclick="clearAll()">
+          <i class="fa fa-trash"></i> Limpar
+        </button>
+        <span id="statusPill" class="status-pill"></span>
+      </div>
+      <div class="progress-bar-wrap" id="progressWrap">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-label" id="progressLabel"></div>
+    </div>
+
+    <!-- Side by side output -->
+    <div class="side-by-side" id="sideBySide" style="display:none; display:flex;">
+      <!-- Original -->
+      <div class="side-panel" id="panelLeft">
+        <div class="side-header">
+          <span class="dot dot-en"></span>
+          Original — English
+        </div>
+        <div class="paragraphs-list" id="listLeft">
+          <div class="empty-state">
+            <i class="fa fa-align-left"></i>
+            <p>O texto original aparecerá aqui</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Translated -->
+      <div class="side-panel" id="panelRight">
+        <div class="side-header">
+          <span class="dot dot-pt"></span>
+          Tradução — Português
+          <span id="reviewToggle" style="margin-left:auto;cursor:pointer;font-size:11px;opacity:0.6;" onclick="toggleReviews()">
+            <i class="fa fa-comment-dots"></i> Revisões
+          </span>
+        </div>
+        <div class="paragraphs-list" id="listRight">
+          <div class="empty-state">
+            <i class="fa fa-language"></i>
+            <p>A tradução aparecerá aqui</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agent log -->
+    <div class="agent-log" id="agentLog">
+      <div class="agent-log-header" onclick="toggleLog()">
+        <i class="fa fa-terminal"></i> Log dos Agentes
+        <i class="fa fa-chevron-down" id="logChevron" style="margin-left:auto;"></i>
+      </div>
+      <div class="agent-log-body" id="logBody"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // ─── Password gate ────────────────────────────────────────────────────────
+    (function() {
+      if (sessionStorage.getItem('tradutor_auth') === '1') {
+        document.getElementById('gate').style.display = 'none';
+      }
+    })();
+
+    function checkPassword() {
+      const val = document.getElementById('gateInput').value;
+      if (val === 'toledo') {
+        sessionStorage.setItem('tradutor_auth', '1');
+        document.getElementById('gate').style.display = 'none';
+      } else {
+        document.getElementById('gateError').style.display = 'block';
+        document.getElementById('gateInput').value = '';
+        document.getElementById('gateInput').focus();
+      }
+    }
+
+    // ─── State ───────────────────────────────────────────────────────────────
+    let paragraphs = [];
+    let results = [];
+    let showReviews = true;
+    let syncingScroll = false;
+
+    // ─── Helpers ─────────────────────────────────────────────────────────────
+    function getKey() {
+      return document.getElementById('apiKey').value.trim();
+    }
+
+    function getModel() {
+      return document.getElementById('modelSelect').value.trim() || 'gemini-1.5-flash';
+    }
+
+    function toggleKey() {
+      const inp = document.getElementById('apiKey');
+      const icon = document.getElementById('eyeIcon');
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.className = 'fa fa-eye-slash';
+      } else {
+        inp.type = 'password';
+        icon.className = 'fa fa-eye';
+      }
+    }
+
+    function setStatus(msg, color) {
+      const pill = document.getElementById('statusPill');
+      pill.innerHTML = msg;
+      pill.style.color = color || 'var(--muted)';
+    }
+
+    function addLog(html) {
+      const body = document.getElementById('logBody');
+      body.innerHTML += `<div class="log-line">${html}</div>`;
+      body.scrollTop = body.scrollHeight;
+    }
+
+    function toggleLog() {
+      const body = document.getElementById('logBody');
+      const icon = document.getElementById('logChevron');
+      if (body.style.display === 'none') {
+        body.style.display = 'block';
+        icon.className = 'fa fa-chevron-down';
+      } else {
+        body.style.display = 'none';
+        icon.className = 'fa fa-chevron-right';
+      }
+    }
+
+    function toggleReviews() {
+      showReviews = !showReviews;
+      document.querySelectorAll('.review-section').forEach(el => {
+        el.style.display = showReviews ? 'block' : 'none';
+      });
+    }
+
+    function clearAll() {
+      document.getElementById('sourceText').value = '';
+      document.getElementById('listLeft').innerHTML = '<div class="empty-state"><i class="fa fa-align-left"></i><p>O texto original aparecerá aqui</p></div>';
+      document.getElementById('listRight').innerHTML = '<div class="empty-state"><i class="fa fa-language"></i><p>A tradução aparecerá aqui</p></div>';
+      document.getElementById('agentLog').style.display = 'none';
+      document.getElementById('logBody').innerHTML = '';
+      document.getElementById('progressWrap').style.display = 'none';
+      document.getElementById('progressLabel').style.display = 'none';
+      setStatus('');
+      paragraphs = [];
+      results = [];
+    }
+
+    function setProgress(current, total) {
+      const pct = total ? Math.round((current / total) * 100) : 0;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressLabel').textContent = `Processando parágrafo ${current} de ${total}…`;
+    }
+
+    // ─── Gemini API call ─────────────────────────────────────────────────────
+    async function callGemini(prompt) {
+      const key = getKey();
+      const model = getModel();
+      if (!key) throw new Error('API key não informada');
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+      const body = {
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.3, maxOutputTokens: 2048 }
+      };
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error?.message || `HTTP ${res.status}`);
+      }
+
+      const data = await res.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    }
+
+    // ─── Translation prompt ──────────────────────────────────────────────────
+    function buildTranslationPrompt(text) {
+      return `You are a professional translator specializing in journalism and long-form writing. Translate the following English paragraph into Brazilian Portuguese.
+
+Rules:
+- Keep the journalistic tone and style
+- Do NOT add explanations or commentary — output ONLY the translated paragraph
+- Preserve proper nouns (names, places, organizations) as-is or with standard Brazilian adaptation
+- Be faithful to the original meaning
+
+Paragraph to translate:
+"""
+${text}
+"""
+
+Output ONLY the Portuguese translation, nothing else.`;
+    }
+
+    // ─── Review prompt ───────────────────────────────────────────────────────
+    function buildReviewPrompt(original, translation) {
+      return `You are a senior editorial reviewer specializing in English-to-Brazilian Portuguese translation for journalism.
+
+Review the translation below against the original English paragraph. Check for:
+1. False cognates (falsos cognatos) — words that look similar but mean different things
+2. Omissions — ideas or details present in the original but missing in the translation
+3. Meaning errors — phrases translated incorrectly
+4. Tone/register problems — too formal, too casual, or style inconsistencies
+
+Original (English):
+"""
+${original}
+"""
+
+Translation (Portuguese):
+"""
+${translation}
+"""
+
+Respond in this exact JSON format (no markdown, no extra text):
+{
+  "status": "OK" | "WARNING" | "NEEDS_FIX",
+  "comment": "Brief reviewer comment in Portuguese (max 2 sentences)",
+  "issues": ["issue 1", "issue 2"]
+}
+
+If no issues found, return {"status":"OK","comment":"Tradução fiel e precisa.","issues":[]}`;
+    }
+
+    // ─── Render functions ────────────────────────────────────────────────────
+    function renderOriginalPara(idx, text) {
+      const div = document.createElement('div');
+      div.className = 'para-block';
+      div.id = `orig-${idx}`;
+      div.innerHTML = `<p>${escapeHtml(text)}</p>`;
+      div.addEventListener('mouseenter', () => highlightPair(idx, true));
+      div.addEventListener('mouseleave', () => highlightPair(idx, false));
+      div.addEventListener('click', () => scrollToRight(idx));
+      return div;
+    }
+
+    function renderLoadingPara(idx) {
+      const div = document.createElement('div');
+      div.className = 'para-block para-translated';
+      div.id = `trans-${idx}`;
+      div.innerHTML = `<div class="loading-para"><div class="spinner"></div> Traduzindo parágrafo ${idx + 1}…</div>`;
+      return div;
+    }
+
+    function renderTranslatedPara(idx, translation, review) {
+      const statusMap = { OK: 'status-ok', WARNING: 'status-warn', NEEDS_FIX: 'status-fix' };
+      const statusLabel = { OK: '✓ OK', WARNING: '⚠ Atenção', NEEDS_FIX: '✗ Revisar' };
+      const statusClass = statusMap[review.status] || 'status-ok';
+      const statusText = statusLabel[review.status] || '✓ OK';
+
+      const issuesHtml = review.issues?.length
+        ? `<ul style="margin-top:6px;padding-left:16px;">${review.issues.map(i => `<li style="font-size:12px;color:var(--muted);margin-bottom:3px;">${escapeHtml(i)}</li>`).join('')}</ul>`
+        : '';
+
+      const div = document.createElement('div');
+      div.className = 'para-block para-translated';
+      div.id = `trans-${idx}`;
+      div.innerHTML = `
+        <div class="translation-text">${escapeHtml(translation)}</div>
+        <textarea class="edit-area" id="edit-${idx}">${escapeHtml(translation)}</textarea>
+        <div class="para-controls">
+          <button class="btn-micro" onclick="toggleEdit(${idx})">
+            <i class="fa fa-pen"></i> Editar
+          </button>
+          <button class="btn-micro save" id="save-${idx}" onclick="saveEdit(${idx})" style="display:none">
+            <i class="fa fa-check"></i> Salvar
+          </button>
+        </div>
+        <div class="review-section" id="review-${idx}" ${showReviews ? '' : 'style="display:none"'}>
+          <div class="review-header">
+            <i class="fa fa-robot"></i> Agente Revisor
+            <span class="review-status ${statusClass}" style="margin-left:auto;">${statusText}</span>
+          </div>
+          <div class="review-text">${escapeHtml(review.comment)}${issuesHtml}</div>
+        </div>`;
+
+      div.addEventListener('mouseenter', () => highlightPair(idx, true));
+      div.addEventListener('mouseleave', () => highlightPair(idx, false));
+      return div;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ─── Edit / Save ─────────────────────────────────────────────────────────
+    function toggleEdit(idx) {
+      const block = document.getElementById(`trans-${idx}`);
+      const textEl = block.querySelector('.translation-text');
+      const editEl = document.getElementById(`edit-${idx}`);
+      const saveBtn = document.getElementById(`save-${idx}`);
+      const editBtn = block.querySelector('.btn-micro:first-child');
+
+      const isEditing = editEl.style.display === 'block';
+      if (isEditing) {
+        // cancel
+        editEl.style.display = 'none';
+        textEl.style.display = 'block';
+        saveBtn.style.display = 'none';
+        editBtn.classList.remove('edit-active');
+      } else {
+        editEl.value = textEl.textContent;
+        editEl.style.display = 'block';
+        textEl.style.display = 'none';
+        saveBtn.style.display = 'inline-flex';
+        editBtn.classList.add('edit-active');
+        editEl.focus();
+      }
+    }
+
+    function saveEdit(idx) {
+      const block = document.getElementById(`trans-${idx}`);
+      const textEl = block.querySelector('.translation-text');
+      const editEl = document.getElementById(`edit-${idx}`);
+      const saveBtn = document.getElementById(`save-${idx}`);
+      const editBtn = block.querySelector('.btn-micro:first-child');
+
+      textEl.textContent = editEl.value;
+      editEl.style.display = 'none';
+      textEl.style.display = 'block';
+      saveBtn.style.display = 'none';
+      editBtn.classList.remove('edit-active');
+
+      if (results[idx]) results[idx].translation = editEl.value;
+      addLog(`<span class="log-ok">✓</span> Parágrafo ${idx + 1} editado manualmente`);
+    }
+
+    // ─── Hover sync ──────────────────────────────────────────────────────────
+    function highlightPair(idx, active) {
+      const orig = document.getElementById(`orig-${idx}`);
+      const trans = document.getElementById(`trans-${idx}`);
+      if (orig) orig.classList.toggle('hovered', active);
+      if (trans) trans.classList.toggle('hovered', active);
+    }
+
+    // ─── Scroll sync ─────────────────────────────────────────────────────────
+    function scrollToRight(idx) {
+      const el = document.getElementById(`trans-${idx}`);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function setupScrollSync() {
+      const left = document.getElementById('panelLeft');
+      const right = document.getElementById('panelRight');
+
+      left.addEventListener('scroll', () => {
+        if (syncingScroll) return;
+        syncingScroll = true;
+        const ratio = left.scrollTop / (left.scrollHeight - left.clientHeight || 1);
+        right.scrollTop = ratio * (right.scrollHeight - right.clientHeight);
+        requestAnimationFrame(() => { syncingScroll = false; });
+      });
+
+      right.addEventListener('scroll', () => {
+        if (syncingScroll) return;
+        syncingScroll = true;
+        const ratio = right.scrollTop / (right.scrollHeight - right.clientHeight || 1);
+        left.scrollTop = ratio * (left.scrollHeight - left.clientHeight);
+        requestAnimationFrame(() => { syncingScroll = false; });
+      });
+    }
+
+    // ─── Main translation flow ───────────────────────────────────────────────
+    async function startTranslation() {
+      const text = document.getElementById('sourceText').value.trim();
+      if (!text) { alert('Cole um texto em inglês primeiro.'); return; }
+      if (!getKey()) { alert('Informe sua Gemini API Key.'); return; }
+
+      // Split into paragraphs (blank lines)
+      paragraphs = text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean);
+      if (!paragraphs.length) { alert('Nenhum parágrafo encontrado.'); return; }
+
+      results = new Array(paragraphs.length).fill(null);
+
+      // UI setup
+      const btn = document.getElementById('translateBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner" style="width:14px;height:14px;border:2px solid rgba(0,0,0,0.2);border-top-color:#0a0b0f;"></div> Traduzindo…';
+
+      document.getElementById('progressWrap').style.display = 'block';
+      document.getElementById('progressLabel').style.display = 'block';
+      document.getElementById('agentLog').style.display = 'block';
+      document.getElementById('logBody').innerHTML = '';
+
+      // Show side-by-side
+      const sbs = document.getElementById('sideBySide');
+      sbs.style.display = 'flex';
+
+      // Populate original paragraphs
+      const listLeft = document.getElementById('listLeft');
+      const listRight = document.getElementById('listRight');
+      listLeft.innerHTML = '';
+      listRight.innerHTML = '';
+
+      paragraphs.forEach((p, i) => {
+        listLeft.appendChild(renderOriginalPara(i, p));
+        listRight.appendChild(renderLoadingPara(i));
+      });
+
+      setupScrollSync();
+
+      setStatus(`<i class="fa fa-circle-notch fa-spin"></i> Processando ${paragraphs.length} parágrafos…`, 'var(--accent)');
+      addLog(`<span class="log-agent">▶ Iniciando tradução de ${paragraphs.length} parágrafo(s) com ${getModel()}</span>`);
+
+      let errors = 0;
+
+      for (let i = 0; i < paragraphs.length; i++) {
+        setProgress(i + 1, paragraphs.length);
+        addLog(`<span class="log-agent">→ Agente Tradutor</span> · parágrafo ${i + 1}`);
+
+        let translation = '';
+        let review = { status: 'OK', comment: 'Revisão não disponível.', issues: [] };
+
+        try {
+          // Step 1: Translate
+          translation = await callGemini(buildTranslationPrompt(paragraphs[i]));
+          translation = translation.trim();
+          addLog(`<span class="log-ok">  ✓ Traduzido</span> · ${translation.substring(0, 60)}…`);
+
+          // Step 2: Review
+          addLog(`<span class="log-reviewer">→ Agente Revisor</span> · parágrafo ${i + 1}`);
+          const reviewRaw = await callGemini(buildReviewPrompt(paragraphs[i], translation));
+          try {
+            const clean = reviewRaw.replace(/```json|```/g, '').trim();
+            review = JSON.parse(clean);
+          } catch {
+            review = { status: 'OK', comment: 'Revisão concluída (resposta não-JSON).', issues: [] };
+          }
+
+          const iconMap = { OK: '<span class="log-ok">  ✓</span>', WARNING: '<span class="log-warn">  ⚠</span>', NEEDS_FIX: '<span class="log-fix">  ✗</span>' };
+          addLog(`${iconMap[review.status] || iconMap.OK} Status: ${review.status} — ${review.comment}`);
+
+        } catch (err) {
+          errors++;
+          translation = '[Erro na tradução: ' + err.message + ']';
+          review = { status: 'NEEDS_FIX', comment: 'Erro ao processar este parágrafo.', issues: [err.message] };
+          addLog(`<span class="log-fix">  ✗ Erro parágrafo ${i + 1}: ${err.message}</span>`);
+        }
+
+        results[i] = { original: paragraphs[i], translation, review };
+
+        // Replace loading block
+        const loadingEl = document.getElementById(`trans-${i}`);
+        const newEl = renderTranslatedPara(i, translation, review);
+        listRight.replaceChild(newEl, loadingEl);
+      }
+
+      // Done
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa fa-language"></i> Traduzir & Revisar';
+      setProgress(paragraphs.length, paragraphs.length);
+
+      if (errors === 0) {
+        setStatus(`<i class="fa fa-check-circle"></i> ${paragraphs.length} parágrafos traduzidos`, 'var(--accent)');
+        addLog(`<span class="log-ok">✓ Concluído sem erros</span>`);
+      } else {
+        setStatus(`<i class="fa fa-exclamation-triangle"></i> ${errors} erro(s)`, '#ffc864');
+        addLog(`<span class="log-warn">⚠ Concluído com ${errors} erro(s)</span>`);
+      }
+    }
+  </script>
+
+</body>
+</html>
