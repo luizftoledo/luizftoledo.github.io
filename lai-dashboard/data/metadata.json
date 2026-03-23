@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-04T23:25:46.138377+00:00",
+  "updated_at": "2026-03-23T11:18:50.102568+00:00",
   "years_covered": [
     2012,
     2013,
@@ -18,13 +18,13 @@
     2026
   ],
   "overall": {
-    "total_requests": 1639154,
-    "denied_total": 128800,
-    "restricted_total": 215520,
-    "personal_restricted_total": 43509,
-    "denied_rate": 0.0785771196605078,
-    "restricted_rate": 0.1314824598542907,
-    "personal_share_in_restricted": 0.2018791759465479
+    "total_requests": 1676063,
+    "denied_total": 131922,
+    "restricted_total": 221374,
+    "personal_restricted_total": 44147,
+    "denied_rate": 0.07870945185234685,
+    "restricted_rate": 0.13207976072498467,
+    "personal_share_in_restricted": 0.19942269643228203
   },
   "source": {
     "source_id": "ampla",
@@ -50,7 +50,7 @@
       2026
     ]
   },
-  "sample_count": 128800,
-  "years_refreshed_in_run": 1,
+  "sample_count": 131922,
+  "years_refreshed_in_run": 15,
   "build_notes": "Cache anual incremental: anos anteriores ficam congelados; ano corrente é reprocessado a cada execução."
 }
