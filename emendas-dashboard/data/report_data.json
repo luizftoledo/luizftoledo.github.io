@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-23T14:19:55.876097+00:00",
+  "generated_at": "2026-03-24T14:22:21.430256+00:00",
   "snapshot_date": "2026-03-22",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -1018,7 +1018,7 @@
     "total_liquidado": 14702447.05,
     "total_pago": 12840267.68
   },
-  "run_date": "2026-03-23",
+  "run_date": "2026-03-24",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -1048,7 +1048,7 @@
       "available": true,
       "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
       "last_update": "",
-      "base_siafi_date": "19/3/2026",
+      "base_siafi_date": "23/3/2026",
       "filters": {
         "year": 2026,
         "rp": [
@@ -1102,8 +1102,7 @@
           "error": ""
         }
       ],
-      "error": "6 - Emendas Individuais: filtro não confirmado ; 8 - Emendas de Comissão: filtro não confirmado",
-      "fallback_from_previous": true
+      "error": ""
     },
     "siop_details": {
       "available": true,
@@ -1118,7 +1117,7 @@
         ]
       },
       "last_update": "",
-      "base_siafi_date": "19/3/2026",
+      "base_siafi_date": "23/3/2026",
       "rows": [],
       "rows_count": 0,
       "unique_nro_emendas": 0,
@@ -1153,8 +1152,7 @@
           "error": ""
         }
       ],
-      "error": "6 - Emendas Individuais: filtro não confirmado ; 7 - Emendas de Bancada Estadual: filtro não confirmado ; 8 - Emendas de Comissão: filtro não confirmado",
-      "fallback_from_previous": true
+      "error": ""
     },
     "documents": {
       "year": 2026,
@@ -2748,7 +2746,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-03-24",
+      "last_update": "",
+      "base_siafi_date": "23/3/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
   ],
-  "updated_at": "2026-03-23T14:19:55.876097+00:00"
+  "updated_at": "2026-03-24T14:22:21.430256+00:00"
 }
