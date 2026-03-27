@@ -1,29 +1,29 @@
 {
   "project": "Lulometro",
   "title": "Lulometro: analise de discurso de presidentes brasileiros",
-  "generated_at": "2026-03-26T14:48:05.198958+00:00",
+  "generated_at": "2026-03-27T14:20:22.794853+00:00",
   "timezone": "America/Sao_Paulo",
   "scope_mandates": [
     "Bolsonaro (2019-2022)",
     "Lula 3 (2023-)"
   ],
-  "total_records": 1631,
+  "total_records": 1633,
   "excluded_records": 8,
-  "candidate_urls": 1019,
-  "new_urls": 8,
-  "detail_fetched": 20,
+  "candidate_urls": 1049,
+  "new_urls": 10,
+  "detail_fetched": 22,
   "sources": {
-    "planalto": 945,
+    "planalto": 947,
     "biblioteca": 686
   },
   "types": {
-    "entrevista": 287,
+    "entrevista": 289,
     "discurso": 1344
   },
   "top_presidents": [
     [
       "Luiz Inacio Lula da Silva",
-      945
+      947
     ],
     [
       "Jair Bolsonaro",
@@ -33,7 +33,7 @@
   "top_mandates": [
     [
       "Lula 3 (2023-)",
-      945
+      947
     ],
     [
       "Bolsonaro (2019-2022)",
@@ -42,21 +42,20 @@
   ],
   "people_index": {
     "status": "ok",
-    "entities": 605,
+    "entities": 595,
     "entities_by_kind": {
       "deputado": 513,
       "janja": 1,
-      "stf": 10,
       "senador": 81
     },
-    "mention_rows": 1235,
-    "mention_occurrences_total": 1883,
-    "mention_docs_total": 1235,
+    "mention_rows": 1093,
+    "mention_occurrences_total": 1640,
+    "mention_docs_total": 1093,
     "lula_docs_with_text": 931,
     "date_range": {
       "min": "2023-01-06",
       "max": "2026-10-13"
     }
   },
-  "duration_seconds": 141.33
+  "duration_seconds": 134.44
 }
