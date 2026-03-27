@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-03-26T14:52:58.171426+00:00",
+  "generated_at": "2026-03-27T14:39:01.102790+00:00",
   "counts": {
-    "items": 89,
+    "items": 88,
     "domains": 24,
     "categories": {
-      "reportagem_autoral": 62,
+      "reportagem_autoral": 61,
       "republicacao": 0,
       "eco_repercussao": 0,
-      "citacao_fonte": 2,
-      "mencao": 6,
+      "citacao_fonte": 3,
+      "mencao": 5,
       "entrevista": 1,
       "palestra_curso": 0,
       "perfil_bio": 18
@@ -20,7 +20,7 @@
     }
   },
   "date_range": {
-    "min": "2019-12-10",
+    "min": "2020-06-29",
     "max": "2026-03-13"
   },
   "methodology": {
@@ -39,23 +39,23 @@
         "google-news-rss:\"Luiz Fernando Toledo\"": 40,
         "google-news-rss:\"Luiz Fernando Toledo Antunes\"": 2,
         "google-news-rss:\"segundo reportagem\" \"Luiz Fernando Toledo\"": 2,
-        "google-news-rss:\"levantamento\" \"Luiz Fernando Toledo\"": 14
+        "google-news-rss:\"levantamento\" \"Luiz Fernando Toledo\"": 13
       }
     },
     "enrich": {
-      "fetched": 61,
-      "reused": 31,
-      "kept": 89,
+      "fetched": 58,
+      "reused": 33,
+      "kept": 88,
       "dropped": 3,
       "categories": {
         "perfil_bio": 18,
-        "reportagem_autoral": 62,
-        "mencao": 6,
+        "reportagem_autoral": 61,
+        "mencao": 5,
         "entrevista": 1,
-        "citacao_fonte": 2
+        "citacao_fonte": 3
       },
       "domains": {
-        "bbc.com": 50,
+        "bbc.com": 49,
         "intercept.com.br": 2,
         "piaui.folha.uol.com.br": 1,
         "apublica.org": 3,
@@ -76,7 +76,7 @@
         "scielo.br": 1,
         "cnnbrasil.com.br": 1,
         "sbtnews.sbt.com.br": 1,
-        "gaz.com.br": 1,
+        "abraji.org.br": 1,
         "rollingstone.com.br": 1,
         "piaui.uol.com.br": 1
       },
