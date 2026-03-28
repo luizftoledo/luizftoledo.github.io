@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27T14:20:22.738337+00:00",
+  "generated_at": "2026-03-28T14:01:11.273047+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -16,9 +16,9 @@
       "janja": 1,
       "senador": 81
     },
-    "mention_rows": 1093,
-    "mention_occurrences_total": 1640,
-    "mention_docs_total": 1093,
+    "mention_rows": 1123,
+    "mention_occurrences_total": 1671,
+    "mention_docs_total": 1123,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -10329,6 +10329,31 @@
       "mention_docs_total": 7
     },
     {
+      "id": "senador-carlos-favaro",
+      "kind": "senador",
+      "group_label": "Senadores",
+      "name": "Carlos Fávaro",
+      "official_name": "Carlos Henrique Baqueta Fávaro",
+      "role": "Senador",
+      "source_url": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/6295",
+      "party": "PSD",
+      "state": "MT",
+      "aliases_counted": [
+        "Carlos Henrique Baqueta Fávaro",
+        "Carlos Fávaro"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Carlos Fávaro",
+          "occurrences": 32,
+          "docs": 31
+        }
+      ],
+      "search_text": "carlos favaro carlos henrique baqueta favaro senadores senador psd mt carlos henrique baqueta favaro carlos favaro",
+      "mention_occurrences_total": 32,
+      "mention_docs_total": 31
+    },
+    {
       "id": "senador-humberto-costa",
       "kind": "senador",
       "group_label": "Senadores",
@@ -11350,31 +11375,6 @@
         }
       ],
       "search_text": "marcos do val marcos ribeiro do val senadores senador podemos es marcos ribeiro do val marcos do val",
-      "mention_occurrences_total": 1,
-      "mention_docs_total": 1
-    },
-    {
-      "id": "senador-margareth-buzetti",
-      "kind": "senador",
-      "group_label": "Senadores",
-      "name": "Margareth Buzetti",
-      "official_name": "Margareth Gettert Busetti",
-      "role": "Senador",
-      "source_url": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/6304",
-      "party": "PP",
-      "state": "MT",
-      "aliases_counted": [
-        "Margareth Gettert Busetti",
-        "Margareth Buzetti"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Margareth Buzetti",
-          "occurrences": 1,
-          "docs": 1
-        }
-      ],
-      "search_text": "margareth buzetti margareth gettert busetti senadores senador pp mt margareth gettert busetti margareth buzetti",
       "mention_occurrences_total": 1,
       "mention_docs_total": 1
     },

@@ -1,7 +1,7 @@
 {
   "project": "Lulometro",
   "title": "Lulometro: analise de discurso de presidentes brasileiros",
-  "generated_at": "2026-03-27T14:20:22.794853+00:00",
+  "generated_at": "2026-03-28T14:01:11.329182+00:00",
   "timezone": "America/Sao_Paulo",
   "scope_mandates": [
     "Bolsonaro (2019-2022)",
@@ -9,8 +9,8 @@
   ],
   "total_records": 1633,
   "excluded_records": 8,
-  "candidate_urls": 1049,
-  "new_urls": 10,
+  "candidate_urls": 1021,
+  "new_urls": 8,
   "detail_fetched": 22,
   "sources": {
     "planalto": 947,
@@ -48,14 +48,14 @@
       "janja": 1,
       "senador": 81
     },
-    "mention_rows": 1093,
-    "mention_occurrences_total": 1640,
-    "mention_docs_total": 1093,
+    "mention_rows": 1123,
+    "mention_occurrences_total": 1671,
+    "mention_docs_total": 1123,
     "lula_docs_with_text": 931,
     "date_range": {
       "min": "2023-01-06",
       "max": "2026-10-13"
     }
   },
-  "duration_seconds": 134.44
+  "duration_seconds": 144.23
 }

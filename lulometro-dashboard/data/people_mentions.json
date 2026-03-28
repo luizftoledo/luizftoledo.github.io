@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-27T14:20:22.738337+00:00",
+  "generated_at": "2026-03-28T14:01:11.273047+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -16,9 +16,9 @@
       "janja": 1,
       "senador": 81
     },
-    "mention_rows": 1093,
-    "mention_occurrences_total": 1640,
-    "mention_docs_total": 1093,
+    "mention_rows": 1123,
+    "mention_occurrences_total": 1671,
+    "mention_docs_total": 1123,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -195,6 +195,23 @@
         "Eliziane Gama"
       ],
       "snippet": "Senadora Eliziane Gama; os deputados federais Clodoado Magalhães, Dorinaldo Malafaia, Jorge Solla; e Zé Neto."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2026-02-23",
+      "week": "2026-W09",
+      "month": "2026-02",
+      "year": "2026",
+      "type": "discurso",
+      "doc_id": "22764d3df09f256f55b7",
+      "title": "Pronunciamento do presidente Lula no encerramento do Fórum Empresarial Brasil-Coreia do Sul",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/pronunciamento-do-presidente-lula-no-encerramento-do-forum-empresarial-brasil-coreia-do-sul",
+      "location": "23 de fevereiro de 2026",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Quero cuprimentar meus amigos, ministros brasileiros de Mauro Vieira, das Relações Exteriores; Fernanda Haddad, ministro da Fazenda; Márcio Fernando Elias Rosa, ministro do Desenvolvimento Indústria e Comércio; Carlos Fávaro, ministro da Agricultura e Pecuária; Alexandre Padilha, da Saúde; Márcio França, do Empreendedorismo; Frederico..."
     },
     {
       "entity_id": "deputado-ze-neto",
@@ -606,6 +623,23 @@
         "Jaques Wagner"
       ],
       "snippet": "Quero cumprimentar o meu querido, sempre ex-ministro, embaixador Celso Amorim [assessor especial da Presidência da República]; os governadores Jerônimo Rodrigues [governador da Bahia], Elmano de Freitas [governador do Ceará], Fátima Bezerra [governadora do Rio Grande do Norte]; o senador Randolfe Rodrigues; o senador Jaques Wagner; o s..."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2026-01-08",
+      "week": "2026-W02",
+      "month": "2026-01",
+      "year": "2026",
+      "type": "discurso",
+      "doc_id": "216797dca3695767ad9e",
+      "title": "Pronunciamento do presidente Lula durante a cerimônia em defesa da democracia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2026/01/discurso-do-presidente-lula-durante-a-cerimonia-em-defesa-da-democracia",
+      "location": "8 de janeiro de 2026",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Então eu quero começar cumprimentando a minha querida companheira Janja [Rosângela Lula da Silva, primeira-dama do Brasil], o meu querido vice-presidente Geraldo Alckmin [vice-presidente da República e ministro do Desenvolvimento, Indústria, Comércio e Serviços] e a sua esposa Lu Alckmin [segunda-dama do Brasil]; o meu ministro-chefe d..."
     },
     {
       "entity_id": "senador-beto-faro",
@@ -1750,6 +1784,23 @@
         "Diego Garcia"
       ],
       "snippet": "Então, queria agradecer a ela e ao senador Flávio Arns, que foi o relator, aos deputados, que trabalharam muito nisso; a um deputado aqui...Tem vários deputados aqui, tem a deputada [federal] doutora Alessandra Haber, tem o deputado [federal] Rogério Correia, tem o deputado [federal] Diego Garcia, dos republicanos, ou seja, uma demonst..."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2025-10-26",
+      "week": "2025-W43",
+      "month": "2025-10",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "243d653f73fd930177e0",
+      "title": "Pronunciamento do presidente Lula na Reunião Empresarial Brasil-Malásia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/10/pronunciamento-do-presidente-lula-na-reuniao-empresarial-brasil-malasia",
+      "location": "26 de outubro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Não pôde falar aqui, mas está aqui meu ministro da Agricultura [ e Pecuária, Carlos Fávaro ], ele é fanático para vender os produtos agrícolas brasileiros."
     },
     {
       "entity_id": "janja-janja",
@@ -3186,6 +3237,23 @@
       "snippet": "E, portanto, eu estou com muito orgulho, eu mostrei para o Confúcio [Moura, Senador da República] dentro do avião uma lista de obras desse estado."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2025-08-06",
+      "week": "2025-W32",
+      "month": "2025-08",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "e910471b941f08bc308e",
+      "title": "Entrevista do presidente Lula à Agência Reuters",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-agencia-reuters",
+      "location": "6 de agosto de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Desde quando ele anunciou a taxação de 10%, o meu ministro de relações exteriores, Mauro Vieira; o meu vice-presidente da República e o ministro da Indústria e Comércio, companheiro Geraldo Alckmin; mais o ministro da Agricultura [Carlos Fávaro] e mais o ministro da Fazenda [Fernando Haddad], estávamos tentando entrar em contato com vá..."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2025-08-05",
       "week": "2025-W32",
@@ -3439,6 +3507,23 @@
         "Sergio Moro"
       ],
       "snippet": "Eu me recusei, eu fui lá para o Paraná, porque eu queria desmentir o Moro [Sergio Moro, ex-juíz federal e senador] e queria desmentir os meus acusadores do Ministério Público."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2025-07-25",
+      "week": "2025-W30",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "f25d0590e500419ea5ae",
+      "title": "Pronunciamento do presidente Lula em Osasco, durante anúncio do Novo PAC Seleções - Periferia Viva",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/08/pronunciamento-do-presidente-lula-em-osasco-durante-anuncio-do-novo-pac-selecoes-periferia-viva",
+      "location": "25 de julho de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Ainda mais, eu criei um comitê para discutir, está o Rui Costa, está o ministro da Agricultura [Carlos Fávaro], tem mais um, e o Fernando Haddad, [ministro] da Fazenda."
     },
     {
       "entity_id": "deputado-alencar-santana",
@@ -3970,6 +4055,23 @@
       "snippet": "Daí porque eu aprendi a ter respeito por prefeito e posso olhar na cara, Pacheco [Rodrigo Pacheco, senador], de cada prefeito e dizer: “Eu duvido que na história desse país teve um presidente que tratou os prefeitos com o respeito que eu tratei durante os meus primeiros oito anos e que estamos tratando agora."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2025-06-12",
+      "week": "2025-W24",
+      "month": "2025-06",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "dc63bcf4b8f1a6b7d0de",
+      "title": "Pronunciamento do presidente Lula em cerimônia de entrega de maquinário agrícola em MG",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/06/pronunciamento-do-presidente-lula-em-cerimonia-de-entrega-de-maquinario-agricola-em-mg",
+      "location": "evento de entrega de equipamento agrícola",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Pergunta para o Fávaro [Carlos Fávaro, ministro da Agricultura e Pecuária] quantos mercados nós abrimos em dois anos?"
+    },
+    {
       "entity_id": "deputado-nikolas-ferreira",
       "date": "2025-06-12",
       "week": "2025-W24",
@@ -4106,6 +4208,23 @@
       "snippet": "E agora tem, e o Hugo Motta falou que iria falar com o senhor para derrubar essa medida, porque isso atinge principalmente os pequenos empresários, os pequenos empreendedores."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2025-06-06",
+      "week": "2025-W23",
+      "month": "2025-06",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "8959bbabedf51942b4fc",
+      "title": "Pronunciamento do presidente Lula na cerimônia de certificação do Brasil como país livre de febre aftosa sem vacinação",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/06/pronunciamento-do-presidente-lula-na-cerimonia-de-certificacao-do-brasil-como-pais-livre-de-febre-aftosa-sem-vacinacao",
+      "location": "6 de junho de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Então, eu acho que o companheiro Fávaro [Carlos Fávaro, ministro da Agricultura] tem razão de dizer que é um dia histórico, um dia histórico por merecimento de cada um de vocês que entendeu de que se a gente quer competir, a gente tem que ser o melhor."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2025-06-06",
       "week": "2025-W23",
@@ -4138,6 +4257,23 @@
         "Mendonça Filho"
       ],
       "snippet": "Parabéns, querida, e sinta orgulho do teu irmão Marcelo, porque ele conseguiu contar a história extraordinária e eu acho que o Brasil está vivendo um momento excepcional, porque já ganhamos um Oscar em Hollywood, agora ganhamos em Cannes, ganhamos o Melhor Filme [“O Agente Secreto”, dirigido por Kleber Mendonça Filho], ganhamos o Melho..."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2025-06-06",
+      "week": "2025-W23",
+      "month": "2025-06",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "eeb16c535c9c5a1ba472",
+      "title": "Discurso do presidente Lula no encerramento do Fórum Empresarial Brasil-França",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/06/discurso-do-presidente-lula-no-encerramento-do-forum-empresarial-brasil-franca",
+      "location": "prol do Acordo comercial entre União Europeia e MERCOSUL e as similaridades entre os dois países",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Companheiros ministros que estão aqui, ministro das Relações Exteriores [Mauro Vieira], ministro da Justiça [Ricardo Lewandowski], ministro de Portos e Aeroportos [Silvio Costa Filho], ministro da Agricultura [Carlos Fávaro], que está muito feliz porque hoje o Brasil recebeu, da Organização Mundial de Saúde Animal, o certificado de que..."
     },
     {
       "entity_id": "janja-janja",
@@ -4480,6 +4616,23 @@
         "Hugo Motta"
       ],
       "snippet": "Deputado federal Hugo Motta, presidente da Câmara dos Deputados, por meio de quem cumprimento todos os deputados e deputadas aqui presentes."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2025-05-19",
+      "week": "2025-W21",
+      "month": "2025-05",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "004525a155c4f3e49f71",
+      "title": "Pronunciamento do presidente Lula na reunião com ministros de Agricultura da União Africana",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/05/pronunciamento-do-presidente-lula-na-reuniao-com-ministros-de-agricultura-da-uniao-africana",
+      "location": "19 de maio de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Outra pessoa importante, o ministro Carlos Fávaro, ministro da Agricultura e Pecuária brasileira, que também vai acompanhar vocês."
     },
     {
       "entity_id": "janja-janja",
@@ -4973,6 +5126,23 @@
         "Davi Alcolumbre"
       ],
       "snippet": "Eu sou agradecido por aceitarem o meu convite o companheiro Alcolumbre [Davi Alcolumbre, presidente do Senado]."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2025-03-27",
+      "week": "2025-W13",
+      "month": "2025-03",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "bec070508b6eb7405706",
+      "title": "Entrevista coletiva concedida pelo presidente Lula no fim da viagem ao Japão",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-coletiva-concedida-pelo-presidente-lula-no-fim-da-viagem-ao-japao",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "De vez em quando, Fávaro [Carlos Fávaro, ministro da Agricultura e Pecuária] eu discuto com alguns companheiros que acham que o commodity é uma coisa atrasada."
     },
     {
       "entity_id": "deputado-arthur-lira",
@@ -6063,6 +6233,23 @@
         "Rodrigo Pacheco"
       ],
       "snippet": "Qual ministério deve ser destinado ao ex-presidente do Congresso Nacional, Rodrigo Pacheco, e ele ter um ministério é fundamental para que ele concorra ao Governo de Minas na base do senhor, como o senhor tanto deseja?"
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2025-02-05",
+      "week": "2025-W06",
+      "month": "2025-02",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "69b261d7368fb4165e7b",
+      "title": "Entrevista do presidente Lula para grupo de rádios de Minas Gerais",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-para-grupo-de-radios-de-minas-gerais",
+      "location": "5 de fevereiro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Presidente Lula — Eu tenho o ministro da Agricultura, o companheiro Fávaro [Carlos Fávaro, ministro da Agricultura e Pecuária], que é um grande ministro, de forma extraordinária, e tenho o ministro do Turismo [Celso Sabino]."
     },
     {
       "entity_id": "deputado-celso-sabino",
@@ -8263,6 +8450,23 @@
       "snippet": "Então, eu quero começar cumprimentando a minha querida companheira Janja [primeira-dama do Brasil], os ministros e ministra de estado Alexandre Silveira [Ministério de Minas e Energia]; Rui Costa [Casa Civil]; embaixadora Maria Laura da Rocha, secretária-Geral do Ministério das Relações Exteriores; Fernando Haddad, da Fazenda; Silvio C..."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-08-26",
+      "week": "2024-W35",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "11d2e23bbafefefb5f8a",
+      "title": "Pronunciamento do presidente Lula na cerimônia de lançamento da Política Nacional de Transição Energética, em 26 de agosto de 2024",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/08/pronunciamento-do-presidente-lula-durante-a-cerimonia-de-lancamento-da-politica-nacional-de-transicao-energetica-em-26-de-agosto-de-2024",
+      "location": "26 de agosto de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Então, eu quero começar cumprimentando a minha querida companheira Janja [primeira-dama do Brasil], os ministros e ministra de estado Alexandre Silveira [Ministério de Minas e Energia]; Rui Costa [Casa Civil]; embaixadora Maria Laura da Rocha, secretária-Geral do Ministério das Relações Exteriores; Fernando Haddad, da Fazenda; Silvio C..."
+    },
+    {
       "entity_id": "senador-randolfe-rodrigues",
       "date": "2024-08-26",
       "week": "2024-W35",
@@ -8414,6 +8618,23 @@
         "Leila Barros"
       ],
       "snippet": "Meus queridos companheiros, ministros da Suprema Corte Flávio Dino, Gilmar Mendes e Dias Toffoli, nossa ex-procuradora-geral da República, Raquel Dodge, governador Eduardo Riedel, do estado de Mato Grosso [do Sul], e Antonio Denarium, de Roraima, Walter Alves, vice-governador do Rio Grande do Norte, senadora Leila Barros e senador Bene..."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-08-21",
+      "week": "2024-W34",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "68363b4e9f271b55af50",
+      "title": "Pronunciamento do presidente Lula durante assinatura do Pacto pela Transformação Ecológica entre os Três Poderes",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/08/pronunciamento-do-presidente-lula-durante-assinatura-do-pacto-pela-transformacao-ecologica-entre-os-tres-poderes",
+      "location": "21 de agosto de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Eu quero cumprimentar o Rui Costa [ministro da Casa Civil], quero cumprimentar o Ricardo Lewandowski [ministro da Justiça e Segurança Pública], quero cumprimentar a embaixadora Maria Laura, secretária-geral do Itamaraty, o nosso companheiro Fernando Haddad [ministro da Fazenda], o nosso companheiro Renan Filho [ministro dos Transportes..."
     },
     {
       "entity_id": "janja-janja",
@@ -8618,6 +8839,23 @@
         "Carol Dartora"
       ],
       "snippet": "Quero cumprimentar o companheiro Zeca Dirceu, deputado federal; a companheira Carol Dartora, deputada federal."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-08-15",
+      "week": "2024-W33",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "f54236ea961251a1076f",
+      "title": "Pronunciamento do presidente Lula durante cerimônia de retomada das operações da Fábrica de Fertilizantes Araucária Nitrogenados",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/08/pronunciamento-do-presidente-lula-durante-cerimonia-de-retomada-das-operacoes-da-fabrica-de-fertilizantes-araucaria",
+      "location": "15 de agosto de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Quero cumprimentar o meu ministro Carlos Fávaro, ministro da Agricultura e Pecuária."
     },
     {
       "entity_id": "deputado-zeca-dirceu",
@@ -8909,6 +9147,23 @@
       "snippet": "Apaixonado aos 78 anos, amo a minha mulher, a companheira Janja."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-07-31",
+      "week": "2024-W31",
+      "month": "2024-07",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "f435af463e619ed932e7",
+      "title": "Pronunciamento do presidente Lula durante entrega de unidades habitacionais do Minha Casa, Minha Vida, em Várzea Grande (MT)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/08/pronunciamento-do-presidente-lula-durante-entrega-de-unidades-habitacionais-do-minha-casa-minha-vida-em-varzea-grande-mt",
+      "location": "31 de julho de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Quero agradecer ao pessoal que o Fávaro [Carlos Fávaro, ministro da Agricultura e Pecuária] atendeu, do Agronegócio."
+    },
+    {
       "entity_id": "senador-nelsinho-trad",
       "date": "2024-07-31",
       "week": "2024-W31",
@@ -8924,6 +9179,23 @@
         "Nelsinho Trad"
       ],
       "snippet": "Porque acho que nunca nenhum prefeito recebeu a quantidade de recursos que o Nelsinho Trad [ex-prefeito de Campo Grande] recebeu quando eu fui presidente da República."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-07-30",
+      "week": "2024-W31",
+      "month": "2024-07",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "ebf2568daa90635e6ec7",
+      "title": "Entrevista do presidente Lula à TV Centro América",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-tv-centro-america",
+      "location": "30 de julho de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Aliás, só para dar uma notícia nova para vocês, eu acabei de falar com o Fávaro [Carlos Fávaro, ministro da Agricultura e Pecuária], nós crescemos mais seis mercados novos."
     },
     {
       "entity_id": "janja-janja",
@@ -9180,6 +9452,23 @@
         "Carlos Zarattini"
       ],
       "snippet": "Companheiras e companheiros, eu quero cumprimentar a minha querida Luciana Santos [ministra da Ciência, Tecnologia e Inovação], a Nísia Trindade [ministra da Saúde], o Márcio França [ministro do Empreendedorismo]; o nosso querido deputado Carlos Zarattini e o nosso querido deputado Jonas Donizette; cumprimentar o nosso querido Dom João..."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-07-03",
+      "week": "2024-W27",
+      "month": "2024-07",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "dc5fd0bd5dd21fff2348",
+      "title": "Discurso do presidente Lula durante o lançamento do Plano Safra 2024 / 2025",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/07/discurso-do-presidente-lula-durante-o-lancamento-do-plano-safra-2024-2025",
+      "location": "3 de julho de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Eu lembro, Fávaro [Carlos Fávaro, ministro da Agricultura e Pecuária], que eu estava numa caravana da Cidadania em Santa Maria, no Rio Grande do Sul, quando visitei uma pequena propriedade e a mulher partiu um salame para a gente tomar café."
     },
     {
       "entity_id": "janja-janja",
@@ -10356,6 +10645,23 @@
       "snippet": "O líder do governo na Câmara essa semana, deputado José Guimarães, falou que vive com a faca no pescoço, disse que está faltando ao governo comando político e estratégico, centralizado."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-06-12",
+      "week": "2024-W24",
+      "month": "2024-06",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "03ace63d18b13de2428b",
+      "title": "Pronunciamento do presidente Lula no Fórum de Investimentos Prioridade 2024, no Rio de Janeiro",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/06/Pronunciamento-do-presidente-lula-no-forum-de-investimentos-prioridade-2024-no-rio-de-janeiro",
+      "location": "12 de junho",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Quero agradecer aos companheiros do meu governo que vieram participar, representado pelo ministro Rui Costa [ministro da Casa Civil], pelo ministro Renan Filho [ministro dos Transportes] e pelo ministro Carlos Fávaro [ministro de Agricultura e Pecuária]."
+    },
+    {
       "entity_id": "deputado-ricardo-galvao",
       "date": "2024-06-11",
       "week": "2024-W24",
@@ -10405,6 +10711,23 @@
         "Alexandre Luiz Giordano"
       ],
       "snippet": "Senador [Alexandre Luiz] Giordano e, sobretudo, muito obrigado e um beijo no coração de cada mulher, de cada homem e de cada criança de Guarulhos."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-05-25",
+      "week": "2024-W21",
+      "month": "2024-05",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "ca04c324be2d69d2ae5b",
+      "title": "Pronunciamento do presidente Lula durante inauguração de obras viárias na rodovia Presidente Dutra",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/05/pronunciamento-do-presidente-lula-durante-inauguracao-de-obras-viarias-na-rodovia-presidente-dutra",
+      "location": "25 de maio de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Chamei o ministro [Carlos] Fávaro, que é o ministro da Agricultura, e nós decidimos: arroz e feijão é uma coisa que nós brasileiros não sabemos e não queremos abrir mão."
     },
     {
       "entity_id": "deputado-alencar-santana",
@@ -10866,6 +11189,23 @@
       "snippet": "Quando eu levei o Lira (Arthur Lira, presidente da Câmara dos Deputados) e o Pacheco (Rodrigo Pacheco, presidente do Senado Federal) comigo, eu disse o seguinte, eu aprendi com a minha mãe que dizia o seguinte: “meu filho, o coração não sente, o que os olhos não veem."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-05-03",
+      "week": "2024-W18",
+      "month": "2024-05",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "eb040693bdfda1e61451",
+      "title": "Declaração do presidente Lula à imprensa durante visita do primeiro-ministro do Japão",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/05/declaracao-do-presidente-lula-a-imprensa-durante-visita-do-primeiro-ministro-do-japao",
+      "location": "3 de maio de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Esse ministro da Agricultura (Carlos Fávaro) faz um churrasco que, se o primeiro-ministro comesse, não iria querer voltar pro Japão."
+    },
+    {
       "entity_id": "deputado-paulo-pimenta",
       "date": "2024-05-01",
       "week": "2024-W18",
@@ -11019,6 +11359,23 @@
       "snippet": "Meu querido companheiro Gustavo Petro, presidente da República da Colômbia, e sua companheira Verónica Alcocer; minha querida companheira Janja; meu caro ex-presidente da República da Colômbia Juan Manuel; meu caro ex-presidente da Colômbia Ernesto Samper, e sua esposa Jacquin Lucena; companheiros ministros da Colômbia que participam d..."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-04-12",
+      "week": "2024-W15",
+      "month": "2024-04",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "8210ffec158523b5a683",
+      "title": "Pronunciamento do presidente Lula ao acompanhar primeiro embarque de carne para a China em planta recém-habilitada",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/04/pronunciamento-do-presidente-lula-ao-acompanhar-primeiro-embarque-de-carne-para-a-china-em-planta-recem-habilitada",
+      "location": "Campo Grande (MS)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Quero cumprimentar o meu querido companheiro Carlos Fávaro, meu ministro da Agricultura."
+    },
+    {
       "entity_id": "deputado-vander-loubet",
       "date": "2024-04-12",
       "week": "2024-W15",
@@ -11119,6 +11476,23 @@
         "Jader Barbalho"
       ],
       "snippet": "Bem, quero cumprimentar a prefeita; os senadores, primeiro, o senador Veneziano que está aqui, companheiro da Paraíba, o Jader Barbalho que está ali atrás, o companheiro Beto Faro, que está aqui na minha frente, Jayme Campos, a Janaína (Farias), que assumiu agora."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2024-04-10",
+      "week": "2024-W15",
+      "month": "2024-04",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "91cdeb1f2fe99fd52bf9",
+      "title": "Pronunciamento do presidente Lula durante anúncio de seleção do Minha Casa, Minha Vida nas modalidades Rural e Entidades",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/04/pronunciamento-do-presidente-lula-durante-anuncio-de-selecao-do-minha-casa-minha-vida-nas-modalidades-rural-e-entidades",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Quero cumprimentar o companheiro Carlos Fávaro (ministro da Agricultura, Pecuária e Abastecimento), que é o maior vendedor de carne que esse país já teve."
     },
     {
       "entity_id": "senador-beto-faro",
@@ -12993,6 +13367,23 @@
       "snippet": "Eu e a Benedita (da Silva, deputada federal), se a gente for participar para ser delegado no Encontro da Juventude, ela tem direito a quatro votos, quatro delegados, e eu tenho direito a três delegados e meio."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2023-12-12",
+      "week": "2023-W50",
+      "month": "2023-12",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "c7f3bb2945eaa74caf3e",
+      "title": "Pronunciamento do presidente Lula durante a reunião do Conselho de Desenvolvimento Econômico Social Sustentável",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-lula-durante-a-reuniao-do-conselho-de-desenvolvimento-economico-social-sustentavel",
+      "location": "Bras´ília",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Aí vem o Fávaro (Carlos Fávaro, ministro da Agricultura, Pecuária e Abastecimento do Brasil) e fala: “porque o Plano Safra é o maior da história”."
+    },
+    {
       "entity_id": "deputado-lindbergh-farias",
       "date": "2023-12-06",
       "week": "2023-W49",
@@ -13025,6 +13416,23 @@
         "Paulo Pimenta"
       ],
       "snippet": "Paulo Pimenta (Secretaria de Comunicação da Presidência) : Só antes disso, presidente."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2023-12-05",
+      "week": "2023-W49",
+      "month": "2023-12",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "3f1c922d3194a0a62b5f",
+      "title": "Conversa com o Presidente - Live do dia 5.dez.23",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/conversa-com-o-presidente-live-do-dia-5-dez.23",
+      "location": "",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Carlos Fávaro (Agricultura e Pecuária) : Bom dia, presidente."
     },
     {
       "entity_id": "janja-janja",
@@ -13688,6 +14096,23 @@
         "Augusto Coutinho"
       ],
       "snippet": "Meu querido André de Paula, ministro da Pesca e da Aquicultura; companheiro Jorge Messias; querida governadora Raquel Lyra; senadores Humberto Costa, Teresa Leitão e Fernando Dueire; deputado Carlos Veras, nosso coordenador da bancada; deputados federais Augusto Coutinho, Eriberto Medeiros, Felipe Carreiras, Fernando Monteiro, Guilherm..."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2023-11-07",
+      "week": "2023-W45",
+      "month": "2023-11",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "e70fbdc5c7aef3bbc6ce",
+      "title": "Pronunciamento do presidente Lula na abertura do 6º Brasil Investment Forum",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-lula-na-abertura-do-6o-brasil-investment-forum",
+      "location": "7 de novembro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Quero agradecer aos ministros Rui Costa, Mauro Vieira, nosso companheiro Fernando Haddad, nosso companheiro Carlos Fávaro, o Márcio França, Simone Tebet, que ontem me apresentou um programa extraordinário de integração dos países da América do Sul, que eu espero que a gente possa concluir grande parte dele ainda no nosso mandato."
     },
     {
       "entity_id": "deputado-paulo-pimenta",
@@ -15357,6 +15782,23 @@
       "snippet": "Meu querido companheiro senador e líder do governo no Senado, Jaques Wagner."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2023-07-03",
+      "week": "2023-W27",
+      "month": "2023-07",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "1c52245ac69c56f17ca6",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, na cerimônia de início de obras na FIOL",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-na-cerimonia-de-inicio-de-obras-na-fiol",
+      "location": "trecho da FIOL",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Ministros de estados aqui presentes: Rui Costa, da Casa Civil; Renan Filho, do Transporte; Roberto Gusmão, de Portos e Aeroportos; companheiro Carlos Fávaro, da Agricultura e Pecuária; Alexandre Silveira, de Minas e Energia; Waldez Góes, de Integração e Desenvolvimento Regional; e Márcio Macêdo, da Secretaria-Geral."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2023-07-03",
       "week": "2023-W27",
@@ -15644,6 +16086,23 @@
         "Janja"
       ],
       "snippet": "Ontem eu estava me queixando com a Janja que eu tô com saudade da minha casa."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2023-06-27",
+      "week": "2023-W26",
+      "month": "2023-06",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "2aced23e6f5aeee46d90",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, no lançamento do Plano Safra 2023/2024",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-no-lancamento-do-plano-safra-2023-2024",
+      "location": "27 de junho de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Primeiro com relação ao companheiro Fávaro [ Carlos Fávaro, ministro da Agricultura e Pecuária ]."
     },
     {
       "entity_id": "senador-jaques-wagner",
@@ -16392,6 +16851,23 @@
         "Jaques Wagner"
       ],
       "snippet": "Em 2006, o Jaques Wagner era meu ministro do Trabalho e de repente ele me procura e fala que quer ser candidato a governador."
+    },
+    {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2023-06-06",
+      "week": "2023-W23",
+      "month": "2023-06",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "8b5d734b0251d30e764e",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, na abertura da feira Bahia Farm Show",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-na-abertura-da-feira-bahia-farm-show",
+      "location": "Luis Eduardo Magalhães (BA)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Quero cumprimentar o companheiro Rui Costa; Renan Filho, ministro dos Transportes; Carlos Fávaro, da Agricultura; Luciana Santos, da Ciência e Tecnologia; Paulo Teixeira, do Desenvolvimento Agrário e Agricultura Familiar; André de Paula, da Pesca e Aquicultura; e o meu querido e amigo, sempre, Otto Alencar, senador da Bahia, que muito..."
     },
     {
       "entity_id": "deputado-tulio-gadelha",
@@ -17194,6 +17670,23 @@
       "snippet": "Quero cumprimentar ainda os senadores e senadoras; a senadora Eliziane Gama; o senador Confúcio Moura; senadora Augusta Brito, companheiro senador Irajá Silvestre Filho; a companheira senadora Jussara Lima."
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2023-04-13",
+      "week": "2023-W15",
+      "month": "2023-04",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "bd89dde7d12530ed48c6",
+      "title": "DISCURSO do presidente da República, Luiz Inácio Lula da Silva, na cerimônia de posse de Dilma Rousseff na Presidência do NBD",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/discurso-do-presidente-da-republica-luiz-inacio-lula-da-silva-na-cerimonia-de-posse-de-dilma-rousseff-na-presidencia-do-nbd",
+      "location": "13 de abril de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Quero cumprimentar o presidente do Senado, o senador Rodrigo Pacheco; quero cumprimentar o líder do governo no Senado, o companheiro Jaques Wagner; quero cumprimentar o vice-ministro da Relações Exteriores da China, Xie Feng; quero cumprimentar os ministros de Estado: embaixador Mauro Vieira, companheiro Fernando Haddad, ministro da Fa..."
+    },
+    {
       "entity_id": "senador-augusta-brito",
       "date": "2023-04-13",
       "week": "2023-W15",
@@ -17772,6 +18265,23 @@
       "snippet": "Como é que o senhor vai fazer para atender Arthur Lira, que é um personagem importante e essa parcela que quer ser governo, mas quer ter mais participação?"
     },
     {
+      "entity_id": "senador-carlos-favaro",
+      "date": "2023-04-03",
+      "week": "2023-W14",
+      "month": "2023-04",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "8ac4f555796550257181",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, na abertura de reunião ministerial",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-na-abertura-de-reuniao-ministerial-1",
+      "location": "3 de abril de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Carlos Fávaro"
+      ],
+      "snippet": "Eu acho que isso aqui vai apontar, se você olhar para a cara do ministro [ Carlos ] Fávaro, que voltou da China agora, com um grupo de empresários, você vai perceber que ele é 150% de otimismo."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2023-03-30",
       "week": "2023-W13",
@@ -18027,7 +18537,7 @@
       "snippet": "Queridas companheiras de Rondonópolis, queridos companheiros, minha querida companheira Janja, caro governador, Mauro Mendes, caros ministros do Estado Jader Filho, Carlos Fávaro e Márcio Macedo; deputados estaduais, Eduardo Botelho presidente da Assembleia Legislativa; senador Jaime Campos, Margareth Buzetti, Wellington Fagundes, depu..."
     },
     {
-      "entity_id": "senador-margareth-buzetti",
+      "entity_id": "senador-carlos-favaro",
       "date": "2023-03-03",
       "week": "2023-W09",
       "month": "2023-03",
@@ -18039,7 +18549,7 @@
       "location": "Rondonópolis (MT)",
       "occurrences": 1,
       "matched_aliases": [
-        "Margareth Buzetti"
+        "Carlos Fávaro"
       ],
       "snippet": "Queridas companheiras de Rondonópolis, queridos companheiros, minha querida companheira Janja, caro governador, Mauro Mendes, caros ministros do Estado Jader Filho, Carlos Fávaro e Márcio Macedo; deputados estaduais, Eduardo Botelho presidente da Assembleia Legislativa; senador Jaime Campos, Margareth Buzetti, Wellington Fagundes, depu..."
     },
