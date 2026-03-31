@@ -40,14 +40,8 @@
     }
   ],
   "pages_visited_by_source": {
-    "planalto": 23,
+    "planalto": 24,
     "biblioteca": 38
   },
-  "errors": [
-    {
-      "scope": "people-index",
-      "url": "",
-      "error": "Failed to build nominal mentions index: HTTPSConnectionPool(host='dadosabertos.camara.leg.br', port=443): Max retries exceeded with url: /api/v2/deputados?itens=100&ordem=ASC&ordenarPor=nome (Caused by ConnectTimeoutError(<HTTPSConnection(host='dadosabertos.camara.leg.br', port=443) at 0x7f120cceca50>, 'Connection to dadosabertos.camara.leg.br timed out. (connect timeout=30)'))"
-    }
-  ]
+  "errors": []
 }

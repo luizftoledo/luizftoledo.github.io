@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-29T14:04:01.103641+00:00",
+  "generated_at": "2026-03-31T14:48:16.566788+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -17,9 +17,9 @@
       "ministro": 38,
       "senador": 81
     },
-    "mention_rows": 2875,
-    "mention_occurrences_total": 5257,
-    "mention_docs_total": 2875,
+    "mention_rows": 2874,
+    "mention_occurrences_total": 5236,
+    "mention_docs_total": 2874,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -10497,40 +10497,6 @@
       "mention_docs_total": 49
     },
     {
-      "id": "ministro-margareth-menezes-da-purificacao-costa",
-      "kind": "ministro",
-      "group_label": "Ministros do governo",
-      "name": "Margareth Menezes",
-      "official_name": "Margareth Menezes da Purificação Costa",
-      "role": "Ministra de Estado da Cultura",
-      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
-      "aliases_counted": [
-        "Margareth Menezes da Purificação Costa",
-        "Margareth Purificação",
-        "Menezes Purificação",
-        "Margareth Menezes",
-        "Purificação Costa",
-        "Margareth Costa",
-        "Menezes Costa",
-        "Margareth"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Margareth Menezes",
-          "occurrences": 71,
-          "docs": 44
-        },
-        {
-          "alias": "Margareth",
-          "occurrences": 22,
-          "docs": 10
-        }
-      ],
-      "search_text": "margareth menezes da purificacao costa margareth menezes da purificacao costa ministros do governo ministra de estado da cultura margareth menezes da purificacao costa margareth purificacao menezes purificacao margareth menezes purificacao costa margareth costa menezes costa margareth",
-      "mention_occurrences_total": 93,
-      "mention_docs_total": 46
-    },
-    {
       "id": "ministro-sonia-bone-de-sousa-silva-santos",
       "kind": "ministro",
       "group_label": "Ministros do governo",
@@ -10675,6 +10641,34 @@
       "search_text": "maria osmarina marina da silva vaz de lima maria osmarina marina da silva vaz de lima ministros do governo ministra de estado do meio ambiente e mudanca do clima maria osmarina marina da silva vaz de lima osmarina marina maria osmarina osmarina lima maria marina marina silva maria silva marina lima maria lima silva lima maria vaz silva vaz vaz lima",
       "mention_occurrences_total": 81,
       "mention_docs_total": 72
+    },
+    {
+      "id": "ministro-margareth-menezes-da-purificacao-costa",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Margareth Menezes",
+      "official_name": "Margareth Menezes da Purificação Costa",
+      "role": "Ministra de Estado da Cultura",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Margareth Menezes da Purificação Costa",
+        "Margareth Purificação",
+        "Menezes Purificação",
+        "Margareth Menezes",
+        "Purificação Costa",
+        "Margareth Costa",
+        "Menezes Costa"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Margareth Menezes",
+          "occurrences": 71,
+          "docs": 44
+        }
+      ],
+      "search_text": "margareth menezes da purificacao costa margareth menezes da purificacao costa ministros do governo ministra de estado da cultura margareth menezes da purificacao costa margareth purificacao menezes purificacao margareth menezes purificacao costa margareth costa menezes costa",
+      "mention_occurrences_total": 71,
+      "mention_docs_total": 44
     },
     {
       "id": "ministro-jose-wellington-barroso-de-araujo-dias",
@@ -10951,6 +10945,34 @@
       "search_text": "macae maria evaristo dos santos macae maria evaristo dos santos ministros do governo ministra de estado dos direitos humanos e da cidadania macae maria evaristo dos santos evaristo santos macae evaristo maria evaristo macae santos maria santos macae maria macae",
       "mention_occurrences_total": 33,
       "mention_docs_total": 18
+    },
+    {
+      "id": "ministro-carlos-henrique-baqueta-favaro",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Carlos Fávaro",
+      "official_name": "Carlos Henrique Baqueta Fávaro",
+      "role": "Ministro de Estado da Agricultura e Pecuária",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Carlos Henrique Baqueta Fávaro",
+        "Henrique Baqueta",
+        "Carlos Henrique",
+        "Henrique Fávaro",
+        "Baqueta Fávaro",
+        "Carlos Baqueta",
+        "Carlos Fávaro"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Carlos Fávaro",
+          "occurrences": 32,
+          "docs": 31
+        }
+      ],
+      "search_text": "carlos henrique baqueta favaro carlos henrique baqueta favaro ministros do governo ministro de estado da agricultura e pecuaria carlos henrique baqueta favaro henrique baqueta carlos henrique henrique favaro baqueta favaro carlos baqueta carlos favaro",
+      "mention_occurrences_total": 32,
+      "mention_docs_total": 31
     },
     {
       "id": "ministro-jose-mucio-monteiro-filho",
@@ -11342,27 +11364,6 @@
       "mention_docs_total": 1
     },
     {
-      "id": "ministro-carlos-henrique-baqueta-favaro",
-      "kind": "ministro",
-      "group_label": "Ministros do governo",
-      "name": "Carlos Henrique Baqueta Fávaro",
-      "official_name": "Carlos Henrique Baqueta Fávaro",
-      "role": "Ministro de Estado da Agricultura e Pecuária",
-      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
-      "aliases_counted": [
-        "Carlos Henrique Baqueta Fávaro",
-        "Henrique Baqueta",
-        "Carlos Henrique",
-        "Henrique Fávaro",
-        "Baqueta Fávaro",
-        "Carlos Baqueta"
-      ],
-      "aliases_observed": [],
-      "search_text": "carlos henrique baqueta favaro carlos henrique baqueta favaro ministros do governo ministro de estado da agricultura e pecuaria carlos henrique baqueta favaro henrique baqueta carlos henrique henrique favaro baqueta favaro carlos baqueta",
-      "mention_occurrences_total": 0,
-      "mention_docs_total": 0
-    },
-    {
       "id": "ministro-gustavo-costa-feliciano",
       "kind": "ministro",
       "group_label": "Ministros do governo",
@@ -11479,31 +11480,6 @@
       "search_text": "leila barros leila gomes de barros rego senadores senador pdt df leila gomes de barros rego leila barros",
       "mention_occurrences_total": 33,
       "mention_docs_total": 7
-    },
-    {
-      "id": "senador-carlos-favaro",
-      "kind": "senador",
-      "group_label": "Senadores",
-      "name": "Carlos Fávaro",
-      "official_name": "Carlos Henrique Baqueta Fávaro",
-      "role": "Senador",
-      "source_url": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/6295",
-      "party": "PSD",
-      "state": "MT",
-      "aliases_counted": [
-        "Carlos Henrique Baqueta Fávaro",
-        "Carlos Fávaro"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Carlos Fávaro",
-          "occurrences": 32,
-          "docs": 31
-        }
-      ],
-      "search_text": "carlos favaro carlos henrique baqueta favaro senadores senador psd mt carlos henrique baqueta favaro carlos favaro",
-      "mention_occurrences_total": 32,
-      "mention_docs_total": 31
     },
     {
       "id": "senador-humberto-costa",
@@ -12527,6 +12503,31 @@
         }
       ],
       "search_text": "marcos do val marcos ribeiro do val senadores senador podemos es marcos ribeiro do val marcos do val",
+      "mention_occurrences_total": 1,
+      "mention_docs_total": 1
+    },
+    {
+      "id": "senador-margareth-buzetti",
+      "kind": "senador",
+      "group_label": "Senadores",
+      "name": "Margareth Buzetti",
+      "official_name": "Margareth Gettert Busetti",
+      "role": "Senador",
+      "source_url": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/6304",
+      "party": "PP",
+      "state": "MT",
+      "aliases_counted": [
+        "Margareth Gettert Busetti",
+        "Margareth Buzetti"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Margareth Buzetti",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "margareth buzetti margareth gettert busetti senadores senador pp mt margareth gettert busetti margareth buzetti",
       "mention_occurrences_total": 1,
       "mention_docs_total": 1
     },
