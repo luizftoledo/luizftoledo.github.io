@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-03-30T14:45:26.062199+00:00",
-  "snapshot_date": "2026-03-30",
+  "updated_at": "2026-03-31T14:42:11.111039+00:00",
+  "snapshot_date": "2026-03-31",
   "source_requested_url": "https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO",
-  "source_download_url": "https://landpage.cgu.gov.br/portaltransparencia/erro.html",
+  "source_download_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares/EmendasParlamentares.zip",
   "source_senado_reference_url": "https://www9.senado.gov.br/QvAJAXZfc/opendoc.htm?document=senado%2Fsigabrasilpainelcidadao.qvw&host=QVS%40www9&anonymous=true&Sheet=shOrcamentoVisaoGeral",
-  "source_last_modified": "Wed, 18 Feb 2026 19:28:58 GMT",
-  "source_etag": "\"b2235c345437e26277b9e7ced70c8546\"",
+  "source_last_modified": "Sat, 28 Mar 2026 07:19:33 GMT",
+  "source_etag": "\"1560ac4d81370129aba6cfc250562ec4-4\"",
   "source_zip_bytes": 31231205,
   "rows_processed": 89577,
   "authors_mapped": 1606,
@@ -21,7 +21,7 @@
   "siop_snapshot_available": true,
   "siop_snapshot_fallback_from_previous": false,
   "siop_snapshot_last_update": "",
-  "siop_base_siafi_date": "27/3/2026",
+  "siop_base_siafi_date": "30/3/2026",
   "siop_dotacao_atual_emenda": 0.0,
   "siop_dotacao_inicial_emenda": 0.0,
   "siop_snapshot_error": "",
@@ -31,6 +31,6 @@
   "siop_details_unique_nro_emendas": 0,
   "siop_details_sweep_steps": 27,
   "siop_details_error": "",
-  "siop_history_days": 21,
-  "siop_history_last_date": "2026-03-30"
+  "siop_history_days": 22,
+  "siop_history_last_date": "2026-03-31"
 }

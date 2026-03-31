@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-03-30T14:45:26.062199+00:00",
-  "snapshot_date": "2026-03-30",
+  "generated_at": "2026-03-31T14:42:11.111039+00:00",
+  "snapshot_date": "2026-03-31",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
     "requested_url": "https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO",
-    "download_url": "https://landpage.cgu.gov.br/portaltransparencia/erro.html",
+    "download_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares/EmendasParlamentares.zip",
     "senado_reference_url": "https://www9.senado.gov.br/QvAJAXZfc/opendoc.htm?document=senado%2Fsigabrasilpainelcidadao.qvw&host=QVS%40www9&anonymous=true&Sheet=shOrcamentoVisaoGeral",
-    "etag": "\"b2235c345437e26277b9e7ced70c8546\"",
-    "last_modified": "Wed, 18 Feb 2026 19:28:58 GMT",
+    "etag": "\"1560ac4d81370129aba6cfc250562ec4-4\"",
+    "last_modified": "Sat, 28 Mar 2026 07:19:33 GMT",
     "zip_bytes": 31231205
   },
   "metrics": {
@@ -405,7 +405,7 @@
     "total_liquidado": 32472410.9,
     "total_pago": 35633466.14
   },
-  "run_date": "2026-03-30",
+  "run_date": "2026-03-31",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -435,7 +435,7 @@
       "available": true,
       "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
       "last_update": "",
-      "base_siafi_date": "27/3/2026",
+      "base_siafi_date": "30/3/2026",
       "filters": {
         "year": 2026,
         "rp": [
@@ -504,7 +504,7 @@
         ]
       },
       "last_update": "",
-      "base_siafi_date": "27/3/2026",
+      "base_siafi_date": "30/3/2026",
       "rows": [],
       "rows_count": 0,
       "unique_nro_emendas": 0,
@@ -2035,6 +2035,14 @@
       "total_empenhado_atual": 303546635975.55,
       "autores_com_aumento": 0,
       "destinos_com_aumento": 0
+    },
+    {
+      "date": "2026-03-31",
+      "delta_positivo": 0.0,
+      "delta_liquido": 0.0,
+      "total_empenhado_atual": 303546635975.55,
+      "autores_com_aumento": 0,
+      "destinos_com_aumento": 0
     }
   ],
   "siop_daily_history": [
@@ -2242,6 +2250,16 @@
       "date": "2026-03-30",
       "last_update": "",
       "base_siafi_date": "27/3/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
+    },
+    {
+      "date": "2026-03-31",
+      "last_update": "",
+      "base_siafi_date": "30/3/2026",
       "dotacao_inicial_emenda": 0.0,
       "dotacao_atual_emenda": 0.0,
       "empenhado": 0.0,
