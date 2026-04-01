@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-31T14:42:11.111039+00:00",
+  "generated_at": "2026-04-01T14:44:29.369812+00:00",
   "snapshot_date": "2026-03-31",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -405,7 +405,7 @@
     "total_liquidado": 32472410.9,
     "total_pago": 35633466.14
   },
-  "run_date": "2026-03-31",
+  "run_date": "2026-04-01",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -435,7 +435,7 @@
       "available": true,
       "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
       "last_update": "",
-      "base_siafi_date": "30/3/2026",
+      "base_siafi_date": "31/3/2026",
       "filters": {
         "year": 2026,
         "rp": [
@@ -504,7 +504,7 @@
         ]
       },
       "last_update": "",
-      "base_siafi_date": "30/3/2026",
+      "base_siafi_date": "31/3/2026",
       "rows": [],
       "rows_count": 0,
       "unique_nro_emendas": 0,
@@ -1350,7 +1350,7 @@
         },
         {
           "author": "DR. DANIEL SORANZ",
-          "party": "Nao identificado",
+          "party": "PSD",
           "empenhado": 500000.0
         }
       ],
@@ -2265,6 +2265,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-04-01",
+      "last_update": "",
+      "base_siafi_date": "31/3/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
-  ]
+  ],
+  "updated_at": "2026-04-01T14:44:29.369812+00:00"
 }
