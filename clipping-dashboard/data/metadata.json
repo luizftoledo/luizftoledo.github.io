@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-03-31T14:51:28.779768+00:00",
+  "generated_at": "2026-04-01T14:55:32.618588+00:00",
   "counts": {
-    "items": 85,
+    "items": 86,
     "domains": 23,
     "categories": {
-      "reportagem_autoral": 59,
+      "reportagem_autoral": 60,
       "republicacao": 0,
       "eco_repercussao": 0,
       "citacao_fonte": 3,
@@ -16,12 +16,12 @@
     "recent": {
       "last_1_day": 0,
       "last_7_days": 0,
-      "last_30_days": 2
+      "last_30_days": 1
     }
   },
   "date_range": {
-    "min": "2021-01-27",
-    "max": "2026-03-13"
+    "min": "2019-09-16",
+    "max": "2026-03-11"
   },
   "methodology": {
     "names": [
@@ -43,19 +43,19 @@
       }
     },
     "enrich": {
-      "fetched": 58,
-      "reused": 32,
-      "kept": 85,
+      "fetched": 62,
+      "reused": 29,
+      "kept": 86,
       "dropped": 5,
       "categories": {
         "perfil_bio": 17,
-        "reportagem_autoral": 59,
+        "reportagem_autoral": 60,
         "mencao": 5,
         "entrevista": 1,
         "citacao_fonte": 3
       },
       "domains": {
-        "bbc.com": 48,
+        "bbc.com": 49,
         "intercept.com.br": 2,
         "piaui.folha.uol.com.br": 1,
         "apublica.org": 3,
@@ -75,9 +75,9 @@
         "cima.ned.org": 1,
         "scielo.br": 1,
         "sbtnews.sbt.com.br": 1,
-        "abraji.org.br": 1,
-        "rollingstone.com.br": 1,
-        "piaui.uol.com.br": 1
+        "observatoriodatv.com.br": 1,
+        "fiquemsabendo.com.br": 1,
+        "rollingstone.com.br": 1
       },
       "errors": [
         {
