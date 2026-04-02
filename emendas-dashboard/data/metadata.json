@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-01T14:44:29.369812+00:00",
+  "updated_at": "2026-04-02T14:24:34.660125+00:00",
   "snapshot_date": "2026-03-31",
   "source_requested_url": "https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO",
   "source_download_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares/EmendasParlamentares.zip",
@@ -19,18 +19,18 @@
   "apoiamento_source_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares-apoiamento/2025_ApoiamentoEmendasParlamentares.zip",
   "apoiamento_last_modified": "Sat, 28 Mar 2026 07:19:34 GMT",
   "siop_snapshot_available": true,
-  "siop_snapshot_fallback_from_previous": false,
+  "siop_snapshot_fallback_from_previous": true,
   "siop_snapshot_last_update": "",
   "siop_base_siafi_date": "31/3/2026",
   "siop_dotacao_atual_emenda": 0.0,
   "siop_dotacao_inicial_emenda": 0.0,
-  "siop_snapshot_error": "",
+  "siop_snapshot_error": "Message: Stacktrace: #0 0x5611c138ba6a <unknown> #1 0x5611c0d9aab5 <unknown> #2 0x5611c0ded676 <unknown> #3 0x5611c0ded8b1 <unknown> #4 0x5611c0e38614 <unknown> #5 0x5611c0e357b6 <unknown> #6 0x5611c0de0cbf <unknown> #7 0x5611c0de1a81 <unknown> #8 0x5611c1351a64 <unknown> #9 0x5611c1354951 <unknown> #10 0x5611c133e21e <unknown> #11 0x5611c135551e <unknown> #12 0x5611c1324be0 <unknown> #13 0x5611c13789b8 <unknown> #14 0x5611c1378b88 <unknown> #15 0x5611c138a4de <unknown> #16 0x7f15b549caa4 <unkno",
   "siop_details_available": true,
-  "siop_details_fallback_from_previous": false,
+  "siop_details_fallback_from_previous": true,
   "siop_details_rows_count": 0,
   "siop_details_unique_nro_emendas": 0,
   "siop_details_sweep_steps": 27,
-  "siop_details_error": "",
-  "siop_history_days": 23,
-  "siop_history_last_date": "2026-04-01"
+  "siop_details_error": "Message: Stacktrace: #0 0x55f3a1305a6a <unknown> #1 0x55f3a0d14ab5 <unknown> #2 0x55f3a0d67676 <unknown> #3 0x55f3a0d678b1 <unknown> #4 0x55f3a0db2614 <unknown> #5 0x55f3a0daf7b6 <unknown> #6 0x55f3a0d5acbf <unknown> #7 0x55f3a0d5ba81 <unknown> #8 0x55f3a12cba64 <unknown> #9 0x55f3a12ce951 <unknown> #10 0x55f3a12b821e <unknown> #11 0x55f3a12cf51e <unknown> #12 0x55f3a129ebe0 <unknown> #13 0x55f3a12f29b8 <unknown> #14 0x55f3a12f2b88 <unknown> #15 0x55f3a13044de <unknown> #16 0x7f7c0b49caa4 <unkno",
+  "siop_history_days": 24,
+  "siop_history_last_date": "2026-04-02"
 }
