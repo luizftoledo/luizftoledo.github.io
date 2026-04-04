@@ -11,8 +11,8 @@
     }
   },
   "enrich": {
-    "fetched": 60,
-    "reused": 32,
+    "fetched": 61,
+    "reused": 31,
     "kept": 87,
     "dropped": 5,
     "categories": {
@@ -23,12 +23,12 @@
       "citacao_fonte": 4
     },
     "domains": {
-      "bbc.com": 50,
+      "bbc.com": 48,
       "intercept.com.br": 2,
       "piaui.folha.uol.com.br": 1,
       "apublica.org": 3,
       "ojoioeotrigo.com.br": 2,
-      "estadao.com.br": 10,
+      "estadao.com.br": 11,
       "g1.globo.com": 2,
       "escavador.com": 1,
       "icfj.org": 1,
@@ -42,9 +42,10 @@
       "talks.ox.ac.uk": 1,
       "cima.ned.org": 1,
       "scielo.br": 1,
-      "abraji.org.br": 1,
       "sbtnews.sbt.com.br": 1,
       "observatoriodatv.com.br": 1,
+      "fiquemsabendo.com.br": 1,
+      "poder360.com.br": 1,
       "rollingstone.com.br": 1,
       "piaui.uol.com.br": 1
     },
