@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-05T14:05:45.050373+00:00",
+  "generated_at": "2026-04-06T14:18:45.459950+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -10,16 +10,17 @@
     "senado_senadores": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json"
   },
   "counts": {
-    "entities": 633,
+    "entities": 643,
     "entities_by_kind": {
       "deputado": 513,
       "janja": 1,
       "ministro": 38,
+      "stf": 10,
       "senador": 81
     },
-    "mention_rows": 2869,
-    "mention_occurrences_total": 4767,
-    "mention_docs_total": 2869,
+    "mention_rows": 3007,
+    "mention_occurrences_total": 4966,
+    "mention_docs_total": 3007,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -146,6 +147,30 @@
       "search_text": "arthur lira arthur lira deputados federais deputado federal pp al arthur lira",
       "mention_occurrences_total": 56,
       "mention_docs_total": 41
+    },
+    {
+      "id": "deputado-gleisi-hoffmann",
+      "kind": "deputado",
+      "group_label": "Deputados federais",
+      "name": "Gleisi Hoffmann",
+      "official_name": "Gleisi Hoffmann",
+      "role": "Deputado federal",
+      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/107283",
+      "party": "PT",
+      "state": "PR",
+      "aliases_counted": [
+        "Gleisi Hoffmann"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Gleisi Hoffmann",
+          "occurrences": 54,
+          "docs": 42
+        }
+      ],
+      "search_text": "gleisi hoffmann gleisi hoffmann deputados federais deputado federal pt pr gleisi hoffmann",
+      "mention_occurrences_total": 54,
+      "mention_docs_total": 42
     },
     {
       "id": "deputado-sonia-guajajara",
@@ -3101,6 +3126,30 @@
       "mention_docs_total": 1
     },
     {
+      "id": "deputado-fernanda-pessoa",
+      "kind": "deputado",
+      "group_label": "Deputados federais",
+      "name": "Fernanda Pessoa",
+      "official_name": "Fernanda Pessoa",
+      "role": "Deputado federal",
+      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220656",
+      "party": "UNIÃO",
+      "state": "CE",
+      "aliases_counted": [
+        "Fernanda Pessoa"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Fernanda Pessoa",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "fernanda pessoa fernanda pessoa deputados federais deputado federal uniao ce fernanda pessoa",
+      "mention_occurrences_total": 1,
+      "mention_docs_total": 1
+    },
+    {
       "id": "deputado-flavio-nogueira",
       "kind": "deputado",
       "group_label": "Deputados federais",
@@ -3433,30 +3482,6 @@
         }
       ],
       "search_text": "julio lopes julio lopes deputados federais deputado federal pp rj julio lopes",
-      "mention_occurrences_total": 1,
-      "mention_docs_total": 1
-    },
-    {
-      "id": "deputado-lenir-de-assis",
-      "kind": "deputado",
-      "group_label": "Deputados federais",
-      "name": "Lenir de Assis",
-      "official_name": "Lenir de Assis",
-      "role": "Deputado federal",
-      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/231911",
-      "party": "PT",
-      "state": "PR",
-      "aliases_counted": [
-        "Lenir de Assis"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Lenir de Assis",
-          "occurrences": 1,
-          "docs": 1
-        }
-      ],
-      "search_text": "lenir de assis lenir de assis deputados federais deputado federal pt pr lenir de assis",
       "mention_occurrences_total": 1,
       "mention_docs_total": 1
     },
@@ -4625,6 +4650,24 @@
       ],
       "aliases_observed": [],
       "search_text": "benes leocadio benes leocadio deputados federais deputado federal uniao rn benes leocadio",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
+    },
+    {
+      "id": "deputado-beto-preto",
+      "kind": "deputado",
+      "group_label": "Deputados federais",
+      "name": "Beto Preto",
+      "official_name": "Beto Preto",
+      "role": "Deputado federal",
+      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220698",
+      "party": "PSD",
+      "state": "PR",
+      "aliases_counted": [
+        "Beto Preto"
+      ],
+      "aliases_observed": [],
+      "search_text": "beto preto beto preto deputados federais deputado federal psd pr beto preto",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -7375,6 +7418,22 @@
       "mention_docs_total": 0
     },
     {
+      "id": "deputado-leandre",
+      "kind": "deputado",
+      "group_label": "Deputados federais",
+      "name": "Leandre",
+      "official_name": "Leandre",
+      "role": "Deputado federal",
+      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/178832",
+      "party": "PSD",
+      "state": "PR",
+      "aliases_counted": [],
+      "aliases_observed": [],
+      "search_text": "leandre leandre deputados federais deputado federal psd pr",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
+    },
+    {
       "id": "deputado-leda-borges",
       "kind": "deputado",
       "group_label": "Deputados federais",
@@ -7462,24 +7521,6 @@
       ],
       "aliases_observed": [],
       "search_text": "lucas redecker lucas redecker deputados federais deputado federal psdb rs lucas redecker",
-      "mention_occurrences_total": 0,
-      "mention_docs_total": 0
-    },
-    {
-      "id": "deputado-luciano-alves",
-      "kind": "deputado",
-      "group_label": "Deputados federais",
-      "name": "Luciano Alves",
-      "official_name": "Luciano Alves",
-      "role": "Deputado federal",
-      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/138286",
-      "party": "PSD",
-      "state": "PR",
-      "aliases_counted": [
-        "Luciano Alves"
-      ],
-      "aliases_observed": [],
-      "search_text": "luciano alves luciano alves deputados federais deputado federal psd pr luciano alves",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -8927,24 +8968,6 @@
       "mention_docs_total": 0
     },
     {
-      "id": "deputado-reinhold-stephanes",
-      "kind": "deputado",
-      "group_label": "Deputados federais",
-      "name": "Reinhold Stephanes",
-      "official_name": "Reinhold Stephanes",
-      "role": "Deputado federal",
-      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/205865",
-      "party": "PL",
-      "state": "PR",
-      "aliases_counted": [
-        "Reinhold Stephanes"
-      ],
-      "aliases_observed": [],
-      "search_text": "reinhold stephanes reinhold stephanes deputados federais deputado federal pl pr reinhold stephanes",
-      "mention_occurrences_total": 0,
-      "mention_docs_total": 0
-    },
-    {
       "id": "deputado-renata-abreu",
       "kind": "deputado",
       "group_label": "Deputados federais",
@@ -9251,24 +9274,6 @@
       "mention_docs_total": 0
     },
     {
-      "id": "deputado-rodrigo-estacho",
-      "kind": "deputado",
-      "group_label": "Deputados federais",
-      "name": "Rodrigo Estacho",
-      "official_name": "Rodrigo Estacho",
-      "role": "Deputado federal",
-      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/223128",
-      "party": "PSD",
-      "state": "PR",
-      "aliases_counted": [
-        "Rodrigo Estacho"
-      ],
-      "aliases_observed": [],
-      "search_text": "rodrigo estacho rodrigo estacho deputados federais deputado federal psd pr rodrigo estacho",
-      "mention_occurrences_total": 0,
-      "mention_docs_total": 0
-    },
-    {
       "id": "deputado-rodrigo-gambale",
       "kind": "deputado",
       "group_label": "Deputados federais",
@@ -9501,6 +9506,24 @@
       "mention_docs_total": 0
     },
     {
+      "id": "deputado-sandro-alex",
+      "kind": "deputado",
+      "group_label": "Deputados federais",
+      "name": "Sandro Alex",
+      "official_name": "Sandro Alex",
+      "role": "Deputado federal",
+      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/160621",
+      "party": "PSD",
+      "state": "PR",
+      "aliases_counted": [
+        "Sandro Alex"
+      ],
+      "aliases_observed": [],
+      "search_text": "sandro alex sandro alex deputados federais deputado federal psd pr sandro alex",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
+    },
+    {
       "id": "deputado-sargento-fahur",
       "kind": "deputado",
       "group_label": "Deputados federais",
@@ -9713,24 +9736,6 @@
       ],
       "aliases_observed": [],
       "search_text": "socorro neri socorro neri deputados federais deputado federal pp ac socorro neri",
-      "mention_occurrences_total": 0,
-      "mention_docs_total": 0
-    },
-    {
-      "id": "deputado-soldado-noelio",
-      "kind": "deputado",
-      "group_label": "Deputados federais",
-      "name": "Soldado Noelio",
-      "official_name": "Soldado Noelio",
-      "role": "Deputado federal",
-      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/222565",
-      "party": "UNIÃO",
-      "state": "CE",
-      "aliases_counted": [
-        "Soldado Noelio"
-      ],
-      "aliases_observed": [],
-      "search_text": "soldado noelio soldado noelio deputados federais deputado federal uniao ce soldado noelio",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -10397,37 +10402,6 @@
       "search_text": "mauro luiz iecker vieira mauro luiz iecker vieira ministros do governo ministro de estado das relacoes exteriores mauro luiz iecker vieira iecker vieira mauro iecker mauro vieira luiz iecker luiz vieira mauro luiz",
       "mention_occurrences_total": 112,
       "mention_docs_total": 91
-    },
-    {
-      "id": "ministro-gleisi-helena-hoffmann",
-      "kind": "ministro",
-      "group_label": "Ministros do governo",
-      "name": "Gleisi Hoffmann",
-      "official_name": "Gleisi Helena Hoffmann",
-      "role": "Ministra de Estado da Secretaria de Relações Institucionais da Presidência da República",
-      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
-      "aliases_counted": [
-        "Gleisi Helena Hoffmann",
-        "Gleisi Hoffmann",
-        "Helena Hoffmann",
-        "Gleisi Helena",
-        "Gleisi"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Gleisi Hoffmann",
-          "occurrences": 54,
-          "docs": 42
-        },
-        {
-          "alias": "Gleisi",
-          "occurrences": 44,
-          "docs": 21
-        }
-      ],
-      "search_text": "gleisi helena hoffmann gleisi helena hoffmann ministros do governo ministra de estado da secretaria de relacoes institucionais da presidencia da republica gleisi helena hoffmann gleisi hoffmann helena hoffmann gleisi helena gleisi",
-      "mention_occurrences_total": 98,
-      "mention_docs_total": 46
     },
     {
       "id": "ministro-esther-dweck",
@@ -11314,6 +11288,24 @@
       "mention_docs_total": 0
     },
     {
+      "id": "ministro-gleisi-helena-hoffmann",
+      "kind": "ministro",
+      "group_label": "Ministros do governo",
+      "name": "Gleisi Helena Hoffmann",
+      "official_name": "Gleisi Helena Hoffmann",
+      "role": "Ministra de Estado da Secretaria de Relações Institucionais da Presidência da República",
+      "source_url": "https://www.gov.br/planalto/pt-br/conheca-a-presidencia/ministros-e-ministras",
+      "aliases_counted": [
+        "Gleisi Helena Hoffmann",
+        "Helena Hoffmann",
+        "Gleisi Helena"
+      ],
+      "aliases_observed": [],
+      "search_text": "gleisi helena hoffmann gleisi helena hoffmann ministros do governo ministra de estado da secretaria de relacoes institucionais da presidencia da republica gleisi helena hoffmann helena hoffmann gleisi helena",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
+    },
+    {
       "id": "ministro-gustavo-costa-feliciano",
       "kind": "ministro",
       "group_label": "Ministros do governo",
@@ -11351,6 +11343,262 @@
       ],
       "aliases_observed": [],
       "search_text": "jose renan vasconcelos calheiros filho jose renan vasconcelos calheiros filho ministros do governo ministro de estado dos transportes jose renan vasconcelos calheiros filho vasconcelos calheiros renan vasconcelos vasconcelos filho jose vasconcelos jose calheiros jose renan",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
+    },
+    {
+      "id": "stf-flavio-dino",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Flávio Dino",
+      "official_name": "Flávio Dino",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=FlavioDinoPrincipal",
+      "aliases_counted": [
+        "Flávio Dino"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Flávio Dino",
+          "occurrences": 119,
+          "docs": 53
+        }
+      ],
+      "search_text": "flavio dino flavio dino stf ministro do stf flavio dino",
+      "mention_occurrences_total": 119,
+      "mention_docs_total": 53
+    },
+    {
+      "id": "stf-alexandre-de-moraes",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Alexandre de Moraes",
+      "official_name": "Alexandre de Moraes",
+      "role": "Vice-Presidente",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=AlexandreMoraesPrincipal",
+      "aliases_counted": [
+        "Alexandre de Moraes",
+        "Alexandre Moraes"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Alexandre de Moraes",
+          "occurrences": 40,
+          "docs": 31
+        },
+        {
+          "alias": "Alexandre Moraes",
+          "occurrences": 6,
+          "docs": 6
+        }
+      ],
+      "search_text": "alexandre de moraes alexandre de moraes stf vice presidente alexandre de moraes alexandre moraes",
+      "mention_occurrences_total": 46,
+      "mention_docs_total": 37
+    },
+    {
+      "id": "stf-cristiano-zanin",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Cristiano Zanin",
+      "official_name": "Cristiano Zanin",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=CristianoZaninPrincipal",
+      "aliases_counted": [
+        "Cristiano Zanin",
+        "Cristiano",
+        "Zanin"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Cristiano",
+          "occurrences": 11,
+          "docs": 11
+        },
+        {
+          "alias": "Cristiano Zanin",
+          "occurrences": 8,
+          "docs": 7
+        },
+        {
+          "alias": "Zanin",
+          "occurrences": 17,
+          "docs": 6
+        }
+      ],
+      "search_text": "cristiano zanin cristiano zanin stf ministro do stf cristiano zanin cristiano zanin",
+      "mention_occurrences_total": 36,
+      "mention_docs_total": 18
+    },
+    {
+      "id": "stf-gilmar-mendes",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Gilmar Mendes",
+      "official_name": "Gilmar Mendes",
+      "role": "Decano",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=GilmarMendesPrincipal",
+      "aliases_counted": [
+        "Gilmar Mendes",
+        "Gilmar"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Gilmar Mendes",
+          "occurrences": 12,
+          "docs": 11
+        },
+        {
+          "alias": "Gilmar",
+          "occurrences": 5,
+          "docs": 5
+        }
+      ],
+      "search_text": "gilmar mendes gilmar mendes stf decano gilmar mendes gilmar",
+      "mention_occurrences_total": 17,
+      "mention_docs_total": 15
+    },
+    {
+      "id": "stf-edson-fachin",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Edson Fachin",
+      "official_name": "Edson Fachin",
+      "role": "Presidente",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=EdsonFachinPrincipal",
+      "aliases_counted": [
+        "Edson Fachin",
+        "Fachin",
+        "Edson"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Edson Fachin",
+          "occurrences": 6,
+          "docs": 6
+        },
+        {
+          "alias": "Edson",
+          "occurrences": 6,
+          "docs": 3
+        },
+        {
+          "alias": "Fachin",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "edson fachin edson fachin stf presidente edson fachin fachin edson",
+      "mention_occurrences_total": 13,
+      "mention_docs_total": 9
+    },
+    {
+      "id": "stf-carmen-lucia",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Cármen Lúcia",
+      "official_name": "Cármen Lúcia",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=CarmenLuciaPrincipal",
+      "aliases_counted": [
+        "Cármen Lúcia",
+        "Cármen"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Cármen Lúcia",
+          "occurrences": 5,
+          "docs": 4
+        },
+        {
+          "alias": "Cármen",
+          "occurrences": 2,
+          "docs": 2
+        }
+      ],
+      "search_text": "carmen lucia carmen lucia stf ministro do stf carmen lucia carmen",
+      "mention_occurrences_total": 7,
+      "mention_docs_total": 5
+    },
+    {
+      "id": "stf-dias-toffoli",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Dias Toffoli",
+      "official_name": "Dias Toffoli",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=DiasToffoliPrincipal",
+      "aliases_counted": [
+        "Dias Toffoli",
+        "Toffoli"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Dias Toffoli",
+          "occurrences": 2,
+          "docs": 2
+        },
+        {
+          "alias": "Toffoli",
+          "occurrences": 1,
+          "docs": 1
+        }
+      ],
+      "search_text": "dias toffoli dias toffoli stf ministro do stf dias toffoli toffoli",
+      "mention_occurrences_total": 3,
+      "mention_docs_total": 3
+    },
+    {
+      "id": "stf-luiz-fux",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Luiz Fux",
+      "official_name": "Luiz Fux",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=LuizFuxPrincipal",
+      "aliases_counted": [
+        "Luiz Fux"
+      ],
+      "aliases_observed": [
+        {
+          "alias": "Luiz Fux",
+          "occurrences": 2,
+          "docs": 2
+        }
+      ],
+      "search_text": "luiz fux luiz fux stf ministro do stf luiz fux",
+      "mention_occurrences_total": 2,
+      "mention_docs_total": 2
+    },
+    {
+      "id": "stf-andre-mendonca",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "André Mendonça",
+      "official_name": "André Mendonça",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=AndreMendoncaPrincipal",
+      "aliases_counted": [
+        "André Mendonça"
+      ],
+      "aliases_observed": [],
+      "search_text": "andre mendonca andre mendonca stf ministro do stf andre mendonca",
+      "mention_occurrences_total": 0,
+      "mention_docs_total": 0
+    },
+    {
+      "id": "stf-nunes-marques",
+      "kind": "stf",
+      "group_label": "STF",
+      "name": "Nunes Marques",
+      "official_name": "Nunes Marques",
+      "role": "Ministro do STF",
+      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=NunesMarquesPrincipal",
+      "aliases_counted": [
+        "Nunes Marques"
+      ],
+      "aliases_observed": [],
+      "search_text": "nunes marques nunes marques stf ministro do stf nunes marques",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
