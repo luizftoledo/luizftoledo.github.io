@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-06T14:13:23+00:00",
+  "updated_at": "2026-04-07T14:47:26+00:00",
   "datasets": {
     "ibama": {
-      "rows": 702968,
-      "total_fines": 110070788237.95682,
+      "rows": 702969,
+      "total_fines": 110070799737.95682,
       "date_min": "1977-09-03",
-      "date_max": "2026-04-04",
+      "date_max": "2026-04-05",
       "future_dates_ignored": 0,
       "ufs": [
         "ac",
@@ -36,16 +36,16 @@
         "sp",
         "to"
       ],
-      "source_size_bytes": 111473348,
+      "source_size_bytes": 111476688,
       "source_url": "https://dadosabertos.ibama.gov.br/dados/SIFISC/auto_infracao/auto_infracao/auto_infracao_csv.zip",
       "data_file": "ibama_records.jsonl.gz",
-      "updated_at": "2026-04-06T14:13:09+00:00"
+      "updated_at": "2026-04-07T14:47:05+00:00"
     },
     "icmbio": {
-      "rows": 40734,
-      "total_fines": 11363553761.0,
+      "rows": 40837,
+      "total_fines": 11370192535.0,
       "date_min": "2008-10-08",
-      "date_max": "2026-03-17",
+      "date_max": "2026-04-01",
       "future_dates_ignored": 0,
       "ufs": [
         "ac",
@@ -76,10 +76,10 @@
         "sp",
         "to"
       ],
-      "source_size_bytes": 7173398,
+      "source_size_bytes": 7193923,
       "source_url": "https://www.gov.br/icmbio/pt-br/assuntos/dados_geoespaciais/mapa-tematico-e-dados-geoestatisticos-das-unidades-de-conservacao-federais/autos_infracao_icmbio.xlsx",
       "data_file": "icmbio_records.jsonl.gz",
-      "updated_at": "2026-03-21T13:46:34+00:00"
+      "updated_at": "2026-04-07T14:47:26+00:00"
     }
   }
 }
