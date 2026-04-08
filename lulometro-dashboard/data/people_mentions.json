@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-07T14:52:40.299502+00:00",
+  "generated_at": "2026-04-08T14:54:26.533549+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -10,15 +10,16 @@
     "senado_senadores": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json"
   },
   "counts": {
-    "entities": 595,
+    "entities": 605,
     "entities_by_kind": {
       "deputado": 513,
       "janja": 1,
+      "stf": 10,
       "senador": 81
     },
-    "mention_rows": 1531,
-    "mention_occurrences_total": 2207,
-    "mention_docs_total": 1531,
+    "mention_rows": 1673,
+    "mention_occurrences_total": 2450,
+    "mention_docs_total": 1673,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -333,6 +334,23 @@
       "snippet": "Senadora Eliziane Gama; os deputados federais Clodoado Magalhães, Dorinaldo Malafaia, Jorge Solla; e Zé Neto."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2026-02-20",
+      "week": "2026-W08",
+      "month": "2026-02",
+      "year": "2026",
+      "type": "entrevista",
+      "doc_id": "02d6ae81dd069d6569d0",
+      "title": "Entrevista do presidente Luiz Inácio Lula da Silva à India Today TV",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-luiz-inacio-lula-da-silva-a-india-today-tv",
+      "location": "20 de fevereiro de 2026",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Porque, além de tentar dar um golpe de Estado, ele tinha planejado matar a mim, ao meu vice-presidente e ao presidente da Corte Eleitoral [Alexandre de Moraes, ministro do Supremo Tribunal Federal]."
+    },
+    {
       "entity_id": "senador-humberto-costa",
       "date": "2026-02-15",
       "week": "2026-W07",
@@ -348,6 +366,23 @@
         "Humberto Costa"
       ],
       "snippet": "Quando o Humberto Costa [senador por Pernambuco] tomou posse como ministro da Saúde em 2003, Padilha [Alexandre, ministro da Saúde], eu lembro de uma reunião em que eu dizia para o Humberto: “Humberto, nós precisamos trabalhar a ideia de que todos os hospitais universitários, em qualquer lugar do Brasil, tem que se transformar em centr..."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2026-02-06",
+      "week": "2026-W06",
+      "month": "2026-02",
+      "year": "2026",
+      "type": "entrevista",
+      "doc_id": "512821f3d904f4bae5b9",
+      "title": "Entrevista do presidente Lula à TV Aratu, da Bahia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-tv-aratu-da-bahia-1",
+      "location": "6 de fevereiro de 2026",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Esse cidadão que foi condenado a 27 anos e 3 meses de cadeia, esse cidadão tinha um plano para matar o Lula, para matar o Alckmin [Geraldo, vice-presidente e ministra do Desenvolvimento, Indústria e Comércio] e para matar o Alexandre de Moraes [vice-presidente do Supremo Tribunal Federal]."
     },
     {
       "entity_id": "senador-otto-alencar",
@@ -469,6 +504,23 @@
       "snippet": "Se você coloca, por exemplo, o Flávio Bolsonaro, o filho mais velho do ex-presidente Jair Messias Bolsonaro, ele performa num patamar muito semelhante, um pouco mais largo, mas muito semelhante."
     },
     {
+      "entity_id": "stf-edson-fachin",
+      "date": "2026-02-04",
+      "week": "2026-W06",
+      "month": "2026-02",
+      "year": "2026",
+      "type": "discurso",
+      "doc_id": "a8ebc1379c1dcc1bc7b5",
+      "title": "Discurso do presidente Lula no lançamento do Pacto Brasil de Enfrentamento ao Feminicídio",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/discurso-do-presidente-lula-no-lancamento-do-pacto-brasil-de-enfrentamento-ao-feminicidio",
+      "location": "4 de fevereiro de 2026",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Edson Fachin"
+      ],
+      "snippet": "Meu querido presidente do Senado, Davi Alcolumbre; meu querido Hugo Motta, presidente da Câmara; meu querido Edson Fachin, presidente da Suprema Corte; meu querido companheiro Alckmin [Geraldo], vice-presidente da República; Rui Costa [ministro da Casa Civil], Gleisi Hoffmann [ministra da Secretaria de Relações Institucionais]; Márcia..."
+    },
+    {
       "entity_id": "senador-davi-alcolumbre",
       "date": "2026-02-04",
       "week": "2026-W06",
@@ -535,6 +587,23 @@
         "Gleisi Hoffmann"
       ],
       "snippet": "Meu querido presidente do Senado, Davi Alcolumbre; meu querido Hugo Motta, presidente da Câmara; meu querido Edson Fachin, presidente da Suprema Corte; meu querido companheiro Alckmin [Geraldo], vice-presidente da República; Rui Costa [ministro da Casa Civil], Gleisi Hoffmann [ministra da Secretaria de Relações Institucionais]; Márcia..."
+    },
+    {
+      "entity_id": "stf-edson-fachin",
+      "date": "2026-02-02",
+      "week": "2026-W06",
+      "month": "2026-02",
+      "year": "2026",
+      "type": "discurso",
+      "doc_id": "a6987374351d97ac1759",
+      "title": "Discurso do presidente Lula na Abertura do Ano Judiciário 2026",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/discurso-do-presidente-lula-na-abertura-do-ano-judiciario-2026",
+      "location": "2 de fevereiro de 2026",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Edson Fachin"
+      ],
+      "snippet": "Sob a presidência do Ministro Edson Fachin, o STF segue exercendo seu papel com serenidade, firmeza e compromisso democrático."
     },
     {
       "entity_id": "senador-renan-filho",
@@ -1305,6 +1374,23 @@
       "snippet": "Quero cumprimentar o meu querido, sempre ex-ministro, embaixador Celso Amorim [assessor especial da Presidência da República]; os governadores Jerônimo Rodrigues [governador da Bahia], Elmano de Freitas [governador do Ceará], Fátima Bezerra [governadora do Rio Grande do Norte]; o senador Randolfe Rodrigues; o senador Jaques Wagner; o s..."
     },
     {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2026-01-07",
+      "week": "2026-W02",
+      "month": "2026-01",
+      "year": "2026",
+      "type": "discurso",
+      "doc_id": "016cc0d15ddc9191143f",
+      "title": "Pronunciamento do presidente Lula na cerimônia de anúncio da Rede Nacional de Hospitais e Serviços Inteligentes do SUS",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2026/01/pronunciamento-do-presidente-lula-na-cerimonia-de-anuncio-da-rede-nacional-de-hospitais-e-servicos-inteligentes-do-sus",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "E começa o ano melhor ainda, porque, além de continuar com a mesma expectativa na economia, e todas as análises feitas em janeiro deram erradas, Gilmar [Mendes, ministro do Supremo Tribunal Federal], todas, todas as previsões feitas em janeiro deram erradas e vão continuar errando."
+    },
+    {
       "entity_id": "senador-eliziane-gama",
       "date": "2025-12-23",
       "week": "2025-W52",
@@ -1388,6 +1474,23 @@
         "Baleia Rossi"
       ],
       "snippet": "O que eu estranho muito aqui é o Baleia [Rossi, deputado federal], de Jacareí a Ribeirão Preto é uma distância muito grande para ele ficar, sabe?"
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-12-19",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "6da56d9a5ced39306ab9",
+      "title": "Discurso do presidente Lula na celebração de Natal na ExpoCatadores, em São Paulo",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/12/discurso-do-presidente-lula-na-celebracao-de-natal-na-expocatadores",
+      "location": "São Paulo",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre Moraes"
+      ],
+      "snippet": "Pela tentativa de fazer um plano para matar o Lula, para matar o Alckmin [Geraldo, vice-presidente da República] e para matar o Alexandre Moraes [ministro do Supremo Tribunal Federal]."
     },
     {
       "entity_id": "deputado-hugo-motta",
@@ -1577,6 +1680,40 @@
       "snippet": "Então, eu termino o ano de 2025 agradecendo ao Congresso Nacional, ao comportamento do companheiro Alcolumbre, ao comportamento do Arthur Lira quando era presidente, e ao comportamento do Hugo, de aprovar as coisas que nos interessam."
     },
     {
+      "entity_id": "stf-edson-fachin",
+      "date": "2025-12-17",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "c52f1bb4288511f8b5a7",
+      "title": "Pronunciamento do presidente Lula na reunião ministerial",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/12/pronunciamento-do-presidente-lula-na-reuniao-ministerial",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Edson Fachin"
+      ],
+      "snippet": "E também eu dizia ontem, numa reunião que nós fizemos com o presidente da Suprema Corte [Edson Fachin], com a ministra Cármen Lúcia [ministra do Supremo Tribunal Federal], com o Benjamin Hermann [Hermann Benjamin], do Superior Tribunal de Justiça, quem é que já viu um filme da mulher sendo algoz do homem?"
+    },
+    {
+      "entity_id": "stf-carmen-lucia",
+      "date": "2025-12-17",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "c52f1bb4288511f8b5a7",
+      "title": "Pronunciamento do presidente Lula na reunião ministerial",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/12/pronunciamento-do-presidente-lula-na-reuniao-ministerial",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cármen Lúcia"
+      ],
+      "snippet": "E também eu dizia ontem, numa reunião que nós fizemos com o presidente da Suprema Corte [Edson Fachin], com a ministra Cármen Lúcia [ministra do Supremo Tribunal Federal], com o Benjamin Hermann [Hermann Benjamin], do Superior Tribunal de Justiça, quem é que já viu um filme da mulher sendo algoz do homem?"
+    },
+    {
       "entity_id": "senador-renan-filho",
       "date": "2025-12-17",
       "week": "2025-W51",
@@ -1713,6 +1850,24 @@
       "snippet": "Depois disso, o companheiro Sidônio [Palmeira, ministro-chefe da Secretaria de Comunicação Social da Presidência da República] fará uma fala sobre a questão da comunicação, não só do que está sendo feito, mas do que nós vamos fazer, e depois a companheira Gleisi Hoffmann [ministra da Secretaria de Relações Institucionais] fará uma aval..."
     },
     {
+      "entity_id": "stf-carmen-lucia",
+      "date": "2025-12-16",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "f5d591d5f0fb087a35ad",
+      "title": "Pronunciamento do presidente Lula em reunião sobre prevenção e combate à violência contra as mulheres",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/12/pronunciamento-do-presidente-lula-em-reuniao-sobre-prevencao-e-combate-a-violencia-contra-as-mulheres",
+      "location": "reunião sobre prevenção e combate à violência contra as mulheres",
+      "occurrences": 3,
+      "matched_aliases": [
+        "Cármen Lúcia",
+        "Cármen"
+      ],
+      "snippet": "Aquela era, ministra Cármen [Lúcia, ministra do Supremo Tribunal Federal], em que o marido chegava em casa, meia-noite, e a coitada da mulher estava dormindo com três crianças na cama, e tinha que levantar para esquentar o feijãozinho dele, a sopa dele, como se fosse obrigação, acabou."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2025-12-16",
       "week": "2025-W51",
@@ -1729,6 +1884,40 @@
         "Janja"
       ],
       "snippet": "Aquilo me tocou porque normalmente isso é um assunto que não se discute muito em família, mas a Janja [Lula da Silva, primeira-dama do Brasil] estava falando porque ela estava violentada com a cena que ela viu na televisão, depois eu não sei se repetiu em outros programas."
+    },
+    {
+      "entity_id": "stf-edson-fachin",
+      "date": "2025-12-16",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "05a00c2782748bda1aaa",
+      "title": "Pronunciamento do presidente Lula na 10ª Reunião do Conselho de Participação Social",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/pronunciamento-do-presidente-lula-na-10a-reuniao-do-conselho-de-participacao-social",
+      "location": "Brasília/DF",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Edson Fachin"
+      ],
+      "snippet": "Eu convidei agora o presidente da Suprema Corte [Edson Fachin], o presidente do Superior Tribunal de Justiça [Herman Benjamin], o Alcolumbre [Davi, presidente do Senado], o Motta [Hugo, presidente da Câmara] não veio porque tem sessão lá."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-12-16",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "05a00c2782748bda1aaa",
+      "title": "Pronunciamento do presidente Lula na 10ª Reunião do Conselho de Participação Social",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/pronunciamento-do-presidente-lula-na-10a-reuniao-do-conselho-de-participacao-social",
+      "location": "Brasília/DF",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre Moraes"
+      ],
+      "snippet": "E é importante que vocês saibam que eu acho que nós tivemos uma atuação muito importante e depois do Tarifaço, eu já tive três reuniões com o presidente Trump [Donald], e nessas três reuniões a gente conseguiu ganhos para o Brasil, em todas elas, inclusive com a parte da redução da taxação, e a coisa mais importante foi tirar o nosso m..."
     },
     {
       "entity_id": "senador-camilo-santana",
@@ -1782,6 +1971,74 @@
       "snippet": "Como o Fávaro, como o Paulo Teixeira [ministro do Desenvolvimento Agrário e Agricultura Familiar], como o companheiro Jorge Viana."
     },
     {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2025-12-15",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "788e9768fcff70498e15",
+      "title": "Entrevista do presidente Lula ao SBT News",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-sbt-news",
+      "location": "15 de dezembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "Portanto, ele merece estar lá, como estava, como o Fernando Henrique Cardoso [ex-presidente da República] indicou, o Gilmar Mendes, como eu indiquei o Toffoli [José Antonio Dias, ministro do Supremo Tribunal Federal], está lá."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2025-12-15",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "788e9768fcff70498e15",
+      "title": "Entrevista do presidente Lula ao SBT News",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-sbt-news",
+      "location": "15 de dezembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Jornalista Marina Demori : Agora, presidente, uma decisão do ministro Flávio Dino [do Supremo Tribunal Federal] determinou uma operação dentro da Câmara dos Deputados contra a pessoa que era responsável pelo pagamento, pela distribuição das emendas parlamentares."
+    },
+    {
+      "entity_id": "stf-dias-toffoli",
+      "date": "2025-12-15",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "788e9768fcff70498e15",
+      "title": "Entrevista do presidente Lula ao SBT News",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-sbt-news",
+      "location": "15 de dezembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Toffoli"
+      ],
+      "snippet": "Portanto, ele merece estar lá, como estava, como o Fernando Henrique Cardoso [ex-presidente da República] indicou, o Gilmar Mendes, como eu indiquei o Toffoli [José Antonio Dias, ministro do Supremo Tribunal Federal], está lá."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-12-15",
+      "week": "2025-W51",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "788e9768fcff70498e15",
+      "title": "Entrevista do presidente Lula ao SBT News",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-sbt-news",
+      "location": "15 de dezembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "E hoje eu fiquei feliz quando eu entendo a notícia de que ele já tirou a punição do Alexandre [de Moraes, ministro do STF]."
+    },
+    {
       "entity_id": "senador-flavio-bolsonaro",
       "date": "2025-12-15",
       "week": "2025-W51",
@@ -1833,6 +2090,23 @@
       "snippet": "Eu sou amigo do Davi, eu sou amigo do Hugo Motta [presidente da Câmara dos Deputados]."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-12-12",
+      "week": "2025-W50",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "2b51062a814830a4b5b2",
+      "title": "Pronunciamento do presidente Lula no lançamento do SBTNews",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/12/pronunciamento-do-presidente-lula-no-lancamento-do-sbtnews",
+      "location": "São Paulo (SP)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "A segunda boa notícia é que o Silvio Santos faria 95 anos, e o Alexandre de Moraes [vice-presidente do Supremo Tribunal Federal] faz 35 amanhã [em tom de brincadeira, na verdade Moraes faz 57]."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2025-12-12",
       "week": "2025-W50",
@@ -1882,6 +2156,40 @@
         "Janja"
       ],
       "snippet": "Por isso, meu querido companheiro Hélio Costa [ex-deputado federal], é que eu tenho dito: aos 80 anos de idade, muito apaixonado pela minha Janjinha [Janja da Silva, primeira-dama], eu estou decidido."
+    },
+    {
+      "entity_id": "stf-carmen-lucia",
+      "date": "2025-12-11",
+      "week": "2025-W50",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "61f28ce21ac4428a8353",
+      "title": "Entrevista do presidente Lula à TV Alterosa - SBT",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-tv-alterosa-sbt",
+      "location": "11 de dezembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cármen Lúcia"
+      ],
+      "snippet": "Talvez na semana que vem vou ter uma reunião com o presidente da Suprema Corte, com a ministra Carmen Lúcia [do Supremo Tribunal Federal], com o presidente do Tribunal de Justiça, com o presidente da Câmara e com o presidente do Senado, para que a gente discuta qual é o papel dos homens na luta contra a violência contra a mulher."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-12-11",
+      "week": "2025-W50",
+      "month": "2025-12",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "61f28ce21ac4428a8353",
+      "title": "Entrevista do presidente Lula à TV Alterosa - SBT",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-tv-alterosa-sbt",
+      "location": "11 de dezembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Ele tinha um plano arquitetado para matar a mim, matar o Alckmin [Geraldo, vice-presidente da República e ministro da Indústria, Comércio e Serviços] , matar o Alexandre de Moraes [ministro do Supremo Tribunal Federal]."
     },
     {
       "entity_id": "senador-rodrigo-pacheco",
@@ -2602,6 +2910,23 @@
       "snippet": "Então, queria agradecer a ela e ao senador Flávio Arns, que foi o relator, aos deputados, que trabalharam muito nisso; a um deputado aqui...Tem vários deputados aqui, tem a deputada [federal] doutora Alessandra Haber, tem o deputado [federal] Rogério Correia, tem o deputado [federal] Diego Garcia, dos republicanos, ou seja, uma demonst..."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-10-27",
+      "week": "2025-W44",
+      "month": "2025-10",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "7ec8eba12b7e2881c746",
+      "title": "Entrevista concedida pelo presidente Lula, em Kuala Lumpur, na Malásia, após agendas no Sudeste Asiático",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-concedida-pelo-presidente-lula-em-kuala-lumpur-na-malasia-apos-agendas-no-sudeste-asiatico",
+      "location": "27 de outubro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Eu disse para ele que o julgamento foi um julgamento muito sério, com provas muito contundentes, nenhuma prova da oposição, a prova é tudo de relato das pessoas que estão sendo julgadas, disse para ele a gravidade do que eles tentaram fazer no Brasil, disse a eles que eles tinham um plano para me matar, para matar o meu vice-presidente..."
+    },
+    {
       "entity_id": "senador-carlos-favaro",
       "date": "2025-10-26",
       "week": "2025-W43",
@@ -2891,6 +3216,23 @@
       "snippet": "E eu tenho brigado com o ministro do Turismo [Celso Sabino] e aí, Camilo, uma coisa que nós temos que fazer na escola é que nós temos que fazer publicidade, incentivo, para que a meninada nossa da escola que tem vontade."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2025-10-07",
+      "week": "2025-W41",
+      "month": "2025-10",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "a3ff5117dfb7c233b9f4",
+      "title": "Entrevista do presidente Lula à TV Mirante (MA)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-tv-mirante-ma",
+      "location": "7 de outubro de 2025",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Eu tenho uma relação com o ex-governador Flávio Dino, muito boa."
+    },
+    {
       "entity_id": "senador-eliziane-gama",
       "date": "2025-10-07",
       "week": "2025-W41",
@@ -2923,6 +3265,23 @@
         "André Fufuca"
       ],
       "snippet": "Carla Lima : Presidente, eu ia encerrar com essa pergunta, mas já que o senhor me lembrou do ministro, o ministro que o senhor falou é o André Fufuca [ministro do Esporte], que sofre pressão para desembarcar do seu governo."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2025-10-06",
+      "week": "2025-W41",
+      "month": "2025-10",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "a7f5e3b0aa7eb8344f94",
+      "title": "Pronunciamento do presidente Lula durante entrega de 2,8 mil unidades do Minha Casa, Minha Vida em Imperatriz (MA)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/10/pronunciamento-do-presidente-lula-durante-entrega-de-2-8-mil-unidades-do-minha-casa-minha-vida-em-imperatriz-ma",
+      "location": "6 de outubro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Quero agradecer aos senadores, ao companheiro Weverton [senador], que tem sido muito leal na relação com o governo, a companheira Eliziane Gama [senadora], que tem sido muito leal, e a companheira Ana Paula, que é uma senadora suplente do Flávio Dino e que tem trabalhado de forma extraordinária junto com o governo."
     },
     {
       "entity_id": "senador-eliziane-gama",
@@ -3455,6 +3814,23 @@
       "snippet": "Quero cumprimentar minha querida companheira Janja [Lula da Silva, primeira-dama do Brasil]; meus queridos companheiros ministros e ministras, Ricardo Lewandowski, ministro da Justiça e Segurança Pública; ministro Camilo Santana, da Educação; ministra Marina Silva, do Meio Ambiente e Mudança do Clima; Jader Filho, ministro das Cidades;..."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-09-22",
+      "week": "2025-W39",
+      "month": "2025-09",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "8500c14fc78e95921c64",
+      "title": "entrevista do presidente Lula à jornalista Amna Nawaz, no programa PBS NewsHour, da rede de TV americana PBS",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-jornalista-amna-nawaz-no-programa-pbs-newshour-da-rede-de-tv-americana-pbs",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Presidente Lula - Bem, antes de tudo, é inacreditável que o presidente Trump tenha esse tipo de comportamento com o Brasil devido ao julgamento de um ex-presidente que tentou dar um golpe de estado contra o Estado democrático de direito, que conectou e planejou minha morte, o meu assassinato, do vice-presidente [Geraldo Alckmin] e do p..."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2025-09-19",
       "week": "2025-W38",
@@ -3539,6 +3915,23 @@
         "Zé Neto"
       ],
       "snippet": "Eu estou vendo ali o Zé Neto [deputado federal], que já foi candidato cinco vezes e não se elegeu ainda."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-09-17",
+      "week": "2025-W38",
+      "month": "2025-09",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "cc5c7f4f778ec5c26240",
+      "title": "Entrevista do presidente Lula à BBC Brasil e à BBC News",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-bbc-brasil-e-a-bbc-news",
+      "location": "17 de setembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Essas pessoas fizeram muito mal ao país, essas pessoas tentaram dar um golpe de Estado, essas pessoas articularam a minha morte, a morte do meu vice [Geraldo Alckmin, vice-presidente e ministro da Indústria, Comércio e Serviços], a morte de um juiz [Alexandre de Moraes, ministro do Supremo Tribunal Federal] da Suprema Corte, essa gente..."
     },
     {
       "entity_id": "senador-alessandro-vieira",
@@ -3797,6 +4190,23 @@
       "snippet": "“Eu faço cinco anestesias, seis, e vou embora e acabou.” Mas é uma profissão que a gente, então, Padilha, vai ter que pensar, Camilo [Santana, ministro da Educação], como é que a gente faz para incentivar a formação da anestesista, que é uma coisa muito necessária hoje."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-09-11",
+      "week": "2025-W37",
+      "month": "2025-09",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "dcdd5dfeb03cdb216870",
+      "title": "Entrevista do presidente Lula ao Jornal da Band",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-jornal-da-band",
+      "location": "11 de setembro de 2025",
+      "occurrences": 4,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "A ponto de ele tentar trabalhar a tentativa da morte do presidente da República eleito, do vice-presidente [da República, Geraldo Alckmin] e do próprio Alexandre de Moraes [ministro do Supremo Tribunal Federal]."
+    },
+    {
       "entity_id": "senador-camilo-santana",
       "date": "2025-09-11",
       "week": "2025-W37",
@@ -3829,6 +4239,23 @@
         "Hugo Motta"
       ],
       "snippet": "Hugo [Motta, presidente da Câmara dos Deputados], veja que absurdo."
+    },
+    {
+      "entity_id": "stf-luiz-fux",
+      "date": "2025-09-11",
+      "week": "2025-W37",
+      "month": "2025-09",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "dcdd5dfeb03cdb216870",
+      "title": "Entrevista do presidente Lula ao Jornal da Band",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-jornal-da-band",
+      "location": "11 de setembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Luiz Fux"
+      ],
+      "snippet": "E o voto do ministro Luiz Fux [ministro do Supremo Tribunal Federal] foi muito contundente, abriu uma profunda divergência."
     },
     {
       "entity_id": "senador-chico-rodrigues",
@@ -3967,6 +4394,23 @@
       "snippet": "Às vezes, as pessoas jogam a culpa em cima da Marina [Marina Silva, ministra do Meio Ambiente]."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-09-05",
+      "week": "2025-W36",
+      "month": "2025-09",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "03ee0c7a9d8e0c463898",
+      "title": "Entrevista do presidente Lula ao SBT Brasil",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-sbt-brasil",
+      "location": "5 de setembro de 2025",
+      "occurrences": 4,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "E, também nessa delação, mostra que havia uma tentativa de assassinar o presidente Lula, o vice-presidente Alckmin [Geraldo, vice-presidente e ministro do Desenvolvimento, Indústria, Comércio e Serviços] e o ministro da Suprema Corte, Alexandre de Moraes."
+    },
+    {
       "entity_id": "senador-sergio-moro",
       "date": "2025-09-05",
       "week": "2025-W36",
@@ -3982,6 +4426,23 @@
         "Sergio Moro"
       ],
       "snippet": "Jornalista César Filho : O senhor acredita que as pessoas dizem que o Alexandre de Moraes estaria para o Bolsonaro da mesma forma que o ex-juiz Sérgio Moro esteve com o senhor?"
+    },
+    {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2025-09-05",
+      "week": "2025-W36",
+      "month": "2025-09",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "03ee0c7a9d8e0c463898",
+      "title": "Entrevista do presidente Lula ao SBT Brasil",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-sbt-brasil",
+      "location": "5 de setembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "O ministro Gilmar Mendes, ele está falando da pejotização das empresas e falando que a CLT está um pouco parada no tempo."
     },
     {
       "entity_id": "janja-janja",
@@ -4017,6 +4478,23 @@
         "Bandeira de Mello"
       ],
       "snippet": "Fala do presidente do Sindigás, Sergio Bandeira de Mello"
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-09-04",
+      "week": "2025-W36",
+      "month": "2025-09",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "00808fdd1a2774b9c6aa",
+      "title": "Pronunciamento do presidente Lula durante lançamento do Programa União com Municípios pela Redução do Desmatamento e Incêndios Florestais",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/09/pronunciamento-do-presidente-lula-durante-lancamento-do-programa-uniao-com-municipios-pela-reducao-do-desmatamento-e-incendios-florestais",
+      "location": "4 de setembro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "O pai dele estava aqui tentando matar o Lula, matar o Alckmin [Geraldo, vice-presidente e ministro do Desenvolvimento, Indústria, Comércio e Serviços], matar o Alexandre de Moraes [ministro do Supremo Tribunal Federal]."
     },
     {
       "entity_id": "janja-janja",
@@ -4070,6 +4548,23 @@
       "snippet": "Então, eu me sinto bem quando eu estou em Minas Gerais, acompanhado do senador Rodrigo Pacheco, meu ministro Alexandre Silveira [Minas e Energia], da nossa querida professora e ministra de Direitos Humanos [e da Cidadania], Macaé [Evaristo], e do Rui Costa [ministro da Casal Civil], que está tentando resolver os problemas da Casa Civil."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-08-29",
+      "week": "2025-W35",
+      "month": "2025-08",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "c229cbb71e4efe2d14b0",
+      "title": "Pronunciamento do presidente Lula durante anúncio de projetos habilitados pelo Novo PAC Seleções 2025",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/08/pronunciamento-do-presidente-lula-durante-anuncio-de-projetos-habilitados-pelo-novo-pac-selecoes-2025",
+      "location": "29 de agosto de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "É o plano para matar o presidente Lula, para matar o Alckmin e para matar o Alexandre de Moraes [ministro do Supremo Tribunal Federal]."
+    },
+    {
       "entity_id": "deputado-newton-cardoso-jr",
       "date": "2025-08-29",
       "week": "2025-W35",
@@ -4085,6 +4580,23 @@
         "Newton Cardoso Jr"
       ],
       "snippet": "Eu queria primeiro pedir desculpas aos deputados, à família Cardoso [Newton Cardoso Jr, deputado federal; Maria Lúcia Cardoso, ex-primeira-dama de Minas Gerais; Newton Cardoso, ex-governador de Minas Gerais], de não citar o nome aqui na nominata mais, porque todo mundo já citou."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-08-29",
+      "week": "2025-W35",
+      "month": "2025-08",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "ce8685e93d949668e9fa",
+      "title": "Entrevista do presidente Lula à Rádio Itatiaia, de Minas Gerais",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-radio-itatiaia-de-minas-gerais",
+      "location": "29 de agosto de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Ele que prove que ele não tinha um plano arquitetado para matar o Lula, para matar o Alckmin [vice-presidente da República e ministro do Desenvolvimento, Indústria, Comércio e Serviços], para matar o Alexandre de Moraes [ministro do STF]."
     },
     {
       "entity_id": "deputado-nikolas-ferreira",
@@ -4272,6 +4784,23 @@
         "Humberto Costa"
       ],
       "snippet": "Eu não poderia começar a minha fala hoje sem compartilhar o meu tempo com o companheiro Humberto Costa [senador da República]."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-08-14",
+      "week": "2025-W33",
+      "month": "2025-08",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "54973ce2504ccd8bb2d7",
+      "title": "Pronunciamento do presidente Lula na inauguração da fábrica de hemoderivados da Hemobrás em Goiana (PE)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/08/pronunciamento-do-presidente-lula-na-inauguracao-da-fabrica-de-hemoderivados-da-hemobras-em-goiana-pe",
+      "location": "14 de agosto de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Ele está sendo julgado pelas mazelas que ele fez, pela tentativa de golpe, pela preparação do assassinato ao presidente Lula, ao vice Alckmin [Geraldo, vice-presidente da República e ministro do Desenvolvimento, Indústria, Comércio e Serviços]], ao Alexandre de Moraes [ministro do Supremo Tribunal Federal], pela tentativa de colocar um..."
     },
     {
       "entity_id": "senador-teresa-leitao",
@@ -4529,6 +5058,23 @@
       "snippet": "Eu quero começar cumprimentando a minha querida companheira Janja [primeira-dama do Brasil], nosso querido companheiro ministro Camilo Santana [ministro da Educação], o governador do estado [do Ceará], Elmano de Freitas, Rafael Fonteles [governador do Piauí], a nossa governadora de Pernambuco, Raquel Lyra, cumprimentar a senadora Zenai..."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-08-08",
+      "week": "2025-W32",
+      "month": "2025-08",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "c1850c68941c745c316d",
+      "title": "Pronunciamento do presidente Lula durante anúncio de investimentos do Governo Federal no estado do Acre",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/08/pronunciamento-do-presidente-lula-durante-anuncio-de-investimentos-do-governo-federal-no-estado-do-acre",
+      "location": "8 de agosto de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre Moraes"
+      ],
+      "snippet": "E você, Petecão, por favor, não assine pedido de impeachment do Alexandre Moraes porque ele está garantindo a democracia."
+    },
+    {
       "entity_id": "senador-sergio-petecao",
       "date": "2025-08-08",
       "week": "2025-W32",
@@ -4631,6 +5177,23 @@
       "snippet": "Queria cumprimentar o deputado Antônia Lúcia, Meire Serafim, José Adriano."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-08-08",
+      "week": "2025-W32",
+      "month": "2025-08",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "5003aeb5322f09110666",
+      "title": "Pronunciamento do presidente Lula durante anúncio de investimentos do Governo Federal no estado de Rondônia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/08/pronunciamento-do-presidente-lula-durante-anuncio-de-investimentos-do-governo-federal-no-estado-de-rondonia",
+      "location": "8 de agosto de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "E ele sabe que ele é culpado porque ele tramou no golpe, ele tramava matar o Lula, tramava matar o Alckmin [Geraldo, vice-presidente e ministro d a Indústria, Comércio e Serviços] e tramava matar o Alexandre de Moraes [ministro do Supremo Tribunal Federal]."
+    },
+    {
       "entity_id": "senador-confucio-moura",
       "date": "2025-08-08",
       "week": "2025-W32",
@@ -4680,6 +5243,23 @@
         "Paulo Teixeira"
       ],
       "snippet": "O Paulo Teixeira foi falar, falou do Confúcio."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-08-06",
+      "week": "2025-W32",
+      "month": "2025-08",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "e910471b941f08bc308e",
+      "title": "Entrevista do presidente Lula à Agência Reuters",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-agencia-reuters",
+      "location": "6 de agosto de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "É importante citar que no governo Bolsonaro ele tinha arquitetado, se perdesse as eleições, matar a mim, matar ao Alckmin e matar ao juiz [Alexandre de Moraes, ministro do Supremo Tribunal Federal]que está julgando o processo dele."
     },
     {
       "entity_id": "senador-carlos-favaro",
@@ -4903,6 +5483,23 @@
       "snippet": "Meu querido companheiro Camilo Santana [ministro da Educação], eu tenho uma sorte muito grande porque o Camilo Santana foi, inegavelmente, o melhor governador do Estado do Ceará, um dos melhores governadores que o Brasil já teve, foi eleito senador da República, o mais votado da história do Ceará e, ao invés de assumir o Senado, ele ac..."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-07-29",
+      "week": "2025-W31",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "04814cd05da18433bba2",
+      "title": "Pronunciamento do Presidente Lula sobre o Programa Agora Tem Especialistas e Novo PAC Saúde, na Bahia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/07/pronunciamento-do-presidente-lula-sobre-o-programa-agora-tem-especialistas-e-novo-pac-saude-na-bahia",
+      "location": "18 de julho",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Porque o Bolsonaro tentou dar um golpe nesse país, ele tinha um plano para dar um golpe e tinha um plano para matar o Lula, para matar o Alckmin [Geraldo, vice-presidente da República e ministro de Desenvolvimento, Indústria, Comércio e Serviços] e para matar o Alexandre de Moraes [ministro do Supremo Tribunal Federal], presidente da C..."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2025-07-29",
       "week": "2025-W31",
@@ -5073,6 +5670,23 @@
       "snippet": "Era deputado federal, ô Boulos [Guilherme Boulos, deputado federal] ou Tatto [Jilmar Tatto, deputado federal], vocês aí na Câmara têm que tomar uma atitude."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-07-25",
+      "week": "2025-W30",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "f25d0590e500419ea5ae",
+      "title": "Pronunciamento do presidente Lula em Osasco, durante anúncio do Novo PAC Seleções - Periferia Viva",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/08/pronunciamento-do-presidente-lula-em-osasco-durante-anuncio-do-novo-pac-selecoes-periferia-viva",
+      "location": "25 de julho de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre Moraes"
+      ],
+      "snippet": "Ele tentou dar um golpe neste país, ele não queria que eu e o Alckmin [Geraldo Alckmin, vice-presidente da República e ministro do Desenvolvimento, Indústria, Comércio e Serviços] tomasse posse e chegou a montar uma equipe para matar o Lula, para matar o Alckmin e para matar o presidente do Superior Tribunal Eleitoral, o Alexandre Mora..."
+    },
+    {
       "entity_id": "senador-sergio-moro",
       "date": "2025-07-25",
       "week": "2025-W30",
@@ -5174,6 +5788,23 @@
         "Janja"
       ],
       "snippet": "PRESIDENTE LULA – Eu, às vezes acho, Mano, que eu estou melhor de saúde hoje do que quando eu tinha 50 anos, porque eu me cuido melhor, eu me preparo melhor, e depois eu tenho uma companheira [Rosângela Lula da Silva, primeira-dama da República] que cuida muito de mim, então eu estou muito bem preparado de saúde."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2025-07-18",
+      "week": "2025-W29",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "5819d7300fbb80f17226",
+      "title": "Entrevista ao programa Mano a Mano",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-ao-programa-mano-a-mano",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Quando nós entramos, o Flávio Dino [ministro do Supremo Tribunal Federal e ex-ministro da Justiça e Segurança Pública] começou a desmontar decreto por decreto para a gente tirar essas armas das pessoas."
     },
     {
       "entity_id": "senador-camilo-santana",
@@ -5293,6 +5924,40 @@
         "Camilo Santana"
       ],
       "snippet": "Eu queria dizer para vocês, que eu assinei esta medida provisória agora, criando uma coisa chamada data center aqui, em Fortaleza, que já existe no Porto de Pecém, porque o Elmano [de Freitas, governador do Ceará] e o Camilo Santana [ministro da Educação], todo santo dia, eles estão em Brasília, enchendo o saco para eu assinar esta med..."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-07-17",
+      "week": "2025-W29",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "ed7a9c2b345f2f38d7ac",
+      "title": "Entrevista do Presidente Lula à jornalista Christiane Amanpour, da CNN International",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-jornalista-christiane-amanpour-da-cnn-international",
+      "location": "17 de julho de 2025",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Ele tentou dar um golpe, tentou derrubar a democracia, ameaçou sigilosamente a morte do Alckmin, a minha e a do presidente do Tribunal Eleitoral brasileiro [ministro Alexandre de Moraes, hoje no Supremo Tribunal Federal]."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-07-17",
+      "week": "2025-W29",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "bc6b379063ec73ca3d34",
+      "title": "Pronunciamento do Presidente Lula no 60º CONUNE – Congresso da União Nacional dos Estudantes",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/07/pronunciamento-do-presidente-lula-no-60o-conune-2013-congresso-da-uniao-nacional-dos-estudantes",
+      "location": "17 de julho de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre Moraes"
+      ],
+      "snippet": "Inclusive com insinuações de que era preciso matar o Lula, matar o Alexandre Moraes [ministro do Supremo Tribunal Federal] e matar o meu vice [Geraldo Alckmin, vice-presidente da República e ministro de Desenvolvimento, Indústria, Comércio e Serviços]."
     },
     {
       "entity_id": "senador-camilo-santana",
@@ -5431,6 +6096,57 @@
       "snippet": "Eu levo como uma divergência, eu gosto do Hugo, eu gosto do Davi, eu gostava do Pacheco [Rodrigo Pacheco, senador, ex-presidente do Senado Federal], eu gostava do Lira [Arthur Lira, deputado federal, ex-presidente da Câmara dos Deputados]."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-07-10",
+      "week": "2025-W28",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "4c653540530cdbecb6f5",
+      "title": "Entrevista concedida pelo Presidente Lula ao Jornal Nacional",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-concedida-pelo-presidente-lula-ao-jornal-nacional",
+      "location": "10 de julho de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Ele não tentou dar o golpe, ele tentou preparar a minha morte, a morte do presidente da Suprema Corte, que na época era o Alexandre de Moraes, a morte do vice-presidente."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-07-07",
+      "week": "2025-W28",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "f16afaf7d72b53f8d136",
+      "title": "Entrevista coletiva do presidente Lula no encerramento da cúpula do BRICS, no Rio de Janeiro",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-no-encerramento-da-cupula-do-brics-no-rio-de-janeiro",
+      "location": "7 de julho de 2025",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Eu não li ainda a decisão do ministro Alexandre de Moraes, porque eu estava aqui no BRICS, mas nós temos outras decisões de outros ministros, diferente da decisão do Alexandre de Moraes."
+    },
+    {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2025-07-07",
+      "week": "2025-W28",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "f16afaf7d72b53f8d136",
+      "title": "Entrevista coletiva do presidente Lula no encerramento da cúpula do BRICS, no Rio de Janeiro",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-no-encerramento-da-cupula-do-brics-no-rio-de-janeiro",
+      "location": "7 de julho de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "Nós temos decisões, no caso do ministro Gilmar [Mendes, do STF], aprovando IOF, quando o Fernando Henrique Cardoso [ex-presidente da República] era presidente."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2025-07-04",
       "week": "2025-W27",
@@ -5463,6 +6179,23 @@
         "Hugo Motta"
       ],
       "snippet": "O erro, na minha opinião, foi o descumprimento de um acordo que tinha sido feito num domingo à meia-noite na casa do presidente Hugo Motta, lá estavam vários ministros, lá estavam vários deputados, lá estava o companheiro Fernando Haddad [ministro da Fazenda] com a sua equipe, festejaram o acordo no domingo!"
+    },
+    {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2025-07-02",
+      "week": "2025-W27",
+      "month": "2025-07",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "4273f6005f2419b5f105",
+      "title": "Entrevista televisiva do Presidente Lula ao Jornal da Manhã Salvador",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-televisiva-do-presidente-lula-ao-jornal-da-manha-salvador",
+      "location": "2 de julho de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "O ministro Gilmar [Mendes, do Supremo Tribunal Federal] assumiu para ele a tarefa de tentar fazer acordo nacional sobre a questão indígena."
     },
     {
       "entity_id": "senador-jaques-wagner",
@@ -6044,6 +6777,23 @@
       "snippet": "Então, eu acho que o companheiro Fávaro [Carlos Fávaro, ministro da Agricultura] tem razão de dizer que é um dia histórico, um dia histórico por merecimento de cada um de vocês que entendeu de que se a gente quer competir, a gente tem que ser o melhor."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2025-06-06",
+      "week": "2025-W23",
+      "month": "2025-06",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "6c80b7b647d7118f6e65",
+      "title": "Pronunciamento do presidente Lula na Universidade Paris 8, em Paris",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/06/pronunciamento-do-presidente-lula-na-universidade-paris-8-em-paris",
+      "location": "Paris",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "Como nem todo mundo pode ser jogador de futebol, nem todo mundo pode ser o Cristiano Ronaldo, um Mbappé, um Messi, um Ronaldo, Ronaldinho, nós temos que acreditar na educação como forma de dar oportunidade a todas as pessoas."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2025-06-06",
       "week": "2025-W23",
@@ -6059,6 +6809,23 @@
         "Janja Lula da Silva"
       ],
       "snippet": "Quero cumprimentar a minha querida companheira Janja [Lula da Silva, primeira-dama do Brasil] e quero cumprimentar os meus ministros e ministras que estão aqui."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-06-06",
+      "week": "2025-W23",
+      "month": "2025-06",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "b261bca70d8c81acdb44",
+      "title": "Entrevista coletiva do presidente Lula no Palácio do Planalto",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-coletiva-do-presidente-lula-no-palacio-do-planalto",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Presidente, minha pergunta é sobre as sanções dos Estados Unidos prometidas pelos Estados Unidos contra o ministro Alexandre de Moraes."
     },
     {
       "entity_id": "deputado-mendonca-filho",
@@ -6894,6 +7661,23 @@
         "Hugo Motta"
       ],
       "snippet": "Obrigado, companheiro Hugo [Motta, presidente da Câmara dos Deputados]."
+    },
+    {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2025-04-15",
+      "week": "2025-W16",
+      "month": "2025-04",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "2a031e74c3df8076a8ec",
+      "title": "Pronunciamento do presidente Lula durante visita às obras da rodovia Presidente Dutra, na Serra das Araras (RJ)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/04/pronunciamento-do-presidente-lula-durante-visita-as-obras-da-rodovia-presidente-dutra-na-serra-das-araras-rj",
+      "location": "15 de abril de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "Pode pensar que vocês são mais caros que o Cristiano Ronaldo, sabe, de tanto valor que tem."
     },
     {
       "entity_id": "senador-renan-filho",
@@ -7935,6 +8719,23 @@
       "snippet": "Eu quero cumprimentar os deputados federais que estão aqui, na pessoa do presidente da Câmara, Hugo Motta."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2025-02-27",
+      "week": "2025-W09",
+      "month": "2025-02",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "2f6f216140cd9278ccb5",
+      "title": "Entrevista do presidente Lula no Balanço Geral Litoral (SP), em 27 de fevereiro de 2025",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-no-balanco-geral-litoral-sp-em-27-de-fevereiro-de-2025",
+      "location": "27 de fevereiro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Jornalista Alexandre Furtado: Agora, com relação à liberação das condições de transparência para as emendas por parte do ministro do Supremo Tribunal Federal, Flávio Dino."
+    },
+    {
       "entity_id": "deputado-silvio-costa-filho",
       "date": "2025-02-21",
       "week": "2025-W08",
@@ -8069,6 +8870,40 @@
         "Janja"
       ],
       "snippet": "Sinceramente, eu acho graça quando eu ouço dizer porque a Janja [primeira-dama do Brasil] dá palpite na vida do Lula."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-02-20",
+      "week": "2025-W08",
+      "month": "2025-02",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "5fa0784d6d6ca1e90285",
+      "title": "Entrevista do presidente Lula à Rádio Tupi FM (RJ)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-radio-tupi-rj",
+      "location": "20 de fevereiro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre Moraes"
+      ],
+      "snippet": "Eu tentei bolar um plano para matar o Lula, tentei bolar um plano para matar o Alckmin, tentei bolar um plano para matar o Alexandre Moraes, não deu certo porque eu tive uma diarréia no dia, fiquei com medo."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2025-02-19",
+      "week": "2025-W08",
+      "month": "2025-02",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "57dbeebda56c990a1aac",
+      "title": "Entrevista coletiva com o presidente Lula após realização da XIV Cimeira Brasil-Portugal",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-coletiva-com-o-presidente-lula-apos-realizacao-da-xiv-cimeira-brasil-portugal",
+      "location": "Brasília",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Se eles provarem que não tentaram dar golpe e se eles provarem que não tentaram matar o presidente, o vice-presidente [Geraldo Alckmin] e o presidente do Superior Tribunal Eleitoral [Tribunal Superior Eleitoral, à época presidido por Alexandre de Moraes, ministro do STF], eles ficarão livres e serão cidadãos que poderão transitar pelo..."
     },
     {
       "entity_id": "senador-rodrigo-pacheco",
@@ -8667,6 +9502,23 @@
       "snippet": "Se não, há possibilidade de mudança aqui no Planalto, quem sabe Pacheco [Rodrigo Pacheco, senador, atual presidente do Congresso] ou Lira [Arthur Lira, deputado federal, atual presidente da Câmara] saindo das presidências, vindo para o governo?"
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2025-01-30",
+      "week": "2025-W05",
+      "month": "2025-01",
+      "year": "2025",
+      "type": "discurso",
+      "doc_id": "1a2837afd0b938053b83",
+      "title": "Pronunciamento do presidente Lula durante conversa com jornalistas, em 30 de janeiro de 2025",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/02/pronunciamento-do-presidente-lula-durante-conversa-com-jornalistas-em-30-de-janeiro-de-2025",
+      "location": "30 de janeiro de 2025",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Então, elas existem, nós estamos agora com decisões da Suprema Corte, do ministro Flávio Dino, e nós vamos negociar para ver se se coloca um acordo definitivo entre a Câmara, sabe, e o Poder Executivo para saber que, sabe, se tiver que dar emenda, vamos dar emenda subordinada e orientada a projetos de interesse do Estado brasileiro, so..."
+    },
+    {
       "entity_id": "deputado-gleisi-hoffmann",
       "date": "2025-01-30",
       "week": "2025-W05",
@@ -8750,6 +9602,23 @@
         "Arthur Lira"
       ],
       "snippet": "Se não, há possibilidade de mudança aqui no Planalto, quem sabe Pacheco [Rodrigo Pacheco, senador, atual presidente do Congresso] ou Lira [Arthur Lira, deputado federal, atual presidente da Câmara] saindo das presidências, vindo para o governo?"
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2025-01-30",
+      "week": "2025-W05",
+      "month": "2025-01",
+      "year": "2025",
+      "type": "entrevista",
+      "doc_id": "03d45ce080e795c0a97c",
+      "title": "Entrevista concedida pelo presidente Lula a jornalistas no Palácio do Planalto",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-concedida-pelo-presidente-lula-a-jornalistas-no-palacio-do-planalto",
+      "location": "30 de janeiro de 2025",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Então, elas existem, nós estamos agora com decisões da Suprema Corte, do ministro Flávio Dino, e nós vamos negociar para ver se se coloca um acordo definitivo entre a Câmara, sabe, e o Poder Executivo para saber que, sabe, se tiver que dar emenda, vamos dar emenda subordinada e orientada a projetos de interesse do Estado brasileiro, so..."
     },
     {
       "entity_id": "deputado-gleisi-hoffmann",
@@ -9245,6 +10114,23 @@
       "snippet": "Querido deputado Arnaldo Jardim."
     },
     {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2024-11-27",
+      "week": "2024-W48",
+      "month": "2024-11",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "7649a5a6c0f44f98f6df",
+      "title": "Pronunciamento do presidente Lula na abertura do Encontro Nacional da Indústria",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/11/pronunciamento-do-presidente-lula-na-abertura-do-encontro-nacional-da-industria",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar"
+      ],
+      "snippet": "E vou chegar lá, Gilmar, vou chegar lá, porque quando tem uma causa, quando a gente tem uma causa, a gente está em busca dessa causa, a gente vai onde a gente quiser."
+    },
+    {
       "entity_id": "senador-rodrigo-pacheco",
       "date": "2024-11-27",
       "week": "2024-W48",
@@ -9620,6 +10506,23 @@
         "Camilo Santana"
       ],
       "snippet": "Uma coisa importante, Camilo [Santana, ministro da Educação], que eu e você precisamos falar aqui nessa sala é o seguinte."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-10-31",
+      "week": "2024-W44",
+      "month": "2024-10",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "277b5ff72d9f329636b7",
+      "title": "Pronunciamento do presidente Lula durante reunião com governadores",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/10/pronunciamento-do-presidente-lula-durante-reuniao-com-governadores-1",
+      "location": "31 de outubro de 2024",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Por isso é importante a presença do Poder Judiciário aqui, é importante a presença do companheiro Flávio Dino [ministro do Supremo Tribunal Federal], que foi ministro da Justiça até outro dia, e que tinha muita preocupação com isso."
     },
     {
       "entity_id": "senador-rodrigo-pacheco",
@@ -10728,6 +11631,23 @@
       "snippet": "E eu, junto com o ministro da Educação [Camilo Santana], começamos a discutir."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2024-09-12",
+      "week": "2024-W37",
+      "month": "2024-09",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "cbcd24a20c6fe8ef0447",
+      "title": "Pronunciamento do presidente Lula na inauguração do Armazém da Utopia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/09/pronunciamento-do-presidente-lula-na-inauguracao-do-armazem-da-utopia",
+      "location": "12 de setembro de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "Quero cumprimentar a nossa querida Maria Marighella, presidente da Funarte; o Lucas Padilha, secretário da Casa Civil do município do Rio de Janeiro; o Cristiano Costa, presidente da Shell do Brasil; a Tereza Campelo, diretora socioambiental do BNDES; a Marice Inácio, gerente de patrocínio do Instituto Cultural Vale; os nossos queridos..."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2024-09-12",
       "week": "2024-W37",
@@ -11170,6 +12090,23 @@
       "snippet": "Mas, Camilo [Camilo Santana, ministro da Educação], apenas para, primeiro, agradecer o esforço que o Brasil está conseguindo com a aprovação do IDEB [Índice de Desenvolvimento da Educação Básica] em 2007."
     },
     {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2024-09-05",
+      "week": "2024-W36",
+      "month": "2024-09",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "bf51a950e85d0c223c77",
+      "title": "Pronunciamento do presidente Lula durante entrega de novo bloco do Hospital de Clínicas da Universidade Federal de Uberlândia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/09/pronunciamento-do-presidente-lula-durante-entrega-de-novo-bloco-do-hospital-de-clinicas-da-universidade-federal-de-uberlandia",
+      "location": "5 de setembro de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar"
+      ],
+      "snippet": "Quero cumprimentar o companheiro Gilmar Machado, ex-deputado federal, ex-prefeito e assessor de assuntos parlamentares do nosso companheiro Padilha [Alexandre, ministro das Relações Institucionais]."
+    },
+    {
       "entity_id": "senador-humberto-costa",
       "date": "2024-09-05",
       "week": "2024-W36",
@@ -11389,6 +12326,23 @@
         "Aguinaldo Ribeiro"
       ],
       "snippet": "Inclusive, uma coisa que ninguém imaginava que a gente fosse votar, governador, uma política tributária que foi aprovada e o Aguinaldo [Ribeiro, deputado federal] foi o relator na Câmara e aprovou essa política de Reforma Agrária."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2024-08-30",
+      "week": "2024-W35",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "8e8c4a37af7204adbbfc",
+      "title": "Entrevista do presidente Lula à Rádio MaisPB, na Paraíba",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-radio-maispb",
+      "location": "30 de agosto de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "O ministro Alexandre de Moraes, do Supremo Tribunal Federal, ele intimou o empresário Elon Musk, ainda representante legal das empresas dele no Brasil."
     },
     {
       "entity_id": "senador-renan-filho",
@@ -11918,6 +12872,57 @@
       "snippet": "Cumprimentar o meu querido companheiro Geraldo Alckmin [vice-presidente da República e ministro do Desenvolvimento, Indústria, Comércio e Serviços], meu querido companheiro Rodrigo Pacheco, meu querido companheiro Arthur Lira [presidente da Câmara dos Deputados], meu querido companheiro Roberto Barroso [presidente do Supremo Tribunal F..."
     },
     {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2024-08-21",
+      "week": "2024-W34",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "68363b4e9f271b55af50",
+      "title": "Pronunciamento do presidente Lula durante assinatura do Pacto pela Transformação Ecológica entre os Três Poderes",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/08/pronunciamento-do-presidente-lula-durante-assinatura-do-pacto-pela-transformacao-ecologica-entre-os-tres-poderes",
+      "location": "21 de agosto de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "Meus queridos companheiros, ministros da Suprema Corte Flávio Dino, Gilmar Mendes e Dias Toffoli, nossa ex-procuradora-geral da República, Raquel Dodge, governador Eduardo Riedel, do estado de Mato Grosso [do Sul], e Antonio Denarium, de Roraima, Walter Alves, vice-governador do Rio Grande do Norte, senadora Leila Barros e senador Bene..."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-08-21",
+      "week": "2024-W34",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "68363b4e9f271b55af50",
+      "title": "Pronunciamento do presidente Lula durante assinatura do Pacto pela Transformação Ecológica entre os Três Poderes",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/08/pronunciamento-do-presidente-lula-durante-assinatura-do-pacto-pela-transformacao-ecologica-entre-os-tres-poderes",
+      "location": "21 de agosto de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Meus queridos companheiros, ministros da Suprema Corte Flávio Dino, Gilmar Mendes e Dias Toffoli, nossa ex-procuradora-geral da República, Raquel Dodge, governador Eduardo Riedel, do estado de Mato Grosso [do Sul], e Antonio Denarium, de Roraima, Walter Alves, vice-governador do Rio Grande do Norte, senadora Leila Barros e senador Bene..."
+    },
+    {
+      "entity_id": "stf-dias-toffoli",
+      "date": "2024-08-21",
+      "week": "2024-W34",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "68363b4e9f271b55af50",
+      "title": "Pronunciamento do presidente Lula durante assinatura do Pacto pela Transformação Ecológica entre os Três Poderes",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/08/pronunciamento-do-presidente-lula-durante-assinatura-do-pacto-pela-transformacao-ecologica-entre-os-tres-poderes",
+      "location": "21 de agosto de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Dias Toffoli"
+      ],
+      "snippet": "Meus queridos companheiros, ministros da Suprema Corte Flávio Dino, Gilmar Mendes e Dias Toffoli, nossa ex-procuradora-geral da República, Raquel Dodge, governador Eduardo Riedel, do estado de Mato Grosso [do Sul], e Antonio Denarium, de Roraima, Walter Alves, vice-governador do Rio Grande do Norte, senadora Leila Barros e senador Bene..."
+    },
+    {
       "entity_id": "senador-renan-filho",
       "date": "2024-08-21",
       "week": "2024-W34",
@@ -12120,6 +13125,23 @@
         "Janja"
       ],
       "snippet": "Eu estava dizendo para a Janja que eu ouvia o Silvio Santos quando ele estava num programa de rádio com o Manoel de Nóbrega, o programa era O Peru que Fala, foi a primeira coisa."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-08-16",
+      "week": "2024-W33",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "9e4b284bf76b664ad975",
+      "title": "Entrevista do presidente Lula à Rádio Gaúcha",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-radio-gaucha",
+      "location": "16 de agosto de 2024",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Com uma decisão do ministro Flávio Dino, do Supremo Tribunal Federal, de segurar essas emendas PIX até que se tenha transparência."
     },
     {
       "entity_id": "deputado-paulo-pimenta",
@@ -12496,6 +13518,23 @@
       "snippet": "Quero cumprimentar a minha querida companheira Gleisi Hoffmann, deputada federal, Carol Dartora, companheiro Zeca Dirceu, Tadeu Veneri, e o companheiro Toninho Wandscheer."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-08-15",
+      "week": "2024-W33",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "f9a2229bcf43219e2107",
+      "title": "Entrevista do presidente Lula à Rádio T, no Paraná",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-radio-t-no-parana",
+      "location": "15 de agosto de 202",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Então, nós tivemos agora essa decisão do ministro Flávio Dino."
+    },
+    {
       "entity_id": "senador-renan-filho",
       "date": "2024-08-15",
       "week": "2024-W33",
@@ -12630,6 +13669,23 @@
         "Bohn Gass"
       ],
       "snippet": "Deputados federais aqui presentes, o Bohn Gass, o padre Luiz Couto, o Chico Vigilante, que está ali na minha frente."
+    },
+    {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2024-08-09",
+      "week": "2024-W32",
+      "month": "2024-08",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "07600564dad8ab4ca6d2",
+      "title": "Pronunciamento do presidente Lula durante inauguração do Contorno Viário de Florianópolis",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/08/pronunciamento-do-presidente-lula-durante-inauguracao-do-contorno-viario-de-florianopolis",
+      "location": "9 de agosto de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "No mais, queridos companheiros e companheiras, eu queria agradecer aos funcionários que me receberam com muito carinho, aos funcionários da Arteris: a Rita de Cassia Santana Foz Leal, a Silvânia Santos da Silva Oliveira, Cristiano Santos Garcia e Tupinazan Bezerra Samico, que é um indígena de Pernambuco que está trabalhando nessa obra."
     },
     {
       "entity_id": "senador-renan-filho",
@@ -12989,6 +14045,23 @@
       "snippet": "Bem, eu quero cumprimentar os meus ministros, Camilo [Santana, da Educação], Paulo Teixeira [do Desenvolvimento Agrário e Agricultura Familiar] e Laércio [Portela, da Secretaria de Comunicação Social da Presidência da República]."
     },
     {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2024-07-23",
+      "week": "2024-W30",
+      "month": "2024-07",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "f31483e6825ecdb13d67",
+      "title": "Pronunciamento do presidente Lula na celebração dos 10 anos do campus Lagoa do Sino da UFSCar",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/07/pronunciamento-do-presidente-lula-na-celebracao-dos-10-anos-do-campus-lagoa-do-sino-da-ufscar",
+      "location": "23 de julho de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar"
+      ],
+      "snippet": "Quero cumprimentar o Alberto Carmassi, diretor do Campus da Lagoa do Sino da UFSCar; o Fábio Grigoletto, diretor do Centro de Ciência de Natureza da UFSCar; o meu querido companheiro Gilmar Mauro, da Direção Nacional do Movimento Sem Terra; o companheiro Murilo Araújo Picoli, estudante do curso de engenharia; a nossa querida companheir..."
+    },
+    {
       "entity_id": "senador-camilo-santana",
       "date": "2024-07-23",
       "week": "2024-W30",
@@ -13279,6 +14352,23 @@
       "snippet": "Então, quem achar que o Lulinha tá cansado, pergunte para Janja."
     },
     {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2024-07-05",
+      "week": "2024-W27",
+      "month": "2024-07",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "adaa8bd52a44d4a9cfeb",
+      "title": "Pronunciamento do presidente Lula durante visita a obras do Quarteirão da Educação, em Diadema (SP)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/07/pronunciamento-do-presidente-lula-durante-visita-a-obras-do-quarteirao-da-educacao-em-diadema-sp",
+      "location": "Diadema (SP)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar"
+      ],
+      "snippet": "Eu descobri uma coisa, Gilmar, que valida a minha vida."
+    },
+    {
       "entity_id": "deputado-paulo-teixeira",
       "date": "2024-07-05",
       "week": "2024-W27",
@@ -13498,6 +14588,23 @@
         "Camilo Santana"
       ],
       "snippet": "É por isso que o Camilo (Camilo Santana, ministro da Educação) citou aqui que 68 milhões de brasileiros não concluíram o primeiro grau."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-07-02",
+      "week": "2024-W27",
+      "month": "2024-07",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "5fcd08034f0077a49410",
+      "title": "Entrevista do presidente Lula à Rádio Sociedade (BA)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-radio-sociedade-ba",
+      "location": "2 de julho de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Depois, durante o processo da transição, eu cheguei à conclusão, conversei com o ministro Flávio Dino [ministro do Supremo Tribunal Federal e ex-ministro da Justiça e Segurança Pública] de que, olhe, se a gente anunciar um Ministério de Segurança Pública e ele não der resultado rápido, vai ser uma coisa que vai nascer desacreditada."
     },
     {
       "entity_id": "senador-camilo-santana",
@@ -13824,6 +14931,23 @@
       "snippet": "Veja, eu estou acompanhado do presidente do Senado, o senador Rodrigo Pacheco."
     },
     {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2024-06-27",
+      "week": "2024-W26",
+      "month": "2024-06",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "e34ff4b43de342728c60",
+      "title": "Entrevista do presidente Luiz Inácio Lula da Silva à Rádio Itatiaia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-luiz-inacio-lula-da-silva-a-radio-itatiaia",
+      "location": "27 de junho de 2024",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "O ministro Gilmar Mendes disse lá em Portugal que o STF toma muitas decisões, ou seja, é muito acionado porque não há consenso na política no Brasil."
+    },
+    {
       "entity_id": "deputado-rogerio-correia",
       "date": "2024-06-27",
       "week": "2024-W26",
@@ -14079,6 +15203,40 @@
       "snippet": "Primeiro porque a Janja conheceu o Jardim Ângela."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-06-26",
+      "week": "2024-W26",
+      "month": "2024-06",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "a58afedf9640587ad36c",
+      "title": "Entrevista do presidente Lula ao UOL",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-uol",
+      "location": "26 de junho de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Ou seja, era o Flávio Dino [ministro do STF, ex-ministro da Justiça], é uma penca de gente da mais alta qualidade."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2024-06-26",
+      "week": "2024-W26",
+      "month": "2024-06",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "a58afedf9640587ad36c",
+      "title": "Entrevista do presidente Lula ao UOL",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-uol",
+      "location": "26 de junho de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Há um pedido de indiciamento que tem que ser aceito ou pelo Alexandre de Moraes [ministro do STF], ou pelo Procurador-Geral da República."
+    },
+    {
       "entity_id": "senador-rodrigo-pacheco",
       "date": "2024-06-26",
       "week": "2024-W26",
@@ -14145,6 +15303,23 @@
         "Juscelino Filho"
       ],
       "snippet": "Ao mesmo tempo, no caso do União Brasil, ele entregou para o senhor o ministro Juscelino Filho [das Comunicações], que é um ministro que foi indiciado pela Polícia Federal no caso de desvio de verbas públicas."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-06-21",
+      "week": "2024-W25",
+      "month": "2024-06",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "26ab8b4da251cfdc0d4e",
+      "title": "Pronunciamento do presidente Lula durante anúncio de investimentos no Maranhão",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/06/pronunciamento-do-presidente-lula-durante-anuncio-de-investimentos-no-maranhao",
+      "location": "21 de junho de 2024",
+      "occurrences": 4,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "O nosso querido Flávio Dino, que foi para a Suprema Corte desse país."
     },
     {
       "entity_id": "janja-janja",
@@ -14419,6 +15594,23 @@
       "snippet": "Quero cumprimentar o companheiro André Fufuca."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-06-21",
+      "week": "2024-W25",
+      "month": "2024-06",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "a024c0fe7673e3ecc6ad",
+      "title": "Entrevista do presidente Lula à Rádio Mirante News (MA)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-a-radio-mirante-news-ma",
+      "location": "21 de junho de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Jorge Aragão : Presidente, a gente, com a cessão do Flávio Dino para o STF, convite formulado pelo senhor, a gente ficou com dois ministros."
+    },
+    {
       "entity_id": "deputado-juscelino-filho",
       "date": "2024-06-21",
       "week": "2024-W25",
@@ -14451,6 +15643,23 @@
         "Maria do Rosário"
       ],
       "snippet": "No Rio Grande do Sul, a gente tem uma candidata competitiva, que é a Maria do Rosário."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-06-21",
+      "week": "2024-W25",
+      "month": "2024-06",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "c77c418e9e83f9d5e46b",
+      "title": "Entrevista do presidente Lula ao jornal O Imparcial",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-lula-ao-jornal-o-imparcial",
+      "location": "21 de junho de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "E para o cargo de senador, o PT, apoiou o ex-governador Flávio Dino também do PSB, que foi eleito com uma votação expressiva."
     },
     {
       "entity_id": "senador-camilo-santana",
@@ -15165,6 +16374,23 @@
         "Rodrigo Pacheco"
       ],
       "snippet": "Falar depois do Pacheco [ Rodrigo Pacheco, presidente do Senado Federal ] não é fácil, porque o microfone fica muito alto quando o Pacheco fala."
+    },
+    {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2024-05-21",
+      "week": "2024-W21",
+      "month": "2024-05",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "ec19675cba28ca247bf7",
+      "title": "Pronunciamento do presidente Lula durante cerimônia de abertura da Marcha dos Prefeitos 2024",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/05/pronunciamento-do-presidente-lula-durante-cerimonia-de-abertura-da-marcha-dos-prefeitos-2024",
+      "location": "canal do YouTube",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano Zanin"
+      ],
+      "snippet": "O Governo Federal junto com a Suprema Corte, o Senado e a Câmara estabeleceu a manutenção da alíquota da previdência dos municípios em 8%, pedido realizado pela Advocacia-Geral da União, e a liminar foi concedida pelo ministro Cristiano Zanin, na sexta-feira, 17/5."
     },
     {
       "entity_id": "senador-zenaide-maia",
@@ -16918,6 +18144,23 @@
       "snippet": "Marina Silva, do Meio Ambiente."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-03-18",
+      "week": "2024-W12",
+      "month": "2024-03",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "b26db4e7e656ddb935f9",
+      "title": "Pronunciamento do presidente Lula durante a primeira reunião ministerial de 2024",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/03/pronunciamento-do-presidente-lula-durante-a-primeira-reuniao-ministerial-de-2024",
+      "location": "18 de março de 2024",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "E o Flávio Dino, porque foi promovido."
+    },
+    {
       "entity_id": "deputado-paulo-pimenta",
       "date": "2024-03-15",
       "week": "2024-W11",
@@ -16950,6 +18193,23 @@
         "Camilo Santana"
       ],
       "snippet": "O problema é que o Camilo [Santana, ministro da Educação] não deixou nada para falar."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-03-11",
+      "week": "2024-W11",
+      "month": "2024-03",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "c591a518cd15ed95e018",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, ao SBT",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-ao-sbt",
+      "location": "pesquisas?",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Eu tenho discutido com o ministro Lewandowski, discutia com o ministro Flávio Dino, nós precisamos fazer o seguinte: nós precisamos criar uma polícia nacional mais forte e mais presente."
     },
     {
       "entity_id": "deputado-rui-falcao",
@@ -17222,6 +18482,23 @@
         "Janja"
       ],
       "snippet": "Esses dias a Janja perguntou para a jornalista: “por que não publica essa foto?”."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2024-02-27",
+      "week": "2024-W09",
+      "month": "2024-02",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "98b4c9ad2423329ff71d",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, à RedeTV!",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-a-redetv",
+      "location": "27 de fevereiro de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Kennedy Alencar: O Alexandre de Moraes falou que tem que estar vigilante, que não pode ser como o Bambam que apanhou do Popó em 36 segundos."
     },
     {
       "entity_id": "senador-rodrigo-pacheco",
@@ -17922,6 +19199,40 @@
       "snippet": "Cumprimentar o Marcos Pereira, que está no exercício da presidência da Câmara, porque o Lira não veio aqui."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-02-01",
+      "week": "2024-W05",
+      "month": "2024-02",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "1388e68a1dedfdfcdfd1",
+      "title": "Pronunciamento do presidente Lula durante a posse do novo ministro da Justiça e Segurança Pública, Ricardo Lewandowski",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/02/pronunciamento-do-presidente-lula-durante-a-posse-do-novo-ministro-da-justica-e-seguranca-publica-ricardo-lewandowski",
+      "location": "Brasília (DF)",
+      "occurrences": 15,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Todos vocês sabem que é desnecessário o presidente da República falar depois da gente ouvir o Flávio Dino e ouvir o Lewandowski."
+    },
+    {
+      "entity_id": "stf-carmen-lucia",
+      "date": "2024-02-01",
+      "week": "2024-W05",
+      "month": "2024-02",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "1388e68a1dedfdfcdfd1",
+      "title": "Pronunciamento do presidente Lula durante a posse do novo ministro da Justiça e Segurança Pública, Ricardo Lewandowski",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/02/pronunciamento-do-presidente-lula-durante-a-posse-do-novo-ministro-da-justica-e-seguranca-publica-ricardo-lewandowski",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cármen Lúcia"
+      ],
+      "snippet": "Entretanto, eu não poderia deixar de cumprimentar a quantidade de ministros da Suprema Corte e a ministra Cármen Lúcia aqui presente, em uma demonstração de afeto e de reconhecimento ao companheiro deles, que assume o Ministério da Justiça, e ao companheiro deles que vai assumir a Suprema Corte."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2024-02-01",
       "week": "2024-W05",
@@ -17937,6 +19248,23 @@
         "Janja"
       ],
       "snippet": "E, confesso para vocês, que eu dizia para a Janja que, muitas vezes, eu deitava e eu tinha que escolher o novo ministro da Suprema Corte e eu ficava pensando: “Quem?"
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-01-31",
+      "week": "2024-W05",
+      "month": "2024-01",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "ada0a01c8f79b2462871",
+      "title": "Pronunciamento do presidente Lula durante apresentação do balanço da segurança pública em 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/01/pronunciamento-do-presidente-lula-durante-apresentacao-do-balanco-da-seguranca-publica-em-2023",
+      "location": "Brasília (DF)",
+      "occurrences": 5,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Nessa exposição do companheiro Flávio Dino, depois haverá um conjunto de perguntas, eu não sei se vão ser dez perguntas."
     },
     {
       "entity_id": "deputado-paulo-pimenta",
@@ -18143,6 +19471,23 @@
       "snippet": "Mas, mesmo assim, como a minha mãe sempre pediu para eu teimar, para eu fazer as coisas, eu resolvi fazer um teste e decidimos fazer a primeira Olimpíada da Matemática na escola pública, Camilo [Santana, ministro da Educação]."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-01-18",
+      "week": "2024-W03",
+      "month": "2024-01",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "44558836a1e14bc41589",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, ao Jornal A Tarde (BA)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-ao-jornal-a-tarde-ba-1",
+      "location": "18 de janeiro de 2024",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "A Tarde — No nível nacional, dois assuntos interligados que estão movimentando o cenário do Judiciário e Executivo é a ida do ministro Flávio Dino para o Supremo e a substituição dele no Ministério da Justiça pelo ex-ministro do Supremo Lewandowski, o que tem gerado críticas de blocos adversários."
+    },
+    {
       "entity_id": "deputado-alice-portugal",
       "date": "2024-01-18",
       "week": "2024-W03",
@@ -18177,6 +19522,40 @@
       "snippet": "A nominata é muito grande e eu vou dispensar um pouco a nominata e falar cumprimentando todos os políticos, falar o nome da nossa querida Teresa Leitão, nossa vereadora, que em nome dela eu cumprimento todas as pessoas aqui presentes."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-01-11",
+      "week": "2024-W02",
+      "month": "2024-01",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "19a0c8168904bd71736d",
+      "title": "Pronunciamento do presidente Lula durante anúncio de que Ricardo Lewandowski será o novo ministro da Justiça e Segurança Pública",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/01/pronunciamento-do-presidente-lula-durante-anuncio-de-que-ricardo-lewandowski-sera-o-novo-ministro-da-justica-e-seguranca-publica",
+      "location": "11 de janeiro de 2024",
+      "occurrences": 10,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "E feliz porque eu tenho do meu lado esquerdo um companheiro que foi um extraordinário ministro da Suprema Corte que deixa uma cadeira vazia e que ela vai ser ocupada pelo Flávio Dino."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-01-08",
+      "week": "2024-W02",
+      "month": "2024-01",
+      "year": "2024",
+      "type": "discurso",
+      "doc_id": "acd0d9f7824e2615c56d",
+      "title": "Discurso do presidente Lula durante ato em defesa da democracia e do Estado de Direito, no Congresso Nacional",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2024/01/discurso-do-presidente-lula-durante-o-ato-em-defesa-da-democracia-e-do-estado-de-direito-no-congresso-nacional",
+      "location": "8 de janeiro de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Quero cumprimentar, especialmente, o nosso querido mais novo ministro da Suprema Corte, o Flávio Dino, que já está com cara de ministro da Suprema Corte, aqui na minha frente."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2024-01-08",
       "week": "2024-W02",
@@ -18194,6 +19573,23 @@
       "snippet": "Eu quero, primeiro, cumprimentar a minha querida companheira Janja."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-01-06",
+      "week": "2024-W01",
+      "month": "2024-01",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "02b648b761763dc212f9",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, ao Jornal Folha de S. Paulo",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-ao-jornal-folha-de-s-paulo",
+      "location": "torno da GLO e o fortalecimento da democracia",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Presidente Lula – Olha, nas conversas que eu tive com o ministro Flávio Dino – e foram muitas conversas –, dentre várias coisas que ele falou, ele aventou que uma das possibilidades era fazer GLO."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2024-01-05",
       "week": "2024-W01",
@@ -18209,6 +19605,40 @@
         "Janja"
       ],
       "snippet": "Presidente Lula – Então, eu falei para Janja: “Vamos passar em Araraquara antes de a gente chegar a Brasília, para a gente ver o que a gente pode fazer com Edinho\"."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-01-05",
+      "week": "2024-W01",
+      "month": "2024-01",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "08ef184db90267183025",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, ao canal de notícias GloboNews",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-ao-canal-de-noticias-globonews",
+      "location": "5 de janeiro de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Presidente Lula – Então, eu tomei a decisão de dizer para o Flávio Dino: \"Vamos fazer o que tem que fazer, não tem GLO.\""
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2024-01-05",
+      "week": "2024-W01",
+      "month": "2024-01",
+      "year": "2024",
+      "type": "entrevista",
+      "doc_id": "f2f2931d99ef3e7b70a0",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, ao canal de notícias CNN Brasil",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-ao-canal-de-noticias-cnn-brasil",
+      "location": "5 de janeiro de 2024",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Liguei para algumas pessoas aqui, sabe, liguei para o Flávio Dino (ministro da Justiça e Segurança Pública), outras pessoas me ligaram."
     },
     {
       "entity_id": "janja-janja",
@@ -18603,6 +20033,23 @@
       "snippet": "Você sabe que um dos moleques, uma das coisas que aconteceu com o cara que hackeou a Janja (Lula da Silva, primeira-dama do Brasil), sabe quem passou a noite passando informação?"
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-12-14",
+      "week": "2023-W50",
+      "month": "2023-12",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "ca01cc4a25c0ea703dd6",
+      "title": "Pronunciamento do presidente Lula na abertura da 4ª Conferência Nacional de Juventude",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-lula-na-abertura-da-4a-conferencia-nacional-de-juventude",
+      "location": "Bras´ília",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Pela primeira vez na história deste país, nós conseguimos colocar na Suprema Corte deste país um ministro comunista, um companheiro da qualidade do Flávio Dino."
+    },
+    {
       "entity_id": "deputado-benedita-da-silva",
       "date": "2023-12-14",
       "week": "2023-W50",
@@ -18805,6 +20252,40 @@
         "Janja"
       ],
       "snippet": "É uma honra para minha esposa, Janja, e para mim recebê-los ao lado do xeique Mohammed Bin Zayed."
+    },
+    {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-11-24",
+      "week": "2023-W47",
+      "month": "2023-11",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "05baedb7f6cd3219f73b",
+      "title": "Pronunciamento do presidente Lula durante a sanção da lei que institui pensão a filhos de vítimas da hanseníase",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-lula-durante-a-sancao-da-lei-que-institui-pensao-a-filhos-de-vitimas-da-hanseniase",
+      "location": "24 de novembro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "Essa caneta eu ganhei de presente e eu fui assinar, quando eu fui assinar, o companheiro, acho que era Cristiano, foi falar e ele pediu para quebrar o protocolo."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-11-23",
+      "week": "2023-W47",
+      "month": "2023-11",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "4248346e7ec84c888ebb",
+      "title": "Pronunciamento do presidente Lula durante o lançamento do Novo Viver Sem Limite",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-lula-durante-o-lancamento-do-novo-viver-sem-limite",
+      "location": "23 de novembro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Flávio Dino, ministro da Justiça e Segurança Pública; Camilo Santana, ministro da Educação; Wellington Dias, ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome."
     },
     {
       "entity_id": "senador-camilo-santana",
@@ -19111,6 +20592,23 @@
         "Camilo Santana"
       ],
       "snippet": "A gente tem obviamente um ilustre convidado aqui, o ministro da Educação, Camilo Santana."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-11-13",
+      "week": "2023-W46",
+      "month": "2023-11",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "4506a0bfc2c9c226cb27",
+      "title": "Pronunciamento do presidente Lula na chegada a Brasília de 32 repatriados da Faixa de Gaza",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-lula-na-chegada-a-brasilia-de-32-repatriados-da-faixa-de-gaza",
+      "location": "13 de novembro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Comandante da Aeronáutica, o nosso comandante da Marinha, nosso ministro dos Direitos Humanos (Silvio Almeida), o Celso Amorim (assessor-chefe da Assessoria Especial da Presidência), o Flávio Dino (ministro da Justiça), nosso companheiro Márcio (Macedo, ministro da Secretaria-Geral da Presidência), nosso companheiro ministro Mauro (Vie..."
     },
     {
       "entity_id": "janja-janja",
@@ -19657,6 +21155,40 @@
       "snippet": "Uma coisa importante, que o ministro [Paulo] Pimenta está me lembrando, é que o Nordeste é a região que mais tem jovem participando do Enem."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-11-01",
+      "week": "2023-W44",
+      "month": "2023-11",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "0e2f5fe5eee09fdf3831",
+      "title": "Pronunciamento do presidente Lula durante entrevista coletiva sobre ações na área de Segurança Pública",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-lula-durante-entrevista-coletiva-sobre-acoes-na-area-de-seguranca-publica",
+      "location": "1º de novembro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Agora, se vocês quiserem fazer perguntas, tem uma penca de ministros aí, sobretudo o Flávio Dino, para responder qualquer pergunta que vocês quiserem fazer."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-10-31",
+      "week": "2023-W44",
+      "month": "2023-10",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "b214e7b660a9a757cd34",
+      "title": "Pronunciamento do presidente Lula na cerimônia de sanção da lei que institui pensão especial para órfãos do feminicídio",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-lula-durante-cerimonia-de-sancao-da-lei-que-institui-pensao-especial-para-orfaos-do-feminicidio",
+      "location": "31 de outubro de 2023",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "E o que é mais grave, Flávio Dino, é que quando eu sancionei a Lei Maria da Penha, há quase 15 anos atrás, eu imaginava que ia diminuir a violência."
+    },
+    {
       "entity_id": "deputado-benedita-da-silva",
       "date": "2023-10-31",
       "week": "2023-W44",
@@ -19672,6 +21204,40 @@
         "Benedita da Silva"
       ],
       "snippet": "Em que momento nós erramos na formação da humanidade, Benedita da Silva?"
+    },
+    {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-10-31",
+      "week": "2023-W44",
+      "month": "2023-10",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "4cdb091e08e36d7797b1",
+      "title": "Conversa com o Presidente - Live do dia 31.out.23",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/conversa-com-o-presidente-live-do-dia-31-out.23",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "Eu fico um absurdo de ver o Cristiano Ronaldo na Arábia Saudita, em 43 jogos marcar 40 gols."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-10-27",
+      "week": "2023-W43",
+      "month": "2023-10",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "879d3f64928dba0a9444",
+      "title": "Café com o presidente do dia 27 de outubro de 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/cafe-com-o-presidente-do-dia-27-de-outubro-de-2023",
+      "location": "",
+      "occurrences": 5,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Mariana Holanda (Folha de São Paulo): Presidente, ainda na seara de Supremo, queria perguntar para o senhor, objetivamente, o que o senhor acha do nome de Flávio Dino, que tem sido colocado como preferencial."
     },
     {
       "entity_id": "janja-janja",
@@ -19741,6 +21307,23 @@
         "Zeca Dirceu"
       ],
       "snippet": "Quero cumprimentar o governador Helder Barbalho, do estado do Pará; Eduardo Leite, do estado do Rio Grande do Sul; Elmano de Freitas, do estado do Ceará; João Azevêdo, do estado da Paraíba; Renato Casagrande, do Espírito Santo; Fátima Bezerra, do Rio Grande do Norte; Wilson Lima, do estado do Amazonas; Ibaneis Rocha, do Distrito Federa..."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-10-24",
+      "week": "2023-W43",
+      "month": "2023-10",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "67fba6d79418fe875552",
+      "title": "Conversa com o Presidente - Live do dia 24.out.23",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/conversa-com-o-presidente-live-do-dia-24-out.23",
+      "location": "",
+      "occurrences": 4,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Eu já conversei com o governador Castro, do Rio de Janeiro, ontem eu conversei com o Flávio Dino, hoje eu vou conversar com o ministro da Defesa, na perspectiva de fazer com que a Aeronáutica possa ter uma intervenção maior nos aeroportos do Rio de Janeiro, que a Marinha possa ter uma intervenção maior nos portos do Rio de Janeiro, par..."
     },
     {
       "entity_id": "janja-janja",
@@ -19894,6 +21477,23 @@
         "Benedita da Silva"
       ],
       "snippet": "Também quero cumprimentar e lembrar da nossa companheira Benedita da Silva [deputada federal], que foi a primeira ministra de Assistência e Promoção Social."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-09-27",
+      "week": "2023-W39",
+      "month": "2023-09",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "82cd7a568fbc870a11ca",
+      "title": "Pronunciamento do presidente Lula na cerimônia de lançamento do Novo PAC – Seleções",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-lula-na-cerimonia-de-lancamento-do-novo-pac-2013-selecoes",
+      "location": "27 de setembro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "A gente faz o dinheiro circular na comunidade e vou dizer mais, companheiro ministro Flávio Dino [da Justiça e Segurança Pública]."
     },
     {
       "entity_id": "deputado-andre-fufuca",
@@ -20117,6 +21717,23 @@
       "snippet": "Hoje, às 7 e meia da noite, tem uma live com a Xuxa [apresentadora], com a Nísia [Nísia Trindade, ministra da Saúde] e com a Janja [primeira-dama do Brasil] sobre a questão da vacinação."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-09-05",
+      "week": "2023-W36",
+      "month": "2023-09",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "ef55519e57f7ce30f625",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, durante evento do Dia da Amazônia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-durante-evento-do-dia-da-amazonia",
+      "location": "Brasília",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Hoje, eu tive o prazer de participar com o companheiro Flávio Dino [ministro da Justiça e Segurança Pública] da diplomação de 241 policiais da Polícia Federal, entre delegados, investigadores, e os 241 policiais vão todos pro estado do Amazonas."
+    },
+    {
       "entity_id": "deputado-sonia-guajajara",
       "date": "2023-09-05",
       "week": "2023-W36",
@@ -20149,6 +21766,23 @@
         "Marina Silva"
       ],
       "snippet": "A segunda coisa, Marina [Marina Silva, ministra do Meio Ambiente e Mudança do Clima], importante, que não foi assinada aqui."
+    },
+    {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-09-05",
+      "week": "2023-W36",
+      "month": "2023-09",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "490b4689f1282f3dec8a",
+      "title": "Conversa com o Presidente - Live do dia 5.set.23",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/conversa-com-o-presidente-live-do-dia-5-set-23",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "O Cristiano Ronaldo não é o que ele é por causa da sorte."
     },
     {
       "entity_id": "deputado-sonia-guajajara",
@@ -20234,6 +21868,23 @@
         "Camilo Santana"
       ],
       "snippet": "É por isso, que eu escolhi o Camilo Santana para ser ministro da Educação, porque o Ceará tem a melhor experiência da educação neste país."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-09-01",
+      "week": "2023-W35",
+      "month": "2023-09",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "49ea85fc97afbb66472c",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, ao jornal Tribuna do Norte (RN)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-ao-jornal-tribuna-do-norte-rn",
+      "location": "1º de setembro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Eu sei que é uma área que causa muita angústia à população, e junto com o ministro Flávio Dino temos aumentado os investimentos federais nessa área e vamos procurar medidas para combater as facções criminosas que se espalharam pelo país."
     },
     {
       "entity_id": "senador-camilo-santana",
@@ -20387,6 +22038,23 @@
         "Bohn Gass"
       ],
       "snippet": "Deputado Bohn Gass, relator do projeto de lei do PPA [ Plano Plurianual ] 2024-2027, por meio de quem eu quero cumprimentar todos os deputados aqui presentes."
+    },
+    {
+      "entity_id": "stf-edson-fachin",
+      "date": "2023-08-29",
+      "week": "2023-W35",
+      "month": "2023-08",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "45f0e9df640bea41706d",
+      "title": "Conversa com o Presidente - Live do dia 29.ago.23",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/conversa-com-o-presidente-live-do-dia-29-ago-23",
+      "location": "",
+      "occurrences": 4,
+      "matched_aliases": [
+        "Edson"
+      ],
+      "snippet": "Edson Rocha (metalúrgico) – \"Presidente, eu sou Edson, aqui do metalúrgico de Niterói, ansioso pela retomada da indústria naval."
     },
     {
       "entity_id": "deputado-orlando-silva",
@@ -20678,6 +22346,23 @@
       "snippet": "Depois teremos as palavras do presidente do Parlamento Amazônico (PARLAMAZ), senador Nelsinho Trad, por cinco minutos."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-08-08",
+      "week": "2023-W32",
+      "month": "2023-08",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "37e2b5a779162c94c902",
+      "title": "Conversa com o Presidente - Live do dia 8.ago.23",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/conversa-com-o-presidente-live-do-dia-8-ago-23",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Quando eu acertei com o Flávio Dino [ministro da Justiça e Segurança Pública] que a gente ia colocar a Polícia Federal pra tomar conta disso, é porque nós vamos colocar mais policiais, fazer mais concursos, porque senão não se combate o crime organizado, você não combate o narcotráfico, essa gente está por aí matando índio, matando rib..."
+    },
+    {
       "entity_id": "senador-camilo-santana",
       "date": "2023-08-08",
       "week": "2023-W32",
@@ -20933,6 +22618,23 @@
       "snippet": "Queridos companheiros e companheiras do estado do Amazonas e de Parintins; minha querida companheira Janja; meu caro governador do estado do Amazonas, Wilson Lima e sua senhora Taiana Lima; meu caro companheiro Alexandre Silveira, ministro de Estado de Minas e Energia; meu caro governador do estado de Roraima, Antonio Denarium; senador..."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-08-03",
+      "week": "2023-W31",
+      "month": "2023-08",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "5ae7356ed480ae9ea98a",
+      "title": "Entrevista do presidente Luiz Inácio Lula da Silva para radialistas de seis estados amazônicos",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-luiz-inacio-lula-da-silva-para-radialistas-de-seis-estados-amazonicos",
+      "location": "",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Há pouco mais de um mês, o ministro Flávio Dino [ministro da Justiça e Segurança Pública] teve aqui na Tríplice Fronteira participando de uma reunião e discutindo como melhorar essa segurança na fronteira e tentar barrar qualquer tipo de entrada de entorpecentes ou equipamentos ilícitos."
+    },
+    {
       "entity_id": "deputado-marina-silva",
       "date": "2023-08-03",
       "week": "2023-W31",
@@ -21018,6 +22720,23 @@
       "snippet": "Presidente, hoje assume o Ministério do Turismo o deputado paraense Celso Sabino."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-08-02",
+      "week": "2023-W31",
+      "month": "2023-08",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "c5239f71fd9bf221d23d",
+      "title": "Pronunciamento do presidente Luiz Inácio Lula da Silva na cerimônia de lançamento do programa Povos da Pesca Artesanal",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-luiz-inacio-lula-da-silva-na-cerimonia-de-lancamento-do-programa-povos-da-pesca-artesanal",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "Eu quero dar os parabéns ao ministro André de Paula e ao secretário nacional da Pesca Artesanal, Cristiano Ramalho, por compreenderem que toda política pública precisa de um elemento vital para dar certo e esse elemento vital chama-se: participação popular."
+    },
+    {
       "entity_id": "deputado-paulo-teixeira",
       "date": "2023-08-02",
       "week": "2023-W31",
@@ -21069,6 +22788,23 @@
       "snippet": "Se vocês quiserem fazer pergunta pro Mauro, pro Celso, pro Pimenta [ Paulo Pimenta, ministro da Secretaria de Comunicação Social da Presidência da República ]."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-08-02",
+      "week": "2023-W31",
+      "month": "2023-08",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "e00420a0f832df6e757e",
+      "title": "Discurso do presidente Luiz Inácio Lula da Silva na cerimônia de lançamento do programa Povos da Pesca Artesanal",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/discurso-do-presidente-luiz-inacio-lula-da-silva-na-cerimonia-de-lancamento-do-programa-povos-da-pesca-artesanal",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "Parabéns ao ministro André de Paula e ao secretário nacional da Pesca Artesanal, Cristiano Ramalho, por compreenderem que toda política pública precisa de um elemento vital para dar certo: a participação popular."
+    },
+    {
       "entity_id": "senador-sergio-moro",
       "date": "2023-08-01",
       "week": "2023-W31",
@@ -21101,6 +22837,23 @@
         "Paulo Pimenta"
       ],
       "snippet": "Eu brigo com o Pimenta [Paulo Pimenta, ministro da Secretaria de Comunicação Social da Presidência da República], não sei se você sabe, muito, porque eu acho que um país do tamanho do Brasil tem que ter uma TV internacional."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-07-31",
+      "week": "2023-W31",
+      "month": "2023-07",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "eabd8113bb8f025386df",
+      "title": "Pronunciamento do presidente Luiz Inácio Lula da Silva na cerimônia de sanção da Lei do Programa Escola em Tempo Integral",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-luiz-inacio-lula-da-silva-na-cerimonia-de-sancao-da-lei-do-programa-escola-em-tempo-integral",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Queridas companheiras e queridos companheiros; minha querida companheira Janja; meu querido companheiro Camilo Santana, ministro da Educação; ministro Rui Costa, chefe da Casa Civil; Flávio Dino, da Justiça; Margareth Menezes da Cultura; Wellington Dias, do Desenvolvimento, Assistência Social, Família e Combate à Fome; Juscelino Filho,..."
     },
     {
       "entity_id": "senador-randolfe-rodrigues",
@@ -21256,6 +23009,40 @@
       "snippet": "O companheiro Moisés [ Moisés Selerges Júnior ] tomou posse, e eu fui lá, e fui eu, foi a Gleisi [ Gleisi Hoffmann, presidente do PT ], foi a Janja [ primeira-dama do Brasil ], foi alguns outros ministros."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-07-25",
+      "week": "2023-W30",
+      "month": "2023-07",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "bad40504b9f5327ce9db",
+      "title": "Conversa com o Presidente - Live do dia 25.jul.23",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/conversa-com-o-presidente-live-do-dia-25-jul.23",
+      "location": "",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Marcos Uchôa — Presidente, nessa direção o que passou, o Flávio Dino passou agora em relação a questão do armamento, de ter um maior controle, diminuir o número de armas no Brasil, essa coisa que tava louca, que tava aberta, gente comprando 60 armas como se fosse um exército particular."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2023-07-25",
+      "week": "2023-W30",
+      "month": "2023-07",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "bad40504b9f5327ce9db",
+      "title": "Conversa com o Presidente - Live do dia 25.jul.23",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/conversa-com-o-presidente-live-do-dia-25-jul.23",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Veja, quando acontece aquilo que aconteceu com o Alexandre de Moraes [ministro do Supremo Tribunal Federal] no aeroporto de Roma, eu acho que um cidadão que faz isso, ele não é um ser humano que você pode ter respeito por ele."
+    },
+    {
       "entity_id": "senador-rodrigo-pacheco",
       "date": "2023-07-25",
       "week": "2023-W30",
@@ -21392,6 +23179,40 @@
       "snippet": "Eu tenho conversado com Pacheco [Rodrigo Pacheco, presidente do Senado Federal], tenho conversado com o Lira [Arthur Lira, presidente da Câmara dos Deputados], tenho conversado com os líderes, o que eu sinto, o que eu sinto, na verdade, é que as pessoas estão com muito boa vontade de fazer as coisas acontecerem."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-07-23",
+      "week": "2023-W29",
+      "month": "2023-07",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "34f6460e0118b3297279",
+      "title": "Discurso do presidente Luiz Inácio Lula da Silva durante a cerimônia de posse da diretoria do Sindicato dos Metalúrgicos do ABC",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/discurso-do-presidente-luiz-inacio-lula-da-silva-durante-a-cerimonia-de-possa-de-diretoria-do-sindicato-dos-metalurgicos-do-abc",
+      "location": "São Bernardo do Campo",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cristiano"
+      ],
+      "snippet": "O Topo Giggio, quem não conhece, ele tem um restaurante ali no Bairro Assunção, na Avenida Cristiano Ângelo, lá na esquina que eu não sei com que outra rua."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2023-07-23",
+      "week": "2023-W29",
+      "month": "2023-07",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "34f6460e0118b3297279",
+      "title": "Discurso do presidente Luiz Inácio Lula da Silva durante a cerimônia de posse da diretoria do Sindicato dos Metalúrgicos do ABC",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/discurso-do-presidente-luiz-inacio-lula-da-silva-durante-a-cerimonia-de-possa-de-diretoria-do-sindicato-dos-metalurgicos-do-abc",
+      "location": "São Bernardo do Campo",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Ela não e é obrigada a gostar, mas ela não é obrigada a te xingar, não é obrigada a te ofender como aconteceu esses dias com o Alexandre de Moraes no Aeroporto de Roma, em que um canalha não só ofendeu ele, como bateu no filho dele."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2023-07-23",
       "week": "2023-W29",
@@ -21443,6 +23264,23 @@
       "snippet": "A nossa querida presidenta Nacional do PT, a nossa deputada Gleisi Hoffmann."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-07-21",
+      "week": "2023-W29",
+      "month": "2023-07",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "a677f10838465072fb2c",
+      "title": "Discurso do presidente da República, Luiz Inácio Lula da Silva, na cerimônia de assinatura de atos que compõem o Programa de Ação na Segurança (PAS)",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/discurso-do-presidente-luiz-inacio-lula-da-silva-na-cerimonia-de-assinatura-de-atos-que-compoem-o-programa-de-acao-na-seguranca-pas",
+      "location": "21 de julho de 2023",
+      "occurrences": 7,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Aí só o general dele, só o general do Flávio Dino [Ministro da Justiça e Segurança Pública] é que levantando os braços, resolve."
+    },
+    {
       "entity_id": "senador-jaques-wagner",
       "date": "2023-07-20",
       "week": "2023-W29",
@@ -21475,6 +23313,23 @@
         "Paulo Teixeira"
       ],
       "snippet": "É importante que a gente, Paulo Teixeira [Ministro do Desenvolvimento Agrário e Agricultura Familiar] e companheiro Wellington [Wellington Dias, ministro, do Desenvolvimento e Assistência Social, Família e Combate à Fome], que a gente passe a fiscalizar para saber se as coisas estão acontecendo, porque se isso acontecer a gente vai tra..."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2023-07-19",
+      "week": "2023-W29",
+      "month": "2023-07",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "653e193b4f28e77ab4f0",
+      "title": "Entrevista coletiva concedida pelo presidente Luiz Inácio Lula da Silva em Bruxelas, na Bélgica, após reunião CELAC - União Europeia",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-coletiva-concedida-pelo-presidente-luiz-inacio-lula-da-silva-em-bruxelas-na-belgica-apos-reuniao-celac-uniao-europeia-1",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Nós precisamos punir severamente pessoas que ainda transmitem ódio, como o cidadão que agrediu o ministro Alexandre de Moraes no Aeroporto de Roma."
     },
     {
       "entity_id": "deputado-jose-guimaraes",
@@ -21543,6 +23398,24 @@
         "Camilo Santana"
       ],
       "snippet": "Ainda ontem, o Camilo [Camilo Santana - ministro da Educação] anunciou o fim do ensino cívico-militar, sabe, porque não é obrigação do MEC cuidar disso."
+    },
+    {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-07-13",
+      "week": "2023-W28",
+      "month": "2023-07",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "a959e163161300cff459",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, à TV Record",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-a-tv-record",
+      "location": "13 de julho de 2023",
+      "occurrences": 7,
+      "matched_aliases": [
+        "Zanin",
+        "Cristiano Zanin"
+      ],
+      "snippet": "Presidente, eu te pergunto: Cristiano Zanin, nem tomou posse ainda, mas a gente já tá falando do próximo indicado."
     },
     {
       "entity_id": "senador-rodrigo-pacheco",
@@ -22378,6 +24251,23 @@
       "snippet": "E o Haddad tem sido um mestre nisso, junto com o Jaques Wagner, junto com o Guimarães, junto com o Randolfe na articulação com o Congresso Nacional."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-06-22",
+      "week": "2023-W25",
+      "month": "2023-06",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "9516c4e9dd32ddde00b8",
+      "title": "Entrevista do presidente Luiz Inácio Lula da Silva na saída de jantar oferecido pelo presidente da França em Paris",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-luiz-inacio-lula-da-silva-na-saida-de-jantar-oferecido-pelo-presidente-da-franca-em-paris",
+      "location": "22 de junho de 2023",
+      "occurrences": 3,
+      "matched_aliases": [
+        "Zanin"
+      ],
+      "snippet": "Repórter – A gente só que saber do Zanin."
+    },
+    {
       "entity_id": "deputado-gleisi-hoffmann",
       "date": "2023-06-21",
       "week": "2023-W25",
@@ -22597,6 +24487,23 @@
         "Tereza Cristina"
       ],
       "snippet": "A ex-ministra da Agricultura Tereza Cristina, que fazia parte do governo anterior, falou exatamente alguns anos atrás, o que o senhor disse em uma resposta anterior."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-06-15",
+      "week": "2023-W24",
+      "month": "2023-06",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "e8059f840986cb435d4a",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, na abertura de reunião ministerial",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-na-abertura-de-reuniao-ministerial-2",
+      "location": "reunião ministerial",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "O Flávio Dino também, mas nós vamos trazer pouca comida pra ele."
     },
     {
       "entity_id": "senador-camilo-santana",
@@ -23705,6 +25612,23 @@
       "snippet": "Eu tinha o Humberto Costa, eu tinha o Padilha, eu tinha o Temporão e tinha o Chioro e tinha mais o companheiro de Minas Gerais."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-05-04",
+      "week": "2023-W18",
+      "month": "2023-05",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "d70f739caf9de7d6d362",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, durante recriação do Conselho de Desenvolvimento Econômico Social Sustentável",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-durante-recriacao-do-conselho-de-desenvolvimento-economico-social-sustentavel",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Meu querido companheiro Rui Costa, ministro chefe da Casa Civil; Flávio Dino (da Justiça); Fernando Haddad (da Fazenda); Márcio França (dos Transportes); Camilo Santana (da Educação); Luiz Marinho (do Trabalho e Emprego); Wellington Dias (do Desenvolvimento Social); Nísia Trindade (da Saúde); Simone Tebet (do Planejamento); Esther Dwec..."
+    },
+    {
       "entity_id": "senador-camilo-santana",
       "date": "2023-05-04",
       "week": "2023-W18",
@@ -24096,6 +26020,23 @@
       "snippet": "O companheiro João Paulo Capobianco, deve estar aqui representando a companheira Marina Silva, que não pode vir nessa reunião."
     },
     {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2023-04-18",
+      "week": "2023-W16",
+      "month": "2023-04",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "61d53a7a8279e337ec34",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, em reunião sobre ações integradas de combate à violência nas escolas",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-em-reuniao-sobre-acoes-integradas-de-combate-a-violencia-nas-escolas",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Por isso, eu resumirei essa reunião na frase do Alexandre de Moraes: as pessoas não podem fazer na rede digital aquilo que é proibido na sociedade."
+    },
+    {
       "entity_id": "senador-randolfe-rodrigues",
       "date": "2023-04-18",
       "week": "2023-W16",
@@ -24128,6 +26069,23 @@
         "Camilo Santana"
       ],
       "snippet": "Nem sempre o Camilo [ Santana ] vai ter todo o dinheiro que as pessoas precisam."
+    },
+    {
+      "entity_id": "stf-carmen-lucia",
+      "date": "2023-04-18",
+      "week": "2023-W16",
+      "month": "2023-04",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "fe0ec6736f8831f26662",
+      "title": "Discurso do presidente da República, Luiz Inácio Lula da Silva, em encontro com o presidente da Romênia, Klaus Iohannis",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/discurso-do-presidente-da-republica-luiz-inacio-lula-da-silva-em-encontro-com-o-presidente-da-romenia-klaus-iohannis",
+      "location": "Brasília (DF)",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Cármen"
+      ],
+      "snippet": "É com grande prazer que damos as boas vindas em Brasília ao presidente da Romênia Klaus Iohannis, acompanhado da primeira-dama Carmen Iohannis."
     },
     {
       "entity_id": "senador-jaques-wagner",
@@ -24657,6 +26615,23 @@
       "snippet": "O deputado federal Júlio César; deputado federal Fábio Macedo; deputado federal Luís Tibé; deputada federal Jandira Feghali; deputado federal Fausto Pinato; deputado federal Heitor Schuch; deputada federal Tabata Amaral; deputado federal André Janones; deputado federal Daniel Almeida; deputada federal Maria Arraes; deputado federal Ren..."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-04-10",
+      "week": "2023-W15",
+      "month": "2023-04",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "a7b74965b8d1fb028366",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, em evento alusivo aos 100 dias de gestão do Governo Federal",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-em-evento-alusivo-aos-100-dias-de-gestao-do-governo-federal",
+      "location": "Brasília (DF)",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Uniremos os estados e municípios e a sociedade civil, isso é tua responsabilidade [ Flávio ] Dino, organizada em um pacto para enfrentar o massacre dos jovens negros da periferia."
+    },
+    {
       "entity_id": "senador-randolfe-rodrigues",
       "date": "2023-04-10",
       "week": "2023-W15",
@@ -24759,6 +26734,23 @@
       "snippet": "Então, nós mandamos, agora, um Projeto de Lei que eu acho que todos os senadores, liderados pelo Jaques Wagner, pelo Randolfe [ Rodrigues ], vão votar cem por cento porque são todos defensores da igualdade; e a Câmara, com o [ José ] Guimarães, certamente eu terei, praticamente, os 513 votos, garantindo que a mulher, uma vez na vida, s..."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-04-09",
+      "week": "2023-W14",
+      "month": "2023-04",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "d40bea37502f4344c5a5",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, em Bacabal, no Maranhão",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-luiz-inacio-lula-da-silva-em-bacabal-no-maranhao",
+      "location": "Bacabal (MA)",
+      "occurrences": 3,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Companheiros e companheiras da imprensa, companheiros ministros, companheiro Pimenta da Comunicação, companheiro Jader da Cidade, companheiro Flávio Dino da Justiça, nosso companheiro Valdez, do Desenvolvimento Regional, nosso querido companheiro Marinho do Trabalho, que está aqui atrás de mim, minha querida companheira Janja, te acons..."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2023-04-09",
       "week": "2023-W14",
@@ -24791,6 +26783,24 @@
         "Paulo Pimenta"
       ],
       "snippet": "Ministro Paulo Pimenta — Bom dia!"
+    },
+    {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2023-04-08",
+      "week": "2023-W14",
+      "month": "2023-04",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "63ac81542018e1270ea8",
+      "title": "PRONUNCIAMENTO do presidente da República, Luiz Inácio Lula da Silva, em café da manhã com jornalistas",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-em-cafe-da-manha-com-jornalistas-1",
+      "location": "café da manhã com jornalistas",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Gilmar Mendes",
+        "Gilmar"
+      ],
+      "snippet": "E também queria que o senhor comentasse: o ministro Gilmar Mendes numa entrevista para o jornal O Globo , ele até defendeu o nome do presidente do Senado Rodrigo Pacheco, como um bom nome para o Supremo Tribunal Federal."
     },
     {
       "entity_id": "senador-rodrigo-pacheco",
@@ -24997,6 +27007,24 @@
       "snippet": "Quero cumprimentar os ministros, o Jaques Wagner; sobretudo, cumprimentar a querida Ana Moser."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-03-21",
+      "week": "2023-W12",
+      "month": "2023-03",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "9b8f6adf83cd5e6b4e64",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, ao Portal Brasil 247",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-ao-portal-brasil-247",
+      "location": "",
+      "occurrences": 5,
+      "matched_aliases": [
+        "Zanin",
+        "Cristiano Zanin"
+      ],
+      "snippet": "Todo mundo quer uma mulher e entende-se que exista nessa defesa uma forma oblíqua de dizer que não pode indicar o Zanin porque foi seu advogado, é seu amigo etc."
+    },
+    {
       "entity_id": "senador-jaques-wagner",
       "date": "2023-03-21",
       "week": "2023-W12",
@@ -25012,6 +27040,23 @@
         "Jaques Wagner"
       ],
       "snippet": "Presidente Lula — E deixa eu te contar uma coisa: o Rui já foi chefe da Casa Civil do Jaques Wagner, e o Jaques Wagner me falava: ô presidente, ele é um cara que vai tomar conta, pode ficar certo de que ele vai tomar conta."
+    },
+    {
+      "entity_id": "stf-edson-fachin",
+      "date": "2023-03-21",
+      "week": "2023-W12",
+      "month": "2023-03",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "ef01402a50c6b4f35b32",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, em cerimônia alusiva ao Dia Internacional da Luta pela Eliminação da Discriminação Racial",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-em-cerimonia-alusiva-ao-dia-internacional-da-luta-pela-eliminacao-da-discriminacao-racial",
+      "location": "21 de março de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Edson"
+      ],
+      "snippet": "eu não sei se alguns deles estão aqui: a Matilde, o Martvs, o Edson, o Eloi, a saudosa Luiza Helena de Bairros, e a companheira Nilma Lino, que também não está aqui."
     },
     {
       "entity_id": "senador-paulo-paim",
@@ -25097,6 +27142,23 @@
         "Benedita da Silva"
       ],
       "snippet": "Embaixadores estrangeiros presentes; minha querida deputada Benedita da Silva, por quem cumprimento todas as senhoras e senhores parlamentares aqui presentes; ex-ministra da Secretaria Especial de Políticas da Promoção da Igualdade Racial..."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-03-21",
+      "week": "2023-W12",
+      "month": "2023-03",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "9b8f6adf83cd5e6b4e64",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, ao Portal Brasil 247",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-ao-portal-brasil-247",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Presidente Lula — Olha, nós estamos com um projeto que o Flávio Dino mandou para a Casa Civil, nós vamos estudar."
     },
     {
       "entity_id": "janja-janja",
@@ -25252,6 +27314,23 @@
       "snippet": "Minha querida companheira Janja; minha querida companheira Nísia Trindade, ministra de Estado da Saúde; companheiro Camilo Santana, ministro da Educação; Margareth Menezes, ministra de Estado da Cultura; Daniela Carneiro, ministra de Estado do Turismo; Jader Filho, ministro de Estado das Cidades, André de Paula, ministro de Estado da P..."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-03-15",
+      "week": "2023-W11",
+      "month": "2023-03",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "4195eae5dbfd12ac06a3",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, na cerimônia de lançamento do Pronasci II",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-na-cerimonia-de-lancamento-do-pronasci-ii",
+      "location": "15 de março de 2023",
+      "occurrences": 7,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Querido companheiro Flávio Dino, ministro da Justiça e Segurança Pública; companheiro Luiz Marinho, ministro de Estado de Trabalho e Emprego; nossa querida ministra da Saúde, Nísia Trindade; nossa querida ministra do Turismo, Daniela Carneiro; nosso querido ministro da Integração e Desenvolvimento Regional, Waldez Góes; companheiro Már..."
+    },
+    {
       "entity_id": "senador-camilo-santana",
       "date": "2023-03-14",
       "week": "2023-W11",
@@ -25388,6 +27467,24 @@
       "snippet": "Queridas companheiras de Rondonópolis, queridos companheiros, minha querida companheira Janja, caro governador, Mauro Mendes, caros ministros do Estado Jader Filho, Carlos Fávaro e Márcio Macedo; deputados estaduais, Eduardo Botelho presidente da Assembleia Legislativa; senador Jaime Campos, Margareth Buzetti, Wellington Fagundes, depu..."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-03-02",
+      "week": "2023-W09",
+      "month": "2023-03",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "af237123e4feef3a2895",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, a Reinaldo Azevedo, da BandNews",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-a-reinaldo-azevedo-da-bandnews",
+      "location": "",
+      "occurrences": 3,
+      "matched_aliases": [
+        "Zanin",
+        "Cristiano Zanin"
+      ],
+      "snippet": "E se fala muito, por exemplo, que o senhor pretende indicar o seu advogado Cristiano Zanin para ser ministro do Supremo."
+    },
+    {
       "entity_id": "senador-sergio-moro",
       "date": "2023-03-02",
       "week": "2023-W09",
@@ -25456,6 +27553,23 @@
       "snippet": "Por isso eu já pedi para o Paulo Teixeira, o ministro de Desenvolvimento Agrário, que teremos que convocar uma reunião dos pequenos e médios produtores, para que a gente discuta outra vez, o Programa Mais Alimento, para que a gente possa facilitar, incrementar a produção de mais alimentos."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-02-28",
+      "week": "2023-W09",
+      "month": "2023-02",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "b5ac6ca761a4a95214c0",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, na cerimônia de reinstalação do Consea",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-na-cerimonia-de-reinstalacao-do-consea",
+      "location": "28 de fevereiro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Por isso, companheiro Flávio Dino, é que nós vamos ter que trabalhar para que a gente possa discutir, quem sabe, uma nova política de segurança pública para esse país, que não é uma coisa a ser discutida imediatamente, não."
+    },
+    {
       "entity_id": "senador-renan-filho",
       "date": "2023-02-20",
       "week": "2023-W08",
@@ -25471,6 +27585,74 @@
         "Renan Filho"
       ],
       "snippet": "Eu fiz questão de vir aqui trazer um conjunto de ministros, aqui o Rui Costa (que é o ministro-chefe da Casa Civil); o Renan filho (que é o ministro do Estado do Transporte); o Márcio França (ministro do Estado dos Portos e Aeroportos), que é aqui da região; a companheira Ana Moser (ministra de Estado do Esporte); o companheiro Waldez..."
+    },
+    {
+      "entity_id": "stf-luiz-fux",
+      "date": "2023-02-17",
+      "week": "2023-W07",
+      "month": "2023-02",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "1b5c9d88564b7fc3ea93",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, à âncora Daniela Lima, da CNN Brasil",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-a-ancora-daniela-lima-da-cnn-brasil",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Luiz Fux"
+      ],
+      "snippet": "Eu lembro das diversas vezes em que os ministros, como Luís Roberto Barroso e Luiz Fux fizeram falas veementes em defesa da Lava-Jato, inclusive muitas vezes retardando a análise de recursos ou retardando a análise de ações que poderiam beneficiá-lo."
+    },
+    {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2023-02-17",
+      "week": "2023-W07",
+      "month": "2023-02",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "1b5c9d88564b7fc3ea93",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, à âncora Daniela Lima, da CNN Brasil",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-a-ancora-daniela-lima-da-cnn-brasil",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "No dia em que aquilo foi divulgado, a minha impressão foi de que a Dilma Rousseff perdeu qualquer chance que ela tinha de evitar um impeachment politicamente, porque isso culmina com uma não chegada sua na Casa Civil, por uma decisão do ministro Gilmar Mendes."
+    },
+    {
+      "entity_id": "stf-edson-fachin",
+      "date": "2023-02-17",
+      "week": "2023-W07",
+      "month": "2023-02",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "1b5c9d88564b7fc3ea93",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, à âncora Daniela Lima, da CNN Brasil",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-a-ancora-daniela-lima-da-cnn-brasil",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Edson Fachin"
+      ],
+      "snippet": "Eu poderia falar de outros ou do ministro Luiz Edson Fachin, que foi o relator da Lava -e que até o último momento tentou defender a operação."
+    },
+    {
+      "entity_id": "stf-dias-toffoli",
+      "date": "2023-02-17",
+      "week": "2023-W07",
+      "month": "2023-02",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "1b5c9d88564b7fc3ea93",
+      "title": "Entrevista do presidente da República, Luiz Inácio Lula da Silva, à âncora Daniela Lima, da CNN Brasil",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-luiz-inacio-lula-da-silva-a-ancora-daniela-lima-da-cnn-brasil",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Dias Toffoli"
+      ],
+      "snippet": "Essa foi uma decisão do ministro Dias Toffoli."
     },
     {
       "entity_id": "senador-rodrigo-pacheco",
@@ -25592,6 +27774,23 @@
       "snippet": "O Padilha tem a missão de, junto com os líderes, tanto na Câmara, José Guimarães, Jaques Wagner no Senado e o Randolfe no Congresso, eles têm o compromisso de manter a relação com vocês muito harmônica, mais do que harmônica, muito sincera e muito verdadeira."
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-02-07",
+      "week": "2023-W06",
+      "month": "2023-02",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "de1fd7fa362adb929fd8",
+      "title": "DISCURSO do presidente Luiz Inácio Lula da Silva em café da manhã com jornalistas de veículos independentes",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/discurso-do-presidente-luiz-inacio-lula-da-silva-em-cafe-da-manha-com-jornalistas-de-veiculos-independentes",
+      "location": "café da manhã com jornalistas de veículos independentes",
+      "occurrences": 4,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Juntamente com o ministro Flávio Dino, com o ministro dos Direitos Humanos e com outros órgãos do governo, nós estamos discutindo um observatório para acompanhar a violência contra profissionais da imprensa e contra a liberdade de expressão."
+    },
+    {
       "entity_id": "deputado-paulo-pimenta",
       "date": "2023-02-07",
       "week": "2023-W06",
@@ -25694,6 +27893,23 @@
       "snippet": "Minha querida companheira Janja; minha querida ministra Nísia Trindade; meu caro governador Cláudio Castro; companheiros parlamentares, aqui presentes; vereadores e vereadoras; deputados e deputadas; meu querido companheiro Eduardo Paes, prefeito do Rio de Janeiro e sua companheira Cristina Paes; companheiro Daniel Soranz, nosso secret..."
     },
     {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2023-02-06",
+      "week": "2023-W06",
+      "month": "2023-02",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "15e6b33cc14f25104944",
+      "title": "DISCURSO do presidente Luiz Inácio Lula da Silva durante cerimônia de posse de Aloizio Mercadante na Presidência do BNDES",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/discurso-do-presidente-luiz-inacio-lula-da-silva-durante-cerimonia-de-posse-de-aloizio-mercadante-na-presidencia-do-bndes",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "Queridos companheiros, queridas companheiras, eu quero começar cumprimentando o nosso querido ministro de Indústria e Comércio, Geraldo Alckimin, vice-presidente da República; minha querida companheira Janja; minha querida ex-presidenta Dilma Rousseff; o governador Cláudio Castro, em nome de todos eu gostaria de cumprimentar todos os m..."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2023-02-06",
       "week": "2023-W06",
@@ -25726,6 +27942,40 @@
         "Rogerio Marinho"
       ],
       "snippet": "Kennedy Alencar — Em relação a Senado, o Pacheco teve 49 votos, que é exatamente o número para aprovar uma Proposta de Emenda Constitucional, e o Rogério Marinho teve 32."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-02-03",
+      "week": "2023-W05",
+      "month": "2023-02",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "49f69c877e8aaf9da414",
+      "title": "Entrevista do presidente da República à Kennedy Alencar, na RedeTV em 02 de fevereiro de 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-a-kennedy-alencar-na-redetv-em-02-de-fevereiro-de-2023",
+      "location": "02 de fevereiro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Nós temos o Rui Costa, nós temos o Wellington, nós temos o Camilo, nós temos o Flávio Dino, nós temos o Renanzinho."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2023-02-03",
+      "week": "2023-W05",
+      "month": "2023-02",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "49f69c877e8aaf9da414",
+      "title": "Entrevista do presidente da República à Kennedy Alencar, na RedeTV em 02 de fevereiro de 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-a-kennedy-alencar-na-redetv-em-02-de-fevereiro-de-2023",
+      "location": "02 de fevereiro de 2023",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "A gente viu hoje o caso, senador Marcos do Val, do Podemos, do Espírito Santo, publicamente dizendo que ouviu do Daniel Silveira, que foi preso quando perdeu o mandato, e pelo Bolsonaro, uma proposta de gravar o Alexandre de Moraes e não deixar o senhor assumir."
     },
     {
       "entity_id": "senador-marcos-do-val",
@@ -25949,6 +28199,41 @@
       "snippet": "O nosso companheiro deputado Afonso Florence, que foi ministro do Desenvolvimento Agrário, não pode estar aqui porque teve um problema na Bahia, sabe?"
     },
     {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-01-19",
+      "week": "2023-W03",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "edb585a2cef014b361f9",
+      "title": "Entrevista do presidente da República à Globonews em 18 de janeiro de 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-a-globonews-em-18-de-janeiro-de-2023",
+      "location": "algum momento o senhor achou que poderia perder o controle do país?",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Então eu liguei para o Flávio Dino, conversei com ele, decidimos então..."
+    },
+    {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-01-19",
+      "week": "2023-W03",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "entrevista",
+      "doc_id": "edb585a2cef014b361f9",
+      "title": "Entrevista do presidente da República à Globonews em 18 de janeiro de 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/entrevistas/entrevista-do-presidente-da-republica-a-globonews-em-18-de-janeiro-de-2023",
+      "location": "algum momento o senhor achou que poderia perder o controle do país?",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Cristiano Zanin",
+        "Zanin"
+      ],
+      "snippet": "Esses dias eu vi uma foto, uma gravação do cidadão chamando o Cristiano Zanin aqui no aeroporto de Brasília."
+    },
+    {
       "entity_id": "janja-janja",
       "date": "2023-01-19",
       "week": "2023-W03",
@@ -26000,6 +28285,58 @@
       "snippet": "Ministro Paulo Pimenta — Bom dia pessoal."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-01-12",
+      "week": "2023-W02",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "fdba530aca06e7753e5e",
+      "title": "PRONUNCIAMENTO do presidente da República, Luiz Inácio Lula da Silva, em café da manhã com jornalistas",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-em-cafe-da-manha-com-jornalistas",
+      "location": "café da manhã com jornalistas",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Cristiano Zanin",
+        "Cristiano"
+      ],
+      "snippet": "Ainda ontem eu vi uma coisa na internet, o Cristiano Zanin no banheiro do aeroporto escovando os dentes e o cidadão xingando ele, filmando ele e xingando, porque essa é a lógica."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-01-12",
+      "week": "2023-W02",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "fdba530aca06e7753e5e",
+      "title": "PRONUNCIAMENTO do presidente da República, Luiz Inácio Lula da Silva, em café da manhã com jornalistas",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-em-cafe-da-manha-com-jornalistas",
+      "location": "café da manhã com jornalistas",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Em relação ao presidente Jair Bolsonaro, o ministro Flávio Dino diz ver responsabilidade política, mas ele usa as redes sociais, como o senhor lembrou há pouco, para negar a vitória eleitoral legítima."
+    },
+    {
+      "entity_id": "stf-edson-fachin",
+      "date": "2023-01-12",
+      "week": "2023-W02",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "fdba530aca06e7753e5e",
+      "title": "PRONUNCIAMENTO do presidente da República, Luiz Inácio Lula da Silva, em café da manhã com jornalistas",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-em-cafe-da-manha-com-jornalistas",
+      "location": "café da manhã com jornalistas",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Edson"
+      ],
+      "snippet": "Meu nome é Edson Sardinha, sou diretor de redação do site Congresso em Foco."
+    },
+    {
       "entity_id": "senador-sergio-moro",
       "date": "2023-01-12",
       "week": "2023-W02",
@@ -26017,6 +28354,76 @@
       "snippet": "Visite Irati (PR), com Programa de Aquisição de Alimentos {PAA} e limpe a honra dos agricultores que foram presos pelo Sérgio Moro, ilegalmente."
     },
     {
+      "entity_id": "stf-cristiano-zanin",
+      "date": "2023-01-08",
+      "week": "2023-W01",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "d51e89663e06b8563b44",
+      "title": "Discurso do presidente Lula no ato de devolução das obras danificadas no 8 de janeiro de 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/01/discurso-do-presidente-lula-no-ato-de-devolucao-das-obras-danificadas-no-8-de-janeiro-de-2023",
+      "location": "",
+      "occurrences": 3,
+      "matched_aliases": [
+        "Zanin",
+        "Cristiano Zanin"
+      ],
+      "snippet": "Zanin [Cristiano Zanin, ministro do Supremo Tribunal Federal], tenha paciência."
+    },
+    {
+      "entity_id": "stf-edson-fachin",
+      "date": "2023-01-08",
+      "week": "2023-W01",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "d51e89663e06b8563b44",
+      "title": "Discurso do presidente Lula no ato de devolução das obras danificadas no 8 de janeiro de 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/01/discurso-do-presidente-lula-no-ato-de-devolucao-das-obras-danificadas-no-8-de-janeiro-de-2023",
+      "location": "",
+      "occurrences": 2,
+      "matched_aliases": [
+        "Edson Fachin",
+        "Fachin"
+      ],
+      "snippet": "Paciência, Fachin [Edson Fachin, ministro do Supremo Tribunal Federal]."
+    },
+    {
+      "entity_id": "stf-gilmar-mendes",
+      "date": "2023-01-08",
+      "week": "2023-W01",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "d51e89663e06b8563b44",
+      "title": "Discurso do presidente Lula no ato de devolução das obras danificadas no 8 de janeiro de 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/01/discurso-do-presidente-lula-no-ato-de-devolucao-das-obras-danificadas-no-8-de-janeiro-de-2023",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Gilmar Mendes"
+      ],
+      "snippet": "Eu estava cortando a unha da mão, não estava cortando a unha do pé, Gilmar [Mendes, ministro do Supremo Tribunal Federal], quando de repente, eu estava num banquinho redondo e eu fui afastar para trás e o banquinho acabou e eu não levitei."
+    },
+    {
+      "entity_id": "stf-alexandre-de-moraes",
+      "date": "2023-01-08",
+      "week": "2023-W01",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "d51e89663e06b8563b44",
+      "title": "Discurso do presidente Lula no ato de devolução das obras danificadas no 8 de janeiro de 2023",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2025/01/discurso-do-presidente-lula-no-ato-de-devolucao-das-obras-danificadas-no-8-de-janeiro-de-2023",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Alexandre de Moraes"
+      ],
+      "snippet": "Depois eu escapei da tentativa junto com o Xandão [Alexandre de Moraes, ministro do Supremo Tribunal Federal] e com o companheiro Alckmin [Geraldo Alckmin, vice-presidente da República] de um atentado de um bando de irresponsáveis."
+    },
+    {
       "entity_id": "senador-veneziano-vital-do-rego",
       "date": "2023-01-08",
       "week": "2023-W01",
@@ -26032,6 +28439,23 @@
         "Veneziano Vital do Rêgo"
       ],
       "snippet": "Vital [Veneziano Vital do Rêgo, senador em exercício, e Vital do Rêgo Filho, ministro do Tribunal de Contas da União], paciência."
+    },
+    {
+      "entity_id": "stf-flavio-dino",
+      "date": "2023-01-06",
+      "week": "2023-W01",
+      "month": "2023-01",
+      "year": "2023",
+      "type": "discurso",
+      "doc_id": "17dfded2f3b25389563b",
+      "title": "Pronunciamento do presidente da República, Luiz Inácio Lula da Silva, na abertura da primeira reunião ministerial",
+      "url": "https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/discursos-e-pronunciamentos/2023/pronunciamento-do-presidente-da-republica-luiz-inacio-lula-da-silva-na-abertura-da-primeira-reuniao-ministerial",
+      "location": "",
+      "occurrences": 1,
+      "matched_aliases": [
+        "Flávio Dino"
+      ],
+      "snippet": "Se prepare, porque esse povo precisa de cultura, porque parte da violência que existe neste país, ela não existe por falta de polícia, Flávio Dino, ela existe pela ausência do Estado no cumprimento de suas obrigações."
     },
     {
       "entity_id": "senador-rodrigo-pacheco",
