@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-07T14:48:23.401700+00:00",
+  "updated_at": "2026-04-08T14:48:36.369108+00:00",
   "snapshot_date": "2026-04-03",
   "source_requested_url": "https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO",
   "source_download_url": "https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares/EmendasParlamentares.zip",
@@ -24,13 +24,13 @@
   "siop_base_siafi_date": "31/3/2026",
   "siop_dotacao_atual_emenda": 0.0,
   "siop_dotacao_inicial_emenda": 0.0,
-  "siop_snapshot_error": "Message: Stacktrace: #0 0x55b4e7ee9a6a <unknown> #1 0x55b4e78f8ab5 <unknown> #2 0x55b4e794b676 <unknown> #3 0x55b4e794b8b1 <unknown> #4 0x55b4e7996614 <unknown> #5 0x55b4e79937b6 <unknown> #6 0x55b4e793ecbf <unknown> #7 0x55b4e793fa81 <unknown> #8 0x55b4e7eafa64 <unknown> #9 0x55b4e7eb2951 <unknown> #10 0x55b4e7e9c21e <unknown> #11 0x55b4e7eb351e <unknown> #12 0x55b4e7e82be0 <unknown> #13 0x55b4e7ed69b8 <unknown> #14 0x55b4e7ed6b88 <unknown> #15 0x55b4e7ee84de <unknown> #16 0x7f261489caa4 <unkno",
+  "siop_snapshot_error": "Message: Stacktrace: #0 0x55b4700faa6a <unknown> #1 0x55b46fb09ab5 <unknown> #2 0x55b46fb5c676 <unknown> #3 0x55b46fb5c8b1 <unknown> #4 0x55b46fba7614 <unknown> #5 0x55b46fba47b6 <unknown> #6 0x55b46fb4fcbf <unknown> #7 0x55b46fb50a81 <unknown> #8 0x55b4700c0a64 <unknown> #9 0x55b4700c3951 <unknown> #10 0x55b4700ad21e <unknown> #11 0x55b4700c451e <unknown> #12 0x55b470093be0 <unknown> #13 0x55b4700e79b8 <unknown> #14 0x55b4700e7b88 <unknown> #15 0x55b4700f94de <unknown> #16 0x7f9340c9caa4 <unkno",
   "siop_details_available": true,
   "siop_details_fallback_from_previous": true,
   "siop_details_rows_count": 0,
   "siop_details_unique_nro_emendas": 0,
   "siop_details_sweep_steps": 27,
-  "siop_details_error": "Message: Stacktrace: #0 0x55b3d047aa6a <unknown> #1 0x55b3cfe89ab5 <unknown> #2 0x55b3cfedc676 <unknown> #3 0x55b3cfedc8b1 <unknown> #4 0x55b3cff27614 <unknown> #5 0x55b3cff247b6 <unknown> #6 0x55b3cfecfcbf <unknown> #7 0x55b3cfed0a81 <unknown> #8 0x55b3d0440a64 <unknown> #9 0x55b3d0443951 <unknown> #10 0x55b3d042d21e <unknown> #11 0x55b3d044451e <unknown> #12 0x55b3d0413be0 <unknown> #13 0x55b3d04679b8 <unknown> #14 0x55b3d0467b88 <unknown> #15 0x55b3d04794de <unknown> #16 0x7efe4369caa4 <unkno",
-  "siop_history_days": 29,
-  "siop_history_last_date": "2026-04-07"
+  "siop_details_error": "Message: Stacktrace: #0 0x55e7eb565a6a <unknown> #1 0x55e7eaf74ab5 <unknown> #2 0x55e7eafc7676 <unknown> #3 0x55e7eafc78b1 <unknown> #4 0x55e7eb012614 <unknown> #5 0x55e7eb00f7b6 <unknown> #6 0x55e7eafbacbf <unknown> #7 0x55e7eafbba81 <unknown> #8 0x55e7eb52ba64 <unknown> #9 0x55e7eb52e951 <unknown> #10 0x55e7eb51821e <unknown> #11 0x55e7eb52f51e <unknown> #12 0x55e7eb4febe0 <unknown> #13 0x55e7eb5529b8 <unknown> #14 0x55e7eb552b88 <unknown> #15 0x55e7eb5644de <unknown> #16 0x7f8219e9caa4 <unkno",
+  "siop_history_days": 30,
+  "siop_history_last_date": "2026-04-08"
 }
