@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-08T14:48:36.369108+00:00",
+  "generated_at": "2026-04-09T14:59:13.205698+00:00",
   "snapshot_date": "2026-04-03",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -1018,7 +1018,7 @@
     "total_liquidado": 422507522.52,
     "total_pago": 122444530.97
   },
-  "run_date": "2026-04-08",
+  "run_date": "2026-04-09",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -1102,7 +1102,7 @@
           "error": ""
         }
       ],
-      "error": "Message: Stacktrace: #0 0x55b4700faa6a <unknown> #1 0x55b46fb09ab5 <unknown> #2 0x55b46fb5c676 <unknown> #3 0x55b46fb5c8b1 <unknown> #4 0x55b46fba7614 <unknown> #5 0x55b46fba47b6 <unknown> #6 0x55b46fb4fcbf <unknown> #7 0x55b46fb50a81 <unknown> #8 0x55b4700c0a64 <unknown> #9 0x55b4700c3951 <unknown> #10 0x55b4700ad21e <unknown> #11 0x55b4700c451e <unknown> #12 0x55b470093be0 <unknown> #13 0x55b4700e79b8 <unknown> #14 0x55b4700e7b88 <unknown> #15 0x55b4700f94de <unknown> #16 0x7f9340c9caa4 <unkno",
+      "error": "Message: Stacktrace: #0 0x55fe1860ea6a <unknown> #1 0x55fe1801dab5 <unknown> #2 0x55fe18070676 <unknown> #3 0x55fe180708b1 <unknown> #4 0x55fe180bb614 <unknown> #5 0x55fe180b87b6 <unknown> #6 0x55fe18063cbf <unknown> #7 0x55fe18064a81 <unknown> #8 0x55fe185d4a64 <unknown> #9 0x55fe185d7951 <unknown> #10 0x55fe185c121e <unknown> #11 0x55fe185d851e <unknown> #12 0x55fe185a7be0 <unknown> #13 0x55fe185fb9b8 <unknown> #14 0x55fe185fbb88 <unknown> #15 0x55fe1860d4de <unknown> #16 0x7f76e3e9caa4 <unkno",
       "fallback_from_previous": true
     },
     "siop_details": {
@@ -1153,7 +1153,7 @@
           "error": ""
         }
       ],
-      "error": "Message: Stacktrace: #0 0x55e7eb565a6a <unknown> #1 0x55e7eaf74ab5 <unknown> #2 0x55e7eafc7676 <unknown> #3 0x55e7eafc78b1 <unknown> #4 0x55e7eb012614 <unknown> #5 0x55e7eb00f7b6 <unknown> #6 0x55e7eafbacbf <unknown> #7 0x55e7eafbba81 <unknown> #8 0x55e7eb52ba64 <unknown> #9 0x55e7eb52e951 <unknown> #10 0x55e7eb51821e <unknown> #11 0x55e7eb52f51e <unknown> #12 0x55e7eb4febe0 <unknown> #13 0x55e7eb5529b8 <unknown> #14 0x55e7eb552b88 <unknown> #15 0x55e7eb5644de <unknown> #16 0x7f8219e9caa4 <unkno",
+      "error": "Message: Stacktrace: #0 0x560d4d5c7a6a <unknown> #1 0x560d4cfd6ab5 <unknown> #2 0x560d4d029676 <unknown> #3 0x560d4d0298b1 <unknown> #4 0x560d4d074614 <unknown> #5 0x560d4d0717b6 <unknown> #6 0x560d4d01ccbf <unknown> #7 0x560d4d01da81 <unknown> #8 0x560d4d58da64 <unknown> #9 0x560d4d590951 <unknown> #10 0x560d4d57a21e <unknown> #11 0x560d4d59151e <unknown> #12 0x560d4d560be0 <unknown> #13 0x560d4d5b49b8 <unknown> #14 0x560d4d5b4b88 <unknown> #15 0x560d4d5c64de <unknown> #16 0x7f5e5069caa4 <unkno",
       "fallback_from_previous": true
     },
     "documents": {
@@ -1973,7 +1973,7 @@
         },
         {
           "author": "MARIA ARRAES",
-          "party": "SOLIDARIEDADE",
+          "party": "PSB",
           "empenhado": 1000000.0
         },
         {
@@ -2757,7 +2757,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-04-09",
+      "last_update": "",
+      "base_siafi_date": "31/3/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
   ],
-  "updated_at": "2026-04-08T14:48:36.369108+00:00"
+  "updated_at": "2026-04-09T14:59:13.205698+00:00"
 }
