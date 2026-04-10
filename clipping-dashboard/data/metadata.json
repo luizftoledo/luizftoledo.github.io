@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-04-09T15:11:46.664847+00:00",
+  "generated_at": "2026-04-10T14:39:22.068096+00:00",
   "counts": {
-    "items": 87,
+    "items": 86,
     "domains": 22,
     "categories": {
       "reportagem_autoral": 61,
       "republicacao": 0,
       "eco_repercussao": 0,
       "citacao_fonte": 2,
-      "mencao": 6,
+      "mencao": 5,
       "entrevista": 1,
       "palestra_curso": 0,
       "perfil_bio": 17
@@ -43,19 +43,19 @@
       }
     },
     "enrich": {
-      "fetched": 62,
+      "fetched": 61,
       "reused": 29,
-      "kept": 87,
+      "kept": 86,
       "dropped": 4,
       "categories": {
         "perfil_bio": 17,
         "reportagem_autoral": 61,
-        "mencao": 6,
+        "mencao": 5,
         "entrevista": 1,
         "citacao_fonte": 2
       },
       "domains": {
-        "bbc.com": 51,
+        "bbc.com": 50,
         "intercept.com.br": 2,
         "piaui.folha.uol.com.br": 1,
         "apublica.org": 3,
