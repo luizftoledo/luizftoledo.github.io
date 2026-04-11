@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-10T14:36:05.855981+00:00",
+  "generated_at": "2026-04-11T14:06:59.131208+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -10,17 +10,16 @@
     "senado_senadores": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json"
   },
   "counts": {
-    "entities": 644,
+    "entities": 633,
     "entities_by_kind": {
       "deputado": 513,
       "janja": 1,
       "ministro": 38,
-      "stf": 10,
-      "senador": 82
+      "senador": 81
     },
-    "mention_rows": 3006,
-    "mention_occurrences_total": 4965,
-    "mention_docs_total": 3006,
+    "mention_rows": 2864,
+    "mention_occurrences_total": 4722,
+    "mention_docs_total": 2864,
     "lula_docs_with_text": 931
   },
   "date_range": {
@@ -2749,7 +2748,7 @@
       "official_name": "Antônia Lúcia",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/123756",
-      "party": "REPUBLICANOS",
+      "party": "MDB",
       "state": "AC",
       "aliases_counted": [
         "Antônia Lúcia"
@@ -2761,7 +2760,7 @@
           "docs": 1
         }
       ],
-      "search_text": "antonia lucia antonia lucia deputados federais deputado federal republicanos ac antonia lucia",
+      "search_text": "antonia lucia antonia lucia deputados federais deputado federal mdb ac antonia lucia",
       "mention_occurrences_total": 1,
       "mention_docs_total": 1
     },
@@ -2797,7 +2796,7 @@
       "official_name": "Beto Pereira",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/204358",
-      "party": "PSDB",
+      "party": "REPUBLICANOS",
       "state": "MS",
       "aliases_counted": [
         "Beto Pereira"
@@ -2809,7 +2808,7 @@
           "docs": 1
         }
       ],
-      "search_text": "beto pereira beto pereira deputados federais deputado federal psdb ms beto pereira",
+      "search_text": "beto pereira beto pereira deputados federais deputado federal republicanos ms beto pereira",
       "mention_occurrences_total": 1,
       "mention_docs_total": 1
     },
@@ -2821,7 +2820,7 @@
       "official_name": "Bruno Farias",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/210989",
-      "party": "AVANTE",
+      "party": "REPUBLICANOS",
       "state": "MG",
       "aliases_counted": [
         "Bruno Farias"
@@ -2833,7 +2832,7 @@
           "docs": 1
         }
       ],
-      "search_text": "bruno farias bruno farias deputados federais deputado federal avante mg bruno farias",
+      "search_text": "bruno farias bruno farias deputados federais deputado federal republicanos mg bruno farias",
       "mention_occurrences_total": 1,
       "mention_docs_total": 1
     },
@@ -2941,7 +2940,7 @@
       "official_name": "Dagoberto Nogueira",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/141411",
-      "party": "PSDB",
+      "party": "PP",
       "state": "MS",
       "aliases_counted": [
         "Dagoberto Nogueira"
@@ -2953,7 +2952,7 @@
           "docs": 1
         }
       ],
-      "search_text": "dagoberto nogueira dagoberto nogueira deputados federais deputado federal psdb ms dagoberto nogueira",
+      "search_text": "dagoberto nogueira dagoberto nogueira deputados federais deputado federal pp ms dagoberto nogueira",
       "mention_occurrences_total": 1,
       "mention_docs_total": 1
     },
@@ -4281,13 +4280,13 @@
       "official_name": "Aline Gurgel",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/204353",
-      "party": "REPUBLICANOS",
+      "party": "UNIÃO",
       "state": "AP",
       "aliases_counted": [
         "Aline Gurgel"
       ],
       "aliases_observed": [],
-      "search_text": "aline gurgel aline gurgel deputados federais deputado federal republicanos ap aline gurgel",
+      "search_text": "aline gurgel aline gurgel deputados federais deputado federal uniao ap aline gurgel",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -4353,13 +4352,13 @@
       "official_name": "Amom Mandel",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220715",
-      "party": "CIDADANIA",
+      "party": "REPUBLICANOS",
       "state": "AM",
       "aliases_counted": [
         "Amom Mandel"
       ],
       "aliases_observed": [],
-      "search_text": "amom mandel amom mandel deputados federais deputado federal cidadania am amom mandel",
+      "search_text": "amom mandel amom mandel deputados federais deputado federal republicanos am amom mandel",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -5298,13 +5297,13 @@
       "official_name": "Daniela do Waguinho",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/204459",
-      "party": "UNIÃO",
+      "party": "REPUBLICANOS",
       "state": "RJ",
       "aliases_counted": [
         "Daniela do Waguinho"
       ],
       "aliases_observed": [],
-      "search_text": "daniela do waguinho daniela do waguinho deputados federais deputado federal uniao rj daniela do waguinho",
+      "search_text": "daniela do waguinho daniela do waguinho deputados federais deputado federal republicanos rj daniela do waguinho",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -5388,13 +5387,13 @@
       "official_name": "Defensor Stélio Dener",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220539",
-      "party": "REPUBLICANOS",
+      "party": "UNIÃO",
       "state": "RR",
       "aliases_counted": [
         "Defensor Stélio Dener"
       ],
       "aliases_observed": [],
-      "search_text": "defensor stelio dener defensor stelio dener deputados federais deputado federal republicanos rr defensor stelio dener",
+      "search_text": "defensor stelio dener defensor stelio dener deputados federais deputado federal uniao rr defensor stelio dener",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -5910,13 +5909,13 @@
       "official_name": "Dra. Alessandra Haber",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220674",
-      "party": "MDB",
+      "party": "PODE",
       "state": "PA",
       "aliases_counted": [
         "Dra. Alessandra Haber"
       ],
       "aliases_observed": [],
-      "search_text": "dra alessandra haber dra alessandra haber deputados federais deputado federal mdb pa dra alessandra haber",
+      "search_text": "dra alessandra haber dra alessandra haber deputados federais deputado federal pode pa dra alessandra haber",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -5946,13 +5945,13 @@
       "official_name": "Duda Salabert",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220623",
-      "party": "PDT",
+      "party": "PSOL",
       "state": "MG",
       "aliases_counted": [
         "Duda Salabert"
       ],
       "aliases_observed": [],
-      "search_text": "duda salabert duda salabert deputados federais deputado federal pdt mg duda salabert",
+      "search_text": "duda salabert duda salabert deputados federais deputado federal psol mg duda salabert",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -5982,13 +5981,13 @@
       "official_name": "Eli Borges",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/204364",
-      "party": "PL",
+      "party": "REPUBLICANOS",
       "state": "TO",
       "aliases_counted": [
         "Eli Borges"
       ],
       "aliases_observed": [],
-      "search_text": "eli borges eli borges deputados federais deputado federal pl to eli borges",
+      "search_text": "eli borges eli borges deputados federais deputado federal republicanos to eli borges",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -6703,13 +6702,13 @@
       "official_name": "Gustinho Ribeiro",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/204408",
-      "party": "REPUBLICANOS",
+      "party": "PP",
       "state": "SE",
       "aliases_counted": [
         "Gustinho Ribeiro"
       ],
       "aliases_observed": [],
-      "search_text": "gustinho ribeiro gustinho ribeiro deputados federais deputado federal republicanos se gustinho ribeiro",
+      "search_text": "gustinho ribeiro gustinho ribeiro deputados federais deputado federal pp se gustinho ribeiro",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -6775,13 +6774,13 @@
       "official_name": "Henderson Pinto",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220672",
-      "party": "MDB",
+      "party": "UNIÃO",
       "state": "PA",
       "aliases_counted": [
         "Henderson Pinto"
       ],
       "aliases_observed": [],
-      "search_text": "henderson pinto henderson pinto deputados federais deputado federal mdb pa henderson pinto",
+      "search_text": "henderson pinto henderson pinto deputados federais deputado federal uniao pa henderson pinto",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -6829,13 +6828,13 @@
       "official_name": "Idilvan Alencar",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/204533",
-      "party": "PDT",
+      "party": "PSB",
       "state": "CE",
       "aliases_counted": [
         "Idilvan Alencar"
       ],
       "aliases_observed": [],
-      "search_text": "idilvan alencar idilvan alencar deputados federais deputado federal pdt ce idilvan alencar",
+      "search_text": "idilvan alencar idilvan alencar deputados federais deputado federal psb ce idilvan alencar",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -7293,13 +7292,13 @@
       "official_name": "Junior Lourenço",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/204574",
-      "party": "PL",
+      "party": "MDB",
       "state": "MA",
       "aliases_counted": [
         "Junior Lourenço"
       ],
       "aliases_observed": [],
-      "search_text": "junior lourenco junior lourenco deputados federais deputado federal pl ma junior lourenco",
+      "search_text": "junior lourenco junior lourenco deputados federais deputado federal mdb ma junior lourenco",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -7972,13 +7971,13 @@
       "official_name": "Marussa Boldrin",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220572",
-      "party": "MDB",
+      "party": "REPUBLICANOS",
       "state": "GO",
       "aliases_counted": [
         "Marussa Boldrin"
       ],
       "aliases_observed": [],
-      "search_text": "marussa boldrin marussa boldrin deputados federais deputado federal mdb go marussa boldrin",
+      "search_text": "marussa boldrin marussa boldrin deputados federais deputado federal republicanos go marussa boldrin",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -8080,14 +8079,14 @@
       "official_name": "Mauro Benevides Filho",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/204486",
-      "party": "PDT",
+      "party": "UNIÃO",
       "state": "CE",
       "aliases_counted": [
         "Mauro Benevides Filho",
         "Benevides Filho"
       ],
       "aliases_observed": [],
-      "search_text": "mauro benevides filho mauro benevides filho deputados federais deputado federal pdt ce mauro benevides filho benevides filho",
+      "search_text": "mauro benevides filho mauro benevides filho deputados federais deputado federal uniao ce mauro benevides filho benevides filho",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -8279,13 +8278,13 @@
       "official_name": "Nelson Barbudo",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/204449",
-      "party": "PL",
+      "party": "PODE",
       "state": "MT",
       "aliases_counted": [
         "Nelson Barbudo"
       ],
       "aliases_observed": [],
-      "search_text": "nelson barbudo nelson barbudo deputados federais deputado federal pl mt nelson barbudo",
+      "search_text": "nelson barbudo nelson barbudo deputados federais deputado federal pode mt nelson barbudo",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -8385,11 +8384,11 @@
       "official_name": "Padovani",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220706",
-      "party": "REPUBLICANOS",
+      "party": "PP",
       "state": "PR",
       "aliases_counted": [],
       "aliases_observed": [],
-      "search_text": "padovani padovani deputados federais deputado federal republicanos pr",
+      "search_text": "padovani padovani deputados federais deputado federal pp pr",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -8419,13 +8418,13 @@
       "official_name": "Pastor Eurico",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/160642",
-      "party": "PL",
+      "party": "PSDB",
       "state": "PE",
       "aliases_counted": [
         "Pastor Eurico"
       ],
       "aliases_observed": [],
-      "search_text": "pastor eurico pastor eurico deputados federais deputado federal pl pe pastor eurico",
+      "search_text": "pastor eurico pastor eurico deputados federais deputado federal psdb pe pastor eurico",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -8597,13 +8596,13 @@
       "official_name": "Paulo Lemos",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/233592",
-      "party": "PSOL",
+      "party": "PT",
       "state": "AP",
       "aliases_counted": [
         "Paulo Lemos"
       ],
       "aliases_observed": [],
-      "search_text": "paulo lemos paulo lemos deputados federais deputado federal psol ap paulo lemos",
+      "search_text": "paulo lemos paulo lemos deputados federais deputado federal pt ap paulo lemos",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -8651,13 +8650,13 @@
       "official_name": "Pedro Aihara",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220630",
-      "party": "PRD",
+      "party": "PP",
       "state": "MG",
       "aliases_counted": [
         "Pedro Aihara"
       ],
       "aliases_observed": [],
-      "search_text": "pedro aihara pedro aihara deputados federais deputado federal prd mg pedro aihara",
+      "search_text": "pedro aihara pedro aihara deputados federais deputado federal pp mg pedro aihara",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -9023,13 +9022,13 @@
       "official_name": "Ricardo Abrão",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/221329",
-      "party": "UNIÃO",
+      "party": "PSDB",
       "state": "RJ",
       "aliases_counted": [
         "Ricardo Abrão"
       ],
       "aliases_observed": [],
-      "search_text": "ricardo abrao ricardo abrao deputados federais deputado federal uniao rj ricardo abrao",
+      "search_text": "ricardo abrao ricardo abrao deputados federais deputado federal psdb rj ricardo abrao",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -9813,13 +9812,13 @@
       "official_name": "Thiago Flores",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/220597",
-      "party": "REPUBLICANOS",
+      "party": "UNIÃO",
       "state": "RO",
       "aliases_counted": [
         "Thiago Flores"
       ],
       "aliases_observed": [],
-      "search_text": "thiago flores thiago flores deputados federais deputado federal republicanos ro thiago flores",
+      "search_text": "thiago flores thiago flores deputados federais deputado federal uniao ro thiago flores",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -10023,13 +10022,13 @@
       "official_name": "Wellington Roberto",
       "role": "Deputado federal",
       "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/74043",
-      "party": "PL",
+      "party": "PSD",
       "state": "PB",
       "aliases_counted": [
         "Wellington Roberto"
       ],
       "aliases_observed": [],
-      "search_text": "wellington roberto wellington roberto deputados federais deputado federal pl pb wellington roberto",
+      "search_text": "wellington roberto wellington roberto deputados federais deputado federal psd pb wellington roberto",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -11336,262 +11335,6 @@
       ],
       "aliases_observed": [],
       "search_text": "jose renan vasconcelos calheiros filho jose renan vasconcelos calheiros filho ministros do governo ministro de estado dos transportes jose renan vasconcelos calheiros filho vasconcelos calheiros renan vasconcelos vasconcelos filho jose vasconcelos jose calheiros jose renan",
-      "mention_occurrences_total": 0,
-      "mention_docs_total": 0
-    },
-    {
-      "id": "stf-flavio-dino",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "Flávio Dino",
-      "official_name": "Flávio Dino",
-      "role": "Ministro do STF",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=FlavioDinoPrincipal",
-      "aliases_counted": [
-        "Flávio Dino"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Flávio Dino",
-          "occurrences": 119,
-          "docs": 53
-        }
-      ],
-      "search_text": "flavio dino flavio dino stf ministro do stf flavio dino",
-      "mention_occurrences_total": 119,
-      "mention_docs_total": 53
-    },
-    {
-      "id": "stf-alexandre-de-moraes",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "Alexandre de Moraes",
-      "official_name": "Alexandre de Moraes",
-      "role": "Vice-Presidente",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=AlexandreMoraesPrincipal",
-      "aliases_counted": [
-        "Alexandre de Moraes",
-        "Alexandre Moraes"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Alexandre de Moraes",
-          "occurrences": 40,
-          "docs": 31
-        },
-        {
-          "alias": "Alexandre Moraes",
-          "occurrences": 6,
-          "docs": 6
-        }
-      ],
-      "search_text": "alexandre de moraes alexandre de moraes stf vice presidente alexandre de moraes alexandre moraes",
-      "mention_occurrences_total": 46,
-      "mention_docs_total": 37
-    },
-    {
-      "id": "stf-cristiano-zanin",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "Cristiano Zanin",
-      "official_name": "Cristiano Zanin",
-      "role": "Ministro do STF",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=CristianoZaninPrincipal",
-      "aliases_counted": [
-        "Cristiano Zanin",
-        "Cristiano",
-        "Zanin"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Cristiano",
-          "occurrences": 11,
-          "docs": 11
-        },
-        {
-          "alias": "Cristiano Zanin",
-          "occurrences": 8,
-          "docs": 7
-        },
-        {
-          "alias": "Zanin",
-          "occurrences": 17,
-          "docs": 6
-        }
-      ],
-      "search_text": "cristiano zanin cristiano zanin stf ministro do stf cristiano zanin cristiano zanin",
-      "mention_occurrences_total": 36,
-      "mention_docs_total": 18
-    },
-    {
-      "id": "stf-gilmar-mendes",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "Gilmar Mendes",
-      "official_name": "Gilmar Mendes",
-      "role": "Decano",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=GilmarMendesPrincipal",
-      "aliases_counted": [
-        "Gilmar Mendes",
-        "Gilmar"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Gilmar Mendes",
-          "occurrences": 12,
-          "docs": 11
-        },
-        {
-          "alias": "Gilmar",
-          "occurrences": 5,
-          "docs": 5
-        }
-      ],
-      "search_text": "gilmar mendes gilmar mendes stf decano gilmar mendes gilmar",
-      "mention_occurrences_total": 17,
-      "mention_docs_total": 15
-    },
-    {
-      "id": "stf-edson-fachin",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "Edson Fachin",
-      "official_name": "Edson Fachin",
-      "role": "Presidente",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=EdsonFachinPrincipal",
-      "aliases_counted": [
-        "Edson Fachin",
-        "Fachin",
-        "Edson"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Edson Fachin",
-          "occurrences": 6,
-          "docs": 6
-        },
-        {
-          "alias": "Edson",
-          "occurrences": 6,
-          "docs": 3
-        },
-        {
-          "alias": "Fachin",
-          "occurrences": 1,
-          "docs": 1
-        }
-      ],
-      "search_text": "edson fachin edson fachin stf presidente edson fachin fachin edson",
-      "mention_occurrences_total": 13,
-      "mention_docs_total": 9
-    },
-    {
-      "id": "stf-carmen-lucia",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "Cármen Lúcia",
-      "official_name": "Cármen Lúcia",
-      "role": "Ministro do STF",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=CarmenLuciaPrincipal",
-      "aliases_counted": [
-        "Cármen Lúcia",
-        "Cármen"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Cármen Lúcia",
-          "occurrences": 5,
-          "docs": 4
-        },
-        {
-          "alias": "Cármen",
-          "occurrences": 2,
-          "docs": 2
-        }
-      ],
-      "search_text": "carmen lucia carmen lucia stf ministro do stf carmen lucia carmen",
-      "mention_occurrences_total": 7,
-      "mention_docs_total": 5
-    },
-    {
-      "id": "stf-dias-toffoli",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "Dias Toffoli",
-      "official_name": "Dias Toffoli",
-      "role": "Ministro do STF",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=DiasToffoliPrincipal",
-      "aliases_counted": [
-        "Dias Toffoli",
-        "Toffoli"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Dias Toffoli",
-          "occurrences": 2,
-          "docs": 2
-        },
-        {
-          "alias": "Toffoli",
-          "occurrences": 1,
-          "docs": 1
-        }
-      ],
-      "search_text": "dias toffoli dias toffoli stf ministro do stf dias toffoli toffoli",
-      "mention_occurrences_total": 3,
-      "mention_docs_total": 3
-    },
-    {
-      "id": "stf-luiz-fux",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "Luiz Fux",
-      "official_name": "Luiz Fux",
-      "role": "Ministro do STF",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=LuizFuxPrincipal",
-      "aliases_counted": [
-        "Luiz Fux"
-      ],
-      "aliases_observed": [
-        {
-          "alias": "Luiz Fux",
-          "occurrences": 2,
-          "docs": 2
-        }
-      ],
-      "search_text": "luiz fux luiz fux stf ministro do stf luiz fux",
-      "mention_occurrences_total": 2,
-      "mention_docs_total": 2
-    },
-    {
-      "id": "stf-andre-mendonca",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "André Mendonça",
-      "official_name": "André Mendonça",
-      "role": "Ministro do STF",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=AndreMendoncaPrincipal",
-      "aliases_counted": [
-        "André Mendonça"
-      ],
-      "aliases_observed": [],
-      "search_text": "andre mendonca andre mendonca stf ministro do stf andre mendonca",
-      "mention_occurrences_total": 0,
-      "mention_docs_total": 0
-    },
-    {
-      "id": "stf-nunes-marques",
-      "kind": "stf",
-      "group_label": "STF",
-      "name": "Nunes Marques",
-      "official_name": "Nunes Marques",
-      "role": "Ministro do STF",
-      "source_url": "https://portal.stf.jus.br/textos/verTexto.asp?servico=bibliotecaConsultaProdutoBibliotecaPastaMinistro&pagina=NunesMarquesPrincipal",
-      "aliases_counted": [
-        "Nunes Marques"
-      ],
-      "aliases_observed": [],
-      "search_text": "nunes marques nunes marques stf ministro do stf nunes marques",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
@@ -12904,24 +12647,6 @@
       ],
       "aliases_observed": [],
       "search_text": "astronauta marcos pontes marcos cesar pontes senadores senador pl sp astronauta marcos pontes marcos cesar pontes",
-      "mention_occurrences_total": 0,
-      "mention_docs_total": 0
-    },
-    {
-      "id": "senador-bruno-bonetti",
-      "kind": "senador",
-      "group_label": "Senadores",
-      "name": "Bruno Bonetti",
-      "official_name": "Bruno Bierrenbach Bonetti",
-      "role": "Senador",
-      "source_url": "http://www25.senado.leg.br/web/senadores/senador/-/perfil/6372",
-      "party": "PL",
-      "aliases_counted": [
-        "Bruno Bierrenbach Bonetti",
-        "Bruno Bonetti"
-      ],
-      "aliases_observed": [],
-      "search_text": "bruno bonetti bruno bierrenbach bonetti senadores senador pl bruno bierrenbach bonetti bruno bonetti",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
