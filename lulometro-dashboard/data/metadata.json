@@ -1,7 +1,7 @@
 {
   "project": "Lulometro",
   "title": "Lulometro: analise de discurso de presidentes brasileiros",
-  "generated_at": "2026-04-11T14:06:59.220400+00:00",
+  "generated_at": "2026-04-12T14:08:38.041592+00:00",
   "timezone": "America/Sao_Paulo",
   "scope_mandates": [
     "Bolsonaro (2019-2022)",
@@ -9,7 +9,7 @@
   ],
   "total_records": 1684,
   "excluded_records": 8,
-  "candidate_urls": 1052,
+  "candidate_urls": 1022,
   "new_urls": 8,
   "detail_fetched": 58,
   "sources": {
@@ -58,5 +58,5 @@
       "max": "2026-10-13"
     }
   },
-  "duration_seconds": 224.86
+  "duration_seconds": 191.05
 }
