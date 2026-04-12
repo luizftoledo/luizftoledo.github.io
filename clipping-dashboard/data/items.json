@@ -22,14 +22,14 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-23T14:43:34.440650+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [
       "Luiz Fernando Toledo"
     ],
     "domain": "bbc.com",
     "published_date": "2026-03-11",
     "first_seen_date": "2026-03-23",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "6b4ed9d8ef1d6c77",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -39,50 +39,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/c5y6g6yzev5o",
-    "title": "Modelo brasileira escapou de recrutador de Epstein por causa da mãe: 'Estava no meio do furacão'",
-    "description": "Investigação da BBC News Brasil mostra como a rede de Jeffrey Epstein atuou no Brasil e no Equador. Aliado de criminoso sexual foi ao RS selecionar adolescente para concurso de modelo.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-02-26T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... nda da foto, Concurso idealizado por Jean-Luc Brunel foi realizado em 2004 e 2006 no Equador, e teve presença de Jeffrey Epstein na cidade no mesmo dia Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 26 fevereiro 2026 Tempo de leitura: 15 min \"Se eu tivesse desobedecido a minha mãe e ido para Nova York, o que será que teria acontecido comigo?\" A pergunta ronda há anos a cabeça de  ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c5y6g6yzev5o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c5y6g6yzev5o",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-02-26",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "378ed88ce6aa299d",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -106,12 +64,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "bbc.com",
     "published_date": "2026-02-26",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "ef6493413324c708",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -121,15 +79,15 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
+      "bbc",
+      "pesquisador",
       "reporter",
-      "londres",
       "oxford",
+      "dados",
+      "columbia",
       "cambridge",
       "jornalismo",
-      "pesquisador",
-      "columbia",
-      "bbc",
-      "dados"
+      "londres"
     ]
   },
   {
@@ -156,12 +114,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "bbc.com",
     "published_date": "2026-02-14",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "a334d8de57c4280d",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -171,50 +129,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/cp817772k2go",
-    "title": "Atuação de Epstein no Brasil é alvo de investigação aberta pelo MPF após reportagem da BBC: 'Participação das vítimas é fundamental'",
-    "description": "BBC News Brasil revelou que criminoso sexual manteve contato pessoal com modelos no país e as financiou.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-02-12T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... mental' Crédito, Getty Images Legenda da foto, Mensagens mostram pagamentos de Epstein a brasileiras, ajuda com logística em viagens e troca de favores Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 12 fevereiro 2026 Atualizado 13 fevereiro 2026 Tempo de leitura: 7 min O Ministério Público Federal (MPF) instaurou um procedimento sigiloso na terça-feira (10/2) para investigar poss ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cp817772k2go",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cp817772k2go",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-02-12",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "6db6776c992832cb",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -241,11 +157,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2026-02-09",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "830a5a565d8dae52",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -255,50 +171,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/c5ydlv11pe1o",
-    "title": "Alunas denunciam PMs por assédio em escolas cívico-militares no Paraná",
-    "description": "Mães e alunas acusaram monitor militar de tocar partes do corpo de meninas entre 11 e 13 anos. Ele foi desligado do programa quase dois anos após a denúncia. Caso está em sigilo e nunca veio a público",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-02-05T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... litares no Paraná Crédito, Governo do Paraná Legenda da foto, Paraná já criou mais de 300 escolas no modelo cívico-militar e deve expandir rede em 2026 Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 5 fevereiro 2026 Tempo de leitura: 13 min ATENÇÃO: esta reportagem contém relatos de violência sexual que podem ser considerados perturbadores. Um grupo de ao menos nove meninas, com  ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c5ydlv11pe1o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c5ydlv11pe1o",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-02-05",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "4fed24be8ae2f0b5",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -325,11 +199,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2026-02-03",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "1c3e57e8b63790bc",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -339,8 +213,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -365,13 +239,13 @@
     "fetch_ok": true,
     "content_type": "text/html; charset=UTF-8",
     "error": "",
-    "first_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "first_seen_at": "2026-04-12T14:26:23.806679+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "bbc.com",
     "published_date": "2026-01-31",
-    "first_seen_date": "2026-04-11",
-    "last_seen_date": "2026-04-11",
+    "first_seen_date": "2026-04-12",
+    "last_seen_date": "2026-04-12",
     "id": "1729c33c4b58f03a",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -385,228 +259,13 @@
     ]
   },
   {
-    "url": "https://www.bbc.com/portuguese/articles/cx2g71g8xy7o",
-    "title": "Jeffrey Epstein trocou elogios sobre Bolsonaro com Steve Bannon: 'Mudou o jogo'",
-    "description": "Novos documentos sobre caso Epstein foram divulgados pelo governo dos EUA nesta sexta-feira, 30/01.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-31T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "...  Bannon: 'Mudou o jogo' Crédito, Getty Images Legenda da foto, O ex-presidente Jair Bolsonaro foi citado em comunicação que estava nos arquivos Epstein Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil, em Londres 31 janeiro 2026 Tempo de leitura: 4 min Uma troca de emails atribuída a Jeffrey Epstein , criminoso sexual condenado nos Estados Unidos e morto em 2019, e Steve Bannon, ex-conselheir ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cx2g71g8xy7o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cx2g71g8xy7o",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-01-31",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "c4e67f746385d823",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/cn76p0jjxz7o",
-    "title": "As previsões sobre inteligência artificial de 70 anos atrás que são realidade hoje",
-    "description": "Desde os anos 1950, a trajetória da inteligência artificial tem sido marcada pelos mesmos dilemas: medo de que máquinas substituam humanos, a tendência de humanizar a tecnologia, o apego emocional que muitas pessoas desenvolvem por ela e as promessas ambiciosas que raramente se cumprem.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-31T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl",
-      "google-news-rss:\"Luiz Fernando Toledo\""
-    ],
-    "queries": [
-      "\"Luiz Fernando Toledo\""
-    ],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... rtificial de 70 anos atrás que são realidade hoje Crédito, Getty Images Legenda da foto, Joseph Weizenbaum, criador do primeiro chatbot, Eliza, de 1966 Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 31 janeiro 2026 Tempo de leitura: 9 min Recorrer a um chatbot (como o ChatGPT, Gemini ou Claude) em busca de terapia , ou até mesmo de um novo amigo, pode soar como uma história contr ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cn76p0jjxz7o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cn76p0jjxz7o",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-01-31",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "1729c33c4b58f03a",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/c70lg5kye2wo",
-    "title": "As conversas de Jeffrey Epstein e Noam Chomsky sobre Lula: 'Prisioneiro político mais importante do mundo'",
-    "description": "Governo americano divulgou mais de 100 GB de arquivos relacionados ao caso Epstein, com citações sobre o Brasil e autoridades locais; mensagem sobre presidente brasileiro é de 2018, quando Lula estava preso em Curitiba.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-31T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... ídeos Podcasts As conversas de Jeffrey Epstein e Noam Chomsky sobre Lula: 'Prisioneiro político mais importante do mundo' Crédito, AFP via Getty Images Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 31 janeiro 2026 Tempo de leitura: 6 min Em setembro de 2018, o linguista e filósofo americano Noam Chomsky teria comunicado a Jeffrey Epstein por email que estava no Brasil com sua mu ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c70lg5kye2wo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c70lg5kye2wo",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-01-31",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "9e812b29b310deb3",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/c3942vzm7ezo",
-    "title": "Governador de Roraima pede restrição a imigrantes e quer pavilhão para estrangeiros em presídio com recurso federal",
-    "description": "Em entrevista à BBC News Brasil, Antonio Denarium diz que fluxo de venezuelanos entrando no país caiu por ora e que população do país está 'em observação'.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-30T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... o com recurso federal Crédito, AFP via Getty Images Legenda da foto, Houve redução de quase 50% no número de venezuelanos entrando no Brasil em janeiro Article Information Author, Luiz Fernando Toledo Role, BBC News Brasil 30 janeiro 2026 Tempo de leitura: 11 min A notícia da operação militar dos EUA no começo deste mês que resultou na captura do presidente da Venezuela, Nicolás Maduro , colocou o governo brasileiro  ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c3942vzm7ezo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c3942vzm7ezo",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-01-30",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "cdeae944c78ddab6",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/czr4e28nx2ro",
-    "title": "Fachin 'perdeu credibilidade' para aprovar código de ética do STF, e Judiciário 'chegou ao fundo do poço', diz ex-ministra Eliana Calmon",
-    "description": "A ex-ministra do STJ diz que o Supremo não obedece a sistema de freios e contrapesos, e isso fortalece visão de que sociedade brasileira funciona na base do 'jeitinho'.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-27T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl",
-      "google-news-rss:\"Luiz Fernando Toledo\""
-    ],
-    "queries": [
-      "\"Luiz Fernando Toledo\""
-    ],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... ara Eliana Calmon, Fachin \"perdeu credibilidade\" para aprovar um código de ética por ter legitimado atitudes de seus pares ou silenciado respeito delas Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil, em Londres 27 janeiro 2026 Tempo de leitura: 9 min A aprovação de um código de ética para ministros do Supremo Tribunal Federal (STF) , proposta pelo presidente da Corte, o ministro Edson Fachi ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/czr4e28nx2ro",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/czr4e28nx2ro",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-01-27",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "6e498c4197a9c286",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/cn42lyly5v9o",
+    "url": "https://bbc.com/portuguese/articles/cn42lyly5v9o",
     "title": "Oito ministros do STF têm parentes advogados com processos na Corte",
-    "description": "Ao menos treze advogados têm ou tiveram seus nomes vinculados a causas no Supremo, segundo levantamento da BBC News Brasil. Especialistas veem possível risco para a imagem do tribunal e, em tese, pode haver conflito de interesse.",
+    "description": "... 1f0-a422-4ba8a094a8fa.jpg.webp) Crédito, Getty Images Legenda da foto, Ao menos treze parentes de oito ministros apareceram listados como advogados em processos no STF * * Author, Luiz Fernando Toledo * Role, Da BBC ",
     "category_hint": "reportagem_autoral",
     "relation_hint": "autor",
     "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-26T00:00:00+00:00",
+    "published_at": "2026-01-26T09:51:25.399000+00:00",
     "source_labels": [
       "known-source:crawl",
       "google-news-rss:\"Luiz Fernando Toledo\""
@@ -614,23 +273,23 @@
     "queries": [
       "\"Luiz Fernando Toledo\""
     ],
-    "site_name": "BBC News Brasil",
+    "site_name": "bbc.com",
     "author_names": [
       "Luiz Fernando Toledo"
     ],
-    "text_excerpt": "... cessos na Corte Crédito, Getty Images Legenda da foto, Ao menos treze parentes de oito ministros apareceram listados como advogados em processos no STF Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil, em Londres 26 janeiro 2026 Tempo de leitura: 23 min Quando a Polícia Federal encontrou no celular de Daniel Vorcaro, dono do banco Master , um contrato de R$ 129 milhões firmado com o escritóri ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cn42lyly5v9o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cn42lyly5v9o",
+    "text_excerpt": "... 1f0-a422-4ba8a094a8fa.jpg.webp) Crédito, Getty Images Legenda da foto, Ao menos treze parentes de oito ministros apareceram listados como advogados em processos no STF * * Author, Luiz Fernando Toledo * Role, Da BBC News Brasil, em Londres * 26 janeiro 2026 * Tempo de leitura: 23 min Quando a Polícia Federal encontrou no celular de Daniel Vorcaro, dono do [banco Master](https://www.bbc.com/portuguese/articles/c4gvgvw ...",
+    "canonical_url": "https://bbc.com/portuguese/articles/cn42lyly5v9o",
+    "resolved_url": "https://bbc.com/portuguese/articles/cn42lyly5v9o",
     "status_code": 200,
     "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
+    "content_type": "text/plain; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2026-01-26",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "66a29924bf59416a",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -640,124 +299,39 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
-    "url": "https://www.bbc.com/portuguese/articles/c78emp8gjmdo",
-    "title": "Quem é a delegada presa em SP acusada de trabalhar para o PCC",
-    "description": "A delegada Layla Ayub teria se envolvido romanticamente com um membro do Primeiro Comando da Capital (PCC) no Pará",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-16T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... rabalhar para o PCC Crédito, Instagram/Reprodução Legenda da foto, A delegada de polícia Layla Lima Ayub foi presa por suspeita de envolvimento com PCC Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 16 janeiro 2026 Atualizado 19 janeiro 2026 Tempo de leitura: 4 min A delegada de polícia Layla Lima Ayub foi presa na manhã de sexta-feira (16/1), em São Paulo, por suspeita de envolv ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c78emp8gjmdo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c78emp8gjmdo",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-01-16",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "3b3434f32659fff4",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/c8xdy451lp2o",
-    "title": "Por que escolas cívico-militares têm fila de espera de 11 mil alunos no Paraná: 'Pais procuram alguém que faça a disciplina dos filhos'",
-    "description": "Modelo rejeitado pelo governo federal vira destaque no Paraná e deve se expandir em 2026, mas enfrenta críticas por desigualdades e atritos entre militares e professores.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-15T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... plina dos filhos' Crédito, Governo do Paraná Legenda da foto, Paraná já criou mais de 300 escolas no modelo cívico-militar e deve expandir rede em 2026 Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 15 janeiro 2026 Tempo de leitura: 15 min Quando Rafaela Barbosa leu sobre a possível chegada do modelo de escolas cívico-militares em sua cidade, Wenceslau Braz, no norte do Paraná ,  ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c8xdy451lp2o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c8xdy451lp2o",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-01-15",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "166e374d7eb7b2cf",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "professor",
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/c4g5dnj4x8lo",
-    "title": "Brasil poderia imitar política de detenção em massa adotada por presidente de El Salvador?",
-    "description": "Presidente de El Salvador é conhecido por ser \"linha-dura\" contra o crime organizado.",
+    "url": "https://bbc.com/portuguese/articles/c4g5dnj4x8lo",
+    "title": "Brasil poderia imitar política de detenção em massa de Bukele?",
+    "description": "... destacar em uma área que costuma concentrar as principais preocupações da população. Mas será que o modelo de Bukele poderia ser copiado pelo Brasil? O repórter da BBC News Brasil Luiz Fernando Toledo conversou com u",
     "category_hint": "",
     "relation_hint": "",
     "notes": "",
-    "published_at": "2026-01-14T00:00:00+00:00",
+    "published_at": "2026-01-14T23:24:17.797000+00:00",
     "source_labels": [
       "google-news-rss:\"Luiz Fernando Toledo\""
     ],
     "queries": [
       "\"Luiz Fernando Toledo\""
     ],
-    "site_name": "BBC News Brasil",
-    "text_excerpt": "... destacar em uma área que costuma concentrar as principais preocupações da população. Mas será que o modelo de Bukele poderia ser copiado pelo Brasil? O repórter da BBC News Brasil Luiz Fernando Toledo conversou com uma série de especialistas para responder a essa pergunta. Confira no vídeo. Leia também a reportagem em texto . Tópicos relacionados Justiça América Latina Brasil Mais recentes 2:45 Vídeo, A nova espécie  ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c4g5dnj4x8lo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c4g5dnj4x8lo",
+    "site_name": "bbc.com",
+    "text_excerpt": "... destacar em uma área que costuma concentrar as principais preocupações da população. Mas será que o modelo de Bukele poderia ser copiado pelo Brasil? O repórter da BBC News Brasil Luiz Fernando Toledo conversou com uma série de especialistas para responder a essa pergunta. Confira no vídeo. Leia também a [reportagem em texto](https://bbc.com/portuguese/articles/c0jd0yxdvlvo). ## Tópicos relacionados * [Justiça](https ...",
+    "canonical_url": "https://bbc.com/portuguese/articles/c4g5dnj4x8lo",
+    "resolved_url": "https://bbc.com/portuguese/articles/c4g5dnj4x8lo",
     "status_code": 200,
     "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
+    "content_type": "text/plain; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-11T14:33:14.465391+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "bbc.com",
     "published_date": "2026-01-14",
     "first_seen_date": "2026-03-11",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "37c744bbc660eaea",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -767,93 +341,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "reporter",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/cjdjegvrz8eo",
-    "title": "'Trump não deve usar sanção na eleição brasileira. Ambiente cordial com Lula é verdadeiro', diz ex-diplomata dos EUA",
-    "description": "Em entrevista à BBC News Brasil, Ricardo Zuniga, ex-cônsul americano em SP e e ex-conselheiro para Américas de Barack Obama diz achar que EUA devem 'apoiar um candidato' na eleição brasileira, como fizeram em eleição recente em Honduras, mas que 'Brasil é mais complexo em seu contexto político doméstico'.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-09T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... eos Podcasts 'Trump não deve usar sanção na eleição brasileira. Ambiente cordial com Lula é verdadeiro', diz ex-diplomata dos EUA Crédito, Getty Images Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil, em Londres 9 janeiro 2026 Tempo de leitura: 11 min A resposta do presidente Luiz Inácio Lula da Silva ao ataque dos Estados Unidos à Venezuela só veio sete horas depois da operação que prendeu  ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cjdjegvrz8eo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cjdjegvrz8eo",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-01-09",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "35b7a2993bf74eaa",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/cgqe1lkyw97o",
-    "title": "'EUA têm longa história de distorcer lei internacional em nome de seus interesses', diz especialista britânico sobre prisão de Maduro",
-    "description": "Para Marko Milanovic, professor da Universidade de Reading, ação militar americana na Venezuela é 'violação descarada da lei' e argumentos de Maduro contra sua prisão são 'válidos', mas ele considera improvável que os tribunais consigam conter o governo Trump.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2026-01-06T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "...  têm longa história de distorcer lei internacional em nome de seus interesses', diz especialista britânico sobre prisão de Maduro Crédito, Getty Images Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 6 janeiro 2026 Tempo de leitura: 6 min A operação militar do governo de Donald Trump para deter o presidente da Venezuela Nicolás Maduro e sua esposa, Cilia Flores, terá uma posição d ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cgqe1lkyw97o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cgqe1lkyw97o",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2026-01-06",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "2c38cb0b692a1175",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "professor",
-      "londres",
-      "bbc"
+      "bbc",
+      "reporter"
     ]
   },
   {
@@ -880,11 +369,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2026-01-05",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "5eca6f3278499724",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -894,10 +383,10 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "professor",
-      "londres",
+      "bbc",
       "oxford",
-      "bbc"
+      "professor",
+      "londres"
     ]
   },
   {
@@ -922,13 +411,13 @@
     "fetch_ok": true,
     "content_type": "text/html; charset=UTF-8",
     "error": "",
-    "first_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "first_seen_at": "2026-04-12T14:26:23.806679+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "bbc.com",
     "published_date": "2025-12-23",
-    "first_seen_date": "2026-04-11",
-    "last_seen_date": "2026-04-11",
+    "first_seen_date": "2026-04-12",
+    "last_seen_date": "2026-04-12",
     "id": "9b9d6a0f39cce986",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -939,214 +428,6 @@
     ],
     "matched_identity_tokens": [
       "londres"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/cnv2937j42ro",
-    "title": "'Grande grupo brasileiro': o elo do caso Jeffrey Epstein com o Brasil revelado em novos documentos",
-    "description": "Novos documento liberados pelos EUA citam depoimento ao FBI com diversas menções ao país.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2025-12-23T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... da da foto, Documento divulgado pelo Departamento de Justiça americano detalha relatos coletados pelo FBI em que é citado 'grande grupo de brasileiros' Article Information Author, Luiz Fernando Toledo Role, BBC News Brasil , Reporting from, Londres 23 dezembro 2025 Atualizado 13 fevereiro 2026 Tempo de leitura: 9 min Um \"grande grupo brasileiro\" é mencionado em um depoimento ao FBI, a polícia federal americana , que  ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cnv2937j42ro",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cnv2937j42ro",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2025-12-23",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "9b9d6a0f39cce986",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/cvgklvlq8ejo",
-    "title": "Enel em SP: 'reforço externo' durante crise de energia elevou equipes em menos de 5%",
-    "description": "Enel SP disse ter chegado a mobilizar 1,8 mil equipes no ápice da crise; governador diz que equipe é insuficiente",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2025-12-17T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "...  menos de 5% Crédito, Agência Brasil Legenda da foto, A Aneel iniciou processo que pode culminar em rompimento de contrato com a multinacional italiana Article Information Author, Luiz Fernando Toledo Role, BBC News Brasil , Reporting from, Londres 17 dezembro 2025 Tempo de leitura: 6 min Fortes chuvas atingiram a cidade de São Paulo na última semana, levando à queda de energia para mais de 2 milhões de consumidores, ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cvgklvlq8ejo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cvgklvlq8ejo",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2025-12-17",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "d896be04e8ce1d1b",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/cde66xjx2n8o",
-    "title": "O que Moraes pode voltar a fazer após EUA retirarem sanções da Lei Magnitsky?",
-    "description": "Governo Trump suspendeu as restrições contra o ministro e sua esposa, Viviane Barci de Moraes.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2025-12-12T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "text_excerpt": "... ídeos Podcasts O que Moraes pode voltar a fazer após EUA retirarem sanções da Lei Magnitsky? Crédito, Ton Molina/NurPhoto via Getty Images Article Information Author, Julia Braun, Luiz Fernando Toledo e Daniel Gallas Role, Da BBC Brasil em Londres 12 dezembro 2025 Tempo de leitura: 4 min O governo dos Estados Unidos retirou nesta sexta-feira (12/12) o ministro do Supremo Tribunal Federal (STF), Alexandre de Moraes, e ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cde66xjx2n8o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cde66xjx2n8o",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "author_names": [],
-    "domain": "bbc.com",
-    "published_date": "2025-12-12",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "f6ff04958c031dd0",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 11,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/c1j9gnxnk4zo",
-    "title": "Seu psicólogo é de carne e osso — mas pode estar usando IA na terapia: entenda os riscos",
-    "description": "Empresas oferecem serviços que oferecem até sugestão de abordagem com pacientes, a partir de transcrição das sessões e anotações",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2025-12-08T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... mia Saúde Ciência Tecnologia Vídeos Podcasts Seu psicólogo é de carne e osso — mas pode estar usando IA na terapia: entenda os riscos Crédito, Getty Images Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 8 dezembro 2025 Atualizado 9 dezembro 2025 Tempo de leitura: 11 min Fazer terapia com um chatbot pode não ser uma boa ideia por uma série de motivos, como muitos especialistas têm ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c1j9gnxnk4zo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c1j9gnxnk4zo",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2025-12-08",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "2eeb3ce6727ebfad",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/c0jd0yxdvlvo",
-    "title": "Bukele: Brasil poderia imitar estratégia de segurança do presidente de El Salvador?",
-    "description": "Líderes da direita no Brasil, como o governador de Minas Geraus, Romeu Zema (Novo), e o deputado federal Nikolas Ferreira (PL-MG), defendem e elogiam modelo.",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2025-12-08T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... do presidente de El Salvador? Crédito, Getty Images Legenda da foto, Apoiadores seguram um cartaz em suporte ao presidente Nayib Bukele, de El Salvador Article Information Author, Luiz Fernando Toledo Role, BBC News Brasil , Reporting from, Londres 8 dezembro 2025 Tempo de leitura: 12 min Desde a reeleição em 2024, o presidente de El Salvador, Nayib Bukele , tem conseguido manter uma popularidade tão elevada que supe ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c0jd0yxdvlvo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c0jd0yxdvlvo",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2025-12-08",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "be31e64384877457",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
     ]
   },
   {
@@ -1173,11 +454,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-12-05",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "131b9618dece2d66",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1187,50 +468,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/crrk7pqkq1eo",
-    "title": "Quem são os foragidos do 8 de janeiro que podem ser extraditados da Argentina?",
-    "description": "A decisão foi tomada pelo juiz Daniel Eduardo Rafecas, do Tribunal Criminal 3, de Buenos Aires",
-    "category_hint": "reportagem_autoral",
-    "relation_hint": "autor",
-    "notes": "Descoberto a partir de https://bbc.com/portuguese/topics/c5ydzy3vg0xt.",
-    "published_at": "2025-12-04T00:00:00+00:00",
-    "source_labels": [
-      "known-source:crawl"
-    ],
-    "queries": [],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo e Leandro Prazeres"
-    ],
-    "text_excerpt": "... ? Crédito, Reuters Legenda da foto, Segundo a PGR, acusados e condenados por trama golpista tiveram responsabilidade pelos atos do 8 de janeiro de 2023 Article Information Author, Luiz Fernando Toledo e Leandro Prazeres Role, Da BBC News Brasil em Londres e Brasília 4 dezembro 2025 Tempo de leitura: 4 min Um tribunal criminal da Argentina decidiu, na quarta-feira, 3/12, pela extradição de cinco brasileiros condenados ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/crrk7pqkq1eo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/crrk7pqkq1eo",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2025-12-04",
-    "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
-    "id": "66c6e24de093b5ab",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 15,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -1256,12 +495,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "bbc.com",
     "published_date": "2025-11-26",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "516d5ae5e5d56cd2",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1271,10 +510,10 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "professor",
-      "reporter",
+      "bbc",
       "pesquisador",
-      "bbc"
+      "reporter",
+      "professor"
     ]
   },
   {
@@ -1302,11 +541,11 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "blogfca.pucminas.br",
     "published_date": "2025-11-18",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "40b9bae3af540d8b",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -1316,44 +555,44 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "fiquem sabendo",
-      "londres",
-      "jornalismo",
       "bbc",
-      "dados"
+      "fiquem sabendo",
+      "dados",
+      "jornalismo",
+      "londres"
     ]
   },
   {
-    "url": "https://www.bbc.com/portuguese/articles/cjw9yz4ng43o",
-    "title": "Quanto dura popularidade de políticos 'linha-dura' contra as facções criminosas?",
-    "description": "Estudos diversos indicam melhora de aprovação de políticos linha-dura, mas desgaste com aumento de letalidade policial no médio e longo prazo.",
+    "url": "https://bbc.com/portuguese/articles/cjw9yz4ng43o",
+    "title": "Quanto dura popularidade de políticos 'linha-dura' contra as facções criminosas",
+    "description": "... Policiais escoltam um suspeito preso durante a Operação Contenção na favela da Vila Cruzeiro, no complexo da Penha, no Rio de Janeiro, Brasil, em 28 de outubro de 2025 * * Author, Luiz Fernando Toledo * Role, Da BBC ",
     "category_hint": "",
     "relation_hint": "",
     "notes": "",
-    "published_at": "2025-11-13T00:00:00+00:00",
+    "published_at": "2025-11-13T09:43:21.027000+00:00",
     "source_labels": [
       "google-news-rss:\"Luiz Fernando Toledo\""
     ],
     "queries": [
       "\"Luiz Fernando Toledo\""
     ],
-    "site_name": "BBC News Brasil",
+    "site_name": "bbc.com",
     "author_names": [
       "Luiz Fernando Toledo"
     ],
-    "text_excerpt": "... am um suspeito preso durante a Operação Contenção na favela da Vila Cruzeiro, no complexo da Penha, no Rio de Janeiro, Brasil, em 28 de outubro de 2025 Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 13 novembro 2025 Tempo de leitura: 14 min Um dos primeiros efeitos políticos da megaoperação policial contra o Comando Vermelho, realizada nos complexos da Penha e do Alemão no mês pa ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cjw9yz4ng43o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cjw9yz4ng43o",
+    "text_excerpt": "... Policiais escoltam um suspeito preso durante a Operação Contenção na favela da Vila Cruzeiro, no complexo da Penha, no Rio de Janeiro, Brasil, em 28 de outubro de 2025 * * Author, Luiz Fernando Toledo * Role, Da BBC News Brasil em Londres * 13 novembro 2025 * Tempo de leitura: 14 min Uma pesquisa de opinião da AtlasIntel, divulgada na semana da operação, apontou que Castro era aprovado por 47% dos moradores da capita ...",
+    "canonical_url": "https://bbc.com/portuguese/articles/cjw9yz4ng43o",
+    "resolved_url": "https://bbc.com/portuguese/articles/cjw9yz4ng43o",
     "status_code": 200,
     "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
+    "content_type": "text/plain; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-11-13",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "c43c9bad50c9265f",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1363,52 +602,48 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
     "url": "https://www.bbc.com/portuguese/articles/c1d0p2p91ppo",
     "title": "Como IA pode ajudar estudantes a se preparar para o Enem",
-    "description": "Empresas têm apostado em tecnologias próprias para resumir conteúdos e até ajudar em correções ou planejamento",
+    "description": "Empresas têm apostado em tecnologias próprias para resumir conteúdos e até ajudar em correções ou planejamento.",
     "category_hint": "",
     "relation_hint": "",
     "notes": "",
-    "published_at": "2025-11-05T00:00:00+00:00",
+    "published_at": "2025-11-05T17:48:57.390000+00:00",
     "source_labels": [
       "google-news-rss:\"Luiz Fernando Toledo\""
     ],
     "queries": [
       "\"Luiz Fernando Toledo\""
     ],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... r estudantes a se preparar para o Enem Crédito, Getty Images Legenda da foto, Provas objetivas e de redação serão aplicadas nos dias 9 e 16 de novembro Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil, em Londres 5 novembro 2025 Tempo de leitura: 8 min Ferramentas de inteligência artificial entraram de vez na rotina de estudantes em cursinhos e professores que os preparam para o Exame Naciona ...",
+    "site_name": "G1",
+    "text_excerpt": "... m 2025 Como IA pode ajudar estudantes a se preparar para o Enem Empresas têm apostado em tecnologias próprias para resumir conteúdos e até ajudar em correções ou planejamento. Por Luiz Fernando Toledo 05/11/2025 14h48 Atualizado 05/11/2025 1 de 3 Provas objetivas e de redação serão aplicadas nos dias 9 e 16 de novembro — Foto: Getty Images via BBC Provas objetivas e de redação serão aplicadas nos dias 9 e 16 de novem ...",
     "canonical_url": "https://www.bbc.com/portuguese/articles/c1d0p2p91ppo",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c1d0p2p91ppo",
+    "resolved_url": "https://g1.globo.com/educacao/enem/2025/noticia/2025/11/05/como-ia-pode-ajudar-estudantes-a-se-preparar-para-o-enem.ghtml",
     "status_code": 200,
     "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
+    "content_type": "text/html; charset=UTF-8",
     "error": "",
-    "first_seen_at": "2026-04-07T14:57:27.315449+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "first_seen_at": "2026-04-12T14:26:23.806679+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
+    "author_names": [],
     "domain": "bbc.com",
     "published_date": "2025-11-05",
-    "first_seen_date": "2026-04-07",
-    "last_seen_date": "2026-04-11",
+    "first_seen_date": "2026-04-12",
+    "last_seen_date": "2026-04-12",
     "id": "208f42b057786ff8",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
     "relation": "autor",
-    "match_score": 13,
+    "match_score": 9,
     "matched_name_variants": [
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "professor",
-      "londres",
       "bbc"
     ]
   },
@@ -1438,11 +673,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-11-05",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "416f70f8fa1efb86",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1452,42 +687,42 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
+      "bbc",
       "pesquisador",
-      "bbc"
+      "londres"
     ]
   },
   {
-    "url": "https://www.bbc.com/portuguese/articles/cx20d707r94o",
-    "title": "Máquinas podem pensar? Os 70 anos de história que levaram à inteligência artificial dos dias atuais",
-    "description": "Como foi que chegamos a esse ponto, em que ilusões de inteligência desafiam nossa noção do que é humano?",
+    "url": "https://bbc.com/portuguese/articles/cx20d707r94o",
+    "title": "Inteligência artificial: máquinas podem pensar? Os 70 anos de história que resultaram nos dias atuais",
+    "description": "... cc4b89bd.png.webp) Crédito, Frederic Lewis via Getty Images Legenda da foto, Homem ajusta fiação de máquina projetada para usar um tipo de rede neural, na década de 60 * * Author, Luiz Fernando Toledo * Role, Da BBC ",
     "category_hint": "",
     "relation_hint": "",
     "notes": "",
-    "published_at": "2025-10-18T00:00:00+00:00",
+    "published_at": "2025-10-18T09:20:18.303000+00:00",
     "source_labels": [
       "google-news-rss:\"Luiz Fernando Toledo\""
     ],
     "queries": [
       "\"Luiz Fernando Toledo\""
     ],
-    "site_name": "BBC News Brasil",
+    "site_name": "bbc.com",
     "author_names": [
       "Luiz Fernando Toledo"
     ],
-    "text_excerpt": "... is Crédito, Frederic Lewis via Getty Images Legenda da foto, Homem ajusta fiação de máquina projetada para usar um tipo de rede neural, na década de 60 Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil, em Londres 18 outubro 2025 Tempo de leitura: 16 min Ao fazer compras na internet, tiro dúvidas sobre o produto com um chat. Não sei identificar com certeza se quem responde é uma pessoa de verd ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cx20d707r94o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cx20d707r94o",
+    "text_excerpt": "... cc4b89bd.png.webp) Crédito, Frederic Lewis via Getty Images Legenda da foto, Homem ajusta fiação de máquina projetada para usar um tipo de rede neural, na década de 60 * * Author, Luiz Fernando Toledo * Role, Da BBC News Brasil, em Londres * 18 outubro 2025 * Tempo de leitura: 16 min Ao fazer compras na internet, tiro dúvidas sobre o produto com um chat. Não sei identificar com certeza se quem responde é uma pessoa d ...",
+    "canonical_url": "https://bbc.com/portuguese/articles/cx20d707r94o",
+    "resolved_url": "https://bbc.com/portuguese/articles/cx20d707r94o",
     "status_code": 200,
     "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
+    "content_type": "text/plain; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-10-18",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "328051b10408faa9",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1497,8 +732,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -1527,11 +762,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-17T15:11:01.307254+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-10-01",
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "56807b59ef02a637",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1541,8 +776,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -1568,12 +803,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-03T14:28:49.652328+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "bbc.com",
     "published_date": "2025-09-15",
     "first_seen_date": "2026-04-03",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "b88555fd5164e6bc",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1583,8 +818,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "reporter",
-      "bbc"
+      "bbc",
+      "reporter"
     ]
   },
   {
@@ -1613,11 +848,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-08-18",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "b83df868b158e239",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1627,8 +862,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -1657,11 +892,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-17T15:11:01.307254+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-08-01",
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "6d988e709e0444f1",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1671,8 +906,52 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
+    ]
+  },
+  {
+    "url": "https://bbc.com/portuguese/articles/cd6n04e0j07o",
+    "title": "'Resistência de Lula dá resultados e Trump atenua tarifas ao Brasil', diz agência americana Bloomberg",
+    "description": "... mas das maiores exportações do Brasil para os EUA, de aeronaves civis a suco de laranja, não sofrerão aumentos além da taxa de 10% imposta anteriormente, diz Bloomberg * * Author, Luiz Fernando Toledo * Role, Da BBC ",
+    "category_hint": "",
+    "relation_hint": "",
+    "notes": "",
+    "published_at": "2025-07-31T13:17:16.295000+00:00",
+    "source_labels": [
+      "google-news-rss:\"Luiz Fernando Toledo\""
+    ],
+    "queries": [
+      "\"Luiz Fernando Toledo\""
+    ],
+    "site_name": "bbc.com",
+    "author_names": [
+      "Luiz Fernando Toledo"
+    ],
+    "text_excerpt": "... mas das maiores exportações do Brasil para os EUA, de aeronaves civis a suco de laranja, não sofrerão aumentos além da taxa de 10% imposta anteriormente, diz Bloomberg * * Author, Luiz Fernando Toledo * Role, Da BBC News Brasil em Londres * 31 julho 2025 * Tempo de leitura: 3 min A resposta \"desafiadora\" do presidente [Lula](https://www.bbc.com/portuguese/topics/cpzd4zx0272t) à tarifa imposta pelo governo [Donald Tru ...",
+    "canonical_url": "https://bbc.com/portuguese/articles/cd6n04e0j07o",
+    "resolved_url": "https://bbc.com/portuguese/articles/cd6n04e0j07o",
+    "status_code": 200,
+    "fetch_ok": true,
+    "content_type": "text/plain; charset=utf-8",
+    "error": "",
+    "first_seen_at": "2026-03-17T15:11:01.307254+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
+    "domain": "bbc.com",
+    "published_date": "2025-07-31",
+    "first_seen_date": "2026-03-17",
+    "last_seen_date": "2026-04-12",
+    "id": "460af4843f1cbe40",
+    "category": "reportagem_autoral",
+    "category_label": "Reportagens publicadas por mim",
+    "relation": "autor",
+    "match_score": 13,
+    "matched_name_variants": [
+      "Luiz Fernando Toledo"
+    ],
+    "matched_identity_tokens": [
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -1701,11 +980,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-06T14:36:18.892845+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-07-31",
     "first_seen_date": "2026-04-06",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "62345411b935c889",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1715,53 +994,9 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
       "bbc",
-      "dados"
-    ]
-  },
-  {
-    "url": "https://www.bbc.com/portuguese/articles/cd6n04e0j07o",
-    "title": "'Resistência de Lula dá resultados e Trump atenua tarifas ao Brasil', diz agência americana Bloomberg",
-    "description": "Decreto de Trump detalha 694 produtos específicos isentos. Em geral, minerais, produtos energéticos, metais básicos, fertilizantes, papel e celulose, alguns produtos químicos e bens para aviação civil estão isentos da tarifação adicional.",
-    "category_hint": "",
-    "relation_hint": "",
-    "notes": "",
-    "published_at": "2025-07-31T00:00:00+00:00",
-    "source_labels": [
-      "google-news-rss:\"Luiz Fernando Toledo\""
-    ],
-    "queries": [
-      "\"Luiz Fernando Toledo\""
-    ],
-    "site_name": "BBC News Brasil",
-    "author_names": [
-      "Luiz Fernando Toledo"
-    ],
-    "text_excerpt": "... exportações do Brasil para os EUA, de aeronaves civis a suco de laranja, não sofrerão aumentos além da taxa de 10% imposta anteriormente, diz Bloomberg Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil em Londres 31 julho 2025 Tempo de leitura: 3 min A resposta \"desafiadora\" do presidente Lula à tarifa imposta pelo governo Donald Trump de 50% sobre produtos brasileiros foi validada na quarta-f ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/cd6n04e0j07o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/cd6n04e0j07o",
-    "status_code": 200,
-    "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
-    "error": "",
-    "first_seen_at": "2026-03-17T15:11:01.307254+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "domain": "bbc.com",
-    "published_date": "2025-07-31",
-    "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
-    "id": "460af4843f1cbe40",
-    "category": "reportagem_autoral",
-    "category_label": "Reportagens publicadas por mim",
-    "relation": "autor",
-    "match_score": 13,
-    "matched_name_variants": [
-      "Luiz Fernando Toledo"
-    ],
-    "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "dados",
+      "londres"
     ]
   },
   {
@@ -1790,11 +1025,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-05T14:22:44.641735+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-07-18",
     "first_seen_date": "2026-04-05",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "2fb2ddef3d6e3e37",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1804,8 +1039,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -1834,11 +1069,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-06-25",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "d22c0e13338bf51e",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1848,41 +1083,41 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
-    "url": "https://www.bbc.com/portuguese/articles/c74nw400191o",
-    "title": "Os influencers que ganham fama exibindo animais selvagens como pets",
-    "description": "Levantamento feito pela BBC News Brasil identificou ao menos 175 multas do Ibama que citam nomes de redes sociais na descrição e a exploração da imagem de animais silvestres",
+    "url": "https://bbc.com/portuguese/articles/c74nw400191o",
+    "title": "Capivara Filó e jaguatirica Pituca: os influencers que ganham fama exibindo animais selvagens como pets",
+    "description": "... 11f0-96c3-cf669419a2b0.jpg.webp) Crédito, Reprodução Legenda da foto, Os influenciadores Agenor Tupinambá, com a capivara Filó, e Luh da Roça, com a jaguatirica Pituca * * Author, Luiz Fernando Toledo * Role, Da BBC ",
     "category_hint": "",
     "relation_hint": "",
     "notes": "",
-    "published_at": "2025-05-26T00:00:00+00:00",
+    "published_at": "2025-05-26T16:50:19.376000+00:00",
     "source_labels": [
       "google-news-rss:\"levantamento\" \"Luiz Fernando Toledo\""
     ],
     "queries": [
       "\"levantamento\" \"Luiz Fernando Toledo\""
     ],
-    "site_name": "BBC News Brasil",
+    "site_name": "bbc.com",
     "author_names": [
       "Luiz Fernando Toledo"
     ],
-    "text_excerpt": "... vagens como pets Crédito, Reprodução Legenda da foto, Os influenciadores Agenor Tupinambá, com a capivara Filó, e Luh da Roça, com a jaguatirica Pituca Article Information Author, Luiz Fernando Toledo Role, Da BBC News Brasil, em Londres 26 maio 2025 Tempo de leitura: 10 min O influenciador digital Agenor Tupinambá , de 25 anos, ganhou a atenção do país, em 2023, quando o Instituto Brasileiro do Meio Ambiente e dos R ...",
-    "canonical_url": "https://www.bbc.com/portuguese/articles/c74nw400191o",
-    "resolved_url": "https://www.bbc.com/portuguese/articles/c74nw400191o",
+    "text_excerpt": "... 11f0-96c3-cf669419a2b0.jpg.webp) Crédito, Reprodução Legenda da foto, Os influenciadores Agenor Tupinambá, com a capivara Filó, e Luh da Roça, com a jaguatirica Pituca * * Author, Luiz Fernando Toledo * Role, Da BBC News Brasil, em Londres * 26 maio 2025 * Tempo de leitura: 10 min A apreensão aconteceu à época porque, segundo o instituto, o animal estaria sendo exibido indevidamente nas [redes sociais](https://www.bb ...",
+    "canonical_url": "https://bbc.com/portuguese/articles/c74nw400191o",
+    "resolved_url": "https://bbc.com/portuguese/articles/c74nw400191o",
     "status_code": 200,
     "fetch_ok": true,
-    "content_type": "text/html; charset=utf-8",
+    "content_type": "text/plain; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-25T14:45:56.893506+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-05-26",
     "first_seen_date": "2026-03-25",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "6728aa50872b8984",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1892,8 +1127,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -1922,11 +1157,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-05T14:22:44.641735+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-05-03",
     "first_seen_date": "2026-04-05",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "4da1a1d5eb8d939f",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1936,8 +1171,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -1966,11 +1201,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T17:46:17.825922+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2025-04-19",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "387a6e988339beb2",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -1980,8 +1215,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -2010,11 +1245,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-01T14:54:38.597444+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2024-11-25",
     "first_seen_date": "2026-04-01",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "15254fc61e042f76",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2024,8 +1259,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -2054,11 +1289,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-04T14:22:00.940293+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2024-11-11",
     "first_seen_date": "2026-04-04",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "4d3560f68b9da239",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2068,8 +1303,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -2100,11 +1335,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-18T14:51:04.673611+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2024-10-21",
     "first_seen_date": "2026-03-18",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "0080a8d4046740fe",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2114,8 +1349,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -2144,11 +1379,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-17T01:30:43.856870+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2024-10-16",
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "9c598c8780ecf83e",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2158,8 +1393,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -2188,11 +1423,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-17T15:11:01.307254+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2024-10-01",
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "487302dd32f119e1",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2202,8 +1437,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -2232,11 +1467,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-17T15:11:01.307254+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "bbc.com",
     "published_date": "2024-09-26",
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "6b3af49db984c689",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2246,8 +1481,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "londres",
-      "bbc"
+      "bbc",
+      "londres"
     ]
   },
   {
@@ -2274,11 +1509,11 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "ojoioeotrigo.com.br",
     "published_date": "2024-07-03",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "ebcbb417bf5a594d",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2313,11 +1548,11 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "apublica.org",
     "published_date": "2024-05-19",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "d946bb1917b872a2",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2351,12 +1586,12 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "cima.ned.org",
     "published_date": "2024-03-19",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "a0d700faccd3b516",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -2395,11 +1630,11 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-04-02T14:43:14.625477+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "piaui.uol.com.br",
     "published_date": "2023-11-27",
     "first_seen_date": "2026-04-02",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "e1e890c15f9f0518",
     "category": "mencao",
     "category_label": "Menções ao meu nome",
@@ -2438,11 +1673,11 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-17T15:11:01.307254+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "sbtnews.sbt.com.br",
     "published_date": "2023-06-30",
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "fb817fd370ced045",
     "category": "mencao",
     "category_label": "Menções ao meu nome",
@@ -2452,8 +1687,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "pesquisador",
-      "abraji"
+      "abraji",
+      "pesquisador"
     ]
   },
   {
@@ -2480,11 +1715,11 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "apublica.org",
     "published_date": "2023-03-01",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "ca3476753c2862f0",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2518,12 +1753,12 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-17T15:11:01.307254+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "g1.globo.com",
     "published_date": "2023-01-17",
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "216c1cb11189bfa9",
     "category": "citacao_fonte",
     "category_label": "Citado como fonte / especialista",
@@ -2559,13 +1794,13 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "brown.columbia.edu",
     "site_name": "brown.columbia.edu",
     "published_date": "2022-09-12",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "cee41825768d6a7c",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -2599,12 +1834,12 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-17T01:35:41.639990+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "intercept.com.br",
     "published_date": "2021-08-30",
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "484e0fdd59dd494a",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2635,13 +1870,13 @@
     "fetch_ok": true,
     "content_type": "text/html; charset=UTF-8",
     "error": "",
-    "first_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "first_seen_at": "2026-04-12T14:26:23.806679+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "reutersinstitute.politics.ox.ac.uk",
     "published_date": "2021-07-20",
-    "first_seen_date": "2026-04-11",
-    "last_seen_date": "2026-04-11",
+    "first_seen_date": "2026-04-12",
+    "last_seen_date": "2026-04-12",
     "id": "1fcbb80105c8b241",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -2652,12 +1887,12 @@
       "Luiz Fernando Toledo Antunes"
     ],
     "matched_identity_tokens": [
-      "fiquem sabendo",
-      "journalist",
-      "reuters institute",
       "abraji",
       "investigative",
-      "data journalism"
+      "fiquem sabendo",
+      "journalist",
+      "data journalism",
+      "reuters institute"
     ]
   },
   {
@@ -2681,12 +1916,12 @@
     "content_type": "text/plain; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T17:46:17.825922+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "piaui.folha.uol.com.br",
     "published_date": "2021-02-06",
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "29b7c08383d742ba",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -2697,6 +1932,48 @@
     ],
     "matched_identity_tokens": [
       "uol"
+    ]
+  },
+  {
+    "url": "https://www.estadao.com.br/sao-paulo/gestao-doria-dificulta-acesso-a-dados-e-viola-lei-de-acesso-a-informacao/",
+    "title": "Gestão Doria age para dificultar a Lei de Acesso à Informação",
+    "description": "Em áudio obtido pelo ‘Estado’, nº 2 da Comunicação diz que vai ‘botar pra dificultar’ e que faz ranking mental de autores dos pedidos",
+    "category_hint": "",
+    "relation_hint": "",
+    "notes": "",
+    "published_at": null,
+    "source_labels": [
+      "google-news-rss:\"Luiz Fernando Toledo\""
+    ],
+    "queries": [
+      "\"Luiz Fernando Toledo\""
+    ],
+    "site_name": "Estadão",
+    "text_excerpt": "... ificultar a Lei de Acesso à Informação Em áudio obtido pelo ‘Estado’, nº 2 da Comunicação diz que vai ‘botar pra dificultar’ e que faz ranking mental de autores dos pedidos PUBLICIDADE Por Luiz Fernando Toledo 08/11/2017 | 04h00 SÃO PAULO - Gravação oficial de reunião da Comissão Municipal de Acesso à Informação (Cmai) obtida pelo Estado mostra que a gestão João Doria (PSDB) age para tentar dificultar a Lei de Acesso ...",
+    "canonical_url": "https://www.estadao.com.br/sao-paulo/gestao-doria-dificulta-acesso-a-dados-e-viola-lei-de-acesso-a-informacao/",
+    "resolved_url": "https://www.estadao.com.br/sao-paulo/gestao-doria-dificulta-acesso-a-dados-e-viola-lei-de-acesso-a-informacao/",
+    "status_code": 200,
+    "fetch_ok": true,
+    "content_type": "text/html; charset=utf-8",
+    "error": "",
+    "first_seen_at": "2026-04-12T14:26:23.806679+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
+    "author_names": [],
+    "domain": "estadao.com.br",
+    "published_date": null,
+    "first_seen_date": "2026-04-12",
+    "last_seen_date": "2026-04-12",
+    "id": "4ebe0902ea6f5fd8",
+    "category": "reportagem_autoral",
+    "category_label": "Reportagens publicadas por mim",
+    "relation": "autor",
+    "match_score": 9,
+    "matched_name_variants": [
+      "Luiz Fernando Toledo"
+    ],
+    "matched_identity_tokens": [
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -2722,12 +1999,12 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-04-11T14:23:25.001652+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-04-11",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "6de3c5eaed7b4dc7",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2737,8 +2014,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -2766,12 +2043,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-10T14:38:26.688205+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-04-10",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "8f29c795b3fda36e",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2781,8 +2058,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -2808,12 +2085,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-10T14:38:26.688205+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-04-10",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "d699d183bb375eaf",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2823,8 +2100,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -2850,12 +2127,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-09T15:10:57.568419+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-04-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "0a1ceccc08d062ee",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2865,8 +2142,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -2892,12 +2169,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-09T15:10:57.568419+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-04-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "8dbc10fe1ff1ba5e",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -2907,8 +2184,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -2934,12 +2211,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-08T14:58:46.520766+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-04-08",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "7c36ee9018591ff8",
     "category": "mencao",
     "category_label": "Menções ao meu nome",
@@ -2949,8 +2226,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -2975,13 +2252,13 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-04-05T14:22:44.641735+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "abraji.org.br",
     "site_name": "abraji.org.br",
     "published_date": null,
     "first_seen_date": "2026-04-05",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "ee1ff16f3546c75c",
     "category": "citacao_fonte",
     "category_label": "Citado como fonte / especialista",
@@ -2991,12 +2268,12 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
+      "abraji",
       "fiquem sabendo",
       "jornalista",
+      "dados",
       "jornalismo",
-      "investigativo",
-      "abraji",
-      "dados"
+      "investigativo"
     ]
   },
   {
@@ -3024,12 +2301,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-18T14:51:04.673611+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-03-18",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "24ce554b871d10ba",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -3040,8 +2317,8 @@
       "Luiz Fernando Toledo Antunes"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -3067,12 +2344,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-18T14:51:04.673611+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-03-18",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "afdd6fe2365e6f42",
     "category": "mencao",
     "category_label": "Menções ao meu nome",
@@ -3082,8 +2359,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -3109,12 +2386,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-17T01:30:43.856870+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "a60ebbcfd033d947",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -3124,8 +2401,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -3151,12 +2428,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-17T01:30:43.856870+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "bc26166fc4638d7e",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -3166,8 +2443,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -3193,12 +2470,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-17T01:30:43.856870+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "4787c2d7a9cf9fe2",
     "category": "reportagem_autoral",
     "category_label": "Reportagens publicadas por mim",
@@ -3208,9 +2485,9 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
       "estadao",
-      "dados"
+      "dados",
+      "estadão"
     ]
   },
   {
@@ -3233,13 +2510,13 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-17T01:30:43.856870+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "g1.globo.com",
     "site_name": "g1.globo.com",
     "published_date": null,
     "first_seen_date": "2026-03-17",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "d1b17125558e0bee",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3271,12 +2548,12 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "estadao.com.br",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "6f87d50a980397a4",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3286,8 +2563,8 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "estadão",
-      "estadao"
+      "estadao",
+      "estadão"
     ]
   },
   {
@@ -3310,13 +2587,13 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "talks.ox.ac.uk",
     "site_name": "talks.ox.ac.uk",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "9e1651906f348f46",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3326,9 +2603,9 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "professor",
+      "polis",
       "cambridge",
-      "polis"
+      "professor"
     ]
   },
   {
@@ -3350,13 +2627,13 @@
     "content_type": "",
     "error": "HTTPSConnectionPool(host='devstudies.cam.ac.uk', port=443): Max retries exceeded with url: /news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil (Caused by NameResolutionError(\"HTTPSConnection(host='devstudies.cam.ac.uk', port=443): Failed to resolve 'devstudies.cam.ac.uk' ([Errno -5] No address associated with hostname)\")) | jina: 422 Client Error: Unprocessable Entity for url: https://r.jina.ai/http://https://devstudies.cam.ac.uk/news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "devstudies.cam.ac.uk",
     "site_name": "devstudies.cam.ac.uk",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "80361178cdc289a5",
     "category": "mencao",
     "category_label": "Menções ao meu nome",
@@ -3393,11 +2670,11 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "domain": "tvgazeta.com.br",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "b940a00180e669bd",
     "category": "entrevista",
     "category_label": "Entrevistas / podcasts",
@@ -3431,12 +2708,12 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "ojoioeotrigo.com.br",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "129343a85dd5b7d2",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3471,12 +2748,12 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "intercept.com.br",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "cf72a92118d372b7",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3486,19 +2763,19 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
-      "fiquem sabendo",
-      "oxford",
-      "occrp",
-      "jornalista",
-      "jornalismo",
-      "investigativo",
-      "estadão",
-      "pesquisador",
-      "columbia",
       "abraji",
+      "fiquem sabendo",
       "estadao",
       "cnn",
-      "dados"
+      "occrp",
+      "jornalista",
+      "pesquisador",
+      "oxford",
+      "dados",
+      "columbia",
+      "jornalismo",
+      "estadão",
+      "investigativo"
     ]
   },
   {
@@ -3522,12 +2799,12 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "apublica.org",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "8de5c3158f0944b1",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3561,12 +2838,12 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "icfj.org",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "b04d6098c38f7b25",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3599,13 +2876,13 @@
     "content_type": "text/html; charset=UTF-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "institutoling.org.br",
     "site_name": "institutoling.org.br",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "1f4b12eb875c4b0d",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3615,12 +2892,12 @@
       "Luiz Fernando Toledo"
     ],
     "matched_identity_tokens": [
+      "abraji",
       "fiquem sabendo",
       "jornalista",
+      "dados",
       "jornalismo",
-      "abraji",
-      "data journalism",
-      "dados"
+      "data journalism"
     ]
   },
   {
@@ -3644,12 +2921,12 @@
     "content_type": "text/plain; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "escavador.com",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "6273cd32cddfd002",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3681,13 +2958,13 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "scielo.br",
     "site_name": "scielo.br",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "d642f2876ac6011f",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",
@@ -3719,13 +2996,13 @@
     "content_type": "text/html; charset=utf-8",
     "error": "",
     "first_seen_at": "2026-03-09T13:42:31.137294+00:00",
-    "last_seen_at": "2026-04-11T14:23:25.001652+00:00",
+    "last_seen_at": "2026-04-12T14:26:23.806679+00:00",
     "author_names": [],
     "domain": "repositorio.fgv.br",
     "site_name": "repositorio.fgv.br",
     "published_date": null,
     "first_seen_date": "2026-03-09",
-    "last_seen_date": "2026-04-11",
+    "last_seen_date": "2026-04-12",
     "id": "f5284d43946ed7c9",
     "category": "perfil_bio",
     "category_label": "Perfis / bios / páginas institucionais",

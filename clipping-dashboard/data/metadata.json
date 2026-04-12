@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-04-11T14:24:31.187690+00:00",
+  "generated_at": "2026-04-12T14:28:11.766149+00:00",
   "counts": {
-    "items": 88,
+    "items": 71,
     "domains": 22,
     "categories": {
-      "reportagem_autoral": 63,
+      "reportagem_autoral": 46,
       "republicacao": 0,
       "eco_repercussao": 0,
       "citacao_fonte": 2,
@@ -33,7 +33,7 @@
   "sources": {
     "discovery": {
       "seeds": {
-        "known_external_sources": 50
+        "known_external_sources": 26
       },
       "searches": {
         "google-news-rss:\"Luiz Fernando Toledo\"": 40,
@@ -43,24 +43,24 @@
       }
     },
     "enrich": {
-      "fetched": 61,
-      "reused": 31,
-      "kept": 88,
-      "dropped": 4,
+      "fetched": 44,
+      "reused": 32,
+      "kept": 71,
+      "dropped": 5,
       "categories": {
         "perfil_bio": 17,
-        "reportagem_autoral": 63,
+        "reportagem_autoral": 46,
         "mencao": 5,
         "entrevista": 1,
         "citacao_fonte": 2
       },
       "domains": {
-        "bbc.com": 51,
+        "bbc.com": 33,
         "intercept.com.br": 2,
         "piaui.folha.uol.com.br": 1,
         "apublica.org": 3,
         "ojoioeotrigo.com.br": 2,
-        "estadao.com.br": 12,
+        "estadao.com.br": 13,
         "g1.globo.com": 2,
         "escavador.com": 1,
         "icfj.org": 1,
