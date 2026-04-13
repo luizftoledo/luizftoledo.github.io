@@ -43,5 +43,11 @@
     "planalto": 17,
     "biblioteca": 38
   },
-  "errors": []
+  "errors": [
+    {
+      "scope": "people-index",
+      "url": "",
+      "error": "Failed to build nominal mentions index: 504 Server Error: Gateway Timeout for url: https://dadosabertos.camara.leg.br/api/v2/deputados?ordem=ASC&ordenarPor=nome&pagina=6&itens=100"
+    }
+  ]
 }
