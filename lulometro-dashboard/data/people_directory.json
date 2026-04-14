@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-12T14:08:37.950797+00:00",
+  "generated_at": "2026-04-14T15:01:48.499980+00:00",
   "scope_president": "Luiz Inacio Lula da Silva",
   "scope_mandate": "Lula 3 (2023-)",
   "source_urls": {
@@ -10,9 +10,9 @@
     "senado_senadores": "https://legis.senado.leg.br/dadosabertos/senador/lista/atual.json"
   },
   "counts": {
-    "entities": 633,
+    "entities": 632,
     "entities_by_kind": {
-      "deputado": 513,
+      "deputado": 512,
       "janja": 1,
       "ministro": 38,
       "senador": 81
@@ -9621,24 +9621,6 @@
       ],
       "aliases_observed": [],
       "search_text": "sergio turra sergio turra deputados federais deputado federal pp rs sergio turra",
-      "mention_occurrences_total": 0,
-      "mention_docs_total": 0
-    },
-    {
-      "id": "deputado-silas-camara",
-      "kind": "deputado",
-      "group_label": "Deputados federais",
-      "name": "Silas Câmara",
-      "official_name": "Silas Câmara",
-      "role": "Deputado federal",
-      "source_url": "https://dadosabertos.camara.leg.br/api/v2/deputados/74356",
-      "party": "REPUBLICANOS",
-      "state": "AM",
-      "aliases_counted": [
-        "Silas Câmara"
-      ],
-      "aliases_observed": [],
-      "search_text": "silas camara silas camara deputados federais deputado federal republicanos am silas camara",
       "mention_occurrences_total": 0,
       "mention_docs_total": 0
     },
