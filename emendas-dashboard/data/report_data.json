@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-14T14:56:03.083358+00:00",
+  "generated_at": "2026-04-15T14:49:35.650675+00:00",
   "snapshot_date": "2026-04-11",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -975,7 +975,7 @@
     "total_liquidado": 264520237.97,
     "total_pago": 258655404.21
   },
-  "run_date": "2026-04-14",
+  "run_date": "2026-04-15",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -1005,7 +1005,7 @@
       "available": true,
       "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
       "last_update": "",
-      "base_siafi_date": "31/3/2026",
+      "base_siafi_date": "14/4/2026",
       "filters": {
         "year": 2026,
         "rp": [
@@ -1059,8 +1059,7 @@
           "error": ""
         }
       ],
-      "error": "8 - Emendas de Comissão: filtro não confirmado",
-      "fallback_from_previous": true
+      "error": ""
     },
     "siop_details": {
       "available": true,
@@ -1075,7 +1074,7 @@
         ]
       },
       "last_update": "",
-      "base_siafi_date": "13/4/2026",
+      "base_siafi_date": "14/4/2026",
       "rows": [],
       "rows_count": 0,
       "unique_nro_emendas": 0,
@@ -1971,7 +1970,7 @@
         },
         {
           "author": "JOSE GUIMARAES",
-          "party": "PT",
+          "party": "Nao identificado",
           "empenhado": 955000.0
         },
         {
@@ -2344,7 +2343,7 @@
       }
     },
     "party_lookup": {
-      "camara_mapeados": 512,
+      "camara_mapeados": 513,
       "senado_mapeados": 81
     }
   },
@@ -2806,7 +2805,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-04-15",
+      "last_update": "",
+      "base_siafi_date": "14/4/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
   ],
-  "updated_at": "2026-04-14T14:56:03.083358+00:00"
+  "updated_at": "2026-04-15T14:49:35.650675+00:00"
 }
