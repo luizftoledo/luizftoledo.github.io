@@ -1288,6 +1288,88 @@
             </div>
         </section>
 
+            <h3>Agentes de IA: o que são e como ajudam jornalistas</h3>
+
+            <p>Um agente de IA é um programa que recebe uma tarefa descrita em linguagem natural — como
+                "entre neste site, filtre os documentos por país e me dê um resumo das pessoas citadas" — e
+                executa sozinho, passo a passo, sem que você precise escrever uma linha de código. Ele lê
+                páginas, baixa arquivos, analisa conteúdo e devolve o resultado pronto.</p>
+
+            <p>Para jornalistas, isso muda o jogo: tarefas que antes levavam dias de trabalho manual — raspar
+                centenas de PDFs, cruzar nomes em bases diferentes, categorizar documentos — agora podem ser
+                delegadas a um agente em minutos.</p>
+
+            <h4>NotebookLM (Google)</h4>
+            <p>Ferramenta gratuita que permite carregar documentos (PDFs, transcrições, depoimentos) e
+                conversar com a IA sobre o conteúdo deles. Ideal para investigações com centenas de arquivos:
+                você carrega tudo e pergunta "quem aparece mais de uma vez?", "qual a relação entre fulano e
+                ciclano?", "resuma os trechos que mencionam o Brasil". Também gera podcasts e resumos em áudio
+                a partir das fontes.</p>
+
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Google</span>
+                        <h4>NotebookLM</h4>
+                        <p>Pesquisa em muitos documentos ao mesmo tempo — quase obrigatório para investigações
+                            documentais.</p>
+                    </div>
+                    <a class="go" href="https://notebooklm.google.com/" target="_blank">Abrir</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">YouTube · Tutorial</span>
+                        <h4>Vídeo: como usar o NotebookLM para jornalismo</h4>
+                    </div>
+                    <a class="go" href="https://www.youtube.com/watch?v=-yDqqTsV0TE" target="_blank">Assistir</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Abraji</span>
+                        <h4>Kit de ferramentas Gemini para jornalistas</h4>
+                    </div>
+                    <a class="go" href="https://abraji.org.br/noticias/abraji-publica-novos-conteudos-do-kit-de-ferramentas-gemini-para-jornalistas" target="_blank">Acessar</a>
+                </div>
+            </div>
+
+            <h4>Codex (OpenAI)</h4>
+            <p>O agente da OpenAI que roda dentro do ChatGPT, no navegador. Você descreve a tarefa e ele
+                escreve e executa o código sozinho — raspa sites, analisa documentos em lote, cruza
+                informações e devolve o resultado organizado.</p>
+
+            <p><strong>Caso prático — Epstein Files:</strong> na investigação da BBC sobre Epstein, usamos
+                o Codex para automatizar parte da análise documental. O pedido foi simples: entrar na página
+                que continha os documentos do caso (<a href="https://jmail.world/" target="_blank">jmail.world</a>),
+                filtrar pelo termo <strong>"Brazil"</strong>, e então categorizar os e-mails encontrados por
+                <strong>assunto</strong> e por <strong>nome das pessoas envolvidas</strong> — identificando
+                quem falava com quem e qual a possível relação com Epstein. O agente fez a busca, leu os
+                resultados, organizou por relevância e devolveu um resumo estruturado com nomes, datas,
+                contextos e possíveis conexões. Um trabalho que levaria horas de leitura manual foi
+                concluído em minutos.</p>
+
+            <figure>
+                <img src="photos/codex_screenshot.png" alt="Codex raspando dados do caso Epstein">
+                <figcaption>Prompt enviado ao Codex: entrar no jmail.world, filtrar por "Brazil" e resumir
+                    pessoas e contextos dos e-mails.</figcaption>
+            </figure>
+            <figure>
+                <img src="photos/codex_resultado.png" alt="Resultado da análise do Codex">
+                <figcaption>Resultado: o agente identificou nomes, datas e possíveis relações com Epstein
+                    a partir dos e-mails filtrados.</figcaption>
+            </figure>
+
+            <h4>Claude Code (Anthropic)</h4>
+            <p>Outro agente poderoso, que roda no navegador, no terminal ou na nuvem. Forte em leitura de
+                documentos longos, apuração assistida e automação de tarefas complexas. Na prática, funciona
+                de forma parecida com o Codex: você descreve o que precisa em português e ele executa.</p>
+
+            <div class="callout">
+                <div class="callout-title">Você não precisa saber programar</div>
+                <p>Tanto o Codex quanto o Claude Code funcionam da mesma forma: você descreve a tarefa em
+                    linguagem natural e o agente escreve e executa o código sozinho. O jornalista entra com
+                    o método, a pergunta certa e o olhar crítico — a IA entra com a execução técnica.</p>
+            </div>
+
             <h3>Planilhas do zero</h3>
             <div class="tool-list">
                 <div class="tool-item">
