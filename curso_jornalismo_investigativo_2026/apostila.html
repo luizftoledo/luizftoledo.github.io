@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Apostila · Jornalismo investigativo: das planilhas às ruas</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #111;
+            --white: #fff;
+            --mid: #888;
+            --light-gray: #e5e5e5;
+            --cream: #f7f5f1;
+            --accent: #111;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--black);
+            background: #fafaf8;
+            font-weight: 300;
+            line-height: 1.75;
+            font-size: 17px;
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "kern", "liga";
+        }
+
+        /* ======================================== */
+        /* READING PROGRESS BAR                     */
+        /* ======================================== */
+        .reading-progress {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 44px;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            padding: 0 26px;
+            justify-content: space-between;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+        }
+        .reading-progress .rp-label {
+            position: relative;
+            padding-left: 18px;
+            color: var(--black);
+            max-width: 55%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .reading-progress .rp-label::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 50%;
+            width: 10px; height: 1px;
+            background: var(--black);
+            transform: translateY(-50%);
+        }
+        .reading-progress .rp-percent {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 14px;
+            letter-spacing: 0.02em;
+            color: var(--black);
+            text-transform: none;
+        }
+        .reading-progress .rp-percent strong {
+            font-weight: 900;
+            font-style: normal;
+        }
+        .reading-progress .rp-track {
+            position: absolute;
+            bottom: -1px; left: 0;
+            height: 2px;
+            background: var(--black);
+            width: 0;
+            transition: width 0.15s linear;
+        }
+
+        a { color: var(--black); border-bottom: 1px solid var(--black); text-decoration: none; transition: opacity .2s; }
+        a:hover { opacity: 0.65; }
+
+        strong, b { font-weight: 600; color: var(--black); }
+        em, i { font-style: italic; }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 900;
+            color: var(--black);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+
+        /* ===== STICKY NAV MENU ===== */
+        .nav-menu {
+            position: fixed;
+            top: 44px; left: 0; right: 0;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            z-index: 90;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            padding: 0 24px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .nav-menu::-webkit-scrollbar { display: none; }
+        .nav-menu a {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--mid);
+            text-decoration: none;
+            border: none !important;
+            border-bottom: 2px solid transparent !important;
+            padding: 13px 18px;
+            white-space: nowrap;
+            transition: color 0.2s, border-bottom-color 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-menu a:hover { color: var(--black); opacity: 1; }
+        .nav-menu a.active {
+            color: var(--black);
+            border-bottom-color: var(--black) !important;
+        }
+        html { scroll-padding-top: 100px; }
+
+        /* ===== HEADER ===== */
+        .site-header {
+            background: var(--black);
+            color: var(--white);
+            padding: 160px 40px 110px;
+            text-align: center;
+            border-bottom: 1px solid var(--black);
+            position: relative;
+        }
+        .site-header::before {
+            content: "";
+            position: absolute;
+            top: 80px; right: 40px; bottom: 40px; left: 40px;
+            border: 1px solid rgba(255,255,255,0.12);
+            pointer-events: none;
+        }
+        .site-header .eyebrow {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7em;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            color: rgba(255,255,255,0.55);
+            text-transform: uppercase;
+            margin-bottom: 26px;
+        }
+        .site-header h1 {
+            color: var(--white);
+            font-size: 3.2em;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.05;
+        }
+        .site-header .divider {
+            width: 60px; height: 2px; background: var(--white);
+            margin: 32px auto;
+        }
+        .site-header .authors {
+            font-family: 'Inter', sans-serif;
+            color: rgba(255,255,255,0.78);
+            font-size: 1.05em;
+            letter-spacing: 0.05em;
+        }
+        .site-header .subtitle {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8em;
+            margin-top: 10px;
+            letter-spacing: 0.06em;
+        }
+
+        /* ===== NAVIGATION INDEX ===== */
+        .index {
+            max-width: 840px;
+            margin: -60px auto 0;
+            background: var(--white);
+            padding: 46px 54px;
+            border: 1px solid var(--light-gray);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 2;
+        }
+        .index h2 {
+            font-size: 0.65em;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--mid);
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 20px;
+        }
+        .index ol {
+            list-style: none;
+            counter-reset: idx;
+            padding: 0;
+        }
+        .index ol li {
+            counter-increment: idx;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            align-items: baseline;
+        }
+        .index ol li:last-child { border-bottom: none; }
+        .index ol li::before {
+            content: counter(idx, decimal-leading-zero);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 0.95em;
+            color: var(--mid);
+        }
+        .index ol li a {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.2em;
+            color: var(--black);
+            border: none;
+            line-height: 1.25;
+        }
+        .index ol li a:hover { opacity: 0.6; }
+
+        /* ===== CONTENT ===== */
+        .content {
+            max-width: 760px;
+            margin: 100px auto 120px;
+            padding: 0 40px;
+        }
+
+        .content section { margin-bottom: 90px; }
+
+        .content h2 {
+            font-size: 2.6em;
+            margin-bottom: 8px;
+            letter-spacing: -0.03em;
+        }
+        .content .section-number {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7em;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 18px;
+            position: relative;
+            padding-left: 24px;
+        }
+        .content .section-number::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 50%;
+            width: 16px; height: 1px;
+            background: var(--black);
+            transform: translateY(-50%);
+        }
+
+        /* First paragraph drop cap */
+        .content section > p:first-of-type::first-letter {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 3.4em;
+            line-height: 0.85;
+            float: left;
+            padding: 8px 10px 0 0;
+            color: var(--black);
+        }
+        .content .section-lead {
+            font-size: 1.15em;
+            color: var(--mid);
+            font-weight: 300;
+            margin: 14px 0 36px;
+            line-height: 1.55;
+            max-width: 620px;
+            border-left: 2px solid var(--black);
+            padding-left: 20px;
+        }
+        .content h3 {
+            font-size: 1.5em;
+            margin: 44px 0 14px;
+        }
+        .content h4 {
+            font-size: 1.1em;
+            margin: 30px 0 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.005em;
+        }
+        .content p {
+            margin-bottom: 18px;
+            color: var(--black);
+        }
+        .content p.muted { color: var(--mid); }
+
+        .content ul, .content ol {
+            padding-left: 0;
+            margin-bottom: 24px;
+            list-style: none;
+        }
+        .content ul li {
+            position: relative;
+            padding: 10px 0 10px 28px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .content ul li:last-child { border-bottom: none; }
+        .content ul li::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 20px;
+            width: 14px; height: 1px;
+            background: var(--black);
+        }
+        .content ol { counter-reset: enum; }
+        .content ol li {
+            counter-increment: enum;
+            position: relative;
+            padding: 12px 0 12px 50px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .content ol li::before {
+            content: counter(enum, decimal-leading-zero);
+            position: absolute;
+            left: 0; top: 12px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 0.95em;
+            color: var(--mid);
+        }
+        .content ol li:last-child { border-bottom: none; }
+
+        blockquote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.35em;
+            line-height: 1.35;
+            color: var(--black);
+            margin: 36px 0;
+            padding: 0 0 0 32px;
+            border-left: 2px solid var(--black);
+            max-width: 680px;
+        }
+        blockquote cite {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 0.45em;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-top: 16px;
+        }
+
+        .callout {
+            background: var(--white);
+            padding: 30px 36px;
+            margin: 40px 0;
+            border: 1px solid var(--light-gray);
+            border-left: 3px solid var(--black);
+            position: relative;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+        }
+        .callout::before {
+            content: "§";
+            position: absolute;
+            top: 18px; right: 22px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--mid);
+            opacity: 0.5;
+        }
+        .callout .callout-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62em;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 10px;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+
+        /* Table: Fala vs Documento */
+        .two-col-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid var(--light-gray);
+            margin: 24px 0;
+        }
+        .two-col-table .head {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62em;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--mid);
+            padding: 14px 18px 14px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .two-col-table .head + .head { padding-left: 18px; padding-right: 0; }
+        .two-col-table .q {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1em;
+            padding: 18px 18px 18px 0;
+            border-right: 1px solid var(--light-gray);
+            border-bottom: 1px solid var(--light-gray);
+            color: var(--black);
+        }
+        .two-col-table .a {
+            font-size: 0.88em;
+            padding: 18px 0 18px 18px;
+            border-bottom: 1px solid var(--light-gray);
+            color: var(--mid);
+        }
+
+        /* Compare */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+            margin: 24px 0;
+            border-top: 1px solid var(--light-gray);
+            padding-top: 20px;
+        }
+        .compare-grid h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .compare-grid ul li {
+            font-size: 0.86em;
+            padding: 8px 0 8px 22px;
+        }
+        .compare-grid ul li::before { top: 18px; width: 12px; }
+
+        /* Tool cards */
+        .tool-list {
+            display: grid;
+            gap: 22px;
+            margin: 24px 0;
+        }
+        .tool-item {
+            border: 1px solid var(--light-gray);
+            padding: 22px 24px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: center;
+        }
+        .tool-item h4 {
+            margin: 0 0 4px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3em;
+        }
+        .tool-item .tool-org {
+            font-size: 0.58em;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+            display: block;
+            margin-bottom: 2px;
+        }
+        .tool-item p {
+            margin: 6px 0 8px;
+            font-size: 0.86em;
+            color: var(--mid);
+        }
+        .tool-item a.go {
+            font-size: 0.72em;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--white);
+            background: var(--black);
+            padding: 12px 22px;
+            border: none;
+            white-space: nowrap;
+        }
+        .tool-item a.go:hover { opacity: 0.8; }
+
+        /* Steps */
+        .steps-list {
+            counter-reset: step;
+            border-left: 2px solid var(--black);
+            padding-left: 28px;
+            margin: 24px 0;
+        }
+        .steps-list li {
+            counter-increment: step;
+            padding: 10px 0;
+            list-style: none;
+            border: none;
+            position: relative;
+        }
+        .steps-list li::before {
+            content: "Etapa " counter(step);
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62em;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 2px;
+        }
+        .steps-list li strong {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Figures */
+        figure {
+            margin: 28px 0;
+            background: var(--cream);
+            padding: 18px;
+            border: 1px solid var(--light-gray);
+        }
+        figure img {
+            width: 100%;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            background: #fff;
+        }
+        figure figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            font-weight: 400;
+            color: var(--mid);
+            margin-top: 12px;
+            line-height: 1.5;
+            text-align: center;
+        }
+        .figure-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin: 28px 0;
+        }
+        .figure-row figure { margin: 0; }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: rgba(255,255,255,0.7);
+            padding: 60px 40px;
+            text-align: center;
+            font-size: 0.88em;
+        }
+        footer a { color: var(--white); border-bottom-color: rgba(255,255,255,0.4); }
+        footer .divider {
+            width: 40px; height: 1px; background: rgba(255,255,255,0.3);
+            margin: 24px auto;
+        }
+        footer .back-link {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 0.85em;
+            letter-spacing: 0.04em;
+        }
+
+        @media (max-width: 720px) {
+            .site-header { padding: 60px 24px 90px; }
+            .site-header h1 { font-size: 2.1em; }
+            .index { margin: -50px 20px 0; padding: 30px 26px; }
+            .index ol li { grid-template-columns: 44px 1fr; }
+            .content { margin: 60px auto 80px; padding: 0 24px; }
+            .content h2 { font-size: 1.9em; }
+            .compare-grid, .two-col-table { grid-template-columns: 1fr; }
+            .two-col-table .q { border-right: none; }
+            .tool-item { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PASSWORD GATE -->
+    <div id="pw-gate" style="position:fixed;inset:0;z-index:9999;background:#111;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:'Inter',sans-serif;">
+        <h1 style="font-family:'Playfair Display',serif;color:#fff;font-size:2.2em;margin-bottom:8px;letter-spacing:-0.03em;">Acesso restrito</h1>
+        <p style="color:rgba(255,255,255,0.5);font-size:0.85em;margin-bottom:28px;">Digite a senha para acessar o conteúdo</p>
+        <form onsubmit="return checkPw()" style="display:flex;gap:12px;">
+            <input id="pw-input" type="password" placeholder="Senha" autocomplete="off"
+                style="font-family:'Inter',sans-serif;font-size:1em;padding:14px 22px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:#fff;outline:none;width:260px;letter-spacing:0.06em;">
+            <button type="submit"
+                style="font-family:'Inter',sans-serif;font-size:0.8em;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:14px 28px;background:#fff;color:#111;border:none;cursor:pointer;">Entrar</button>
+        </form>
+        <p id="pw-err" style="color:#e55;font-size:0.78em;margin-top:14px;opacity:0;transition:opacity 0.3s;">Senha incorreta</p>
+    </div>
+    <script>
+        async function hashStr(s){const e=new TextEncoder().encode(s);const h=await crypto.subtle.digest('SHA-256',e);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+        async function checkPw(){
+            var v=document.getElementById('pw-input').value;
+            var h=await hashStr(v);
+            if(h==='e57f9b279797c5b6646c88383581dce25e6624788ca6b3c39684bd956c75c900'){
+                document.getElementById('pw-gate').style.display='none';
+                sessionStorage.setItem('pw-ok','1');
+                return false;
+            }
+            document.getElementById('pw-err').style.opacity='1';
+            return false;
+        }
+        if(sessionStorage.getItem('pw-ok')==='1'){document.getElementById('pw-gate').style.display='none';}
+    </script>
+
+    <div class="reading-progress">
+        <div class="rp-label" id="rp-label">Apostila · Aula 2 · LAI, transparência e dados abertos (e um pouquinho de IA)</div>
+        <div class="rp-percent" id="rp-percent"><strong>00</strong>%</div>
+        <div class="rp-track" id="rp-track"></div>
+    </div>
+
+    <nav class="nav-menu" id="nav-menu">
+        <a href="#intro">Por que dados</a>
+        <a href="#fundamentos">Fundamentos</a>
+        <a href="#portal">Portal</a>
+        <a href="#ferramentas">Ferramentas</a>
+        <a href="#lai">LAI</a>
+        <a href="#pedido">Pedido</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#exemplos">Exemplos</a>
+        <a href="#referencias">Referências</a>
+    </nav>
+
+    <header class="site-header">
+        <div class="eyebrow">Apostila · Aula 2 · LAI, transparência e dados abertos (e um pouquinho de IA)</div>
+        <h1>Jornalismo investigativo: das planilhas às ruas</h1>
+        <div class="divider"></div>
+        <div class="authors">Ju Faddul &nbsp;·&nbsp; Luiz Fernando Toledo</div>
+        <div class="subtitle">LAI, transparência e dados abertos (e um pouquinho de IA)</div>
+    </header>
+
+    <nav class="index">
+        <h2>Índice</h2>
+        <ol>
+            <li><a href="#intro">Por que usar dados no jornalismo</a></li>
+            <li><a href="#fundamentos">O que considerar antes de usar dados</a></li>
+            <li><a href="#portal">Portal da Transparência</a></li>
+            <li><a href="#ferramentas">Ferramentas complementares</a></li>
+            <li><a href="#lai">Lei de Acesso à Informação</a></li>
+            <li><a href="#pedido">Como escrever um bom pedido</a></li>
+            <li><a href="#recursos">E se o pedido for negado? Recursos</a></li>
+            <li><a href="#exemplos">Material extra: reportagens, vídeos e cursos</a></li>
+            <li><a href="#referencias">Referências e links</a></li>
+        </ol>
+    </nav>
+
+    <main class="content">
+
+        <section id="intro">
+            <span class="section-number">Parte 01</span>
+            <h2>Por que usar dados no jornalismo</h2>
+
+            <p>O jornalismo de dados não é um gênero separado nem uma especialidade técnica reservada a poucos. É,
+                antes, uma <strong>postura de apuração</strong> em que o repórter começa ou complementa a apuração
+                por meio de dados e documentos (mas esses conceitos começam a se misturar no momento, com a
+                evolução da IA).</p>
+
+            <figure>
+                <img src="photos/dona_maria_materia.png" alt="A personagem de IA que viraliza com críticas ao governo Lula e ao STF">
+                <figcaption>BBC News Brasil · A personagem de IA que viraliza com críticas ao governo Lula e ao STF</figcaption>
+            </figure>
+            <figure>
+                <img src="photos/dona_maria_grafico.png" alt="Dona Maria atingiu interações semelhantes a políticos influentes">
+                <figcaption>Dona Maria atingiu número de interações por publicação comparável ao de políticos influentes</figcaption>
+            </figure>
+
+            <p>A pauta começa com um tema abrangente — uso de IA nas eleições — e um levantamento de dados de
+                engajamento no Instagram. Então decide focar em um perfil de IA e compará-lo com outros perfis. Mas o
+                mais importante não são os números, que dão a dimensão: eles estão ali para dar ainda mais destaque e
+                ênfase para a história da página e de seu autor — e dos riscos para a eleição. Os dados não estão lá
+                sobrando, eles são um pilar da reportagem. Sem eles, a matéria poderia cair no sensacionalismo ou na
+                história pessoal sem dimensão do impacto que causa ou pode causar nas eleições.</p>
+
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil · Política e IA</span>
+                        <h4>A personagem de IA que viraliza com críticas ao governo Lula e ao STF</h4>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/c7vq10lvv15o" target="_blank">Ler</a>
+                </div>
+            </div>
+
+            <h3>Dez razões para trabalhar com dados</h3>
+            <ul>
+                <li>Descobrir histórias inéditas que ninguém está contando.</li>
+                <li>Destrinchar falas oficiais e identificar exageros ou informações falsas.</li>
+                <li>Mais independência em relação às assessorias e aspas oficiais.</li>
+                <li>Qualificar o debate sobre políticas públicas.</li>
+                <li>Abrir caminho para conversar com fontes — quando você chega com uma descoberta concreta em
+                    mãos, a entrevista muda de patamar.</li>
+                <li>Avançar em um tema de maneira independente ou em parceria com profissionais de fora do
+                    jornalismo (pesquisadores, cientistas sociais, MP/Judiciário) a partir de descobertas próprias.</li>
+                <li>Abrir caminho para novos serviços e produtos jornalísticos.</li>
+                <li>Encontrar várias histórias diferentes nos mesmos dados.</li>
+                <li>Ampliar o engajamento do leitor e a credibilidade da reportagem.</li>
+                <li>Ganhar credibilidade junto às fontes e à audiência.</li>
+            </ul>
+
+            <div class="callout">
+                <div class="callout-title">Lembre-se</div>
+                <p>Não é porque você usou dados que a matéria virou relatório. Simplifique sempre e mantenha o foco
+                    na história. Poucos números, muito contexto.</p>
+            </div>
+        </section>
+
+        <section id="fundamentos">
+            <span class="section-number">Parte 02</span>
+            <h2>O que considerar antes de usar dados</h2>
+            <p class="section-lead">Os dados são um meio, não um fim. Antes de abrir a planilha, pergunte-se se eles
+                de fato trazem uma informação relevante para o leitor.</p>
+
+            <h3>As perguntas que você precisa responder primeiro</h3>
+            <ol>
+                <li>Os dados trazem uma informação realmente relevante?</li>
+                <li>Por que os leitores vão se interessar? No que isso muda a história?</li>
+                <li>Como você vai comparar os números com algo compreensível — séries históricas, outras cidades,
+                    outras políticas públicas?</li>
+                <li>Como você vai ilustrar esses dados para a história não virar um relatório?</li>
+            </ol>
+
+            <h3>Regras de ouro</h3>
+            <ul>
+                <li><strong>Use poucos números e mais contexto.</strong> Dois números bem escolhidos contam mais do
+                    que uma tabela inteira.</li>
+                <li><strong>Simplifique conclusões sempre que possível.</strong> Se você precisa de muitos parágrafos
+                    para explicar o gráfico, o gráfico está errado.</li>
+                <li><strong>Dê exemplos.</strong> Escolha as partes mais relevantes, não tente encaixar tudo.</li>
+                <li><strong>Cuidado com "o Estado campeão" ou "a cidade com a maior quantidade".</strong> Na maioria
+                    das vezes, isso só significa que aquele lugar tem mais gente.</li>
+            </ul>
+
+            <h3>Entrevistar fontes e entrevistar dados</h3>
+            <p>Entrevistar alguém e analisar dados são tarefas mais parecidas do que imaginamos.</p>
+
+            <div class="compare-grid">
+                <div>
+                    <h4>Entrevistar uma fonte</h4>
+                    <ul>
+                        <li>Conseguir acesso à fonte</li>
+                        <li>Conhecer a fonte</li>
+                        <li>Pesquisar o histórico dela</li>
+                        <li>Tirar a fonte da zona de conforto</li>
+                        <li>Demonstrar contradições</li>
+                        <li>Identificar erros na fala</li>
+                        <li>Traduzir jargões para o público</li>
+                        <li>Buscar informações inéditas</li>
+                        <li>Cruzar com outras fontes</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Entrevistar dados</h4>
+                    <ul>
+                        <li>Ter acesso aos dados</li>
+                        <li>Conhecer colunas, células e metadados</li>
+                        <li>Pesquisar quem e como produziu</li>
+                        <li>Análises com recortes novos</li>
+                        <li>Encontrar contradições e erros</li>
+                        <li>Corrigir/adaptar o que for necessário</li>
+                        <li>Transformar conforme o projeto</li>
+                        <li>Buscar informações inéditas</li>
+                        <li>Cruzar com outros dados</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Perguntas respondidas (parcialmente) por dados</h3>
+            <ul>
+                <li>Em que ano houve mais homicídios nesta cidade? E por quê?</li>
+                <li>Quais fatores explicam o melhor ou pior desempenho no Enem?</li>
+                <li>Quais áreas econômicas concentram o maior número de MEIs e como isso mudou ao longo do tempo?</li>
+                <li>Como é a distribuição de raça entre as pessoas que estão presas?</li>
+                <li>Quanto o governo gastou com leite condensado? É pouco ou muito? (e isso tem interesse público? se sim, por quê?)</li>
+                <li>Qual bairro tem menos policiais proporcionalmente à população?</li>
+            </ul>
+        </section>
+
+        <section id="portal">
+            <span class="section-number">Parte 03</span>
+            <h2>Portal da Transparência</h2>
+            <p class="section-lead">É um excelente ponto de partida para inúmeras reportagens.</p>
+
+            <p>Endereço oficial:
+                <a href="https://portaldatransparencia.gov.br/" target="_blank">portaldatransparencia.gov.br</a>.</p>
+
+            <h3>O que investigar no portal</h3>
+            <ul>
+                <li>Pessoas físicas: servidores, beneficiários, sancionados.</li>
+                <li>Empresas: contratos, sanções, convênios.</li>
+                <li>Cartões corporativos: quem, onde e em quê gastou dinheiro público.</li>
+                <li>Licitações, contratos e emendas parlamentares.</li>
+                <li>Orçamento por órgão — útil para comparar prioridades.</li>
+            </ul>
+
+            <div class="callout">
+                <div class="callout-title">Exercício prático 1 · Neymar</div>
+                <p>Busque por <strong>"Neymar da Silva Santos Junior"</strong> no portal. Você vai encontrar algo
+                    inesperado para um jogador que está entre os mais bem pagos do mundo.</p>
+            </div>
+
+            <figure>
+                <img src="pdf_pages/page-27.jpg" alt="Busca por Neymar no Portal da Transparência">
+                <figcaption>Resultado da busca por "Neymar da Silva Santos Junior" no Portal da Transparência.</figcaption>
+            </figure>
+            <figure>
+                <img src="pdf_pages/page-28.jpg" alt="Detalhes do resultado">
+                <figcaption>Detalhes do vínculo encontrado.</figcaption>
+            </figure>
+            <figure>
+                <img src="pdf_pages/page-29.jpg" alt="Cruzamentos no Portal da Transparência">
+                <figcaption>Cruzamentos complementares — o que pode virar reportagem a partir daqui.</figcaption>
+            </figure>
+
+            <div class="callout">
+                <div class="callout-title">Exercício prático 2 · Ailton Barros</div>
+                <p>Busque por <strong>"Ailton Gonçalves Moraes Barros"</strong>, ex-major do Exército indiciado pela
+                    PF como um dos principais nomes do esquema de fraude nos cartões de vacinação de Jair Bolsonaro.</p>
+            </div>
+
+            <figure>
+                <img src="pdf_pages/page-31.jpg" alt="Busca por Ailton Barros">
+                <figcaption>Busca por Ailton Barros no Portal da Transparência.</figcaption>
+            </figure>
+            <figure>
+                <img src="pdf_pages/page-32.jpg" alt="Cruzamentos Ailton Barros">
+                <figcaption>Cruzamentos e vínculos identificados.</figcaption>
+            </figure>
+            <figure>
+                <img src="pdf_pages/page-33.jpg" alt="Cobertura da imprensa">
+                <figcaption>A descoberta virou manchete e pautou a imprensa por semanas.</figcaption>
+            </figure>
+
+            <h3>Descobrindo laranjas</h3>
+            <p>O Portal da Transparência é uma das formas mais diretas de identificar <strong>laranjas</strong> — pessoas que aparecem
+                como donas de empresas, mas que, na prática, não são. A lógica é simples: se alguém figura como sócio de uma empresa
+                conhecida ou de <strong>capital social elevado</strong>, mas ao mesmo tempo consta no portal como
+                beneficiário de <strong>Bolsa Família, auxílio emergencial ou outro benefício voltado a pessoas de baixa
+                renda</strong>, há uma enorme chance de que essa pessoa não seja a verdadeira dona do negócio.</p>
+            <p>A partir desse descasamento entre patrimônio declarado e perfil socioeconômico, você encontra o fio da meada
+                para investigar quem está de fato por trás de uma empresa — e por que alguém a registrou em nome de outro.</p>
+        </section>
+
+        <section id="ferramentas">
+            <span class="section-number">Parte 04</span>
+            <h2>Ferramentas complementares</h2>
+            <p class="section-lead">Além do Portal da Transparência, existe um ecossistema robusto de bases
+                organizadas por parceiros — normalmente gratuitas ou com acesso facilitado para jornalistas.</p>
+
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Fundação · Brasil</span>
+                        <h4>Base dos Dados</h4>
+                        <p>Dados brasileiros integrados e limpos. Consulta via web, SQL ou pacote em Python/R.</p>
+                    </div>
+                    <a class="go" href="https://basedosdados.org/" target="_blank">Abrir</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Abraji · Brasil</span>
+                        <h4>Cruzagrafos</h4>
+                        <p>Plataforma que cruza bases públicas para encontrar conexões societárias. Ideal para
+                            investigar laranjas. Disponibiliza também informações sobre multas ambientais e
+                            candidaturas.</p>
+                    </div>
+                    <a class="go" href="https://cruzagrafos.abraji.org.br/" target="_blank">Abrir</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">OCCRP · Global</span>
+                        <h4>Aleph</h4>
+                        <p>Maior repositório colaborativo de documentos investigativos do mundo. Acesso sob solicitação
+                            a jornalistas verificados.</p>
+                    </div>
+                    <a class="go" href="https://aleph.occrp.org/" target="_blank">Abrir</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Parceria Abraji</span>
+                        <h4>Escavador &amp; JusBrasil</h4>
+                        <p>Informações jurídicas, societárias e publicações oficiais. Jornalistas filiados à Abraji têm
+                            acesso diferenciado.</p>
+                    </div>
+                    <a class="go" href="https://www.escavador.com/" target="_blank">Abrir</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">CGU · Brasil</span>
+                        <h4>Busca LAI</h4>
+                        <p>O "Google" dos pedidos de informação já respondidos. Ótimo para descobrir quem já perguntou
+                            o que você quer saber.</p>
+                    </div>
+                    <a class="go" href="https://buscalai.cgu.gov.br/" target="_blank">Abrir</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="lai">
+            <span class="section-number">Parte 05</span>
+            <h2>Lei de Acesso à Informação</h2>
+            <p class="section-lead">A LAI (Lei 12.527/2011) é um dos instrumentos mais poderosos do jornalismo
+                brasileiro. Use quando os dados não estão nos portais, mas também saiba quando NÃO usar.</p>
+
+            <h3>Por que usar a LAI</h3>
+            <ul>
+                <li>Acesso a dados que o poder público não tem interesse em divulgar.</li>
+                <li>Informações que fogem ao formato tradicional: fotos, vídeos de fiscalizações, arquivos antigos,
+                    pareceres internos.</li>
+            </ul>
+
+            <h3>Quando NÃO usar a LAI</h3>
+            <ul>
+                <li>Se a informação já está em portais de transparência, releases ou sites oficiais, busque ali
+                    primeiro.</li>
+                <li>Se uma instituição de pesquisa ou ONG já trabalha com esses dados (ex: Fórum Brasileiro de
+                    Segurança Pública para criminalidade), comece por ela.</li>
+                <li>Se você está com pressa. A LAI pode demorar semanas ou meses.</li>
+            </ul>
+
+            <h3>Para quem perguntar</h3>
+            <ul>
+                <li>Executivo, Legislativo e Judiciário.</li>
+                <li>Sociedades de economia mista e demais entidades controladas direta ou indiretamente pelo governo.</li>
+                <li>Entidades privadas sem fins lucrativos que recebam recursos públicos.</li>
+            </ul>
+
+            <h3>Prazos</h3>
+            <ul>
+                <li><strong>Resposta inicial:</strong> 20 dias, prorrogáveis por mais 10.</li>
+                <li><strong>Recursos:</strong> 5 dias por etapa.</li>
+                <li><strong>Última etapa:</strong> pode levar meses ou mais de um ano, dependendo do órgão.</li>
+                <li><strong>Descumprimento:</strong> raro na administração federal, ainda comum em prefeituras,
+                    legislativos municipais e no Judiciário.</li>
+            </ul>
+
+            <h3>Onde pedir</h3>
+            <ul>
+                <li><a href="https://falabr.cgu.gov.br/" target="_blank">FalaBR</a> — todos os órgãos públicos federais
+                    vinculados ao Executivo.</li>
+                <li><strong>E-SIC estaduais e municipais</strong> — busque por "Esic" + nome da cidade ou estado.</li>
+                <li><strong>Sites próprios</strong> — universidades estaduais (USP, Unesp, Unicamp) e outras entidades
+                    autônomas têm canais próprios.</li>
+            </ul>
+
+            <div class="callout">
+                <div class="callout-title">Você não precisa justificar seu pedido</div>
+                <p>A lei é clara: qualquer cidadão pode solicitar qualquer informação pública sem dar razões. Na
+                    prática, porém, estudos mostram que solicitantes institucionais recebem respostas mais completas
+                    que cidadãos comuns.</p>
+            </div>
+
+            <h3>A LAI como coletiva de imprensa permanente</h3>
+            <p>Encare a LAI como uma entrevista. Autoridades têm mais dificuldade para fugir das perguntas incômodas
+                quando existe uma trilha documental.</p>
+
+            <div class="two-col-table">
+                <div class="head">Fala da autoridade</div>
+                <div class="head">Documentos que embasam a fala</div>
+
+                <div class="q">"Registramos um aumento de casos"</div>
+                <div class="a">Como monitoram? Existe um relatório?</div>
+
+                <div class="q">"Vamos triplicar os atendimentos"</div>
+                <div class="a">Como se mensura o atendimento? Qual sistema é usado? Como armazenam os dados?</div>
+
+                <div class="q">"Nossos estudos internos apontam"</div>
+                <div class="a">Quais estudos? Produzidos por quem, com qual metodologia e quais fontes?</div>
+            </div>
+
+            <h4>Órgãos públicos não são "donos" das informações</h4>
+            <ul>
+                <li>Faça quantos pedidos julgar necessário.</li>
+                <li>Dê apenas as informações necessárias para chegar aos dados.</li>
+                <li>Sua instituição ou empresa que usará as informações não precisa estar descrita no pedido.</li>
+                <li>Sigilo só pode ser aceito se justificado de forma específica e excepcional.</li>
+                <li>Se não existe regra específica, a informação é pública.</li>
+            </ul>
+        </section>
+
+        <section id="pedido">
+            <span class="section-number">Parte 06</span>
+            <h2>Como escrever um bom pedido</h2>
+            <p class="section-lead">Um bom pedido é específico, delimitado e ancorado em contexto. Explique o que
+                sabe — e exatamente o que falta saber.</p>
+
+            <h3>Os quatro elementos essenciais</h3>
+            <ol>
+                <li><strong>Local.</strong> "Dados de todos os municípios do estado, cidade por cidade."</li>
+                <li><strong>Período.</strong> "Dados para os últimos cinco anos, mês a mês."</li>
+                <li><strong>Detalhes que interessam.</strong> "Dados devem ser divididos por gênero, raça e separados
+                    por distrito."</li>
+                <li><strong>Contexto que você já sabe.</strong> Explique ao órgão onde está a informação, quem a
+                    produziu. Pesquise antes e fale com quem é da área.</li>
+            </ol>
+
+            <h3>Solicite formato aberto</h3>
+            <p>Formato aberto é aquele que permite edições, para que você possa trabalhar livremente nos dados. É
+                comum que órgãos públicos respondam aos seus pedidos com arquivos em PDF ou tabelas estáticas. Elas
+                não servem. O ideal é que as respostas com dados sejam fornecidas em formato de planilha, como CSV
+                ou XLSX. E tem legislação para te ajudar. Texto pronto para copiar no pedido:</p>
+
+            <div class="callout">
+                <p>Requisitamos que as respostas sejam fornecidas em formato aberto (planilha em *.xls, *.csv, *.ods,
+                    etc.), nos termos do art. 8º, §3º, III da Lei Federal 12.527/11 e art. 24, V da Lei Federal
+                    12.965/14. Esclarecemos que arquivos em formato *.pdf não são abertos (item 6.2 da Cartilha Técnica
+                    para Publicação de Dados Abertos no Brasil).</p>
+            </div>
+
+            <h3>Quem é o responsável pela informação?</h3>
+            <p>Pedidos bem-sucedidos são direcionados. No caso do <strong>Programa Pé de Meia</strong>, por exemplo,
+                há múltiplos responsáveis: MEC, FNDE, Caixa Econômica Federal e secretarias de educação municipais
+                e estaduais.</p>
+            <p>Na dúvida: pesquise antes e peça redirecionamento do pedido ao órgão competente. É melhor ser
+                redirecionado do que receber uma negativa por endereçamento errado.</p>
+
+            <div class="callout">
+                <div class="callout-title">Cuidado</div>
+                <p>Dado público não é sinônimo de dado correto. Cheque outras fontes. Consulte o que já foi publicado
+                    e fale com especialistas. Certifique-se de que os servidores entenderam o pedido e de que você
+                    entendeu o contexto em que a informação foi coletada.</p>
+            </div>
+
+            <figure>
+                <img src="pdf_pages/page-73.jpg" alt="Caso NBOME — erro na resposta via LAI">
+                <figcaption>Matéria abordada na aula: erro de digitação em resposta de LAI sobre apreensão de substância.</figcaption>
+            </figure>
+
+            <p>Em reportagem da <em>piauí</em> abordada na aula, mostramos que a polícia confundiu <strong>gramas de
+                apreensão de uma substância com quilos</strong> em uma resposta enviada via LAI. O que poderia ser um
+                escândalo era, na verdade, apenas um erro de digitação. A lição: antes de publicar, <strong>confirme
+                os dados com as fontes</strong>, entenda o contexto e desconfie de números que parecem bons demais
+                para ser verdade.</p>
+
+            <h3>Informações em vídeo, imagem ou áudio também podem ser pedidas</h3>
+            <p>Câmeras de fiscalização, fotos de vistorias, arquivos em áudio, documentos digitalizados — tudo entra
+                no escopo da LAI. A LAI não se limita a planilhas: ela cobre qualquer registro produzido ou arquivado
+                pelo poder público.</p>
+
+            <figure>
+                <img src="pdf_pages/page-70.jpg" alt="IBAMA · fotos de contêineres apreendidos">
+                <figcaption>IBAMA · fotos de contêineres de madeira ilegal apreendidos, obtidas via LAI.</figcaption>
+            </figure>
+
+            <p>Um caso real ilustra bem essa possibilidade. A partir de pedidos via LAI, o IBAMA liberou
+                <strong>fotografias de contêineres apreendidos</strong> e <strong>arquivos físicos contendo cópias
+                em papel de multas e embargos ambientais</strong>. Segundo fontes ouvidas pela reportagem, esses
+                documentos estavam com traças ou sofrendo com efeito de chuvas — alguns até desaparecendo — o que
+                acelerou o processo de prescrição de mais de <strong>um bilhão de reais em multas ambientais</strong>.
+                Sem a LAI, esse material provavelmente jamais chegaria ao público.</p>
+
+            <figure>
+                <img src="pdf_pages/page-71.jpg" alt="IBAMA · multas em papel digitalizadas via LAI">
+                <figcaption>Arquivos em papel do IBAMA (pastas de multas ambientais) digitalizados e entregues via
+                    LAI — o tipo de material que raramente aparece em portais de transparência.</figcaption>
+            </figure>
+
+            <p>A lição: quando você precisa de algo que não está digitalizado, peça assim mesmo. O órgão é obrigado
+                a fornecer em <strong>formato acessível</strong>, o que muitas vezes significa que eles próprios vão
+                escanear os documentos para você.</p>
+
+            <div class="callout">
+                <div class="callout-title">Quer aprender sobre a LAI em detalhes?</div>
+                <p>Veja este curso completo:
+                    <a href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank">Investigue
+                    gastos públicos com a Lei de Acesso à Informação</a> — na Udemy, com exercícios práticos,
+                    modelos de pedidos e estudos de caso reais.</p>
+            </div>
+        </section>
+
+        <section id="recursos">
+            <span class="section-number">Parte 07</span>
+            <h2>E se o pedido for negado? Recursos</h2>
+            <p class="section-lead">Um "não" da primeira instância é apenas o começo. A LAI prevê cinco etapas de
+                recurso, cada uma com seus prazos e instâncias.</p>
+
+            <h3>Os três P's do sigilo</h3>
+            <p>Antes de entrar com recurso, saiba que existem apenas três razões legítimas para negativa:</p>
+            <ul>
+                <li><strong>Pessoal.</strong> Informações que expõem a privacidade de cidadãos.</li>
+                <li><strong>Previsto em outras leis.</strong> Sigilos específicos de outras normas (fiscal, bancário).</li>
+                <li><strong>Proteção do Estado.</strong> Segurança nacional ou do chefe de Estado.</li>
+            </ul>
+            <p>Fora desses três casos, a regra é publicidade. Pesquise como um advogado: a
+                <a href="https://buscaprecedentes.cgu.gov.br/" target="_blank">Busca Precedentes da CGU</a> mostra
+                como órgãos reagiram em situações parecidas.</p>
+
+            <h3>As etapas do recurso</h3>
+            <ol class="steps-list">
+                <li><strong>SIC — Serviço de Informação ao Cidadão</strong>
+                    Servidor do órgão requerido.</li>
+                <li><strong>Chefe hierárquico</strong>
+                    Autoridade imediatamente superior no órgão requerido.</li>
+                <li><strong>Autoridade máxima do órgão</strong>
+                    Ministro, presidente da autarquia ou cargo equivalente.</li>
+                <li><strong>CGU — Controladoria-Geral da União</strong>
+                    Ou ouvidoria local, quando for o caso.</li>
+                <li><strong>CMRI — Comissão Mista de Reavaliação de Informações</strong>
+                    Ou órgão colegiado equivalente na administração requerida.</li>
+            </ol>
+
+            <div class="callout">
+                <div class="callout-title">Prazos</div>
+                <p><strong>Para entrar com recurso:</strong> 10 dias. <strong>Para resposta:</strong> 5 dias. Da CGU em
+                    diante, pode levar semanas ou meses — mas vale a persistência.</p>
+            </div>
+        </section>
+
+        <section id="exemplos">
+            <span class="section-number">Parte 08</span>
+            <h2>Material extra: reportagens, vídeos e cursos</h2>
+
+            <h3>Achar personagens com dados</h3>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Estadão · Educação</span>
+                        <h4>Aluno pobre tem só 0,16% de chance de estar entre os melhores do Enem</h4>
+                        <p>Análise de 1,3 milhão de candidatos. Fatores socioeconômicos pesam até 85% no resultado;
+                            entre alunos ricos, a chance de estar no topo chega a 25%.</p>
+                    </div>
+                    <a class="go" href="https://www.estadao.com.br/brasil/aluno-pobre-tem-so-0-16-de-chance-de-estar-entre-os-melhores-do-enem/" target="_blank">Ler</a>
+                </div>
+            </div>
+
+            <h3>Identificar irregularidades cometidas por autoridades</h3>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil · Eleições 2024</span>
+                        <h4>Os 2,8 mil candidatos multados por danos ao meio ambiente</h4>
+                        <p>Políticos que disputam cargos municipais mesmo com multas ambientais em seus nomes.</p>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/c62dx1nl619o" target="_blank">Ler</a>
+                </div>
+            </div>
+
+            <h3>Agrupar interesses e conflitos</h3>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil · Eleições 2024</span>
+                        <h4>Empresários do mercado imobiliário são metade dos 50 maiores doadores</h4>
+                        <p>Investigação sobre o financiamento das campanhas municipais de 2024.</p>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/c3rlz7g9914o" target="_blank">Ler</a>
+                </div>
+            </div>
+
+            <h3>Encontrar lugares que ilustram um problema</h3>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil · Meio Ambiente</span>
+                        <h4>'Turismo de Instagram' aumenta violações ambientais em Fernando de Noronha</h4>
+                        <p>Pousada de celebridades e turismo de massa pressionam o arquipélago protegido.</p>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/cevy34jwl8do" target="_blank">Ler</a>
+                </div>
+            </div>
+
+            <h3>Nomear responsáveis de forma direta e buscar padrões</h3>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil · Trabalho escravo</span>
+                        <h4>Como produto de mão de obra escrava vai parar na sua calçada</h4>
+                        <p>Cruzamento entre a lista suja do trabalho escravo e contratos públicos.</p>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/c20xkrxny32o" target="_blank">Ler</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil · Orçamento</span>
+                        <h4>Como emenda apoiada por Hugo Motta foi parar em obra com produto de trabalho escravo</h4>
+                        <p>Do release sobre emendas parlamentares a uma investigação com nome de responsáveis.</p>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank">Ler</a>
+                </div>
+            </div>
+
+            <h3>Buscar padrões em texto que revelem histórias de interesse público</h3>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil · Eleições 2024</span>
+                        <h4>Candidatos que usam propostas idênticas em planos de governo</h4>
+                        <p>"Nada se cria, tudo se copia", diz o autor de plano copiado por outros candidatos.</p>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/cpw5yl8jgelo" target="_blank">Ler</a>
+                </div>
+            </div>
+
+            <h3>Navegar por milhões de arquivos — a série Epstein no Brasil</h3>
+            <p>Um caso em que o acesso aos dados já estava dado para todo mundo. Mas a forma como eles foram
+                utilizados é que fez a diferença entre reportagem ou um tweet curioso.</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil</span>
+                        <h4>Epstein financiou modelos brasileiras e avisou dias antes sobre sua prisão</h4>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/cvg83wprk37o" target="_blank">Ler</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil</span>
+                        <h4>Os indícios de como o bilionário pretendia recrutar mulheres no Brasil</h4>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/cm24mr6el23o" target="_blank">Ler</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil</span>
+                        <h4>O elo com o Brasil revelado em novos documentos: 'Grande grupo brasileiro'</h4>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/cnv2937j42ro" target="_blank">Ler</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil</span>
+                        <h4>'Umas 50 brasileiras' estiveram na mansão do bilionário, diz vítima</h4>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank">Ler</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil · Impacto</span>
+                        <h4>MPF abre investigação sobre rede de aliciamento de mulheres após reportagem da BBC</h4>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank">Ler</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil</span>
+                        <h4>Epstein tinha CPF e tentou ponte com empresários brasileiros para negócios</h4>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/c2047g008dgo" target="_blank">Ler</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC News Brasil</span>
+                        <h4>Caso Epstein: mãe impediu modelo brasileira de viajar aos EUA com recrutador</h4>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/portuguese/articles/c5y6g6yzev5o" target="_blank">Ler</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">BBC World Service · English</span>
+                        <h4>Epstein used modelling agent to recruit girls, Brazilian women tell BBC</h4>
+                        <p>Versão internacional da investigação, com entrevistas inéditas de vítimas brasileiras.</p>
+                    </div>
+                    <a class="go" href="https://www.bbc.com/news/articles/cr4576v66kno" target="_blank">Ler</a>
+                </div>
+            </div>
+        </section>
+
+            <h3>Planilhas do zero</h3>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">YouTube · Introdução</span>
+                        <h4>Como trabalhar com planilhas para jornalismo</h4>
+                        <p>Vídeo-guia recomendado como ponto de partida para quem nunca abriu uma planilha com olhar
+                            jornalístico.</p>
+                    </div>
+                    <a class="go" href="https://www.youtube.com/watch?v=HdH92Ih3fOs" target="_blank">Assistir</a>
+                </div>
+            </div>
+
+            <h3>Ferramentas de IA para apuração</h3>
+            <p>A IA generativa é um ótimo acelerador para resumir documentos, gerar roteiros de áudio e até explorar
+                grandes PDFs. Mas nenhuma delas substitui a checagem humana.</p>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Google · Pesquisa</span>
+                        <h4>NotebookLM</h4>
+                        <p>Análise de documentos, resumos, geração de podcasts a partir de fontes carregadas pelo
+                            próprio jornalista.</p>
+                    </div>
+                    <a class="go" href="https://notebooklm.google.com/" target="_blank">Abrir</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Anthropic</span>
+                        <h4>Claude</h4>
+                        <p>Um dos LLMs mais fortes para leitura crítica de documentos longos, redação e apuração
+                            assistida.</p>
+                    </div>
+                    <a class="go" href="https://claude.ai/" target="_blank">Abrir</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">OpenAI</span>
+                        <h4>ChatGPT</h4>
+                        <p>Útil para limpar dados, gerar código em Python/R e tirar dúvidas de metodologia.</p>
+                    </div>
+                    <a class="go" href="https://chatgpt.com/" target="_blank">Abrir</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Google · DeepMind</span>
+                        <h4>Gemini</h4>
+                        <p>Bom para análise multimodal, integração com produtos Google e consultas com contexto
+                            longo.</p>
+                    </div>
+                    <a class="go" href="https://gemini.google.com/" target="_blank">Abrir</a>
+                </div>
+            </div>
+
+            <h3>Curso online — com passo a passo</h3>
+            <div class="callout">
+                <div class="callout-title">Aprofunde o conteúdo desta aula</div>
+                <p><a href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank">Investigue
+                    gastos públicos com a Lei de Acesso à Informação</a> — curso na Udemy com todas as técnicas
+                    apresentadas aqui, aplicadas em exercícios reais.</p>
+            </div>
+        </section>
+
+        <section id="referencias">
+            <span class="section-number">Parte 09</span>
+            <h2>Referências e links</h2>
+            <p class="section-lead">Tudo reunido em um só lugar, para você voltar aqui sempre que precisar.</p>
+
+            <h3>Leis</h3>
+            <ul>
+                <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12527.htm" target="_blank">Lei 12.527/2011 · Lei de Acesso à Informação</a></li>
+                <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/decreto/d7724.htm" target="_blank">Decreto 7.724/2012 · regulamentação da LAI</a></li>
+                <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2014/lei/l12965.htm" target="_blank">Lei 12.965/2014 · Marco Civil da Internet</a></li>
+                <li><a href="https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2020/lei/l14129.htm" target="_blank">Lei 14.129/2021 · Lei do Governo Digital</a></li>
+                <li><a href="https://dados.gov.br/dados/conjuntos-dados/cartilha-tecnica-para-publicacao-de-dados-abertos" target="_blank">Cartilha Técnica para Publicação de Dados Abertos no Brasil</a></li>
+            </ul>
+
+            <h3>Portais oficiais</h3>
+            <ul>
+                <li><a href="https://portaldatransparencia.gov.br/" target="_blank">Portal da Transparência do governo federal</a></li>
+                <li><a href="https://falabr.cgu.gov.br/" target="_blank">FalaBR · sistema nacional de pedidos de LAI</a></li>
+                <li><a href="https://buscalai.cgu.gov.br/" target="_blank">Busca LAI · pedidos já respondidos</a></li>
+                <li><a href="https://buscaprecedentes.cgu.gov.br/" target="_blank">Busca Precedentes · decisões da CGU</a></li>
+                <li><a href="https://www.gov.br/cgu/pt-br/centrais-de-conteudo/publicacoes/transparencia-publica/busca-por-instrumentos/arquivos/guia-lai.pdf" target="_blank">Guia da LAI · CGU (PDF)</a></li>
+                <li><a href="https://dados.gov.br/" target="_blank">Portal Brasileiro de Dados Abertos</a></li>
+                <li><a href="https://www.gov.br/tcu/pt-br" target="_blank">Tribunal de Contas da União · TCU</a></li>
+                <li><a href="https://portal.tcu.gov.br/transparencia/" target="_blank">Painéis de Transparência do TCU</a></li>
+                <li><a href="https://www.tse.jus.br/eleicoes/estatisticas/repositorio-de-dados-eleitorais-1" target="_blank">TSE · Repositório de Dados Eleitorais</a></li>
+                <li><a href="https://dados.gov.br/dados/organizacoes/visualizar/receita-federal-do-brasil" target="_blank">Receita Federal · dados abertos</a></li>
+                <li><a href="https://www.ibge.gov.br/" target="_blank">IBGE</a></li>
+                <li><a href="https://www.ipea.gov.br/atlasviolencia/" target="_blank">Atlas da Violência · IPEA</a></li>
+                <li><a href="https://forumseguranca.org.br/anuario-brasileiro-seguranca-publica/" target="_blank">Anuário Brasileiro de Segurança Pública · FBSP</a></li>
+                <li><a href="https://dadosabertos.camara.leg.br/" target="_blank">Câmara dos Deputados · dados abertos</a></li>
+                <li><a href="https://www25.senado.leg.br/web/transparencia" target="_blank">Senado Federal · transparência</a></li>
+            </ul>
+
+            <h3>Ferramentas de apuração</h3>
+            <ul>
+                <li><a href="https://basedosdados.org/" target="_blank">Base dos Dados</a> — bases brasileiras integradas e limpas</li>
+                <li><a href="https://cruzagrafos.abraji.org.br/" target="_blank">Cruzagrafos · Abraji</a> — cruzamentos societários</li>
+                <li><a href="https://aleph.occrp.org/" target="_blank">Aleph · OCCRP</a> — maior repositório global de documentos investigativos</li>
+                <li><a href="https://www.escavador.com/" target="_blank">Escavador</a> — informações jurídicas e societárias</li>
+                <li><a href="https://www.jusbrasil.com.br/" target="_blank">JusBrasil</a> — jurisprudência e processos</li>
+                <li><a href="https://queridodiario.ok.org.br/" target="_blank">Querido Diário · Open Knowledge Brasil</a> — diários oficiais municipais</li>
+                                <li><a href="https://cepesp.io/" target="_blank">CEPESP · FGV</a> — dados eleitorais e políticos</li>
+                <li><a href="https://openrefine.org/" target="_blank">OpenRefine</a> — limpeza e transformação de dados</li>
+                <li><a href="https://datawrapper.de/" target="_blank">Datawrapper</a> — visualização rápida para redações</li>
+                <li><a href="https://flourish.studio/" target="_blank">Flourish</a> — storytelling com dados</li>
+                <li><a href="https://tabula.technology/" target="_blank">Tabula</a> — extração de tabelas de PDFs</li>
+                <li><a href="https://docs.google.com/spreadsheets/" target="_blank">Google Sheets</a> — planilhas colaborativas gratuitas</li>
+            </ul>
+
+            <h3>IA generativa para jornalismo</h3>
+            <ul>
+                <li><a href="https://claude.ai/" target="_blank">Claude</a> · Anthropic — análise de documentos longos</li>
+                <li><a href="https://chatgpt.com/" target="_blank">ChatGPT</a> · OpenAI — limpeza de dados, código, explicações</li>
+                <li><a href="https://gemini.google.com/" target="_blank">Gemini</a> · Google — análise multimodal</li>
+                <li><a href="https://notebooklm.google.com/" target="_blank">NotebookLM</a> · Google — resumos e podcasts a partir de fontes</li>
+                <li><a href="https://www.perplexity.ai/" target="_blank">Perplexity</a> — busca assistida por IA com citações</li>
+            </ul>
+
+            <h3>Organizações e comunidades</h3>
+            <ul>
+                <li><a href="https://abraji.org.br/" target="_blank">Abraji · Associação Brasileira de Jornalismo Investigativo</a></li>
+                <li><a href="https://www.transparencia.org.br/" target="_blank">Transparência Brasil</a></li>
+                <li><a href="https://ok.org.br/" target="_blank">Open Knowledge Brasil</a></li>
+                <li><a href="https://www.article19.org/pt-br/" target="_blank">ARTIGO 19 Brasil</a></li>
+                <li><a href="https://www.fiquemsabendo.com.br/" target="_blank">Fiquem Sabendo</a> — agência especializada em LAI</li>
+                <li><a href="https://www.gijn.org/pt/" target="_blank">GIJN · Global Investigative Journalism Network</a></li>
+                <li><a href="https://www.icfj.org/" target="_blank">ICFJ · International Center for Journalists</a></li>
+                <li><a href="https://www.occrp.org/en" target="_blank">OCCRP</a></li>
+            </ul>
+
+            <h3>Leituras recomendadas</h3>
+            <ul>
+                <li><strong>The Art of Access</strong> · David Cuillier &amp; Charles N. Davis. Um dos melhores manuais
+                    sobre o uso da LAI americana — com lições válidas para o Brasil.</li>
+                <li><strong>The Data Journalism Handbook</strong> ·
+                    <a href="https://datajournalism.com/read/handbook/two" target="_blank">datajournalism.com/read/handbook/two</a></li>
+                <li><a href="https://abraji.org.br/help-desk/manual-de-jornalismo-de-dados" target="_blank"><strong>Manual de Jornalismo de Dados</strong></a> · Abraji</li>
+                <li><strong>Precision Journalism</strong> · Philip Meyer — o clássico que deu origem ao campo.</li>
+                <li><strong>Story-Based Inquiry</strong> · Mark Lee Hunter (UNESCO) ·
+                    <a href="https://unesdoc.unesco.org/ark:/48223/pf0000193525" target="_blank">download gratuito</a></li>
+            </ul>
+
+            <h3>Cursos online — aprofundamento</h3>
+            <ul>
+                <li><a href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank">Investigue
+                    gastos públicos com a Lei de Acesso à Informação</a> · Udemy — expande tudo o que vimos aqui, com
+                    exercícios práticos e casos reais do Portal da Transparência.</li>
+                <li><a href="https://abraji.org.br/noticias/abraji-publica-novos-conteudos-do-kit-de-ferramentas-gemini-para-jornalistas" target="_blank">IA
+                    para jornalistas</a> · Abraji — kit de ferramentas Gemini aplicado ao jornalismo, com materiais
+                    gratuitos.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Apostila complementar da aula 2</p>
+        <p><strong>Jornalismo investigativo: das planilhas às ruas</strong></p>
+        <div class="divider"></div>
+        <p>Ju Faddul &nbsp;·&nbsp; Luiz Fernando Toledo</p>
+        <a class="back-link" href="index.html">← Voltar para a apresentação</a>
+    </footer>
+
+    <script>
+        (function () {
+            const track = document.getElementById('rp-track');
+            const percent = document.getElementById('rp-percent');
+            const label = document.getElementById('rp-label');
+            const sections = document.querySelectorAll('.content section');
+            const titles = {};
+            sections.forEach(s => {
+                const h2 = s.querySelector('h2');
+                if (h2) titles[s.id] = h2.textContent.trim();
+            });
+
+            function onScroll() {
+                const doc = document.documentElement;
+                const scrollTop = window.scrollY || doc.scrollTop;
+                const scrollHeight = doc.scrollHeight - doc.clientHeight;
+                const pct = Math.max(0, Math.min(100, (scrollTop / scrollHeight) * 100));
+                track.style.width = pct + '%';
+                percent.innerHTML = '<strong>' + String(Math.round(pct)).padStart(2, '0') + '</strong>%';
+
+                // Find current section
+                const midY = scrollTop + window.innerHeight * 0.35;
+                let currentLabel = 'Apostila · Aula 2 · LAI, transparência e dados abertos (e um pouquinho de IA)';
+                for (const s of sections) {
+                    const top = s.offsetTop;
+                    if (midY >= top) currentLabel = titles[s.id] || currentLabel;
+                }
+                label.textContent = currentLabel;
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            onScroll();
+
+            // Highlight active nav item
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            const sectionIds = Array.from(navLinks).map(a => a.getAttribute('href').slice(1));
+            function updateNav() {
+                const scrollY = window.scrollY + 140;
+                let activeId = sectionIds[0];
+                for (const id of sectionIds) {
+                    const el = document.getElementById(id);
+                    if (el && el.offsetTop <= scrollY) activeId = id;
+                }
+                navLinks.forEach(a => {
+                    a.classList.toggle('active', a.getAttribute('href') === '#' + activeId);
+                });
+                // Scroll active item into view in nav
+                const activeLink = document.querySelector('.nav-menu a.active');
+                if (activeLink) {
+                    activeLink.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+                }
+            }
+            window.addEventListener('scroll', updateNav, { passive: true });
+            updateNav();
+        })();
+    </script>
+
+</body>
+
+</html>
