@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>Apostila · $$$$$ — Como conseguir dinheiro para o seu projeto jornalístico</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #111;
+            --white: #fff;
+            --mid: #888;
+            --light-gray: #e5e5e5;
+            --cream: #f7f5f1;
+            --accent: #111;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--black);
+            background: #fafaf8;
+            font-weight: 300;
+            line-height: 1.75;
+            font-size: 17px;
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "kern", "liga";
+        }
+
+        /* ======================================== */
+        /* READING PROGRESS BAR                     */
+        /* ======================================== */
+        .reading-progress {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 44px;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            padding: 0 26px;
+            justify-content: space-between;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+        }
+        .reading-progress .rp-label {
+            position: relative;
+            padding-left: 18px;
+            color: var(--black);
+            max-width: 55%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .reading-progress .rp-label::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 50%;
+            width: 10px; height: 1px;
+            background: var(--black);
+            transform: translateY(-50%);
+        }
+        .reading-progress .rp-percent {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 14px;
+            letter-spacing: 0.02em;
+            color: var(--black);
+            text-transform: none;
+        }
+        .reading-progress .rp-percent strong {
+            font-weight: 900;
+            font-style: normal;
+        }
+        .reading-progress .rp-track {
+            position: absolute;
+            bottom: -1px; left: 0;
+            height: 2px;
+            background: var(--black);
+            width: 0;
+            transition: width 0.15s linear;
+        }
+
+        a { color: var(--black); border-bottom: 1px solid var(--black); text-decoration: none; transition: opacity .2s; }
+        a:hover { opacity: 0.65; }
+
+        strong, b { font-weight: 600; color: var(--black); }
+        em, i { font-style: italic; }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 900;
+            color: var(--black);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+
+        /* ===== STICKY NAV MENU ===== */
+        .nav-menu {
+            position: fixed;
+            top: 44px; left: 0; right: 0;
+            background: rgba(255,255,255,0.97);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            z-index: 90;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            padding: 0 24px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .nav-menu::-webkit-scrollbar { display: none; }
+        .nav-menu a {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--mid);
+            text-decoration: none;
+            border: none !important;
+            border-bottom: 2px solid transparent !important;
+            padding: 13px 18px;
+            white-space: nowrap;
+            transition: color 0.2s, border-bottom-color 0.2s;
+            flex-shrink: 0;
+        }
+        .nav-menu a:hover { color: var(--black); opacity: 1; }
+        .nav-menu a.active {
+            color: var(--black);
+            border-bottom-color: var(--black) !important;
+        }
+        html { scroll-padding-top: 100px; }
+
+        /* ===== HEADER ===== */
+        .site-header {
+            background: var(--black);
+            color: var(--white);
+            padding: 160px 40px 110px;
+            text-align: center;
+            border-bottom: 1px solid var(--black);
+            position: relative;
+        }
+        .site-header::before {
+            content: "";
+            position: absolute;
+            top: 80px; right: 40px; bottom: 40px; left: 40px;
+            border: 1px solid rgba(255,255,255,0.12);
+            pointer-events: none;
+        }
+        .site-header .eyebrow {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7em;
+            font-weight: 700;
+            letter-spacing: 0.28em;
+            color: rgba(255,255,255,0.55);
+            text-transform: uppercase;
+            margin-bottom: 26px;
+        }
+        .site-header h1 {
+            color: var(--white);
+            font-size: 3.2em;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.05;
+        }
+        .site-header .divider {
+            width: 60px; height: 2px; background: var(--white);
+            margin: 32px auto;
+        }
+        .site-header .authors {
+            font-family: 'Inter', sans-serif;
+            color: rgba(255,255,255,0.78);
+            font-size: 1.05em;
+            letter-spacing: 0.05em;
+        }
+        .site-header .subtitle {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8em;
+            margin-top: 10px;
+            letter-spacing: 0.06em;
+        }
+
+        /* ===== NAVIGATION INDEX ===== */
+        .index {
+            max-width: 840px;
+            margin: -60px auto 0;
+            background: var(--white);
+            padding: 46px 54px;
+            border: 1px solid var(--light-gray);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 2;
+        }
+        .index h2 {
+            font-size: 0.65em;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--mid);
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 20px;
+        }
+        .index ol {
+            list-style: none;
+            counter-reset: idx;
+            padding: 0;
+        }
+        .index ol li {
+            counter-increment: idx;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--light-gray);
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            align-items: baseline;
+        }
+        .index ol li:last-child { border-bottom: none; }
+        .index ol li::before {
+            content: counter(idx, decimal-leading-zero);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 0.95em;
+            color: var(--mid);
+        }
+        .index ol li a {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.2em;
+            color: var(--black);
+            border: none;
+            line-height: 1.25;
+        }
+        .index ol li a:hover { opacity: 0.6; }
+
+        /* ===== CONTENT ===== */
+        .content {
+            max-width: 760px;
+            margin: 100px auto 120px;
+            padding: 0 40px;
+        }
+
+        .content section { margin-bottom: 90px; }
+
+        .content h2 {
+            font-size: 2.6em;
+            margin-bottom: 8px;
+            letter-spacing: -0.03em;
+        }
+        .content .section-number {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7em;
+            font-weight: 700;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 18px;
+            position: relative;
+            padding-left: 24px;
+        }
+        .content .section-number::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 50%;
+            width: 16px; height: 1px;
+            background: var(--black);
+            transform: translateY(-50%);
+        }
+
+        /* First paragraph drop cap */
+        .content section > p:first-of-type::first-letter {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 3.4em;
+            line-height: 0.85;
+            float: left;
+            padding: 8px 10px 0 0;
+            color: var(--black);
+        }
+        .content .section-lead {
+            font-size: 1.15em;
+            color: var(--mid);
+            font-weight: 300;
+            margin: 14px 0 36px;
+            line-height: 1.55;
+            max-width: 620px;
+            border-left: 2px solid var(--black);
+            padding-left: 20px;
+        }
+        .content h3 {
+            font-size: 1.5em;
+            margin: 44px 0 14px;
+        }
+        .content h4 {
+            font-size: 1.1em;
+            margin: 30px 0 10px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.005em;
+        }
+        .content p {
+            margin-bottom: 18px;
+            color: var(--black);
+        }
+        .content p.muted { color: var(--mid); }
+
+        .content ul, .content ol {
+            padding-left: 0;
+            margin-bottom: 24px;
+            list-style: none;
+        }
+        .content ul li {
+            position: relative;
+            padding: 10px 0 10px 28px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .content ul li:last-child { border-bottom: none; }
+        .content ul li::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 20px;
+            width: 14px; height: 1px;
+            background: var(--black);
+        }
+        .content ol { counter-reset: enum; }
+        .content ol li {
+            counter-increment: enum;
+            position: relative;
+            padding: 12px 0 12px 50px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        .content ol li::before {
+            content: counter(enum, decimal-leading-zero);
+            position: absolute;
+            left: 0; top: 12px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 0.95em;
+            color: var(--mid);
+        }
+        .content ol li:last-child { border-bottom: none; }
+
+        blockquote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 1.35em;
+            line-height: 1.35;
+            color: var(--black);
+            margin: 36px 0;
+            padding: 0 0 0 32px;
+            border-left: 2px solid var(--black);
+            max-width: 680px;
+        }
+        blockquote cite {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-style: normal;
+            font-size: 0.45em;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-top: 16px;
+        }
+
+        .callout {
+            background: var(--white);
+            padding: 30px 36px;
+            margin: 40px 0;
+            border: 1px solid var(--light-gray);
+            border-left: 3px solid var(--black);
+            position: relative;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+        }
+        .callout::before {
+            content: "\00a7";
+            position: absolute;
+            top: 18px; right: 22px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--mid);
+            opacity: 0.5;
+        }
+        .callout .callout-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62em;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 10px;
+        }
+        .callout p:last-child { margin-bottom: 0; }
+
+        /* Tool cards */
+        .tool-list {
+            display: grid;
+            gap: 22px;
+            margin: 24px 0;
+        }
+        .tool-item {
+            border: 1px solid var(--light-gray);
+            padding: 22px 24px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: center;
+        }
+        .tool-item h4 {
+            margin: 0 0 4px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3em;
+        }
+        .tool-item .tool-org {
+            font-size: 0.58em;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+            display: block;
+            margin-bottom: 2px;
+        }
+        .tool-item p {
+            margin: 6px 0 8px;
+            font-size: 0.86em;
+            color: var(--mid);
+        }
+        .tool-item a.go {
+            font-size: 0.72em;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--white);
+            background: var(--black);
+            padding: 12px 22px;
+            border: none;
+            white-space: nowrap;
+        }
+        .tool-item a.go:hover { opacity: 0.8; }
+
+        /* Steps */
+        .steps-list {
+            counter-reset: step;
+            border-left: 2px solid var(--black);
+            padding-left: 28px;
+            margin: 24px 0;
+        }
+        .steps-list li {
+            counter-increment: step;
+            padding: 10px 0;
+            list-style: none;
+            border: none;
+            position: relative;
+        }
+        .steps-list li::before {
+            content: "Etapa " counter(step);
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62em;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--mid);
+            margin-bottom: 2px;
+        }
+        .steps-list li strong {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* Compare grid */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 36px;
+            margin: 24px 0;
+            border-top: 1px solid var(--light-gray);
+            padding-top: 20px;
+        }
+        .compare-grid h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .compare-grid ul li {
+            font-size: 0.86em;
+            padding: 8px 0 8px 22px;
+        }
+        .compare-grid ul li::before { top: 18px; width: 12px; }
+
+        /* Figures */
+        figure {
+            margin: 28px 0;
+            background: var(--cream);
+            padding: 18px;
+            border: 1px solid var(--light-gray);
+        }
+        figure img {
+            width: 100%;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            background: #fff;
+        }
+        figure figcaption {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75em;
+            font-weight: 400;
+            color: var(--mid);
+            margin-top: 12px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* Prompt block */
+        .prompt-block {
+            background: #1a1a1a;
+            color: #e0e0e0;
+            padding: 28px 32px;
+            margin: 24px 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92em;
+            line-height: 1.7;
+            border-left: 3px solid #555;
+            position: relative;
+        }
+        .prompt-block::before {
+            content: "PROMPT";
+            position: absolute;
+            top: 10px; right: 16px;
+            font-size: 0.6em;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            color: #666;
+        }
+        .prompt-block em {
+            color: #aaa;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: rgba(255,255,255,0.7);
+            padding: 60px 40px;
+            text-align: center;
+            font-size: 0.88em;
+        }
+        footer a { color: var(--white); border-bottom-color: rgba(255,255,255,0.4); }
+        footer .divider {
+            width: 40px; height: 1px; background: rgba(255,255,255,0.3);
+            margin: 24px auto;
+        }
+        footer .back-link {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 0.85em;
+            letter-spacing: 0.04em;
+        }
+
+        @media (max-width: 720px) {
+            .site-header { padding: 60px 24px 90px; }
+            .site-header h1 { font-size: 2.1em; }
+            .index { margin: -50px 20px 0; padding: 30px 26px; }
+            .index ol li { grid-template-columns: 44px 1fr; }
+            .content { margin: 60px auto 80px; padding: 0 24px; }
+            .content h2 { font-size: 1.9em; }
+            .compare-grid { grid-template-columns: 1fr; }
+            .tool-item { grid-template-columns: 1fr; }
+            .prompt-block { padding: 20px 18px; font-size: 0.85em; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- PASSWORD GATE -->
+    <div id="pw-gate" style="position:fixed;inset:0;z-index:9999;background:#111;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:'Inter',sans-serif;">
+        <h1 style="font-family:'Playfair Display',serif;color:#fff;font-size:2.2em;margin-bottom:8px;letter-spacing:-0.03em;">Acesso restrito</h1>
+        <p style="color:rgba(255,255,255,0.5);font-size:0.85em;margin-bottom:28px;">Digite a senha para acessar o conteúdo</p>
+        <form onsubmit="return checkPw()" style="display:flex;gap:12px;">
+            <input id="pw-input" type="password" placeholder="Senha" autocomplete="off"
+                style="font-family:'Inter',sans-serif;font-size:1em;padding:14px 22px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:#fff;outline:none;width:260px;letter-spacing:0.06em;">
+            <button type="submit"
+                style="font-family:'Inter',sans-serif;font-size:0.8em;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:14px 28px;background:#fff;color:#111;border:none;cursor:pointer;">Entrar</button>
+        </form>
+        <p id="pw-err" style="color:#e55;font-size:0.78em;margin-top:14px;opacity:0;transition:opacity 0.3s;">Senha incorreta</p>
+    </div>
+    <script>
+        async function hashStr(s){const e=new TextEncoder().encode(s);const h=await crypto.subtle.digest('SHA-256',e);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+        async function checkPw(){
+            var v=document.getElementById('pw-input').value;
+            var h=await hashStr(v);
+            if(h==='e57f9b279797c5b6646c88383581dce25e6624788ca6b3c39684bd956c75c900'){
+                document.getElementById('pw-gate').style.display='none';
+                sessionStorage.setItem('pw-ok','1');
+                return false;
+            }
+            document.getElementById('pw-err').style.opacity='1';
+            return false;
+        }
+        if(sessionStorage.getItem('pw-ok')==='1'){document.getElementById('pw-gate').style.display='none';}
+    </script>
+
+    <div class="reading-progress">
+        <div class="rp-label" id="rp-label">Apostila · Aula 3 · Fellowships, grants, bolsas e oportunidades</div>
+        <div class="rp-percent" id="rp-percent"><strong>00</strong>%</div>
+        <div class="rp-track" id="rp-track"></div>
+    </div>
+
+    <nav class="nav-menu" id="nav-menu">
+        <a href="#narrativa">Narrativa</a>
+        <a href="#fellowships">Fellowships</a>
+        <a href="#bolsas-estudo">Bolsas de estudo</a>
+        <a href="#grants">Grants</a>
+        <a href="#aplicacao">Aplicação</a>
+        <a href="#pitch">Pitch</a>
+        <a href="#impacto">Impacto</a>
+        <a href="#dicas">Dicas finais</a>
+        <a href="#referencias">Links</a>
+    </nav>
+
+    <header class="site-header">
+        <div class="eyebrow">Apostila · Aula 3 · Fellowships, grants, bolsas e oportunidades</div>
+        <h1>$$$$$ — Como conseguir dinheiro para o seu projeto jornalístico</h1>
+        <div class="divider"></div>
+        <div class="authors">Ju Faddul &nbsp;·&nbsp; Luiz Fernando Toledo</div>
+        <div class="subtitle">Jornalismo investigativo: das planilhas às ruas</div>
+    </header>
+
+    <nav class="index">
+        <h2>Índice</h2>
+        <ol>
+            <li><a href="#narrativa">A narrativa pessoal</a></li>
+            <li><a href="#fellowships">Fellowships</a></li>
+            <li><a href="#bolsas-estudo">Bolsas de estudo</a></li>
+            <li><a href="#grants">Bolsas de reportagem / Grants</a></li>
+            <li><a href="#aplicacao">Como montar sua aplicação</a></li>
+            <li><a href="#pitch">Pitch de projeto</a></li>
+            <li><a href="#impacto">Impacto e grants de longo prazo</a></li>
+            <li><a href="#dicas">Dicas finais</a></li>
+            <li><a href="#referencias">Links e referências</a></li>
+        </ol>
+    </nav>
+
+    <main class="content">
+
+        <!-- ============================================================ -->
+        <!-- PARTE 01 · A NARRATIVA PESSOAL                               -->
+        <!-- ============================================================ -->
+        <section id="narrativa">
+            <span class="section-number">Parte 01</span>
+            <h2>A narrativa pessoal</h2>
+
+            <p>Existe um grande segredo sobre a vida: ela é uma história que criamos sobre nós mesmos e depois acreditamos nela. Conhecer essa história e dar significados a ela pode ser o primeiro passo para convencer os outros da sua importância — e convencê-los a nos dar oportunidades, recursos e tempo.</p>
+
+            <p>Não existe trajetória ruim ou pior. Mas existem jeitos e jeitos de falar sobre essa trajetória. A forma como você conta a sua história profissional determina como os outros a percebem — e se vão apostar em você ou não.</p>
+
+            <blockquote>
+                A vida é uma história que criamos sobre nós mesmos e depois acreditamos nela. Conhecer essa história pode ser o primeiro passo para convencer os outros da sua importância.
+                <cite>Inspirado em "The Status Game"</cite>
+            </blockquote>
+
+            <h3>Como a narrativa se forma</h3>
+
+            <p>A narrativa pessoal não nasce pronta. Ela se constrói ao longo do tempo, a partir das escolhas que fazemos, dos projetos que abraçamos e dos significados que atribuímos a cada etapa. Para um jornalista, isso significa olhar para trás e identificar um fio condutor: qual tema te persegue? Que tipo de história te move? Que problema do mundo você quer ajudar a resolver?</p>
+
+            <p>Pense no exemplo de alguém que começa como trainee em um grande jornal, enfrenta a síndrome do impostor ao ver os "concorrentes", busca alguma especialização para se diferenciar e, com o tempo, descobre que seu diferencial é a democratização do jornalismo, o acesso a fontes e dados públicos. Essa narrativa — que começa tímida — vai ganhando corpo quando vira ideia de projeto, que vira bolsa, que vira pesquisa, que pode virar anos de trabalho dedicado a um tema.</p>
+
+            <h3>Da história pessoal ao projeto</h3>
+
+            <p>O ponto central é: sua trajetória profissional precisa ser traduzida em uma narrativa coerente que conecte o que você já fez com o que quer fazer. Não se trata de inventar ou exagerar. É sobre encontrar os pontos de conexão entre suas experiências e dar sentido a eles para quem vai avaliar sua candidatura a uma bolsa, fellowship ou grant.</p>
+
+            <ul>
+                <li><strong>Democratização do jornalismo</strong> — como seu trabalho amplia o acesso à informação.</li>
+                <li><strong>Maior acesso a fontes</strong> — como você usa dados e documentos para ir além das aspas oficiais.</li>
+                <li><strong>Jornalismo mais plural</strong> — como você traz vozes e perspectivas sub-representadas.</li>
+                <li><strong>Garantir reportagens exclusivas</strong> — como suas habilidades geram resultado concreto para a redação.</li>
+            </ul>
+
+            <p>A história pessoal vira ideia de projeto, que vira bolsa. O resultado da bolsa vira um projeto pequeno. O projeto pode virar pesquisa e estudo — e também um trabalho de cinco anos ou mais. Tudo começa com a narrativa.</p>
+
+            <div class="callout">
+                <div class="callout-title">Lembre-se</div>
+                <p>Você não precisa ter uma trajetória "perfeita" para contar uma boa história. Precisa ter clareza sobre o que te move e para onde quer ir. Os avaliadores querem saber o porquê, não apenas o quê.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PARTE 02 · FELLOWSHIPS                                        -->
+        <!-- ============================================================ -->
+        <section id="fellowships">
+            <span class="section-number">Parte 02</span>
+            <h2>Fellowships</h2>
+            <p class="section-lead">Na prática, um fellowship é uma bolsa para executar um projeto, estudar um tema ou ambos. É uma espécie de prêmio que reconhece sua experiência e aposta no impacto do que você propõe.</p>
+
+            <p>Fellowships oferecem a oportunidade de passar um tempo dedicado a um projeto jornalístico. Historicamente, as maiores oportunidades estão no exterior, mas cada vez mais surgem bolsas com trabalho remoto ou de organizações brasileiras. Durante o período da bolsa, você é seu próprio chefe, se organiza no seu ritmo e participa de encontros com outros bolsistas — o que gera um networking valioso.</p>
+
+            <h3>Características de um fellowship</h3>
+            <ul>
+                <li>Você precisa demonstrar experiência na área e que seu projeto terá impacto.</li>
+                <li>Períodos mais longos que uma bolsa de reportagem — pode durar até um ano.</li>
+                <li>Pode conter mentoria com especialistas e encontros regulares com outros fellows.</li>
+                <li>Há oportunidades em áreas correlatas ao jornalismo: direitos humanos, economia, meio ambiente, tecnologia.</li>
+            </ul>
+
+            <h3>Como aplicar a um fellowship</h3>
+            <p>O mais comum é que os editais exijam a apresentação de um projeto de reportagem de longo prazo ou de pesquisa. Os processos costumam demorar — planeje-se e não deixe para o último dia. Algumas perguntas que devem guiar sua aplicação:</p>
+
+            <ol>
+                <li>Como meu projeto será útil para a comunidade em que convivo?</li>
+                <li>Por que eu sou a pessoa certa, no lugar certo, para executar este projeto?</li>
+                <li>Que diferencial eu trago em relação aos outros candidatos?</li>
+            </ol>
+
+            <p>Jornalistas mais experientes costumam ter vantagem — alguns editais exigem 10 ou mais anos de carreira —, mas isso não é regra. Existem fellowships voltados para jornalistas em início de carreira e até para estudantes de jornalismo.</p>
+
+            <div class="callout">
+                <div class="callout-title">O não você já tem</div>
+                <p>Procure ativamente pelas oportunidades, pense em projetos com antecedência e aplique quantas vezes for necessário. O não você já tem. Só precisamos de um sim.</p>
+            </div>
+
+            <h3>Principais fellowships</h3>
+
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Harvard University · EUA</span>
+                        <h4>Nieman Fellowship</h4>
+                        <p>Um dos mais prestigiados do mundo. Jornalistas passam um ano acadêmico em Harvard, com liberdade para assistir aulas em qualquer faculdade.</p>
+                    </div>
+                    <a class="go" href="https://nieman.harvard.edu/fellowships/how-to-apply/" target="_blank">Aplicar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">MIT · EUA</span>
+                        <h4>Knight Science Journalism (KSJ)</h4>
+                        <p>Fellowship para jornalistas de ciência no MIT. Inclui acesso a laboratórios, aulas e mentoria de pesquisadores.</p>
+                    </div>
+                    <a class="go" href="https://ksj.mit.edu/fellowships/" target="_blank">Aplicar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">University of Oxford · Reino Unido</span>
+                        <h4>Reuters Institute Fellowship</h4>
+                        <p>Programa para jornalistas em Oxford, focado em pesquisa sobre mídia e jornalismo. Ideal para quem quer combinar prática e reflexão acadêmica.</p>
+                    </div>
+                    <a class="go" href="https://reutersinstitute.politics.ox.ac.uk/journalist-fellowships" target="_blank">Aplicar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">ICFJ · Global</span>
+                        <h4>International Center for Journalists</h4>
+                        <p>Diversos programas de fellowship ao longo do ano, com foco em inovação, investigação e jornalismo digital.</p>
+                    </div>
+                    <a class="go" href="https://www.icfj.org/our-work/fellowships" target="_blank">Aplicar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Connectas · América Latina</span>
+                        <h4>Connectas</h4>
+                        <p>Organização que apoia jornalismo investigativo na América Latina com bolsas, mentorias e publicação.</p>
+                    </div>
+                    <a class="go" href="https://www.connectas.org/" target="_blank">Acessar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Brasil</span>
+                        <h4>CBJC — Congresso Brasileiro de Jornalismo Científico</h4>
+                        <p>Oportunidades de bolsas e prêmios para jornalistas de ciência no Brasil.</p>
+                    </div>
+                    <a class="go" href="https://www.cbjc.org.br/" target="_blank">Acessar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Columbia University · EUA</span>
+                        <h4>Dart Center for Journalism and Trauma</h4>
+                        <p>Programas para jornalistas que cobrem trauma, violência e conflitos. Inclui fellowships e treinamentos.</p>
+                    </div>
+                    <a class="go" href="https://dartcenter.org/" target="_blank">Acessar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Pulitzer Center · Global</span>
+                        <h4>Rainforest Investigations Network</h4>
+                        <p>Rede de jornalistas investigativos focados em florestas tropicais. Oferece fellowships, financiamento e suporte editorial.</p>
+                    </div>
+                    <a class="go" href="https://pulitzercenter.org/rainforest-investigations-network" target="_blank">Aplicar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Columbia University · EUA</span>
+                        <h4>Lede Program</h4>
+                        <p>Programa intensivo de jornalismo de dados na Columbia. Focado em programação, análise de dados e storytelling digital.</p>
+                    </div>
+                    <a class="go" href="https://ledeprogram.com/" target="_blank">Acessar</a>
+                </div>
+            </div>
+
+            <div class="callout">
+                <div class="callout-title">Guia de oportunidades abertas</div>
+                <p>O LatAm Journalism Review mantém uma lista atualizada de fellowships, bolsas e oportunidades para jornalistas da América Latina: <a href="https://latamjournalismreview.org/pt-br/articles/fellowships-bolsas-e-oportunidades-abertas-para-jornalistas-da-america-latina-para-2025-e-2026/" target="_blank">ver oportunidades abertas para 2025-2026</a>.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PARTE 03 · BOLSAS DE ESTUDO                                   -->
+        <!-- ============================================================ -->
+        <section id="bolsas-estudo">
+            <span class="section-number">Parte 03</span>
+            <h2>Bolsas de estudo</h2>
+            <p class="section-lead">Mestrados, doutorados e especializações: uma oportunidade para se aprofundar em um tema, expandir seus horizontes profissionais e construir uma rede internacional.</p>
+
+            <p>Bolsas de estudo são uma porta de entrada para outro patamar profissional. Elas oferecem a chance de se especializar em um tema ou técnica de trabalho, sair da zona de conforto, expandir as possibilidades de como fazer jornalismo e garantir recursos por um período determinado. Para muitos jornalistas, é também uma excelente opção de transição de carreira.</p>
+
+            <h3>Por que considerar uma bolsa de estudo</h3>
+            <ul>
+                <li><strong>Especialização temática ou técnica</strong> — mergulhar em um assunto que você já cobre ou quer cobrir.</li>
+                <li><strong>Sair da zona de conforto</strong> — viver em outro país, aprender outro idioma, conviver com pessoas de áreas diferentes.</li>
+                <li><strong>Recursos garantidos</strong> — durante o período da bolsa, você tem estabilidade financeira para se dedicar.</li>
+                <li><strong>Transição de carreira</strong> — um mestrado ou doutorado pode abrir portas para a academia, organizações internacionais ou áreas correlatas.</li>
+                <li><strong>Networking</strong> — as conexões feitas durante os estudos costumam durar a carreira inteira.</li>
+            </ul>
+
+            <p>Fique de olho também em vagas para aluno especial em universidades brasileiras — é uma forma de testar se aquele programa é para você antes de se comprometer com uma pós-graduação completa.</p>
+
+            <h3>Como aplicar</h3>
+            <p>A aplicação para bolsas de estudo exige planejamento e reflexão. Não é algo que se faz da noite para o dia. Algumas perguntas essenciais:</p>
+            <ol>
+                <li><strong>Construa sua narrativa.</strong> Isso requer tempo e reflexão sobre quem você é e para onde quer ir.</li>
+                <li><strong>Tenha bons exemplos de trabalhos feitos</strong> e mostre como eles se encaixam na sua narrativa.</li>
+                <li><strong>Para onde essa história pode te levar?</strong> Conecte seu passado com o futuro que você projeta.</li>
+                <li><strong>Por que esta bolsa?</strong> O que essa organização ou universidade tem de diferente? Quais professores ou aulas te interessam?</li>
+                <li><strong>Que contatos você já teve com a instituição?</strong> Participou de eventos, leu pesquisas, conversou com alguém de lá?</li>
+            </ol>
+
+            <p>Pode haver provas de conhecimento no processo, mas elas não costumam ser tão difíceis quanto parece — dependendo da instituição. O mais importante é a coerência da sua proposta.</p>
+
+            <h3>Exemplos de programas</h3>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Brasil</span>
+                        <h4>FGV — Fundação Getulio Vargas</h4>
+                        <p>Diversos programas de mestrado e especialização em políticas públicas, economia, direito e administração, com interface direta com o jornalismo.</p>
+                    </div>
+                    <a class="go" href="https://portal.fgv.br/" target="_blank">Acessar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">EUA</span>
+                        <h4>University of Maryland — Philip Merrill College of Journalism</h4>
+                        <p>Um dos programas mais respeitados de jornalismo dos Estados Unidos, com forte ênfase em investigação e dados.</p>
+                    </div>
+                    <a class="go" href="https://merrill.umd.edu/" target="_blank">Acessar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Reino Unido</span>
+                        <h4>University of Cambridge</h4>
+                        <p>Programas de mestrado e doutorado em diversas áreas, incluindo políticas públicas, sociologia, criminologia e desenvolvimento — todos com aplicações diretas ao jornalismo investigativo.</p>
+                    </div>
+                    <a class="go" href="https://www.cam.ac.uk/" target="_blank">Acessar</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PARTE 04 · BOLSAS DE REPORTAGEM / GRANTS                     -->
+        <!-- ============================================================ -->
+        <section id="grants">
+            <span class="section-number">Parte 04</span>
+            <h2>Bolsas de reportagem / Grants</h2>
+            <p class="section-lead">Grants são o combustível para tirar do papel aquela investigação que um trabalho como freelancer comum não pagaria. Hotel, passagem, fotografia, vídeo — tudo entra.</p>
+
+            <p>Diferentemente de fellowships e bolsas de estudo, os grants de reportagem são recursos financeiros destinados especificamente à produção de uma matéria ou série de matérias. Eles permitem que você execute projetos ambiciosos que exigem viagens, contratação de fotógrafos ou cinegrafistas, acesso a bases de dados pagas e tempo dedicado de apuração.</p>
+
+            <h3>Por que buscar um grant</h3>
+            <ul>
+                <li><strong>Tirar ideias do papel</strong> — projetos que um trabalho freelancer comum não bancaria.</li>
+                <li><strong>Cobrir custos de apuração</strong> — combustível, hotel, fotografia, vídeo, equipamento.</li>
+                <li><strong>Enriquecer o currículo</strong> — grants são valorizados no mercado e podem render prêmios.</li>
+                <li><strong>Aproximação com a organização financiadora</strong> — que pode se tornar uma parceira de longo prazo.</li>
+            </ul>
+
+            <p>Uma dica importante: já combine com um editor onde o projeto será publicado, pois a organização financiadora provavelmente vai cobrar isso.</p>
+
+            <h3>Principais grants para jornalistas</h3>
+
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Earth Journalism Network · Global</span>
+                        <h4>EJN Reporting Fellowships</h4>
+                        <p>Bolsas de reportagem para cobrir temas ambientais. Valores a partir de US$ 5.000, com suporte editorial e mentoria.</p>
+                    </div>
+                    <a class="go" href="https://earthjournalism.net/what-we-do/projects/ejn-reporting-fellowships" target="_blank">Aplicar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Jeduca · Brasil</span>
+                        <h4>Editais Jeduca</h4>
+                        <p>Bolsas para reportagens sobre educação no Brasil. Editais abertos periodicamente.</p>
+                    </div>
+                    <a class="go" href="https://jeduca.org.br/edital/" target="_blank">Aplicar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Fundación Gabo · América Latina</span>
+                        <h4>Becas de periodismo</h4>
+                        <p>Bolsas da fundação criada por Gabriel García Márquez para jornalistas latino-americanos. Diversos temas e formatos.</p>
+                    </div>
+                    <a class="go" href="https://fundaciongabo.org/es/becas-de-periodismo" target="_blank">Aplicar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Agência Pública · Brasil</span>
+                        <h4>Microbolsa</h4>
+                        <p>Programa da Agência Pública para financiar reportagens investigativas de jornalistas independentes e freelancers.</p>
+                    </div>
+                    <a class="go" href="https://apublica.org/especial/microbolsa/" target="_blank">Aplicar</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Mongabay · Global</span>
+                        <h4>Y. Eva Tan Conservation Reporting Fellowship</h4>
+                        <p>Fellowship para reportagens sobre conservação ambiental, com foco em biodiversidade e florestas.</p>
+                    </div>
+                    <a class="go" href="https://mongabay.org/opportunity/the-y-eva-tan-conservation-reporting-fellowship/" target="_blank">Aplicar</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PARTE 05 · COMO MONTAR SUA APLICAÇÃO                         -->
+        <!-- ============================================================ -->
+        <section id="aplicacao">
+            <span class="section-number">Parte 05</span>
+            <h2>Como montar sua aplicação</h2>
+            <p class="section-lead">A aplicação a uma bolsa ou fellowship é um exercício de autoconhecimento e estratégia. Cada peça do dossiê precisa contar a mesma história — a sua.</p>
+
+            <h3>História mínima e história máxima</h3>
+
+            <p>Antes de escrever qualquer coisa, reflita sobre a história que você quer contar. Pergunte-se: o que a pré-apuração já tem? A história se sustenta só com o que já existe? Quais outras hipóteses você tem e como pretende chegar até elas? Quem poderá ser ouvido? O que já foi publicado sobre o assunto e o que ainda é inédito? Onde a reportagem será publicada?</p>
+
+            <div class="callout">
+                <div class="callout-title">Dica fundamental</div>
+                <p>Leia o edital com calma e veja como se encaixar de forma específica. Não aplique igual para todos os lugares. Cada organização tem prioridades, valores e critérios diferentes.</p>
+            </div>
+
+            <h3>Carta de recomendação</h3>
+
+            <p>A carta de recomendação é uma das peças mais delicadas da aplicação. Feita da maneira certa, pode ser o fator decisivo. Feita de qualquer jeito, pode prejudicar mais do que ajudar.</p>
+
+            <ul>
+                <li><strong>Só quem te conhece de fato.</strong> Nada de pedir carta para pessoas famosas que mal sabem quem você é.</li>
+                <li><strong>Só ex-chefes que trabalharam diretamente com você.</strong> Nada de colegas, amigos de bar ou chefes de outras áreas.</li>
+                <li><strong>Peça para ver a carta antes do envio.</strong> A maioria das pessoas fica feliz em mostrar. Isso evita surpresas.</li>
+                <li><strong>Chegue com uma história pronta.</strong> Lembre a pessoa de um projeto incrível que vocês fizeram juntos e peça para ela focar naquilo. Se você não direcionar, corre o risco de receber algo genérico.</li>
+                <li><strong>Nunca invente ou exagere.</strong> O mundo é pequeno e vão acabar descobrindo.</li>
+                <li><strong>Responda: por que você? Por que agora?</strong></li>
+            </ul>
+
+            <div class="callout">
+                <div class="callout-title">Aqui não tem humildade</div>
+                <p>Peça elogios. Sim, é estranho. Mas a carta de recomendação existe para isso. Se a pessoa se ofereceu para escrever, ela quer te ajudar. Direcione e facilite o trabalho dela.</p>
+            </div>
+
+            <h3>Exemplo real: trecho de carta da Abraji</h3>
+
+            <blockquote>
+                A Associação Brasileira de Jornalismo Investigativo (Abraji) é uma organização que atua em defesa do jornalismo e dos jornalistas há 20 anos. [...] Desde 2020 reforçamos esse trabalho de defesa da LAI com a entrada do jornalista Luiz Fernando Toledo em nosso quadro de diretores [...]. Toledo é hoje um dos principais especialistas no acesso à informação pública entre jornalistas no Brasil.
+                <cite>Trecho de carta de recomendação da Abraji</cite>
+            </blockquote>
+
+            <p>Repare como a carta não é genérica. Ela contextualiza a organização, descreve o papel da pessoa, cita projetos concretos e usa números (mais de 1.000 jornalistas treinados, pesquisa com quase 400 jornalistas). É isso que uma boa carta faz: conta uma história com evidências.</p>
+
+            <h3>Carta de apresentação</h3>
+
+            <p>Você com certeza é a melhor pessoa do mundo em alguma coisa — ou foi a melhor pessoa do mundo em alguma situação específica que vivenciou. Os avaliadores não querem histórias genéricas. Mas também não precisam de invenções. É só lembrar daquela coisa que você realmente gostou de fazer e que deu certo: uma boa pauta executada com sucesso, um projeto, uma história pessoal interessante.</p>
+
+            <p>Prefira contar histórias a citar cargos e títulos. Os cargos e títulos precisam vir junto com a história, não sozinhos. Busque uma narrativa de vida: por que você está aqui? Para onde quer ir? Como as coisas que fez te tornam o candidato ideal?</p>
+
+            <h4>Perguntas a responder na carta</h4>
+            <ol>
+                <li>Quem é você?</li>
+                <li>Qual sua área de interesse?</li>
+                <li>Qual seu diferencial?</li>
+                <li>Que história de vida ou profissional exemplifica esses três primeiros pontos?</li>
+                <li>Qual foi o impacto do seu trabalho até agora?</li>
+                <li>Que oportunidades você já teve antes — e como se beneficiou delas e as devolveu para a sociedade?</li>
+                <li>Como essas experiências serão úteis nesse novo projeto ou organização?</li>
+                <li>Por que aqui? O que te interessa mais nesta organização?</li>
+                <li>Qual sua relação com essa organização?</li>
+            </ol>
+
+            <div class="callout">
+                <div class="callout-title">Aqui também não cabe humildade</div>
+                <p>Nem arrogância, claro. Mas você vai dizer por que é o melhor candidato. Se você não disser, ninguém vai adivinhar.</p>
+            </div>
+
+            <h3>Currículo</h3>
+
+            <p>O currículo para aplicações a bolsas e fellowships segue uma lógica diferente do currículo convencional. A regra de ouro: <strong>uma página</strong>. Mais do que isso, ninguém lê.</p>
+
+            <ul>
+                <li><strong>Não coloque só o nome dos cargos.</strong> Diga, em uma frase, algo muito legal que você fez ali — sua melhor matéria, uma ideia que melhorou um processo, qualquer coisa que possa interessar a quem está lendo.</li>
+                <li><strong>Destaque o que interessa mais àquele projeto ou bolsa.</strong> Adapte o currículo a cada aplicação.</li>
+                <li><strong>Prêmios funcionam melhor como parte da história.</strong> Em vez de listar prêmios, cite-os ao descrever um trabalho: "produzimos reportagens que foram reconhecidas com o prêmio X".</li>
+                <li><strong>Nem todos os trabalhos precisam estar lá.</strong> Selecione o que for relevante para aquela aplicação específica.</li>
+            </ul>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PARTE 06 · PITCH DE PROJETO                                   -->
+        <!-- ============================================================ -->
+        <section id="pitch">
+            <span class="section-number">Parte 06</span>
+            <h2>Pitch de projeto</h2>
+            <p class="section-lead">Seu projeto é o melhor projeto. Você só precisa convencer os jurados disso. Se você não concordar, talvez precise reestruturar a ideia.</p>
+
+            <p>Um bom pitch de projeto é construído com clareza, pesquisa e estratégia. Antes de escrever, estude o que a organização financiadora busca: veja nos sites as palavras-chave, os temas prioritários, os projetos bem-sucedidos de edições anteriores. Defina de forma muito clara onde você quer chegar e de onde está partindo.</p>
+
+            <h3>O que os avaliadores esperam</h3>
+            <ul>
+                <li><strong>Entregáveis claros</strong> — audiência, impacto social, formação, multiplicação. Cada financiador pensa em impacto de um jeito diferente.</li>
+                <li><strong>Pesquisa de custos detalhada</strong> — não saber quanto custa a passagem ou o hotel pode demonstrar que você não pesquisou o suficiente.</li>
+                <li><strong>Coerência entre problema, método e resultado</strong> — o avaliador precisa enxergar o caminho do início ao fim.</li>
+            </ul>
+
+            <h3>Exemplo prático: bolsa EJN (US$ 5.000) — O pau-brasil</h3>
+
+            <p>Para ilustrar como funciona um pitch completo, veja o exemplo real de uma aplicação bem-sucedida à Earth Journalism Network, no valor de US$ 5.000, para investigar o contrabando de pau-brasil.</p>
+
+            <h4>O pitch</h4>
+            <div class="callout">
+                <p>O pau-brasil é uma árvore ameaçada de extinção que tem sido usada para produzir os melhores arcos de violino e violoncelo do mundo há décadas. Mas a maior parte de sua produção é ilegal. O OCCRP e a revista piauí revelaram, em dezembro de 2022, nomes de famosos fabricantes de arcos investigados por contrabandear esses arcos ilegais para os EUA, Europa e Japão. Agora vamos descobrir <strong>de onde vem a madeira</strong>, as <strong>conexões entre contrabandistas e fabricantes de arcos</strong> e como eles conseguem <strong>exportar a madeira para outros continentes</strong>. Em uma segunda parte, investigaremos quais são as iniciativas que estão tentando fazer com que o pau-brasil sobreviva e se torne sustentável.</p>
+            </div>
+
+            <h4>Fontes esperadas</h4>
+            <ul>
+                <li>Fontes do Ibama oficiais na operação Do-Re-Mi (orientação, sem citação direta).</li>
+                <li>Fontes da Polícia Federal envolvidas na operação (documentos, sem menção na reportagem).</li>
+                <li>Especialistas em unidades de conservação da UFBA.</li>
+                <li>Especialistas da UFRJ envolvidos na conservação do pau-brasil.</li>
+                <li>Especialistas do Incaper (Espírito Santo).</li>
+            </ul>
+
+            <h4>Fontes de dados</h4>
+            <ul>
+                <li>Conjunto de dados de multas ambientais do Ibama (dados abertos).</li>
+                <li>Solicitações via LAI ao Ibama, ICMBio, Polícia Federal e governos estaduais da Bahia e Espírito Santo.</li>
+            </ul>
+
+            <h4>Plano de apuração</h4>
+            <p>Fontes do Ibama indicaram quem está extraindo pau-brasil no sul da Bahia. Com essas informações, foram enviadas solicitações via LAI para obter sanções ambientais contra essas pessoas e empresas. Em paralelo, busca-se obter relatórios policiais que comprovem, por meio de análise laboratorial, que a madeira apreendida de fabricantes de arcos no Espírito Santo foi extraída ilegalmente do Parque Nacional do Pau Brasil. Está planejado o envio de um repórter freelancer ao sul da Bahia e, se houver avanços no ângulo internacional, entrevistas em Londres com compradores de pau-brasil bruto e arcos.</p>
+
+            <h4>Resultados esperados</h4>
+            <p>Dois artigos de 1.500 palavras cada — um sobre os contrabandistas e um sobre a conservação do pau-brasil. Publicação na revista piauí (português) e, havendo ângulo internacional, no OCCRP (inglês). Além disso, divulgação de todos os dados e documentos em newsletter e coleções no DocumentCloud e Google Pinpoint para que outros repórteres possam produzir histórias locais.</p>
+
+            <h4>Equipe</h4>
+            <ul>
+                <li><strong>Luiz Fernando Toledo</strong> — repórter e coordenador.</li>
+                <li><strong>Fernanda da Escóssia</strong> — editora da revista piauí.</li>
+                <li><strong>Fernanda Santana</strong> — repórter freelancer na Bahia.</li>
+                <li><strong>Joana Moncau</strong> — fotógrafa.</li>
+            </ul>
+
+            <h4>Timeline</h4>
+            <ol>
+                <li><strong>Janeiro 2023</strong> — Encontrar freelancers; enviar solicitações via LAI.</li>
+                <li><strong>Fevereiro 2023</strong> — Viajar, escrever, verificar fatos.</li>
+                <li><strong>Março 2023</strong> — Publicar a primeira história sobre extração e conexão com fabricantes de arcos.</li>
+                <li><strong>Abril 2023</strong> — Publicar a segunda matéria sobre preservação; enviar dados e documentos via newsletter.</li>
+            </ol>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PARTE 07 · IMPACTO E GRANTS DE LONGO PRAZO                    -->
+        <!-- ============================================================ -->
+        <section id="impacto">
+            <span class="section-number">Parte 07</span>
+            <h2>Impacto e grants de longo prazo</h2>
+            <p class="section-lead">Grants maiores exigem demonstração de impacto. Mas o que é impacto, afinal? E como medi-lo?</p>
+
+            <p>Quando você busca financiamento para projetos jornalísticos de médio e longo prazo, a conversa sobre impacto se torna central. Organizações que oferecem grants de maior valor querem saber não apenas o que você vai produzir, mas que diferença isso vai fazer no mundo.</p>
+
+            <h3>Como medir impacto</h3>
+            <ul>
+                <li><strong>Número de citações</strong> — quantas vezes seu trabalho foi referenciado por outros veículos, pesquisadores ou instituições.</li>
+                <li><strong>Visualizações e tempo de leitura</strong> — métricas de audiência que mostram alcance e engajamento.</li>
+                <li><strong>Comentários e repercussão</strong> — o debate público gerado pelo trabalho.</li>
+                <li><strong>Impacto no local</strong> — mudou alguma realidade? Conscientizou pessoas? Gerou ação?</li>
+                <li><strong>Formação de pessoas</strong> — mais gente ficou capacitada a realizar alguma atividade?</li>
+                <li><strong>Mudanças em políticas públicas</strong> — reconhecimento público de erros ou problemas; alterações legislativas ou administrativas.</li>
+            </ul>
+
+            <h3>Grants para projetos de médio e longo prazo</h3>
+
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Brasil · Ciência e Mídia</span>
+                        <h4>Instituto Serrapilheira</h4>
+                        <p>Programa de jornalismo e mídia que apoia projetos de divulgação científica e jornalismo investigativo de longo prazo. Grants que podem chegar a R$ 500 mil ou mais.</p>
+                    </div>
+                    <a class="go" href="https://serrapilheira.org/programa-de-jornalismo-e-midia/" target="_blank">Ver projetos</a>
+                </div>
+                <div class="tool-item">
+                    <div>
+                        <span class="tool-org">Brasil · Sociedade</span>
+                        <h4>Instituto Ibirapitanga</h4>
+                        <p>Apoia projetos nas áreas de política de drogas, liberdades, equidade racial e cultura. Submeta seu projeto pelo site.</p>
+                    </div>
+                    <a class="go" href="https://ibirapitanga.org.br/doacoes/seu-projeto/" target="_blank">Submeter</a>
+                </div>
+            </div>
+
+            <h3>Google para jornalistas</h3>
+
+            <p>O Google mantém diversos programas de financiamento e ferramentas para jornalistas, com editais que abrem periodicamente. Fique sempre de olho — e siga profissionais que acompanham essas oportunidades de perto.</p>
+
+            <div class="callout">
+                <div class="callout-title">Siga a Natalia Mazotte</div>
+                <p>Natalia Mazotte é uma das principais referências brasileiras em inovação no jornalismo e acompanha de perto os programas do Google e de outras organizações. Siga-a no <a href="https://www.linkedin.com/in/natalia-mazotte/" target="_blank">LinkedIn</a>.</p>
+            </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PARTE 08 · DICAS FINAIS                                       -->
+        <!-- ============================================================ -->
+        <section id="dicas">
+            <span class="section-number">Parte 08</span>
+            <h2>Dicas finais</h2>
+            <p class="section-lead">O que mais pode fazer diferença na sua busca por financiamento: idiomas, persistência, IA e marca pessoal.</p>
+
+            <h3>Falar um segundo idioma ajuda muito</h3>
+
+            <p>Nossa moeda está desvalorizada, o que significa que uma bolsa mediana dos Estados Unidos ou de outro país pode bancar um ou mais anos de trabalho se for remota. Financiadores internacionais costumam incomodar menos ao longo do percurso. Falar outro idioma facilita o acesso a novas fontes e estudos — nem tudo dá para ficar jogando no Google Translator. Além disso, pode ajudar a criar contatos no exterior e até a conseguir oportunidades fora do Brasil.</p>
+
+            <p>Não se desespere: pode ser um plano para médio ou longo prazo. Nem todo mundo pode querer ou precisar disso. Mas que ajuda, ajuda.</p>
+
+            <h3>Aplique mesmo sem preencher todos os requisitos</h3>
+
+            <div class="callout">
+                <div class="callout-title">O não você já tem</div>
+                <p>Recrutadores pedem o que imaginam ser o mundo ideal. Às vezes nem eles sabem direito o que estão pedindo. Que outros pontos fortes você tem que podem substituir os fracos ou até te dar vantagem? Aplique assim mesmo. Só não invente nenhuma habilidade que não tem.</p>
+            </div>
+
+            <h3>Uma bolsa leva a outras</h3>
+
+            <p>Saber que alguém executou um projeto até o fim, sem dar dor de cabeça, é um grande trunfo no mundo das bolsas e grants. Não é incomum ouvir histórias de bolsistas que não entregam o projeto. Há muita valorização de quem se compromete com o trabalho e entrega resultados.</p>
+
+            <p>Lembre-se: a bolsa é uma oportunidade, não um direito constitucional. Agarre e use da melhor forma. Quem dá bolsas é praticamente um investidor — mostre o bom retorno que terão. Se tiver como mostrar experiências passadas de outras bolsas, mostre.</p>
+
+            <h3>Fique de olho nas agendas e planeje</h3>
+            <ul>
+                <li><strong>Sites de associações jornalísticas</strong> — Abraji, Ajor, ICFJ, GIJN e outras publicam editais regularmente.</li>
+                <li><strong>Newsletters</strong> — inscreva-se nas newsletters das organizações que te interessam.</li>
+                <li><strong>LinkedIn</strong> — siga pessoas e organizações do setor para não perder oportunidades.</li>
+            </ul>
+
+            <h3>Use IA para treinar</h3>
+
+            <p>A inteligência artificial pode ser uma aliada poderosa na preparação da sua candidatura. Use para treinar para entrevistas, pedir para editar e melhorar o pitch, ser crítico com suas ideias e brigar com elas até encontrar o formato ideal. Use também para analisar sites e editais em busca de palavras-chave, e para estudar projetos vencedores de anos anteriores.</p>
+
+            <div class="callout">
+                <div class="callout-title">Cuidado com a resposta da IA</div>
+                <p>Não vá colar um "Claro, aqui está o que você pediu, quer algo mais?" no seu projeto. Revise tudo com olhar humano.</p>
+            </div>
+
+            <h4>Prompt para análise de edital</h4>
+            <div class="prompt-block">
+                Leia este edital: [LINK DO EDITAL] e me ajude a construir um projeto que contenha todos os elementos exigidos. Eu estou pensando em aplicar com um projeto sobre <em>[descreva sua ideia]</em>.<br><br>
+                As perguntas que eles fazem são essas abaixo. Me ajude a preencher com base na minha ideia.
+            </div>
+
+            <h4>Prompt crítico</h4>
+            <div class="prompt-block">
+                Avalie esta minha ideia como avaliador de uma bolsa para trabalhar com <em>[COMPLETE AQUI]</em>. Seja crítico e antecipe quais pontos podem ser questionados ou considerados fracos. Em que isso pode ser melhorado?
+            </div>
+
+            <h4>Prompt para geração de ideias</h4>
+            <div class="prompt-block">
+                Quero um relatório com tudo que já foi publicado nos últimos cinco anos sobre o assunto <em>[COMPLETE AQUI]</em>. Quero fazer um projeto sobre isso, para oferecer à organização <em>[NOME DA ORGANIZAÇÃO]</em>, e preciso de ideias inovadoras e que se encaixem com o perfil da organização.
+            </div>
+
+            <h3>Promova sua imagem</h3>
+
+            <p>Nossa marca pessoal é um dos valores mais importantes que temos. Sempre que conquistar uma bolsa ou concluir um projeto, pense em como isso vai te ajudar a construir essa imagem. Quais valores te aproximam do projeto? Quais você não aceitaria de jeito nenhum?</p>
+
+            <p>Volte à narrativa pessoal do começo desta aula: que história sobre nós queremos contar? A resposta a essa pergunta deve guiar não apenas suas aplicações, mas toda a sua carreira.</p>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- PARTE 09 · LINKS E REFERÊNCIAS                                -->
+        <!-- ============================================================ -->
+        <section id="referencias">
+            <span class="section-number">Parte 09</span>
+            <h2>Links e referências</h2>
+            <p class="section-lead">Todos os links mencionados nesta apostila, organizados por categoria, para você voltar aqui sempre que precisar.</p>
+
+            <h3>Fellowships</h3>
+            <ul>
+                <li><a href="https://nieman.harvard.edu/fellowships/how-to-apply/" target="_blank">Nieman Fellowship · Harvard</a></li>
+                <li><a href="https://ksj.mit.edu/fellowships/" target="_blank">Knight Science Journalism (KSJ) · MIT</a></li>
+                <li><a href="https://reutersinstitute.politics.ox.ac.uk/journalist-fellowships" target="_blank">Reuters Institute Fellowship · Oxford</a></li>
+                <li><a href="https://www.icfj.org/our-work/fellowships" target="_blank">ICFJ Fellowships</a></li>
+                <li><a href="https://www.connectas.org/" target="_blank">Connectas</a></li>
+                <li><a href="https://www.cbjc.org.br/" target="_blank">CBJC — Congresso Brasileiro de Jornalismo Científico</a></li>
+                <li><a href="https://dartcenter.org/" target="_blank">Dart Center for Journalism and Trauma</a></li>
+                <li><a href="https://pulitzercenter.org/rainforest-investigations-network" target="_blank">Rainforest Investigations Network · Pulitzer Center</a></li>
+                <li><a href="https://ledeprogram.com/" target="_blank">Lede Program · Columbia University</a></li>
+                <li><a href="https://latamjournalismreview.org/pt-br/articles/fellowships-bolsas-e-oportunidades-abertas-para-jornalistas-da-america-latina-para-2025-e-2026/" target="_blank">LatAm Journalism Review · Oportunidades abertas 2025-2026</a></li>
+            </ul>
+
+            <h3>Bolsas de estudo</h3>
+            <ul>
+                <li><a href="https://portal.fgv.br/" target="_blank">FGV — Fundação Getulio Vargas</a></li>
+                <li><a href="https://merrill.umd.edu/" target="_blank">University of Maryland — Philip Merrill College of Journalism</a></li>
+                <li><a href="https://www.cam.ac.uk/" target="_blank">University of Cambridge</a></li>
+            </ul>
+
+            <h3>Grants e bolsas de reportagem</h3>
+            <ul>
+                <li><a href="https://earthjournalism.net/what-we-do/projects/ejn-reporting-fellowships" target="_blank">EJN Reporting Fellowships</a></li>
+                <li><a href="https://jeduca.org.br/edital/" target="_blank">Jeduca · Editais</a></li>
+                <li><a href="https://fundaciongabo.org/es/becas-de-periodismo" target="_blank">Fundación Gabo · Becas de periodismo</a></li>
+                <li><a href="https://apublica.org/especial/microbolsa/" target="_blank">Agência Pública · Microbolsa</a></li>
+                <li><a href="https://mongabay.org/opportunity/the-y-eva-tan-conservation-reporting-fellowship/" target="_blank">Mongabay · Y. Eva Tan Conservation Reporting Fellowship</a></li>
+            </ul>
+
+            <h3>Grants de longo prazo</h3>
+            <ul>
+                <li><a href="https://serrapilheira.org/programa-de-jornalismo-e-midia/" target="_blank">Instituto Serrapilheira · Programa de Jornalismo e Mídia</a></li>
+                <li><a href="https://ibirapitanga.org.br/doacoes/seu-projeto/" target="_blank">Instituto Ibirapitanga · Submeta seu projeto</a></li>
+            </ul>
+
+            <h3>Organizações e comunidades</h3>
+            <ul>
+                <li><a href="https://abraji.org.br/" target="_blank">Abraji · Associação Brasileira de Jornalismo Investigativo</a></li>
+                <li><a href="https://www.icfj.org/" target="_blank">ICFJ · International Center for Journalists</a></li>
+                <li><a href="https://www.gijn.org/pt/" target="_blank">GIJN · Global Investigative Journalism Network</a></li>
+                <li><a href="https://www.connectas.org/" target="_blank">Connectas</a></li>
+                <li><a href="https://fundaciongabo.org/" target="_blank">Fundación Gabo</a></li>
+                <li><a href="https://pulitzercenter.org/" target="_blank">Pulitzer Center</a></li>
+            </ul>
+
+            <h3>Pessoas para seguir</h3>
+            <ul>
+                <li><a href="https://www.linkedin.com/in/natalia-mazotte/" target="_blank">Natalia Mazotte · LinkedIn</a> — inovação no jornalismo e programas Google</li>
+            </ul>
+
+            <h3>Fontes de dados mencionadas no exemplo do pau-brasil</h3>
+            <ul>
+                <li><a href="https://dadosabertos.ibama.gov.br/dataset/fiscalizacao-auto-de-infracao/resource/b2aba344-95df-43c0-b2ba-f4353cfd9a00" target="_blank">Ibama · Dados abertos de multas ambientais</a></li>
+            </ul>
+
+            <h3>Leitura recomendada</h3>
+            <ul>
+                <li><strong>The Status Game</strong> — sobre como construímos narrativas sobre nós mesmos e como elas moldam nossas oportunidades.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Apostila complementar da aula 3</p>
+        <p><strong>Jornalismo investigativo: das planilhas às ruas</strong></p>
+        <div class="divider"></div>
+        <p>Ju Faddul &nbsp;·&nbsp; Luiz Fernando Toledo</p>
+        <a class="back-link" href="index.html">&larr; Voltar para a apresentação</a>
+    </footer>
+
+    <script>
+        (function () {
+            const track = document.getElementById('rp-track');
+            const percent = document.getElementById('rp-percent');
+            const label = document.getElementById('rp-label');
+            const sections = document.querySelectorAll('.content section');
+            const titles = {};
+            sections.forEach(s => {
+                const h2 = s.querySelector('h2');
+                if (h2) titles[s.id] = h2.textContent.trim();
+            });
+
+            function onScroll() {
+                const doc = document.documentElement;
+                const scrollTop = window.scrollY || doc.scrollTop;
+                const scrollHeight = doc.scrollHeight - doc.clientHeight;
+                const pct = Math.max(0, Math.min(100, (scrollTop / scrollHeight) * 100));
+                track.style.width = pct + '%';
+                percent.innerHTML = '<strong>' + String(Math.round(pct)).padStart(2, '0') + '</strong>%';
+
+                // Find current section
+                const midY = scrollTop + window.innerHeight * 0.35;
+                let currentLabel = 'Apostila · Aula 3 · Fellowships, grants, bolsas e oportunidades';
+                for (const s of sections) {
+                    const top = s.offsetTop;
+                    if (midY >= top) currentLabel = titles[s.id] || currentLabel;
+                }
+                label.textContent = currentLabel;
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', onScroll);
+            onScroll();
+
+            // Highlight active nav item
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            const sectionIds = Array.from(navLinks).map(a => a.getAttribute('href').slice(1));
+            function updateNav() {
+                const scrollY = window.scrollY + 140;
+                let activeId = sectionIds[0];
+                for (const id of sectionIds) {
+                    const el = document.getElementById(id);
+                    if (el && el.offsetTop <= scrollY) activeId = id;
+                }
+                navLinks.forEach(a => {
+                    a.classList.toggle('active', a.getAttribute('href') === '#' + activeId);
+                });
+                // Scroll active item into view in nav
+                const activeLink = document.querySelector('.nav-menu a.active');
+                if (activeLink) {
+                    activeLink.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+                }
+            }
+            window.addEventListener('scroll', updateNav, { passive: true });
+            updateNav();
+        })();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>$$$$$ — Como conseguir dinheiro para o seu projeto jornalístico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --black:#111; --white:#fff; --mid:#888; --light-gray:#e5e5e5; --cream:#f7f5f1; --accent:#c45a2d; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        .reveal { font-family:'Inter',-apple-system,sans-serif; color:var(--black); }
+        .reveal .slides { text-align:left; }
+        .reveal .slides section { background:var(--white); padding:46px 70px; }
+        .reveal h1,.reveal h2,.reveal h3 { font-family:'Playfair Display',Georgia,serif; font-weight:900; color:var(--black); text-transform:none; letter-spacing:-0.03em; line-height:1.08; }
+        .reveal p { font-family:'Inter',sans-serif; font-weight:300; font-size:0.95em; line-height:1.65; color:var(--mid); }
+        .reveal .progress { color:var(--accent); height:4px; }
+        .reveal .controls { color:var(--black); }
+        .reveal .slide-number { font-family:'Playfair Display',serif; font-style:italic; font-size:12px!important; color:var(--mid); background:none; right:26px; bottom:14px; }
+
+        .divider { width:50px; height:2px; background:var(--black); margin:16px 0; }
+        .divider-center { width:50px; height:2px; background:var(--black); margin:20px auto; }
+
+        .kicker { font-family:'Inter',sans-serif; font-size:0.68em; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--mid); display:block; margin-bottom:16px; }
+        .kicker::before { content:"— "; color:var(--mid); letter-spacing:0; }
+
+        .big-title { font-family:'Playfair Display',serif; font-weight:900; font-size:2em; line-height:1.05; letter-spacing:-0.03em; max-width:960px; }
+        .big-title.center { margin:0 auto; text-align:center; }
+
+        .lead { font-family:'Inter',sans-serif; font-weight:300; font-size:1em; line-height:1.65; color:var(--mid); max-width:820px; margin-top:20px; }
+        .lead.center { margin:20px auto 0; text-align:center; }
+
+        .minimal-list { list-style:none; margin:26px 0 0; padding:0; max-width:880px; }
+        .minimal-list li { font-family:'Inter',sans-serif; font-weight:300; font-size:1em; line-height:1.55; color:var(--black); padding:15px 0 15px 32px; border-bottom:1px solid var(--light-gray); position:relative; }
+        .minimal-list li::before { content:""; position:absolute; left:0; top:26px; width:16px; height:1px; background:var(--black); }
+        .minimal-list li:last-child { border-bottom:none; }
+        .minimal-list li:hover { padding-left:36px; }
+        .minimal-list li::before { transition:width 0.3s ease; }
+        .minimal-list li:hover::before { width:20px; }
+
+        /* Title */
+        .slide-title { display:flex!important; flex-direction:column; justify-content:center; align-items:center; text-align:center!important; background:var(--black)!important; }
+        .slide-title h1 { color:var(--white); font-size:3em; max-width:920px; line-height:1.05; }
+        .slide-title .divider-center { background:var(--white); margin:28px auto; }
+        .slide-title .author { font-family:'Inter',sans-serif; font-size:1.05em; font-weight:400; color:rgba(255,255,255,0.78); letter-spacing:0.06em; }
+        .slide-title .site { font-family:'Inter',sans-serif; font-size:0.78em; font-weight:400; color:rgba(255,255,255,0.5); margin-top:10px; letter-spacing:0.08em; text-transform:uppercase; }
+        .slide-title .subtitle { font-family:'Inter',sans-serif; font-size:0.8em; color:rgba(255,255,255,0.55); letter-spacing:0.22em; text-transform:uppercase; margin-bottom:22px; }
+        .slide-title .money { font-family:'Playfair Display',serif; font-size:4.5em; color:var(--accent); font-weight:900; letter-spacing:-0.04em; line-height:0.9; margin-bottom:14px; }
+
+        /* Section break */
+        .section-break { display:flex!important; flex-direction:column; justify-content:center; align-items:center; text-align:center!important; background:var(--black)!important; }
+        .section-break h2 { color:var(--white); font-size:2.2em; max-width:820px; }
+        .section-break .divider-center { background:rgba(255,255,255,0.3); margin:18px auto; }
+        .section-break p { color:rgba(255,255,255,0.4); text-align:center; }
+        .section-break .eyebrow { font-family:'Inter',sans-serif; font-size:0.7em; font-weight:600; letter-spacing:0.25em; color:rgba(255,255,255,0.5); text-transform:uppercase; margin-bottom:22px; }
+
+        /* Center slide */
+        .center-slide { display:flex!important; flex-direction:column; justify-content:center; align-items:center; text-align:center!important; }
+
+        /* Dark slide */
+        .dark-slide { background:var(--black)!important; color:var(--white); }
+        .dark-slide h1,.dark-slide h2,.dark-slide h3 { color:var(--white); }
+        .dark-slide p,.dark-slide .lead { color:rgba(255,255,255,0.7); }
+        .dark-slide .kicker { color:rgba(255,255,255,0.55); }
+        .dark-slide .minimal-list li { color:var(--white); border-bottom-color:rgba(255,255,255,0.15); }
+        .dark-slide .minimal-list li::before { background:var(--white); }
+
+        /* PDF shot */
+        .pdf-shot { display:flex!important; flex-direction:column; justify-content:center; align-items:center; text-align:center!important; padding:24px 40px!important; background:#f5f2ec!important; }
+        .pdf-shot img { max-width:95%; max-height:560px; width:auto; object-fit:contain; display:block; box-shadow:0 14px 40px rgba(0,0,0,0.1); border:1px solid rgba(0,0,0,0.05); background:#fff; }
+        .pdf-shot .shot-cap { font-family:'Inter',sans-serif; font-size:0.58em; font-weight:400; color:var(--mid); margin-top:12px; letter-spacing:0.02em; position:relative; padding-top:12px; max-width:720px; }
+        .pdf-shot .shot-cap::before { content:""; position:absolute; top:0; left:50%; width:30px; height:1px; background:var(--black); transform:translateX(-50%); opacity:0.3; }
+
+        /* Paper feel */
+        .reveal .slides > section:not(.slide-title):not(.section-break):not(.dark-slide):not(.pdf-shot):not(.thanks-slide) { background:#fafaf8; }
+
+        /* URL badge */
+        .url-badge { display:inline-block; font-family:'Inter',sans-serif; font-size:0.72em; font-weight:500; color:var(--black); border:1px solid var(--black); padding:12px 22px; text-decoration:none; margin-top:20px; letter-spacing:0.04em; }
+        .url-badge:hover { background:var(--black); color:var(--white); }
+        .url-badge.big { font-size:0.9em; padding:16px 30px; font-weight:600; letter-spacing:0.06em; }
+
+        /* Pull quote */
+        .pull-quote { font-family:'Playfair Display',serif; font-weight:400; font-style:italic; font-size:1.3em; line-height:1.35; color:var(--black); max-width:820px; position:relative; padding-left:26px; }
+        .pull-quote::before { content:"\201C"; position:absolute; left:-6px; top:-24px; font-size:3.4em; color:var(--light-gray); font-family:'Playfair Display',serif; }
+        .pull-quote .cite { display:block; font-family:'Inter',sans-serif; font-style:normal; font-size:0.5em; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--mid); margin-top:18px; }
+
+        /* Agenda */
+        .agenda-list { list-style:none; padding:0; margin:24px 0 0; max-width:880px; counter-reset:ag; }
+        .agenda-list li { font-family:'Inter',sans-serif; font-size:1.05em; font-weight:400; color:var(--black); padding:20px 0 20px 62px; border-bottom:1px solid var(--light-gray); position:relative; counter-increment:ag; }
+        .agenda-list li::before { content:counter(ag, decimal-leading-zero); position:absolute; left:0; top:22px; font-family:'Playfair Display',serif; font-size:1em; font-weight:700; color:var(--mid); }
+        .agenda-list li:last-child { border-bottom:none; }
+
+        /* Tool card (for fellowship/grant cards) */
+        .opp-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:22px; max-width:1020px; }
+        .opp-card { border:1px solid var(--light-gray); padding:22px 24px; display:flex; flex-direction:column; }
+        .opp-card .org { font-family:'Inter',sans-serif; font-size:0.55em; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); margin-bottom:6px; }
+        .opp-card h3 { font-family:'Playfair Display',serif; font-size:1.1em; font-weight:900; margin-bottom:8px; line-height:1.15; }
+        .opp-card p { font-family:'Inter',sans-serif; font-size:0.75em; font-weight:300; color:var(--mid); line-height:1.5; margin-bottom:10px; flex:1; }
+        .opp-card a { font-family:'Inter',sans-serif; font-size:0.65em; font-weight:600; color:var(--black); border-bottom:1px solid var(--black); text-decoration:none; align-self:flex-start; padding-bottom:2px; }
+        .opp-card.highlight { background:var(--black); color:var(--white); border:none; }
+        .opp-card.highlight h3 { color:var(--white); }
+        .opp-card.highlight p { color:rgba(255,255,255,0.6); }
+        .opp-card.highlight a { color:var(--white); border-bottom-color:rgba(255,255,255,0.4); }
+
+        /* Steps with numbers */
+        .checklist { list-style:none; padding:0; margin:22px 0 0; max-width:860px; counter-reset:cl; }
+        .checklist li { counter-increment:cl; font-family:'Inter',sans-serif; font-weight:300; font-size:0.95em; line-height:1.55; color:var(--black); padding:14px 0 14px 56px; border-bottom:1px solid var(--light-gray); position:relative; }
+        .checklist li::before { content:counter(cl, decimal-leading-zero); position:absolute; left:0; top:15px; font-family:'Playfair Display',serif; font-size:1em; font-weight:700; color:var(--accent); }
+        .checklist li:last-child { border-bottom:none; }
+
+        /* Callout */
+        .callout-slide { border-left:4px solid var(--accent)!important; padding-left:50px!important; }
+        .callout-slide .callout-big { font-family:'Playfair Display',serif; font-weight:900; font-size:2.2em; line-height:1.05; color:var(--accent); max-width:800px; margin-bottom:16px; }
+
+        /* Thanks */
+        .thanks-slide { display:flex!important; flex-direction:column; justify-content:center; align-items:center; text-align:center!important; background:var(--white)!important; }
+        .thanks-slide h1 { font-size:4em; }
+        .thanks-slide .divider-center { margin:20px auto; }
+        .thanks-link { font-family:'Inter',sans-serif; font-size:1em; color:var(--black); text-decoration:none; font-weight:500; border-bottom:2px solid var(--black); padding-bottom:3px; }
+
+        /* Class bar */
+        .class-bar { position:fixed; top:0; left:0; right:0; background:rgba(255,255,255,0.94); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-bottom:1px solid rgba(0,0,0,0.06); padding:11px 26px; display:flex; justify-content:space-between; align-items:center; font-family:'Inter',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--mid); z-index:40; }
+        .class-bar .cb-block { position:relative; padding-left:18px; cursor:pointer; user-select:none; color:var(--black); }
+        .class-bar .cb-block::before { content:""; position:absolute; left:0; top:50%; width:10px; height:1px; background:var(--black); transform:translateY(-50%); }
+        .class-bar .cb-block::after { content:" ▾"; font-size:0.7em; opacity:0.5; }
+        .class-bar .cb-counter { font-family:'Playfair Display',serif; font-style:italic; font-weight:400; font-size:14px; letter-spacing:0.02em; color:var(--black); text-transform:none; }
+        .class-bar .cb-counter span { font-weight:900; font-style:normal; }
+        .class-bar .cb-track { position:absolute; bottom:-1px; left:0; height:2px; background:var(--accent); width:0; transition:width 0.4s ease; }
+
+        body.dark-ctx .class-bar { background:rgba(0,0,0,0.6); border-bottom-color:rgba(255,255,255,0.12); color:rgba(255,255,255,0.5); }
+        body.dark-ctx .class-bar .cb-block { color:var(--white); }
+        body.dark-ctx .class-bar .cb-block::before { background:var(--white); }
+        body.dark-ctx .class-bar .cb-counter { color:var(--white); }
+        body.dark-ctx .class-bar .cb-track { background:var(--white); }
+
+        .slide-nav { position:fixed; top:44px; left:0; right:0; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-bottom:1px solid rgba(0,0,0,0.1); z-index:39; display:none; padding:10px 26px; gap:0; flex-wrap:wrap; }
+        .slide-nav.open { display:flex; }
+        .slide-nav a { font-family:'Inter',sans-serif; font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--mid); text-decoration:none; padding:9px 16px; white-space:nowrap; cursor:pointer; border-bottom:2px solid transparent; transition:color 0.15s; }
+        .slide-nav a:hover { color:var(--black); }
+        .slide-nav a.active { color:var(--black); border-bottom-color:var(--accent); }
+        body.dark-ctx .slide-nav { background:rgba(0,0,0,0.85); }
+        body.dark-ctx .slide-nav a { color:rgba(255,255,255,0.5); }
+        body.dark-ctx .slide-nav a:hover, body.dark-ctx .slide-nav a.active { color:var(--white); border-bottom-color:var(--white); }
+
+        /* Apostila CTA */
+        .apostila-slide { display:flex!important; flex-direction:column; justify-content:center; align-items:center; text-align:center!important; background:var(--cream)!important; }
+
+        img { background:var(--light-gray); }
+    </style>
+</head>
+<body>
+    <!-- PASSWORD GATE -->
+    <div id="pw-gate" style="position:fixed;inset:0;z-index:9999;background:#111;display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:'Inter',sans-serif;">
+        <h1 style="font-family:'Playfair Display',serif;color:#fff;font-size:2.2em;margin-bottom:8px;letter-spacing:-0.03em;">Acesso restrito</h1>
+        <p style="color:rgba(255,255,255,0.5);font-size:0.85em;margin-bottom:28px;">Digite a senha para acessar o conteúdo</p>
+        <form onsubmit="return checkPw()" style="display:flex;gap:12px;">
+            <input id="pw-input" type="password" placeholder="Senha" autocomplete="off" style="font-family:'Inter',sans-serif;font-size:1em;padding:14px 22px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:#fff;outline:none;width:260px;letter-spacing:0.06em;">
+            <button type="submit" style="font-family:'Inter',sans-serif;font-size:0.8em;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:14px 28px;background:#fff;color:#111;border:none;cursor:pointer;">Entrar</button>
+        </form>
+        <p id="pw-err" style="color:#e55;font-size:0.78em;margin-top:14px;opacity:0;transition:opacity 0.3s;">Senha incorreta</p>
+    </div>
+    <script>
+        async function hashStr(s){const e=new TextEncoder().encode(s);const h=await crypto.subtle.digest('SHA-256',e);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+        async function checkPw(){var v=document.getElementById('pw-input').value;var h=await hashStr(v);if(h==='e57f9b279797c5b6646c88383581dce25e6624788ca6b3c39684bd956c75c900'){document.getElementById('pw-gate').style.display='none';sessionStorage.setItem('pw-ok','1');return false;}document.getElementById('pw-err').style.opacity='1';return false;}
+        if(sessionStorage.getItem('pw-ok')==='1'){document.getElementById('pw-gate').style.display='none';}
+    </script>
+
+    <div class="class-bar">
+        <div class="cb-block" id="cb-block" onclick="document.getElementById('slide-nav').classList.toggle('open')">Abertura</div>
+        <div class="cb-counter" id="cb-counter">01 / 01</div>
+        <div class="cb-track" id="cb-track"></div>
+    </div>
+    <nav class="slide-nav" id="slide-nav"></nav>
+
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- 1 · TÍTULO -->
+            <section class="slide-title">
+                <div class="subtitle">Aula 3 · Fellowships, grants, bolsas e oportunidades</div>
+                <div class="money">$$$$$</div>
+                <h1>Como conseguir dinheiro para o seu projeto jornalístico</h1>
+                <div class="divider-center"></div>
+                <div class="author">Luiz Fernando Toledo</div>
+                <div class="site">luizftoledo.github.io</div>
+            </section>
+
+            <!-- 2 · AGENDA -->
+            <section>
+                <span class="kicker">Agenda</span>
+                <h2 class="big-title" style="font-size:1.9em;">Sobre o que vamos falar hoje</h2>
+                <ol class="agenda-list">
+                    <li>Como se vender melhor? Como contar uma boa história sobre você e seu projeto?</li>
+                    <li>A busca por projetos duradouros</li>
+                    <li>Bolsas de reportagem, de estudo e fellowships</li>
+                    <li>Principais fundações e organizações que apoiam o jornalismo</li>
+                    <li>Como montar uma aplicação matadora</li>
+                </ol>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- BLOCO 1 · A NARRATIVA PESSOAL                 -->
+            <!-- ============================================ -->
+
+            <section class="section-break">
+                <div class="eyebrow">Bloco 1</div>
+                <h2>A narrativa pessoal</h2>
+                <div class="divider-center"></div>
+                <p>Antes de vender um projeto, venda a sua história</p>
+            </section>
+
+            <!-- Segredo sobre a vida -->
+            <section>
+                <span class="kicker">Um grande segredo sobre a vida</span>
+                <div class="pull-quote">
+                    Ela é uma história que criamos sobre nós mesmos e depois acreditamos nela. Conhecer essa
+                    história e dar significados a ela pode ser o primeiro passo para convencer os outros da
+                    importância de tal história. E convencê-los a nos dar oportunidades. Recursos. Tempo.
+                    <span class="cite">Livro: The Status Game</span>
+                </div>
+                <p class="lead" style="margin-top:24px;">Não existe trajetória ruim ou pior. Mas existem jeitos e jeitos de falar sobre essa trajetória.</p>
+                <p class="lead" style="font-style:italic;margin-top:10px;">(isso aqui tá com a cara de algum curso de Pablo Marçal, mas eu prometo que melhora...)</p>
+            </section>
+
+            <!-- História pessoal - slides 5 a 14 (embeds) -->
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-05.jpg" alt="Uma breve história pessoal">
+                <div class="shot-cap">Uma breve (juro!) história pessoal</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-06.jpg" alt="O trainee do Estadão">
+                <div class="shot-cap">O trainee do Estadão e a vaga número 32 (de 30)</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-07.jpg" alt="Os concorrentes">
+                <div class="shot-cap">Os 'concorrentes' e a síndrome do impostor</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-08.jpg" alt="Especialização">
+                <div class="shot-cap">A busca por alguma especialização (e os contatos lá feitos)</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-09.jpg" alt="Diferencial">
+                <div class="shot-cap">A busca por algum diferencial (e o desespero de não ficar pra trás)</div>
+            </section>
+
+            <section>
+                <span class="kicker">A narrativa se forma</span>
+                <h2 class="big-title" style="font-size:1.7em;">A narrativa pessoal que começa a se formar</h2>
+                <ul class="minimal-list">
+                    <li>Democratização do jornalismo</li>
+                    <li>Maior acesso a fontes</li>
+                    <li>Jornalismo mais plural</li>
+                    <li>Para os chefes: garantir reportagens exclusivas</li>
+                </ul>
+            </section>
+
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-11.jpg" alt="A história vira projeto">
+                <div class="shot-cap">A história pessoal vira ideia de projeto, que vira bolsa</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-12.jpg" alt="O projetinho">
+                <div class="shot-cap">O resultado da bolsa vira projetinho...</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-13.jpg" alt="Pesquisa e estudo">
+                <div class="shot-cap">O projetinho pode virar pesquisa e estudo</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-14.jpg" alt="Trabalho de cinco anos">
+                <div class="shot-cap">...e também um trabalho de cinco anos</div>
+            </section>
+
+            <section class="center-slide dark-slide">
+                <h2 class="big-title center" style="font-size:2.5em; color:var(--white);">Tá, vamos ao que interessa de verdade</h2>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- BLOCO 2 · FELLOWSHIPS                         -->
+            <!-- ============================================ -->
+
+            <section class="section-break">
+                <div class="eyebrow">Bloco 2</div>
+                <h2>Fellowships</h2>
+                <div class="divider-center"></div>
+                <p>Bolsas para executar projetos ou estudar um tema</p>
+            </section>
+
+            <section>
+                <span class="kicker">O que são</span>
+                <h2 class="big-title" style="font-size:1.7em;">O que são fellowships?</h2>
+                <ul class="minimal-list">
+                    <li>Na prática, é ganhar uma bolsa para executar um projeto ou estudar um tema (ou ambos)</li>
+                    <li>Oportunidade de passar um tempo dedicado; mais oportunidades no exterior, mas cada vez mais surgem bolsas remotas ou de organizações brasileiras</li>
+                    <li>É uma espécie de prêmio: demonstre experiência e que seu projeto terá impacto</li>
+                    <li>Você é seu próprio chefe no período da bolsa</li>
+                    <li>Oportunidades em áreas correlatas (direitos humanos, economia, meio ambiente)</li>
+                    <li>Pode conter mentoria com especialistas</li>
+                </ul>
+            </section>
+
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-17.jpg" alt="Exemplos de fellowships">
+                <div class="shot-cap">Exemplos de fellowships disponíveis para jornalistas</div>
+            </section>
+
+            <section>
+                <span class="kicker">Como aplicar</span>
+                <h2 class="big-title" style="font-size:1.7em;">Como aplicar a um fellowship?</h2>
+                <ul class="minimal-list">
+                    <li>Apresente um projeto de reportagem de longo prazo ou de pesquisa</li>
+                    <li>Períodos mais longos que uma bolsa de reportagem (pode ser até um ano)</li>
+                    <li>Processos demoram — se planeje e não deixe pro último dia!</li>
+                    <li>Como meu projeto será útil para a comunidade em que convivo?</li>
+                    <li>Por que eu sou a pessoa certa, no lugar certo, pra aplicar esse projeto?</li>
+                    <li>Procure ativamente, pense em projetos com antecedência e aplique quantas vezes for necessário</li>
+                </ul>
+            </section>
+
+            <section class="callout-slide">
+                <div class="callout-big">O NÃO você já tem. Só precisamos de UM SIM.</div>
+                <p class="lead">Tem grant por aí de R$ 500 mil (ou mais). Nieman/Harvard, KSJ/MIT, Reuters Institute/Oxford — o mundo está cheio de oportunidades para quem se planeja.</p>
+                <div style="display:flex;gap:14px;margin-top:22px;flex-wrap:wrap;">
+                    <a class="url-badge" href="https://nieman.harvard.edu/fellowships/how-to-apply/" target="_blank">Nieman/Harvard →</a>
+                    <a class="url-badge" href="https://ksj.mit.edu/fellowships/" target="_blank">KSJ/MIT →</a>
+                    <a class="url-badge" href="https://latamjournalismreview.org/pt-br/articles/fellowships-bolsas-e-oportunidades-abertas-para-jornalistas-da-america-latina-para-2025-e-2026/" target="_blank">LatAm Journalism Review →</a>
+                </div>
+            </section>
+
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-20.jpg" alt="Fellowships remotos/híbridos">
+                <div class="shot-cap">Fellowships remotos e híbridos · Oxford, Dart Center, Connectas, Lede Program</div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- BLOCO 3 · BOLSAS DE ESTUDO                    -->
+            <!-- ============================================ -->
+
+            <section class="section-break">
+                <div class="eyebrow">Bloco 3</div>
+                <h2>Bolsas de estudo</h2>
+                <div class="divider-center"></div>
+                <p>Mestrados, doutorados, especializações</p>
+            </section>
+
+            <section>
+                <span class="kicker">Oportunidades</span>
+                <h2 class="big-title" style="font-size:1.7em;">O mundo das bolsas de estudo</h2>
+                <ul class="minimal-list">
+                    <li>Oportunidade para se especializar em um tema ou técnica de trabalho</li>
+                    <li>Mestrados, doutorados, especializações (fique de olho em vagas pra aluno especial!)</li>
+                    <li>Sair da zona de conforto</li>
+                    <li>Expandir possibilidades de como fazer jornalismo</li>
+                    <li>Recursos garantidos por algum período</li>
+                    <li>Bom para transição de carreira</li>
+                    <li>Networking</li>
+                </ul>
+            </section>
+
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-22.jpg" alt="Bolsas de estudo">
+                <div class="shot-cap">FGV EAESP · University of Maryland · e outras opções</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-23.jpg" alt="Bolsas de estudo">
+                <div class="shot-cap">Instituto Ling · Chevening · Fundação Estudar</div>
+            </section>
+
+            <section>
+                <span class="kicker">Como aplicar</span>
+                <h2 class="big-title" style="font-size:1.7em;">Como aplicar?</h2>
+                <ol class="checklist">
+                    <li>Construa a sua narrativa — isso não sai da noite pro dia e requer tempo e reflexão</li>
+                    <li>Tenha bons exemplos de trabalhos feitos e como eles se encaixam nessa narrativa</li>
+                    <li>Para onde essa história pessoal pode te levar?</li>
+                    <li>Por que você quer aplicar para esta bolsa? O que essa organização tem de diferente?</li>
+                    <li>Quais professores ou aulas te interessam?</li>
+                    <li>Que contatos você já teve com essa instituição na vida?</li>
+                    <li>Pode haver provas de conhecimento (mas não são tão difíceis quanto parece)</li>
+                </ol>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- BLOCO 4 · BOLSAS DE REPORTAGEM / GRANTS       -->
+            <!-- ============================================ -->
+
+            <section class="section-break">
+                <div class="eyebrow">Bloco 4</div>
+                <h2>Bolsas de reportagem e grants</h2>
+                <div class="divider-center"></div>
+                <p>Combustível para tirar ideias do ar</p>
+            </section>
+
+            <section>
+                <span class="kicker">O que são</span>
+                <h2 class="big-title" style="font-size:1.7em;">As bolsas de reportagem</h2>
+                <ul class="minimal-list">
+                    <li>Tirar ideias do ar que um frila comum não pagaria</li>
+                    <li>Combustível, hotel, fotografia, vídeo...</li>
+                    <li>Enriquecimento de currículo + prêmios</li>
+                    <li>Aproximação da organização que pagou as bolsas</li>
+                    <li>Já combinar com um editor onde o projeto será publicado, pois possivelmente será cobrado</li>
+                </ul>
+            </section>
+
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-26.jpg" alt="Bolsas de reportagem">
+                <div class="shot-cap">EJN · Jeduca · Fundación Gabo · Abraji</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-27.jpg" alt="Bolsas de reportagem">
+                <div class="shot-cap">Agência Pública (Microbolsa) · Mongabay</div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- BLOCO 5 · COMO MONTAR SUA APLICAÇÃO           -->
+            <!-- ============================================ -->
+
+            <section class="section-break">
+                <div class="eyebrow">Bloco 5</div>
+                <h2>Como montar sua aplicação</h2>
+                <div class="divider-center"></div>
+                <p>Carta, currículo, pitch — o que funciona de verdade</p>
+            </section>
+
+            <section>
+                <span class="kicker">Planejamento</span>
+                <h2 class="big-title" style="font-size:1.7em;">História mínima e história máxima</h2>
+                <ul class="minimal-list">
+                    <li>O que a pré-apuração já tem? A história se sustenta só com isso?</li>
+                    <li>Quais outras hipóteses você tem? Como chegar até elas?</li>
+                    <li>Quem poderá ser ouvido?</li>
+                    <li>O que já saiu sobre esse assunto? O que ainda é inédito?</li>
+                    <li>Onde será publicado?</li>
+                    <li>Leia o edital com calma e veja como se encaixar de forma específica. Não aplique igual pra todos os lugares!</li>
+                </ul>
+            </section>
+
+            <section>
+                <span class="kicker">Cartas de recomendação</span>
+                <h2 class="big-title" style="font-size:1.6em;">Carta de recomendação / referências</h2>
+                <ul class="minimal-list">
+                    <li>Só quem te conhece de fato. Nada de famosinhos</li>
+                    <li>Só ex-chefes que de fato trabalharam com você</li>
+                    <li>As pessoas gostam de te mostrar a carta antes de enviar</li>
+                    <li>Já chegue com uma história contada sobre vocês: lembre a pessoa de um projeto incrível e peça pra ela focar naquilo</li>
+                    <li>Nunca invente ou aumente; o mundo é pequeno!</li>
+                    <li>Por que você? Por que agora?</li>
+                </ul>
+            </section>
+
+            <section class="callout-slide">
+                <div class="callout-big">AQUI NÃO TEM HUMILDADE. PEÇA ELOGIOS!</div>
+                <p class="lead">A carta de recomendação é o lugar onde seus melhores advogados falam por você. Dê munição pra quem vai escrever.</p>
+            </section>
+
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-30.jpg" alt="Exemplo de carta">
+                <div class="shot-cap">Exemplo real de carta de recomendação — Abraji</div>
+            </section>
+
+            <section>
+                <span class="kicker">Carta de apresentação</span>
+                <h2 class="big-title" style="font-size:1.6em;">Perguntas a responder na carta de apresentação</h2>
+                <ol class="checklist">
+                    <li>Quem é você?</li>
+                    <li>Qual sua área de interesse?</li>
+                    <li>Qual seu diferencial?</li>
+                    <li>Que história de vida ou profissional exemplifica esses 3 primeiros pontos?</li>
+                    <li>Qual foi o impacto do seu trabalho até agora?</li>
+                    <li>Que oportunidades você já teve — e como se beneficiou delas e as devolveu para a sociedade?</li>
+                    <li>Como essas experiências serão úteis nesse novo projeto?</li>
+                    <li>Por que aqui? O que te interessa mais nessa organização?</li>
+                </ol>
+            </section>
+
+            <section>
+                <span class="kicker">Currículo</span>
+                <h2 class="big-title" style="font-size:1.7em;">Currículo que funciona</h2>
+                <ul class="minimal-list">
+                    <li>Não coloque só o nome dos cargos — diga, em uma frase, algo incrível que você fez lá</li>
+                    <li>Destacar o que interessa mais àquele projeto/bolsa/curso</li>
+                    <li>Uma página! Mais do que isso ninguém lê</li>
+                    <li>Prêmios só quando ligados a uma história que você consiga contar</li>
+                </ul>
+            </section>
+
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-34.jpg" alt="Exemplo de currículo">
+                <div class="shot-cap">Exemplo real · Abraji + Fiquem Sabendo · nem todos os trabalhos precisam estar</div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- BLOCO 6 · EXEMPLO PRÁTICO — PAU-BRASIL        -->
+            <!-- ============================================ -->
+
+            <section class="section-break">
+                <div class="eyebrow">Bloco 6</div>
+                <h2>Exemplo prático completo</h2>
+                <div class="divider-center"></div>
+                <p>Bolsa de reportagem EJN · US$ 5.000 · Pau-brasil</p>
+            </section>
+
+            <section>
+                <span class="kicker">Pitch de projeto</span>
+                <h2 class="big-title" style="font-size:1.6em;">Seu projeto é o melhor projeto. Você só precisa convencer os jurados disso.</h2>
+                <ul class="minimal-list">
+                    <li>O que eles buscam? Veja palavras-chave, temas, projetos bem sucedidos do passado</li>
+                    <li>Defina de forma muito clara onde quer chegar e de onde está partindo</li>
+                    <li>Pense em entregáveis: audiência, impacto social, formação, multiplicação</li>
+                    <li>Faça uma ótima pesquisa de custos — não saber quanto custa a passagem pode demonstrar falta de preparo</li>
+                </ul>
+            </section>
+
+            <section>
+                <span class="kicker">Exemplo · EJN · US$ 5.000</span>
+                <h2 class="big-title" style="font-size:1.4em;">Pau-brasil: a árvore ameaçada que vira arco de violino</h2>
+                <p class="lead">O OCCRP e a piauí revelaram fabricantes investigados por contrabandear arcos ilegais para os EUA, Europa e Japão. Agora vamos descobrir de onde vem a madeira, as conexões entre contrabandistas e fabricantes, e como conseguem exportar.</p>
+            </section>
+
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-37.jpg" alt="Entrevistas esperadas">
+                <div class="shot-cap">Entrevistas esperadas · fontes do Ibama, PF, UFBA, UFRJ, Incaper</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-38.jpg" alt="Fontes de dados">
+                <div class="shot-cap">Fontes de dados · multas do Ibama + solicitações via LAI</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-39.jpg" alt="Plano de apuração">
+                <div class="shot-cap">Plano de apuração · passo a passo</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-40.jpg" alt="Resultados esperados">
+                <div class="shot-cap">Resultados esperados · 2 artigos de 1.500 palavras + dados abertos</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-41.jpg" alt="Equipe">
+                <div class="shot-cap">Equipe · repórter, editora, 2 freelancers</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-42.jpg" alt="Timeline">
+                <div class="shot-cap">Timeline do projeto · janeiro a abril de 2023</div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- BLOCO 7 · IMPACTO + GRANTS DE LONGO PRAZO     -->
+            <!-- ============================================ -->
+
+            <section class="section-break">
+                <div class="eyebrow">Bloco 7</div>
+                <h2>Impacto e grants de longo prazo</h2>
+                <div class="divider-center"></div>
+            </section>
+
+            <section>
+                <span class="kicker">Medir impacto</span>
+                <h2 class="big-title" style="font-size:1.7em;">Como se mede o impacto de um projeto?</h2>
+                <ul class="minimal-list">
+                    <li>Número de citações</li>
+                    <li>Número de visualizações e tempo de leitura</li>
+                    <li>Impacto no local: mudou alguma realidade? Conscientizou pessoas?</li>
+                    <li>Formação de pessoas: mais gente ficou capacitada?</li>
+                    <li>Mudanças em políticas públicas; reconhecimento público de erros ou problemas</li>
+                </ul>
+            </section>
+
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-44.jpg" alt="Grants de longo prazo">
+                <div class="shot-cap">Serrapilheira · Ibirapitanga · projetos de médio e longo prazo</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-45.jpg" alt="Grants de longo prazo">
+                <div class="shot-cap">Mais exemplos de projetos apoiados</div>
+            </section>
+            <section class="pdf-shot">
+                <img src="pdf_pages/page-46.jpg" alt="Google para jornalistas">
+                <div class="shot-cap">Google para jornalistas · sigam a Natalia Mazotte!</div>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- BLOCO 8 · DICAS FINAIS                        -->
+            <!-- ============================================ -->
+
+            <section class="section-break">
+                <div class="eyebrow">Bloco 8</div>
+                <h2>Dicas finais</h2>
+                <div class="divider-center"></div>
+                <p>O que mais pode fazer diferença na sua jornada</p>
+            </section>
+
+            <section>
+                <span class="kicker">Idiomas</span>
+                <h2 class="big-title" style="font-size:1.7em;">Falar um segundo idioma ajuda MUITO</h2>
+                <ul class="minimal-list">
+                    <li>Nossa moeda está desvalorizada — uma bolsa mediana dos EUA pode bancar um ou mais anos de trabalho remoto</li>
+                    <li>Financiadores gringos incomodam bem menos ao longo do percurso</li>
+                    <li>Pode ajudar a criar contatos no exterior e até conseguir oportunidades fora</li>
+                    <li>Facilita o acesso a novas fontes e estudos</li>
+                    <li>Não se desespere: pode ser um plano para médio ou longo prazo</li>
+                </ul>
+            </section>
+
+            <section class="callout-slide">
+                <div class="callout-big">E se a oportunidade 'exigir' mais do que eu tenho a oferecer?</div>
+                <ul class="minimal-list" style="margin-top:18px;">
+                    <li><strong style="color:var(--accent);">Aplique assim mesmo!</strong> Recrutadores pedem o mundo ideal. Às vezes nem eles sabem direito o que estão pedindo.</li>
+                    <li>Que outros pontos fortes você tem que podem substituir os fracos ou até te dar vantagem?</li>
+                    <li>Só não invente nenhuma habilidade que não tem, pelo amor de deus. :)</li>
+                </ul>
+            </section>
+
+            <section>
+                <span class="kicker">Continuidade</span>
+                <h2 class="big-title" style="font-size:1.7em;">Uma bolsa leva a outras</h2>
+                <ul class="minimal-list">
+                    <li>Saber que alguém executou um projeto até o fim, sem dar dor de cabeça, é um grande trunfo</li>
+                    <li>A bolsa é uma oportunidade, não um direito constitucional — agarre e use da melhor forma!</li>
+                    <li>Quem dá bolsas é praticamente um investidor. Mostre o bom retorno que terão!</li>
+                </ul>
+            </section>
+
+            <section>
+                <span class="kicker">Use IA para treinar!</span>
+                <h2 class="big-title" style="font-size:1.7em;">IA como aliada na aplicação</h2>
+                <ul class="minimal-list">
+                    <li>Treinar para entrevistas</li>
+                    <li>Pedir para editar e melhorar o pitch</li>
+                    <li>Ser crítico com suas ideias e brigar com elas até achar o formato ideal</li>
+                    <li>Analisar sites e editais em busca de palavras-chave</li>
+                    <li>Analisar projetos vencedores de outros anos</li>
+                    <li><strong style="color:var(--accent);">CUIDADO:</strong> Não vá colar um "claro, aqui está o que você pediu" no seu projeto!</li>
+                </ul>
+            </section>
+
+            <section>
+                <span class="kicker">Prompts práticos</span>
+                <h2 class="big-title" style="font-size:1.5em;">Prompts de IA para a sua aplicação</h2>
+                <ul class="minimal-list">
+                    <li><em>"Leia este edital: [LINK] e me ajude a construir um projeto que contenha todos os elementos exigidos. Eu estou pensando em aplicar com um projeto sobre xxxx."</em></li>
+                    <li><em>"Avalie esta minha ideia como avaliador de uma bolsa para trabalhar com [COMPLETE]. Seja crítico e antecipe quais pontos podem ser questionados ou considerados fracos."</em></li>
+                    <li><em>"Quero um relatório com tudo que já foi publicado nos últimos cinco anos sobre o assunto XXXX. Quero fazer um projeto sobre isso, para oferecer à organização XXXX."</em></li>
+                </ul>
+            </section>
+
+            <section class="center-slide">
+                <span class="kicker">Marca pessoal</span>
+                <h2 class="big-title center" style="font-size:2em; max-width:860px;">Não tenha vergonha de promover sua imagem</h2>
+                <div class="divider-center"></div>
+                <p class="lead center">Nossa marca pessoal é um dos valores mais importantes que temos. Sempre que pegar um projeto, pense em como ele vai te ajudar a construir essa imagem.</p>
+                <p class="lead center" style="margin-top:14px;">Que narrativa sobre nós queremos contar?</p>
+            </section>
+
+            <!-- ============================================ -->
+            <!-- FECHAMENTO                                    -->
+            <!-- ============================================ -->
+
+            <section class="dark-slide center-slide">
+                <span class="kicker">Resumo</span>
+                <h2 class="big-title center" style="font-size:1.9em; color:var(--white); max-width:880px;">O que levar daqui</h2>
+                <div class="divider-center" style="background:rgba(255,255,255,0.3);"></div>
+                <ul class="minimal-list" style="max-width:780px; margin:26px auto 0; text-align:left;">
+                    <li>Construa sua narrativa pessoal — ela é o alicerce de tudo</li>
+                    <li>O NÃO você já tem. Aplique quantas vezes for necessário</li>
+                    <li>Fellowships, bolsas e grants existem para todos os perfis — procure ativamente</li>
+                    <li>Use IA para treinar, mas nunca para inventar</li>
+                    <li>Uma bolsa leva a outras — cuide do retorno como se fosse um investidor</li>
+                </ul>
+            </section>
+
+            <section>
+                <span class="kicker">Próximo encontro · Aula 4</span>
+                <h2 class="big-title" style="font-size:1.8em;">23/04, 19h — Como conseguir bons personagens, falar com contraventores e pegar boas aspas</h2>
+                <div class="divider"></div>
+                <p class="lead">A última aula do curso. Vamos falar sobre a parte mais humana da apuração.</p>
+            </section>
+
+            <section class="apostila-slide">
+                <span class="kicker">Material de apoio</span>
+                <h2 class="big-title center" style="font-size:2.3em;">Apostila completa</h2>
+                <div class="divider-center"></div>
+                <p class="lead center">Tudo o que vimos hoje, com links, exemplos e prompts prontos.</p>
+                <a class="url-badge big" href="apostila.html" target="_blank">Abrir apostila →</a>
+            </section>
+
+            <section class="thanks-slide">
+                <h1>Obrigado!</h1>
+                <div class="divider-center"></div>
+                <a class="thanks-link" href="https://luizftoledo.github.io" target="_blank">luizftoledo.github.io</a>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'none',
+            width: 1200,
+            height: 700,
+            margin: 0.04
+        });
+
+        (function () {
+            const blockMap = [
+                { from: 1,  label: 'Abertura' },
+                { from: 3,  label: 'Bloco 1 · Narrativa pessoal' },
+                { from: 16, label: 'Bloco 2 · Fellowships' },
+                { from: 23, label: 'Bloco 3 · Bolsas de estudo' },
+                { from: 28, label: 'Bloco 4 · Grants' },
+                { from: 32, label: 'Bloco 5 · Como aplicar' },
+                { from: 42, label: 'Bloco 6 · Exemplo prático' },
+                { from: 51, label: 'Bloco 7 · Impacto' },
+                { from: 55, label: 'Bloco 8 · Dicas finais' },
+                { from: 63, label: 'Fechamento' },
+            ];
+            function currentBlock(n) {
+                var out = blockMap[0].label;
+                for (var i = 0; i < blockMap.length; i++) { if (n >= blockMap[i].from) out = blockMap[i].label; }
+                return out;
+            }
+            function update() {
+                var slides = document.querySelectorAll('.reveal .slides > section');
+                var total = slides.length;
+                var current = (Reveal.getIndices().h || 0) + 1;
+                document.getElementById('cb-counter').innerHTML = '<span>' + String(current).padStart(2, '0') + '</span> / ' + String(total).padStart(2, '0');
+                document.getElementById('cb-block').textContent = currentBlock(current);
+                document.getElementById('cb-track').style.width = ((current / total) * 100) + '%';
+                var slide = Reveal.getCurrentSlide();
+                var isDark = slide && (slide.classList.contains('slide-title') || slide.classList.contains('section-break') || slide.classList.contains('dark-slide'));
+                document.body.classList.toggle('dark-ctx', isDark);
+                nav.querySelectorAll('a').forEach(function (a) { a.classList.toggle('active', a.textContent === currentBlock(current)); });
+            }
+            var nav = document.getElementById('slide-nav');
+            blockMap.forEach(function (b) {
+                var a = document.createElement('a');
+                a.textContent = b.label;
+                a.onclick = function () { Reveal.slide(b.from - 1); nav.classList.remove('open'); };
+                nav.appendChild(a);
+            });
+            Reveal.on('ready', update);
+            Reveal.on('slidechanged', update);
+        })();
+    </script>
+</body>
+</html>
