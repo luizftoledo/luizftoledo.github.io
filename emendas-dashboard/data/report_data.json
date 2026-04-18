@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-17T14:23:50.783466+00:00",
+  "generated_at": "2026-04-18T14:04:45.549198+00:00",
   "snapshot_date": "2026-04-11",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -975,7 +975,7 @@
     "total_liquidado": 264520237.97,
     "total_pago": 258655404.21
   },
-  "run_date": "2026-04-17",
+  "run_date": "2026-04-18",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -1005,7 +1005,7 @@
       "available": true,
       "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
       "last_update": "",
-      "base_siafi_date": "15/4/2026",
+      "base_siafi_date": "16/4/2026",
       "filters": {
         "year": 2026,
         "rp": [
@@ -1059,8 +1059,7 @@
           "error": ""
         }
       ],
-      "error": "8 - Emendas de Comissão: filtro não confirmado",
-      "fallback_from_previous": true
+      "error": ""
     },
     "siop_details": {
       "available": true,
@@ -1798,7 +1797,7 @@
         },
         {
           "author": "RODRIGO PACHECO",
-          "party": "PSB",
+          "party": "Nao identificado",
           "empenhado": 27066830.9,
           "pago": 5178207.98
         },
@@ -1834,7 +1833,7 @@
         },
         {
           "author": "MARCIO BITTAR",
-          "party": "PL",
+          "party": "Nao identificado",
           "empenhado": 15089989.0,
           "pago": 9770271.47
         },
@@ -1852,7 +1851,7 @@
         },
         {
           "author": "PAULO PAIM",
-          "party": "PT",
+          "party": "Nao identificado",
           "empenhado": 12452750.0,
           "pago": 9189712.53
         },
@@ -1864,19 +1863,19 @@
         },
         {
           "author": "ORIOVISTO GUIMARAES",
-          "party": "PSDB",
+          "party": "Nao identificado",
           "empenhado": 11609000.0,
           "pago": 9362125.43
         },
         {
           "author": "FLAVIO BOLSONARO",
-          "party": "PL",
+          "party": "Nao identificado",
           "empenhado": 11031902.27,
           "pago": 15160554.54
         },
         {
           "author": "CARLOS PORTINHO",
-          "party": "PL",
+          "party": "Nao identificado",
           "empenhado": 10470825.63,
           "pago": 25964074.41
         },
@@ -1888,7 +1887,7 @@
         },
         {
           "author": "FABIANO CONTARATO",
-          "party": "PT",
+          "party": "Nao identificado",
           "empenhado": 9938076.68,
           "pago": 13199250.86
         }
@@ -1931,12 +1930,12 @@
         },
         {
           "author": "HAMILTON MOURAO",
-          "party": "REPUBLICANOS",
+          "party": "Nao identificado",
           "empenhado": 2410000.0
         },
         {
           "author": "PAULO PAIM",
-          "party": "PT",
+          "party": "Nao identificado",
           "empenhado": 2387500.0
         },
         {
@@ -1991,7 +1990,7 @@
         },
         {
           "author": "FLAVIO ARNS",
-          "party": "PSB",
+          "party": "Nao identificado",
           "empenhado": 820000.0
         }
       ],
@@ -2345,7 +2344,7 @@
     },
     "party_lookup": {
       "camara_mapeados": 513,
-      "senado_mapeados": 81
+      "senado_mapeados": 0
     }
   },
   "daily_history": [
@@ -2836,7 +2835,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-04-18",
+      "last_update": "",
+      "base_siafi_date": "16/4/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
   ],
-  "updated_at": "2026-04-17T14:23:50.783466+00:00"
+  "updated_at": "2026-04-18T14:04:45.549198+00:00"
 }
