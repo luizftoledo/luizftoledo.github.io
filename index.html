@@ -18,7 +18,7 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Spectral:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.future.css?v=6">
 
   <link rel="icon" type="image/png" href="favicon.png">
@@ -70,6 +70,91 @@
     .poke-secret-trigger:focus {
       opacity: 1 !important;
     }
+
+    /* ============ Add-ons: outlets accordion, initiatives, research trail ============ */
+    /* Barra gradiente universal nos títulos de seção (e no subsection-title) */
+    h2.section-title::before,
+    h3.subsection-title::before{
+      content:'';display:inline-block;width:48px;height:4px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border-radius:4px;margin-right:14px;vertical-align:middle;
+      transform-origin:left;
+      animation:barIn .8s .2s backwards cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+    .outlets-wrap{margin-top:60px;padding-top:40px;border-top:1px dashed rgba(255,255,255,.08)}
+    .outlets-wrap .subsection-title{font-size:1.5rem;font-weight:700;margin:0 0 8px;color:var(--text);letter-spacing:-.01em}
+    .outlets-wrap .outlets-sub{color:var(--muted);margin-bottom:24px;font-size:15px;max-width:720px}
+    .outlets-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+    .outlet-chip{position:relative;text-align:left;cursor:pointer;background:rgba(14,17,23,.65);border:1px solid var(--border);border-radius:12px;padding:18px 18px;color:var(--text);font-family:inherit;transition:border-color .25s,transform .25s,background .25s;display:flex;flex-direction:column;gap:6px;min-height:96px;overflow:hidden}
+    .outlet-chip::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+    .outlet-chip:hover{border-color:rgba(124,255,240,.35);transform:translateY(-2px);background:rgba(20,24,32,.8)}
+    .outlet-chip:hover::after{transform:scaleX(1)}
+    .outlet-chip.active{border-color:rgba(124,255,240,.55);background:rgba(20,24,32,.9)}
+    .outlet-chip.active::after{transform:scaleX(1)}
+    .outlet-chip .outlet-name{font-size:18px;font-weight:900;letter-spacing:-.01em}
+    .outlet-chip .outlet-years{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em}
+    .outlet-chip .outlet-count{font-size:11.5px;color:var(--accent);font-weight:600;margin-top:auto}
+    .outlet-chip .caret{position:absolute;top:14px;right:14px;color:var(--muted);transition:transform .3s,color .25s;font-size:12px}
+    .outlet-chip.active .caret{transform:rotate(180deg);color:var(--accent)}
+
+    .outlet-panel{border:1px solid var(--border);border-radius:14px;background:linear-gradient(135deg,rgba(14,17,23,.75),rgba(14,17,23,.45));padding:0;overflow:hidden;max-height:0;opacity:0;transition:max-height .5s cubic-bezier(.2,.8,.2,1),opacity .3s,padding .3s}
+    .outlet-panel.open{max-height:3000px;opacity:1;padding:28px 32px}
+    .outlet-panel .panel-meta{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;margin-bottom:22px;padding-bottom:18px;border-bottom:1px dashed rgba(255,255,255,.08)}
+    .outlet-panel .panel-role{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .outlet-panel .panel-role b{color:var(--text);font-weight:700;margin-right:4px}
+    .outlet-panel .award{color:var(--accent);font-size:12.5px;font-weight:600}
+    .outlet-panel .stories{display:flex;flex-direction:column;gap:26px}
+    .outlet-panel .story{position:relative;padding-left:22px}
+    .outlet-panel .story::before{content:'';position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(124,255,240,.1)}
+    .outlet-panel .story h4{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:22px;line-height:1.25;color:var(--text);margin-bottom:6px;letter-spacing:-.01em}
+    .outlet-panel .story .lede{color:var(--muted);font-size:15px;line-height:1.6;font-family:'Spectral',serif;font-weight:500;margin-bottom:10px}
+    .outlet-panel .story .proof{display:inline-block;padding:6px 12px;margin:4px 0 10px;background:rgba(124,255,240,.08);border:1px solid rgba(124,255,240,.25);border-radius:6px;color:var(--accent);font-size:13px;font-weight:600}
+    .outlet-panel .story .proof i{margin-right:6px;opacity:.85}
+    .outlet-panel .story-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px}
+    .outlet-panel .chip-tool{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:4px 9px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text)}
+    .outlet-panel .chip-tool::before{content:'/';color:var(--accent);margin-right:-2px}
+    .outlet-panel .story-link-external{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(124,255,240,.4);padding-bottom:1px;transition:color .2s,border-color .2s;margin-left:auto}
+    .outlet-panel .story-link-external:hover{color:var(--accent-2);border-bottom-color:rgba(159,124,255,.5)}
+    .outlet-panel .story-link-external i{margin-left:5px;font-size:11px}
+
+    /* Initiatives */
+    .init-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .init-card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px 26px 24px;backdrop-filter:blur(8px);transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s;display:flex;flex-direction:column;gap:12px}
+    .init-card:hover{transform:translateY(-3px);border-color:rgba(124,255,240,.35)}
+    .init-card .when{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+    .init-card h3{font-size:22px;font-weight:900;letter-spacing:-.01em;line-height:1.2;margin:0}
+    .init-card .role{font-size:13.5px;color:var(--accent);font-weight:600;margin-top:-4px}
+    .init-card ul{list-style:none;padding:0;margin-top:4px;display:flex;flex-direction:column;gap:8px}
+    .init-card li{font-size:13.5px;color:var(--muted);line-height:1.5;padding-left:18px;position:relative}
+    .init-card li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700}
+    .init-card li b{color:var(--text);font-weight:600}
+    .init-card a{color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(124,255,240,.4)}
+
+    /* Research trail */
+    .research-trail{list-style:none;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;margin:0}
+    .research-trail::before{content:'';position:absolute;left:4%;right:4%;top:32px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)}
+    .research-step{position:relative;padding:0 10px;text-align:center}
+    .research-step .rnode{width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);margin:24px auto 16px;position:relative;z-index:1;transition:transform .25s,box-shadow .25s}
+    .research-step:hover .rnode{transform:scale(1.2);box-shadow:0 0 20px rgba(124,255,240,.4)}
+    .research-step .yr{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+    .research-step .inst{font-size:15px;font-weight:900;letter-spacing:-.01em;margin-bottom:4px;line-height:1.25}
+    .research-step .degree{font-size:12.5px;color:var(--muted);line-height:1.45;font-family:'Spectral',serif;font-style:italic}
+    .research-step .output{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);margin-top:8px;display:block}
+
+    @media (max-width:1100px){
+      .init-cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:1000px){
+      .outlets-row{grid-template-columns:repeat(3,1fr)}
+      .research-trail{grid-template-columns:repeat(2,1fr);row-gap:20px}
+      .research-trail::before{display:none}
+    }
+    @media (max-width:600px){
+      .outlets-row{grid-template-columns:1fr}
+      .init-cards{grid-template-columns:1fr}
+    }
   </style>
 </head>
 
@@ -88,6 +173,7 @@
         <li><a href="#short-videos">Videos</a></li>
         <li><a href="#awards">Awards</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#courses-workshops">Courses &amp; workshops</a></li>
         <li><a href="resume.html">Resume</a></li>
         <li><a href="https://datafixers.org/index_en.html" target="_blank" rel="noopener noreferrer">Data journalism</a></li>
       </ul>
@@ -527,6 +613,65 @@
           </div>
         </div>
 
+        <!-- Accordion: other reporting examples (Estadão, Globo SP, CNN) -->
+        <div class="outlets-wrap" data-reveal>
+          <h3 class="subsection-title">Other reporting examples</h3>
+          <p class="outlets-sub">From earlier newsrooms — select one to see additional stories not featured above.</p>
+          <div class="outlets-row" id="outletsRow"></div>
+          <div class="outlet-panel" id="outletPanel"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Initiatives I've led -->
+    <section id="initiatives-led" class="section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Initiatives I've led</h2>
+        <div class="init-cards">
+          <article class="init-card" data-reveal>
+            <span class="when">2022 – present</span>
+            <h3>Datafixers</h3>
+            <span class="role">Founder</span>
+            <ul>
+              <li><b>US$100,000</b> grant from the Brown Institute for Media Innovation (Columbia University)</li>
+              <li><b>Gabo Prize 2024</b> — environmental coverage with InfoAmazonia</li>
+              <li><b>Best data project in Brazil 2023</b> — Open Knowledge Foundation</li>
+              <li>Published with <b>ICIJ, OCCRP, BBC</b>; supported <b>Washington Post</b> (Pulitzer finalist) and <b>Al Jazeera</b></li>
+              <li><a href="https://datafixers.org/" target="_blank" rel="noopener">datafixers.org ↗</a></li>
+            </ul>
+          </article>
+          <article class="init-card" data-reveal>
+            <span class="when">2019 – 2024</span>
+            <h3>Abraji</h3>
+            <span class="role">Director for FOIA projects · Advisory board</span>
+            <ul>
+              <li>National research on Brazil's <b>Lei de Acesso à Informação</b></li>
+              <li>Contributed to training <b>2,000+ journalists</b> in workshops</li>
+              <li>This FOIA work earned the <b>Oxford RISJ fellowship</b></li>
+            </ul>
+          </article>
+          <article class="init-card" data-reveal>
+            <span class="when">2019 – 2023</span>
+            <h3>Fiquem Sabendo</h3>
+            <span class="role">Cofounder · content director</span>
+            <ul>
+              <li>Nonprofit specialised in <b>public records requests</b></li>
+              <li>Year-long project on presidential corporate-card spending triggered investigations against current and former presidents</li>
+              <li><b>Câmara dos Deputados Transparency Prize 2022</b></li>
+              <li>Cited in <b>1,000+ stories</b> by other newsrooms</li>
+            </ul>
+          </article>
+          <article class="init-card" data-reveal>
+            <span class="when">present</span>
+            <h3>Jeduca</h3>
+            <span class="role">Director · course co-creator</span>
+            <ul>
+              <li>Co-created a course taken by <b>1,000+ journalists and students</b></li>
+              <li>Travelled to <b>several Brazilian states</b> giving in-person workshops to students on education journalism</li>
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -555,7 +700,7 @@
           <div class="reels-carousel">
             <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVwcNVPAQ0_/?igsh=MXR4a216aW9jenkzbA%3D%3D"
               data-instgrm-version="14"></blockquote>
-            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVO4gD_j5T4/"
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVOzOrYjtxj/"
               data-instgrm-version="14"></blockquote>
             <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DUi12gSEaFV/"
               data-instgrm-version="14"></blockquote>
@@ -776,24 +921,69 @@
       });
     </script>
 
+    <!-- Research & fellowships (visual trail) -->
+    <section id="research-fellowships" class="section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Research &amp; fellowships</h2>
+        <ol class="research-trail">
+          <li class="research-step">
+            <span class="yr">2019–2021</span>
+            <div class="rnode"></div>
+            <div class="inst">FGV-EAESP</div>
+            <div class="degree">MS Public Administration (full scholarship)</div>
+            <span class="output">FOI research adopted by gov.</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2021</span>
+            <div class="rnode"></div>
+            <div class="inst">Oxford · RISJ</div>
+            <div class="degree">Trust in News fellow (6 months)</div>
+            <span class="output">Course for 300+ journalists</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2021–2022</span>
+            <div class="rnode"></div>
+            <div class="inst">Columbia University</div>
+            <div class="degree">MS Data Journalism (full scholarship)</div>
+            <span class="output">Datafixers founded here</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2022–2023</span>
+            <div class="rnode"></div>
+            <div class="inst">Brown Institute</div>
+            <div class="degree">Media Innovation fellowship (Columbia)</div>
+            <span class="output">US$100k grant → Datafixers</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2023–2024</span>
+            <div class="rnode"></div>
+            <div class="inst">NED</div>
+            <div class="degree">Reagan-Fascell fellow — AI in investigative journalism</div>
+            <span class="output">AI chatbot &amp; reaction simulator</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2024–present</span>
+            <div class="rnode"></div>
+            <div class="inst">Cambridge · POLIS</div>
+            <div class="degree">Research-assistant — Prison Consensus Project</div>
+            <span class="output">Ongoing</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
     <section id="grants" class="grants section" data-reveal>
       <div class="container">
-        <h2 class="section-title">Scholarships, Fellowships and Grants</h2>
+        <h2 class="section-title">Scholarships and Grants</h2>
         <ul class="grant-list">
           <li><span class="grant-year">2024</span><span class="grant-title">Together for Conservation (EJN,
               2024)</span><span class="grant-source">Earth Journalism Network</span></li>
-          <li><span class="grant-year">2023–2024</span><span class="grant-title">National Endowment for Democracy (NED)
-              –
-              Reagan‑Fascell fellowship (2023–2024)</span><span class="grant-source">NED</span></li>
           <li><span class="grant-year">2022</span><span class="grant-title">Person of the Year 2022 – Brazilian American
               Chamber of Commerce</span><span class="grant-source">Brazilian American Chamber of Commerce</span></li>
           <li><span class="grant-year">2021–2022</span><span class="grant-title">Columbia Journalism School (US$ 91,500
-              in
-              tuition) 2021/2022</span><span class="grant-source">Columbia University</span></li>
+              in tuition) 2021/2022</span><span class="grant-source">Columbia University</span></li>
           <li><span class="grant-year">2020</span><span class="grant-title">ICFJ Latin America Grantee 2020 – FOIA –
               Brazil and US project</span><span class="grant-source">ICFJ</span></li>
-          <li><span class="grant-year">2019</span><span class="grant-title">EAESP‑FGV – Full scholarship for a master of
-              science in Public Administration (2019)</span><span class="grant-source">FGV</span></li>
           <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$
               60,000 scholarship (2019) – Jornalista de Visão</span>
             <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="Hidden secret"
@@ -872,7 +1062,7 @@
         </div>
 
         <!-- ── Courses & Workshops ──────────────────────────────────────── -->
-        <h3 style="font-size:1.1rem;font-weight:700;margin:2.5rem 0 1rem;color:var(--text)">Courses &amp; workshops</h3>
+        <h2 id="courses-workshops" class="section-title" style="margin-top:3rem;scroll-margin-top:80px">Courses &amp; workshops</h2>
         <div style="display:grid;gap:.75rem;max-width:860px">
 
           <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem">
@@ -1194,6 +1384,111 @@
         });
       }
     });
+  </script>
+
+  <!-- Other reporting examples — outlets accordion -->
+  <script>
+  (function(){
+    const OUTLETS = [
+      {
+        id:'estadao', name:'Estadão', years:'2013–2018',
+        role:'Public policy reporter',
+        award:'10+ awards · Estado Jornalismo 2017/2018',
+        stories:[
+          {
+            title:"Doria's office moved to obstruct the FOI Act",
+            lede:"Audio obtained by Estado showed the administration's Nº 2 of Communications saying they'd \"make it harder\" to answer records requests — and kept a mental ranking of the requesters.",
+            proof:"Audio obtained · public records law breach documented",
+            url:"https://www.estadao.com.br/sao-paulo/gestao-doria-dificulta-acesso-a-dados-e-viola-lei-de-acesso-a-informacao/"
+          },
+          {
+            title:"R$15 million bid fraud at São Paulo's City Hall",
+            lede:"Investigation led Prefeitura de São Paulo to suspend the bidding process before contracts were signed.",
+            proof:"R$15M saved from the city budget",
+            url:"http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/"
+          }
+        ]
+      },
+      {
+        id:'globo', name:'TV Globo SP', years:'2019',
+        role:'TV news producer · data journalist',
+        stories:[
+          {
+            title:"Children and teenagers sleeping on the floor, waiting for shelter placements",
+            lede:"SP2 reporting revealed minors were being held in temporary spaces without beds while the Prefeitura delayed allocating shelter slots.",
+            proof:"Court ordered the city to allocate a shelter slot within 1 hour",
+            url:"https://g1.globo.com/sp/sao-paulo/noticia/2019/04/17/justica-determina-que-prefeitura-de-sp-arrume-vaga-em-abrigo-para-criancas-e-adolescentes-em-ate-uma-hora.ghtml"
+          }
+        ]
+      },
+      {
+        id:'cnn', name:'CNN Brasil', years:'2020',
+        role:'Investigative producer · data journalist',
+        stories:[
+          {
+            title:"Illegal air-taxi operations across Brazil",
+            lede:"Two-month investigation tied fatal crashes of Ricardo Boechat (2019), singer Gabriel Diniz (2019) and a 2016 accident to unauthorised air-taxi flights. The series identified irregularities and prompted enforcement action.",
+            proof:"Interdictions grew 5× · fines and investigations opened · 2+ cases referred to the Federal Prosecution · first air-taxi company ever shut down in Brazil",
+            tool:"aeronaves-dashboard",
+            url:"https://www.cnnbrasil.com.br/nacional/interdicao-de-aeronaves-clandestinas-cresce-mais-de-cinco-vezes-desde-2017/"
+          }
+        ]
+      }
+    ];
+    const row = document.getElementById('outletsRow');
+    const panel = document.getElementById('outletPanel');
+    if(!row || !panel) return;
+
+    OUTLETS.forEach(o=>{
+      const btn = document.createElement('button');
+      btn.className = 'outlet-chip';
+      btn.dataset.id = o.id;
+      btn.type = 'button';
+      btn.innerHTML = '<i class="fas fa-chevron-down caret"></i>'
+        + '<span class="outlet-name">'+o.name+'</span>'
+        + '<span class="outlet-years">'+o.years+'</span>';
+      row.appendChild(btn);
+    });
+
+    function renderPanel(id){
+      const o = OUTLETS.find(x=>x.id===id);
+      if(!o) return;
+      const awardHtml = o.award ? '<span class="award"><i class="fas fa-award"></i> '+o.award+'</span>' : '';
+      const storiesHtml = o.stories.map(function(s){
+        return '<article class="story">'
+          + '<h4>'+s.title+'</h4>'
+          + '<p class="lede">'+s.lede+'</p>'
+          + '<div class="proof"><i class="fas fa-check"></i>'+s.proof+'</div>'
+          + '<div class="story-meta">'
+          + (s.tool ? '<span class="chip-tool">'+s.tool+'</span>' : '')
+          + (s.url ? '<a class="story-link-external" href="'+s.url+'" target="_blank" rel="noopener">Read original<i class="fas fa-arrow-up-right-from-square"></i></a>' : '')
+          + '</div>'
+          + '</article>';
+      }).join('');
+      panel.innerHTML = '<div class="panel-meta">'
+        + '<span class="panel-role"><b>Role:</b> '+o.role+'</span>'
+        + awardHtml
+        + '</div>'
+        + '<div class="stories">'+storiesHtml+'</div>';
+    }
+
+    let active = null;
+    row.addEventListener('click', function(e){
+      const btn = e.target.closest('.outlet-chip');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      if(active===id){
+        active=null;
+        panel.classList.remove('open');
+        row.querySelectorAll('.outlet-chip').forEach(function(x){x.classList.remove('active')});
+        return;
+      }
+      active=id;
+      row.querySelectorAll('.outlet-chip').forEach(function(x){x.classList.toggle('active', x.dataset.id===id)});
+      renderPanel(id);
+      panel.classList.add('open');
+    });
+  })();
   </script>
 </body>
 
