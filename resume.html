@@ -5,13 +5,113 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Luiz Fernando Toledo – Resume</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;family=Spectral:ital,wght@0,500;0,700;1,500&amp;family=JetBrains+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.future.css">
   <link rel="canonical" href="https://luizftoledo.github.io/resume.html">
   <script>
-    // Force dark mode sitewide
     document.documentElement.setAttribute('data-theme', 'dark');
   </script>
+  <style>
+    /* ===== Resume hero (novo) ===== */
+    .resume-hero {
+      padding: 72px 20px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .resume-hero .inner {
+      max-width: 1160px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px;
+      align-items: center;
+    }
+    .resume-hero .kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--accent); font-weight: 600; margin-bottom: 18px;
+    }
+    .resume-hero h1 {
+      font-size: 68px; font-weight: 900; letter-spacing: -0.03em;
+      line-height: 1; margin-bottom: 20px;
+    }
+    .resume-hero h1 .last { color: var(--accent); }
+    .resume-hero .subtitle {
+      color: var(--muted); font-size: 18px; line-height: 1.55;
+      max-width: 520px; margin-bottom: 24px;
+    }
+    .resume-hero .subtitle strong { color: var(--text); font-weight: 600; }
+    .resume-hero .chips {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px;
+    }
+    .resume-hero .chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+      background: rgba(124, 255, 240, 0.08);
+      border: 1px solid rgba(124, 255, 240, 0.25);
+      color: var(--accent); padding: 7px 14px; border-radius: 9999px;
+      font-weight: 600;
+    }
+    .resume-hero .portrait {
+      position: relative; aspect-ratio: 4 / 5;
+      border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: 0 0 0 1px rgba(124, 255, 240, 0.08), 0 20px 50px rgba(0,0,0,0.4);
+    }
+    .resume-hero .portrait img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .resume-hero .portrait .corner {
+      position: absolute; top: 14px; left: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--accent); background: rgba(10, 11, 15, 0.75);
+      padding: 5px 10px; border-radius: 3px;
+      border: 1px solid rgba(124, 255, 240, 0.3);
+      backdrop-filter: blur(6px);
+    }
+
+    /* ===== Resume items — enhancement leve ===== */
+    .resume-page { padding: 48px 20px 80px; }
+    .resume-section { position: relative; }
+    .resume-section h2 {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px;
+      font-family: 'Inter', sans-serif;
+    }
+    .resume-section h2 .num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; color: var(--muted); letter-spacing: 2px;
+      font-weight: 500;
+    }
+    .resume-item {
+      padding: 14px 0;
+      border-top: 1px dashed rgba(255,255,255,0.06);
+    }
+    .resume-item:first-of-type { border-top: none; }
+    .resume-item .date {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; letter-spacing: 1px; color: var(--muted);
+      font-style: normal; text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .resume-item .now-badge {
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      color: #000; font-size: 9px; font-weight: 800;
+      padding: 2px 8px; border-radius: 3px; letter-spacing: 1.5px;
+    }
+    .resume-item strong {
+      font-size: 17px; font-weight: 700; color: var(--text);
+      margin-bottom: 2px;
+    }
+    .resume-item p:not(.date) { color: var(--muted); line-height: 1.55; }
+    .resume-item p:not(.date) .highlight { color: var(--accent); font-weight: 600; }
+
+    @media (max-width: 820px) {
+      .resume-hero { padding: 48px 20px 30px; }
+      .resume-hero .inner { grid-template-columns: 1fr; gap: 32px; }
+      .resume-hero h1 { font-size: 48px; }
+      .resume-hero .portrait { max-width: 320px; }
+    }
+  </style>
 </head>
 <body>
   <div class="progress-bar" id="progressBar"></div>
@@ -34,85 +134,108 @@
     </div>
   </nav>
 
-  
+  <section class="resume-hero">
+    <div class="inner">
+      <div>
+        <div class="kicker">Resume</div>
+        <h1>Luiz Fernando<br><span class="last">Toledo</span></h1>
+        <p class="subtitle">
+          <strong>Reporter</strong> at BBC World Service (BBC News Brasil), based in London.<br>
+          <strong>Research-assistant</strong> at the University of Cambridge (POLIS).<br>
+          <strong>Founder</strong> of Datafixers.org.
+        </p>
+        <div class="chips">
+          <span class="chip">BBC News Brasil</span>
+          <span class="chip">Cambridge — POLIS</span>
+          <span class="chip">Datafixers.org</span>
+          <span class="chip">Columbia '22</span>
+        </div>
+      </div>
+      <div class="portrait">
+        <div class="corner">Innsbruck · Áustria</div>
+        <img src="images/luiz-portrait.png" alt="Luiz Fernando Toledo">
+      </div>
+    </div>
+  </section>
 
   <section class="resume-page">
     <div class="resume-container">
+
       <!-- Reporting Experience -->
       <div class="resume-section" id="reporting-experience">
-        <h2>Reporting experience</h2>
+        <h2><span class="num">/ 01</span> Reporting experience</h2>
         <div class="resume-item">
-          <p class="date"><em>September 2024 – Present</em></p>
+          <p class="date">September 2024 – Present <span class="now-badge">NOW</span></p>
           <p><strong>BBC World Service (BBC News Brasil) | Reporter</strong></p>
           <p>Based in London, UK. Data journalism, investigations, breaking news. Selected among 500+ candidates.</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>August 2022 – Present</em></p>
+          <p class="date">August 2022 – Present <span class="now-badge">NOW</span></p>
           <p><strong>Founder | Datafixers.org</strong></p>
-          <p>I created this data‑driven journalism project to help other journalists and researchers find stories in public records. <span class="highlight">Awarded a US$ 100,000 grant</span> from the Brown Institute for Media innovation and as the best data project in Brazil in 2023 by Open Knowledge Foundation (Brazil chapter). Published investigative projects with the ICIJ, OCCRP, BBC and supported The Washington Post (including a Pulitzer finalist) and Al Jazeera.</p>
+          <p>I created this data-driven journalism project to help other journalists and researchers find stories in public records. <span class="highlight">Awarded a US$ 100,000 grant</span> from the Brown Institute for Media innovation and as the best data project in Brazil in 2023 by Open Knowledge Foundation (Brazil chapter). Published investigative projects with the ICIJ, OCCRP, BBC and supported The Washington Post (including a Pulitzer finalist) and Al Jazeera.</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>January 2019 – March 2024</em></p>
+          <p class="date">January 2019 – March 2024</p>
           <p><strong>Brazilian Association of Investigative Journalism (Abraji) | Director for FOIA projects | Advisory board</strong></p>
-          <p>One of the most relevant journalistic organizations in Latin America, similar to the IRE in the US. I am responsible for national surveys, workshops and projects related to Access to Information Law (Brazil’s FOIA or Freedom of Information Act). <span class="highlight">Awarded a scholarship at the University of Oxford</span> due to one of those projects.</p>
+          <p>One of the most relevant journalistic organizations in Latin America, similar to the IRE in the US. I am responsible for national surveys, workshops and projects related to Access to Information Law (Brazil's FOIA or Freedom of Information Act). <span class="highlight">Awarded a scholarship at the University of Oxford</span> due to one of those projects.</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>January 2019 – July 2023</em></p>
+          <p class="date">January 2019 – July 2023</p>
           <p><strong>Fiquem Sabendo | Cofounder, content director</strong></p>
-          <p>I founded a public records non‑profit organization in partnership with three other professionals. I coordinated their journalism projects, including a 1‑year project about presidential corporate card expenses that led to investigations against former and current Brazilian presidents and was mentioned in more than 1,000 stories.</p>
+          <p>I founded a public records non-profit organization in partnership with three other professionals. I coordinated their journalism projects, including a 1-year project about presidential corporate card expenses that led to investigations against former and current Brazilian presidents and was mentioned in more than 1,000 stories.</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>December 2020 – August 2021</em></p>
-          <p><strong>Organized Crime and Corruption Reporting Project | Brazilian correspondent | São Paulo</strong></p>
-          <p>Responsible for long‑term investigations in English and Portuguese on cross‑border crime and corruption related to Brazil figures and developing partnerships with international and local media. Shortlisted in Sigma Awards for a project.</p>
+          <p class="date">December 2020 – August 2021</p>
+          <p><strong>Organized Crime and Corruption Reporting Project | Brazilian correspondent | São Paulo</strong></p>
+          <p>Responsible for long-term investigations in English and Portuguese on cross-border crime and corruption related to Brazil figures and developing partnerships with international and local media. Shortlisted in Sigma Awards for a project.</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>Others (2012–2018)</em></p>
+          <p class="date">Others (2012 – 2018)</p>
           <p><strong>Various roles</strong></p>
-          <p>Investigative producer/data journalist at CNN Brasil (Jan–Dec 2020); TV news producer and data journalist at TV Globo São Paulo (Jan 2019 – Dec 2019); public policy reporter at O Estado de São Paulo newspaper (2013–2018). Awarded more than ten times for stories published in these roles.</p>
+          <p>Investigative producer/data journalist at CNN Brasil (Jan–Dec 2020); TV news producer and data journalist at TV Globo São Paulo (Jan 2019 – Dec 2019); public policy reporter at O Estado de São Paulo newspaper (2013–2018). Awarded more than ten times for stories published in these roles.</p>
         </div>
       </div>
 
       <!-- Teaching/Research Experience -->
       <div class="resume-section" id="teaching-research-experience">
-        <h2>Teaching/Research experience</h2>
+        <h2><span class="num">/ 02</span> Teaching / Research experience</h2>
         <div class="resume-item">
-          <p class="date"><em>July 2024 – Present</em></p>
-          <p><strong>Research‑assistant | University of Cambridge (POLIS)</strong></p>
-          <p>Desk‑based research and data analysis for the Prison Consensus Project. Part time/remote job.</p>
+          <p class="date">July 2024 – Present <span class="now-badge">NOW</span></p>
+          <p><strong>Research-assistant | University of Cambridge (POLIS)</strong></p>
+          <p>Desk-based research and data analysis for the Prison Consensus Project. Part time/remote job.</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>July 2022 – September 2023</em></p>
-          <p><strong>Professor (part‑time) | Insper</strong></p>
-          <p>I taught in a master’s program about public records and spreadsheets in a 3‑month class.</p>
+          <p class="date">July 2022 – September 2023</p>
+          <p><strong>Professor (part-time) | Insper</strong></p>
+          <p>I taught in a master's program about public records and spreadsheets in a 3-month class.</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>January 2017 – Present</em></p>
-          <p><strong>FOIA Trainer | Folha, Estadão, Correio Braziliense trainee programs and by demand</strong></p>
+          <p class="date">January 2017 – Present <span class="now-badge">NOW</span></p>
+          <p><strong>FOIA Trainer | Folha, Estadão, Correio Braziliense trainee programs and by demand</strong></p>
           <p>I teach about public records and the freedom of information act (FOIA).</p>
         </div>
       </div>
 
       <!-- Education -->
       <div class="resume-section" id="education">
-        <h2>Education</h2>
+        <h2><span class="num">/ 03</span> Education</h2>
         <div class="resume-item">
-          <p class="date"><em>2021 – 2022</em></p>
+          <p class="date">2021 – 2022</p>
           <p><strong>Columbia University (full scholarship)</strong></p>
-          <p>Master of Science in Data Journalism (New York/USA).</p>
+          <p>Master of Science in Data Journalism (New York/USA).</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>2019 – 2021</em></p>
-          <p><strong>FGV‑EAESP (full scholarship)</strong></p>
-          <p>Master of Science in Public Administration (São Paulo/BR).</p>
+          <p class="date">2019 – 2021</p>
+          <p><strong>FGV-EAESP (full scholarship)</strong></p>
+          <p>Master of Science in Public Administration (São Paulo/BR).</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>2015 – 2016</em></p>
+          <p class="date">2015 – 2016</p>
           <p><strong>Fespsp</strong></p>
           <p>Political science (specialization / <em>lato sensu</em>).</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>2009 – 2012</em></p>
+          <p class="date">2009 – 2012</p>
           <p><strong>Universidade de Sorocaba</strong></p>
           <p>BA in Journalism (Sorocaba/BR).</p>
         </div>
@@ -120,26 +243,26 @@
 
       <!-- Fellowships -->
       <div class="resume-section" id="fellowships">
-        <h2>Fellowships</h2>
+        <h2><span class="num">/ 04</span> Fellowships</h2>
         <div class="resume-item">
-          <p class="date"><em>2023/2024</em></p>
+          <p class="date">2023 / 2024</p>
           <p><strong>Earth Journalism Network (Internews)</strong></p>
-          <p>Awarded three fellowships/reporting grants (Biodiversity Media Initiative 2022/2023, Conservation iOmbus 2024, and Media Grant to Strengthen Media Coverage of Environmental Crimes in the Amazon, 2024).</p>
+          <p>Awarded three fellowships/reporting grants (Biodiversity Media Initiative 2022/2023, Conservation iOmbus 2024, and Media Grant to Strengthen Media Coverage of Environmental Crimes in the Amazon, 2024).</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>2023/2024</em></p>
+          <p class="date">2023 / 2024</p>
           <p><strong>National Endowment for Democracy (NED)</strong></p>
-          <p>5‑months, Reagan‑Fascell program. Developed publications about how to use data in journalism stories and a chatbot.</p>
+          <p>5-months, Reagan-Fascell program. Developed publications about how to use data in journalism stories and a chatbot.</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>2021</em></p>
+          <p class="date">2021</p>
           <p><strong>University of Oxford, RISJ</strong></p>
-          <p>6‑months, Trust in News program. Developed a course for 300+ journalists about public records.</p>
+          <p>6-months, Trust in News program. Developed a course for 300+ journalists about public records.</p>
         </div>
         <div class="resume-item">
-          <p class="date"><em>2018</em></p>
+          <p class="date">2018</p>
           <p><strong>International Center for Journalists</strong></p>
-          <p>Emerging Media Program, 45 days, co‑founded the non‑profit Fiquem Sabendo.</p>
+          <p>Emerging Media Program, 45 days, co-founded the non-profit Fiquem Sabendo.</p>
         </div>
       </div>
     </div>
@@ -154,6 +277,7 @@
       <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
     </div>
   </footer>
+
   <script defer>
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
@@ -162,7 +286,6 @@
         navLinks.classList.toggle('open');
       });
     }
-    // Reading progress bar
     const progressBar = document.getElementById('progressBar');
     const updateProgress = () => {
       const scrollTop = window.scrollY;
@@ -181,7 +304,6 @@
     };
     window.addEventListener('load', () => setTimeout(highlightHashTarget, 180));
     window.addEventListener('hashchange', () => setTimeout(highlightHashTarget, 120));
-    // Back to top button
     const backBtn = document.createElement('button');
     backBtn.className = 'back-to-top';
     backBtn.innerHTML = '↑';
