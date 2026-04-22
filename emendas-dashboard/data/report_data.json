@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-21T14:52:39.683981+00:00",
+  "generated_at": "2026-04-22T14:52:46.274601+00:00",
   "snapshot_date": "2026-04-20",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -1018,7 +1018,7 @@
     "total_liquidado": 279057634.88,
     "total_pago": 266163825.99
   },
-  "run_date": "2026-04-21",
+  "run_date": "2026-04-22",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -1048,7 +1048,7 @@
       "available": true,
       "source_url": "https://www1.siop.planejamento.gov.br/QvAJAXZfc/opendoc.htm?document=IAS%2FExecucao_Orcamentaria.qvw&host=QVS%40pqlk04&anonymous=true",
       "last_update": "",
-      "base_siafi_date": "17/4/2026",
+      "base_siafi_date": "20/4/2026",
       "filters": {
         "year": 2026,
         "rp": [
@@ -1102,8 +1102,7 @@
           "error": ""
         }
       ],
-      "error": "6 - Emendas Individuais: filtro não confirmado ; 7 - Emendas de Bancada Estadual: filtro não confirmado ; 8 - Emendas de Comissão: filtro não confirmado",
-      "fallback_from_previous": true
+      "error": ""
     },
     "siop_details": {
       "available": true,
@@ -1118,7 +1117,7 @@
         ]
       },
       "last_update": "",
-      "base_siafi_date": "17/4/2026",
+      "base_siafi_date": "20/4/2026",
       "rows": [],
       "rows_count": 0,
       "unique_nro_emendas": 0,
@@ -1153,8 +1152,7 @@
           "error": ""
         }
       ],
-      "error": "6 - Emendas Individuais: filtro não confirmado ; 8 - Emendas de Comissão: filtro não confirmado",
-      "fallback_from_previous": true
+      "error": ""
     },
     "documents": {
       "year": 2026,
@@ -3169,7 +3167,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-04-22",
+      "last_update": "",
+      "base_siafi_date": "20/4/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
   ],
-  "updated_at": "2026-04-21T14:52:39.683981+00:00"
+  "updated_at": "2026-04-22T14:52:46.274601+00:00"
 }
