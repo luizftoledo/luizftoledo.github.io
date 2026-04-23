@@ -218,7 +218,14 @@ def write_metadata(metadata):
 
 
 def download_with_urllib(url, target):
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    # gov.br passou a exigir Referer para servir XLSX, senão devolve 403
+    parent_url = url.rsplit("/", 1)[0]
+    req = urllib.request.Request(url, headers={
+        "User-Agent": USER_AGENT,
+        "Accept": "*/*",
+        "Accept-Language": "pt-BR,pt;q=0.9,en;q=0.8",
+        "Referer": parent_url,
+    })
     with urllib.request.urlopen(req, timeout=DOWNLOAD_TIMEOUT) as resp:
         if getattr(resp, "status", 200) >= 400:
             raise urllib.error.HTTPError(url, resp.status, "http error", resp.headers, None)
@@ -227,11 +234,18 @@ def download_with_urllib(url, target):
 
 
 def download_with_curl(url, target):
+    parent_url = url.rsplit("/", 1)[0]
     cmd = [
         "curl",
         "-L",
         "-A",
         USER_AGENT,
+        "-H",
+        f"Referer: {parent_url}",
+        "-H",
+        "Accept: */*",
+        "-H",
+        "Accept-Language: pt-BR,pt;q=0.9,en;q=0.8",
         "--fail",
         "--silent",
         "--show-error",
