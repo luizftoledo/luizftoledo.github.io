@@ -920,6 +920,11 @@ def extract_siop_snapshot(year, rp_filters):
                 driver.quit()
             except Exception:
                 pass
+
+    if not result["available"]:
+        # Log alto para aparecer nos logs do GitHub Actions — historicamente o
+        # scraper do SIOP quebra silenciosamente quando o Qlik muda o DOM.
+        print(f"[warn] SIOP snapshot indisponível — erro: {result.get('error','')[:400]}", flush=True)
     return result
 
 
@@ -1591,20 +1596,70 @@ def build_report(current, previous, headers, source_zip_size, has_previous):
     return report
 
 
-def update_history(report):
+def override_current_year_totals_from_documents(report):
+    """Substitui os totais anuais pelos valores corretos vindos do PorDocumento.csv.
+
+    O arquivo EmendasParlamentares.csv filtra por 'Ano da Emenda' (o ano do
+    orçamento em que a emenda foi criada), o que é errado para medir o empenho
+    e pagamento do ano corrente — deixa de fora a execução de 'restos a pagar'
+    de emendas de anos anteriores. O arquivo PorDocumento.csv traz a 'Data
+    Documento' de cada empenho/pagamento, que é a data fiscal correta.
+    """
+    parallel = report.get("parallel_monitor") or {}
+    docs = parallel.get("documents") or {}
+    doc_totals = docs.get("totals") or {}
+    # só sobrescreve se o arquivo PorDocumento foi processado com sucesso
+    if not doc_totals or not docs.get("date_max"):
+        return
+    metrics = report.setdefault("metrics", {})
+    # valores antigos (por ano_da_emenda) vão para campos _por_ano_emenda
+    metrics["current_year_total_empenhado_por_ano_emenda"] = metrics.get("current_year_total_empenhado")
+    metrics["current_year_total_pago_por_ano_emenda"] = metrics.get("current_year_total_pago")
+    # substitui pelos valores corretos (por data_documento)
+    metrics["current_year_total_empenhado"] = doc_totals.get("total_empenhado_year", 0.0)
+    metrics["current_year_total_pago"] = doc_totals.get("total_pago_year", 0.0)
+    # current_year_total_liquidado segue vindo do arquivo principal (PorDocumento
+    # não tem essa coluna); documenta a limitação no report:
+    metrics["_pago_e_empenhado_source"] = "por_data_documento"
+    # refletir também em unico_year_summary para consistência
+    summary = report.setdefault("unico_year_summary", {})
+    summary["total_empenhado"] = metrics["current_year_total_empenhado"]
+    summary["total_pago"] = metrics["current_year_total_pago"]
+
+
+def update_history(report, *, source_changed=True):
+    """Anexa um registro ao daily_history.
+
+    Se source_changed=False (Portal não atualizou desde o último run), ainda
+    anexa um registro para o dia — com delta=0 e sinalizando que não houve
+    mudança — para que o histórico fique contínuo dia a dia, sem gaps.
+    """
     history = load_json(HISTORY_FILE, [])
     snapshot_date = report["snapshot_date"]
+    # descobrir o snapshot anterior (último com data < snapshot_date)
+    prior = [row for row in history if row.get("date") and row.get("date") < snapshot_date]
+    previous_snapshot_date = prior[-1].get("date") if prior else ""
+    interval_days = 0
+    if previous_snapshot_date:
+        try:
+            a = dt.date.fromisoformat(previous_snapshot_date)
+            b = dt.date.fromisoformat(snapshot_date)
+            interval_days = (b - a).days
+        except Exception:
+            interval_days = 0
     history = [row for row in history if row.get("date") != snapshot_date]
-    history.append(
-        {
-            "date": snapshot_date,
-            "delta_positivo": report["metrics"]["delta_positivo_desde_snapshot_anterior"],
-            "delta_liquido": report["metrics"]["delta_liquido_desde_snapshot_anterior"],
-            "total_empenhado_atual": report["metrics"]["total_empenhado_atual"],
-            "autores_com_aumento": report["metrics"]["autores_com_aumento"],
-            "destinos_com_aumento": report["metrics"]["destinos_com_aumento"],
-        }
-    )
+    entry = {
+        "date": snapshot_date,
+        "delta_positivo": report["metrics"]["delta_positivo_desde_snapshot_anterior"] if source_changed else 0.0,
+        "delta_liquido": report["metrics"]["delta_liquido_desde_snapshot_anterior"] if source_changed else 0.0,
+        "total_empenhado_atual": report["metrics"]["total_empenhado_atual"],
+        "autores_com_aumento": report["metrics"]["autores_com_aumento"] if source_changed else 0,
+        "destinos_com_aumento": report["metrics"]["destinos_com_aumento"] if source_changed else 0,
+        "previous_snapshot_date": previous_snapshot_date,
+        "interval_days": interval_days,
+        "source_changed": bool(source_changed),
+    }
+    history.append(entry)
     history.sort(key=lambda row: row.get("date", ""))
     if len(history) > 730:
         history = history[-730:]
@@ -1822,9 +1877,30 @@ def write_metadata(report):
         "siop_details_error": siop_details.get("error", ""),
         "siop_history_days": len(siop_history),
         "siop_history_last_date": siop_history_last_date,
+        "siop_broken_days": _siop_broken_days(siop_history),
     }
     META_FILE.write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
     return metadata
+
+
+def _siop_broken_days(siop_history):
+    """Conta quantos dias consecutivos no final o SIOP retornou tudo zero.
+
+    Quando o Qlik muda o DOM, o Selenium quebra em silêncio e deixa os valores
+    zerados. Esse contador ajuda a saber há quantos dias o scraper está falhando
+    (para alertar o mantenedor do dashboard).
+    """
+    broken = 0
+    for row in reversed(siop_history or []):
+        if (
+            to_float(row.get("empenhado", 0)) == 0
+            and to_float(row.get("pago", 0)) == 0
+            and to_float(row.get("dotacao_atual_emenda", 0)) == 0
+        ):
+            broken += 1
+        else:
+            break
+    return broken
 
 
 def save_report(report):
@@ -1892,10 +1968,21 @@ def build_dashboard(force=False):
         run_ts = now_iso()
         party_lookup, party_lookup_meta = fetch_party_lookup()
         report["run_date"] = run_date
+        report["snapshot_date"] = run_date
         report["generated_at"] = run_ts
         report["updated_at"] = run_ts
+        # zera deltas para refletir que NADA mudou no Portal desde o último run
+        metrics = report.setdefault("metrics", {})
+        metrics["delta_liquido_desde_snapshot_anterior"] = 0.0
+        metrics["delta_positivo_desde_snapshot_anterior"] = 0.0
+        metrics["delta_negativo_desde_snapshot_anterior"] = 0.0
+        metrics["autores_com_aumento"] = 0
+        metrics["destinos_com_aumento"] = 0
+        metrics["pares_autor_destino_com_aumento"] = 0
         report["parallel_monitor"] = build_parallel_monitor_payload(report, party_lookup, party_lookup_meta)
         apply_siop_fallback_from_previous(report)
+        override_current_year_totals_from_documents(report)
+        update_history(report, source_changed=False)
         update_siop_history(report)
         save_report(report)
         write_metadata(report)
@@ -1921,6 +2008,7 @@ def build_dashboard(force=False):
         report["run_date"] = run_date
         report["parallel_monitor"] = build_parallel_monitor_payload(report, party_lookup, party_lookup_meta)
         apply_siop_fallback_from_previous(report)
+        override_current_year_totals_from_documents(report)
         update_history(report)
         update_siop_history(report)
         save_report(report)
