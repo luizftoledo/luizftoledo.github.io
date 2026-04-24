@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-24T14:48:42.418717+00:00",
+  "generated_at": "2026-04-24T21:34:36.892444+00:00",
   "snapshot_date": "2026-04-24",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
@@ -13,20 +13,23 @@
   "metrics": {
     "total_empenhado_atual": 315473016443.42,
     "total_empenhado_snapshot_anterior": 313455557673.68,
-    "delta_liquido_desde_snapshot_anterior": 2017458769.74,
-    "delta_positivo_desde_snapshot_anterior": 2017630862.74,
-    "delta_negativo_desde_snapshot_anterior": -172093.0,
-    "autores_com_aumento": 463,
-    "destinos_com_aumento": 64,
-    "pares_autor_destino_com_aumento": 544,
+    "delta_liquido_desde_snapshot_anterior": 0.0,
+    "delta_positivo_desde_snapshot_anterior": 0.0,
+    "delta_negativo_desde_snapshot_anterior": 0.0,
+    "autores_com_aumento": 0,
+    "destinos_com_aumento": 0,
+    "pares_autor_destino_com_aumento": 0,
     "total_autores_mapeados": 1611,
     "total_destinos_mapeados": 5454,
     "total_linhas_csv": 91662,
     "baseline_initialized": false,
     "current_year": 2026,
-    "current_year_total_empenhado": 13005623318.61,
+    "current_year_total_empenhado": 12565128036.69,
     "current_year_total_liquidado": 574629942.27,
-    "current_year_total_pago": 268885242.47
+    "current_year_total_pago": 6141489416.25,
+    "current_year_total_empenhado_por_ano_emenda": 13005623318.61,
+    "current_year_total_pago_por_ano_emenda": 268885242.47,
+    "_pago_e_empenhado_source": "por_data_documento"
   },
   "top_authors_today": [
     {
@@ -1014,9 +1017,9 @@
   ],
   "unico_year_summary": {
     "year": 2026,
-    "total_empenhado": 13005623318.61,
+    "total_empenhado": 12565128036.69,
     "total_liquidado": 574629942.27,
-    "total_pago": 268885242.47
+    "total_pago": 6141489416.25
   },
   "run_date": "2026-04-24",
   "parallel_monitor": {
@@ -1980,31 +1983,31 @@
         },
         {
           "author": "EDUARDO BRAGA",
-          "party": "MDB",
+          "party": "Nao identificado",
           "empenhado": 71791355.0,
           "pago": 111353.34
         },
         {
           "author": "ROMARIO",
-          "party": "PL",
+          "party": "Nao identificado",
           "empenhado": 68547850.0,
           "pago": 497850.0
         },
         {
           "author": "JADER BARBALHO",
-          "party": "MDB",
+          "party": "Nao identificado",
           "empenhado": 62498757.0,
           "pago": 616313.85
         },
         {
           "author": "RENAN CALHEIROS",
-          "party": "MDB",
+          "party": "Nao identificado",
           "empenhado": 61382000.0,
           "pago": 1497741.0
         },
         {
           "author": "CID GOMES",
-          "party": "PSB",
+          "party": "Nao identificado",
           "empenhado": 59111755.0,
           "pago": 0.0
         },
@@ -2016,61 +2019,61 @@
         },
         {
           "author": "ANGELO CORONEL",
-          "party": "REPUBLICANOS",
+          "party": "Nao identificado",
           "empenhado": 54675000.0,
           "pago": 8039004.21
         },
         {
           "author": "RODRIGO PACHECO",
-          "party": "PSB",
+          "party": "Nao identificado",
           "empenhado": 54428445.9,
           "pago": 5562412.98
         },
         {
           "author": "OMAR AZIZ",
-          "party": "PSD",
+          "party": "Nao identificado",
           "empenhado": 49610544.84,
           "pago": 1462290.0
         },
         {
           "author": "MARA GABRILLI",
-          "party": "PSD",
+          "party": "Nao identificado",
           "empenhado": 49303261.96,
           "pago": 8869660.36
         },
         {
           "author": "CARLOS PORTINHO",
-          "party": "PL",
+          "party": "Nao identificado",
           "empenhado": 45830734.63,
           "pago": 26422266.28
         },
         {
           "author": "WELLINGTON FAGUNDES",
-          "party": "PL",
+          "party": "Nao identificado",
           "empenhado": 45069154.86,
           "pago": 22600392.94
         },
         {
           "author": "FABIANO CONTARATO",
-          "party": "PT",
+          "party": "Nao identificado",
           "empenhado": 45029776.68,
           "pago": 14063845.59
         },
         {
           "author": "PAULO PAIM",
-          "party": "PT",
+          "party": "Nao identificado",
           "empenhado": 42239918.43,
           "pago": 11453005.88
         },
         {
           "author": "WEVERTON",
-          "party": "PDT",
+          "party": "Nao identificado",
           "empenhado": 41883754.0,
           "pago": 7750650.05
         },
         {
           "author": "JORGE KAJURU",
-          "party": "PSB",
+          "party": "Nao identificado",
           "empenhado": 41419397.0,
           "pago": 1500000.0
         }
@@ -2113,7 +2116,7 @@
         },
         {
           "author": "CID GOMES",
-          "party": "PSB",
+          "party": "Nao identificado",
           "empenhado": 7400000.0
         },
         {
@@ -2133,7 +2136,7 @@
         },
         {
           "author": "SERGIO MORO",
-          "party": "PL",
+          "party": "Nao identificado",
           "empenhado": 4030000.0
         },
         {
@@ -2153,12 +2156,12 @@
         },
         {
           "author": "ASTRONAUTA MARCOS PONTES",
-          "party": "PL",
+          "party": "Nao identificado",
           "empenhado": 2846584.79
         },
         {
           "author": "SERGIO PETECAO",
-          "party": "PSD",
+          "party": "Nao identificado",
           "empenhado": 2647604.0
         },
         {
@@ -2168,7 +2171,7 @@
         },
         {
           "author": "PAULO PAIM",
-          "party": "PT",
+          "party": "Nao identificado",
           "empenhado": 2535390.43
         },
         {
@@ -2663,7 +2666,7 @@
     },
     "party_lookup": {
       "camara_mapeados": 513,
-      "senado_mapeados": 81
+      "senado_mapeados": 0
     }
   },
   "daily_history": [
@@ -2773,11 +2776,14 @@
     },
     {
       "date": "2026-04-24",
-      "delta_positivo": 2017630862.74,
-      "delta_liquido": 2017458769.74,
+      "delta_positivo": 0.0,
+      "delta_liquido": 0.0,
       "total_empenhado_atual": 315473016443.42,
-      "autores_com_aumento": 463,
-      "destinos_com_aumento": 64
+      "autores_com_aumento": 0,
+      "destinos_com_aumento": 0,
+      "previous_snapshot_date": "2026-04-20",
+      "interval_days": 4,
+      "source_changed": false
     }
   ],
   "siop_daily_history": [
@@ -3241,5 +3247,6 @@
       "liquidado": 0.0,
       "pago": 0.0
     }
-  ]
+  ],
+  "updated_at": "2026-04-24T21:34:36.892444+00:00"
 }

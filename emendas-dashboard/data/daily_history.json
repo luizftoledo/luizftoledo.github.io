@@ -105,10 +105,13 @@
   },
   {
     "date": "2026-04-24",
-    "delta_positivo": 2017630862.74,
-    "delta_liquido": 2017458769.74,
+    "delta_positivo": 0.0,
+    "delta_liquido": 0.0,
     "total_empenhado_atual": 315473016443.42,
-    "autores_com_aumento": 463,
-    "destinos_com_aumento": 64
+    "autores_com_aumento": 0,
+    "destinos_com_aumento": 0,
+    "previous_snapshot_date": "2026-04-20",
+    "interval_days": 4,
+    "source_changed": false
   }
 ]
