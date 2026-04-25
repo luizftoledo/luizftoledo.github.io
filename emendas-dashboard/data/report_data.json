@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-24T21:34:36.892444+00:00",
-  "snapshot_date": "2026-04-24",
+  "generated_at": "2026-04-25T14:06:45.069889+00:00",
+  "snapshot_date": "2026-04-25",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
     "requested_url": "https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO",
@@ -27,8 +27,8 @@
     "current_year_total_empenhado": 12565128036.69,
     "current_year_total_liquidado": 574629942.27,
     "current_year_total_pago": 6141489416.25,
-    "current_year_total_empenhado_por_ano_emenda": 13005623318.61,
-    "current_year_total_pago_por_ano_emenda": 268885242.47,
+    "current_year_total_empenhado_por_ano_emenda": 12565128036.69,
+    "current_year_total_pago_por_ano_emenda": 6141489416.25,
     "_pago_e_empenhado_source": "por_data_documento"
   },
   "top_authors_today": [
@@ -1021,7 +1021,7 @@
     "total_liquidado": 574629942.27,
     "total_pago": 6141489416.25
   },
-  "run_date": "2026-04-24",
+  "run_date": "2026-04-25",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -1983,31 +1983,31 @@
         },
         {
           "author": "EDUARDO BRAGA",
-          "party": "Nao identificado",
+          "party": "MDB",
           "empenhado": 71791355.0,
           "pago": 111353.34
         },
         {
           "author": "ROMARIO",
-          "party": "Nao identificado",
+          "party": "PL",
           "empenhado": 68547850.0,
           "pago": 497850.0
         },
         {
           "author": "JADER BARBALHO",
-          "party": "Nao identificado",
+          "party": "MDB",
           "empenhado": 62498757.0,
           "pago": 616313.85
         },
         {
           "author": "RENAN CALHEIROS",
-          "party": "Nao identificado",
+          "party": "MDB",
           "empenhado": 61382000.0,
           "pago": 1497741.0
         },
         {
           "author": "CID GOMES",
-          "party": "Nao identificado",
+          "party": "PSB",
           "empenhado": 59111755.0,
           "pago": 0.0
         },
@@ -2019,61 +2019,61 @@
         },
         {
           "author": "ANGELO CORONEL",
-          "party": "Nao identificado",
+          "party": "REPUBLICANOS",
           "empenhado": 54675000.0,
           "pago": 8039004.21
         },
         {
           "author": "RODRIGO PACHECO",
-          "party": "Nao identificado",
+          "party": "PSB",
           "empenhado": 54428445.9,
           "pago": 5562412.98
         },
         {
           "author": "OMAR AZIZ",
-          "party": "Nao identificado",
+          "party": "PSD",
           "empenhado": 49610544.84,
           "pago": 1462290.0
         },
         {
           "author": "MARA GABRILLI",
-          "party": "Nao identificado",
+          "party": "PSD",
           "empenhado": 49303261.96,
           "pago": 8869660.36
         },
         {
           "author": "CARLOS PORTINHO",
-          "party": "Nao identificado",
+          "party": "PL",
           "empenhado": 45830734.63,
           "pago": 26422266.28
         },
         {
           "author": "WELLINGTON FAGUNDES",
-          "party": "Nao identificado",
+          "party": "PL",
           "empenhado": 45069154.86,
           "pago": 22600392.94
         },
         {
           "author": "FABIANO CONTARATO",
-          "party": "Nao identificado",
+          "party": "PT",
           "empenhado": 45029776.68,
           "pago": 14063845.59
         },
         {
           "author": "PAULO PAIM",
-          "party": "Nao identificado",
+          "party": "PT",
           "empenhado": 42239918.43,
           "pago": 11453005.88
         },
         {
           "author": "WEVERTON",
-          "party": "Nao identificado",
+          "party": "PDT",
           "empenhado": 41883754.0,
           "pago": 7750650.05
         },
         {
           "author": "JORGE KAJURU",
-          "party": "Nao identificado",
+          "party": "PSB",
           "empenhado": 41419397.0,
           "pago": 1500000.0
         }
@@ -2116,7 +2116,7 @@
         },
         {
           "author": "CID GOMES",
-          "party": "Nao identificado",
+          "party": "PSB",
           "empenhado": 7400000.0
         },
         {
@@ -2136,7 +2136,7 @@
         },
         {
           "author": "SERGIO MORO",
-          "party": "Nao identificado",
+          "party": "PL",
           "empenhado": 4030000.0
         },
         {
@@ -2156,12 +2156,12 @@
         },
         {
           "author": "ASTRONAUTA MARCOS PONTES",
-          "party": "Nao identificado",
+          "party": "PL",
           "empenhado": 2846584.79
         },
         {
           "author": "SERGIO PETECAO",
-          "party": "Nao identificado",
+          "party": "PSD",
           "empenhado": 2647604.0
         },
         {
@@ -2171,7 +2171,7 @@
         },
         {
           "author": "PAULO PAIM",
-          "party": "Nao identificado",
+          "party": "PT",
           "empenhado": 2535390.43
         },
         {
@@ -2666,7 +2666,7 @@
     },
     "party_lookup": {
       "camara_mapeados": 513,
-      "senado_mapeados": 0
+      "senado_mapeados": 81
     }
   },
   "daily_history": [
@@ -2783,6 +2783,17 @@
       "destinos_com_aumento": 0,
       "previous_snapshot_date": "2026-04-20",
       "interval_days": 4,
+      "source_changed": false
+    },
+    {
+      "date": "2026-04-25",
+      "delta_positivo": 0.0,
+      "delta_liquido": 0.0,
+      "total_empenhado_atual": 315473016443.42,
+      "autores_com_aumento": 0,
+      "destinos_com_aumento": 0,
+      "previous_snapshot_date": "2026-04-24",
+      "interval_days": 1,
       "source_changed": false
     }
   ],
@@ -3246,7 +3257,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-04-25",
+      "last_update": "",
+      "base_siafi_date": "23/4/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
   ],
-  "updated_at": "2026-04-24T21:34:36.892444+00:00"
+  "updated_at": "2026-04-25T14:06:45.069889+00:00"
 }
