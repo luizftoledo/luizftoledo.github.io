@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-04-25T14:06:45.069889+00:00",
-  "snapshot_date": "2026-04-25",
+  "generated_at": "2026-04-26T14:08:26.157682+00:00",
+  "snapshot_date": "2026-04-26",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
     "requested_url": "https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO",
@@ -1021,7 +1021,7 @@
     "total_liquidado": 574629942.27,
     "total_pago": 6141489416.25
   },
-  "run_date": "2026-04-25",
+  "run_date": "2026-04-26",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -1030,21 +1030,21 @@
       "stages": [
         {
           "stage": "Empenhado",
-          "value": 13005623318.61
+          "value": 13396589537.44
         },
         {
           "stage": "Liquidado",
-          "value": 574629942.27
+          "value": 575697772.75
         },
         {
           "stage": "Pago",
-          "value": 268885242.47
+          "value": 270417742.47
         }
       ],
       "stage_values": {
-        "empenhado": 13005623318.61,
-        "liquidado": 574629942.27,
-        "pago": 268885242.47
+        "empenhado": 13396589537.44,
+        "liquidado": 575697772.75,
+        "pago": 270417742.47
       }
     },
     "siop_snapshot": {
@@ -2795,6 +2795,17 @@
       "previous_snapshot_date": "2026-04-24",
       "interval_days": 1,
       "source_changed": false
+    },
+    {
+      "date": "2026-04-26",
+      "delta_positivo": 0.0,
+      "delta_liquido": 0.0,
+      "total_empenhado_atual": 315473016443.42,
+      "autores_com_aumento": 0,
+      "destinos_com_aumento": 0,
+      "previous_snapshot_date": "2026-04-25",
+      "interval_days": 1,
+      "source_changed": false
     }
   ],
   "siop_daily_history": [
@@ -3267,7 +3278,17 @@
       "empenhado": 0.0,
       "liquidado": 0.0,
       "pago": 0.0
+    },
+    {
+      "date": "2026-04-26",
+      "last_update": "",
+      "base_siafi_date": "23/4/2026",
+      "dotacao_inicial_emenda": 0.0,
+      "dotacao_atual_emenda": 0.0,
+      "empenhado": 0.0,
+      "liquidado": 0.0,
+      "pago": 0.0
     }
   ],
-  "updated_at": "2026-04-25T14:06:45.069889+00:00"
+  "updated_at": "2026-04-26T14:08:26.157682+00:00"
 }
