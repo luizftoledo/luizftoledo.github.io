@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-28T16:11:10.284768+00:00",
+  "generated_at": "2026-04-29T15:37:16.350647+00:00",
   "counts": {
     "items": 85,
     "domains": 22,
@@ -43,8 +43,8 @@
       }
     },
     "enrich": {
-      "fetched": 54,
-      "reused": 35,
+      "fetched": 55,
+      "reused": 34,
       "kept": 85,
       "dropped": 4,
       "categories": {
@@ -56,12 +56,12 @@
         "palestra_curso": 1
       },
       "domains": {
-        "bbc.com": 46,
+        "bbc.com": 47,
         "intercept.com.br": 1,
         "piaui.folha.uol.com.br": 1,
         "apublica.org": 3,
         "ojoioeotrigo.com.br": 2,
-        "estadao.com.br": 12,
+        "estadao.com.br": 11,
         "g1.globo.com": 2,
         "escavador.com": 1,
         "icfj.org": 1,
@@ -83,6 +83,10 @@
         {
           "url": "https://devstudies.cam.ac.uk/news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil",
           "error": "HTTPSConnectionPool(host='devstudies.cam.ac.uk', port=443): Max retries exceeded with url: /news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil (Caused by NameResolutionError(\"HTTPSConnection(host='devstudies.cam.ac.uk', port=443): Failed to resolve 'devstudies.cam.ac.uk' ([Errno -5] No address associated with hostname)\")) | jina: 422 Client Error: Unprocessable Entity for url: https://r.jina.ai/http://https://devstudies.cam.ac.uk/news/luiz-fernando-toledo-2024s-fourth-most-awarded-journalist-brazil"
+        },
+        {
+          "url": "https://reutersinstitute.politics.ox.ac.uk/people/luiz-fernando-toledo-antunes",
+          "error": "HTTPSConnectionPool(host='reutersinstitute.politics.ox.ac.uk', port=443): Read timed out. (read timeout=30) | jina: 422 Client Error: Unprocessable Entity for url: https://r.jina.ai/http://https://reutersinstitute.politics.ox.ac.uk/people/luiz-fernando-toledo-antunes"
         }
       ]
     }
