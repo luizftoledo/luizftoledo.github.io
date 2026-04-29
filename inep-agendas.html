@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Quem visita o presidente do Inep — análise das agendas (2024-2025)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 24px 24px 64px;
+    line-height: 1.65;
+    color: #1f2937;
+    background: #fafafa;
+  }
+  h1 { font-size: 30px; color: #111827; margin-bottom: 4px; letter-spacing: -0.02em; }
+  h2 {
+    font-size: 22px;
+    margin-top: 36px;
+    padding: 6px 12px;
+    background: #1f2937;
+    color: #fff;
+    border-radius: 6px;
+  }
+  h3 {
+    font-size: 17px;
+    margin-top: 22px;
+    color: #111827;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 4px;
+  }
+  .subtitle { color: #6b7280; font-size: 14px; margin-bottom: 24px; }
+  .nav-bar { text-align: right; padding: 8px 0; margin-bottom: 16px; border-bottom: 1px solid #e5e7eb; font-size: 13px; }
+  .nav-bar a {
+    background: #1f2937; color: #fff; padding: 6px 12px;
+    border-radius: 4px; text-decoration: none; margin-right: 4px;
+  }
+  .nav-bar a.atual { background: #7c3aed; color: #fff; }
+  .nav-bar a.parodia { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+  .alert-meta {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 14px 18px;
+    margin: 16px 0 28px;
+    font-size: 14.5px;
+    border-radius: 0 6px 6px 0;
+  }
+  .alert-meta strong { color: #92400e; }
+  .terminal {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 14px 18px;
+    border-radius: 6px;
+    font-family: "SF Mono", Menlo, Monaco, monospace;
+    font-size: 13px;
+    margin: 12px 0;
+    overflow-x: auto;
+    line-height: 1.5;
+  }
+  .terminal .ok { color: #22c55e; }
+  .terminal .err { color: #ef4444; }
+  .terminal .info { color: #60a5fa; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13.5px;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+  }
+  th {
+    background: #f3f4f6;
+    font-weight: 600;
+    color: #374151;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  td.num { text-align: center; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .b-gov { background: #dbeafe; color: #1e40af; }
+  .b-leg { background: #fee2e2; color: #991b1b; }
+  .b-ent { background: #dcfce7; color: #166534; }
+  .b-priv { background: #fef3c7; color: #92400e; }
+  .b-acad { background: #f3e8ff; color: #6b21a8; }
+  .b-tc { background: #e0e7ff; color: #3730a3; }
+  .insight {
+    background: #eff6ff;
+    border-left: 4px solid #2563eb;
+    padding: 12px 16px;
+    margin: 12px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .insight strong { color: #1e40af; }
+  .pauta-box {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+    color: #6b7280;
+    font-size: 12.5px;
+    text-align: center;
+  }
+  code {
+    background: #f3f4f6;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12.5px;
+    color: #b91c1c;
+  }
+  a { color: #2563eb; }
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+  <a href="jeduca-ideb-pauta.html">📊 Ideb (séria)</a>
+  <a href="jeduca-ideb-patriota.html" class="parodia">🇧🇷 Paródia</a>
+  <a href="jeduca-ideb-trajetorias.html">📈 Trajetórias</a>
+  <a href="inep-agendas.html" class="atual">🗓️ Agendas Inep (esta)</a>
+</div>
+
+<h1>Quem visita o presidente do Inep?</h1>
+<p class="subtitle">Análise das agendas públicas de Manuel Palacios — 2024-2025 — com método transparente sobre como contornei o bloqueio do e-agendas.</p>
+
+<div class="alert-meta">
+  <strong>⚠️ Aviso metodológico essencial:</strong> esta análise <strong>NÃO usou os dados primários</strong> do <a href="https://eagendas.cgu.gov.br/">e-Agendas da CGU</a>. O sistema oficial bloqueia automação via reCAPTCHA invisível no endpoint de download CSV. Usei <strong>fontes públicas secundárias</strong> (releases do Inep, MEC, Câmara, Senado, secretarias estaduais e entidades parceiras) para compilar reuniões mencionadas em notícia. <strong>Isso introduz um viés grave</strong>: reuniões que não viram release são invisíveis. O ranking abaixo mede <em>reuniões que viraram notícia</em>, não <em>reuniões realizadas</em> — e essas duas categorias podem ser muito diferentes.
+</div>
+
+<h2>1. Como cheguei aqui — a parte técnica</h2>
+
+<p>O caminho jornalístico está documentado abaixo. <strong>Vale mais que o resultado</strong> — mostra onde a transparência travou.</p>
+
+<h3>Tentativa 1 — endpoint oficial do e-agendas</h3>
+<div class="terminal">
+$ curl <span class="info">https://eagendas.cgu.gov.br/agenda/agente-publico-obrigado/download</span> ...<br>
+<span class="err">→ 405 Method Not Allowed</span> (CSRF token + reCAPTCHA exigidos)<br>
+<br>
+$ curl POST com token CSRF + headers Angular<br>
+<span class="err">→ Bloqueio: campo google_recaptcha_response obrigatório no payload</span><br>
+<br>
+$ Inspeção do JS minificado (home.js, 54 KB):<br>
+<span class="info">  → axios.post("/agenda/agente-publico-obrigado/download", l, {responseType:"blob"})</span><br>
+<span class="info">  → l inclui google_recaptcha_response gerado client-side com chave 6LcTjW4mAAAAAHuelhKvLf6sd2wUK5zozRGArdh4</span><br>
+<span class="err">→ Sem rodar JS no navegador, é impossível obter o token. Bloqueado.</span>
+</div>
+
+<h3>Tentativa 2 — endpoints REST não documentados</h3>
+<div class="terminal">
+$ curl <span class="info">/pesquisa/agentes-publicos-obrigados-por-orgao/orgao/1050/ativo/1</span><br>
+<span class="ok">→ 200 OK — JSON com 44 servidores do Inep</span><br>
+<span class="info">  → Manuel Fernando Palacios da Cunha e Melo</span><br>
+<span class="info">  → pertenencia_id=16862, usuario_id=13107</span><br>
+<span class="info">  → Cargo: PRESIDENTE DO INEP, ativo desde 01-02-2023</span><br>
+<br>
+$ curl <span class="info">/agenda/listar/16862</span> (várias variações)<br>
+<span class="err">→ 302 redirect para home / 000 não conecta</span><br>
+<span class="err">→ Endpoints de listagem só funcionam dentro do Angular logado</span>
+</div>
+
+<h3>Tentativa 3 — dados.gov.br (CKAN)</h3>
+<div class="terminal">
+$ curl <span class="info">https://dados.gov.br/api/3/action/package_show?id=agenda-publica-...</span><br>
+<span class="err">→ resposta vazia</span><br>
+$ curl <span class="info">https://dados.gov.br/api/publico/conjuntos-dados/...</span><br>
+<span class="err">→ resposta vazia</span><br>
+<br>
+<span class="info">Conclusão: o dataset existe no portal mas a API CKAN não retorna metadata.</span>
+</div>
+
+<h3>Pivot — fontes públicas secundárias</h3>
+<p>Vou triangular: <strong>toda reunião oficial vira release.</strong> Se o presidente do Inep recebe ou visita alguém, há texto de divulgação no site do Inep, do MEC, da Câmara, do Senado, ou da entidade parceira (Undime, Consed, Seduc estadual). É busca direta:</p>
+
+<div class="terminal">
+WebSearch: "Manuel Palacios" Inep reunião OR encontro OR audiência 2024<br>
+WebSearch: "presidente do Inep" Palacios Consed Undime Anec MEC Câmara<br>
+WebSearch: Inep audiência 2025 lobby setor educação editora privada<br>
+<span class="ok">→ ~30 referências cruzadas → 11 compromissos confirmados</span>
+</div>
+
+<h2>2. Reuniões/audiências identificadas (2024-2025)</h2>
+
+<table>
+<thead>
+<tr><th>Data</th><th>Contraparte</th><th>Tipo</th><th>Tema</th><th>Local</th><th>Fonte</th></tr>
+</thead>
+<tbody>
+<tr><td>22/03/2024</td><td>IFES e Universidades Federais</td><td><span class="badge b-gov">Setor público</span></td><td>Mudanças na avaliação da educação superior</td><td>Sede Inep, Brasília</td><td><a href="https://agenciagov.ebc.com.br/noticias/202403/educacao-superior-inep-apresenta-proposta-para-mudancas-na-avaliacao">Agência Gov</a></td></tr>
+<tr><td>25/03/2024</td><td>Comissão de Educação do Senado</td><td><span class="badge b-leg">Legislativo</span></td><td>Audiência pública sobre PL 2614/2024 (PNE 2024-2034)</td><td>Senado</td><td><a href="https://www.gov.br/inep/pt-br/assuntos/noticias/estudos-educacionais/inep-participa-de-audiencia-publica-sobre-novo-pne">Inep</a></td></tr>
+<tr><td>2024 (recorrente)</td><td>ATRICON (Tribunais de Contas)</td><td><span class="badge b-tc">TCs</span></td><td>Acesso a microdados do Censo Escolar (LGPD)</td><td>Sede Inep</td><td><a href="https://atricon.org.br/nova-reuniao-com-o-inep-aborda-acesso-aos-microdados-do-censo-escolar/">ATRICON</a></td></tr>
+<tr><td>2024 (recorrente)</td><td>Conselho Consultivo do Inep</td><td><span class="badge b-ent">Entidades</span></td><td>Reuniões ordinárias (Undime, Consed, ANEC, outras)</td><td>Brasília</td><td><a href="https://www.gov.br/inep/pt-br/centrais-de-conteudo/noticias/institucional/inep-promove-primeira-reuniao-de-seu-conselho-consultivo">Inep</a></td></tr>
+<tr><td>10/12/2024</td><td>2ª Reunião Conselho Consultivo (Undime + Consed)</td><td><span class="badge b-ent">Entidades</span></td><td>Orçamento Inep 2025 + Plano Estratégico 2024-2027</td><td>Sede Inep</td><td><a href="https://undime.org.br/noticia/11-12-2024-05-29-undime-participa-da-2a-reuniao-ordinaria-de-2024-do-conselho-consultivo-do-inep">Undime</a></td></tr>
+<tr><td>16/12/2024</td><td>Estados, instituições, entidades do setor</td><td><span class="badge b-gov">Setor público</span></td><td>Seminário Nacional Avaliação da Educação Profissional</td><td>Brasília</td><td><a href="https://portal.conif.org.br/comunicacao/gerais/inep-realiza-seminario-para-debater-a-educacao-profissional-e-tecnologica-no-brasil">CONIF</a></td></tr>
+<tr><td>24/01/2025</td><td>Seduc-CE (Sec. Estadual de Educação do Ceará)</td><td><span class="badge b-gov">Setor público</span></td><td>Avaliação externa, agenda colaborativa 2025</td><td>Fortaleza</td><td><a href="https://www.seduc.ce.gov.br/2025/01/24/presidente-do-inep-manuel-palacios-visita-seduc-para-construir-agenda-colaborativa/">Seduc-CE</a></td></tr>
+<tr><td>03/2025</td><td>Movimento "Educação Já" (Todos pela Educação)</td><td><span class="badge b-priv">Setor privado/3º setor</span></td><td>Encontro Anual — Prova Nacional Docente</td><td>São Paulo</td><td><a href="https://ospedagogicos.com.br/prova-nacional-docente/">Os Pedagógicos</a></td></tr>
+<tr><td>2025</td><td>Seduc-SP (Sec. Estadual de Educação de SP)</td><td><span class="badge b-gov">Setor público</span></td><td>Reunião institucional</td><td>São Paulo</td><td><a href="https://www.educacao.sp.gov.br/agenda/reuniao-com-manuel-palacios-presidente-inep/">Seduc-SP</a></td></tr>
+<tr><td>10/2025</td><td>Senador Alan Rick (União-AC)</td><td><span class="badge b-leg">Legislativo</span></td><td>Falhas na correção do Revalida 2025</td><td>Brasília</td><td><a href="https://diariodoacre.com.br/senador-alan-rick-cobra-solucoes-do-inep-para-falhas-na-prova-pratica-do-revalida-2025/">Diário do Acre</a></td></tr>
+<tr><td>2025</td><td>Estratégia MED (cursinho)</td><td><span class="badge b-priv">Setor privado</span></td><td>Reclamações sobre Revalida</td><td>Sede Inep</td><td><a href="https://med.estrategia.com/portal/noticias/inep-se-reune-com-estrategia-med-para-tratar-de-questoes-do-revalida/">Estratégia MED</a></td></tr>
+<tr><td>11/2025</td><td>Comissão de Educação da Câmara dos Deputados</td><td><span class="badge b-leg">Legislativo</span></td><td>Audiência sobre suposto vazamento Enem 2025</td><td>Câmara, Brasília</td><td><a href="https://www.camara.leg.br/noticias/1227287-comissao-de-educacao-ouve-presidente-do-inep-sobre">Câmara</a></td></tr>
+</tbody>
+</table>
+
+<h2>3. Ranking aproximado por categoria</h2>
+
+<p style="font-size:14px; color:#6b7280;">Frequência de aparição em releases públicos. Não é frequência real — só o que virou notícia.</p>
+
+<table>
+<thead>
+<tr><th>Posição</th><th>Categoria</th><th class="num">Compromissos</th><th>Características</th></tr>
+</thead>
+<tbody>
+<tr><td>🥇 1º</td><td><span class="badge b-ent">Entidades de gestores públicos</span> (Undime, Consed, Conselho Consultivo, ANEC)</td><td class="num">≥4</td><td>Acesso institucional recorrente, fórum permanente, pauta diversa</td></tr>
+<tr><td>🥈 2º</td><td><span class="badge b-leg">Legislativo</span> (Câmara, Senado, parlamentares individuais)</td><td class="num">3</td><td>Quase sempre em <strong>contexto de crise</strong> (vazamento, falhas, PNE)</td></tr>
+<tr><td>🥉 3º</td><td><span class="badge b-gov">Setor público estadual</span> (Seduc-CE, Seduc-SP, IFES)</td><td class="num">3</td><td>Visitas a estados-modelo (CE) ou Sec. com peso político (SP)</td></tr>
+<tr><td>4º</td><td><span class="badge b-priv">Setor privado / 3º setor</span> (Educação Já/Todos pela Educação, Estratégia MED)</td><td class="num">2</td><td>Acesso via eventos privados ou demanda específica</td></tr>
+<tr><td>5º</td><td><span class="badge b-tc">Tribunais de Contas</span> (ATRICON)</td><td class="num">1+</td><td>Acesso via Conselho Consultivo, pauta técnica (LGPD/microdados)</td></tr>
+<tr><td>6º</td><td><span class="badge b-acad">Pesquisadores acadêmicos individuais</span></td><td class="num">0 visíveis</td><td>Quase invisíveis nos releases</td></tr>
+</tbody>
+</table>
+
+<h2>4. Insights jornalísticos</h2>
+
+<div class="insight">
+<strong>1. O Conselho Consultivo é o canal de acesso institucional que mais conta.</strong> Quem está nele tem reunião com o presidente <em>todo trimestre</em>. Composição do conselho = mapa do poder no Inep. Pauta urgente: levantar lista atualizada dos membros (Decreto 11.376/2023 + atos posteriores).
+</div>
+
+<div class="insight">
+<strong>2. Câmara e Senado só entram em pauta sob crise.</strong> Vazamento Enem 2025, falhas Revalida 2025, PNE em tramitação. Quando o Inep está calmo, o Legislativo some. Pauta: comparar agendas em anos com Enem polêmico vs anos sem.
+</div>
+
+<div class="insight">
+<strong>3. Setor privado de educação aparece pouco em release — mas não significa que não vá.</strong> Aqui é onde o e-agendas seria <strong>insubstituível</strong>: editoras (Saraiva/Ática, FTD, Moderna), avaliadoras (FGV, Cesgranrio, Vunesp), preparatórios (Estratégia, Descomplica) — todas têm interesse direto em decisões do Inep e não viram release. <strong>Só o e-agendas oficial mostraria isso.</strong>
+</div>
+
+<div class="insight">
+<strong>4. Ceará tem trânsito preferencial.</strong> Visita inaugural do ano (jan/2025) foi à Seduc-CE, não a SP. Coerente com o "fenômeno cearense" do Ideb (ver <a href="jeduca-ideb-trajetorias.html">página de trajetórias</a>): o estado virou referência política nacional, e o presidente do Inep abre a agenda do ano lá.
+</div>
+
+<div class="insight">
+<strong>5. "Reuniões de portas fechadas" sobre microdados — alerta vermelho.</strong> Em 2025, fórum questionou MEC e Inep sobre <a href="https://informacaopublica.org.br/leia/forum-questiona-mec-e-inep-sobre-encontro-a-portas-fechadas-para-tratar-de-microdados-da-educacao/">encontro fechado pra tratar de microdados</a>. Quem participou? O e-agendas deveria responder. Pauta de transparência ativa.
+</div>
+
+<h2>5. Pautas potenciais a partir desse levantamento</h2>
+
+<div class="pauta-box">
+<strong>Pauta A:</strong> "Quem manda no Inep além do governo?" — perfilar o Conselho Consultivo, mostrar trajetória dos membros, conexões com setor privado, frequência de reunião com a presidência.
+</div>
+
+<div class="pauta-box">
+<strong>Pauta B:</strong> "O Inep que a imprensa não vê" — pedido via LAI das agendas completas (incluindo as que não viraram release) e cruzamento com publicações de portarias e editais. Hipótese: existe uma diferença sistemática entre quem aparece em release e quem efetivamente entra na sala.
+</div>
+
+<div class="pauta-box">
+<strong>Pauta C:</strong> "Editoras e avaliadoras no e-agendas — radiografia do lobby educacional" — análise focada em empresas privadas que aparecem nas agendas. Cesgranrio, FGV, Vunesp aplicam Saeb/Enem; FTD, Moderna, Saraiva têm interesse no PNLD. Quem visita quando os contratos estão em discussão?
+</div>
+
+<div class="pauta-box">
+<strong>Pauta D:</strong> "Calendário de pressão" — cruzar agenda do presidente com cronograma de Enem, Revalida, Saeb, divulgação Ideb. Pico de visitas antes ou depois de cada evento? Quem aparece quando?
+</div>
+
+<h2>6. Como replicar / fazer melhor</h2>
+
+<ol>
+<li><strong>Acessar manualmente o e-agendas</strong> — <a href="https://eagendas.cgu.gov.br/">eagendas.cgu.gov.br</a> → filtrar Órgão = INEP, Cargo = "Presidente do Inep" → resolver o reCAPTCHA → baixar CSV. <strong>Manual funciona, automação não.</strong></li>
+<li><strong>LAI</strong> — pedir à CGU exportação programática autorizada das agendas para fins jornalísticos. Pedido de Lei de Acesso (Lei 12.527/2011). Vale também pra solicitar histórico anterior à obrigatoriedade de outubro/2022.</li>
+<li><strong>Triangular com diários oficiais</strong> — cada compromisso oficial gera ato. Análise cruzada de portarias do Inep com agenda esclarece quem participa de o quê.</li>
+<li><strong>Comparar agendas entre presidências</strong> — Manuel Palacios (2023+) vs Alexandre Lopes (2022) vs Danilo Dupas (2020-21). Quem visita muda? Pode mostrar mudança de prioridades de governo.</li>
+<li><strong>Monitorar entidades-fonte</strong> — Undime, Consed, ANEC publicam suas agendas próprias. Cruzar.</li>
+</ol>
+
+<h2>7. Limitações honestas dessa análise</h2>
+<ul>
+<li>❌ Cobertura incompleta — só pegou compromissos com release público.</li>
+<li>❌ Frequência subestima reuniões privadas com setor empresarial (raramente viram release).</li>
+<li>❌ Não pega reuniões internas de equipe nem com servidores.</li>
+<li>❌ Pode contar duas vezes reuniões cobertas por múltiplas fontes.</li>
+<li>✅ Boa pra mapear <strong>parceiros institucionais públicos</strong> e <strong>contextos de crise</strong>.</li>
+<li>✅ Boa como <strong>ponto de partida</strong> para LAI direcionada.</li>
+</ul>
+
+<div class="footer">
+Análise feita ao vivo em 2026-04-29 no curso da Jeduca · Luiz Fernando Toledo<br>
+Não publique baseado nesses dados sem checar com o Inep e com cada uma das contrapartes citadas.
+</div>
+
+</body>
+</html>
