@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>8 pautas a partir das trajetórias de Ideb por escola (2005-2019)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 24px 24px 64px;
+    line-height: 1.6;
+    color: #1f2937;
+    background: #fafafa;
+  }
+  h1 { font-size: 30px; color: #111827; margin-bottom: 4px; letter-spacing: -0.02em; }
+  h2 {
+    font-size: 22px;
+    margin-top: 36px;
+    padding: 6px 12px;
+    background: #1f2937;
+    color: #fff;
+    border-radius: 6px;
+  }
+  h3 {
+    font-size: 18px;
+    margin-top: 22px;
+    color: #111827;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 4px;
+  }
+  .subtitle { color: #6b7280; font-size: 14px; margin-bottom: 24px; }
+  .nav-bar {
+    text-align: right;
+    padding: 8px 0;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 13px;
+  }
+  .nav-bar a {
+    background: #1f2937; color: #fff; padding: 6px 12px;
+    border-radius: 4px; text-decoration: none; margin-right: 6px;
+  }
+  .nav-bar a.parodia { background: #fef3c7; color: #92400e; border: 1px solid #f59e0b; }
+  .nav-bar a.atual { background: #16a34a; color: #fff; }
+  .disclaimer {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 14px 18px;
+    margin: 16px 0 28px;
+    font-size: 14.5px;
+    border-radius: 0 6px 6px 0;
+  }
+  .pauta {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin: 20px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .pauta-num {
+    display: inline-block;
+    background: #2563eb;
+    color: #fff;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 14px;
+    font-size: 14px;
+    margin-right: 8px;
+  }
+  .pauta h3 { margin-top: 0; border-bottom: none; padding-bottom: 0; font-size: 20px; }
+  .lead {
+    background: #eff6ff;
+    border-left: 3px solid #2563eb;
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-style: italic;
+    color: #1e40af;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    font-size: 13.5px;
+    background: #fff;
+  }
+  th, td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  th {
+    background: #f3f4f6;
+    font-weight: 600;
+    color: #374151;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  td.num { text-align: center; font-variant-numeric: tabular-nums; }
+  td.delta-up { color: #16a34a; font-weight: 700; }
+  td.delta-down { color: #dc2626; font-weight: 700; }
+  .fontes-box {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 13.5px;
+  }
+  .fontes-box strong { color: #374151; }
+  .badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 0 2px;
+  }
+  .badge-ce { background: #dcfce7; color: #166534; }
+  .badge-al { background: #dbeafe; color: #1e40af; }
+  .badge-pe { background: #fef3c7; color: #92400e; }
+  .badge-ba { background: #fee2e2; color: #991b1b; }
+  .badge-municipal { background: #f3e8ff; color: #6b21a8; }
+  .badge-estadual { background: #e0e7ff; color: #3730a3; }
+  .meta-box {
+    background: #f3f4f6;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-size: 13.5px;
+  }
+  .meta-box dt { font-weight: 600; color: #374151; margin-top: 6px; }
+  .meta-box dd { margin-left: 0; color: #6b7280; }
+  .footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+    color: #6b7280;
+    font-size: 12.5px;
+    text-align: center;
+  }
+  code {
+    background: #f3f4f6;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 12.5px;
+    color: #b91c1c;
+  }
+  a { color: #2563eb; }
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+  <a href="jeduca-ideb-pauta.html">📊 Versão séria</a>
+  <a href="jeduca-ideb-patriota.html" class="parodia">🇧🇷 Versão paródia</a>
+  <a href="jeduca-ideb-trajetorias.html" class="atual">📈 Trajetórias (esta)</a>
+</div>
+
+<h1>8 pautas a partir das trajetórias do Ideb por escola</h1>
+<p class="subtitle">Análise de 559 mil registros (5º ano) e 406 mil registros (9º ano), 2005-2019, escolas com ≥4 medições.</p>
+
+<div class="disclaimer">
+  <strong>⚠️ Limitações importantes:</strong> os dados consolidados publicamente disponíveis em formato pronto para análise (pacote <code>idebr</code> no GitHub) cobrem <strong>2005 a 2019</strong>. Os resultados de 2021 e 2023 estão no portal do Inep mas em sistema dinâmico e sem export único — para incluí-los, é preciso baixar manualmente as planilhas por etapa em <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/pesquisas-estatisticas-e-indicadores/ideb/resultados">gov.br/inep/.../ideb/resultados</a> ou usar a Base dos Dados (<a href="https://basedosdados.org/dataset/br-inep-ideb">basedosdados.org/dataset/br-inep-ideb</a>). Toda pauta abaixo precisa de <strong>checagem com Inep, secretarias e a própria escola antes de publicar</strong> — esses são leads, não conclusões.
+</div>
+
+<div class="meta-box">
+<dl>
+  <dt>📊 Base usada</dt>
+  <dd>Pacote R <a href="https://github.com/jonates/idebr"><code>jonates/idebr</code></a> (formato tidy, derivado dos microdados do Inep)</dd>
+  <dt>🔬 Recorte</dt>
+  <dd>Anos iniciais (5º ano) e finais (9º) do fundamental. Ensino médio só tem 2017-2019 no dataset, sem trajetória robusta.</dd>
+  <dt>📐 Critério</dt>
+  <dd>Apenas escolas com ≥4 medições do Ideb entre 2005 e 2019 (descarta escolas novas, fechadas ou intermitentes na avaliação).</dd>
+  <dt>📈 Métricas</dt>
+  <dd><strong>delta</strong> = Ideb final − Ideb inicial. <strong>desvio</strong> = desvio-padrão da série (volatilidade).</dd>
+</dl>
+</div>
+
+<h2>📌 Padrões macro identificados</h2>
+<ul>
+  <li><strong>Ceará domina o topo de evolução.</strong> Das 15 escolas com maiores saltos no 5º ano, <strong>11 são cearenses</strong>. No 9º ano, 6 das 15 também são. Município concentrador: Quixeramobim (3 escolas no topo público).</li>
+  <li><strong>Alagoas é o segundo polo.</strong> Coruripe e Teotônio Vilela aparecem várias vezes. Coruripe tem 4 escolas distintas no top.</li>
+  <li><strong>Quedas se concentram em capitais e Amazônia.</strong> Rio de Janeiro, Maceió, Natal, Manaus, São Gabriel da Cachoeira/AM, Itamarati/AM, Florianópolis.</li>
+  <li><strong>Bahia tem o pior ranking municipal MAS tem o Colégio Militar de Salvador no topo público.</strong> Desigualdade gritante <em>dentro</em> do estado.</li>
+  <li><strong>Volatilidade alta = sinal de alerta.</strong> Escolas com desvio &gt;2.0 saltam de 2 pra 8 entre medições — pode ser mudança real, mas também pode ser treinamento exclusivo pra prova ou problema de amostragem. <strong>Toda história aqui exige checagem.</strong></li>
+</ul>
+
+<!-- PAUTA 1 -->
+<div class="pauta">
+<h3><span class="pauta-num">1</span>O fenômeno cearense — por que tantas escolinhas do interior do CE estão no topo?</h3>
+
+<p class="lead">11 das 15 escolas com maior salto no Ideb dos anos iniciais (2005-2019) ficam no Ceará. Município concentrador: Quixeramobim. Modelo conhecido: PAIC (Programa Alfabetização na Idade Certa, criado em 2007), descentralização da gestão e formação massiva de professores.</p>
+
+<table>
+<thead><tr><th>Escola</th><th>Município</th><th>Rede</th><th>Período</th><th class="num">Ideb inicial</th><th class="num">Ideb final</th><th class="num">Delta</th></tr></thead>
+<tbody>
+<tr><td>FRANCISCO DE ALCANTARA BARROS</td><td>Crateús <span class="badge badge-ce">CE</span></td><td><span class="badge badge-municipal">Munic.</span></td><td>2005-2019</td><td class="num">2.2</td><td class="num">8.8</td><td class="num delta-up">+6.6</td></tr>
+<tr><td>MARINA XIMENES FROTA</td><td>Martinópole <span class="badge badge-ce">CE</span></td><td><span class="badge badge-municipal">Munic.</span></td><td>2005-2019</td><td class="num">3.0</td><td class="num">9.4</td><td class="num delta-up">+6.4</td></tr>
+<tr><td>HELOISA MARIA MAIA PINTO DINELLY</td><td>Quixeramobim <span class="badge badge-ce">CE</span></td><td><span class="badge badge-municipal">Munic.</span></td><td>2005-2019</td><td class="num">3.1</td><td class="num">9.5</td><td class="num delta-up">+6.4</td></tr>
+<tr><td>JOSE AUGUSTO FERREIRA</td><td>Barroquinha <span class="badge badge-ce">CE</span></td><td><span class="badge badge-municipal">Munic.</span></td><td>2009-2019</td><td class="num">3.4</td><td class="num">9.7</td><td class="num delta-up">+6.3</td></tr>
+<tr><td>MARIA DO CARMO CARDOSO</td><td>Independência <span class="badge badge-ce">CE</span></td><td><span class="badge badge-municipal">Munic.</span></td><td>2007-2019</td><td class="num">3.5</td><td class="num">9.8</td><td class="num delta-up">+6.3</td></tr>
+<tr><td>EDUARDO BARBOSA</td><td>Itatira <span class="badge badge-ce">CE</span></td><td><span class="badge badge-municipal">Munic.</span></td><td>2007-2019</td><td class="num">3.1</td><td class="num">9.3</td><td class="num delta-up">+6.2</td></tr>
+<tr><td>FRANCISCO RUFINO</td><td>Novo Oriente <span class="badge badge-ce">CE</span></td><td><span class="badge badge-municipal">Munic.</span></td><td>2005-2019</td><td class="num">3.3</td><td class="num">9.5</td><td class="num delta-up">+6.2</td></tr>
+</tbody>
+</table>
+
+<div class="fontes-box">
+<strong>Fontes pra apurar:</strong> Secretaria de Educação do Ceará (Seduc-CE); APRECE (Associação dos Municípios do Ceará); Comitê PAIC; Ernesto Faria (Iede); pesquisadores da UFC e UECE; <strong>diretores das escolas listadas</strong> (telefones públicos no portal do Inep). Cuidado pra não heroicizar gestor — investigue mecanismos.
+</div>
+</div>
+
+<!-- PAUTA 2 -->
+<div class="pauta">
+<h3><span class="pauta-num">2</span>O caso Coruripe (AL) — uma cidade do interior alagoano com 4 escolas no topo nacional</h3>
+
+<p class="lead">Coruripe, no litoral sul de Alagoas (~52 mil habitantes, economia ligada à cana), tem ao menos 4 escolas municipais com salto histórico no Ideb. Vereador José Wilson Melo Nascimento saltou de 4.1 (2009) para 9.4 (2019). O caso é jornalisticamente forte porque rompe a expectativa "Nordeste = atraso educacional".</p>
+
+<table>
+<thead><tr><th>Escola</th><th>Etapa</th><th>Período</th><th class="num">Ideb inicial</th><th class="num">Ideb final</th><th class="num">Delta</th></tr></thead>
+<tbody>
+<tr><td>VEREADOR JOSE WILSON MELO NASCIMENTO</td><td>5º ano</td><td>2009-2019</td><td class="num">4.1</td><td class="num">9.4</td><td class="num delta-up">+5.3</td></tr>
+<tr><td>CLAUDIO DANIEL GAMA AMORIM</td><td>5º ano</td><td>2005-2019</td><td class="num">2.9</td><td class="num">9.1</td><td class="num delta-up">+6.2</td></tr>
+<tr><td>ENG GUTTENBERG BREDA NETTO</td><td>9º ano</td><td>2005-2019</td><td class="num">2.2</td><td class="num">8.0</td><td class="num delta-up">+5.8</td></tr>
+<tr><td>MANOEL COTIAS DE JESUS (Jequiá da Praia, próximo)</td><td>5º ano</td><td>2009-2019</td><td class="num">4.5</td><td class="num">9.7</td><td class="num delta-up">+5.2</td></tr>
+</tbody>
+</table>
+
+<div class="fontes-box">
+<strong>Pra apurar:</strong> SEMED de Coruripe; histórico de prefeitos no período (2005-2019 = 4 mandatos); programas estaduais (Alagoas tem o "Escola 10"); influência da política do Ceará? Visitar a escola; ouvir pais e professores.
+</div>
+</div>
+
+<!-- PAUTA 3 -->
+<div class="pauta">
+<h3><span class="pauta-num">3</span>Escolas que despencaram em capitais — periferia esquecida</h3>
+
+<p class="lead">Capitais brasileiras têm escolas com queda dramática do Ideb. Frequentemente, são escolas de periferia que perderam alunos pra rede particular subsidiada ou que sofrem com violência crônica. Pouca matéria nominal sobre essas escolas — pauta concreta de bairro.</p>
+
+<table>
+<thead><tr><th>Escola</th><th>Município</th><th>Etapa</th><th>Período</th><th class="num">Ideb inicial</th><th class="num">Ideb final</th><th class="num">Delta</th></tr></thead>
+<tbody>
+<tr><td>EM GENERAL JOAO MENDONCA LIMA</td><td>Rio de Janeiro/RJ</td><td>5º</td><td>2005-2013</td><td class="num">4.0</td><td class="num">1.3</td><td class="num delta-down">−2.7</td></tr>
+<tr><td>EE JOSE CORREIA DA SILVA TITARA</td><td>Maceió/AL</td><td>5º</td><td>2005-2011</td><td class="num">4.1</td><td class="num">1.7</td><td class="num delta-down">−2.4</td></tr>
+<tr><td>EE PROFA OLDA MARINHO</td><td>Natal/RN</td><td>5º</td><td>2007-2015</td><td class="num">4.5</td><td class="num">2.6</td><td class="num delta-down">−1.9</td></tr>
+<tr><td>EEB DAYSE WERNER SALLES</td><td>Florianópolis/SC</td><td>9º</td><td>2005-2013</td><td class="num">4.9</td><td class="num">2.2</td><td class="num delta-down">−2.7</td></tr>
+<tr><td>EMEF JOSE DE ALCANTARA MACHADO FILHO</td><td>São Paulo/SP</td><td>9º</td><td>2005-2015</td><td class="num">3.2</td><td class="num">1.3</td><td class="num delta-down">−1.9</td></tr>
+</tbody>
+</table>
+
+<div class="fontes-box">
+<strong>Por escola:</strong> Censo Escolar (matrículas perdidas? mudança de turno?); Atlas da Violência por bairro; equipe pedagógica atual; ex-diretores (LinkedIn). Fonte chave: <strong>Conselho Tutelar do bairro</strong> sabe rotatividade e abandono real. <a href="https://qedu.org.br">QEdu</a> tem por escola o histórico de matrícula.
+</div>
+</div>
+
+<!-- PAUTA 4 -->
+<div class="pauta">
+<h3><span class="pauta-num">4</span>Amazonas isolada — escolas em colapso longe do olhar</h3>
+
+<p class="lead">Escolas em municípios isolados do Amazonas (Itamarati, São Gabriel da Cachoeira, Fonte Boa) têm queda acentuada e raramente aparecem na imprensa. Combinação típica: alta rotatividade de professores que não querem ficar, transporte inviável, instabilidade de gestão municipal. Pauta de reportagem-imersão.</p>
+
+<table>
+<thead><tr><th>Escola</th><th>Município</th><th>Etapa</th><th class="num">Ideb inicial</th><th class="num">Ideb final</th><th class="num">Delta</th></tr></thead>
+<tbody>
+<tr><td>ESC FRANCISCA GOMES LOBO</td><td>Itamarati <span class="badge">AM</span></td><td>5º</td><td class="num">5.2</td><td class="num">2.6</td><td class="num delta-down">−2.6</td></tr>
+<tr><td>ESCOLA ESTADUAL SAO MIGUEL</td><td>São Gabriel da Cachoeira <span class="badge">AM</span></td><td>5º</td><td class="num">5.4</td><td class="num">3.0</td><td class="num delta-down">−2.4</td></tr>
+<tr><td>EE ARMANDO MENDES</td><td>Fonte Boa <span class="badge">AM</span></td><td>9º</td><td class="num">6.7</td><td class="num">2.5</td><td class="num delta-down">−4.2</td></tr>
+</tbody>
+</table>
+
+<div class="fontes-box">
+<strong>Pra apurar:</strong> Seduc-AM; Sintepe-AM (sindicato); Sec. Mun. de Educação; CIMI ou ISA (no caso de São Gabriel da Cachoeira, com população majoritariamente indígena — questão da educação escolar indígena entra). Reportagem com deslocamento ou parceria local.
+</div>
+</div>
+
+<!-- PAUTA 5 -->
+<div class="pauta">
+<h3><span class="pauta-num">5</span>Bahia, dois Brasis no mesmo estado</h3>
+
+<p class="lead">A Bahia concentra o pior ranking nacional de Ideb por escola — Inhambupe, Cocos, Caetité, Cruz das Almas, Heliópolis, Barra. <strong>Mas tem o Colégio Militar de Salvador no topo público (Ideb 7.9 no 9º ano).</strong> Pauta sobre desigualdade <em>intra-estadual</em>: o que explica o abismo entre Salvador e o interior baiano?</p>
+
+<table>
+<thead><tr><th>Escola</th><th>Município</th><th>Etapa</th><th class="num">Ideb final (≥2017)</th></tr></thead>
+<tbody>
+<tr><td>COLEGIO MILITAR DE SALVADOR</td><td>Salvador <span class="badge badge-ba">BA</span></td><td>9º</td><td class="num">7.9 ⬆️</td></tr>
+<tr><td>COLEGIO MUNICIPAL PONTE REAL</td><td>Inhambupe <span class="badge badge-ba">BA</span></td><td>9º</td><td class="num">1.0 ⬇️</td></tr>
+<tr><td>COL MUN PROFA DJANIRA ALVES GONCALVES</td><td>Cocos <span class="badge badge-ba">BA</span></td><td>9º</td><td class="num">1.4 ⬇️</td></tr>
+<tr><td>EM PROFA NUNILA IVO FROTA</td><td>Caetité <span class="badge badge-ba">BA</span></td><td>9º</td><td class="num">1.5 ⬇️</td></tr>
+<tr><td>EMEIEF MARCELINO BORGES DOS SANTOS</td><td>Heliópolis <span class="badge badge-ba">BA</span></td><td>9º</td><td class="num">1.8 ⬇️</td></tr>
+</tbody>
+</table>
+
+<div class="fontes-box">
+<strong>Pra apurar:</strong> SEC-BA (Sec. Estadual); UPB (União dos Municípios da Bahia); Comissão de Educação da ALBA; pesquisadores da UFBA e UFSB; CAFRO (terceiro setor). Inhambupe (que tem Ideb 1.0) está a 130 km de Salvador — distância física pequena, abismo educacional gigante.
+</div>
+</div>
+
+<!-- PAUTA 6 -->
+<div class="pauta">
+<h3><span class="pauta-num">6</span>Volatilidade suspeita — quando o Ideb sobe rápido demais</h3>
+
+<p class="lead">Algumas escolas oscilam absurdamente entre medições — Ideb 2.1 numa edição, 7.7 na próxima. Pode ser mudança real (gestão nova, professor decisivo), mas também pode ser <strong>treinamento exclusivo pra prova</strong>, omissão de alunos com pior desempenho na avaliação, ou erro amostral. Vale investigar caso a caso. <strong>É a pauta mais delicada — exige rigor.</strong></p>
+
+<table>
+<thead><tr><th>Escola</th><th>Município</th><th>Etapa</th><th class="num">Min</th><th class="num">Max</th><th class="num">Desvio</th></tr></thead>
+<tbody>
+<tr><td>BERNARDO SAYAO</td><td>Bonito/PE <span class="badge badge-pe">PE</span></td><td>9º</td><td class="num">2.1</td><td class="num">7.7</td><td class="num">2.47</td></tr>
+<tr><td>EDUARDO BARBOSA</td><td>Itatira/CE <span class="badge badge-ce">CE</span></td><td>9º</td><td class="num">3.0</td><td class="num">8.0</td><td class="num">2.42</td></tr>
+<tr><td>ANTONIO SILVANO BALACO</td><td>Pires Ferreira/CE <span class="badge badge-ce">CE</span></td><td>9º</td><td class="num">3.4</td><td class="num">8.5</td><td class="num">2.03</td></tr>
+<tr><td>JOSE LENDENGUE DA COSTA</td><td>Granja/CE <span class="badge badge-ce">CE</span></td><td>9º</td><td class="num">2.9</td><td class="num">7.8</td><td class="num">2.02</td></tr>
+</tbody>
+</table>
+
+<div class="fontes-box">
+<strong>Pra apurar:</strong> taxa de participação no Saeb por escola por ano (Inep tem); Censo Escolar (matrículas, transferências); ouvir professores anônimos do município sobre "preparação para a prova"; verificar se houve mudança de gestão/diretor entre os anos. <strong>Cuidado:</strong> volatilidade não é prova de fraude, mas é um lead. A escola tem direito de explicar.
+</div>
+</div>
+
+<!-- PAUTA 7 -->
+<div class="pauta">
+<h3><span class="pauta-num">7</span>A escola estável no topo — Cícero Barbosa Maciel (Pedra Branca/CE)</h3>
+
+<p class="lead">A maioria das escolas com Ideb alto teve "salto" — saiu de baixo e subiu. Mas algumas <strong>nasceram boas e mantêm</strong>. A Cícero Barbosa Maciel, em tempo integral em Pedra Branca/CE, manteve Ideb entre 7.7 e 9.6 em 4 medições, com desvio de 0.83 — estabilidade rara. Pauta investigativa positiva sobre <strong>como uma escola se mantém no topo</strong>, não como salta.</p>
+
+<table>
+<thead><tr><th>Escola</th><th>Município</th><th>Período</th><th class="num">Ideb inicial</th><th class="num">Ideb final</th><th class="num">Desvio</th></tr></thead>
+<tbody>
+<tr><td>CICERO BARBOSA MACIEL (tempo integral)</td><td>Pedra Branca/CE</td><td>2009-2017</td><td class="num">7.7</td><td class="num">9.6</td><td class="num">0.83</td></tr>
+<tr><td>ARAUJO CHAVES</td><td>Sobral/CE</td><td>2009-2017</td><td class="num">7.2</td><td class="num">9.5</td><td class="num">1.00</td></tr>
+<tr><td>DUQUE DE CAXIAS</td><td>Pires Ferreira/CE</td><td>2011-2019</td><td class="num">6.1</td><td class="num">9.5</td><td class="num">1.23</td></tr>
+</tbody>
+</table>
+
+<div class="fontes-box">
+<strong>Por que essa pauta importa:</strong> a literatura educacional mostra que <em>manter</em> é mais difícil que <em>subir</em>. Modelo de tempo integral, formação continuada, baixa rotatividade docente, gestão democrática. Fontes: Insper, FGV-Educação, professores universitários do Ceará.
+</div>
+</div>
+
+<!-- PAUTA 8 -->
+<div class="pauta">
+<h3><span class="pauta-num">8</span>O paradoxo do Nordeste — quem inventou e quem ficou pra trás</h3>
+
+<p class="lead">Pauta-síntese das anteriores. O Nordeste tem ao mesmo tempo <strong>os maiores casos de sucesso (CE, AL)</strong> e <strong>os piores índices (BA, PI, PB, RN, AL no eixo periferia de Maceió)</strong>. Não dá pra falar em "Nordeste atrasado" nem em "milagre nordestino" — são vários nordestes. A história é a desigualdade interna da região.</p>
+
+<p>Reportagem com 2 polos: município ascendente x município estagnado, ambos no Nordeste, ambos pequenos, ambos com economia parecida. <strong>Coruripe (AL)</strong> vs <strong>Inhambupe (BA)</strong> são candidatos perfeitos: distância física pequena (mesma macrorregião), trajetórias opostas.</p>
+
+<div class="fontes-box">
+<strong>Pra apurar:</strong> CONSED (Conselho Nacional de Secretários de Educação); Iede; Centro de Estudos Tarcílio Vieira de Carvalho (UFPE); Marcelo Câmara (especialista em política educacional Nordeste); Naércio Menezes Filho (Insper). Bases: <a href="https://www.ipea.gov.br/atlasbrasil/">Atlas Brasil</a>, IBGE Cidades, FNDE para repasses educacionais.
+</div>
+</div>
+
+<h2>📋 Como replicar essa análise</h2>
+<ol>
+  <li><code>git clone https://github.com/jonates/idebr</code></li>
+  <li>Carregar os arquivos <code>.rda</code> em R: <code>load("data/ideb_fundamental_iniciais_escolas.rda")</code></li>
+  <li>Converter Ideb pra numérico: vírgula vira ponto: <code>as.numeric(gsub(",", ".", df$ideb))</code></li>
+  <li>Filtrar escolas com ≥4 medições, calcular delta = Ideb final − inicial, ordenar.</li>
+  <li>Cruzar com Censo Escolar (matrícula, infraestrutura) para enriquecer.</li>
+</ol>
+
+<p>Pra dados 2021/2023 (não cobertos pelo idebr): baixar planilhas do <a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/pesquisas-estatisticas-e-indicadores/ideb/resultados">portal Inep</a> ou usar <a href="https://basedosdados.org/dataset/br-inep-ideb">Base dos Dados</a> (BigQuery).</p>
+
+<div class="footer">
+  Análise feita ao vivo no curso da Jeduca · 2026-04-29 · Luiz Fernando Toledo<br>
+  Cada lead deve ser checado antes de publicar — esses são pontos de partida, não conclusões.
+</div>
+
+</body>
+</html>
