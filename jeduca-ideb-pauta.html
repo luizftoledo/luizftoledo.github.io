@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Pauta — Melhores e piores escolas no Ideb · Insights da Jeduca</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+    line-height: 1.65;
+    color: #1f2937;
+    background: #fafafa;
+  }
+  h1 {
+    font-size: 28px;
+    margin-bottom: 4px;
+    color: #111827;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: 36px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #1f2937;
+    color: #111827;
+  }
+  h3 {
+    font-size: 16px;
+    margin-top: 24px;
+    color: #374151;
+  }
+  .subtitle {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  .summary {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 14px 18px;
+    margin: 16px 0 28px;
+    font-size: 15px;
+    border-radius: 0 6px 6px 0;
+  }
+  .alert {
+    background: #fee2e2;
+    border-left: 4px solid #dc2626;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 14.5px;
+    border-radius: 0 6px 6px 0;
+  }
+  .tip {
+    background: #dcfce7;
+    border-left: 4px solid #16a34a;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 14.5px;
+    border-radius: 0 6px 6px 0;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  .source-tag {
+    display: inline-block;
+    font-size: 11px;
+    color: #6b7280;
+    background: #f3f4f6;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .source-tag:hover { background: #e5e7eb; color: #111827; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14.5px;
+    background: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  th {
+    background: #f3f4f6;
+    font-weight: 600;
+    color: #374151;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: #f9fafb; }
+  blockquote {
+    border-left: 3px solid #6b7280;
+    margin: 16px 0;
+    padding: 4px 16px;
+    color: #4b5563;
+    font-style: italic;
+  }
+  code {
+    background: #f3f4f6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #b91c1c;
+  }
+  .sources-list {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 20px;
+  }
+  .sources-list a {
+    color: #2563eb;
+    text-decoration: none;
+  }
+  .sources-list a:hover { text-decoration: underline; }
+  .footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+    color: #6b7280;
+    font-size: 12.5px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>Melhores e piores escolas no Ideb</h1>
+<p class="subtitle">Insights, pegadinhas e fontes para sua pauta — sintetizado de 8 matérias da <a href="https://jeduca.org.br" style="color:#2563eb">Jeduca</a></p>
+
+<div class="summary">
+  <strong>TL;DR pra pauta:</strong> rankings de "melhores e piores escolas" são jornalisticamente populares, mas tecnicamente perigosos. Antes de publicar uma lista, considere comparar escola consigo mesma no tempo, contextualizar com NSE (nível socioeconômico), checar taxa de participação no Saeb, e ouvir as escolas que <em>mais cresceram</em>, não só as de topo. Os erros mais comuns na cobertura são listados abaixo.
+</div>
+
+<h2>1. Como o Ideb funciona (1 minuto)</h2>
+<ul>
+  <li><strong>Fórmula:</strong> <code>Ideb = Taxa de Aprovação × Desempenho em Português e Matemática</code> (Prova Brasil/Aneb). Ex: aprovação 0,9 × desempenho 6 = Ideb 5,4. <a class="source-tag" href="https://jeduca.org.br/guia/guia-explica-o-ideb">Guia Jeduca</a></li>
+  <li><strong>Escala:</strong> 0 a 10. Nota 6 corresponde aos melhores desempenhos do Brasil no Pisa.</li>
+  <li><strong>Metas:</strong> 6 nos anos iniciais do fundamental até 2021; finais até 2025; ensino médio até 2028.</li>
+  <li><strong>Mede:</strong> aprendizagem em port/mat + fluxo (aprovação).</li>
+  <li><strong>NÃO mede:</strong> outras disciplinas, contexto socioeconômico, desigualdades extraescolares.</li>
+</ul>
+
+<h2>2. Insights principais pra pauta de melhores/piores escolas</h2>
+
+<div class="alert">
+  <strong>Pegadinha #1 — Escola "melhor" ≠ escola "que mais evoluiu":</strong> são métricas diferentes. Uma escola com Ideb 7,5 estagnado pode ser menos interessante jornalisticamente do que uma que saltou de 3,2 para 5,8 em quatro anos. O <em>delta</em> conta uma história mais rica. <a class="source-tag" href="https://jeduca.org.br/noticia/confira-dicas-e-subsidios-para-a-cobertura-do-ideb-2023">Jeduca · Cobertura Ideb 2023</a>
+</div>
+
+<div class="alert">
+  <strong>Pegadinha #2 — Comparar pública com privada é furada metodológica:</strong> realidades distintas (NSE, perfil dos alunos, recursos). Compare apenas entre semelhantes — uma escola estadual rural com outra estadual rural; municipal urbana com municipal urbana de mesmo NSE. <a class="source-tag" href="https://jeduca.org.br/noticia/confira-dicas-e-subsidios-para-a-cobertura-do-ideb-2023">Jeduca · Cobertura Ideb 2023</a>
+</div>
+
+<div class="alert">
+  <strong>Pegadinha #3 — 2021 não é base de comparação confiável:</strong> a taxa de aprovação foi <em>artificialmente inflada</em> pelo Parecer 19/2020 do CNE, que autorizou fusão dos anos letivos 2020-2021 e promoção automática. Resultados 2023 menores não significam piora — podem ser retomada do padrão pré-pandemia. <a class="source-tag" href="https://jeduca.org.br/noticia/resultados-do-saeb-e-ideb-2021-exigem-cuidado-nas-comparacoes">Jeduca · Cuidado nas comparações</a>
+</div>
+
+<div class="alert">
+  <strong>Pegadinha #4 — Taxa de participação no Saeb varia muito:</strong> média nacional ~70% em 2021, mas com variações fortes entre redes. Uma escola pode aparecer mal no Ideb porque os melhores alunos não fizeram a prova. <strong>Sempre cheque a taxa de participação antes de citar a nota.</strong> <a class="source-tag" href="https://jeduca.org.br/noticia/resultados-do-saeb-e-ideb-2021-exigem-cuidado-nas-comparacoes">Jeduca</a></div>
+
+<div class="alert">
+  <strong>Pegadinha #5 — Critérios de exclusão:</strong> escolas com menos de 10 estudantes por turma ou menos de 80% de presença <em>não entram</em> no cálculo. Em municípios pequenos, isso elimina escolas inteiras do ranking. <a class="source-tag" href="https://jeduca.org.br/noticia/orientacoes-e-dicas-para-a-cobertura-do-saeb-2023">Jeduca · Orientações Saeb 2023</a>
+</div>
+
+<div class="tip">
+  <strong>Dica de ouro — Olhe a desagregação por etapa:</strong> Ensino Fundamental 2 e Médio têm metas <em>não atingidas</em> e cobertura jornalística rasa. É onde tem pauta nova. A maioria das matérias foca só no ensino médio; o Fundamental 2 é território pouco explorado. <a class="source-tag" href="https://jeduca.org.br/noticia/cobertura-sobre-saeb-e-ideb-foca-no-ensino-medio-">Jeduca · Padrões de cobertura</a>
+</div>
+
+<h2>3. Limitações do Ideb que você precisa explicar na matéria</h2>
+
+<blockquote>"Rankings podem simplificar a análise do cenário, porque levam em conta apenas um ou poucos aspectos."</blockquote>
+
+<ul>
+  <li><strong>Mede só português e matemática.</strong> Ciências, humanas, artes, educação física — invisíveis. <a class="source-tag" href="https://jeduca.org.br/noticia/debate-aborda-limitacoes-de-indicadores-da-educacao-basica">Debate Jeduca</a></li>
+  <li><strong>Induz lógica binária "boa/ruim"</strong> e o que Ocimar Alavarse (USP) chama de <em>risco de adjetivação</em> — a nota vira identidade, esconde nuances.</li>
+  <li><strong>Ignora NSE.</strong> Escolas com mesmos resultados em contextos diferentes contam histórias completamente diferentes.</li>
+  <li><strong>Não captura formação dos pais, condições gerais dos jovens, evasão real (só aprovação registrada).</strong></li>
+  <li><strong>É bienal e atrasado:</strong> Ideb 2023 sai em 2024. A foto é sempre do passado.</li>
+</ul>
+
+<h2>4. Ângulos pouco explorados (oportunidade pra sua pauta)</h2>
+<div class="tip">
+  <ul style="margin:0">
+    <li>O que <strong>está dentro</strong> das escolas que mais cresceram? Práticas pedagógicas, gestão, formação de professores — não heroicizar diretor, investigar mecanismos.</li>
+    <li><strong>Desigualdades intra-estaduais:</strong> SP, MG, RJ têm dispersão enorme entre municípios — a média esconde a história.</li>
+    <li><strong>Ensino Fundamental 2:</strong> a etapa mais negligenciada na cobertura.</li>
+    <li><strong>Educação infantil:</strong> a Fundação Maria Cecília Souto Vidigal e o NCPI têm dados sobre como a oferta na primeira infância prediz desempenho posterior.</li>
+    <li><strong>Taxas de insucesso:</strong> a maioria das matérias mostra os números mas não investiga as causas concretas.</li>
+  </ul>
+</div>
+
+<h2>5. Especialistas para entrevistar</h2>
+<table>
+<thead>
+  <tr><th>Nome</th><th>Afiliação</th><th>Por que falar com</th></tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Ocimar Alavarse</td>
+    <td>Faculdade de Educação da USP</td>
+    <td>Crítica metodológica do Ideb e o "risco de adjetivação"</td>
+  </tr>
+  <tr>
+    <td>Francisco Soares (José Francisco Soares)</td>
+    <td>Ex-presidente do Inep (2014-2016)</td>
+    <td>Voz de autoridade sobre o que o índice mede e o que não mede</td>
+  </tr>
+  <tr>
+    <td>Ernesto Martins Faria</td>
+    <td>Diretor Executivo do Iede</td>
+    <td>Análise técnica de evidências e interpretação de dados</td>
+  </tr>
+  <tr>
+    <td>Tadeu da Ponte</td>
+    <td>Insper</td>
+    <td>Avaliações educacionais, metodologia</td>
+  </tr>
+  <tr>
+    <td>Luana Bergmann Soares</td>
+    <td>Diretora de Avaliação · Inep</td>
+    <td>Fonte oficial sobre o Saeb/Ideb</td>
+  </tr>
+  <tr>
+    <td>Carlos Eduardo Moreno Sampaio</td>
+    <td>Diretor de Estatísticas · Inep</td>
+    <td>Microdados e estatísticas educacionais</td>
+  </tr>
+  <tr>
+    <td>Instituto Unibanco</td>
+    <td>—</td>
+    <td>Notas técnicas com recomendações de interpretação</td>
+  </tr>
+  <tr>
+    <td>Todos pela Educação</td>
+    <td>—</td>
+    <td>Análises agregadas e contexto político</td>
+  </tr>
+  <tr>
+    <td>Fundação Maria Cecília Souto Vidigal</td>
+    <td>—</td>
+    <td>Desigualdade na educação infantil</td>
+  </tr>
+</tbody>
+</table>
+
+<h2>6. Bases de dados e ferramentas pra reportagem</h2>
+<ul>
+  <li><strong>Inep</strong> — resultados oficiais do Ideb e microdados do Saeb (<a href="https://www.gov.br/inep/pt-br/areas-de-atuacao/avaliacao-e-exames-educacionais/ideb">portal Ideb</a>).</li>
+  <li><strong>Censo Escolar</strong> — dados de aprovação, infraestrutura, matrículas (Inep).</li>
+  <li><strong>QEdu</strong> — interface amigável dos microdados do Saeb por escola/município.</li>
+  <li><strong>Plataforma Observatório de Educação</strong> (Instituto Unibanco) — notas técnicas com recomendações de interpretação.</li>
+  <li><strong>Diário Oficial da União</strong> — portarias e diretrizes do exame.</li>
+  <li><strong>Education at a Glance</strong> (OCDE) — comparação internacional.</li>
+  <li><strong>Press Kit do Saeb/Ideb</strong> — históricos e materiais oficiais com embargo.</li>
+  <li><strong>Downloads da Jeduca</strong> — miniguias por edição (2021, 2023).</li>
+</ul>
+
+<h2>7. Checklist antes de publicar a sua matéria</h2>
+<ol>
+  <li>Comparei a escola consigo mesma no tempo (não só posição em ranking)?</li>
+  <li>Contextualizei o NSE da escola/município?</li>
+  <li>Verifiquei a taxa de participação no Saeb?</li>
+  <li>Identifiquei se o ganho foi por aprendizagem ou só por taxa de aprovação?</li>
+  <li>Ouvi escolas que <em>mais cresceram</em>, não só as de topo?</li>
+  <li>Investigei mecanismos concretos (gestão, prática pedagógica) — não só a nota?</li>
+  <li>Cito fontes primárias (Inep, microdados) e não só releases?</li>
+  <li>Escutei a perspectiva de quem está dentro: alunos, professores, comunidade?</li>
+  <li>Distingui claramente "piora" de "retorno ao padrão pré-pandemia"?</li>
+  <li>Evitei comparar pública com privada como se fossem o mesmo universo?</li>
+</ol>
+
+<h2>8. Fontes consultadas (todas da Jeduca)</h2>
+<div class="sources-list">
+  <ol>
+    <li><a href="https://jeduca.org.br/guia/guia-explica-o-ideb">Guia explica o Ideb</a> — fundamentos, fórmula, escala, metas.</li>
+    <li><a href="https://jeduca.org.br/noticia/confira-dicas-e-subsidios-para-a-cobertura-do-ideb-2023">Confira dicas e subsídios para a cobertura do Ideb 2023</a> — pegadinhas em rankings, comparações justas.</li>
+    <li><a href="https://jeduca.org.br/noticia/resultados-do-saeb-e-ideb-2021-exigem-cuidado-nas-comparacoes">Resultados do Saeb e Ideb 2021 exigem cuidado nas comparações</a> — Marta Avancini (Jeduca), efeito pandemia, Parecer 19/2020.</li>
+    <li><a href="https://jeduca.org.br/noticia/debate-aborda-limitacoes-de-indicadores-da-educacao-basica">Debate aborda limitações de indicadores da educação básica</a> — Ocimar Alavarse (USP), Francisco Soares, Maria Inês Fini (Inep).</li>
+    <li><a href="https://jeduca.org.br/noticia/cobertura-sobre-saeb-e-ideb-foca-no-ensino-medio-">Cobertura sobre Saeb e Ideb foca no ensino médio</a> — análise dos padrões da imprensa, ângulos pouco explorados.</li>
+    <li><a href="https://jeduca.org.br/noticia/orientacoes-e-dicas-para-a-cobertura-do-saeb-2023">Orientações e dicas para a cobertura do Saeb 2023</a> — critérios de participação, faixas de proficiência.</li>
+    <li><a href="https://jeduca.org.br/noticia/jeduca-defende-divulgacao-com-embargo-do-ideb-e-saeb-2023">Jeduca defende divulgação com embargo do Ideb e Saeb 2023</a> — posicionamento institucional sobre transparência.</li>
+    <li><a href="https://jeduca.org.br/noticia/jeduca-realiza-oficina-sobre-a-divulgacao-do-ideb-2021">Jeduca realiza oficina sobre a divulgação do Ideb 2021</a> — Ernesto Faria (Iede), Isabela Palhares (Folha), Marta Avancini.</li>
+  </ol>
+</div>
+
+<div class="footer">
+  Sintetizado em 2026-04-29 · Material para pauta jornalística · Todas as afirmações têm fonte clicável acima
+</div>
+
+</body>
+</html>
