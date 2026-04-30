@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-04-29T15:17:09+00:00",
+  "updated_at": "2026-04-30T15:13:56+00:00",
   "datasets": {
     "ibama": {
-      "rows": 703791,
-      "total_fines": 110255833333.66678,
+      "rows": 703867,
+      "total_fines": 110279105333.66675,
       "date_min": "1977-09-03",
-      "date_max": "2026-04-27",
+      "date_max": "2026-04-28",
       "future_dates_ignored": 0,
       "ufs": [
         "ac",
@@ -36,10 +36,10 @@
         "sp",
         "to"
       ],
-      "source_size_bytes": 111910366,
+      "source_size_bytes": 111945397,
       "source_url": "https://dadosabertos.ibama.gov.br/dados/SIFISC/auto_infracao/auto_infracao/auto_infracao_csv.zip",
       "data_file": "ibama_records.jsonl.gz",
-      "updated_at": "2026-04-29T15:16:57+00:00"
+      "updated_at": "2026-04-30T15:13:47+00:00"
     },
     "icmbio": {
       "rows": 40934,
