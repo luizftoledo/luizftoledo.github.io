@@ -1,29 +1,29 @@
 {
   "project": "Lulometro",
   "title": "Lulometro: analise de discurso de presidentes brasileiros",
-  "generated_at": "2026-04-29T15:33:06.096480+00:00",
+  "generated_at": "2026-04-30T15:28:22.719176+00:00",
   "timezone": "America/Sao_Paulo",
   "scope_mandates": [
     "Bolsonaro (2019-2022)",
     "Lula 3 (2023-)"
   ],
-  "total_records": 1708,
+  "total_records": 1712,
   "excluded_records": 8,
-  "candidate_urls": 1115,
-  "new_urls": 13,
-  "detail_fetched": 83,
+  "candidate_urls": 1135,
+  "new_urls": 12,
+  "detail_fetched": 87,
   "sources": {
-    "planalto": 1022,
+    "planalto": 1026,
     "biblioteca": 686
   },
   "types": {
     "entrevista": 295,
-    "discurso": 1413
+    "discurso": 1417
   },
   "top_presidents": [
     [
       "Luiz Inacio Lula da Silva",
-      1022
+      1026
     ],
     [
       "Jair Bolsonaro",
@@ -33,7 +33,7 @@
   "top_mandates": [
     [
       "Lula 3 (2023-)",
-      1022
+      1026
     ],
     [
       "Bolsonaro (2019-2022)",
@@ -41,8 +41,22 @@
     ]
   ],
   "people_index": {
-    "status": "error",
-    "error": "HTTPSConnectionPool(host='legis.senado.leg.br', port=443): Max retries exceeded with url: /dadosabertos/senador/lista/atual.json (Caused by ConnectTimeoutError(<HTTPSConnection(host='legis.senado.leg.br', port=443) at 0x7f743cdd9c50>, 'Connection to legis.senado.leg.br timed out. (connect timeout=30)'))"
+    "status": "ok",
+    "entities": 633,
+    "entities_by_kind": {
+      "deputado": 513,
+      "janja": 1,
+      "ministro": 38,
+      "senador": 81
+    },
+    "mention_rows": 2846,
+    "mention_occurrences_total": 4704,
+    "mention_docs_total": 2846,
+    "lula_docs_with_text": 931,
+    "date_range": {
+      "min": "2023-01-06",
+      "max": "2026-10-13"
+    }
   },
-  "duration_seconds": 195.64
+  "duration_seconds": 206.58
 }
