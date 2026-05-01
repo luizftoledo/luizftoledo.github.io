@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-30T15:31:25.671039+00:00",
+  "generated_at": "2026-05-01T14:42:49.142173+00:00",
   "counts": {
     "items": 86,
     "domains": 23,
@@ -43,8 +43,8 @@
       }
     },
     "enrich": {
-      "fetched": 60,
-      "reused": 31,
+      "fetched": 59,
+      "reused": 32,
       "kept": 86,
       "dropped": 5,
       "categories": {
@@ -56,12 +56,12 @@
         "palestra_curso": 1
       },
       "domains": {
-        "bbc.com": 49,
+        "bbc.com": 48,
         "intercept.com.br": 1,
         "piaui.folha.uol.com.br": 1,
         "apublica.org": 3,
         "ojoioeotrigo.com.br": 2,
-        "estadao.com.br": 9,
+        "estadao.com.br": 10,
         "g1.globo.com": 2,
         "escavador.com": 1,
         "icfj.org": 1,
@@ -75,10 +75,10 @@
         "talks.ox.ac.uk": 1,
         "cima.ned.org": 1,
         "scielo.br": 1,
+        "piaui.uol.com.br": 1,
         "em.com.br": 1,
         "abraji.org.br": 4,
-        "sbtnews.sbt.com.br": 1,
-        "piaui.uol.com.br": 1
+        "sbtnews.sbt.com.br": 1
       },
       "errors": [
         {
