@@ -902,9 +902,17 @@ def extract_siop_snapshot(year, rp_filters):
 
         result["per_rp"] = per_rp
         if per_rp and all(item.get("available") for item in per_rp):
-            result["totals"] = {k: to_float(v) for k, v in aggregate.items()}
-            result["available"] = True
-            result["error"] = ""
+            # Sanity check: dotação inicial/atual da União nunca é zero durante o ano.
+            # Quando o Qlik muda o DOM e o sweep não acha as células, vem tudo 0 sem
+            # exception — historicamente isso ficou 49 dias gravando zeros silenciosamente.
+            if to_float(aggregate.get("dotacao_inicial_emenda", 0)) == 0 or to_float(aggregate.get("dotacao_atual_emenda", 0)) == 0:
+                result["totals"] = {}
+                result["available"] = False
+                result["error"] = "dotação inicial/atual zerada — provável quebra do scraper Qlik (DOM mudou)"
+            else:
+                result["totals"] = {k: to_float(v) for k, v in aggregate.items()}
+                result["available"] = True
+                result["error"] = ""
         else:
             result["totals"] = {}
             result["available"] = False
