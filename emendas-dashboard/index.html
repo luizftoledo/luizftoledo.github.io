@@ -154,6 +154,66 @@
 
     .spotlight strong { color: var(--ink); font-weight: 600; }
 
+    .features-list {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .feature-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--line);
+      padding: 1.1rem 1.2rem;
+      background: var(--bg);
+      transition: border-color 120ms ease, background 120ms ease;
+    }
+
+    .feature-card:hover {
+      border-color: var(--ink);
+      background: var(--paper);
+    }
+
+    .feature-card .kicker {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    .feature-card h3 {
+      font-family: "Newsreader", Georgia, serif;
+      font-weight: 600;
+      font-size: 1.18rem;
+      line-height: 1.25;
+      letter-spacing: -0.005em;
+      margin: 0 0 0.45rem;
+      color: var(--ink);
+    }
+
+    .feature-card p {
+      margin: 0 0 0.55rem;
+      font-size: 0.92rem;
+      color: #2b2b27;
+      line-height: 1.5;
+    }
+
+    .feature-cta {
+      display: inline-block;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 600;
+      border-bottom: 1px solid #c9d0db;
+      padding-bottom: 1px;
+    }
+
+    .feature-card:hover .feature-cta {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
     .num {
       font-family: "IBM Plex Mono", ui-monospace, monospace;
       font-feature-settings: "tnum";
@@ -429,11 +489,24 @@
 
     <section id="spotlight-section">
       <article class="spotlight" id="spotlight" aria-labelledby="spotlight-title">
-        <div class="kicker">Em destaque</div>
+        <div class="kicker">Pico do ano</div>
         <h3 id="spotlight-title">—</h3>
         <p id="spotlight-body-1">Carregando análise…</p>
         <p id="spotlight-body-2"></p>
       </article>
+    </section>
+
+    <section id="features-section">
+      <h2>Análises em destaque</h2>
+      <p class="sub">Reportagens e análises feitas a partir destes dados. Cada peça é um instantâneo congelado de um momento específico — diferente do dashboard, que avança junto com a fonte.</p>
+      <div class="features-list">
+        <a class="feature-card" href="../analises/efeito-messias-2026/">
+          <div class="kicker">Análise · abr/2026</div>
+          <h3>Efeito Messias: a semana mais cara das emendas em 2026</h3>
+          <p>Entre 8 e 17 de abril — janela imediatamente anterior à votação de Jorge Messias para o STF — o governo empenhou R$ 10,5 bi em emendas, cerca de 70× a média de janeiro a março. Linha do tempo, dias de pico e top autores beneficiados.</p>
+          <span class="feature-cta">Ler análise →</span>
+        </a>
+      </div>
     </section>
 
     <section>

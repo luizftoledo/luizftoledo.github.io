@@ -150,6 +150,27 @@ function renderCompare(report) {
   setText('compare-diff-note', `Diferença absoluta · PT até ${ptDateStr}, SIOP base SIAFI ${siopDate}`);
 }
 
+function isoWeekKey(date) {
+  // Returns 'YYYY-Www' (ISO week). Week starts on Monday; week 1 contains the year's first Thursday.
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+}
+
+function isoWeekRange(date) {
+  const d = parseISODate(date) || date;
+  const dow = d.getDay() || 7; // Mon=1..Sun=7
+  const monday = new Date(d);
+  monday.setDate(d.getDate() - (dow - 1));
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  const toISO = (x) => `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`;
+  return { start: toISO(monday), end: toISO(sunday) };
+}
+
 function renderSpotlight(report) {
   const docs = (report.parallel_monitor || {}).documents || {};
   const series = docs.daily_series || [];
@@ -159,8 +180,7 @@ function renderSpotlight(report) {
     return;
   }
 
-  const sorted = [...series].sort((a, b) => b.empenhado - a.empenhado);
-  const peak = sorted[0];
+  const peak = [...series].sort((a, b) => b.empenhado - a.empenhado)[0];
   if (!peak || peak.empenhado <= 0) {
     setText('spotlight-title', 'Sem picos relevantes');
     setText('spotlight-body-1', 'Não há valores de empenho no período coberto pela série.');
@@ -170,18 +190,29 @@ function renderSpotlight(report) {
   const totalYear = (docs.totals || {}).total_empenhado_year || 0;
   const peakShare = totalYear > 0 ? peak.empenhado / totalYear : 0;
 
-  // Janela "pré-CCJ" Messias 08–17/abr (10 dias, indicativo)
-  const winStart = '2026-04-08';
-  const winEnd = '2026-04-17';
-  const winRows = series.filter((d) => d.date >= winStart && d.date <= winEnd);
-  const winTotal = winRows.reduce((s, d) => s + (d.empenhado || 0), 0);
-  const winDailyAvg = winRows.length ? winTotal / winRows.length : 0;
+  // Agrupa por semana ISO e acha a semana de pico
+  const weekTotals = new Map();
+  for (const d of series) {
+    if (!d.empenhado) continue;
+    const dt = parseISODate(d.date);
+    if (!dt) continue;
+    const key = isoWeekKey(dt);
+    weekTotals.set(key, (weekTotals.get(key) || 0) + d.empenhado);
+  }
+  let topWeekKey = null;
+  let topWeekTotal = 0;
+  for (const [k, v] of weekTotals.entries()) {
+    if (v > topWeekTotal) {
+      topWeekTotal = v;
+      topWeekKey = k;
+    }
+  }
+  const otherWeeksTotals = [...weekTotals.entries()].filter(([k]) => k !== topWeekKey).map(([, v]) => v);
+  const otherWeeksAvg = otherWeeksTotals.length ? otherWeeksTotals.reduce((s, v) => s + v, 0) / otherWeeksTotals.length : 0;
+  const ratio = otherWeeksAvg > 0 ? topWeekTotal / otherWeeksAvg : 0;
 
-  // baseline jan-mar (rotina)
-  const baseRows = series.filter((d) => d.date >= '2026-01-02' && d.date <= '2026-03-31');
-  const baseTotal = baseRows.reduce((s, d) => s + (d.empenhado || 0), 0);
-  const baseDailyAvg = baseRows.length ? baseTotal / baseRows.length : 0;
-  const ratio = baseDailyAvg > 0 ? winDailyAvg / baseDailyAvg : 0;
+  // Range da semana de pico (a partir do dia do pico, calcula segunda-domingo)
+  const range = isoWeekRange(peak.date);
 
   const peakDate = fmtDateLong(peak.date);
   const peakDay = fmtDayName(peak.date);
@@ -191,8 +222,8 @@ function renderSpotlight(report) {
   const body1 = `O recorde de empenho diário em 2026 é de <strong>${fmtBRLFull(peak.empenhado)}</strong>, registrado em <strong>${peakDate}</strong>. Esse dia, sozinho, representa <strong>${fmtPct(peakShare, 1)}</strong> de tudo que foi empenhado no ano até o momento.`;
 
   let body2 = '';
-  if (winRows.length && ratio > 0) {
-    body2 = `A janela de <strong>${fmtDate(winStart)} a ${fmtDate(winEnd)}</strong> — semanas anteriores à votação de Jorge Messias para o STF — concentrou <strong>${fmtBRLCompact(winTotal)}</strong> em ${winRows.length} dias, com média diária de ${fmtBRLCompact(winDailyAvg)} (cerca de <strong>${ratio.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}×</strong> a média de janeiro a março, que foi de ${fmtBRLCompact(baseDailyAvg)}/dia).`;
+  if (topWeekKey && ratio > 0 && otherWeeksTotals.length > 0) {
+    body2 = `A semana de <strong>${fmtDate(range.start)} a ${fmtDate(range.end)}</strong> concentrou <strong>${fmtBRLCompact(topWeekTotal)}</strong> em empenhos — cerca de <strong>${ratio.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}×</strong> a média semanal das demais ${otherWeeksTotals.length} semanas do ano, que foi de ${fmtBRLCompact(otherWeeksAvg)} por semana.`;
   }
 
   setHTML('spotlight-body-1', body1);

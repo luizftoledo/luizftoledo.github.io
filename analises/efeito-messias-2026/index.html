@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Efeito Messias — a semana mais cara das emendas em 2026</title>
+  <meta name="description" content="Análise do empenho de emendas parlamentares na janela de 8 a 17 de abril de 2026, semanas anteriores à votação de Jorge Messias para o STF.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --paper: #fafaf7;
+      --ink: #131311;
+      --muted: #686864;
+      --line: #e6e3dc;
+      --line-strong: #c8c4ba;
+      --good: #1f6f48;
+      --good-soft: #e7efe8;
+      --bad: #8b1a1a;
+      --bad-soft: #f5e7e3;
+      --warn: #b45309;
+      --warn-soft: #fbecdc;
+      --ccj: #b88a18;
+      --vot: #8b1a1a;
+      --janela: #b45309;
+      --accent: #2b3a55;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { background: var(--bg); }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 1.4rem 1.2rem 4rem;
+    }
+
+    .topbar {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 1.6rem;
+    }
+
+    .topbar a {
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 1px;
+    }
+
+    .topbar a:hover { color: var(--ink); border-color: var(--ink); }
+
+    .topbar .sep { color: var(--line-strong); }
+
+    .head {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 1.4rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .kicker {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: "Newsreader", Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(1.9rem, 4vw, 2.7rem);
+      line-height: 1.08;
+      letter-spacing: -0.012em;
+      margin: 0 0 0.6rem;
+    }
+
+    .dek {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: clamp(1.05rem, 1.8vw, 1.22rem);
+      line-height: 1.4;
+      color: var(--muted);
+      margin: 0 0 1rem;
+    }
+
+    .dateline {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .dateline strong { color: var(--ink); font-weight: 600; }
+
+    .lead {
+      font-family: "Newsreader", Georgia, serif;
+      font-size: 1.18rem;
+      line-height: 1.55;
+      color: #2b2b27;
+      margin: 0 0 1.4rem;
+    }
+
+    .lead p { margin: 0 0 0.9rem; }
+
+    .lead strong { color: var(--ink); font-weight: 600; }
+
+    section { margin: 2rem 0; }
+
+    section h2 {
+      font-family: "Newsreader", Georgia, serif;
+      font-weight: 600;
+      font-size: 1.45rem;
+      letter-spacing: -0.005em;
+      margin: 0 0 0.4rem;
+    }
+
+    section .sub {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin: 0 0 1rem;
+    }
+
+    .num {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      padding: 0.85rem 0.95rem;
+      background: var(--bg);
+    }
+
+    .stat .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat .value {
+      font-family: "IBM Plex Mono", monospace;
+      font-feature-settings: "tnum";
+      font-size: 1.4rem;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      font-weight: 500;
+    }
+
+    .stat .ctx {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
+      line-height: 1.35;
+    }
+
+    .chart-card {
+      border: 1px solid var(--line);
+      padding: 0.95rem;
+      background: var(--bg);
+    }
+
+    .chart-card canvas {
+      width: 100% !important;
+      height: 360px !important;
+    }
+
+    .chart-foot {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.7rem;
+      line-height: 1.45;
+    }
+
+    .legend {
+      display: flex; gap: 0.9rem; flex-wrap: wrap;
+      font-size: 0.78rem; color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+    .legend .sw {
+      width: 10px; height: 10px; border-radius: 2px;
+      display: inline-block;
+    }
+
+    .timeline {
+      border: 1px solid var(--line);
+      padding: 1rem 1.2rem;
+      background: var(--paper);
+    }
+
+    .ev {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 0.9rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px dashed var(--line);
+      font-size: 0.94rem;
+      align-items: baseline;
+    }
+
+    .ev:last-child { border-bottom: none; }
+
+    .ev .dt {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .ev.peak .body { font-weight: 600; }
+    .ev.peak .body strong { color: var(--janela); }
+    .ev.ccj .body strong { color: var(--ccj); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.82rem; }
+    .ev.vot .body strong { color: var(--vot); text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.82rem; }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    table th, table td {
+      text-align: left;
+      padding: 0.5rem 0.65rem;
+      font-size: 0.86rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    table th {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    td.num, th.num { text-align: right; font-family: "IBM Plex Mono", monospace; font-feature-settings: "tnum"; white-space: nowrap; }
+
+    .table-wrap {
+      border: 1px solid var(--line);
+      overflow: auto;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 1px 8px;
+      font-size: 0.72rem;
+      color: var(--muted);
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .disclaimer {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--warn);
+      padding: 0.95rem 1.05rem;
+      background: var(--warn-soft);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .disclaimer strong { color: var(--ink); }
+
+    .disclaimer ul {
+      margin: 0.4rem 0 0;
+      padding-left: 1.05rem;
+    }
+
+    .disclaimer li + li { margin-top: 0.3rem; }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding-top: 1.2rem;
+      margin-top: 2.5rem;
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .footer h2 {
+      color: var(--ink);
+      font-size: 1.05rem;
+      margin: 0 0 0.5rem;
+    }
+
+    .footer ul {
+      margin: 0.4rem 0 1rem;
+      padding-left: 1.1rem;
+    }
+
+    .footer li + li { margin-top: 0.3rem; }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid #c9d0db;
+      padding-bottom: 1px;
+    }
+
+    .footer a:hover { color: var(--ink); border-color: var(--ink); }
+
+    code { font-family: "IBM Plex Mono", monospace; font-size: 0.86em; background: var(--paper); padding: 1px 5px; border-radius: 3px; }
+
+    @media (max-width: 720px) {
+      .stats { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .ev { grid-template-columns: 1fr; gap: 0.2rem; }
+      .ev .dt { font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav class="topbar">
+      <a href="https://luizftoledo.github.io/">luizftoledo.github.io</a>
+      <span class="sep">/</span>
+      <a href="../../emendas-dashboard/">monitor de emendas</a>
+      <span class="sep">/</span>
+      <span>análise · efeito Messias</span>
+    </nav>
+
+    <header class="head">
+      <div class="kicker">Análise · abril 2026</div>
+      <h1>Efeito Messias: a semana mais cara das emendas em 2026</h1>
+      <p class="dek">Entre 8 e 17 de abril — janela imediatamente anterior à indicação de Jorge Messias ao STF — o governo empenhou R$ 10,5 bi em emendas parlamentares. Cerca de 70× a média de janeiro a março.</p>
+      <div class="dateline">
+        <span><strong>02/05/2026</strong> · publicado</span>
+        <span>Snapshot dos dados: <strong>29/04/2026</strong></span>
+        <span>Fonte: <strong>CGU/Portal da Transparência</strong></span>
+      </div>
+    </header>
+
+    <article class="lead">
+      <p>O empenho de emendas parlamentares no orçamento federal de 2026 saltou de uma média de <strong>R$ 15 milhões por dia</strong> nos três primeiros meses do ano para <strong>R$ 1,05 bilhão por dia</strong> entre 8 e 17 de abril. Em uma única segunda-feira, 13 de abril, foram empenhados <strong>R$ 3,77 bilhões</strong> — o maior valor diário do ano.</p>
+      <p>A janela coincide com as semanas anteriores à indicação de <strong>Jorge Messias</strong>, advogado-geral da União, ao Supremo Tribunal Federal pelo presidente Lula. A indicação foi formalizada em meados de abril e levada à <strong>CCJ do Senado em 23 de abril</strong>, onde foi aprovada por 16 a 11. Em <strong>29 de abril</strong>, o plenário do Senado rejeitou o nome em escrutínio secreto, por 42 a 34.</p>
+      <p>O voto secreto torna impossível cruzar empenho individual com voto individual. Mas o ritmo agregado da liberação — concentrada em janelas curtas em torno de momentos políticos sensíveis — é mensurável.</p>
+    </article>
+
+    <section>
+      <h2>Em números</h2>
+      <div class="stats">
+        <article class="stat">
+          <div class="label">Empenhado total no ano</div>
+          <div class="value num">R$ 13,69 bi</div>
+          <div class="ctx">Até 29/abril, de R$ 49,90 bi de dotação anual autorizada (~27%).</div>
+        </article>
+        <article class="stat">
+          <div class="label">Janela 08–17/abr (10 dias)</div>
+          <div class="value num">R$ 10,54 bi</div>
+          <div class="ctx">~77% de tudo que foi empenhado em 4 meses.</div>
+        </article>
+        <article class="stat">
+          <div class="label">Média jan–mar (89 dias)</div>
+          <div class="value num">R$ 15 mi/dia</div>
+          <div class="ctx">Total do trimestre: R$ 1,38 bi.</div>
+        </article>
+        <article class="stat">
+          <div class="label">Média 08–17/abr (10 dias)</div>
+          <div class="value num">R$ 1,05 bi/dia</div>
+          <div class="ctx">~70× a média de janeiro a março.</div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Empenho diário em 2026</h2>
+      <p class="sub">Cada barra é o valor empenhado no dia (data oficial do documento de empenho). Em laranja, a janela 08–17/abr; em amarelo, a votação na CCJ; em vermelho, a votação no plenário.</p>
+      <article class="chart-card">
+        <div class="legend">
+          <span><span class="sw" style="background:#2b3a55"></span>Rotina</span>
+          <span><span class="sw" style="background:#b45309"></span>Janela 08–17/abr</span>
+          <span><span class="sw" style="background:#b88a18"></span>CCJ aprovou (23/abr)</span>
+          <span><span class="sw" style="background:#8b1a1a"></span>Plenário rejeitou (29/abr)</span>
+        </div>
+        <canvas id="chart"></canvas>
+        <p class="chart-foot">Eixo Y = R$ por dia. Snapshot da CGU: 01/05/2026 08:53 GMT (cobre dados oficiais até 29/04).</p>
+      </article>
+    </section>
+
+    <section>
+      <h2>Linha do tempo</h2>
+      <article class="timeline">
+        <div class="ev"><span class="dt">~08/abr</span><div class="body">Início do salto: o empenho diário pula para a casa do bilhão.</div></div>
+        <div class="ev"><span class="dt">10/abr (sex)</span><div class="body"><strong>R$ 1,59 bi</strong> empenhado num único dia.</div></div>
+        <div class="ev peak"><span class="dt">13/abr (seg)</span><div class="body"><strong>R$ 3,77 bi em um único dia</strong> — maior valor diário do ano.</div></div>
+        <div class="ev"><span class="dt">14/abr (ter)</span><div class="body">R$ 844 mi.</div></div>
+        <div class="ev"><span class="dt">16/abr (qui)</span><div class="body">R$ 1,43 bi.</div></div>
+        <div class="ev"><span class="dt">17/abr (sex)</span><div class="body">R$ 1,22 bi (a janela 08–17 fecha em R$ 10,54 bi).</div></div>
+        <div class="ev ccj"><span class="dt">23/abr (qui)</span><div class="body"><strong>CCJ DO SENADO APROVA MESSIAS</strong> por 16 × 11.</div></div>
+        <div class="ev vot"><span class="dt">29/abr (qua)</span><div class="body"><strong>PLENÁRIO REJEITA MESSIAS</strong> por 42 × 34 em escrutínio secreto.</div></div>
+      </article>
+    </section>
+
+    <section>
+      <h2>Top dias do ano</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Dia</th>
+              <th class="num">Empenhado no dia</th>
+              <th class="num">% do ano</th>
+            </tr>
+          </thead>
+          <tbody id="t-top-days"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Quem aparece nas tabelas</h2>
+      <p class="sub">À esquerda: top autores no acumulado do ano (até 29/abril). À direita: top autores no último dia da série, 29/abril — uma terça-feira, dia da votação no plenário.</p>
+      <div class="grid-2">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Autor</th>
+                <th>Tipo</th>
+                <th class="num">Empenhado 2026</th>
+              </tr>
+            </thead>
+            <tbody id="t-year"></tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Autor</th>
+                <th>Tipo</th>
+                <th class="num">Empenhado 29/abr</th>
+              </tr>
+            </thead>
+            <tbody id="t-last"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <article class="disclaimer">
+        <strong>Como ler estes números — e o que NÃO se pode afirmar:</strong>
+        <ul>
+          <li><strong>Empenho não é pagamento.</strong> Empenho é o compromisso orçamentário; o repasse efetivo vem nas etapas de liquidado e pago. Aqui medimos a velocidade do empenho — quando o governo "reserva" o dinheiro para uma despesa específica.</li>
+          <li><strong>Voto secreto.</strong> A votação de Messias no plenário foi por escrutínio secreto. Não é possível cruzar voto individual de cada senador com empenho específico — só observar o ritmo agregado.</li>
+          <li>Os autores listados incluem deputados e senadores. Bancadas estaduais aparecem como entidades, porque emendas de bancada são impositivas e creditadas à bancada como um todo, não a um parlamentar específico.</li>
+          <li>O dataset oficial tem latência: dados de 30/abril em diante só estarão visíveis na próxima atualização da CGU.</li>
+        </ul>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <h2>Fontes e replicabilidade</h2>
+      <ul>
+        <li>Portal da Transparência — Emendas Parlamentares por Documento (2026): <code>2026_EmendasParlamentaresPorDocumento.zip</code> (<a href="https://dadosabertos-download.cgu.gov.br/PortalDaTransparencia/saida/emendas-parlamentares-documentos/2026_EmendasParlamentaresPorDocumento.zip" target="_blank" rel="noopener">link direto</a>)</li>
+        <li>Last-Modified do snapshot: Fri, 01 May 2026 08:53:23 GMT.</li>
+        <li>Pipeline: <code>scripts/build_emendas_dashboard_data.py --force</code> em <a href="https://github.com/luizftoledo/luizftoledo.github.io" target="_blank" rel="noopener">github.com/luizftoledo/luizftoledo.github.io</a>.</li>
+        <li>Dashboard ao vivo (atualizado diariamente): <a href="../../emendas-dashboard/">luizftoledo.github.io/emendas-dashboard/</a></li>
+      </ul>
+    </footer>
+  </main>
+
+  <script>
+    const SERIE = [{"date":"2026-01-01","empenhado":0},{"date":"2026-01-02","empenhado":250000},{"date":"2026-01-07","empenhado":5723831},{"date":"2026-01-08","empenhado":400000},{"date":"2026-01-09","empenhado":309819},{"date":"2026-01-13","empenhado":14191549},{"date":"2026-01-14","empenhado":300000},{"date":"2026-01-15","empenhado":100000},{"date":"2026-01-16","empenhado":250000},{"date":"2026-01-19","empenhado":22891648},{"date":"2026-01-20","empenhado":13139550},{"date":"2026-01-21","empenhado":8480361},{"date":"2026-01-22","empenhado":1955331},{"date":"2026-01-23","empenhado":2071069},{"date":"2026-01-26","empenhado":5238070},{"date":"2026-01-27","empenhado":398771},{"date":"2026-01-28","empenhado":7724917},{"date":"2026-01-29","empenhado":300000},{"date":"2026-01-30","empenhado":515417},{"date":"2026-02-02","empenhado":7451159},{"date":"2026-02-03","empenhado":5459322},{"date":"2026-02-04","empenhado":182900},{"date":"2026-02-05","empenhado":8327073},{"date":"2026-02-06","empenhado":3214175},{"date":"2026-02-09","empenhado":3609088},{"date":"2026-02-10","empenhado":7897808},{"date":"2026-02-11","empenhado":26462993},{"date":"2026-02-12","empenhado":1393327},{"date":"2026-02-13","empenhado":1867361},{"date":"2026-02-18","empenhado":1006046},{"date":"2026-02-19","empenhado":3543368},{"date":"2026-02-20","empenhado":3965817},{"date":"2026-02-23","empenhado":11271762},{"date":"2026-02-24","empenhado":1430719},{"date":"2026-02-25","empenhado":4937879},{"date":"2026-02-26","empenhado":10669125},{"date":"2026-02-27","empenhado":6962737},{"date":"2026-03-02","empenhado":21107903},{"date":"2026-03-03","empenhado":4409454},{"date":"2026-03-04","empenhado":19463931},{"date":"2026-03-05","empenhado":31318584},{"date":"2026-03-06","empenhado":12186448},{"date":"2026-03-09","empenhado":35281371},{"date":"2026-03-10","empenhado":19585503},{"date":"2026-03-11","empenhado":28156309},{"date":"2026-03-12","empenhado":71183585},{"date":"2026-03-13","empenhado":75421940},{"date":"2026-03-16","empenhado":16450839},{"date":"2026-03-17","empenhado":47835553},{"date":"2026-03-18","empenhado":75593249},{"date":"2026-03-19","empenhado":32960711},{"date":"2026-03-20","empenhado":26152339},{"date":"2026-03-23","empenhado":155743287},{"date":"2026-03-24","empenhado":198070082},{"date":"2026-03-25","empenhado":129287774},{"date":"2026-03-26","empenhado":13997063},{"date":"2026-03-27","empenhado":47038646},{"date":"2026-03-30","empenhado":70511374},{"date":"2026-03-31","empenhado":50286978},{"date":"2026-04-01","empenhado":19769048},{"date":"2026-04-02","empenhado":93097356},{"date":"2026-04-06","empenhado":112730553},{"date":"2026-04-07","empenhado":37614222},{"date":"2026-04-08","empenhado":1051193969},{"date":"2026-04-09","empenhado":355309902},{"date":"2026-04-10","empenhado":1593984420},{"date":"2026-04-13","empenhado":3765648703},{"date":"2026-04-14","empenhado":844569653},{"date":"2026-04-15","empenhado":283688482},{"date":"2026-04-16","empenhado":1425233913},{"date":"2026-04-17","empenhado":1215608856},{"date":"2026-04-20","empenhado":1373172},{"date":"2026-04-22","empenhado":348985497},{"date":"2026-04-23","empenhado":416822870},{"date":"2026-04-24","empenhado":60301287},{"date":"2026-04-27","empenhado":74997054},{"date":"2026-04-28","empenhado":275254902},{"date":"2026-04-29","empenhado":342641403}];
+
+    const TOP_YEAR = [
+      {"author":"Bancada do Mato Grosso do Sul","tipo":"Bancada","empenhado":262984265},
+      {"author":"Com. Desenv Regional e Turismo","tipo":"Comissão","empenhado":226361031},
+      {"author":"Bancada de Roraima","tipo":"Bancada","empenhado":158805683},
+      {"author":"Relator-Geral","tipo":"Relatoria","empenhado":131326239},
+      {"author":"Eduardo Braga","tipo":"MDB","empenhado":71791355},
+      {"author":"Romário","tipo":"PL","empenhado":70216499},
+      {"author":"Bancada do Acre","tipo":"Bancada","empenhado":70123750},
+      {"author":"Jader Barbalho","tipo":"MDB","empenhado":62749098},
+      {"author":"Rodrigo Pacheco","tipo":"PSB","empenhado":62739401},
+      {"author":"Renan Calheiros","tipo":"MDB","empenhado":61382000},
+      {"author":"Cid Gomes","tipo":"PSB","empenhado":59111755},
+      {"author":"Weverton","tipo":"PDT","empenhado":58526447}
+    ];
+
+    const TOP_LAST = [
+      {"author":"Bancada de Tocantins","tipo":"Bancada","empenhado":23509989},
+      {"author":"Bancada de Roraima","tipo":"Bancada","empenhado":21664902},
+      {"author":"Com. Desenv Regional e Turismo","tipo":"Comissão","empenhado":19769705},
+      {"author":"Maurício do Volei","tipo":"PL","empenhado":11165814},
+      {"author":"Gilberto Abramo","tipo":"REPUBLICANOS","empenhado":8890820},
+      {"author":"Igor Timo","tipo":"UNIÃO","empenhado":8400000},
+      {"author":"Rodrigo Pacheco","tipo":"PSB","empenhado":7750000},
+      {"author":"Carlos Viana","tipo":"PSD","empenhado":7673000},
+      {"author":"Júnio Amaral","tipo":"PL","empenhado":7582007},
+      {"author":"Cleitinho","tipo":"REPUBLICANOS","empenhado":7050000},
+      {"author":"Zé Silva","tipo":"UNIÃO","empenhado":6700000},
+      {"author":"Nely Aquino","tipo":"PODE","empenhado":6660000}
+    ];
+
+    const NBSP = ' ';
+    const fmtBRL = (v) => 'R$' + NBSP + (v || 0).toLocaleString('pt-BR', { maximumFractionDigits: 0 });
+    const fmtBRLCompact = (v) => {
+      const a = Math.abs(v || 0);
+      if (a >= 1e9) return 'R$' + NBSP + (v / 1e9).toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + NBSP + 'bi';
+      if (a >= 1e6) return 'R$' + NBSP + (v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + NBSP + 'mi';
+      if (a >= 1e3) return 'R$' + NBSP + (v / 1e3).toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + NBSP + 'mil';
+      return 'R$' + NBSP + (v || 0).toLocaleString('pt-BR');
+    };
+    const fmtPct = (v) => (v * 100).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + '%';
+    const fmtDateBR = (iso) => {
+      const [y, m, d] = iso.split('-');
+      return d + '/' + m + '/' + y;
+    };
+    const dayName = (iso) => {
+      const d = new Date(iso + 'T00:00:00');
+      const map = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+      return map[d.getDay()];
+    };
+
+    const totalYear = SERIE.reduce((s, r) => s + r.empenhado, 0);
+
+    // Top 10 dias
+    const topDays = [...SERIE].sort((a, b) => b.empenhado - a.empenhado).slice(0, 10);
+    document.getElementById('t-top-days').innerHTML = topDays.map((d) => `
+      <tr>
+        <td>${fmtDateBR(d.date)}</td>
+        <td style="color:var(--muted)">${dayName(d.date)}</td>
+        <td class="num">${fmtBRL(d.empenhado)}</td>
+        <td class="num">${fmtPct(d.empenhado / totalYear)}</td>
+      </tr>
+    `).join('');
+
+    function renderAuthors(id, rows) {
+      const tbody = document.getElementById(id);
+      tbody.innerHTML = rows.map((r) => `
+        <tr>
+          <td>${r.author}</td>
+          <td><span class="tag">${r.tipo}</span></td>
+          <td class="num">${fmtBRL(r.empenhado)}</td>
+        </tr>
+      `).join('');
+    }
+    renderAuthors('t-year', TOP_YEAR);
+    renderAuthors('t-last', TOP_LAST);
+
+    // Build dense daily series (fill missing days with 0) for the chart
+    function isoNext(iso) {
+      const d = new Date(iso + 'T00:00:00');
+      d.setDate(d.getDate() + 1);
+      return d.toISOString().slice(0, 10);
+    }
+    const map = new Map(SERIE.map((r) => [r.date, r.empenhado]));
+    const dense = [];
+    let cursor = '2026-01-01';
+    const end = '2026-04-29';
+    while (cursor <= end) {
+      dense.push({ date: cursor, empenhado: map.get(cursor) || 0 });
+      cursor = isoNext(cursor);
+    }
+
+    const colorFor = (iso) => {
+      if (iso === '2026-04-29') return '#8b1a1a';
+      if (iso === '2026-04-23') return '#b88a18';
+      if (iso >= '2026-04-08' && iso <= '2026-04-17') return '#b45309';
+      return '#2b3a55';
+    };
+
+    new Chart(document.getElementById('chart'), {
+      type: 'bar',
+      data: {
+        labels: dense.map((d) => d.date),
+        datasets: [{
+          data: dense.map((d) => d.empenhado),
+          backgroundColor: dense.map((d) => colorFor(d.date)),
+          borderWidth: 0,
+        }],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#131311',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            padding: 10,
+            cornerRadius: 4,
+            displayColors: false,
+            callbacks: {
+              title: (items) => {
+                const iso = items[0].label;
+                const date = fmtDateBR(iso) + ' (' + dayName(iso) + ')';
+                if (iso === '2026-04-29') return date + ' — Plenário rejeitou Messias';
+                if (iso === '2026-04-23') return date + ' — CCJ aprovou Messias';
+                return date;
+              },
+              label: (item) => fmtBRL(item.parsed.y),
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: '#686864',
+              font: { size: 10, family: 'Inter' },
+              maxTicksLimit: 14,
+              callback: function (value) {
+                const lab = this.getLabelForValue(value);
+                if (!lab) return '';
+                const parts = lab.split('-');
+                return parts[2] + '/' + parts[1];
+              },
+            },
+            grid: { display: false },
+            border: { color: '#e6e3dc' },
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#686864',
+              font: { size: 10, family: 'IBM Plex Mono' },
+              padding: 4,
+              callback: (v) => {
+                if (v >= 1e9) return (v / 1e9).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + 'b';
+                if (v >= 1e6) return (v / 1e6).toLocaleString('pt-BR', { maximumFractionDigits: 0 }) + 'mi';
+                return v.toLocaleString('pt-BR');
+              },
+            },
+            grid: { color: '#f1efe8' },
+            border: { display: false },
+          },
+        },
+      },
+    });
+  </script>
+</body>
+</html>
