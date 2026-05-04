@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-03T14:13:30+00:00",
+  "updated_at": "2026-05-04T15:12:57+00:00",
   "datasets": {
     "ibama": {
       "rows": 704026,
@@ -36,10 +36,10 @@
         "sp",
         "to"
       ],
-      "source_size_bytes": 112021696,
+      "source_size_bytes": 112026321,
       "source_url": "https://dadosabertos.ibama.gov.br/dados/SIFISC/auto_infracao/auto_infracao/auto_infracao_csv.zip",
       "data_file": "ibama_records.jsonl.gz",
-      "updated_at": "2026-05-03T14:13:19+00:00"
+      "updated_at": "2026-05-04T15:12:45+00:00"
     },
     "icmbio": {
       "rows": 40934,
