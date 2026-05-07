@@ -201,5 +201,16 @@
     "previous_snapshot_date": "2026-05-04",
     "interval_days": 2,
     "source_changed": true
+  },
+  {
+    "date": "2026-05-07",
+    "delta_positivo": 0.0,
+    "delta_liquido": 0.0,
+    "total_empenhado_atual": 317263246194.33,
+    "autores_com_aumento": 0,
+    "destinos_com_aumento": 0,
+    "previous_snapshot_date": "2026-05-06",
+    "interval_days": 1,
+    "source_changed": false
   }
 ]
