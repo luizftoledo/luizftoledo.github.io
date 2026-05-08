@@ -574,7 +574,7 @@ function renderCard(p) {
           ${escape(p.fantasia || p.empresa)}
           ${isNew ? '<span class="badge">nova</span>' : ""}
         </h3>
-        <p class="who">${escape(p.empresa)} · CNPJ ${escape(p.cnpj)}</p>
+        <p class="who">${escape(p.empresa)}${p.cnpj ? ` · CNPJ ${escape(p.cnpj)}` : ""}</p>
         <p class="meta">
           ${cargoBits.map((c) => `<span><b>${escape(c)}</b></span>`).join("")}
           ${meta}
