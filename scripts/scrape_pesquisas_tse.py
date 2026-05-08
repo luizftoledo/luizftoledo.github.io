@@ -134,11 +134,13 @@ def main() -> int:
         except json.JSONDecodeError:
             previous = None
 
+    now = datetime.now(timezone.utc).isoformat()
     if previous and previous.get("pesquisas") == pesquisas:
         print("[scraper] dataset inalterado; mantendo pesquisas.json")
+        last_change = previous.get("atualizado_em") or now
     else:
         payload = {
-            "atualizado_em": datetime.now(timezone.utc).isoformat(),
+            "atualizado_em": now,
             "fonte": CSV_ZIP_URL,
             "criterio": "SG_UF=BR (abrangência nacional, cargo Presidente)",
             "total": len(pesquisas),
@@ -147,6 +149,23 @@ def main() -> int:
         pesquisas_path.write_text(
             json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
         )
+        last_change = now
+
+    (OUT_DIR / "status.json").write_text(
+        json.dumps(
+            {
+                "ok": True,
+                "last_check": now,
+                "last_change": last_change,
+                "total": len(pesquisas),
+                "novas": len(novas),
+                "fonte": CSV_ZIP_URL,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
     (OUT_DIR / "novas.json").write_text(
         json.dumps(novas, ensure_ascii=False, indent=2), encoding="utf-8"
     )
