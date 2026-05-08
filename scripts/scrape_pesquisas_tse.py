@@ -120,16 +120,27 @@ def main() -> int:
         novas = [p for p in pesquisas if p["id"] not in seen]
     print(f"[scraper] {len(novas)} pesquisas novas")
 
-    payload = {
-        "atualizado_em": datetime.now(timezone.utc).isoformat(),
-        "fonte": CSV_ZIP_URL,
-        "criterio": "SG_UF=BR (abrangência nacional, cargo Presidente)",
-        "total": len(pesquisas),
-        "pesquisas": pesquisas,
-    }
-    (OUT_DIR / "pesquisas.json").write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    pesquisas_path = OUT_DIR / "pesquisas.json"
+    previous = None
+    if pesquisas_path.exists():
+        try:
+            previous = json.loads(pesquisas_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            previous = None
+
+    if previous and previous.get("pesquisas") == pesquisas:
+        print("[scraper] dataset inalterado; mantendo pesquisas.json")
+    else:
+        payload = {
+            "atualizado_em": datetime.now(timezone.utc).isoformat(),
+            "fonte": CSV_ZIP_URL,
+            "criterio": "SG_UF=BR (abrangência nacional, cargo Presidente)",
+            "total": len(pesquisas),
+            "pesquisas": pesquisas,
+        }
+        pesquisas_path.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
     (OUT_DIR / "novas.json").write_text(
         json.dumps(novas, ensure_ascii=False, indent=2), encoding="utf-8"
     )
