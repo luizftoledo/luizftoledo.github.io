@@ -49,6 +49,12 @@ def to_int(raw: str) -> int | None:
     return int(raw) if raw.isdigit() else None
 
 
+def clean(raw: str) -> str:
+    """Normaliza marcadores nulos do CSV do TSE (#NULO#, #NE#) em string vazia."""
+    raw = (raw or "").strip()
+    return "" if raw in ("#NULO#", "#NE#") else raw
+
+
 def fetch_zip() -> bytes:
     req = Request(CSV_ZIP_URL, headers={"User-Agent": "luizftoledo-portfolio/1.0"})
     with urlopen(req, timeout=180) as resp:
@@ -66,23 +72,23 @@ def extract_brasil_csv(zip_bytes: bytes) -> str:
 
 def normalize(row: dict) -> dict:
     return {
-        "id": row["NR_PROTOCOLO_REGISTRO"],
-        "uf": row["SG_UF"],
-        "unidade_eleitoral": row["NM_UE"],
-        "cargo": row["DS_CARGO"],
+        "id": clean(row["NR_PROTOCOLO_REGISTRO"]),
+        "uf": clean(row["SG_UF"]),
+        "unidade_eleitoral": clean(row["NM_UE"]),
+        "cargo": clean(row["DS_CARGO"]),
         "registro": parse_dt(row["DT_REGISTRO"]),
         "inicio": parse_dt(row["DT_INICIO_PESQUISA"]),
         "fim": parse_dt(row["DT_FIM_PESQUISA"]),
         "divulgacao": parse_dt(row["DT_DIVULGACAO"]),
-        "empresa": row["NM_EMPRESA"].strip(),
-        "fantasia": row["NM_EMPRESA_FANTASIA"].strip(),
-        "cnpj": row["NR_CNPJ_EMPRESA"],
+        "empresa": clean(row["NM_EMPRESA"]),
+        "fantasia": clean(row["NM_EMPRESA_FANTASIA"]),
+        "cnpj": clean(row["NR_CNPJ_EMPRESA"]),
         "entrevistados": to_int(row["QT_ENTREVISTADO"]),
-        "valor": row["VR_PESQUISA"],
-        "estatistico": row["NM_ESTATISTICO_RESP"].strip(),
+        "valor": clean(row["VR_PESQUISA"]),
+        "estatistico": clean(row["NM_ESTATISTICO_RESP"]),
         "propria": row["ST_PESQUISA_PROPRIA"] == "S",
-        "metodologia": row["DS_METODOLOGIA_PESQUISA"].strip(),
-        "plano_amostral": row["DS_PLANO_AMOSTRAL"].strip(),
+        "metodologia": clean(row["DS_METODOLOGIA_PESQUISA"]),
+        "plano_amostral": clean(row["DS_PLANO_AMOSTRAL"]),
     }
 
 
