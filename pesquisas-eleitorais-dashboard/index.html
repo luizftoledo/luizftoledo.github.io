@@ -77,6 +77,38 @@
     color: var(--ink-mute);
   }
 
+  .status-banner {
+    max-width: 1080px;
+    margin: 16px auto 0;
+    padding: 10px 16px;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--bg-soft);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .status-banner .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--new-soft);
+    color: var(--new);
+  }
+  .status-banner.warn .pill { background: #fbeed6; color: #8a5a00; }
+  .status-banner.error .pill { background: var(--accent-soft); color: var(--accent); }
+  .status-banner .sep { color: var(--rule-strong); }
+  .status-banner b { color: var(--ink); font-weight: 600; }
+
   main { max-width: 1080px; margin: 0 auto; padding: 0 24px 64px; }
 
   .controls {
@@ -407,6 +439,8 @@
   </p>
 </header>
 
+<div id="status-banner" class="status-banner" hidden></div>
+
 <main>
   <section class="controls">
     <div class="ctrl">
@@ -644,7 +678,51 @@ function bind() {
   });
 }
 
+function renderStatus(status) {
+  const banner = document.getElementById("status-banner");
+  banner.hidden = false;
+  if (!status) {
+    banner.className = "status-banner error";
+    banner.innerHTML = `<span class="pill">Status indisponível</span>
+      <span>Não foi possível ler <code>data/status.json</code>.</span>`;
+    return;
+  }
+  const lastCheck = new Date(status.last_check);
+  const lastChange = status.last_change ? new Date(status.last_change) : null;
+  const ageHours = (Date.now() - lastCheck.getTime()) / 3.6e6;
+
+  let cls = "", label = "Raspador OK";
+  if (!status.ok) { cls = "error"; label = "Raspador com erro"; }
+  else if (ageHours > 30) { cls = "warn"; label = "Raspador atrasado"; }
+
+  const fmtAbs = (d) => d.toLocaleString("pt-BR", {
+    day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit",
+  });
+  const ago = ageHours < 1
+    ? `${Math.max(1, Math.round(ageHours * 60))} min atrás`
+    : ageHours < 48
+      ? `${Math.round(ageHours)} h atrás`
+      : `${Math.round(ageHours / 24)} dias atrás`;
+
+  banner.className = `status-banner${cls ? " " + cls : ""}`;
+  banner.innerHTML = `
+    <span class="pill">${escape(label)}</span>
+    <span>Última verificação: <b>${escape(fmtAbs(lastCheck))}</b> (${escape(ago)})</span>
+    <span class="sep">·</span>
+    <span><b>${status.total}</b> pesquisas no dataset</span>
+    ${lastChange ? `<span class="sep">·</span><span>última mudança em ${escape(fmtAbs(lastChange))}</span>` : ""}
+    <span class="sep">·</span>
+    <span>roda 2× ao dia (09h e 18h BRT) via GitHub Actions</span>
+  `;
+}
+
 async function load() {
+  // Status banner — independente do dataset
+  try {
+    const rs = await fetch(`data/status.json?t=${Date.now()}`);
+    renderStatus(rs.ok ? await rs.json() : null);
+  } catch (e) { renderStatus(null); }
+
   try {
     const r = await fetch(`data/pesquisas.json?t=${Date.now()}`);
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
