@@ -22,10 +22,14 @@
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
     cursor:default;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-user-select:none; user-select:none;
+    touch-action:manipulation;
   }
   #stage {
     position:relative;
-    width:960px; height:544px;
+    width:min(100vw, 960px);
+    aspect-ratio:960 / 544;
     box-shadow:
       0 0 0 1px rgba(212,160,23,.18),
       0 30px 80px rgba(0,0,0,.8),
@@ -238,8 +242,59 @@
   .blink { animation:blink 1.2s steps(2,start) infinite; }
   @keyframes blink { to { opacity:.2; } }
 
-  @media (max-width: 1000px) {
-    #stage { transform:scale(.78); transform-origin:center; }
+  /* Touch controls — always rendered, only visible on pointer:coarse */
+  .touch-ctrl {
+    position:absolute; inset:auto 0 0 0;
+    display:none;
+    justify-content:space-between; align-items:flex-end;
+    padding:0 8px 8px;
+    pointer-events:none; z-index:7;
+  }
+  .tc-pad, .tc-actions {
+    display:grid; gap:6px;
+    pointer-events:auto;
+  }
+  .tc-pad {
+    grid-template-columns:repeat(3, auto);
+    grid-template-rows:auto auto;
+  }
+  .tc-actions {
+    grid-template-columns:repeat(2, auto);
+  }
+  .tc-btn {
+    width:54px; height:54px;
+    border:1px solid rgba(212,160,23,.45);
+    background:rgba(5,8,17,.55);
+    color:#d4a017;
+    font-family:'JetBrains Mono', monospace;
+    font-size:16px; font-weight:700;
+    border-radius:10px;
+    backdrop-filter:blur(4px);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:transform .08s, background .08s;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+  }
+  .tc-btn:active, .tc-btn.active {
+    background:rgba(212,160,23,.45);
+    color:#050811;
+    transform:scale(.93);
+  }
+  .tc-btn .lbl { font-size:9px; letter-spacing:.1em; opacity:.8; }
+  .tc-btn .ic  { font-size:18px; line-height:1; }
+  .tc-left  { grid-column:1; grid-row:1 / span 2; height:114px; }
+  .tc-right { grid-column:3; grid-row:1 / span 2; height:114px; }
+  .tc-jump  { grid-column:2; grid-row:1 / span 2; height:114px; width:60px; background:rgba(212,160,23,.18); }
+  .tc-z     { width:62px; height:54px; }
+  .tc-x     { width:62px; height:54px; }
+  .tc-e     { width:62px; height:54px; grid-column:1 / span 2; }
+  /* Show on touch / coarse pointer / narrow viewports */
+  @media (pointer: coarse), (max-width: 720px) {
+    .touch-ctrl { display:flex; }
+    .controls-hint { display:none; }
+    .hud { font-size:9px; gap:4px; }
+    .chip, .ability { padding:5px 7px; }
   }
 </style>
 </head>
@@ -269,7 +324,20 @@
   <div class="dialog hidden" id="dialog">
     <div class="who" id="dlgWho">EDITOR</div>
     <div class="text" id="dlgText">…</div>
-    <div class="more">[ESPAÇO] CONTINUAR</div>
+    <div class="more">[ESPAÇO / TOQUE] CONTINUAR</div>
+  </div>
+
+  <div class="touch-ctrl" id="touchCtrl">
+    <div class="tc-pad">
+      <button class="tc-btn tc-left" data-key="arrowleft" aria-label="esquerda"><span class="ic">◄</span></button>
+      <button class="tc-btn tc-jump" data-key="arrowup" aria-label="pular"><span class="ic">▲</span><span class="lbl">PULO</span></button>
+      <button class="tc-btn tc-right" data-key="arrowright" aria-label="direita"><span class="ic">►</span></button>
+    </div>
+    <div class="tc-actions">
+      <button class="tc-btn tc-z" data-key="z" aria-label="câmera"><span class="ic">📷</span><span class="lbl">Z</span></button>
+      <button class="tc-btn tc-x" data-key="x" aria-label="gravador"><span class="ic">🎙</span><span class="lbl">X</span></button>
+      <button class="tc-btn tc-e" data-key="e" aria-label="interagir"><span class="lbl">INTERAGIR · E</span></button>
+    </div>
   </div>
 
   <!-- TITLE -->
@@ -319,13 +387,50 @@ ctx.imageSmoothingEnabled = false;
 /* ---------- INPUT ---------- */
 const keys = {};
 const pressed = {}; // single-frame
-addEventListener('keydown', e => {
-  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
-  const k = e.key.toLowerCase();
+function inputDown(k) {
   if (!keys[k]) pressed[k] = true;
   keys[k] = true;
+}
+function inputUp(k) { keys[k] = false; }
+
+addEventListener('keydown', e => {
+  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
+  inputDown(e.key.toLowerCase());
 });
-addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
+addEventListener('keyup', e => { inputUp(e.key.toLowerCase()); });
+
+// Touch controls — wire each button to inputDown/Up using its data-key
+document.querySelectorAll('.tc-btn').forEach(btn => {
+  const k = btn.dataset.key;
+  const press = (e) => {
+    e.preventDefault();
+    btn.classList.add('active');
+    inputDown(k);
+    // jump key is also tracked via space/arrowup by game logic
+  };
+  const release = (e) => {
+    if (e) e.preventDefault();
+    btn.classList.remove('active');
+    inputUp(k);
+  };
+  btn.addEventListener('touchstart', press, { passive:false });
+  btn.addEventListener('touchend', release, { passive:false });
+  btn.addEventListener('touchcancel', release, { passive:false });
+  btn.addEventListener('mousedown', press);
+  btn.addEventListener('mouseup', release);
+  btn.addEventListener('mouseleave', release);
+});
+
+// Tapping the canvas/dialog advances dialog (mobile-friendly)
+document.getElementById('game').addEventListener('touchstart', (e) => {
+  if (game.state === 'dialog') {
+    e.preventDefault();
+    advanceDialog();
+  }
+}, { passive:false });
+document.getElementById('dialog').addEventListener('click', () => {
+  if (game.state === 'dialog') advanceDialog();
+});
 
 /* ---------- ROOMS ----------
    Tile legend:
