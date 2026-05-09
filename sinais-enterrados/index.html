@@ -512,6 +512,30 @@
     <div class="credit">por Luiz Toledo · luizftoledo.github.io · caso fictício</div>
   </div>
 
+  <!-- FIRED (game over) -->
+  <div class="overlay hidden" id="firedScreen">
+    <div class="tag">terça-feira · 14:32</div>
+    <div class="end-paper">
+      <div class="end-kicker" style="border-bottom-color:rgba(192,57,43,.55); color:#c0392b">COMUNICADO INTERNO · DESLIGAMENTO</div>
+      <h2 class="end-headline" style="color:#e8e3d0">"Toledo, dá um passo pra trás dessa pauta."</h2>
+      <p class="art-p" style="margin-top:18px">
+        <span class="art-method">CHEFE DE REDAÇÃO</span>
+        O deputado Carlão do Pastel ligou pra direção do jornal pessoalmente. Falou em ações, falou em sócios da empresa-mãe. Pediu sua cabeça.
+      </p>
+      <p class="art-p">
+        <span class="art-method">RH</span>
+        A Folha Apurada lamenta informar que o seu vínculo de trabalho está rescindido a partir desta data. As pistas que você apurou ficaram no notebook devolvido na portaria.
+      </p>
+      <p class="end-closing" style="border-top-color:rgba(192,57,43,.45)">
+        Os lobistas chegaram primeiro. A matéria não saiu. Mas a pauta continua aberta — basta voltar pra redação e tentar de novo.
+      </p>
+    </div>
+    <div>
+      <button class="btn" id="firedRetry" style="border-color:#c0392b; color:#c0392b">Tentar de novo</button>
+    </div>
+    <div class="credit">a apuração não termina na primeira derrota</div>
+  </div>
+
   <!-- END -->
   <div class="overlay hidden" id="endScreen">
     <div class="tag">edição extra · matéria publicada</div>
@@ -1168,10 +1192,8 @@ function update(dt) {
       game.shake = 8;
       pulseHearts();
       if (p.hp <= 0) {
-        respawnPlayer();
-        p.hp = 3;
-        p.invuln = 90;
-        toast('flagrado — recompondo o caderno');
+        firedGame();
+        return;
       }
       updateHearts();
     }
@@ -1867,6 +1889,12 @@ function loop(t) {
   requestAnimationFrame(loop);
 }
 
+/* ---------- FIRED ---------- */
+function firedGame() {
+  game.state = 'fired';
+  document.getElementById('firedScreen').classList.remove('hidden');
+}
+
 /* ---------- END ---------- */
 function endGame() {
   game.state = 'end';
@@ -1910,6 +1938,7 @@ document.getElementById('startBtn').addEventListener('click', () => {
   game.state = 'play';
 });
 document.getElementById('replayBtn').addEventListener('click', () => location.reload());
+document.getElementById('firedRetry').addEventListener('click', () => location.reload());
 
 requestAnimationFrame(loop);
 </script>
