@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sinais Enterrados — um jogo de investigação · Luiz Toledo</title>
+<meta name="description" content="Pequeno jogo metroidvania de investigação jornalística. Caso fictício sobre desvio de emendas parlamentares. Por Luiz Toledo." />
+<meta property="og:title" content="Sinais Enterrados — um jogo de investigação" />
+<meta property="og:description" content="Apure uma denúncia anônima sobre desvio de emendas parlamentares. Fuja dos lobistas, junte provas, publique a matéria." />
+<meta property="og:type" content="website" />
+<link rel="icon" type="image/png" href="../favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; }
+  body {
+    background:#050811;
+    color:#e8e3d0;
+    font-family:'JetBrains Mono', ui-monospace, monospace;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    cursor:default;
+  }
+  #stage {
+    position:relative;
+    width:960px; height:544px;
+    box-shadow:
+      0 0 0 1px rgba(212,160,23,.18),
+      0 30px 80px rgba(0,0,0,.8),
+      0 0 120px rgba(212,160,23,.06);
+  }
+  canvas {
+    display:block; width:100%; height:100%;
+    background:#0a0e1a;
+    image-rendering:pixelated;
+  }
+  /* CRT scanlines + vignette */
+  .scan {
+    position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%),
+      repeating-linear-gradient(0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,.18) 3px, rgba(0,0,0,0) 4px);
+    mix-blend-mode:multiply;
+  }
+  .grain {
+    position:absolute; inset:0; pointer-events:none; opacity:.06;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* HUD */
+  .hud {
+    position:absolute; inset:14px 14px auto 14px;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    pointer-events:none; z-index:5;
+    font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  }
+  .hud-left, .hud-right { display:flex; gap:8px; flex-wrap:wrap; }
+  .chip {
+    background:rgba(5,8,17,.78);
+    border:1px solid rgba(212,160,23,.22);
+    padding:7px 11px;
+    backdrop-filter:blur(2px);
+    color:rgba(232,227,208,.7);
+  }
+  .chip strong { color:#d4a017; font-weight:500; letter-spacing:.22em; }
+  .hearts { display:flex; gap:5px; align-items:center; padding:6px 11px; }
+  .hearts span {
+    color:rgba(255,80,80,.18);
+    font-size:14px; line-height:1;
+    transition:color .15s, transform .15s, text-shadow .15s;
+  }
+  .hearts span.on {
+    color:#ff5050;
+    text-shadow:0 0 6px rgba(255,80,80,.6);
+  }
+  .hearts.hit span.on { animation:heartHit .35s; }
+  @keyframes heartHit {
+    0%, 100% { transform:scale(1); }
+    50% { transform:scale(1.4); }
+  }
+  .ability {
+    border:1px solid rgba(232,227,208,.08);
+    color:rgba(232,227,208,.25);
+    padding:7px 11px;
+    background:rgba(5,8,17,.78);
+    transition:all .35s;
+    position:relative;
+  }
+  .ability.on {
+    border-color:rgba(212,160,23,.55);
+    color:#d4a017;
+    box-shadow:0 0 12px rgba(212,160,23,.18) inset;
+  }
+  .ability .key {
+    display:inline-block;
+    border:1px solid currentColor;
+    padding:0 4px;
+    margin-right:6px;
+    font-size:10px;
+  }
+
+  /* Dialog */
+  .dialog {
+    position:absolute; left:50%; bottom:64px;
+    transform:translateX(-50%);
+    width:min(640px, 88%);
+    background:rgba(5,8,17,.96);
+    border:1px solid rgba(212,160,23,.7);
+    padding:18px 22px 16px;
+    z-index:6;
+    box-shadow:0 10px 40px rgba(0,0,0,.6), 0 0 30px rgba(212,160,23,.12);
+  }
+  .dialog .who {
+    font-size:10px; letter-spacing:.32em; color:#d4a017;
+    margin-bottom:8px;
+  }
+  .dialog .text {
+    font-family:'Special Elite', monospace;
+    font-size:15px; line-height:1.55; color:#e8e3d0;
+  }
+  .dialog .more {
+    margin-top:10px; font-size:10px; letter-spacing:.2em;
+    color:rgba(232,227,208,.45);
+  }
+
+  .toast {
+    position:absolute; left:50%; top:64px;
+    transform:translate(-50%, -8px);
+    background:rgba(5,8,17,.94);
+    border:1px solid #d4a017;
+    padding:10px 18px;
+    z-index:6;
+    color:#d4a017;
+    font-size:12px; letter-spacing:.22em; text-transform:uppercase;
+    opacity:0; transition:opacity .35s, transform .35s;
+    pointer-events:none;
+    box-shadow:0 0 24px rgba(212,160,23,.25);
+  }
+  .toast.show { opacity:1; transform:translate(-50%, 0); }
+
+  .room-name {
+    position:absolute; left:50%; top:46%;
+    transform:translate(-50%,-50%);
+    font-family:'Special Elite', monospace;
+    font-size:42px; letter-spacing:.06em;
+    color:#d4a017;
+    text-shadow:0 0 30px rgba(212,160,23,.4);
+    opacity:0; transition:opacity .55s;
+    pointer-events:none; z-index:4;
+  }
+  .room-name .sub {
+    display:block; font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:.4em;
+    color:rgba(232,227,208,.55); margin-top:8px; text-transform:uppercase;
+  }
+  .room-name.show { opacity:1; }
+
+  /* Title & End screens */
+  .overlay {
+    position:absolute; inset:0; z-index:9;
+    background:radial-gradient(ellipse at 50% 30%, #0d1426 0%, #050811 70%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:40px; text-align:center;
+  }
+  .overlay h1 {
+    font-family:'Special Elite', monospace;
+    font-size:62px; letter-spacing:.04em;
+    color:#d4a017;
+    text-shadow:0 0 50px rgba(212,160,23,.35);
+    margin-bottom:6px;
+  }
+  .overlay .tag {
+    font-size:11px; letter-spacing:.6em; text-transform:uppercase;
+    color:rgba(232,227,208,.5); margin-bottom:34px;
+  }
+  .overlay p {
+    max-width:560px; font-size:14px; line-height:1.8;
+    color:rgba(232,227,208,.78); margin-bottom:14px;
+  }
+  .overlay .credit {
+    margin-top:24px; font-size:10px; letter-spacing:.32em;
+    color:rgba(232,227,208,.4); text-transform:uppercase;
+  }
+  .keys {
+    display:grid; grid-template-columns:repeat(2, auto); gap:6px 18px;
+    margin:24px 0 28px;
+    font-size:11px; letter-spacing:.15em; color:rgba(232,227,208,.6);
+  }
+  .keys b {
+    display:inline-block; min-width:54px;
+    border:1px solid rgba(212,160,23,.5);
+    color:#d4a017; padding:2px 6px; margin-right:10px;
+    font-weight:500; text-align:center;
+  }
+  .btn {
+    display:inline-block;
+    background:transparent;
+    color:#d4a017;
+    border:1px solid #d4a017;
+    padding:13px 36px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px; letter-spacing:.32em; text-transform:uppercase;
+    cursor:pointer;
+    text-decoration:none;
+    transition:all .2s;
+  }
+  .btn:hover { background:#d4a017; color:#050811; box-shadow:0 0 30px rgba(212,160,23,.4); }
+  .btn + .btn { margin-left:14px; }
+
+  .end-headline {
+    font-family:'Special Elite', monospace;
+    border-top:1px solid rgba(212,160,23,.4);
+    border-bottom:1px solid rgba(212,160,23,.4);
+    padding:18px 28px;
+    margin:14px 0 26px;
+    max-width:640px;
+  }
+  .end-headline .kicker {
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px; letter-spacing:.4em; color:#d4a017;
+    margin-bottom:8px; text-transform:uppercase;
+  }
+  .end-headline h2 { font-size:26px; line-height:1.25; color:#e8e3d0; }
+
+  .clue-list {
+    text-align:left; font-size:11px; line-height:1.9;
+    color:rgba(232,227,208,.6);
+    max-width:560px; margin:0 auto 24px;
+    border-left:2px solid rgba(212,160,23,.4);
+    padding-left:14px;
+  }
+  .clue-list li { list-style:none; }
+
+  .hidden { display:none !important; }
+
+  .blink { animation:blink 1.2s steps(2,start) infinite; }
+  @keyframes blink { to { opacity:.2; } }
+
+  @media (max-width: 1000px) {
+    #stage { transform:scale(.78); transform-origin:center; }
+  }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <canvas id="game" width="960" height="544"></canvas>
+  <div class="scan"></div>
+  <div class="grain"></div>
+
+  <div class="hud hidden" id="hud">
+    <div class="hud-left">
+      <div class="chip"><strong id="roomLabel">REDAÇÃO</strong></div>
+      <div class="chip">PISTAS <strong id="clueCount">0/10</strong></div>
+      <div class="chip hearts" id="hearts"></div>
+    </div>
+    <div class="hud-right">
+      <div class="ability" id="abCam"><span class="key">Z</span>CÂMERA</div>
+      <div class="ability" id="abRec"><span class="key">X</span>GRAVADOR</div>
+      <div class="ability" id="abDoc"><span class="key">C</span>DOCUMENTO</div>
+    </div>
+  </div>
+
+  <div class="room-name" id="roomName"></div>
+  <div class="toast" id="toast"></div>
+
+  <div class="dialog hidden" id="dialog">
+    <div class="who" id="dlgWho">EDITOR</div>
+    <div class="text" id="dlgText">…</div>
+    <div class="more">[ESPAÇO] CONTINUAR</div>
+  </div>
+
+  <!-- TITLE -->
+  <div class="overlay" id="titleScreen">
+    <h1>Sinais Enterrados</h1>
+    <div class="tag">um jogo de investigação · folha apurada</div>
+    <p>Você é repórter. Caiu uma denúncia anônima sobre desvio de emendas parlamentares pelo deputado <b style="color:#d4a017">Carlão do Pastel</b> via uma ONG de fachada. Lobistas vão tentar te empurrar pra fora. <b style="color:#d4a017">Apure, ganhe ferramentas, publique.</b></p>
+    <div class="keys">
+      <span><b>← →</b> mover</span>
+      <span><b>↑ / W</b> pular</span>
+      <span><b>E</b> interagir</span>
+      <span><b>Z X C</b> habilidades</span>
+    </div>
+    <button class="btn" id="startBtn">Começar a apuração</button>
+    <a href="../index.html" style="margin-top:18px;font-size:10px;letter-spacing:.32em;color:rgba(232,227,208,.4);text-decoration:none;text-transform:uppercase;border-bottom:1px solid rgba(232,227,208,.15);padding-bottom:2px">← voltar ao portfólio</a>
+    <div class="credit">por Luiz Toledo · luizftoledo.github.io · caso fictício</div>
+  </div>
+
+  <!-- END -->
+  <div class="overlay hidden" id="endScreen">
+    <div class="tag">manchete · 1ª edição</div>
+    <div class="end-headline">
+      <div class="kicker" id="endKicker">EXCLUSIVO · FOLHA APURADA</div>
+      <h2 id="endHead">Operação Pastelão: emendas de Carlão são desviadas via ONG fantasma</h2>
+    </div>
+    <p id="endBody">A planilha vazada confirmou o esquema: ao menos R$ 4 milhões em emendas parlamentares de Carlão do Pastel passaram por uma ONG de fachada e abasteceram empresas ligadas a parentes do deputado. O TCU abriu auditoria. A Plenitude foi notificada. O gabinete do parlamentar nega, mas não respondeu aos questionamentos.</p>
+    <ul class="clue-list" id="cluesRecap"></ul>
+    <div>
+      <a class="btn" id="portfolioBtn" href="https://luizftoledo.github.io" target="_blank" rel="noopener">Ver o portfólio →</a>
+      <button class="btn" id="replayBtn">Jogar de novo</button>
+    </div>
+    <div class="credit">obrigado por apurar com a gente</div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   SINAIS ENTERRADOS — engine
+   ============================================================ */
+
+const TILE = 32, COLS = 30, ROWS = 17;
+const W = TILE*COLS, H = TILE*ROWS;
+const cv = document.getElementById('game');
+const ctx = cv.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+/* ---------- INPUT ---------- */
+const keys = {};
+const pressed = {}; // single-frame
+addEventListener('keydown', e => {
+  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key)) e.preventDefault();
+  const k = e.key.toLowerCase();
+  if (!keys[k]) pressed[k] = true;
+  keys[k] = true;
+});
+addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
+
+/* ---------- ROOMS ----------
+   Tile legend:
+     . = empty       # = wall (concrete)        = = floor (top-only? we use solid)
+     | = bookshelf (decor solid)                ~ = water/static (decor solid)
+     ^ = spike/hazard (resets player)
+     L = locked door (needs ability — entity defines key)
+     d = door (entity defines target)
+     N = NPC slot (entity defines)              C = clue slot (entity)
+     A = ability pickup slot (entity)
+     P = spawn (only meaningful for first room)
+*/
+const ROOMS = {
+
+  /* ---------- 1 · REDAÇÃO ---------- */
+  redacao: {
+    title: 'REDAÇÃO',
+    sub: 'folha apurada · 04:12',
+    palette: { wall:'#1a2030', accent:'#3a4a6e', floor:'#262e44' },
+    bg: drawNewsroomBG,
+    map: [
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '......####....................',
+      '..............................',
+      '##############################',
+      '##############################',
+      '##############################',
+    ],
+    entities: [
+      { type:'spawn', x:3, y:13 },
+      { type:'desk', x:5, y:13 }, { type:'desk', x:12, y:13 }, { type:'desk', x:19, y:13 },
+      { type:'npc', x:5, y:13, name:'EDITOR', dialog:[
+        'Toledo. Caiu uma denúncia anônima na caixa segura.',
+        'Emenda do Carlão do Pastel — R$ 4 milhões pra uma ONG fantasma.',
+        'Instituto Plenitude. CNPJ aberto seis meses antes do empenho.',
+        'Vai pro Arquivo Público (→) e puxa os empenhos.',
+        'Cuidado com os assessores. Eles tentam te empurrar pra fora.',
+      ]},
+      { type:'clue', x:7, y:11, text:'Tip anônimo: "Plenitude paga empresa do cunhado do Carlão. Olha o CNPJ."' },
+      { type:'clue', x:24, y:13, text:'Mural: emendas RP-9 do gabinete somam R$ 23 mi em 2023 — 4× a média.' },
+      { type:'door', x:29, y:13, dir:'right', to:'arquivo', spawnAt:{ x:1, y:13 } },
+    ]
+  },
+
+  /* ---------- 2 · ARQUIVO ---------- */
+  arquivo: {
+    title: 'ARQUIVO PÚBLICO',
+    sub: 'pasta 19-B · processos selados',
+    palette: { wall:'#1c1815', accent:'#3d2f1f', floor:'#2a221a' },
+    bg: drawArchiveBG,
+    map: [
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '.........####.................',
+      '..............................',
+      '..............####............',
+      '..............................',
+      '..........####................',
+      '..............................',
+      '..............####............',
+      '..............................',
+      '##############################',
+      '##############################',
+      '##############################',
+    ],
+    entities: [
+      { type:'door', x:0,  y:13, dir:'left',  to:'redacao', spawnAt:{ x:28, y:13 } },
+      { type:'door', x:29, y:13, dir:'right', to:'forum',   spawnAt:{ x:1,  y:13 } },
+      { type:'shelf', x:2, y:13 }, { type:'shelf', x:25, y:13 },
+      { type:'enemy', x:22, y:13, range:3, kind:'lobby', speed:0.55, name:'LOBISTA' },
+      { type:'clue', x:4,  y:13, text:'Empenho 0192/2023: R$ 4 mi para Instituto Plenitude. Sem licitação.' },
+      { type:'clue', x:15, y:7,  text:'Estatuto da ONG: presidente é o ex-motorista do gabinete do deputado.' },
+      { type:'clue', x:11, y:9,  text:'Cruzamento: 7 pagamentos da Plenitude pra Pastel & Cia. Endereço comum.' },
+      { type:'ability', x:10, y:5, key:'cam', name:'CÂMERA', text:'Câmera adquirida. [Z] flash — fotografa prova e cega lobistas por uns segundos.' },
+    ]
+  },
+
+  /* ---------- 3 · TCU ---------- */
+  forum: {
+    title: 'TCU',
+    sub: 'tribunal de contas · auditoria de emendas',
+    palette: { wall:'#15171f', accent:'#2a2e3d', floor:'#1f2330' },
+    bg: drawCourthouseBG,
+    map: [
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............####............',
+      '..............................',
+      '..........####................',
+      '..............................',
+      '..............####............',
+      '..............................',
+      '##############################',
+      '##############################',
+      '##############################',
+    ],
+    entities: [
+      { type:'door', x:0,  y:13, dir:'left',  to:'arquivo', spawnAt:{ x:28, y:13 } },
+      { type:'door', x:29, y:13, dir:'right', to:'campo',   spawnAt:{ x:1,  y:13 }, locked:'guard' },
+      { type:'guard', x:26, y:13, name:'SEGURANÇA', dialog:[
+        '— "Acesso restrito. Sem fotografar documentos."',
+        '(Use [Z] para o flash. Auditores piscam por uns segundos.)',
+      ]},
+      { type:'enemy', x:9,  y:13, range:5, kind:'lobby', speed:0.7, name:'LOBISTA' },
+      { type:'enemy', x:18, y:13, range:3, kind:'lobby', speed:0.85, name:'ASSESSOR' },
+      { type:'clue', x:5,  y:13, text:'Auditoria 14/2024: TCU questionou repasse à Plenitude. Recurso suspendeu.' },
+      { type:'clue', x:11, y:9,  text:'Acórdão preliminar: indícios de "desvio de finalidade". Sem julgamento.' },
+      { type:'clue', x:20, y:13, text:'Memo: a relatoria foi trocada três vezes. Última: aliado de Carlão.' },
+      { type:'ability', x:15, y:7, key:'rec', name:'GRAVADOR', text:'Gravador adquirido. [X] dispara ondas sonoras — expõe lobistas e fonte fala com prova.' },
+    ]
+  },
+
+  /* ---------- 4 · CAMPO ---------- */
+  campo: {
+    title: 'CAMPO',
+    sub: 'estrada vicinal · encontro com a fonte',
+    palette: { wall:'#0f1a14', accent:'#1f3527', floor:'#16241b' },
+    bg: drawFieldBG,
+    map: [
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '##############################',
+      '##############################',
+      '##############################',
+    ],
+    entities: [
+      { type:'door', x:0,  y:13, dir:'left',  to:'forum',       spawnAt:{ x:28, y:13 } },
+      { type:'door', x:29, y:13, dir:'right', to:'publicacao', spawnAt:{ x:1,  y:13 }, locked:'doc' },
+      { type:'tree', x:5, y:13 }, { type:'tree', x:9, y:13 }, { type:'tree', x:24, y:13 },
+      { type:'fire', x:14, y:13 },
+      { type:'npc', x:16, y:13, name:'FONTE', requires:'rec',
+        dialog:[
+          '— "Você tá com gravador? ...então tá. Vou contar."',
+          '— "Trabalhei dois anos no gabinete do Carlão. Vi a operação."',
+          '— "A Plenitude é fachada. O dinheiro volta pro cunhado dele."',
+          '— "Pega esse pendrive. É a planilha. Não me liga depois."',
+        ],
+        altDialog:[
+          '— "Sem gravador, sem prova. Eu não falo no escuro."',
+          '(Volta com o GRAVADOR. Procura no TCU.)',
+        ],
+        gives:'doc' },
+      { type:'enemy', x:4,  y:13, range:2, kind:'lobby', speed:0.6, name:'LOBISTA' },
+      { type:'enemy', x:11, y:13, range:2, kind:'lobby', speed:0.9, name:'ASSESSOR' },
+      { type:'enemy', x:25, y:13, range:2, kind:'lobby', speed:0.75, name:'LOBISTA' },
+      { type:'clue', x:8,  y:13, text:'Caderno da fonte: lista de "doadores fantasma" da campanha de 2022.' },
+      { type:'clue', x:21, y:13, text:'Pendrive: planilha Plenitude → Pastel & Cia, 2023-2024 · R$ 4,2 mi.' },
+    ]
+  },
+
+  /* ---------- 5 · PUBLICAÇÃO ---------- */
+  publicacao: {
+    title: 'PUBLICAÇÃO',
+    sub: 'mesa central · 22:47',
+    palette: { wall:'#1a1d2c', accent:'#3d4566', floor:'#252a40' },
+    bg: drawPublishBG,
+    map: [
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '##############################',
+      '##############################',
+      '##############################',
+    ],
+    entities: [
+      { type:'door', x:0, y:13, dir:'left', to:'campo', spawnAt:{ x:28, y:13 } },
+      { type:'desk', x:11, y:13 }, { type:'desk', x:17, y:13 },
+      { type:'finish', x:14, y:13 },
+    ]
+  },
+};
+
+/* ---------- GAME STATE ---------- */
+const game = {
+  state: 'title', // title, play, dialog, end
+  room: 'redacao',
+  player: { x: 100, y: 200, vx:0, vy:0, w:18, h:28, onGround:false, dir:1, anim:0, flash:0, hp:3, invuln:0, jumpBuffer:0, coyote:0 },
+  abilities: { cam:false, rec:false, doc:false },
+  clues: new Set(),
+  totalClues: 0,
+  particles: [],
+  projectiles: [],
+  flashLight: 0,
+  recPulse: 0,
+  recCooldown: 0,
+  shake: 0,
+  toast: { text:'', t:0 },
+  dialog: null,        // { who, lines, idx }
+  pendingPickup: null,
+  guardStunned: 0,
+  spawnAtNext: null,
+  spawnPoint: null,
+  fadeAlpha: 0,
+  fadeDir: 0,
+  pendingRoom: null,
+};
+
+/* count total clues across rooms */
+for (const r of Object.values(ROOMS)) {
+  for (const e of r.entities) if (e.type === 'clue') game.totalClues++;
+}
+
+/* ---------- HELPERS ---------- */
+const mapAt = (room, cx, cy) => {
+  const m = ROOMS[room].map;
+  if (cy<0||cy>=ROWS||cx<0||cx>=COLS) return '#';
+  return m[cy][cx];
+};
+const solid = ch => ch === '#';
+
+function setRoom(name, spawnAt) {
+  game.room = name;
+  game.particles.length = 0;
+  game.spawnAtNext = spawnAt || null;
+
+  // place player on spawn
+  const room = ROOMS[name];
+  let sp = spawnAt;
+  if (!sp) {
+    const s = room.entities.find(e => e.type === 'spawn');
+    sp = s ? { x:s.x, y:s.y } : { x:2, y:13 };
+  }
+  game.player.x = sp.x*TILE + (TILE-game.player.w)/2;
+  game.player.y = sp.y*TILE + TILE - game.player.h - 1;
+  game.player.vx = 0; game.player.vy = 0;
+  game.player.hp = 3;
+  game.player.invuln = 0;
+  game.spawnPoint = { x: game.player.x, y: game.player.y };
+
+  // reset enemy positions and defeated state in this room
+  for (const e of room.entities) {
+    if (e.type === 'enemy') {
+      e._x = e.x*TILE; e._anchor = e.x*TILE; e._dir = 1; e._anim = 0; e.stunned = 0; e.defeated = false;
+    }
+  }
+  game.projectiles.length = 0;
+
+  document.getElementById('roomLabel').textContent = room.title;
+  updateHearts();
+  showRoomName(room.title, room.sub);
+}
+
+function updateHearts() {
+  const el = document.getElementById('hearts');
+  if (!el) return;
+  let html = '';
+  for (let i = 0; i < 3; i++) {
+    html += `<span class="${i < game.player.hp ? 'on' : ''}">♥</span>`;
+  }
+  el.innerHTML = html;
+}
+function pulseHearts() {
+  const el = document.getElementById('hearts');
+  if (!el) return;
+  el.classList.remove('hit');
+  void el.offsetWidth;
+  el.classList.add('hit');
+}
+
+function showRoomName(t, sub) {
+  const el = document.getElementById('roomName');
+  el.innerHTML = t + (sub ? `<span class="sub">${sub}</span>` : '');
+  el.classList.add('show');
+  clearTimeout(showRoomName._t);
+  showRoomName._t = setTimeout(()=>el.classList.remove('show'), 1900);
+}
+
+function toast(text) {
+  const el = document.getElementById('toast');
+  el.textContent = text;
+  el.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=>el.classList.remove('show'), 2400);
+}
+
+function openDialog(who, lines) {
+  game.state = 'dialog';
+  game.dialog = { who, lines, idx:0 };
+  const dl = document.getElementById('dialog');
+  document.getElementById('dlgWho').textContent = who;
+  document.getElementById('dlgText').textContent = lines[0];
+  dl.classList.remove('hidden');
+}
+function advanceDialog() {
+  game.dialog.idx++;
+  if (game.dialog.idx >= game.dialog.lines.length) {
+    closeDialog();
+    if (game.pendingPickup) {
+      const ab = game.pendingPickup;
+      game.abilities[ab.key] = true;
+      document.getElementById({cam:'abCam',rec:'abRec',doc:'abDoc'}[ab.key]).classList.add('on');
+      toast(`+${ab.name}`);
+      game.pendingPickup = null;
+    }
+  } else {
+    document.getElementById('dlgText').textContent = game.dialog.lines[game.dialog.idx];
+  }
+}
+function closeDialog() {
+  document.getElementById('dialog').classList.add('hidden');
+  game.dialog = null;
+  game.state = 'play';
+}
+
+/* ---------- COLLISION ---------- */
+function rectVsTiles(p, dx, dy) {
+  // Move axis-by-axis
+  // X
+  p.x += dx;
+  let bbox = playerBBox(p);
+  let { l, r, t, b } = bbox;
+  if (dx > 0) {
+    for (let cy = Math.floor(t/TILE); cy <= Math.floor((b-1)/TILE); cy++) {
+      const cx = Math.floor((r-1)/TILE);
+      if (solid(mapAt(game.room, cx, cy))) { p.x = cx*TILE - p.w; p.vx = 0; break; }
+    }
+  } else if (dx < 0) {
+    for (let cy = Math.floor(t/TILE); cy <= Math.floor((b-1)/TILE); cy++) {
+      const cx = Math.floor(l/TILE);
+      if (solid(mapAt(game.room, cx, cy))) { p.x = (cx+1)*TILE; p.vx = 0; break; }
+    }
+  }
+  // Y
+  p.y += dy;
+  bbox = playerBBox(p);
+  ({l, r, t, b} = bbox);
+  p.onGround = false;
+  if (dy > 0) {
+    for (let cx = Math.floor(l/TILE); cx <= Math.floor((r-1)/TILE); cx++) {
+      const cy = Math.floor((b-1)/TILE);
+      if (solid(mapAt(game.room, cx, cy))) { p.y = cy*TILE - p.h; p.vy = 0; p.onGround = true; break; }
+    }
+  } else if (dy < 0) {
+    for (let cx = Math.floor(l/TILE); cx <= Math.floor((r-1)/TILE); cx++) {
+      const cy = Math.floor(t/TILE);
+      if (solid(mapAt(game.room, cx, cy))) { p.y = (cy+1)*TILE; p.vy = 0; break; }
+    }
+  }
+}
+function playerBBox(p) { return { l:p.x, r:p.x+p.w, t:p.y, b:p.y+p.h }; }
+
+function entityRect(e) {
+  if (e.type === 'noisewall') return { x:e.x*TILE, y:e.y*TILE, w:TILE, h:(e.h||1)*TILE };
+  if (e.type === 'door')      return { x:e.x*TILE, y:e.y*TILE - TILE, w:TILE, h:TILE*2 };
+  return { x:e.x*TILE, y:e.y*TILE, w:TILE, h:TILE };
+}
+function overlap(a, b) {
+  return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
+}
+
+/* ---------- UPDATE ---------- */
+function update(dt) {
+  if (game.state !== 'play') return;
+  if (game.fadeDir !== 0) return; // freeze during transitions
+  const p = game.player;
+
+  // Horizontal
+  const left = keys['arrowleft']||keys['a'];
+  const right = keys['arrowright']||keys['d'];
+  const accel = 0.7, max = 3.4, friction = 0.78;
+  if (left)  { p.vx -= accel; p.dir = -1; }
+  if (right) { p.vx += accel; p.dir =  1; }
+  if (!left && !right) p.vx *= friction;
+  p.vx = Math.max(-max, Math.min(max, p.vx));
+
+  // Jump — with buffer and coyote time for snappy feel
+  const jumpReq = pressed['arrowup']||pressed['w']||pressed[' '];
+  if (jumpReq) p.jumpBuffer = 8;            // remember press for 8 frames
+  else if (p.jumpBuffer > 0) p.jumpBuffer--;
+  if (p.onGround) p.coyote = 7;             // grace 7 frames after leaving ground
+  else if (p.coyote > 0) p.coyote--;
+  if (p.jumpBuffer > 0 && p.coyote > 0) {
+    p.vy = -8.6;
+    p.onGround = false;
+    p.jumpBuffer = 0;
+    p.coyote = 0;
+  }
+  // Variable jump (release early = shorter)
+  if (p.vy < 0 && !(keys['arrowup']||keys['w']||keys[' '])) p.vy *= 0.84;
+
+  // Gravity
+  p.vy += 0.45;
+  if (p.vy > 12) p.vy = 12;
+
+  rectVsTiles(p, p.vx, 0);
+  rectVsTiles(p, 0, p.vy);
+
+  // Fell out (none in current rooms but safe)
+  if (p.y > H + 200) respawnPlayer();
+
+  // Animation timer
+  if (Math.abs(p.vx) > 0.4 && p.onGround) p.anim += dt*0.012*Math.abs(p.vx);
+  else p.anim *= 0.6;
+
+  // Ability triggers
+  if (pressed['z'] && game.abilities.cam) {
+    game.flashLight = 1.0;
+    game.guardStunned = Math.max(game.guardStunned, 180); // 3s @60fps
+    for (const e of ROOMS[game.room].entities) {
+      if (e.type === 'enemy') e.stunned = Math.max(e.stunned || 0, 180);
+    }
+    spawnFlashParticles();
+  }
+  if (pressed['x'] && game.abilities.rec && game.recCooldown <= 0) {
+    game.recPulse = 1.0;
+    game.recCooldown = 22;
+    // shoot sound-wave projectile in facing direction
+    game.projectiles.push({
+      x: p.x + p.w/2, y: p.y + p.h/2 - 2,
+      vx: (p.dir > 0 ? 7.5 : -7.5),
+      life: 50, dir: p.dir, age: 0,
+    });
+  }
+  if (game.recCooldown > 0) game.recCooldown--;
+  if (game.flashLight > 0) game.flashLight = Math.max(0, game.flashLight - dt*0.0035);
+  if (game.recPulse > 0)   game.recPulse   = Math.max(0, game.recPulse   - dt*0.0018);
+  if (game.guardStunned > 0) game.guardStunned--;
+
+  // Update projectiles
+  for (const proj of game.projectiles) {
+    proj.x += proj.vx;
+    proj.life--;
+    proj.age++;
+    // tile collision: stop on wall
+    const cx = Math.floor(proj.x/TILE), cy = Math.floor(proj.y/TILE);
+    if (solid(mapAt(game.room, cx, cy))) proj.life = 0;
+  }
+  // Projectile vs enemy
+  for (const proj of game.projectiles) {
+    if (proj.life <= 0) continue;
+    const prj = { x: proj.x-8, y: proj.y-8, w:16, h:16 };
+    for (const e of ROOMS[game.room].entities) {
+      if (e.type !== 'enemy' || e.defeated) continue;
+      const er = { x: e._x + 4, y: e.y*TILE + 2, w: 24, h: 30 };
+      if (overlap(prj, er)) {
+        e.defeated = true;
+        proj.life = 0;
+        flashSparks(e._x + TILE/2, e.y*TILE + TILE/2, '#d4a017');
+        toast('lobista exposto');
+        break;
+      }
+    }
+  }
+  game.projectiles = game.projectiles.filter(pr => pr.life > 0);
+
+  // Entities
+  const room = ROOMS[game.room];
+
+  // Update enemies (patrol)
+  for (const e of room.entities) {
+    if (e.type !== 'enemy' || e.defeated) continue;
+    if (e._x === undefined) { e._x = e.x*TILE; e._anchor = e.x*TILE; e._dir = 1; e._anim = 0; e.stunned = 0; }
+    if (e.stunned > 0) { e.stunned--; continue; }
+    e._x += (e.speed || 0.6) * e._dir;
+    e._anim += 0.08;
+    const range = (e.range || 3) * TILE;
+    if (e._x > e._anchor + range) { e._x = e._anchor + range; e._dir = -1; }
+    if (e._x < e._anchor - range) { e._x = e._anchor - range; e._dir = 1; }
+  }
+
+  // Invulnerability tick
+  if (p.invuln > 0) p.invuln--;
+  if (game.shake > 0) game.shake--;
+
+  const pr = playerBBox(p);
+  const prRect = { x:pr.l, y:pr.t, w:p.w, h:p.h };
+
+  // Enemy ↔ player collision
+  for (const e of room.entities) {
+    if (e.type !== 'enemy' || e.stunned > 0 || e.defeated) continue;
+    const er = { x: e._x + 4, y: e.y*TILE + 2, w: 24, h: 30 };
+    if (overlap(prRect, er) && p.invuln <= 0) {
+      p.hp--;
+      p.invuln = 60;
+      const knock = (p.x + p.w/2 < e._x + TILE/2) ? -1 : 1;
+      p.vx = knock * 5.5;
+      p.vy = -5.5;
+      flashSparks(p.x+p.w/2, p.y+p.h/2, '#c0392b');
+      game.shake = 8;
+      pulseHearts();
+      if (p.hp <= 0) {
+        respawnPlayer();
+        p.hp = 3;
+        p.invuln = 90;
+        toast('flagrado — recompondo o caderno');
+      }
+      updateHearts();
+    }
+  }
+
+  for (const e of room.entities) {
+    if (e.type === 'noisewall') {
+      // breakable by rec pulse
+      if (game.recPulse > 0.6) e.broken = true;
+      continue;
+    }
+    if (e.type === 'guard') continue;
+    if (!e._collected && (e.type === 'clue')) {
+      const er = entityRect(e);
+      // hidden clues require ability
+      if (e.hidden && !game.abilities[e.hiddenBy]) continue;
+      if (overlap(prRect, er)) {
+        e._collected = true;
+        game.clues.add(e.text);
+        document.getElementById('clueCount').textContent = `${game.clues.size}/${game.totalClues}`;
+        toast('+ pista');
+        flashSparks(er.x+TILE/2, er.y+TILE/2, '#d4a017');
+      }
+    }
+    if (e.type === 'ability' && !game.abilities[e.key]) {
+      const er = entityRect(e);
+      if (overlap(prRect, er)) {
+        game.pendingPickup = e;
+        flashSparks(er.x+TILE/2, er.y+TILE/2, '#4ade80');
+        openDialog('SISTEMA', [e.text]);
+      }
+    }
+    if (e.type === 'finish') {
+      const er = entityRect(e);
+      if (overlap(prRect, er)) endGame();
+    }
+  }
+
+  // Hazards (spikes)
+  // none in current maps; left for future
+
+  // Doors / interact
+  if (pressed['e']) {
+    for (const e of room.entities) {
+      if (e.type === 'door') {
+        const er = entityRect(e);
+        if (overlap(prRect, er)) {
+          if (e.locked) {
+            if (e.locked === 'guard' && game.guardStunned <= 0) {
+              toast('um segurança bloqueia o caminho');
+              continue;
+            }
+            if (e.locked === 'doc' && !game.abilities.doc) {
+              toast('precisa de prova pra publicar');
+              continue;
+            }
+          }
+          // transition
+          fadeTo(()=>setRoom(e.to, e.spawnAt));
+          return;
+        }
+      }
+      if (e.type === 'npc' || e.type === 'guard') {
+        const er = entityRect(e);
+        const near = { x:er.x-TILE, y:er.y-TILE/2, w:er.w+TILE*2, h:er.h+TILE };
+        if (overlap(prRect, near)) {
+          const useAlt = e.requires && !game.abilities[e.requires];
+          const lines = useAlt ? (e.altDialog || e.dialog) : e.dialog;
+          openDialog(e.name, lines);
+          if (e.gives && !useAlt && !game.abilities[e.gives]) {
+            game.pendingPickup = { key:e.gives, name:'DOCUMENTO VAZADO' };
+          }
+        }
+      }
+    }
+  }
+}
+
+function respawnPlayer() {
+  const p = game.player;
+  p.x = game.spawnPoint.x; p.y = game.spawnPoint.y;
+  p.vx = 0; p.vy = 0;
+}
+
+/* ---------- PARTICLES ---------- */
+function flashSparks(x, y, color) {
+  for (let i=0;i<14;i++) {
+    const a = Math.random()*Math.PI*2;
+    const s = Math.random()*2.5+0.6;
+    game.particles.push({ x, y, vx:Math.cos(a)*s, vy:Math.sin(a)*s-0.6, life:30+Math.random()*20, color });
+  }
+}
+function spawnFlashParticles() {
+  const cx = game.player.x+game.player.w/2, cy = game.player.y+game.player.h/2;
+  for (let i=0;i<26;i++) {
+    const a = Math.random()*Math.PI*2;
+    const s = Math.random()*4+1;
+    game.particles.push({ x:cx, y:cy, vx:Math.cos(a)*s, vy:Math.sin(a)*s, life:25+Math.random()*15, color:'#ffffff' });
+  }
+}
+function updateParticles() {
+  for (const p of game.particles) {
+    p.x += p.vx; p.y += p.vy; p.vy += 0.05; p.life--;
+  }
+  game.particles = game.particles.filter(p => p.life > 0);
+}
+
+/* ---------- FADE TRANSITIONS ---------- */
+function fadeTo(fn) {
+  game.fadeDir = 1; game._fadeFn = fn;
+}
+
+/* ---------- BACKGROUND DRAWERS ---------- */
+function drawNewsroomBG() {
+  const g = ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#0d1426'); g.addColorStop(1,'#080c18');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  // distant cubicles
+  for (let i=0;i<8;i++){
+    const x = i*120 + 30;
+    ctx.fillStyle = 'rgba(60,80,120,.18)';
+    ctx.fillRect(x, 280, 80, 50);
+    ctx.fillStyle = 'rgba(212,160,23,.06)';
+    ctx.fillRect(x+10, 290, 18, 14);
+  }
+  // window with rain
+  ctx.fillStyle = 'rgba(212,160,23,.05)';
+  ctx.fillRect(120, 60, 280, 140);
+  ctx.strokeStyle = 'rgba(212,160,23,.2)'; ctx.lineWidth = 1;
+  ctx.strokeRect(120, 60, 280, 140);
+  ctx.beginPath();
+  ctx.moveTo(260,60); ctx.lineTo(260,200); ctx.moveTo(120,130); ctx.lineTo(400,130);
+  ctx.stroke();
+  // headline ticker
+  ctx.fillStyle = 'rgba(212,160,23,.55)';
+  ctx.font = '10px JetBrains Mono';
+  ctx.fillText('• AO VIVO · FOLHA APURADA · APURAÇÃO EM ANDAMENTO ·', 480, 80);
+  ctx.fillStyle = 'rgba(232,227,208,.22)';
+  ctx.fillText('lead: tip anônimo · emendas Carlão do Pastel · 04:09', 480, 100);
+  ctx.fillText('checagem: CNPJ Plenitude · empenho 0192/2023', 480, 116);
+}
+function drawArchiveBG() {
+  ctx.fillStyle = '#100c08';
+  ctx.fillRect(0,0,W,H);
+  // shelves of folders in distance
+  for (let r=0;r<4;r++){
+    for (let i=0;i<14;i++){
+      const x = i*70 + 10, y = 60 + r*70;
+      ctx.fillStyle = `rgba(${80+Math.random()*40},${50+Math.random()*30},${30+Math.random()*20},.45)`;
+      ctx.fillRect(x, y, 60, 50);
+      ctx.fillStyle = 'rgba(0,0,0,.35)';
+      for (let k=0;k<6;k++) ctx.fillRect(x+3+k*9, y+4, 7, 42);
+    }
+  }
+  ctx.fillStyle = 'rgba(212,160,23,.06)';
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = 'rgba(212,160,23,.4)';
+  ctx.font = '9px JetBrains Mono';
+  ctx.fillText('SEÇÃO 19 · PROCESSOS SELADOS · ACESSO RESTRITO', 14, 14);
+}
+function drawCourthouseBG() {
+  const g = ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#0c0d12'); g.addColorStop(1,'#070811');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  // columns
+  for (let i=0;i<6;i++){
+    const x = 60 + i*160;
+    ctx.fillStyle = 'rgba(180,180,200,.06)';
+    ctx.fillRect(x, 30, 50, 360);
+    ctx.fillStyle = 'rgba(180,180,200,.12)';
+    ctx.fillRect(x-6, 30, 62, 8);
+    ctx.fillRect(x-6, 380, 62, 8);
+  }
+  ctx.fillStyle = 'rgba(212,160,23,.4)';
+  ctx.font = '9px JetBrains Mono';
+  ctx.fillText('TCU · TRIBUNAL DE CONTAS · AUDITORIA RP-9', 14, 14);
+}
+function drawFieldBG() {
+  // night sky gradient
+  const g = ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#0a1218'); g.addColorStop(.6,'#0d1f1a'); g.addColorStop(1,'#091410');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  // stars
+  for (let i=0;i<60;i++){
+    ctx.fillStyle = `rgba(255,255,255,${0.1+Math.random()*0.4})`;
+    ctx.fillRect((i*97)%W, (i*53)%200, 1, 1);
+  }
+  // distant hills
+  ctx.fillStyle = '#0e1a14';
+  ctx.beginPath(); ctx.moveTo(0,360);
+  for (let x=0;x<=W;x+=40) ctx.lineTo(x, 340 - Math.sin(x*0.013)*22);
+  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.fill();
+  ctx.fillStyle = '#0a1410';
+  ctx.beginPath(); ctx.moveTo(0,400);
+  for (let x=0;x<=W;x+=30) ctx.lineTo(x, 380 - Math.sin(x*0.02+1)*14);
+  ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.fill();
+  ctx.fillStyle = 'rgba(212,160,23,.35)';
+  ctx.font = '9px JetBrains Mono';
+  ctx.fillText('VICINAL · 23h41 · sem cobertura de celular', 14, 14);
+}
+function drawPublishBG() {
+  const g = ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#101428'); g.addColorStop(1,'#080a18');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  // big screen with headline
+  ctx.fillStyle = 'rgba(212,160,23,.07)';
+  ctx.fillRect(120, 50, 720, 220);
+  ctx.strokeStyle = 'rgba(212,160,23,.45)'; ctx.lineWidth = 1;
+  ctx.strokeRect(120, 50, 720, 220);
+  ctx.fillStyle = '#d4a017';
+  ctx.font = 'bold 22px Special Elite';
+  ctx.fillText('EXCLUSIVO · FOLHA APURADA', 140, 90);
+  ctx.fillStyle = '#e8e3d0';
+  ctx.font = '26px Special Elite';
+  ctx.fillText('Operação Pastelão: emendas de', 140, 140);
+  ctx.fillText('Carlão são desviadas via ONG', 140, 174);
+  ctx.fillStyle = 'rgba(232,227,208,.55)';
+  ctx.font = '11px JetBrains Mono';
+  ctx.fillText('por Luiz Toledo · planilha vazada confirma R$ 4 mi em transferências', 140, 208);
+  // blink cursor
+  if (Math.floor(performance.now()/500)%2===0) {
+    ctx.fillStyle='#d4a017'; ctx.fillRect(140, 232, 8, 14);
+  }
+}
+
+/* ---------- TILE / ENTITY DRAW ---------- */
+function drawTiles() {
+  const room = ROOMS[game.room];
+  const pal = room.palette;
+  for (let y=0;y<ROWS;y++) {
+    for (let x=0;x<COLS;x++) {
+      const ch = room.map[y][x];
+      if (ch === '#') {
+        ctx.fillStyle = pal.wall;
+        ctx.fillRect(x*TILE, y*TILE, TILE, TILE);
+        ctx.fillStyle = pal.accent;
+        ctx.fillRect(x*TILE, y*TILE, TILE, 3);
+        // brick lines
+        ctx.fillStyle = 'rgba(0,0,0,.3)';
+        if ((x+y)%2===0) ctx.fillRect(x*TILE+TILE/2, y*TILE+3, 1, TILE-3);
+        ctx.fillRect(x*TILE, y*TILE+TILE-1, TILE, 1);
+      }
+    }
+  }
+}
+
+function drawEntities() {
+  const room = ROOMS[game.room];
+  for (const e of room.entities) {
+    const ex = e.x*TILE, ey = e.y*TILE;
+    switch (e.type) {
+      case 'desk':
+        ctx.fillStyle = '#5a4a32';
+        ctx.fillRect(ex+2, ey+10, TILE-4, 18);
+        ctx.fillStyle = '#3a2f20';
+        ctx.fillRect(ex+4, ey+24, 4, 8);
+        ctx.fillRect(ex+TILE-8, ey+24, 4, 8);
+        // monitor
+        ctx.fillStyle = '#0a0e1a';
+        ctx.fillRect(ex+8, ey-2, TILE-16, 14);
+        ctx.fillStyle = '#4ade80';
+        ctx.fillRect(ex+10, ey, 2, 2);
+        ctx.fillRect(ex+14, ey+2, 8, 1);
+        break;
+      case 'shelf':
+        ctx.fillStyle = '#3a2818';
+        ctx.fillRect(ex-4, ey-32, TILE+8, 64);
+        for (let i=0;i<5;i++) {
+          ctx.fillStyle = ['#7a4a28','#5a3818','#8a5a32','#6a4020','#4a3018'][i%5];
+          ctx.fillRect(ex-2+i*7, ey-28, 6, 26);
+        }
+        ctx.fillStyle='#1a0e08';
+        ctx.fillRect(ex-4, ey-2, TILE+8, 2);
+        break;
+      case 'tree': {
+        ctx.fillStyle = '#1a0e08';
+        ctx.fillRect(ex+TILE/2-3, ey-26, 6, 28);
+        ctx.fillStyle = '#0e1a14';
+        ctx.beginPath(); ctx.arc(ex+TILE/2, ey-30, 18, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#152a20';
+        ctx.beginPath(); ctx.arc(ex+TILE/2-6, ey-34, 12, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(ex+TILE/2+8, ey-30, 10, 0, Math.PI*2); ctx.fill();
+        break;
+      }
+      case 'fire': {
+        const t = performance.now()*0.008;
+        ctx.fillStyle = '#3a2010';
+        ctx.fillRect(ex+8, ey+24, TILE-16, 6);
+        for (let i=0;i<5;i++) {
+          const fx = ex+TILE/2 + Math.sin(t+i)*3;
+          const fy = ey+22 - i*4 - Math.abs(Math.sin(t+i*0.7))*4;
+          ctx.fillStyle = ['#ffba38','#ff8a28','#ff5a18','#d43017'][i%4];
+          ctx.fillRect(fx-2, fy, 4, 4);
+        }
+        // glow
+        const gr = ctx.createRadialGradient(ex+TILE/2, ey+10, 4, ex+TILE/2, ey+10, 50);
+        gr.addColorStop(0,'rgba(255,180,60,.35)'); gr.addColorStop(1,'rgba(255,180,60,0)');
+        ctx.fillStyle = gr;
+        ctx.fillRect(ex-30, ey-30, 90, 70);
+        break;
+      }
+      case 'clue': {
+        if (e._collected) break;
+        if (e.hidden && !game.abilities[e.hiddenBy]) break;
+        const t = performance.now()*0.005;
+        const yo = Math.sin(t)*3;
+        // glow
+        const gr = ctx.createRadialGradient(ex+TILE/2, ey+TILE/2+yo, 2, ex+TILE/2, ey+TILE/2+yo, 24);
+        gr.addColorStop(0,'rgba(212,160,23,.5)'); gr.addColorStop(1,'rgba(212,160,23,0)');
+        ctx.fillStyle = gr;
+        ctx.fillRect(ex-12, ey-12+yo, TILE+24, TILE+24);
+        // paper
+        ctx.fillStyle = '#e8e3d0';
+        ctx.fillRect(ex+8, ey+8+yo, 16, 18);
+        ctx.fillStyle = '#1a1a1a';
+        for (let i=0;i<4;i++) ctx.fillRect(ex+10, ey+11+i*4+yo, 12, 1);
+        ctx.fillStyle = '#d4a017';
+        ctx.fillRect(ex+8, ey+8+yo, 16, 2);
+        break;
+      }
+      case 'ability': {
+        if (game.abilities[e.key]) break;
+        const t = performance.now()*0.003;
+        const yo = Math.sin(t)*4;
+        const gr = ctx.createRadialGradient(ex+TILE/2, ey+TILE/2+yo, 2, ex+TILE/2, ey+TILE/2+yo, 40);
+        gr.addColorStop(0,'rgba(74,222,128,.5)'); gr.addColorStop(1,'rgba(74,222,128,0)');
+        ctx.fillStyle = gr;
+        ctx.fillRect(ex-20, ey-20, TILE+40, TILE+40);
+        if (e.key === 'cam') {
+          ctx.fillStyle = '#1a1a1a';
+          ctx.fillRect(ex+6, ey+10+yo, 20, 14);
+          ctx.fillStyle = '#0a0a0a';
+          ctx.beginPath(); ctx.arc(ex+16, ey+17+yo, 5, 0, Math.PI*2); ctx.fill();
+          ctx.fillStyle = '#d4a017';
+          ctx.beginPath(); ctx.arc(ex+16, ey+17+yo, 3, 0, Math.PI*2); ctx.fill();
+          ctx.fillStyle = '#ff5050';
+          ctx.fillRect(ex+22, ey+12+yo, 2, 2);
+        } else if (e.key === 'rec') {
+          ctx.fillStyle = '#222';
+          ctx.fillRect(ex+10, ey+8+yo, 12, 18);
+          ctx.fillStyle = '#444';
+          ctx.fillRect(ex+12, ey+10+yo, 8, 6);
+          ctx.fillStyle = '#d4a017';
+          ctx.fillRect(ex+12, ey+18+yo, 8, 1);
+          ctx.fillRect(ex+12, ey+21+yo, 8, 1);
+          ctx.fillStyle = '#ff3030';
+          ctx.fillRect(ex+18, ey+11+yo, 2, 2);
+        }
+        break;
+      }
+      case 'noisewall': {
+        if (e.broken) break;
+        const h = (e.h||1) * TILE;
+        ctx.fillStyle = 'rgba(212,160,23,.08)';
+        ctx.fillRect(ex, ey, TILE, h);
+        ctx.strokeStyle = 'rgba(212,160,23,.4)';
+        ctx.setLineDash([4,3]);
+        ctx.strokeRect(ex+1, ey+1, TILE-2, h-2);
+        ctx.setLineDash([]);
+        ctx.fillStyle = 'rgba(212,160,23,.4)';
+        ctx.font = '8px JetBrains Mono';
+        ctx.save();
+        ctx.translate(ex+TILE/2-4, ey+12);
+        ctx.fillText('))) ', 0, 0);
+        ctx.restore();
+        break;
+      }
+      case 'door': {
+        const locked = e.locked && !((e.locked==='guard' && game.guardStunned>0) || (e.locked==='doc' && game.abilities.doc));
+        ctx.fillStyle = locked ? 'rgba(192,57,43,.18)' : 'rgba(212,160,23,.12)';
+        ctx.fillRect(ex, ey-TILE, TILE, TILE*2);
+        ctx.strokeStyle = locked ? 'rgba(192,57,43,.5)' : 'rgba(212,160,23,.55)';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(ex+3, ey-TILE+3, TILE-6, TILE*2-6);
+        ctx.fillStyle = locked ? '#c0392b' : '#d4a017';
+        ctx.font = '8px JetBrains Mono';
+        ctx.fillText(locked ? 'BLOQ' : '→', ex+8, ey-2);
+        // E hint when near
+        const pr = playerBBox(game.player);
+        const dist = Math.abs((pr.l+pr.r)/2 - (ex+TILE/2));
+        if (dist < TILE*1.5) {
+          ctx.fillStyle = 'rgba(232,227,208,.85)';
+          ctx.font = '10px JetBrains Mono';
+          ctx.fillText('[E]', ex+8, ey-TILE-4);
+        }
+        break;
+      }
+      case 'finish': {
+        const t = performance.now()*0.003;
+        ctx.fillStyle = `rgba(212,160,23,${0.15+Math.sin(t)*0.05})`;
+        ctx.fillRect(ex-20, ey-TILE*2, TILE+40, TILE*3);
+        ctx.fillStyle = '#d4a017';
+        ctx.fillRect(ex+TILE/2-1, ey-TILE*2, 2, TILE*3);
+        ctx.font = '10px JetBrains Mono';
+        ctx.textAlign='center';
+        ctx.fillText('PUBLICAR', ex+TILE/2, ey-TILE*2-6);
+        ctx.textAlign='start';
+        break;
+      }
+      case 'enemy': {
+        if (e.defeated) break;
+        const ex0 = (e._x !== undefined ? e._x : e.x*TILE);
+        const ey0 = e.y*TILE;
+        const stunned = (e.stunned || 0) > 0;
+        const facing = (e._dir || 1);
+        const bob = Math.sin(e._anim || 0) * 1.2;
+        // shadow
+        ctx.fillStyle = 'rgba(0,0,0,.45)';
+        ctx.beginPath();
+        ctx.ellipse(ex0+TILE/2, ey0+TILE+1, TILE*0.42, 2.5, 0, 0, Math.PI*2);
+        ctx.fill();
+        // legs (alternating)
+        ctx.fillStyle = '#0a0a0a';
+        const stepO = stunned ? 0 : Math.floor((e._anim||0)*2)%2;
+        ctx.fillRect(ex0+9 + (stepO?0:1),  ey0+24, 4, 6);
+        ctx.fillRect(ex0+18 - (stepO?1:0), ey0+24, 4, 6);
+        // body (suit)
+        ctx.fillStyle = '#1a1822';
+        ctx.fillRect(ex0+7, ey0+12+bob, 18, 13);
+        // shoulder line
+        ctx.fillStyle = '#2a2632';
+        ctx.fillRect(ex0+7, ey0+12+bob, 18, 2);
+        // shirt + tie
+        ctx.fillStyle = '#e8e3d0';
+        ctx.fillRect(ex0+13, ey0+13+bob, 6, 4);
+        ctx.fillStyle = '#7a1f1f';
+        ctx.fillRect(ex0+15, ey0+14+bob, 2, 9);
+        // head
+        ctx.fillStyle = '#c89a78';
+        ctx.fillRect(ex0+10, ey0+3+bob, 12, 10);
+        // hair (slick back)
+        ctx.fillStyle = '#1a0e08';
+        ctx.fillRect(ex0+10, ey0+3+bob, 12, 3);
+        ctx.fillRect(ex0 + (facing>0 ? 20 : 10), ey0+5+bob, 2, 2);
+        // eyes
+        if (stunned) {
+          ctx.fillStyle = '#d4a017';
+          ctx.fillRect(ex0+12, ey0+8+bob, 3, 1);
+          ctx.fillRect(ex0+17, ey0+8+bob, 3, 1);
+        } else {
+          ctx.fillStyle = '#ff3030';
+          const eo = facing > 0 ? 1 : -1;
+          ctx.fillRect(ex0+13+eo, ey0+8+bob, 1, 2);
+          ctx.fillRect(ex0+18+eo, ey0+8+bob, 1, 2);
+          // angry brows
+          ctx.fillStyle = '#1a0e08';
+          ctx.fillRect(ex0+12, ey0+7+bob, 3, 1);
+          ctx.fillRect(ex0+17, ey0+7+bob, 3, 1);
+        }
+        // briefcase
+        const bx = ex0 + (facing>0 ? 24 : 1);
+        ctx.fillStyle = '#3a2810';
+        ctx.fillRect(bx, ey0+16+bob, 7, 8);
+        ctx.fillStyle = '#1a1408';
+        ctx.fillRect(bx, ey0+15+bob, 7, 1);
+        ctx.fillStyle = '#d4a017';
+        ctx.fillRect(bx+3, ey0+15+bob, 1, 1);
+        // label
+        ctx.font = '8px JetBrains Mono';
+        ctx.fillStyle = stunned ? 'rgba(212,160,23,.85)' : 'rgba(192,57,43,.7)';
+        ctx.fillText(stunned ? 'CEGO' : 'LOBISTA', ex0+1, ey0-4);
+        // angry aura
+        if (!stunned) {
+          const t = performance.now()*0.005;
+          ctx.strokeStyle = `rgba(192,57,43,${0.15+Math.sin(t)*0.08})`;
+          ctx.lineWidth = 1;
+          ctx.strokeRect(ex0+5, ey0+1+bob, 22, 26);
+        }
+        break;
+      }
+      case 'npc':
+      case 'guard': {
+        // body
+        const stunned = e.type === 'guard' && game.guardStunned > 0;
+        const skin = e.type === 'guard' ? '#c4a888' : '#d8b89c';
+        ctx.fillStyle = e.type === 'guard' ? '#1a2538' : '#3a3548';
+        ctx.fillRect(ex+8, ey+10, 16, 18);
+        ctx.fillStyle = skin;
+        ctx.fillRect(ex+11, ey+2, 10, 10); // head
+        ctx.fillStyle = '#1a1010';
+        ctx.fillRect(ex+11, ey+2, 10, 4); // hair
+        // eyes
+        if (stunned) {
+          ctx.fillStyle = '#d4a017';
+          ctx.fillRect(ex+12, ey+7, 3, 1); ctx.fillRect(ex+17, ey+7, 3, 1);
+        } else {
+          ctx.fillStyle = '#0a0a0a';
+          ctx.fillRect(ex+13, ey+7, 1, 1); ctx.fillRect(ex+18, ey+7, 1, 1);
+        }
+        // legs
+        ctx.fillStyle = '#1a1a1a';
+        ctx.fillRect(ex+10, ey+26, 5, 6);
+        ctx.fillRect(ex+17, ey+26, 5, 6);
+        // chat indicator
+        const pr = playerBBox(game.player);
+        const dist = Math.abs((pr.l+pr.r)/2 - (ex+TILE/2));
+        if (dist < TILE*1.6) {
+          ctx.fillStyle = 'rgba(232,227,208,.75)';
+          ctx.font = '10px JetBrains Mono';
+          ctx.fillText('[E]', ex+9, ey-4);
+        }
+        if (e.type === 'guard') {
+          ctx.fillStyle = stunned ? 'rgba(212,160,23,.85)' : 'rgba(192,57,43,.7)';
+          ctx.font = '8px JetBrains Mono';
+          ctx.fillText(stunned ? 'CEGO' : 'GUARDA', ex+2, ey-4);
+        }
+        break;
+      }
+    }
+  }
+}
+
+/* ---------- PLAYER DRAW ---------- */
+function drawPlayer() {
+  const p = game.player;
+  // invulnerability flicker
+  if (p.invuln > 0 && Math.floor(p.invuln/4) % 2 === 0) return;
+  const px = Math.round(p.x), py = Math.round(p.y);
+  const walking = Math.abs(p.vx) > 0.4 && p.onGround;
+  const step = walking ? Math.floor(p.anim*4) % 2 : 0;
+  // shadow
+  ctx.fillStyle = 'rgba(0,0,0,.4)';
+  ctx.beginPath();
+  ctx.ellipse(px+p.w/2, py+p.h+1, p.w*0.6, 3, 0, 0, Math.PI*2);
+  ctx.fill();
+  // legs
+  ctx.fillStyle = '#1a1f2e';
+  if (step===0) {
+    ctx.fillRect(px+2, py+22, 6, 6);
+    ctx.fillRect(px+10, py+22, 6, 6);
+  } else {
+    ctx.fillRect(px, py+22, 6, 6);
+    ctx.fillRect(px+12, py+22, 6, 6);
+  }
+  // body (jacket)
+  ctx.fillStyle = '#2a2f44';
+  ctx.fillRect(px+1, py+12, 16, 12);
+  // shirt collar
+  ctx.fillStyle = '#e8e3d0';
+  ctx.fillRect(px+7, py+12, 4, 4);
+  // notebook on hip
+  ctx.fillStyle = '#d4a017';
+  ctx.fillRect(px + (p.dir>0 ? 14 : 0), py+16, 4, 5);
+  // head
+  ctx.fillStyle = '#d8b89c';
+  ctx.fillRect(px+4, py+2, 10, 10);
+  // hair
+  ctx.fillStyle = '#1f1410';
+  ctx.fillRect(px+4, py+2, 10, 4);
+  ctx.fillRect(px + (p.dir>0?12:2), py+5, 2, 2);
+  // eye
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(px + (p.dir>0?11:5), py+8, 2, 1);
+  // glasses
+  ctx.strokeStyle = '#d4a017'; ctx.lineWidth = 1;
+  ctx.strokeRect(px + (p.dir>0?9:5)+0.5, py+7+0.5, 4, 3);
+
+  // flash overlay if firing camera
+  if (game.flashLight > 0.4) {
+    const cx = px+p.w/2, cy = py+p.h/2;
+    const gr = ctx.createRadialGradient(cx, cy, 4, cx, cy, 220*game.flashLight);
+    gr.addColorStop(0,`rgba(255,255,255,${game.flashLight*0.9})`);
+    gr.addColorStop(.4,`rgba(212,160,23,${game.flashLight*0.4})`);
+    gr.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle = gr;
+    ctx.fillRect(0,0,W,H);
+  }
+
+  // recorder pulse rings
+  if (game.recPulse > 0.05) {
+    const cx = px+p.w/2, cy = py+p.h/2;
+    ctx.strokeStyle = `rgba(212,160,23,${game.recPulse*0.7})`;
+    ctx.lineWidth = 2;
+    for (let i=0;i<3;i++){
+      const r = (1-game.recPulse)*120 + i*30;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.stroke();
+    }
+  }
+}
+
+function drawParticles() {
+  for (const p of game.particles) {
+    const a = Math.min(1, p.life/30);
+    const col = p.color === '#ffffff' ? `rgba(255,255,255,${a})` :
+      p.color === '#4ade80' ? `rgba(74,222,128,${a})` :
+      p.color === '#c0392b' ? `rgba(192,57,43,${a})` :
+      `rgba(212,160,23,${a})`;
+    ctx.fillStyle = col;
+    ctx.fillRect(p.x|0, p.y|0, 2, 2);
+  }
+}
+
+function drawProjectiles() {
+  for (const proj of game.projectiles) {
+    const a = Math.min(1, proj.life/30);
+    // expanding sound rings
+    for (let i = 0; i < 3; i++) {
+      const r = 4 + (proj.age*0.6 + i*4) % 14;
+      ctx.strokeStyle = `rgba(212,160,23,${a*0.6/(i+1)})`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(proj.x, proj.y, r, -Math.PI*0.4, Math.PI*0.4);
+      if (proj.dir < 0) ctx.arc(proj.x, proj.y, r, Math.PI*0.6, Math.PI*1.4);
+      ctx.stroke();
+    }
+    // core
+    ctx.fillStyle = `rgba(255,240,180,${a})`;
+    ctx.fillRect(proj.x-2, proj.y-2, 4, 4);
+    // trail
+    ctx.fillStyle = `rgba(212,160,23,${a*0.3})`;
+    for (let i=1; i<5; i++) {
+      ctx.fillRect(proj.x - proj.vx*i*0.6 - 1, proj.y-1, 2, 2);
+    }
+  }
+}
+
+/* ---------- LIGHTING / ATMOSPHERE ---------- */
+function drawLighting() {
+  // soft vignette + warm edge
+  const gr = ctx.createRadialGradient(W/2, H/2, 200, W/2, H/2, 600);
+  gr.addColorStop(0,'rgba(0,0,0,0)'); gr.addColorStop(1,'rgba(0,0,0,.55)');
+  ctx.fillStyle = gr;
+  ctx.fillRect(0,0,W,H);
+}
+
+/* ---------- RENDER ---------- */
+function render() {
+  ctx.clearRect(0,0,W,H);
+  ctx.save();
+  if (game.shake > 0) {
+    const s = game.shake;
+    ctx.translate((Math.random()-0.5)*s, (Math.random()-0.5)*s);
+  }
+  ROOMS[game.room].bg();
+  drawTiles();
+  drawEntities();
+  drawPlayer();
+  drawProjectiles();
+  drawParticles();
+  drawLighting();
+  ctx.restore();
+
+  // fade
+  if (game.fadeDir !== 0) {
+    if (game.fadeDir > 0) {
+      game.fadeAlpha += 0.06;
+      if (game.fadeAlpha >= 1) {
+        game.fadeAlpha = 1;
+        game._fadeFn && game._fadeFn();
+        game._fadeFn = null;
+        game.fadeDir = -1;
+      }
+    } else {
+      game.fadeAlpha -= 0.06;
+      if (game.fadeAlpha <= 0) { game.fadeAlpha = 0; game.fadeDir = 0; }
+    }
+  }
+  if (game.fadeAlpha > 0) {
+    ctx.fillStyle = `rgba(5,8,17,${game.fadeAlpha})`;
+    ctx.fillRect(0,0,W,H);
+  }
+}
+
+/* ---------- LOOP ---------- */
+let last = performance.now();
+function loop(t) {
+  const dt = Math.min(40, t-last);
+  last = t;
+  if (game.state === 'play') update(dt);
+  updateParticles();
+  render();
+  // clear single-frame
+  for (const k in pressed) pressed[k] = false;
+  // dialog input
+  if (game.state === 'dialog' && (keys[' '] || keys['e'])) {
+    if (!loop._dlgLock) {
+      advanceDialog();
+      loop._dlgLock = true;
+      setTimeout(()=>loop._dlgLock=false, 220);
+    }
+  }
+  requestAnimationFrame(loop);
+}
+
+/* ---------- END ---------- */
+function endGame() {
+  game.state = 'end';
+  const list = document.getElementById('cluesRecap');
+  list.innerHTML = '';
+  for (const c of game.clues) {
+    const li = document.createElement('li');
+    li.textContent = '— ' + c;
+    list.appendChild(li);
+  }
+  document.getElementById('endScreen').classList.remove('hidden');
+}
+
+/* ---------- WIRE UP ---------- */
+document.getElementById('startBtn').addEventListener('click', () => {
+  document.getElementById('titleScreen').classList.add('hidden');
+  document.getElementById('hud').classList.remove('hidden');
+  game.player.hp = 3;
+  setRoom('redacao');
+  updateHearts();
+  document.getElementById('clueCount').textContent = `0/${game.totalClues}`;
+  game.state = 'play';
+});
+document.getElementById('replayBtn').addEventListener('click', () => location.reload());
+
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
