@@ -242,59 +242,61 @@
   .blink { animation:blink 1.2s steps(2,start) infinite; }
   @keyframes blink { to { opacity:.2; } }
 
-  /* Touch controls — always rendered, only visible on pointer:coarse */
+  /* Touch controls — compact corner overlays */
   .touch-ctrl {
     position:absolute; inset:auto 0 0 0;
     display:none;
     justify-content:space-between; align-items:flex-end;
-    padding:0 8px 8px;
+    padding:6px 8px;
     pointer-events:none; z-index:7;
   }
   .tc-pad, .tc-actions {
-    display:grid; gap:6px;
+    display:flex; gap:5px;
     pointer-events:auto;
   }
-  .tc-pad {
-    grid-template-columns:repeat(3, auto);
-    grid-template-rows:auto auto;
-  }
-  .tc-actions {
-    grid-template-columns:repeat(2, auto);
-  }
   .tc-btn {
-    width:54px; height:54px;
+    width:42px; height:42px;
     border:1px solid rgba(212,160,23,.45);
-    background:rgba(5,8,17,.55);
+    background:rgba(5,8,17,.6);
     color:#d4a017;
     font-family:'JetBrains Mono', monospace;
-    font-size:16px; font-weight:700;
-    border-radius:10px;
+    font-size:14px; font-weight:700;
+    border-radius:8px;
     backdrop-filter:blur(4px);
-    display:flex; align-items:center; justify-content:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
     cursor:pointer;
     transition:transform .08s, background .08s;
     -webkit-tap-highlight-color:transparent;
     user-select:none;
   }
   .tc-btn:active, .tc-btn.active {
-    background:rgba(212,160,23,.45);
+    background:rgba(212,160,23,.55);
     color:#050811;
-    transform:scale(.93);
+    transform:scale(.92);
   }
-  .tc-btn .lbl { font-size:9px; letter-spacing:.1em; opacity:.8; }
-  .tc-btn .ic  { font-size:18px; line-height:1; }
-  .tc-left  { grid-column:1; grid-row:1 / span 2; height:114px; }
-  .tc-right { grid-column:3; grid-row:1 / span 2; height:114px; }
-  .tc-jump  { grid-column:2; grid-row:1 / span 2; height:114px; width:60px; background:rgba(212,160,23,.18); }
-  .tc-z     { width:62px; height:54px; }
-  .tc-x     { width:62px; height:54px; }
-  .tc-e     { width:62px; height:54px; grid-column:1 / span 2; }
-  /* Show on touch / coarse pointer / narrow viewports */
-  @media (pointer: coarse), (max-width: 720px) {
+  .tc-btn .lbl { font-size:8px; letter-spacing:.05em; opacity:.7; line-height:1; margin-top:1px; }
+  .tc-btn .ic  { font-size:14px; line-height:1; }
+  .tc-jump { background:rgba(212,160,23,.22); }
+  .tc-e    { width:54px; }
+  /* Show on touch / coarse pointer / mobile dimensions */
+  @media (hover: none) and (pointer: coarse), (max-width: 720px), (max-height: 500px) {
     .touch-ctrl { display:flex; }
     .controls-hint { display:none; }
-    .hud { font-size:9px; gap:4px; }
-    .chip, .ability { padding:5px 7px; }
+    .hud { font-size:9px; gap:4px; padding:8px; }
+    .chip, .ability { padding:5px 7px; font-size:9px; }
+    .ability .key { font-size:8px; }
+    .hearts { padding:4px 7px; }
+    .hearts span { font-size:11px; }
+    .room-name { font-size:28px; }
+    .room-name .sub { font-size:9px; }
+    .dialog { bottom:60px; padding:12px 16px; max-width:92%; }
+    .dialog .text { font-size:13px; }
+  }
+  @media (max-width: 480px) {
+    .overlay h1 { font-size:42px; }
+    .overlay p { font-size:12px; }
+    .keys { font-size:10px; gap:4px 12px; }
+    .btn { padding:11px 24px; font-size:11px; letter-spacing:.22em; }
   }
 </style>
 </head>

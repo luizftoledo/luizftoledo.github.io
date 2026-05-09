@@ -193,7 +193,7 @@
       background:radial-gradient(ellipse at 50% 30%, rgba(13,20,38,.92) 0%, rgba(5,8,17,.98) 70%);
       backdrop-filter:blur(8px);
       display:flex; align-items:center; justify-content:center;
-      padding:20px;
+      padding:18px;
       opacity:0; pointer-events:none;
       transition:opacity .35s ease;
       font-family:'JetBrains Mono', ui-monospace, monospace;
@@ -206,94 +206,85 @@
     }
     .se-card {
       position:relative;
-      width:min(880px, 100%);
+      width:min(720px, 100%);
       background:#050811;
       border:1px solid rgba(212,160,23,.5);
       box-shadow:0 0 0 1px rgba(212,160,23,.18), 0 30px 80px rgba(0,0,0,.85), 0 0 120px rgba(212,160,23,.12);
-      display:grid; grid-template-columns:1fr 1fr;
       overflow:hidden;
       transform:scale(.96); transition:transform .35s cubic-bezier(.2,.8,.2,1);
-      max-height:90vh;
     }
     .se-popup-overlay.show .se-card { transform:scale(1); }
-
-    .se-preview {
-      position:relative; min-height:340px;
+    .se-art {
+      position:relative;
+      aspect-ratio:16/9;
       background:#0a0e1a;
       overflow:hidden;
     }
-    .se-preview iframe {
+    .se-art canvas {
       position:absolute; inset:0;
       width:100%; height:100%;
-      border:0;
+      image-rendering:pixelated;
+      image-rendering:crisp-edges;
+    }
+    .se-art::after {
+      content:''; position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(5,8,17,.85) 100%),
+        radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,.45) 100%);
       pointer-events:none;
     }
-    .se-preview::after {
-      content:''; position:absolute; inset:0;
-      background:linear-gradient(135deg, rgba(0,0,0,0) 60%, rgba(5,8,17,.55) 100%);
+    .se-art-title {
+      position:absolute; left:0; right:0; bottom:14px;
+      text-align:center; z-index:2;
       pointer-events:none;
+    }
+    .se-title {
+      font-family:'Special Elite', monospace;
+      color:#d4a017;
+      font-size:clamp(28px, 5vw, 44px); line-height:1;
+      margin:0;
+      letter-spacing:.02em;
+      text-shadow:0 0 22px rgba(212,160,23,.55), 0 4px 12px rgba(0,0,0,.7);
+    }
+    .se-subtitle {
+      font-size:10px; letter-spacing:.45em;
+      color:rgba(232,227,208,.7); text-transform:uppercase;
+      margin-top:4px;
+      text-shadow:0 2px 6px rgba(0,0,0,.6);
     }
     .se-tag-floating {
-      position:absolute; top:14px; left:14px; z-index:2;
-      background:rgba(212,160,23,.2);
+      position:absolute; top:12px; left:12px; z-index:2;
+      background:rgba(212,160,23,.18);
       color:#d4a017;
       border:1px solid #d4a017;
-      padding:4px 10px;
-      font-size:9px; letter-spacing:.32em; text-transform:uppercase;
+      padding:3px 9px;
+      font-size:9px; letter-spacing:.3em; text-transform:uppercase;
       animation:se-pulse 2s infinite;
     }
     @keyframes se-pulse {
       0%,100% { box-shadow:0 0 0 0 rgba(212,160,23,.5); }
       50%     { box-shadow:0 0 0 8px rgba(212,160,23,0); }
     }
-
-    .se-content {
-      padding:32px 30px 26px;
+    .se-body {
+      padding:18px 22px 18px;
       color:#e8e3d0;
-      display:flex; flex-direction:column;
-      gap:14px;
-      position:relative;
+      text-align:center;
     }
-    .se-eyebrow {
-      font-size:10px; letter-spacing:.4em; text-transform:uppercase;
-      color:rgba(232,227,208,.5);
-    }
-    .se-title {
+    .se-pitch {
       font-family:'Special Elite', monospace;
-      color:#d4a017;
-      font-size:38px; line-height:1;
-      margin:0;
-      letter-spacing:.02em;
-      text-shadow:0 0 24px rgba(212,160,23,.35);
-    }
-    .se-subtitle {
-      font-size:11px; letter-spacing:.32em;
-      color:rgba(232,227,208,.55); text-transform:uppercase;
-      margin:-4px 0 4px;
-    }
-    .se-premise {
-      font-family:'Special Elite', monospace;
-      font-size:14px; line-height:1.6;
+      font-size:14px; line-height:1.5;
       color:#e8e3d0;
-      margin:0;
+      margin:0 0 14px;
+      max-width:480px; margin-left:auto; margin-right:auto;
     }
-    .se-premise b { color:#d4a017; font-weight:normal; }
-    .se-meta {
-      display:flex; gap:14px; flex-wrap:wrap;
-      font-size:10px; letter-spacing:.18em; text-transform:uppercase;
-      color:rgba(232,227,208,.4);
-      padding:8px 0; border-top:1px dashed rgba(232,227,208,.1);
-    }
-    .se-meta span::before { content:'· '; color:rgba(212,160,23,.5); }
-    .se-meta span:first-child::before { content:''; }
+    .se-pitch b { color:#d4a017; font-weight:normal; }
     .se-cta-row {
-      display:flex; flex-direction:column; gap:8px;
-      margin-top:auto;
+      display:flex; flex-direction:column; gap:6px; align-items:center;
     }
     .se-btn {
       display:inline-flex; align-items:center; justify-content:center; gap:10px;
       background:#d4a017; color:#050811;
-      padding:14px 24px;
+      padding:13px 38px;
       font-family:'JetBrains Mono', monospace;
       font-size:13px; letter-spacing:.32em; text-transform:uppercase;
       font-weight:700;
@@ -303,74 +294,200 @@
       box-shadow:0 0 30px rgba(212,160,23,.25);
     }
     .se-btn:hover { transform:translateY(-2px); box-shadow:0 6px 40px rgba(212,160,23,.45); background:#e8b520; }
-    .se-btn-arrow { font-size:18px; }
+    .se-meta {
+      font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+      color:rgba(232,227,208,.4);
+    }
+    .se-meta span::before { content:' · '; color:rgba(212,160,23,.5); }
+    .se-meta span:first-child::before { content:''; }
     .se-skip {
       background:transparent; border:0;
       color:rgba(232,227,208,.4);
       font-family:'JetBrains Mono', monospace;
       font-size:10px; letter-spacing:.22em; text-transform:uppercase;
       cursor:pointer;
-      padding:8px;
+      padding:6px;
+      margin-top:2px;
       transition:color .15s;
     }
     .se-skip:hover { color:rgba(232,227,208,.85); }
     .se-close {
       position:absolute; top:10px; right:10px; z-index:3;
       width:30px; height:30px;
-      background:rgba(5,8,17,.6); border:1px solid rgba(232,227,208,.18);
-      color:rgba(232,227,208,.6);
+      background:rgba(5,8,17,.7); border:1px solid rgba(232,227,208,.22);
+      color:rgba(232,227,208,.7);
       font-size:18px; cursor:pointer;
       display:flex; align-items:center; justify-content:center;
-      transition:all .15s;
+      transition:all .15s; border-radius:4px;
     }
     .se-close:hover { color:#d4a017; border-color:#d4a017; }
-
-    @media (max-width: 720px) {
-      .se-card { grid-template-columns:1fr; max-height:none; }
-      .se-preview { min-height:200px; aspect-ratio:16/10; }
-      .se-content { padding:22px 22px 18px; gap:10px; }
-      .se-title { font-size:30px; }
-      .se-premise { font-size:13px; }
+    @media (max-width: 480px) {
+      .se-body { padding:14px 16px 16px; }
+      .se-pitch { font-size:13px; }
+      .se-btn { padding:12px 28px; font-size:12px; letter-spacing:.28em; }
     }
   </style>
   <div class="se-popup-overlay" id="sePopup" role="dialog" aria-modal="true" aria-labelledby="seTitle">
     <div class="se-card">
-      <button class="se-close" onclick="seClose()" aria-label="fechar">×</button>
-      <div class="se-preview">
-        <span class="se-tag-floating">novo · jogo</span>
-        <iframe src="sinais-enterrados/" loading="lazy" title="Prévia do jogo Sinais Enterrados"></iframe>
-      </div>
-      <div class="se-content">
-        <div class="se-eyebrow">caso fictício · investigação</div>
-        <h2 id="seTitle" class="se-title">Sinais Enterrados</h2>
-        <div class="se-subtitle">um jogo de jornalismo investigativo</div>
-        <p class="se-premise">
-          Caiu uma denúncia anônima. <b>R$ 4 milhões em emendas parlamentares</b> sumindo numa ONG fantasma. Lobistas tentam te empurrar pra fora. <b>Apure, pegue ferramentas, publique a matéria.</b>
-        </p>
-        <div class="se-meta">
-          <span>~5 minutos</span>
-          <span>jogável no celular</span>
-          <span>metroidvania pixel-art</span>
+      <button class="se-close" onclick="seClose()" aria-label="close">×</button>
+      <div class="se-art">
+        <canvas id="seArt" width="640" height="360"></canvas>
+        <span class="se-tag-floating" data-pt="novo · jogo" data-en="new · game">new · game</span>
+        <div class="se-art-title">
+          <h2 id="seTitle" class="se-title">Sinais Enterrados</h2>
+          <div class="se-subtitle" data-pt="um jogo de investigação" data-en="an investigation game">an investigation game</div>
         </div>
+      </div>
+      <div class="se-body">
+        <p class="se-pitch"
+           data-pt="Você é repórter. Caiu uma denúncia anônima sobre <b>desvio de emendas parlamentares</b>. Apure, esquive dos lobistas, publique."
+           data-en="You're a reporter. An anonymous tip lands on your desk: <b>missing public funds</b>. Investigate, dodge the lobbyists, publish.">
+        </p>
         <div class="se-cta-row">
           <a href="sinais-enterrados/" class="se-btn" onclick="seMarkSeen()">
-            <span class="se-btn-arrow">▶</span> Jogar agora
+            <span style="font-size:18px">▶</span>
+            <span data-pt="Jogar agora" data-en="Play now">Play now</span>
           </a>
-          <button class="se-skip" onclick="seClose()">depois — quero ver o portfólio</button>
+          <div class="se-meta">
+            <span data-pt="~5 minutos" data-en="~5 minutes">~5 minutes</span>
+            <span data-pt="📱 mobile-friendly" data-en="📱 mobile-friendly">📱 mobile-friendly</span>
+          </div>
+          <button class="se-skip" onclick="seClose()" data-pt="depois" data-en="maybe later">maybe later</button>
         </div>
       </div>
     </div>
   </div>
   <script>
-    function seClose() {
-      document.getElementById('sePopup').classList.remove('show');
-      try { localStorage.setItem('sinais-enterrados-popup', '1'); } catch(e){}
-      document.body.style.overflow = '';
-    }
-    function seMarkSeen() {
-      try { localStorage.setItem('sinais-enterrados-popup', '1'); } catch(e){}
-    }
-    (function() {
+    (function () {
+      // ---------- bilingual switching ----------
+      const lang = (document.documentElement.lang || 'en').toLowerCase().startsWith('pt') ? 'pt' : 'en';
+      document.querySelectorAll('#sePopup [data-en]').forEach(el => {
+        const text = el.dataset[lang];
+        if (!text) return;
+        if (text.includes('<')) el.innerHTML = text; else el.textContent = text;
+      });
+
+      // ---------- pixel-art animated key art on canvas ----------
+      const cv = document.getElementById('seArt');
+      const c = cv.getContext('2d');
+      c.imageSmoothingEnabled = false;
+      let t = 0;
+      function draw() {
+        t++;
+        const W = 640, H = 360;
+        // background
+        const g = c.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, '#0d1426'); g.addColorStop(1, '#080c18');
+        c.fillStyle = g; c.fillRect(0, 0, W, H);
+        // distant stars
+        for (let i = 0; i < 60; i++) {
+          c.fillStyle = `rgba(255,255,255,${0.05 + 0.18 * ((i*7)%5)/5})`;
+          c.fillRect((i*97)%W, (i*53)%180, 1, 1);
+        }
+        // window frame back
+        c.fillStyle = 'rgba(212,160,23,.05)';
+        c.fillRect(60, 30, 200, 110);
+        c.strokeStyle = 'rgba(212,160,23,.22)'; c.lineWidth = 1;
+        c.strokeRect(60, 30, 200, 110);
+        c.beginPath(); c.moveTo(160,30); c.lineTo(160,140); c.moveTo(60,85); c.lineTo(260,85); c.stroke();
+        // archive shelves on right
+        for (let i = 0; i < 4; i++) {
+          const x = 380 + i * 60, y = 90 + (i%2)*4;
+          c.fillStyle = '#3a2818';
+          c.fillRect(x, y, 50, 130);
+          for (let k = 0; k < 6; k++) {
+            c.fillStyle = ['#7a4a28','#5a3818','#8a5a32','#6a4020','#4a3018'][k%5];
+            c.fillRect(x + 2 + k*7.5, y + 4, 6, 122);
+          }
+          c.fillStyle = '#1a0e08'; c.fillRect(x, y+128, 50, 2);
+        }
+        // ground
+        c.fillStyle = '#1a2030';
+        c.fillRect(0, 280, W, 80);
+        c.fillStyle = '#3a4a6e'; c.fillRect(0, 280, W, 3);
+        // distant lobbyist (silhouette)
+        const lx = 100, ly = 244 + Math.sin(t*0.04)*1;
+        c.globalAlpha = 0.6;
+        c.fillStyle = '#0a0a0a'; c.fillRect(lx+6, ly+24, 5, 8); c.fillRect(lx+15, ly+24, 5, 8);
+        c.fillStyle = '#1a1822'; c.fillRect(lx+4, ly+10, 18, 14);
+        c.fillStyle = '#7a1f1f'; c.fillRect(lx+12, ly+10, 2, 10);
+        c.fillStyle = '#c89a78'; c.fillRect(lx+7, ly+1, 12, 10);
+        c.fillStyle = '#1a0e08'; c.fillRect(lx+7, ly+1, 12, 3);
+        c.fillStyle = '#ff3030'; c.fillRect(lx+10, ly+6, 1, 2); c.fillRect(lx+15, ly+6, 1, 2);
+        c.fillStyle = '#3a2810'; c.fillRect(lx+22, ly+15, 6, 8);
+        c.globalAlpha = 1;
+        // journalist (center, larger)
+        const jx = 304, jy = 232 + Math.sin(t*0.06)*2;
+        // shadow
+        c.fillStyle = 'rgba(0,0,0,.45)';
+        c.beginPath(); c.ellipse(jx+18, jy+58, 22, 3, 0, 0, Math.PI*2); c.fill();
+        // legs
+        const step = Math.floor(t*0.06)%2;
+        c.fillStyle = '#1a1f2e';
+        c.fillRect(jx+6 +step*2, jy+44, 8, 12);
+        c.fillRect(jx+22-step*2, jy+44, 8, 12);
+        // body
+        c.fillStyle = '#2a2f44'; c.fillRect(jx+4, jy+24, 28, 22);
+        // collar
+        c.fillStyle = '#e8e3d0'; c.fillRect(jx+15, jy+24, 6, 6);
+        // notebook
+        c.fillStyle = '#d4a017'; c.fillRect(jx+28, jy+30, 6, 9);
+        c.fillStyle = '#a07a10'; c.fillRect(jx+28, jy+30, 6, 1);
+        // head
+        c.fillStyle = '#d8b89c'; c.fillRect(jx+8, jy+6, 20, 18);
+        // hair
+        c.fillStyle = '#1f1410'; c.fillRect(jx+8, jy+6, 20, 6);
+        c.fillRect(jx+24, jy+11, 4, 3);
+        // glasses
+        c.strokeStyle = '#d4a017'; c.lineWidth = 1.5;
+        c.strokeRect(jx+18, jy+15, 7, 5);
+        // eye
+        c.fillStyle = '#0a0a0a'; c.fillRect(jx+20, jy+17, 2, 2);
+        // floating clue paper to the right of journalist
+        const cx = 460 + Math.sin(t*0.04)*3;
+        const cy = 200 + Math.sin(t*0.05)*5;
+        // clue glow
+        const cg = c.createRadialGradient(cx+12, cy+15, 4, cx+12, cy+15, 70);
+        cg.addColorStop(0, 'rgba(212,160,23,.5)'); cg.addColorStop(1, 'rgba(212,160,23,0)');
+        c.fillStyle = cg; c.fillRect(cx-50, cy-50, 130, 130);
+        // paper
+        c.fillStyle = '#e8e3d0'; c.fillRect(cx, cy, 26, 32);
+        c.fillStyle = '#d4a017'; c.fillRect(cx, cy, 26, 4);
+        c.fillStyle = '#1a1a1a';
+        for (let i = 0; i < 5; i++) c.fillRect(cx+3, cy+8+i*4, 20, 1);
+        c.fillStyle = '#c0392b'; c.fillRect(cx+18, cy+22, 6, 6);
+        // sparkle particles around clue
+        for (let i = 0; i < 4; i++) {
+          const px = cx + 12 + Math.cos(t*0.05 + i*1.5) * 28;
+          const py = cy + 15 + Math.sin(t*0.05 + i*1.5) * 22;
+          c.fillStyle = `rgba(212,160,23,${0.6 + 0.3*Math.sin(t*0.1 + i)})`;
+          c.fillRect(px|0, py|0, 2, 2);
+        }
+        // CRT scanlines
+        for (let y = 0; y < H; y += 3) {
+          c.fillStyle = 'rgba(0,0,0,.18)';
+          c.fillRect(0, y, W, 1);
+        }
+        // headline ticker top right
+        c.fillStyle = 'rgba(212,160,23,.42)';
+        c.font = 'bold 9px monospace';
+        c.fillText('• AO VIVO · APURAÇÃO EM ANDAMENTO · 04:09', 280, 50);
+        c.fillStyle = 'rgba(232,227,208,.22)';
+        c.fillText('lead: tip anônimo · emendas · CNPJ Plenitude', 280, 64);
+        c.fillText('checagem: empenho 0192/2023', 280, 76);
+        requestAnimationFrame(draw);
+      }
+      draw();
+
+      // ---------- popup show/hide logic ----------
+      window.seClose = function () {
+        document.getElementById('sePopup').classList.remove('show');
+        try { localStorage.setItem('sinais-enterrados-popup', '1'); } catch(e){}
+        document.body.style.overflow = '';
+      };
+      window.seMarkSeen = function () {
+        try { localStorage.setItem('sinais-enterrados-popup', '1'); } catch(e){}
+      };
       try { if (localStorage.getItem('sinais-enterrados-popup')) return; } catch(e){}
       window.addEventListener('load', () => {
         setTimeout(() => {
