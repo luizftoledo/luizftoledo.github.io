@@ -356,9 +356,44 @@
     .keys { font-size:10px; gap:4px 12px; }
     .btn { padding:11px 24px; font-size:11px; letter-spacing:.22em; }
   }
-  /* Hide abilities entirely until unlocked (instead of just dimming) */
-  .ability { display:none; }
-  .ability.on { display:flex; }
+  /* Abilities — locked state by default, unlocked = amber */
+  .ability {
+    position:relative;
+    border:1px dashed rgba(232,227,208,.18);
+    color:rgba(232,227,208,.32);
+    background:rgba(5,8,17,.5);
+    padding-right:22px;
+  }
+  .ability::after {
+    content:'🔒';
+    position:absolute;
+    top:50%; right:6px;
+    transform:translateY(-50%);
+    font-size:10px;
+    opacity:.6;
+  }
+  .ability.on {
+    border:1px solid rgba(212,160,23,.6);
+    color:#d4a017;
+    box-shadow:0 0 12px rgba(212,160,23,.18) inset;
+    padding-right:11px;
+  }
+  .ability.on::after { display:none; }
+
+  /* Touch buttons for Z and X — show locked state too */
+  .tc-btn.locked {
+    opacity:.45;
+    border-color:rgba(232,227,208,.18);
+    color:rgba(232,227,208,.4);
+    background:rgba(5,8,17,.5);
+    position:relative;
+  }
+  .tc-btn.locked::after {
+    content:'🔒';
+    position:absolute; top:3px; right:3px;
+    font-size:9px;
+    opacity:.7;
+  }
 </style>
 </head>
 <body>
@@ -430,8 +465,8 @@
     <button class="tc-btn tc-right" data-key="arrowright" aria-label="direita"><span class="ic">►</span></button>
   </div>
   <div class="tc-actions">
-    <button class="tc-btn tc-z"    data-key="z"        aria-label="câmera"><span class="ic">📷</span><span class="lbl">Z</span></button>
-    <button class="tc-btn tc-x"    data-key="x"        aria-label="gravador"><span class="ic">🎙</span><span class="lbl">X</span></button>
+    <button class="tc-btn tc-z locked" data-key="z"   aria-label="câmera (bloqueada)"><span class="ic">📷</span><span class="lbl">Z</span></button>
+    <button class="tc-btn tc-x locked" data-key="x"   aria-label="gravador (bloqueado)"><span class="ic">🎙</span><span class="lbl">X</span></button>
     <button class="tc-btn tc-jump" data-key="arrowup"  aria-label="pular"><span class="ic">▲</span><span class="lbl">PULO</span></button>
     <button class="tc-btn tc-e"    data-key="e"        aria-label="interagir"><span class="lbl">E · INTERAGIR</span></button>
   </div>
@@ -831,6 +866,9 @@ function advanceDialog() {
       const ab = game.pendingPickup;
       game.abilities[ab.key] = true;
       document.getElementById({cam:'abCam',rec:'abRec',doc:'abDoc'}[ab.key]).classList.add('on');
+      // unlock corresponding touch button
+      const tcMap = { cam:'.tc-z', rec:'.tc-x' };
+      if (tcMap[ab.key]) document.querySelector(tcMap[ab.key])?.classList.remove('locked');
       toast(`+${ab.name}`);
       game.pendingPickup = null;
     }
@@ -935,13 +973,20 @@ function update(dt) {
   else p.anim *= 0.6;
 
   // Ability triggers
-  if (pressed['z'] && game.abilities.cam) {
-    game.flashLight = 1.0;
-    game.guardStunned = Math.max(game.guardStunned, 180); // 3s @60fps
-    for (const e of ROOMS[game.room].entities) {
-      if (e.type === 'enemy') e.stunned = Math.max(e.stunned || 0, 180);
+  if (pressed['z']) {
+    if (game.abilities.cam) {
+      game.flashLight = 1.0;
+      game.guardStunned = Math.max(game.guardStunned, 180); // 3s @60fps
+      for (const e of ROOMS[game.room].entities) {
+        if (e.type === 'enemy') e.stunned = Math.max(e.stunned || 0, 180);
+      }
+      spawnFlashParticles();
+    } else {
+      toast('câmera ainda não adquirida — vai pro arquivo');
     }
-    spawnFlashParticles();
+  }
+  if (pressed['x'] && !game.abilities.rec) {
+    toast('gravador ainda não adquirido — vai pro tcu');
   }
   if (pressed['x'] && game.abilities.rec && game.recCooldown <= 0) {
     game.recPulse = 1.0;
