@@ -221,6 +221,7 @@
   /* Newspaper-style end paper */
   .end-paper {
     max-width:640px;
+    width:100%;
     background:#161510;
     border:1px solid rgba(212,160,23,.35);
     padding:24px 28px;
@@ -228,6 +229,7 @@
     text-align:left;
     max-height:60vh; overflow-y:auto;
     box-shadow:0 12px 40px rgba(0,0,0,.7);
+    -webkit-overflow-scrolling:touch;
   }
   .end-kicker {
     font-family:'JetBrains Mono', monospace;
@@ -354,6 +356,27 @@
       box-shadow:none;
       border-bottom:1px solid rgba(212,160,23,.25);
     }
+    /* Title and end screens fill whole viewport on portrait, not just stage */
+    .overlay {
+      position:fixed; inset:0;
+      z-index:100;
+      padding:20px;
+      overflow-y:auto;
+      -webkit-overflow-scrolling:touch;
+    }
+    .overlay h1 { font-size:38px; }
+    .end-paper {
+      padding:16px 18px;
+      max-height:60dvh;
+      margin:10px 0 16px;
+    }
+    .end-headline { font-size:20px; }
+    .art-p { font-size:12px; line-height:1.55; margin-bottom:12px; }
+    .art-p .art-method { font-size:8px; letter-spacing:.28em; }
+    .end-byline { font-size:9px; }
+    .end-stats { font-size:9px; }
+    .btn { padding:10px 22px; font-size:11px; letter-spacing:.22em; }
+    .btn + .btn { margin-left:8px; margin-top:8px; }
     .touch-ctrl {
       display:flex;
       flex:1 1 auto;
