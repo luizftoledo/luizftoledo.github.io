@@ -25,6 +25,11 @@
     -webkit-tap-highlight-color:transparent;
     -webkit-user-select:none; user-select:none;
     touch-action:manipulation;
+    min-height:100dvh;
+  }
+  #shell {
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    width:100%; height:100dvh;
   }
   #stage {
     position:relative;
@@ -242,54 +247,107 @@
   .blink { animation:blink 1.2s steps(2,start) infinite; }
   @keyframes blink { to { opacity:.2; } }
 
-  /* Touch controls — compact corner overlays */
+  /* Touch controls — sibling of #stage, layouts switch on orientation */
   .touch-ctrl {
-    position:absolute; inset:auto 0 0 0;
     display:none;
-    justify-content:space-between; align-items:flex-end;
-    padding:6px 8px;
-    pointer-events:none; z-index:7;
+    pointer-events:none;
   }
   .tc-pad, .tc-actions {
-    display:flex; gap:5px;
+    display:flex; gap:8px; align-items:center;
     pointer-events:auto;
   }
   .tc-btn {
-    width:42px; height:42px;
-    border:1px solid rgba(212,160,23,.45);
-    background:rgba(5,8,17,.6);
+    border:1px solid rgba(212,160,23,.5);
+    background:rgba(5,8,17,.7);
     color:#d4a017;
     font-family:'JetBrains Mono', monospace;
-    font-size:14px; font-weight:700;
-    border-radius:8px;
+    font-weight:700;
+    border-radius:10px;
     backdrop-filter:blur(4px);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     cursor:pointer;
-    transition:transform .08s, background .08s;
+    transition:transform .06s, background .08s;
     -webkit-tap-highlight-color:transparent;
     user-select:none;
   }
   .tc-btn:active, .tc-btn.active {
-    background:rgba(212,160,23,.55);
+    background:rgba(212,160,23,.6);
     color:#050811;
     transform:scale(.92);
   }
-  .tc-btn .lbl { font-size:8px; letter-spacing:.05em; opacity:.7; line-height:1; margin-top:1px; }
-  .tc-btn .ic  { font-size:14px; line-height:1; }
+  .tc-btn .lbl { font-size:9px; letter-spacing:.06em; opacity:.7; line-height:1; margin-top:2px; }
+  .tc-btn .ic  { line-height:1; }
   .tc-jump { background:rgba(212,160,23,.22); }
-  .tc-e    { width:54px; }
-  /* Show on touch / coarse pointer / mobile dimensions */
-  @media (hover: none) and (pointer: coarse), (max-width: 720px), (max-height: 500px) {
-    .touch-ctrl { display:flex; }
+
+  /* Landscape mobile / narrow / coarse — compact overlay at bottom of stage */
+  @media (hover: none) and (pointer: coarse) and (orientation: landscape),
+         (max-height: 500px) and (orientation: landscape) {
+    .touch-ctrl {
+      display:flex;
+      position:absolute; left:0; right:0; bottom:0;
+      justify-content:space-between; align-items:flex-end;
+      padding:8px 10px;
+      z-index:7;
+    }
+    .tc-btn { width:44px; height:44px; font-size:14px; }
+    .tc-btn .ic { font-size:14px; }
+    .tc-actions .tc-e { width:54px; }
     .controls-hint { display:none; }
-    .hud { font-size:9px; gap:4px; padding:8px; }
+    .hud { font-size:9px; gap:4px; padding:10px; }
+    .chip, .ability { padding:5px 7px; font-size:9px; }
+    .hearts span { font-size:11px; }
+  }
+
+  /* Portrait phone — game on top, controls in spacious bottom area */
+  @media (orientation: portrait) and (pointer: coarse), (orientation: portrait) and (max-width: 720px) {
+    body { display:block; }
+    #shell {
+      display:flex; flex-direction:column;
+      align-items:stretch; justify-content:flex-start;
+      height:100dvh; width:100vw;
+    }
+    #stage {
+      width:100vw; max-width:none;
+      flex:0 0 auto;
+      box-shadow:none;
+      border-bottom:1px solid rgba(212,160,23,.25);
+    }
+    .touch-ctrl {
+      display:flex;
+      flex:1 1 auto;
+      width:100vw;
+      background:linear-gradient(180deg, rgba(5,8,17,1) 0%, rgba(8,12,28,1) 100%);
+      padding:18px 16px 22px;
+      align-items:center; justify-content:space-between;
+      gap:16px;
+    }
+    /* Left side: only horizontal arrows */
+    .tc-pad { gap:10px; }
+    .tc-pad .tc-btn { width:74px; height:74px; font-size:24px; }
+    /* Right side: jump + actions stacked in 2x2 */
+    .tc-actions {
+      display:grid;
+      grid-template-columns:repeat(2, auto);
+      grid-auto-rows:auto;
+      gap:10px;
+    }
+    .tc-actions .tc-btn { width:74px; height:62px; font-size:18px; }
+    .tc-actions .tc-jump { background:rgba(212,160,23,.28); border-color:#d4a017; }
+    .tc-actions .tc-e {
+      grid-column:1 / span 2;
+      width:auto; height:50px;
+      font-size:11px; letter-spacing:.18em;
+    }
+    /* HUD compact */
+    .hud { font-size:9px; gap:4px; padding:10px; }
     .chip, .ability { padding:5px 7px; font-size:9px; }
     .ability .key { font-size:8px; }
     .hearts { padding:4px 7px; }
     .hearts span { font-size:11px; }
-    .room-name { font-size:28px; }
-    .room-name .sub { font-size:9px; }
-    .dialog { bottom:60px; padding:12px 16px; max-width:92%; }
+    .room-name { font-size:26px; }
+    .room-name .sub { font-size:8px; }
+    .controls-hint { display:none; }
+    .dialog { padding:12px 16px; max-width:94%; }
     .dialog .text { font-size:13px; }
   }
   @media (max-width: 480px) {
@@ -298,10 +356,14 @@
     .keys { font-size:10px; gap:4px 12px; }
     .btn { padding:11px 24px; font-size:11px; letter-spacing:.22em; }
   }
+  /* Hide abilities entirely until unlocked (instead of just dimming) */
+  .ability { display:none; }
+  .ability.on { display:flex; }
 </style>
 </head>
 <body>
 
+<div id="shell">
 <div id="stage">
   <canvas id="game" width="960" height="544"></canvas>
   <div class="scan"></div>
@@ -327,19 +389,6 @@
     <div class="who" id="dlgWho">EDITOR</div>
     <div class="text" id="dlgText">…</div>
     <div class="more">[ESPAÇO / TOQUE] CONTINUAR</div>
-  </div>
-
-  <div class="touch-ctrl" id="touchCtrl">
-    <div class="tc-pad">
-      <button class="tc-btn tc-left" data-key="arrowleft" aria-label="esquerda"><span class="ic">◄</span></button>
-      <button class="tc-btn tc-jump" data-key="arrowup" aria-label="pular"><span class="ic">▲</span><span class="lbl">PULO</span></button>
-      <button class="tc-btn tc-right" data-key="arrowright" aria-label="direita"><span class="ic">►</span></button>
-    </div>
-    <div class="tc-actions">
-      <button class="tc-btn tc-z" data-key="z" aria-label="câmera"><span class="ic">📷</span><span class="lbl">Z</span></button>
-      <button class="tc-btn tc-x" data-key="x" aria-label="gravador"><span class="ic">🎙</span><span class="lbl">X</span></button>
-      <button class="tc-btn tc-e" data-key="e" aria-label="interagir"><span class="lbl">INTERAGIR · E</span></button>
-    </div>
   </div>
 
   <!-- TITLE -->
@@ -374,6 +423,20 @@
     <div class="credit">obrigado por apurar com a gente</div>
   </div>
 </div>
+
+<div class="touch-ctrl" id="touchCtrl">
+  <div class="tc-pad">
+    <button class="tc-btn tc-left"  data-key="arrowleft"  aria-label="esquerda"><span class="ic">◄</span></button>
+    <button class="tc-btn tc-right" data-key="arrowright" aria-label="direita"><span class="ic">►</span></button>
+  </div>
+  <div class="tc-actions">
+    <button class="tc-btn tc-z"    data-key="z"        aria-label="câmera"><span class="ic">📷</span><span class="lbl">Z</span></button>
+    <button class="tc-btn tc-x"    data-key="x"        aria-label="gravador"><span class="ic">🎙</span><span class="lbl">X</span></button>
+    <button class="tc-btn tc-jump" data-key="arrowup"  aria-label="pular"><span class="ic">▲</span><span class="lbl">PULO</span></button>
+    <button class="tc-btn tc-e"    data-key="e"        aria-label="interagir"><span class="lbl">E · INTERAGIR</span></button>
+  </div>
+</div>
+</div><!-- /shell -->
 
 <script>
 /* ============================================================
