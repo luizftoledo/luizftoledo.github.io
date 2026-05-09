@@ -352,9 +352,14 @@
     }
     #stage {
       width:100vw; max-width:none;
-      flex:0 0 auto;
+      aspect-ratio:auto;
+      height:60dvh;
+      flex:0 0 60dvh;
       box-shadow:none;
       border-bottom:1px solid rgba(212,160,23,.25);
+    }
+    #stage canvas {
+      image-rendering:auto;          /* smooth scaling — pixel art não fica retangular bizarro quando estica */
     }
     /* Title and end screens fill whole viewport on portrait, not just stage */
     .overlay {
@@ -495,7 +500,7 @@
   <div class="overlay" id="titleScreen">
     <h1>Sinais Enterrados</h1>
     <div class="tag">um jogo de investigação · folha apurada</div>
-    <p>Você é repórter. Caiu uma denúncia anônima sobre desvio de emendas parlamentares pelo deputado <b style="color:#d4a017">Carlão do Pastel</b> via uma ONG de fachada. Lobistas vão tentar te empurrar pra fora. <b style="color:#d4a017">Apure, ganhe ferramentas, publique.</b></p>
+    <p>Caixa segura recebeu um áudio anônimo. Cita o gabinete do deputado fictício <b style="color:#d4a017">Carlão do Pastel</b> e um CNPJ recém-aberto. <b style="color:#d4a017">Sua tarefa</b>: apure documento por documento — Portal da Transparência, Junta Comercial, LAI, TCU, fontes — e monte a matéria. Lobistas vão tentar te empurrar pra fora.</p>
     <div class="keys">
       <span><b>← →</b> mover</span>
       <span><b>↑ / W</b> pular</span>
@@ -513,10 +518,10 @@
     <div class="end-stats" id="endStats"></div>
     <div class="end-paper">
       <div class="end-kicker">EXCLUSIVO · FOLHA APURADA</div>
-      <h2 class="end-headline" id="endHead">Operação Pastelão: emendas de Carlão são desviadas via ONG fantasma</h2>
-      <div class="end-byline" id="endByline">por Luiz Toledo · documentos confirmam esquema de R$ 4 milhões</div>
+      <h2 class="end-headline" id="endHead">Documentos mostram caminho de R$ 4 mi em emendas de Carlão do Pastel até empresa ligada a ex-motorista do gabinete</h2>
+      <div class="end-byline" id="endByline">reportagem · Folha Apurada · documentos, fontes e auditoria preliminar do TCU</div>
       <div class="end-article" id="cluesRecap"></div>
-      <p class="end-closing">O gabinete do deputado Carlão do Pastel não respondeu aos questionamentos. O TCU foi notificado da reportagem.</p>
+      <p class="end-closing">A reportagem procurou o gabinete do deputado Carlão do Pastel por mensagem, e-mail e telefone, em três oportunidades, e não obteve retorno até o fechamento desta edição. O TCU, o Instituto Plenitude e a Pastel & Cia foram igualmente procurados. O espaço segue aberto para manifestação.</p>
     </div>
     <div>
       <a class="btn" id="portfolioBtn" href="https://luizftoledo.github.io" target="_blank" rel="noopener">Ver o portfólio →</a>
@@ -641,20 +646,20 @@ const ROOMS = {
       { type:'spawn', x:3, y:13 },
       { type:'desk', x:5, y:13 }, { type:'desk', x:12, y:13 }, { type:'desk', x:19, y:13 },
       { type:'npc', x:5, y:13, name:'EDITOR', dialog:[
-        'Toledo. Caiu uma denúncia anônima na caixa segura.',
-        'Emenda do Carlão do Pastel — R$ 4 milhões pra uma ONG fantasma.',
-        'Instituto Plenitude. CNPJ aberto seis meses antes do empenho.',
-        'Vai pro Arquivo Público (→) e puxa os empenhos.',
-        'Cuidado com os assessores. Eles tentam te empurrar pra fora.',
+        'Toledo. Caiu um áudio anônimo na caixa segura.',
+        'A voz cita um "Instituto Plenitude". CNPJ aberto há seis meses.',
+        'A pessoa diz que esse CNPJ recebeu emenda do Carlão do Pastel.',
+        'Vai pro Arquivo Público (→). Puxa o empenho, confere o estatuto, vê se a história cabe.',
+        'E olho aberto: assessores e lobistas tentam empurrar repórter pra fora antes da gente ler tudo.',
       ]},
       { type:'clue', x:7, y:11, ord:1,
-        method:'TIP · CANAL SEGURO',
-        text:'"Plenitude paga empresa do cunhado do Carlão. Olha o CNPJ."',
-        article:'A reportagem teve acesso a uma denúncia anônima recebida via canal seguro: o Instituto Plenitude estaria pagando uma empresa pertencente a um parente do deputado Carlão do Pastel.' },
+        method:'CAIXA SEGURA · ÁUDIO ANÔNIMO',
+        text:'Áudio anônimo de 41 segundos. Voz de mulher: "olha as emendas pro Plenitude. ninguém aqui dentro entende o CNPJ."',
+        article:'A reportagem teve acesso a um áudio anônimo recebido pelo canal seguro do veículo. Uma fonte não identificada cita o Instituto Plenitude e pede que se examine o cadastro da entidade.' },
       { type:'clue', x:24, y:13, ord:2,
-        method:'PORTAL · CÂMARA DOS DEPUTADOS',
-        text:'Emendas RP-9 do gabinete somam R$ 23 mi em 2023 — 4× a média.',
-        article:'Levantamento no painel de emendas mostra que as RP-9 do gabinete de Carlão somam R$ 23 milhões em 2023 — quatro vezes a média de parlamentares com mandato semelhante.' },
+        method:'PAUTA · BACKGROUND',
+        text:'Mural de pauta: três sobrinhos do deputado contratados como assessores parlamentares em 2022. Festas em iates registradas em redes sociais. Nada criminal — ainda.',
+        article:'Em background reunido pela equipe de reportagem, o gabinete de Carlão tem três familiares contratados como assessores e registros públicos de viagens em iates de doadores de campanha — itens que, isoladamente, não configuram irregularidade, mas pavimentam o contexto da apuração.' },
       { type:'door', x:29, y:13, dir:'right', to:'arquivo', spawnAt:{ x:1, y:13 } },
     ]
   },
@@ -690,17 +695,17 @@ const ROOMS = {
       { type:'shelf', x:2, y:13 }, { type:'shelf', x:25, y:13 },
       { type:'enemy', x:22, y:13, range:3, kind:'lobby', speed:0.55, name:'LOBISTA' },
       { type:'clue', x:4,  y:13, ord:3,
-        method:'PORTAL DA TRANSPARÊNCIA',
-        text:'Empenho 0192/2023: R$ 4 mi para Instituto Plenitude. Sem licitação.',
-        article:'Consulta ao Portal da Transparência identifica o empenho 0192/2023, que transferiu R$ 4 milhões ao Instituto Plenitude sem processo licitatório prévio.' },
+        method:'PORTAL DA TRANSPARÊNCIA · PRINT',
+        text:'Empenho 0192/2023: R$ 4 milhões destinados ao Instituto Plenitude. Convênio publicado no Diário Oficial 4 dias após o aviso. Documentação anexa ao processo: ausente.',
+        article:'A consulta ao Portal da Transparência localizou o empenho 0192/2023, que destinou R$ 4 milhões ao Instituto Plenitude. O convênio foi assinado quatro dias após a publicação do aviso e a documentação anexa não consta no sistema.' },
       { type:'clue', x:15, y:7, ord:4,
-        method:'JUNTA COMERCIAL',
-        text:'Estatuto da ONG: presidente é o ex-motorista do gabinete.',
-        article:'O estatuto da Plenitude na Junta Comercial registra como presidente o ex-motorista do gabinete do parlamentar, sem qualificação técnica para gerir o orçamento recebido.' },
+        method:'JUNTA COMERCIAL · CONSULTA',
+        text:'Estatuto registrado em 2022 lista José Aparecido (CPF parcialmente legível) como presidente. Histórico profissional: motorista do gabinete entre 2015 e 2019. Não tem registro anterior no terceiro setor.',
+        article:'Documentos da Junta Comercial registram como presidente do Instituto José Aparecido, ex-motorista do gabinete do parlamentar entre 2015 e 2019, sem registros anteriores em organizações do terceiro setor.' },
       { type:'clue', x:11, y:9, ord:5,
         method:'PEDIDO LAI · CGU',
-        text:'Cruzamento: 7 pagamentos da Plenitude pra Pastel & Cia. Endereço comum.',
-        article:'Notas fiscais obtidas via Lei de Acesso à Informação revelam sete pagamentos da Plenitude para a empresa Pastel & Cia — registrada no mesmo endereço do escritório político do deputado.' },
+        text:'Resposta ao pedido LAI veio em 47 dias: notas fiscais da Plenitude. Sete delas em favor da Pastel & Cia, em 2023. Endereço da Pastel & Cia coincide com o do escritório político do parlamentar.',
+        article:'Por meio de pedido de Lei de Acesso à Informação à CGU, a reportagem obteve notas fiscais que apontam sete pagamentos da Plenitude à empresa Pastel & Cia em 2023. O endereço da empresa coincide com o do escritório eleitoral do parlamentar.' },
       { type:'ability', x:10, y:5, key:'cam', name:'CÂMERA', text:'Câmera adquirida. [Z] flash — fotografa prova e cega lobistas por uns segundos.' },
     ]
   },
@@ -740,17 +745,17 @@ const ROOMS = {
       { type:'enemy', x:9,  y:13, range:5, kind:'lobby', speed:0.7, name:'LOBISTA' },
       { type:'enemy', x:18, y:13, range:3, kind:'lobby', speed:0.85, name:'ASSESSOR' },
       { type:'clue', x:5,  y:13, ord:6,
-        method:'TCU · AUDITORIA',
-        text:'Auditoria 14/2024: TCU questionou repasse à Plenitude. Recurso suspendeu.',
-        article:'A Auditoria 14/2024 do Tribunal de Contas da União questionou o repasse à Plenitude. A análise foi suspensa após recurso apresentado pela ONG.' },
+        method:'TCU · AUDITORIA PRELIMINAR',
+        text:'Pasta da Auditoria 14/2024 lista o repasse à Plenitude entre "casos de atenção". Análise suspensa em 12/03 após recurso apresentado pela própria entidade auditada.',
+        article:'A Auditoria Preliminar 14/2024 do Tribunal de Contas da União listou o repasse à Plenitude entre casos com sinais de irregularidade. A análise foi suspensa após recurso apresentado pela própria entidade.' },
       { type:'clue', x:11, y:9, ord:7,
-        method:'TCU · ACÓRDÃO',
-        text:'Acórdão preliminar: indícios de "desvio de finalidade". Sem julgamento.',
-        article:'O acórdão preliminar do TCU registra "indícios de desvio de finalidade" no repasse. Não houve julgamento de mérito até a publicação desta reportagem.' },
+        method:'TCU · ACÓRDÃO PROVISÓRIO',
+        text:'Decisão preliminar fala em "indícios não conclusivos de desvio de finalidade". Sem julgamento de mérito agendado até o fechamento desta edição.',
+        article:'O acórdão provisório do TCU emprega a expressão "indícios não conclusivos de desvio de finalidade" para o caso. Até o fechamento desta edição, não havia julgamento de mérito agendado.' },
       { type:'clue', x:20, y:13, ord:8,
-        method:'MEMO INTERNO · OFF',
-        text:'A relatoria foi trocada três vezes. Última: aliado de Carlão.',
-        article:'Memorando interno obtido pela reportagem mostra que a relatoria do caso foi trocada três vezes. A última designação caiu sobre auditor publicamente alinhado ao parlamentar.' },
+        method:'MEMO INTERNO · OFF THE RECORD',
+        text:'Memo de servidor do TCU registra três trocas na relatoria. A designação atual aparece em fotos públicas em jantar de campanha do parlamentar em 2022.',
+        article:'Memorando interno da equipe do TCU, obtido pela reportagem, indica três trocas sucessivas na relatoria do caso. Registros públicos mostram que o relator atual participou de jantar de campanha do parlamentar em 2022.' },
       { type:'ability', x:15, y:7, key:'rec', name:'GRAVADOR', text:'Gravador adquirido. [X] dispara ondas sonoras — expõe lobistas e fonte fala com prova.' },
     ]
   },
@@ -784,7 +789,7 @@ const ROOMS = {
       { type:'door', x:0,  y:13, dir:'left',  to:'forum',       spawnAt:{ x:28, y:13 } },
       { type:'door', x:29, y:13, dir:'right', to:'publicacao', spawnAt:{ x:1,  y:13 }, locked:'doc' },
       { type:'tree', x:5, y:13 }, { type:'tree', x:9, y:13 }, { type:'tree', x:24, y:13 },
-      { type:'fire', x:14, y:13 },
+      { type:'car',  x:13, y:13 },
       { type:'npc', x:16, y:13, name:'FONTE', requires:'rec',
         dialog:[
           '— "Você tá com gravador? ...então tá. Vou contar."',
@@ -801,13 +806,13 @@ const ROOMS = {
       { type:'enemy', x:11, y:13, range:2, kind:'lobby', speed:0.9, name:'ASSESSOR' },
       { type:'enemy', x:25, y:13, range:2, kind:'lobby', speed:0.75, name:'LOBISTA' },
       { type:'clue', x:8,  y:13, ord:9,
-        method:'FONTE · OFF THE RECORD',
-        text:'Caderno da fonte: lista de "doadores fantasma" da campanha de 2022.',
-        article:'Caderno entregue por ex-assessor do gabinete lista "doadores fantasma" da campanha de 2022, com endereços que coincidem com os do Instituto Plenitude.' },
+        method:'FONTE · CADERNO DE ANOTAÇÕES',
+        text:'Caderno espiral, capa preta, anotações em caneta azul. Lista nomes de "doadores" da campanha 2022. Três deles aparecem como sócios formais da Plenitude depois das eleições.',
+        article:'A reportagem teve acesso a um caderno entregue por ex-assessor do gabinete. Em suas anotações, três pessoas listadas como "doadores" da campanha 2022 passam a constar como sócios formais do Instituto Plenitude depois das eleições.' },
       { type:'clue', x:21, y:13, ord:10,
-        method:'DOCUMENTO VAZADO',
-        text:'Pendrive: planilha Plenitude → Pastel & Cia, 2023-2024 · R$ 4,2 mi.',
-        article:'Planilha vazada por ex-assessor do gabinete documenta transferências de R$ 4,2 milhões entre o Instituto Plenitude e a Pastel & Cia entre 2023 e 2024.' },
+        method:'PENDRIVE · DOCUMENTO VAZADO',
+        text:'Pendrive criptografado, senha de 12 caracteres entregue à parte. Após decryption: planilha contábil com 23 transferências entre Plenitude e Pastel & Cia (2023-2024). Soma: R$ 4,2 milhões.',
+        article:'Planilha contábil obtida em pendrive entregue pela mesma fonte registra 23 transferências entre o Instituto Plenitude e a empresa Pastel & Cia, somando R$ 4,2 milhões, entre 2023 e 2024.' },
     ]
   },
 
@@ -1371,25 +1376,23 @@ function drawPublishBG() {
   const g = ctx.createLinearGradient(0,0,0,H);
   g.addColorStop(0,'#101428'); g.addColorStop(1,'#080a18');
   ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
-  // big screen with headline
-  ctx.fillStyle = 'rgba(212,160,23,.07)';
-  ctx.fillRect(120, 50, 720, 220);
-  ctx.strokeStyle = 'rgba(212,160,23,.45)'; ctx.lineWidth = 1;
-  ctx.strokeRect(120, 50, 720, 220);
-  ctx.fillStyle = '#d4a017';
-  ctx.font = 'bold 22px Special Elite';
-  ctx.fillText('EXCLUSIVO · FOLHA APURADA', 140, 90);
-  ctx.fillStyle = '#e8e3d0';
-  ctx.font = '26px Special Elite';
-  ctx.fillText('Operação Pastelão: emendas de', 140, 140);
-  ctx.fillText('Carlão são desviadas via ONG', 140, 174);
-  ctx.fillStyle = 'rgba(232,227,208,.55)';
-  ctx.font = '11px JetBrains Mono';
-  ctx.fillText('por Luiz Toledo · planilha vazada confirma R$ 4 mi em transferências', 140, 208);
-  // blink cursor
-  if (Math.floor(performance.now()/500)%2===0) {
-    ctx.fillStyle='#d4a017'; ctx.fillRect(140, 232, 8, 14);
+  // newsroom desks silhouette across the room
+  for (let i=0;i<6;i++){
+    const x = 50 + i*150;
+    ctx.fillStyle = 'rgba(60,80,120,.18)';
+    ctx.fillRect(x, 280, 80, 50);
+    ctx.fillStyle = 'rgba(212,160,23,.08)';
+    ctx.fillRect(x+10, 290, 18, 14);
   }
+  // distant clock + label, away from HUD
+  ctx.fillStyle = 'rgba(212,160,23,.28)';
+  ctx.font = '10px JetBrains Mono';
+  ctx.fillText('FECHAMENTO · 22:47', W-160, 270);
+  // light from the editor's lamp
+  const gr = ctx.createRadialGradient(W*0.55, 360, 30, W*0.55, 360, 240);
+  gr.addColorStop(0,'rgba(212,160,23,.18)');
+  gr.addColorStop(1,'rgba(212,160,23,0)');
+  ctx.fillStyle = gr; ctx.fillRect(0, 200, W, 260);
 }
 
 /* ---------- TILE / ENTITY DRAW ---------- */
@@ -1451,21 +1454,34 @@ function drawEntities() {
         ctx.beginPath(); ctx.arc(ex+TILE/2+8, ey-30, 10, 0, Math.PI*2); ctx.fill();
         break;
       }
-      case 'fire': {
-        const t = performance.now()*0.008;
-        ctx.fillStyle = '#3a2010';
-        ctx.fillRect(ex+8, ey+24, TILE-16, 6);
-        for (let i=0;i<5;i++) {
-          const fx = ex+TILE/2 + Math.sin(t+i)*3;
-          const fy = ey+22 - i*4 - Math.abs(Math.sin(t+i*0.7))*4;
-          ctx.fillStyle = ['#ffba38','#ff8a28','#ff5a18','#d43017'][i%4];
-          ctx.fillRect(fx-2, fy, 4, 4);
-        }
-        // glow
-        const gr = ctx.createRadialGradient(ex+TILE/2, ey+10, 4, ex+TILE/2, ey+10, 50);
-        gr.addColorStop(0,'rgba(255,180,60,.35)'); gr.addColorStop(1,'rgba(255,180,60,0)');
+      case 'car': {
+        // hatch parado com farol fraco — ambiente de encontro com fonte
+        const t = performance.now()*0.001;
+        const flicker = 0.85 + Math.sin(t*7)*0.05;
+        // body
+        ctx.fillStyle = '#2a2a32';
+        ctx.fillRect(ex-18, ey+12, TILE+36, 14);
+        ctx.fillStyle = '#1a1a22';
+        ctx.fillRect(ex-22, ey+18, TILE+44, 8);
+        // roof
+        ctx.fillStyle = '#1f1f28';
+        ctx.fillRect(ex-8, ey+4, TILE+16, 10);
+        // windows
+        ctx.fillStyle = 'rgba(80,100,140,.4)';
+        ctx.fillRect(ex-6, ey+6, 12, 6);
+        ctx.fillRect(ex+TILE-6, ey+6, 12, 6);
+        // wheels
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(ex-14, ey+24, 8, 6);
+        ctx.fillRect(ex+TILE+6, ey+24, 8, 6);
+        // headlight cone (left side)
+        const gr = ctx.createRadialGradient(ex-22, ey+18, 4, ex-22, ey+18, 80);
+        gr.addColorStop(0, `rgba(255,235,180,${0.45*flicker})`);
+        gr.addColorStop(1, 'rgba(255,235,180,0)');
         ctx.fillStyle = gr;
-        ctx.fillRect(ex-30, ey-30, 90, 70);
+        ctx.fillRect(ex-100, ey-30, 100, 80);
+        ctx.fillStyle = `rgba(255,240,200,${0.85*flicker})`;
+        ctx.fillRect(ex-23, ey+17, 3, 3);
         break;
       }
       case 'clue': {
