@@ -480,15 +480,12 @@
       draw();
 
       // ---------- popup show/hide logic ----------
+      // sempre mostra (sem flag de "já viu") — fica visível em todas as visitas
       window.seClose = function () {
         document.getElementById('sePopup').classList.remove('show');
-        try { localStorage.setItem('sinais-enterrados-popup', '1'); } catch(e){}
         document.body.style.overflow = '';
       };
-      window.seMarkSeen = function () {
-        try { localStorage.setItem('sinais-enterrados-popup', '1'); } catch(e){}
-      };
-      try { if (localStorage.getItem('sinais-enterrados-popup')) return; } catch(e){}
+      window.seMarkSeen = function () {};
       window.addEventListener('load', () => {
         setTimeout(() => {
           document.getElementById('sePopup').classList.add('show');
