@@ -296,6 +296,120 @@
   }
   .end-stats b { color:#d4a017; }
 
+  /* Boss UI */
+  .boss-hp-wrap {
+    position:absolute; top:50px; left:50%;
+    transform:translateX(-50%);
+    z-index:5;
+    display:flex; flex-direction:column; align-items:center;
+    pointer-events:none;
+    opacity:0; transition:opacity .4s;
+  }
+  .boss-hp-wrap.show { opacity:1; }
+  .boss-hp-label {
+    font-size:9px; letter-spacing:.42em;
+    color:#c0392b; text-transform:uppercase;
+    margin-bottom:5px;
+    text-shadow:0 0 8px rgba(192,57,43,.5);
+  }
+  .boss-hp-bar {
+    display:flex; gap:2px;
+    background:rgba(5,8,17,.85);
+    border:1px solid #c0392b;
+    padding:3px;
+    box-shadow:0 0 14px rgba(192,57,43,.4);
+  }
+  .boss-hp-bar i {
+    width:14px; height:14px;
+    display:block;
+    background:#c0392b;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);
+    transition:background .15s, opacity .25s;
+  }
+  .boss-hp-bar i.empty {
+    background:rgba(192,57,43,.12);
+    box-shadow:inset 0 0 0 1px rgba(192,57,43,.3);
+  }
+  .boss-hp-bar i.fill { animation:bhpFill .25s ease-out; }
+  @keyframes bhpFill { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+
+  /* Boss intro overlay (Mega Man-style) */
+  .boss-intro {
+    position:absolute; inset:0; z-index:8;
+    background:rgba(5,8,17,.78);
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    pointer-events:none;
+    opacity:0; transition:opacity .35s;
+  }
+  .boss-intro.show { opacity:1; pointer-events:auto; cursor:pointer; }
+  .boss-quote {
+    background:rgba(5,8,17,.96);
+    border:1px solid #c0392b;
+    padding:20px 28px;
+    max-width:520px; text-align:center;
+    box-shadow:0 0 30px rgba(192,57,43,.35), 0 12px 40px rgba(0,0,0,.7);
+  }
+  .boss-quote .who {
+    display:block;
+    color:#c0392b;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px; letter-spacing:.36em;
+    margin-bottom:12px; text-transform:uppercase;
+  }
+  .boss-quote .text {
+    font-family:'Special Elite', monospace;
+    font-size:16px; line-height:1.55; color:#e8e3d0;
+  }
+  .boss-quote .more {
+    margin-top:14px; font-size:9px; letter-spacing:.32em;
+    color:rgba(232,227,208,.45);
+  }
+
+  .boss-name-card {
+    position:absolute; left:50%; bottom:54px;
+    transform:translateX(-50%);
+    z-index:9;
+    text-align:center;
+    pointer-events:none;
+  }
+  .boss-name-big {
+    font-family:'Special Elite', monospace;
+    font-size:60px; letter-spacing:.05em;
+    color:#c0392b;
+    text-shadow:0 0 30px rgba(192,57,43,.6), 0 0 4px rgba(0,0,0,.95);
+    white-space:nowrap;
+    animation:bossNameSlide .55s cubic-bezier(.2,.8,.2,1);
+  }
+  .boss-name-small {
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:.55em;
+    color:rgba(232,227,208,.7);
+    margin-top:4px;
+  }
+  @keyframes bossNameSlide {
+    from { opacity:0; transform:translateX(-50%) translateY(20px); }
+    to   { opacity:1; transform:translateX(-50%) translateY(0); }
+  }
+
+  .boss-go {
+    position:absolute; left:50%; top:46%;
+    transform:translate(-50%,-50%);
+    z-index:10;
+    font-family:'Special Elite', monospace;
+    font-size:96px; color:#d4a017;
+    text-shadow:0 0 50px rgba(212,160,23,.85), 0 0 6px rgba(0,0,0,.9);
+    letter-spacing:.06em;
+    pointer-events:none;
+    animation:bossGoFlash .14s steps(1,end) 8;
+  }
+  @keyframes bossGoFlash { 50% { opacity:0; } }
+
+  .toast.danger {
+    border-color:#c0392b; color:#c0392b;
+    box-shadow:0 0 24px rgba(192,57,43,.35);
+  }
+
   .hidden { display:none !important; }
 
   .blink { animation:blink 1.2s steps(2,start) infinite; }
@@ -493,7 +607,8 @@
     <div class="hud-right">
       <div class="ability" id="abCam"><span class="key">Z</span>CÂMERA</div>
       <div class="ability" id="abRec"><span class="key">X</span>GRAVADOR</div>
-      <div class="ability" id="abDoc"><span class="key">C</span>DOCUMENTO</div>
+      <div class="ability" id="abPed"><span class="key">C</span>PEDIDO</div>
+      <div class="ability" id="abChief"><span class="key">V</span>EDITORA</div>
       <button class="chip mute-btn" id="muteBtn" aria-label="alternar som" title="som on/off">🔊</button>
     </div>
   </div>
@@ -506,6 +621,24 @@
     <div class="text" id="dlgText">…</div>
     <div class="more">[ESPAÇO / TOQUE] CONTINUAR</div>
   </div>
+
+  <!-- BOSS UI -->
+  <div class="boss-hp-wrap" id="bossHp">
+    <div class="boss-hp-label" id="bossHpLabel">CARLÃO DO PASTEL</div>
+    <div class="boss-hp-bar" id="bossHpBar"></div>
+  </div>
+  <div class="boss-intro hidden" id="bossIntro">
+    <div class="boss-quote">
+      <span class="who" id="bossQuoteWho">CARLÃO DO PASTEL · DEPUTADO FEDERAL</span>
+      <span class="text" id="bossQuoteText">…</span>
+      <span class="more">[ESPAÇO / TOQUE] CONTINUAR</span>
+    </div>
+  </div>
+  <div class="boss-name-card hidden" id="bossNameCard">
+    <div class="boss-name-big" id="bossNameBig">CARLÃO DO PASTEL</div>
+    <div class="boss-name-small" id="bossNameSmall">DEPUTADO · CASO RP-9</div>
+  </div>
+  <div class="boss-go hidden" id="bossGo">GO!</div>
 
   <!-- TITLE -->
   <div class="overlay" id="titleScreen">
@@ -574,6 +707,8 @@
   <div class="tc-actions">
     <button class="tc-btn tc-z locked" data-key="z"   aria-label="câmera (bloqueada)"><span class="ic">📷</span><span class="lbl">Z</span></button>
     <button class="tc-btn tc-x locked" data-key="x"   aria-label="gravador (bloqueado)"><span class="ic">🎙</span><span class="lbl">X</span></button>
+    <button class="tc-btn tc-c locked" data-key="c"   aria-label="pedido formal (bloqueado)"><span class="ic">✉</span><span class="lbl">C</span></button>
+    <button class="tc-btn tc-v locked" data-key="v"   aria-label="editora-chefe (bloqueado)"><span class="ic">📞</span><span class="lbl">V</span></button>
     <button class="tc-btn tc-jump" data-key="arrowup"  aria-label="pular"><span class="ic">▲</span><span class="lbl">PULO</span></button>
     <button class="tc-btn tc-e"    data-key="e"        aria-label="interagir"><span class="lbl">E · INTERAGIR</span></button>
   </div>
@@ -672,6 +807,39 @@ const SFX = {
       setTimeout(()=>tone([523,659,784,1047,1319][i], i===4?0.45:0.1, 'triangle', 0.06), d);
     });
   },
+  ped:     () => {
+    tone(880, 0.06, 'square', 0.045);
+    setTimeout(()=>tone(660, 0.10, 'triangle', 0.05, 520), 50);
+    setTimeout(()=>noise(0.04, 0.025), 100);
+  },
+  chief:   () => {
+    [0,90,180].forEach((d,i)=>{
+      setTimeout(()=>tone([784,988,1175][i], 0.16, 'triangle', 0.06), d);
+    });
+  },
+  bossHit: () => {
+    tone(160, 0.16, 'sawtooth', 0.07, 80);
+    noise(0.10, 0.05);
+  },
+  bossDie: () => {
+    [0,180,360,540,800].forEach((d,i)=>{
+      setTimeout(()=>tone([330,247,196,165,110][i], i===4?0.7:0.18, 'sawtooth', 0.07, [220,165,130,110,55][i]), d);
+    });
+    setTimeout(()=>noise(0.4, 0.06), 600);
+  },
+  processo:() => {
+    tone(180, 0.10, 'sawtooth', 0.04, 90);
+    setTimeout(()=>tone(280, 0.06, 'square', 0.03), 60);
+  },
+  bossIntro:() => {
+    [0,200,400,650].forEach((d,i)=>{
+      setTimeout(()=>tone([110,138,165,82][i], i===3?0.6:0.12, 'sawtooth', 0.06), d);
+    });
+  },
+  bossGo:  () => {
+    tone(880, 0.06, 'square', 0.07);
+    setTimeout(()=>tone(1175, 0.18, 'triangle', 0.07), 80);
+  },
 };
 function setMute(m) {
   soundOn = !m;
@@ -725,10 +893,16 @@ document.getElementById('game').addEventListener('touchstart', (e) => {
   if (game.state === 'dialog') {
     e.preventDefault();
     advanceDialog();
+  } else if (game.state === 'bossIntro' && game.bossIntro?.phase === 1) {
+    e.preventDefault();
+    advanceBossIntro();
   }
 }, { passive:false });
 document.getElementById('dialog').addEventListener('click', () => {
   if (game.state === 'dialog') advanceDialog();
+});
+document.getElementById('bossIntro').addEventListener('click', () => {
+  if (game.state === 'bossIntro' && game.bossIntro?.phase === 1) advanceBossIntro();
 });
 
 /* ---------- ROOMS ----------
@@ -914,7 +1088,7 @@ const ROOMS = {
     ],
     entities: [
       { type:'door', x:0,  y:13, dir:'left',  to:'forum',       spawnAt:{ x:28, y:13 } },
-      { type:'door', x:29, y:13, dir:'right', to:'publicacao', spawnAt:{ x:1,  y:13 }, locked:'doc' },
+      { type:'door', x:29, y:13, dir:'right', to:'confronto',  spawnAt:{ x:1,  y:13 }, locked:'doc' },
       { type:'tree', x:5, y:13 }, { type:'tree', x:9, y:13 }, { type:'tree', x:24, y:13 },
       { type:'car',  x:13, y:13 },
       { type:'npc', x:16, y:13, name:'FONTE', requires:'rec',
@@ -943,7 +1117,50 @@ const ROOMS = {
     ]
   },
 
-  /* ---------- 5 · PUBLICAÇÃO ---------- */
+  /* ---------- 5 · OUTRO LADO (BOSS) ---------- */
+  confronto: {
+    title: 'OUTRO LADO',
+    sub: 'antessala da editoria · 23h59',
+    palette: { wall:'#1a1018', accent:'#3a1820', floor:'#241016' },
+    bg: drawConfrontoBG,
+    isBoss: true,
+    map: [
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '..............................',
+      '......####..........####......',
+      '..............................',
+      '..............................',
+      '##############################',
+      '##############################',
+      '##############################',
+    ],
+    entities: [
+      { type:'door', x:0,  y:13, dir:'left',  to:'campo',      spawnAt:{ x:28, y:13 } },
+      { type:'door', x:29, y:13, dir:'right', to:'publicacao', spawnAt:{ x:1,  y:13 }, locked:'boss' },
+      { type:'spawn', x:2, y:13 },
+      { type:'boss',
+        x:22, y:13,
+        name:'CARLÃO DO PASTEL',
+        sub:'DEPUTADO · CASO RP-9',
+        hp:10,
+        intro:[
+          '— "Repórterzinho. Você não tem ideia com quem está mexendo."',
+          '— "Meu advogado já tem seu nome. Vou processar a Folha Apurada por dano moral, calúnia, difamação."',
+          '— "Some daqui antes que eu chame meus assessores."',
+        ] },
+    ]
+  },
+
+  /* ---------- 6 · PUBLICAÇÃO ---------- */
   publicacao: {
     title: 'PUBLICAÇÃO',
     sub: 'mesa central · 22:47',
@@ -978,17 +1195,21 @@ const ROOMS = {
 
 /* ---------- GAME STATE ---------- */
 const game = {
-  state: 'title', // title, play, dialog, end
+  state: 'title', // title, play, dialog, end, bossIntro, bossDefeat
   room: 'redacao',
   player: { x: 100, y: 200, vx:0, vy:0, w:18, h:28, onGround:false, dir:1, anim:0, flash:0, hp:3, invuln:0, jumpBuffer:0, coyote:0 },
-  abilities: { cam:false, rec:false, doc:false },
+  abilities: { cam:false, rec:false, doc:false, ped:false, chief:false },
   clues: [],
   totalClues: 0,
   particles: [],
   projectiles: [],
+  bossProjectiles: [],
   flashLight: 0,
   recPulse: 0,
   recCooldown: 0,
+  pedCooldown: 0,
+  chiefCharges: 0,
+  chiefPulse: 0,
   shake: 0,
   toast: { text:'', t:0 },
   dialog: null,        // { who, lines, idx }
@@ -999,6 +1220,8 @@ const game = {
   fadeAlpha: 0,
   fadeDir: 0,
   pendingRoom: null,
+  boss: null,          // ref to boss entity in current room (or null)
+  bossIntro: null,     // { phase, t, lineIdx, hpFilled, ... }
 };
 
 /* count total clues across rooms */
@@ -1034,16 +1257,65 @@ function setRoom(name, spawnAt) {
   game.spawnPoint = { x: game.player.x, y: game.player.y };
 
   // reset enemy positions and defeated state in this room
+  // also clear any spawned (transient) advisors from previous boss visit
+  room.entities = room.entities.filter(e => !e._spawned);
   for (const e of room.entities) {
     if (e.type === 'enemy') {
-      e._x = e.x*TILE; e._anchor = e.x*TILE; e._dir = 1; e._anim = 0; e.stunned = 0; e.defeated = false;
+      e._x = e.x*TILE; e._anchor = e.x*TILE; e._dir = 1; e._anim = 0;
+      e.stunned = 0; e.defeated = false;
+      e._hp = e.hp || (e.kind === 'assessor' ? 3 : 1);
     }
   }
   game.projectiles.length = 0;
+  game.bossProjectiles.length = 0;
+
+  // Boss room init
+  game.boss = null;
+  game.bossIntro = null;
+  game.bossDefeat = null;
+  hideBossUI();
+  if (room.isBoss) {
+    const bossEnt = room.entities.find(e => e.type === 'boss');
+    if (bossEnt) {
+      if (bossEnt.defeated) {
+        // already beaten in a prior visit — leave dormant, no intro, door stays open
+        bossEnt._x = bossEnt.x * TILE;
+        bossEnt._fall = 1;
+        bossEnt._stunned = 0;
+        bossEnt._invuln = 0;
+        game.boss = bossEnt;
+      } else {
+        bossEnt._x = bossEnt.x * TILE;
+        bossEnt._y = bossEnt.y * TILE;
+        bossEnt._dir = -1;
+        bossEnt._anim = 0;
+        bossEnt._hp = bossEnt.hp;
+        bossEnt._maxHp = bossEnt.hp;
+        bossEnt._attackTimer = 90;
+        bossEnt._spawnTimer = 240;
+        bossEnt._stunned = 0;
+        bossEnt._invuln = 0;
+        bossEnt._enraged = false;
+        bossEnt._fall = 0;
+        game.boss = bossEnt;
+        startBossIntro();
+      }
+    }
+  }
 
   document.getElementById('roomLabel').textContent = room.title;
   updateHearts();
   showRoomName(room.title, room.sub);
+
+  // tension toast on entering boss room
+  if (name === 'confronto') {
+    setTimeout(() => {
+      const t = document.getElementById('toast');
+      t.classList.add('danger');
+      toast('última parada — outro lado · gabinete sabe da pauta');
+      setTimeout(()=>t.classList.remove('danger'), 2600);
+    }, 600);
+  }
 }
 
 function updateHearts() {
@@ -1096,9 +1368,10 @@ function advanceDialog() {
     if (game.pendingPickup) {
       const ab = game.pendingPickup;
       game.abilities[ab.key] = true;
-      document.getElementById({cam:'abCam',rec:'abRec',doc:'abDoc'}[ab.key]).classList.add('on');
-      // unlock corresponding touch button
-      const tcMap = { cam:'.tc-z', rec:'.tc-x' };
+      const chipMap = { cam:'abCam', rec:'abRec', ped:'abPed', chief:'abChief' };
+      const elId = chipMap[ab.key];
+      if (elId) document.getElementById(elId)?.classList.add('on');
+      const tcMap = { cam:'.tc-z', rec:'.tc-x', ped:'.tc-c', chief:'.tc-v' };
       if (tcMap[ab.key]) document.querySelector(tcMap[ab.key])?.classList.remove('locked');
       toast(`+${ab.name}`);
       SFX.ability();
@@ -1233,41 +1506,135 @@ function update(dt) {
       x: p.x + p.w/2, y: p.y + p.h/2 - 2,
       vx: (p.dir > 0 ? 7.5 : -7.5),
       life: 50, dir: p.dir, age: 0,
+      weapon: 'rec', dmg: 1,
     });
     SFX.rec();
   }
   if (game.recCooldown > 0) game.recCooldown--;
+  // PEDIDO FORMAL [C] — arcing envelope, pierces shield, 2 dmg
+  if (pressed['c'] && !game.abilities.ped) {
+    toast('pedido formal trancado — chega lá no outro lado');
+  }
+  if (pressed['c'] && game.abilities.ped && game.pedCooldown <= 0) {
+    game.pedCooldown = 50;
+    game.projectiles.push({
+      x: p.x + p.w/2, y: p.y + p.h/2,
+      vx: (p.dir > 0 ? 5.6 : -5.6),
+      vy: -3.6,
+      gravity: 0.18,
+      life: 100, dir: p.dir, age: 0,
+      weapon: 'ped', dmg: 2, pierce: true,
+    });
+    SFX.ped();
+  }
+  if (game.pedCooldown > 0) game.pedCooldown--;
+  // EDITORA-CHEFE [V] — clears advisors on screen, 2 charges
+  if (pressed['v'] && !game.abilities.chief) {
+    toast('editora ainda não foi acionada');
+  }
+  if (pressed['v'] && game.abilities.chief && game.chiefCharges > 0) {
+    let cleared = 0;
+    for (const e of ROOMS[game.room].entities) {
+      if (e.type === 'enemy' && e.kind === 'assessor' && !e.defeated) {
+        e.defeated = true;
+        flashSparks(e._x + TILE/2, e.y*TILE + TILE/2, '#ffffff');
+        cleared++;
+      }
+    }
+    if (cleared > 0) {
+      game.chiefCharges--;
+      game.chiefPulse = 1.0;
+      toast(`editora-chefe entrou na linha · ${cleared} assessor${cleared>1?'es':''} fora · ${game.chiefCharges} carga${game.chiefCharges===1?'':'s'}`);
+      SFX.chief();
+      game.shake = 4;
+    } else {
+      toast('editora não atende — nenhum assessor à vista');
+    }
+  } else if (pressed['v'] && game.abilities.chief && game.chiefCharges <= 0) {
+    toast('editora sem cargas — você está sozinho');
+  }
+  if (game.chiefPulse > 0) game.chiefPulse = Math.max(0, game.chiefPulse - dt*0.0025);
   if (game.flashLight > 0) game.flashLight = Math.max(0, game.flashLight - dt*0.0035);
   if (game.recPulse > 0)   game.recPulse   = Math.max(0, game.recPulse   - dt*0.0018);
   if (game.guardStunned > 0) game.guardStunned--;
 
-  // Update projectiles
+  // Update projectiles (apply gravity for arcing weapons like ped)
   for (const proj of game.projectiles) {
     proj.x += proj.vx;
+    if (proj.gravity != null) {
+      proj.vy = (proj.vy ?? 0) + proj.gravity;
+      proj.y += proj.vy;
+    }
     proj.life--;
     proj.age++;
-    // tile collision: stop on wall
     const cx = Math.floor(proj.x/TILE), cy = Math.floor(proj.y/TILE);
     if (solid(mapAt(game.room, cx, cy))) proj.life = 0;
   }
-  // Projectile vs enemy
+  // Projectile vs boss / enemy
   for (const proj of game.projectiles) {
     if (proj.life <= 0) continue;
     const prj = { x: proj.x-8, y: proj.y-8, w:16, h:16 };
+
+    // Boss (priority hit)
+    if (game.boss && !game.boss.defeated) {
+      const b = game.boss;
+      const bw = 36, bh = 48;
+      const br = { x: b._x - 2, y: b.y*TILE + TILE - bh, w: bw, h: bh };
+      const liveAssessors = ROOMS[game.room].entities.filter(e =>
+        e.type === 'enemy' && e.kind === 'assessor' && !e.defeated
+      ).length;
+      const shielded = liveAssessors > 0 && !proj.pierce;
+      if (overlap(prj, br)) {
+        if (b._invuln > 0) {
+          // skip — boss in invuln frames
+        } else if (shielded) {
+          toast('os assessores blindam o deputado · use o pedido [c]');
+          flashSparks(proj.x, proj.y, '#c0392b');
+          proj.life = 0;
+          continue;
+        } else {
+          b._hp -= proj.dmg || 1;
+          b._invuln = 24;
+          b._stunned = 26;
+          flashSparks(b._x + bw/2 - 4, br.y + 6, proj.weapon === 'ped' ? '#d4a017' : '#e8e3d0');
+          SFX.bossHit();
+          updateBossHpUI();
+          game.shake = 6;
+          proj.life = 0;
+          if (b._hp <= 0) onBossDefeated();
+          continue;
+        }
+      }
+    }
+
+    // Regular enemies (and dynamically-spawned assessores)
     for (const e of ROOMS[game.room].entities) {
       if (e.type !== 'enemy' || e.defeated) continue;
       const er = { x: e._x + 4, y: e.y*TILE + 2, w: 24, h: 30 };
       if (overlap(prj, er)) {
-        e.defeated = true;
+        e._hp = (e._hp ?? 1) - (proj.dmg || 1);
+        if (e._hp <= 0) {
+          e.defeated = true;
+          flashSparks(e._x + TILE/2, e.y*TILE + TILE/2, '#d4a017');
+          toast(e.kind === 'assessor' ? 'assessor neutralizado' : 'lobista exposto');
+          SFX.enemyDown();
+        } else {
+          flashSparks(e._x + TILE/2, e.y*TILE + TILE/2, '#c0392b');
+          e.stunned = Math.max(e.stunned || 0, 14);
+          SFX.hit();
+        }
         proj.life = 0;
-        flashSparks(e._x + TILE/2, e.y*TILE + TILE/2, '#d4a017');
-        toast('lobista exposto');
-        SFX.enemyDown();
         break;
       }
     }
   }
   game.projectiles = game.projectiles.filter(pr => pr.life > 0);
+
+  // Boss AI + projectiles + assessor cleanup
+  if (game.boss) {
+    updateBoss(dt);
+    updateBossProjectiles();
+  }
 
   // Entities
   const room = ROOMS[game.room];
@@ -1363,7 +1730,11 @@ function update(dt) {
               continue;
             }
             if (e.locked === 'doc' && !game.abilities.doc) {
-              toast('precisa de prova pra publicar');
+              toast('precisa de prova pra confrontar o gabinete');
+              continue;
+            }
+            if (e.locked === 'boss' && !(game.boss && game.boss.defeated)) {
+              toast('Carlão ainda barra a saída');
               continue;
             }
           }
@@ -1421,6 +1792,305 @@ function updateParticles() {
 /* ---------- FADE TRANSITIONS ---------- */
 function fadeTo(fn) {
   game.fadeDir = 1; game._fadeFn = fn;
+}
+
+/* ---------- BOSS UI HELPERS ---------- */
+function showBossUI() {
+  document.getElementById('bossHp').classList.add('show');
+}
+function hideBossUI() {
+  document.getElementById('bossHp').classList.remove('show');
+  document.getElementById('bossIntro').classList.add('hidden');
+  document.getElementById('bossIntro').classList.remove('show');
+  document.getElementById('bossNameCard').classList.add('hidden');
+  document.getElementById('bossGo').classList.add('hidden');
+}
+function buildBossHpBar(max, current) {
+  const bar = document.getElementById('bossHpBar');
+  let html = '';
+  for (let i = 0; i < max; i++) {
+    html += `<i class="${i < current ? '' : 'empty'}"></i>`;
+  }
+  bar.innerHTML = html;
+}
+function updateBossHpUI() {
+  if (!game.boss) return;
+  buildBossHpBar(game.boss._maxHp, Math.max(0, game.boss._hp));
+}
+
+/* ---------- BOSS INTRO (Mega Man-style) ---------- */
+function startBossIntro() {
+  game.state = 'bossIntro';
+  game.bossIntro = {
+    phase: 0,    // 0: walk-in, 1: dialog, 2: name reveal, 3: hp fill, 4: GO!, 5: done
+    t: 0,
+    lineIdx: 0,
+    hpFilled: 0,
+  };
+  // auto-grant new weapons
+  if (!game.abilities.ped) {
+    game.abilities.ped = true;
+    document.getElementById('abPed')?.classList.add('on');
+    document.querySelector('.tc-c')?.classList.remove('locked');
+  }
+  if (!game.abilities.chief) {
+    game.abilities.chief = true;
+    document.getElementById('abChief')?.classList.add('on');
+    document.querySelector('.tc-v')?.classList.remove('locked');
+  }
+  game.chiefCharges = 2;
+  // start off-screen right
+  game.boss._x = W + 40;
+  game.boss._dir = -1;
+  // overlay
+  const intro = document.getElementById('bossIntro');
+  intro.classList.remove('hidden');
+  intro.classList.remove('show');     // fades in via .show
+  document.getElementById('bossQuoteWho').textContent = (game.boss.name + ' · ' + (game.boss.sub || '')).toUpperCase();
+  document.getElementById('bossQuoteText').textContent = '';
+  SFX.bossIntro();
+}
+function updateBossIntro() {
+  if (!game.bossIntro || !game.boss) return;
+  const bi = game.bossIntro;
+  bi.t++;
+  const targetX = game.boss.x * TILE;
+
+  if (bi.phase === 0) {
+    // walk-in
+    game.boss._x -= 2.5;
+    game.boss._anim += 0.18;
+    if (game.boss._x <= targetX) {
+      game.boss._x = targetX;
+      bi.phase = 1; bi.t = 0;
+      const intro = document.getElementById('bossIntro');
+      intro.classList.add('show');
+      document.getElementById('bossQuoteText').textContent = game.boss.intro[0];
+      SFX.dialog();
+    }
+  } else if (bi.phase === 1) {
+    // wait for input — advanced via advanceBossIntro()
+  } else if (bi.phase === 2) {
+    if (bi.t === 1) {
+      const intro = document.getElementById('bossIntro');
+      intro.classList.remove('show');
+      setTimeout(()=>intro.classList.add('hidden'), 380);
+      const card = document.getElementById('bossNameCard');
+      document.getElementById('bossNameBig').textContent = game.boss.name;
+      document.getElementById('bossNameSmall').textContent = game.boss.sub || '';
+      card.classList.remove('hidden');
+      showBossUI();
+      buildBossHpBar(game.boss._maxHp, 0);
+      SFX.bossIntro();
+    }
+    if (bi.t > 32) { bi.phase = 3; bi.t = 0; }
+  } else if (bi.phase === 3) {
+    if (bi.t % 7 === 0 && bi.hpFilled < game.boss._maxHp) {
+      bi.hpFilled++;
+      buildBossHpBar(game.boss._maxHp, bi.hpFilled);
+      SFX.dialog();
+    }
+    if (bi.hpFilled >= game.boss._maxHp && bi.t > game.boss._maxHp * 7 + 28) {
+      bi.phase = 4; bi.t = 0;
+      document.getElementById('bossNameCard').classList.add('hidden');
+      const go = document.getElementById('bossGo');
+      go.classList.remove('hidden');
+      SFX.bossGo();
+      setTimeout(()=>go.classList.add('hidden'), 1100);
+    }
+  } else if (bi.phase === 4) {
+    if (bi.t > 60) {
+      bi.phase = 5;
+      game.state = 'play';
+      game.bossIntro = null;
+      toast('+ pedido formal [c] · + editora-chefe [v] (2x)');
+    }
+  }
+}
+function advanceBossIntro() {
+  if (!game.bossIntro || game.bossIntro.phase !== 1) return;
+  const bi = game.bossIntro;
+  bi.lineIdx++;
+  if (bi.lineIdx >= game.boss.intro.length) {
+    bi.phase = 2;
+    bi.t = 0;
+  } else {
+    document.getElementById('bossQuoteText').textContent = game.boss.intro[bi.lineIdx];
+    SFX.dialog();
+  }
+}
+
+/* ---------- BOSS AI ---------- */
+function updateBoss(dt) {
+  const b = game.boss;
+  if (!b || b.defeated) return;
+  if (b._invuln > 0) b._invuln--;
+  if (b._stunned > 0) {
+    b._stunned--;
+    b._anim += 0.04;
+    return;
+  }
+
+  // patrol — slow walk left/right within range
+  if (!b._patrolDir) b._patrolDir = -1;
+  b._x += b._patrolDir * (b._enraged ? 0.7 : 0.45);
+  b._anim += 0.07;
+  const minX = (b.x - 4) * TILE;
+  const maxX = (b.x + 1) * TILE;
+  if (b._x < minX) { b._x = minX; b._patrolDir =  1; }
+  if (b._x > maxX) { b._x = maxX; b._patrolDir = -1; }
+
+  // face player
+  const px = game.player.x + game.player.w/2;
+  b._dir = (px < b._x + 18) ? -1 : 1;
+
+  // attack timer
+  b._attackTimer--;
+  if (b._attackTimer <= 0) {
+    spawnProcesso(b);
+    b._attackTimer = b._enraged ? 75 : 110;
+  }
+
+  // advisor spawn timer (max simultaneous)
+  const liveAssessors = ROOMS[game.room].entities.filter(e =>
+    e.type === 'enemy' && e.kind === 'assessor' && !e.defeated
+  ).length;
+  const maxAssessors = b._enraged ? 3 : 2;
+  b._spawnTimer--;
+  if (b._spawnTimer <= 0 && liveAssessors < maxAssessors) {
+    spawnAssessor();
+    b._spawnTimer = b._enraged ? 220 : 320;
+  } else if (liveAssessors >= maxAssessors) {
+    b._spawnTimer = 60;
+  }
+
+  // enraged trigger at half HP
+  if (!b._enraged && b._hp <= b._maxHp / 2) {
+    b._enraged = true;
+    toast('Carlão enfurecido — vai chamar mais assessores');
+    game.shake = 8;
+  }
+}
+
+function spawnProcesso(b) {
+  const px = game.player.x + game.player.w/2;
+  const dir = (px < b._x + 18) ? -1 : 1;
+  game.bossProjectiles.push({
+    x: b._x + 18 + dir*16,
+    y: b.y*TILE + 14,
+    vx: dir * 3.4,
+    vy: -4.7,
+    gravity: 0.18,
+    life: 220,
+    rot: 0,
+    rotV: dir * 0.22,
+  });
+  SFX.processo();
+}
+
+function spawnAssessor() {
+  const room = ROOMS[game.room];
+  const fromLeft = Math.random() < 0.5;
+  const startTileX = fromLeft ? 0 : COLS - 1;
+  const startPx = fromLeft ? -16 : (COLS - 1) * TILE + 16;
+  const anchorPx = (fromLeft ? 4 : COLS - 5) * TILE;
+  const ent = {
+    type: 'enemy',
+    kind: 'assessor',
+    x: startTileX,
+    y: 13,
+    range: 5,
+    speed: 1.05,
+    name: 'ASSESSOR',
+    hp: 3,
+    _x: startPx,
+    _anchor: anchorPx,
+    _dir: fromLeft ? 1 : -1,
+    _anim: 0,
+    stunned: 0,
+    defeated: false,
+    _hp: 3,
+    _spawned: true,
+  };
+  room.entities.push(ent);
+  flashSparks(startPx + TILE/2, 13*TILE + TILE/2, '#7a3c8a');
+}
+
+function updateBossProjectiles() {
+  for (const bp of game.bossProjectiles) {
+    bp.x += bp.vx;
+    bp.vy += bp.gravity;
+    bp.y += bp.vy;
+    bp.rot += bp.rotV;
+    bp.life--;
+    // hit ground
+    if (bp.y >= (ROWS - 3) * TILE) {
+      bp.life = 0;
+      flashSparks(bp.x, (ROWS-3)*TILE - 4, '#c0392b');
+    }
+  }
+  // collision with player
+  const p = game.player;
+  if (p.invuln <= 0) {
+    for (const bp of game.bossProjectiles) {
+      if (bp.life <= 0) continue;
+      const bpr = { x: bp.x-10, y: bp.y-10, w:20, h:20 };
+      const pr = { x: p.x, y: p.y, w: p.w, h: p.h };
+      if (overlap(bpr, pr)) {
+        p.hp--;
+        p.invuln = 60;
+        const knock = (p.x + p.w/2 < bp.x) ? -1 : 1;
+        p.vx = knock * 4.5;
+        p.vy = -4.5;
+        flashSparks(p.x+p.w/2, p.y+p.h/2, '#c0392b');
+        game.shake = 8;
+        pulseHearts();
+        SFX.hit();
+        bp.life = 0;
+        if (p.hp <= 0) {
+          SFX.gameOver();
+          firedGame();
+          return;
+        }
+        updateHearts();
+      }
+    }
+  }
+  game.bossProjectiles = game.bossProjectiles.filter(bp => bp.life > 0);
+}
+
+function onBossDefeated() {
+  game.boss.defeated = true;
+  game.boss._fall = 0;
+  game.bossProjectiles.length = 0;
+  // clear remaining assessores
+  for (const e of ROOMS[game.room].entities) {
+    if (e.type === 'enemy' && e.kind === 'assessor' && !e.defeated) e.defeated = true;
+  }
+  SFX.bossDie();
+  game.state = 'bossDefeat';
+  game.bossDefeat = { t: 0 };
+  game.shake = 14;
+}
+
+function updateBossDefeat() {
+  if (!game.bossDefeat) return;
+  game.bossDefeat.t++;
+  if (game.boss) {
+    game.boss._anim += 0.04;
+    game.boss._fall = Math.min(1, game.boss._fall + 0.025);
+  }
+  if (game.bossDefeat.t === 30) {
+    document.getElementById('bossHp').classList.remove('show');
+  }
+  if (game.bossDefeat.t === 70) {
+    openDialog('EDITOR · NA VOZ DA REDAÇÃO', [
+      'Toledo. Falou com o gabinete? Beleza.',
+      'Pediu manifestação por escrito, registrou tudo. Outro lado: feito.',
+      'Agora vai. Publica. A porta da editoria tá liberada.',
+    ]);
+    game.bossDefeat = null;
+  }
 }
 
 /* ---------- BACKGROUND DRAWERS ---------- */
@@ -1510,6 +2180,79 @@ function drawFieldBG() {
   ctx.fillStyle = 'rgba(212,160,23,.35)';
   ctx.font = '9px JetBrains Mono';
   ctx.fillText('VICINAL · 23h41 · sem cobertura de celular', 14, 14);
+}
+function drawConfrontoBG() {
+  // antessala da editoria — corredor escuro, fotos do deputado nas paredes, luz vermelha de "AO VIVO"
+  const g = ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#1a0d12'); g.addColorStop(.55,'#10080c'); g.addColorStop(1,'#080306');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+  // distant chandelier silhouette
+  ctx.fillStyle = 'rgba(192,57,43,.04)';
+  ctx.fillRect(W/2-80, 30, 160, 4);
+  for (let i=0;i<7;i++){
+    const x = W/2 - 70 + i*22;
+    ctx.fillStyle = `rgba(212,160,23,${0.06 + Math.sin(performance.now()*0.001 + i)*0.03})`;
+    ctx.fillRect(x, 34, 3, 22);
+    ctx.beginPath(); ctx.arc(x+1.5, 60, 4, 0, Math.PI*2); ctx.fill();
+  }
+
+  // wall panels — wood paneling
+  for (let i=0;i<6;i++){
+    const x = i*160 + 20;
+    ctx.fillStyle = 'rgba(58,24,32,.5)';
+    ctx.fillRect(x, 110, 130, 240);
+    ctx.strokeStyle = 'rgba(100,40,52,.4)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x+0.5, 110.5, 130, 240);
+    // moulding
+    ctx.fillStyle = 'rgba(100,40,52,.5)';
+    ctx.fillRect(x, 108, 130, 2);
+    ctx.fillRect(x, 350, 130, 2);
+  }
+
+  // photos of deputy on the wall (small framed portraits)
+  for (let i=0;i<4;i++){
+    const x = 120 + i*220, y = 160;
+    // frame
+    ctx.fillStyle = '#3a2010';
+    ctx.fillRect(x-2, y-2, 64, 78);
+    // photo bg
+    ctx.fillStyle = '#1a1418';
+    ctx.fillRect(x, y, 60, 74);
+    // silhouette of deputy (slick suit, head)
+    ctx.fillStyle = 'rgba(232,227,208,.3)';
+    ctx.fillRect(x+22, y+10, 16, 18); // head
+    ctx.fillStyle = 'rgba(40,30,40,.85)';
+    ctx.fillRect(x+10, y+30, 40, 40); // suit
+    ctx.fillStyle = 'rgba(192,57,43,.7)';
+    ctx.fillRect(x+28, y+34, 4, 22);  // tie
+    // brass plate
+    ctx.fillStyle = 'rgba(212,160,23,.45)';
+    ctx.fillRect(x+8, y+72, 44, 4);
+  }
+
+  // red "AO VIVO" / "GABINETE" sign (subtle pulse)
+  const t = performance.now()*0.002;
+  const pulse = 0.6 + Math.sin(t)*0.4;
+  ctx.fillStyle = `rgba(192,57,43,${0.55*pulse})`;
+  ctx.font = 'bold 11px JetBrains Mono';
+  ctx.fillText('● GABINETE · CARLÃO DO PASTEL · ATENDIMENTO RESERVADO', 24, 18);
+
+  // floor light pool
+  const gr = ctx.createRadialGradient(W/2, 420, 30, W/2, 420, 280);
+  gr.addColorStop(0,'rgba(192,57,43,.18)');
+  gr.addColorStop(1,'rgba(192,57,43,0)');
+  ctx.fillStyle = gr; ctx.fillRect(0, 280, W, 200);
+
+  // a door silhouette in the back-right (the path to publicacao)
+  ctx.fillStyle = 'rgba(212,160,23,.08)';
+  ctx.fillRect(W-110, 250, 70, 130);
+  ctx.strokeStyle = 'rgba(212,160,23,.18)';
+  ctx.strokeRect(W-110+0.5, 250.5, 70, 130);
+  ctx.fillStyle = 'rgba(232,227,208,.32)';
+  ctx.font = '8px JetBrains Mono';
+  ctx.fillText('PUBLICAÇÃO →', W-104, 244);
 }
 function drawPublishBG() {
   const g = ctx.createLinearGradient(0,0,0,H);
@@ -1690,7 +2433,11 @@ function drawEntities() {
         break;
       }
       case 'door': {
-        const locked = e.locked && !((e.locked==='guard' && game.guardStunned>0) || (e.locked==='doc' && game.abilities.doc));
+        const locked = e.locked && !(
+          (e.locked==='guard' && game.guardStunned>0) ||
+          (e.locked==='doc' && game.abilities.doc) ||
+          (e.locked==='boss' && game.boss && game.boss.defeated)
+        );
         ctx.fillStyle = locked ? 'rgba(192,57,43,.18)' : 'rgba(212,160,23,.12)';
         ctx.fillRect(ex, ey-TILE, TILE, TILE*2);
         ctx.strokeStyle = locked ? 'rgba(192,57,43,.5)' : 'rgba(212,160,23,.55)';
@@ -1728,6 +2475,14 @@ function drawEntities() {
         const stunned = (e.stunned || 0) > 0;
         const facing = (e._dir || 1);
         const bob = Math.sin(e._anim || 0) * 1.2;
+        const isAssessor = e.kind === 'assessor';
+        // palette per enemy kind
+        const suitColor      = isAssessor ? '#3a1f4a' : '#1a1822';
+        const shoulderColor  = isAssessor ? '#552e6a' : '#2a2632';
+        const tieColor       = isAssessor ? '#a04a14' : '#7a1f1f';
+        const auraColor      = isAssessor ? '122,60,138' : '192,57,43';
+        const labelColor     = isAssessor ? 'rgba(168,90,200,.85)' : 'rgba(192,57,43,.7)';
+        const labelText      = isAssessor ? 'ASSESSOR' : (e.name || 'LOBISTA');
         // shadow
         ctx.fillStyle = 'rgba(0,0,0,.45)';
         ctx.beginPath();
@@ -1739,15 +2494,15 @@ function drawEntities() {
         ctx.fillRect(ex0+9 + (stepO?0:1),  ey0+24, 4, 6);
         ctx.fillRect(ex0+18 - (stepO?1:0), ey0+24, 4, 6);
         // body (suit)
-        ctx.fillStyle = '#1a1822';
+        ctx.fillStyle = suitColor;
         ctx.fillRect(ex0+7, ey0+12+bob, 18, 13);
         // shoulder line
-        ctx.fillStyle = '#2a2632';
+        ctx.fillStyle = shoulderColor;
         ctx.fillRect(ex0+7, ey0+12+bob, 18, 2);
         // shirt + tie
         ctx.fillStyle = '#e8e3d0';
         ctx.fillRect(ex0+13, ey0+13+bob, 6, 4);
-        ctx.fillStyle = '#7a1f1f';
+        ctx.fillStyle = tieColor;
         ctx.fillRect(ex0+15, ey0+14+bob, 2, 9);
         // head
         ctx.fillStyle = '#c89a78';
@@ -1762,7 +2517,7 @@ function drawEntities() {
           ctx.fillRect(ex0+12, ey0+8+bob, 3, 1);
           ctx.fillRect(ex0+17, ey0+8+bob, 3, 1);
         } else {
-          ctx.fillStyle = '#ff3030';
+          ctx.fillStyle = isAssessor ? '#a85ad8' : '#ff3030';
           const eo = facing > 0 ? 1 : -1;
           ctx.fillRect(ex0+13+eo, ey0+8+bob, 1, 2);
           ctx.fillRect(ex0+18+eo, ey0+8+bob, 1, 2);
@@ -1771,24 +2526,151 @@ function drawEntities() {
           ctx.fillRect(ex0+12, ey0+7+bob, 3, 1);
           ctx.fillRect(ex0+17, ey0+7+bob, 3, 1);
         }
-        // briefcase
+        // briefcase / clipboard
         const bx = ex0 + (facing>0 ? 24 : 1);
-        ctx.fillStyle = '#3a2810';
-        ctx.fillRect(bx, ey0+16+bob, 7, 8);
-        ctx.fillStyle = '#1a1408';
-        ctx.fillRect(bx, ey0+15+bob, 7, 1);
-        ctx.fillStyle = '#d4a017';
-        ctx.fillRect(bx+3, ey0+15+bob, 1, 1);
+        if (isAssessor) {
+          // clipboard with paper
+          ctx.fillStyle = '#3a2810';
+          ctx.fillRect(bx, ey0+15+bob, 7, 10);
+          ctx.fillStyle = '#e8e3d0';
+          ctx.fillRect(bx+1, ey0+16+bob, 5, 7);
+          ctx.fillStyle = '#1a0e08';
+          for (let i=0;i<3;i++) ctx.fillRect(bx+2, ey0+18+i*2+bob, 3, 0.5);
+        } else {
+          ctx.fillStyle = '#3a2810';
+          ctx.fillRect(bx, ey0+16+bob, 7, 8);
+          ctx.fillStyle = '#1a1408';
+          ctx.fillRect(bx, ey0+15+bob, 7, 1);
+          ctx.fillStyle = '#d4a017';
+          ctx.fillRect(bx+3, ey0+15+bob, 1, 1);
+        }
         // label
         ctx.font = '8px JetBrains Mono';
-        ctx.fillStyle = stunned ? 'rgba(212,160,23,.85)' : 'rgba(192,57,43,.7)';
-        ctx.fillText(stunned ? 'CEGO' : 'LOBISTA', ex0+1, ey0-4);
+        ctx.fillStyle = stunned ? 'rgba(212,160,23,.85)' : labelColor;
+        ctx.fillText(stunned ? 'CEGO' : labelText, ex0+1, ey0-4);
+        // HP pips for assessor (3 small dots above)
+        if (isAssessor && (e._hp ?? e.hp ?? 1) > 1) {
+          const maxH = e.hp || 3;
+          const cur = Math.max(0, e._hp ?? maxH);
+          for (let i = 0; i < maxH; i++) {
+            ctx.fillStyle = i < cur ? '#a85ad8' : 'rgba(168,90,200,.18)';
+            ctx.fillRect(ex0+10 + i*4, ey0-10, 3, 2);
+          }
+        }
         // angry aura
         if (!stunned) {
           const t = performance.now()*0.005;
-          ctx.strokeStyle = `rgba(192,57,43,${0.15+Math.sin(t)*0.08})`;
+          ctx.strokeStyle = `rgba(${auraColor},${0.15+Math.sin(t)*0.08})`;
           ctx.lineWidth = 1;
           ctx.strokeRect(ex0+5, ey0+1+bob, 22, 26);
+        }
+        break;
+      }
+      case 'boss': {
+        if (game.state === 'bossIntro' && game.bossIntro?.phase === 0) {
+          // already animated by intro state, but draw at current _x
+        }
+        const bx0 = (e._x !== undefined ? e._x : e.x*TILE);
+        const by0 = e.y*TILE - 16;     // boss is bigger, shifted up
+        const stunned = (e._stunned || 0) > 0;
+        const facing = (e._dir || -1);
+        const bob = Math.sin(e._anim || 0) * 1.6;
+        const fall = e._fall || 0;
+        const flicker = (e._invuln > 0) && (Math.floor(e._invuln/3) % 2 === 0);
+        if (flicker) break;
+        const tilt = e.defeated ? Math.PI * 0.5 * fall : 0;
+
+        ctx.save();
+        ctx.translate(bx0 + 18, by0 + 24 + bob + (e.defeated ? fall*8 : 0));
+        ctx.rotate(tilt);
+        ctx.translate(-(bx0 + 18), -(by0 + 24 + bob));
+
+        // shadow
+        ctx.fillStyle = 'rgba(0,0,0,.55)';
+        ctx.beginPath();
+        ctx.ellipse(bx0+18, by0+TILE+18, 24, 4, 0, 0, Math.PI*2);
+        ctx.fill();
+        // legs
+        ctx.fillStyle = '#0a0a0a';
+        const stepO = stunned || e.defeated ? 0 : Math.floor((e._anim||0)*2)%2;
+        ctx.fillRect(bx0+9  + (stepO?0:1), by0+38, 6, 10);
+        ctx.fillRect(bx0+22 - (stepO?1:0), by0+38, 6, 10);
+        // suit (charcoal)
+        ctx.fillStyle = '#1c1820';
+        ctx.fillRect(bx0+4, by0+18+bob, 30, 22);
+        ctx.fillStyle = '#2a2430';
+        ctx.fillRect(bx0+4, by0+18+bob, 30, 3);
+        // shirt + tie (deep red)
+        ctx.fillStyle = '#e8e3d0';
+        ctx.fillRect(bx0+14, by0+19+bob, 10, 5);
+        ctx.fillStyle = '#7a1414';
+        ctx.fillRect(bx0+17, by0+20+bob, 4, 16);
+        ctx.fillStyle = '#a01818';
+        ctx.fillRect(bx0+17, by0+34+bob, 4, 2);
+        // gold lapel pin
+        ctx.fillStyle = '#d4a017';
+        ctx.fillRect(bx0+11, by0+24+bob, 2, 2);
+        // head
+        ctx.fillStyle = '#d4a888';
+        ctx.fillRect(bx0+11, by0+5+bob, 16, 14);
+        // jowls
+        ctx.fillStyle = '#c89878';
+        ctx.fillRect(bx0+10, by0+14+bob, 18, 5);
+        // hair (slick back, gray streaks)
+        ctx.fillStyle = '#1a0e08';
+        ctx.fillRect(bx0+11, by0+5+bob, 16, 4);
+        ctx.fillStyle = '#5a4a3a';
+        ctx.fillRect(bx0+12, by0+6+bob, 4, 1);
+        ctx.fillRect(bx0+22, by0+6+bob, 4, 1);
+        // mustache
+        ctx.fillStyle = '#1a0e08';
+        ctx.fillRect(bx0+15, by0+15+bob, 8, 2);
+        // eyes
+        if (stunned) {
+          ctx.fillStyle = '#d4a017';
+          ctx.fillRect(bx0+14, by0+11+bob, 3, 1);
+          ctx.fillRect(bx0+21, by0+11+bob, 3, 1);
+        } else {
+          ctx.fillStyle = e._enraged ? '#ff3030' : '#7a1414';
+          const eo = facing > 0 ? 1 : -1;
+          ctx.fillRect(bx0+14+eo, by0+11+bob, 2, 2);
+          ctx.fillRect(bx0+22+eo, by0+11+bob, 2, 2);
+          // angry brows
+          ctx.fillStyle = '#1a0e08';
+          ctx.fillRect(bx0+13, by0+10+bob, 4, 1);
+          ctx.fillRect(bx0+21, by0+10+bob, 4, 1);
+        }
+        // briefcase (heavy, gold-clasped)
+        const bcx = bx0 + (facing>0 ? 32 : -2);
+        ctx.fillStyle = '#3a2010';
+        ctx.fillRect(bcx, by0+26+bob, 10, 12);
+        ctx.fillStyle = '#1a1008';
+        ctx.fillRect(bcx, by0+25+bob, 10, 2);
+        ctx.fillStyle = '#d4a017';
+        ctx.fillRect(bcx+3, by0+25+bob, 1, 1);
+        ctx.fillRect(bcx+6, by0+25+bob, 1, 1);
+        ctx.fillStyle = '#3a2010';
+        ctx.fillRect(bcx+3, by0+22+bob, 4, 4);
+        // gold watch on facing arm
+        ctx.fillStyle = '#d4a017';
+        ctx.fillRect(bx0 + (facing>0 ? 30 : 2), by0+30+bob, 2, 1);
+
+        ctx.restore();
+
+        // label (above)
+        if (!e.defeated) {
+          ctx.font = 'bold 9px JetBrains Mono';
+          ctx.fillStyle = e._enraged ? 'rgba(255,80,80,.95)' : 'rgba(192,57,43,.85)';
+          ctx.fillText(e._enraged ? 'ENFURECIDO' : 'CARLÃO', bx0+2, by0-6);
+          // pulsing angry aura
+          const t = performance.now()*0.006;
+          ctx.strokeStyle = `rgba(192,57,43,${0.25+Math.sin(t)*0.15})`;
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(bx0+2, by0+2+bob, 34, 42);
+        } else {
+          ctx.font = 'bold 9px JetBrains Mono';
+          ctx.fillStyle = 'rgba(212,160,23,.7)';
+          ctx.fillText('SE RETIRA', bx0+2, by0-6);
         }
         break;
       }
@@ -1917,23 +2799,102 @@ function drawParticles() {
 function drawProjectiles() {
   for (const proj of game.projectiles) {
     const a = Math.min(1, proj.life/30);
-    // expanding sound rings
-    for (let i = 0; i < 3; i++) {
-      const r = 4 + (proj.age*0.6 + i*4) % 14;
-      ctx.strokeStyle = `rgba(212,160,23,${a*0.6/(i+1)})`;
-      ctx.lineWidth = 1.5;
+    if (proj.weapon === 'ped') {
+      // arcing yellow envelope (PEDIDO FORMAL)
+      const rot = proj.age * 0.08 * proj.dir;
+      ctx.save();
+      ctx.translate(proj.x, proj.y);
+      ctx.rotate(rot);
+      // glow
+      const gr = ctx.createRadialGradient(0, 0, 1, 0, 0, 18);
+      gr.addColorStop(0, `rgba(255,235,140,${a*0.8})`);
+      gr.addColorStop(1, 'rgba(212,160,23,0)');
+      ctx.fillStyle = gr;
+      ctx.fillRect(-18, -18, 36, 36);
+      // envelope body
+      ctx.fillStyle = `rgba(232,227,208,${a})`;
+      ctx.fillRect(-7, -5, 14, 10);
+      // border
+      ctx.strokeStyle = `rgba(212,160,23,${a})`;
+      ctx.lineWidth = 1.2;
+      ctx.strokeRect(-7, -5, 14, 10);
+      // flap
       ctx.beginPath();
-      ctx.arc(proj.x, proj.y, r, -Math.PI*0.4, Math.PI*0.4);
-      if (proj.dir < 0) ctx.arc(proj.x, proj.y, r, Math.PI*0.6, Math.PI*1.4);
+      ctx.moveTo(-7, -5);
+      ctx.lineTo(0, 1);
+      ctx.lineTo(7, -5);
       ctx.stroke();
+      // wax seal
+      ctx.fillStyle = `rgba(192,57,43,${a})`;
+      ctx.beginPath();
+      ctx.arc(0, 1, 2, 0, Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+      // trail
+      for (let i = 1; i < 4; i++) {
+        const tx = proj.x - proj.vx*i*0.5;
+        const ty = proj.y - (proj.vy ?? 0)*i*0.5;
+        ctx.fillStyle = `rgba(212,160,23,${a*0.18/i})`;
+        ctx.fillRect(tx-2, ty-2, 4, 4);
+      }
+    } else {
+      // sound-wave rec
+      for (let i = 0; i < 3; i++) {
+        const r = 4 + (proj.age*0.6 + i*4) % 14;
+        ctx.strokeStyle = `rgba(212,160,23,${a*0.6/(i+1)})`;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(proj.x, proj.y, r, -Math.PI*0.4, Math.PI*0.4);
+        if (proj.dir < 0) ctx.arc(proj.x, proj.y, r, Math.PI*0.6, Math.PI*1.4);
+        ctx.stroke();
+      }
+      ctx.fillStyle = `rgba(255,240,180,${a})`;
+      ctx.fillRect(proj.x-2, proj.y-2, 4, 4);
+      ctx.fillStyle = `rgba(212,160,23,${a*0.3})`;
+      for (let i=1; i<5; i++) {
+        ctx.fillRect(proj.x - proj.vx*i*0.6 - 1, proj.y-1, 2, 2);
+      }
     }
-    // core
-    ctx.fillStyle = `rgba(255,240,180,${a})`;
-    ctx.fillRect(proj.x-2, proj.y-2, 4, 4);
+  }
+}
+
+function drawBossProjectiles() {
+  for (const bp of game.bossProjectiles) {
+    const a = Math.min(1, bp.life/30);
+    ctx.save();
+    ctx.translate(bp.x, bp.y);
+    ctx.rotate(bp.rot);
+    // glow
+    const gr = ctx.createRadialGradient(0, 0, 1, 0, 0, 16);
+    gr.addColorStop(0, `rgba(192,57,43,${a*0.7})`);
+    gr.addColorStop(1, 'rgba(192,57,43,0)');
+    ctx.fillStyle = gr;
+    ctx.fillRect(-16, -16, 32, 32);
+    // rolled paper (subpoena)
+    ctx.fillStyle = `rgba(232,227,208,${a})`;
+    ctx.fillRect(-10, -3, 20, 6);
+    ctx.strokeStyle = `rgba(192,57,43,${a})`;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(-10, -3, 20, 6);
+    // red stamp
+    ctx.fillStyle = `rgba(192,57,43,${a*0.85})`;
+    ctx.beginPath();
+    ctx.arc(0, 0, 3.2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = `rgba(255,255,255,${a*0.9})`;
+    ctx.font = 'bold 5px JetBrains Mono';
+    ctx.textAlign = 'center';
+    ctx.fillText('§', 0, 1.6);
+    ctx.textAlign = 'start';
+    // ribbon ends
+    ctx.fillStyle = `rgba(232,227,208,${a*0.6})`;
+    ctx.fillRect(-12, -2, 2, 4);
+    ctx.fillRect( 10, -2, 2, 4);
+    ctx.restore();
     // trail
-    ctx.fillStyle = `rgba(212,160,23,${a*0.3})`;
-    for (let i=1; i<5; i++) {
-      ctx.fillRect(proj.x - proj.vx*i*0.6 - 1, proj.y-1, 2, 2);
+    for (let i = 1; i < 3; i++) {
+      ctx.fillStyle = `rgba(192,57,43,${a*0.18/i})`;
+      ctx.fillRect(bp.x - bp.vx*i*0.5 - 2, bp.y - bp.vy*i*0.5 - 2, 4, 4);
     }
   }
 }
@@ -1948,6 +2909,20 @@ function drawLighting() {
 }
 
 /* ---------- RENDER ---------- */
+function drawChiefPulse() {
+  if (game.chiefPulse <= 0.05) return;
+  const t = 1 - game.chiefPulse;
+  const r = t * 360;
+  ctx.strokeStyle = `rgba(255,255,255,${game.chiefPulse*0.85})`;
+  ctx.lineWidth = 4 * game.chiefPulse + 1;
+  const cx = game.player.x + game.player.w/2;
+  const cy = game.player.y + game.player.h/2;
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.stroke();
+  ctx.strokeStyle = `rgba(212,160,23,${game.chiefPulse*0.5})`;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.arc(cx, cy, r*0.7, 0, Math.PI*2); ctx.stroke();
+}
+
 function render() {
   ctx.clearRect(0,0,W,H);
   ctx.save();
@@ -1960,6 +2935,8 @@ function render() {
   drawEntities();
   drawPlayer();
   drawProjectiles();
+  drawBossProjectiles();
+  drawChiefPulse();
   drawParticles();
   drawLighting();
   ctx.restore();
@@ -1991,6 +2968,8 @@ function loop(t) {
   const dt = Math.min(40, t-last);
   last = t;
   if (game.state === 'play') update(dt);
+  if (game.state === 'bossIntro') updateBossIntro();
+  if (game.state === 'bossDefeat') updateBossDefeat();
   updateParticles();
   render();
   // clear single-frame
@@ -1999,6 +2978,14 @@ function loop(t) {
   if (game.state === 'dialog' && (keys[' '] || keys['e'])) {
     if (!loop._dlgLock) {
       advanceDialog();
+      loop._dlgLock = true;
+      setTimeout(()=>loop._dlgLock=false, 220);
+    }
+  }
+  // boss intro input
+  if (game.state === 'bossIntro' && game.bossIntro?.phase === 1 && (keys[' '] || keys['e'])) {
+    if (!loop._dlgLock) {
+      advanceBossIntro();
       loop._dlgLock = true;
       setTimeout(()=>loop._dlgLock=false, 220);
     }
