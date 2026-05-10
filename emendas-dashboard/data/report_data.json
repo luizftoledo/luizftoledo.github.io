@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-05-09T14:20:07.095463+00:00",
-  "snapshot_date": "2026-05-09",
+  "generated_at": "2026-05-10T14:22:35.852254+00:00",
+  "snapshot_date": "2026-05-10",
   "source": {
     "label": "Portal da Transparência (CGU) - Emendas Parlamentares",
     "requested_url": "https://portaldatransparencia.gov.br/download-de-dados/emendas-parlamentares/UNICO",
@@ -27,8 +27,8 @@
     "current_year_total_empenhado": 14610806967.75,
     "current_year_total_liquidado": 3134797805.46,
     "current_year_total_pago": 9281967953.58,
-    "current_year_total_empenhado_por_ano_emenda": 14394178864.49,
-    "current_year_total_pago_por_ano_emenda": 6783005887.07,
+    "current_year_total_empenhado_por_ano_emenda": 14610806967.75,
+    "current_year_total_pago_por_ano_emenda": 9281967953.58,
     "_pago_e_empenhado_source": "por_data_documento"
   },
   "top_authors_today": [
@@ -1021,7 +1021,7 @@
     "total_liquidado": 3134797805.46,
     "total_pago": 9281967953.58
   },
-  "run_date": "2026-05-09",
+  "run_date": "2026-05-10",
   "parallel_monitor": {
     "year": 2026,
     "execucao_ano_corrente": {
@@ -3004,6 +3004,17 @@
       "previous_snapshot_date": "2026-05-08",
       "interval_days": 1,
       "source_changed": false
+    },
+    {
+      "date": "2026-05-10",
+      "delta_positivo": 0.0,
+      "delta_liquido": 0.0,
+      "total_empenhado_atual": 317373459238.14,
+      "autores_com_aumento": 0,
+      "destinos_com_aumento": 0,
+      "previous_snapshot_date": "2026-05-09",
+      "interval_days": 1,
+      "source_changed": false
     }
   ],
   "siop_daily_history": [
@@ -3576,7 +3587,17 @@
       "empenhado": 13590646127.0,
       "liquidado": 572514487.0,
       "pago": 466412376.0
+    },
+    {
+      "date": "2026-05-10",
+      "last_update": "",
+      "base_siafi_date": "30/4/2026",
+      "dotacao_inicial_emenda": 49901486761.0,
+      "dotacao_atual_emenda": 49901486761.0,
+      "empenhado": 13590646127.0,
+      "liquidado": 572514487.0,
+      "pago": 466412376.0
     }
   ],
-  "updated_at": "2026-05-09T14:20:07.095463+00:00"
+  "updated_at": "2026-05-10T14:22:35.852254+00:00"
 }
