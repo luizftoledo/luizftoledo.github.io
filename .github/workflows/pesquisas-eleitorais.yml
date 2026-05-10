@@ -1,0 +1,99 @@
+name: Pesquisas eleitorais (TSE)
+
+on:
+  schedule:
+    # 09:00 e 18:00 BRT (UTC-3) → 12:00 e 21:00 UTC
+    - cron: "0 12 * * *"
+    - cron: "0 21 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run scraper
+        run: python scripts/scrape_pesquisas_tse.py
+
+      - name: Commit data updates
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pesquisas-eleitorais-dashboard/data/
+          NOVAS=$(python -c 'import json; print(len(json.load(open("pesquisas-eleitorais-dashboard/data/novas.json"))))')
+          echo "novas=$NOVAS" >> "$GITHUB_OUTPUT"
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            if [ "$NOVAS" -gt 0 ]; then
+              MSG="data(pesquisas-eleitorais): $NOVAS nova(s) pesquisa(s) + status"
+            else
+              MSG="chore(pesquisas-eleitorais): atualiza status (sem novas pesquisas)"
+            fi
+            git commit -m "$MSG"
+            git push
+          fi
+
+      - name: Send Telegram alert for new pesquisas
+        if: steps.commit.outputs.novas != '0'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          set -e
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "::warning::TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID não configurados — pulando alerta."
+            exit 0
+          fi
+          python - <<'PY'
+          import json, os, urllib.parse, urllib.request
+          from datetime import datetime
+          from pathlib import Path
+
+          novas = json.loads(Path("pesquisas-eleitorais-dashboard/data/novas.json").read_text())
+          if not novas:
+              print("Nenhuma pesquisa nova; nada a enviar.")
+              raise SystemExit(0)
+
+          def fmt_date(s):
+              if not s: return "—"
+              try: return datetime.fromisoformat(s).strftime("%d/%m")
+              except Exception: return s[:10]
+
+          lines = [f"<b>🗳️ {len(novas)} nova(s) pesquisa(s) nacional(is) registrada(s) no TSE</b>", ""]
+          for p in novas[:20]:
+              fant = p.get("fantasia") or p.get("empresa") or "?"
+              cargo = p.get("cargo") or "?"
+              lines.append(
+                  f"• <b>{fant}</b> — {cargo}\n"
+                  f"  divulga {fmt_date(p.get('divulgacao'))} · coleta {fmt_date(p.get('inicio'))}–{fmt_date(p.get('fim'))} · {p.get('entrevistados') or '?'} ent.\n"
+                  f"  <code>{p.get('id')}</code>"
+              )
+          if len(novas) > 20:
+              lines.append(f"\n…e mais {len(novas)-20}.")
+          lines.append("\n→ https://luizftoledo.github.io/pesquisas-eleitorais-dashboard/")
+
+          token = os.environ["TELEGRAM_BOT_TOKEN"]
+          chat = os.environ["TELEGRAM_CHAT_ID"]
+          body = urllib.parse.urlencode({
+              "chat_id": chat,
+              "text": "\n".join(lines),
+              "parse_mode": "HTML",
+              "disable_web_page_preview": "true",
+          }).encode()
+          req = urllib.request.Request(
+              f"https://api.telegram.org/bot{token}/sendMessage",
+              data=body, method="POST",
+          )
+          with urllib.request.urlopen(req, timeout=30) as r:
+              print("telegram:", r.status, r.read()[:200])
+          PY
