@@ -667,7 +667,7 @@
   <div class="overlay" id="titleScreen">
     <h1>Sinais Enterrados</h1>
     <div class="tag">um jogo de investigação · jornalzão do cidadão</div>
-    <p>Você é um jornalista investigativo. Chegou uma dica de pauta por meio de um e-mail criptografado. A fonte diz que o gabinete do deputado <b style="color:#d4a017">Carlão do Pastel</b> desvia recursos de emendas parlamentares por meio de assessores e empresas de fachada. Você vai usar ferramentas de jornalista — Lei de Acesso à Informação, pesquisa em acervos públicos, portal de transparência e relatórios — para descobrir o que aconteceu e tentar publicar a matéria. Lobistas e assessores vão tentar te atrapalhar.</p>
+    <p>Você é um jornalista investigativo. Chegou uma dica de pauta por meio de um e-mail criptografado. A fonte diz que o gabinete do deputado <b style="color:#d4a017">Carlão do Pastel</b> desvia recursos de emendas parlamentares por meio de aliados e empresas de fachada. Você vai usar ferramentas de jornalista — Lei de Acesso à Informação, pesquisa em acervos públicos, portal de transparência e relatórios — para descobrir o que aconteceu e tentar publicar a matéria. Lobistas e aliados do deputado vão tentar te atrapalhar.</p>
     <div class="keys">
       <span><b>← →</b> mover</span>
       <span><b>↑ / W</b> pular</span>
@@ -974,7 +974,7 @@ const ROOMS = {
         'A fonte cita um "Instituto Plenitude". CNPJ aberto há seis meses.',
         'A pessoa diz que esse CNPJ recebeu emenda do Carlão do Pastel.',
         'Vai pro Arquivo Público (→). Puxa o empenho, confere o estatuto, ver se a história faz algum sentido.',
-        'E olho aberto: assessores e lobistas tentam empurrar repórter pra fora antes da gente ler tudo.',
+        'E olho aberto: aliados do deputado e lobistas tentam empurrar repórter pra fora antes da gente ler tudo.',
       ]},
       { type:'clue', x:7, y:11, ord:1,
         method:'CAIXA SEGURA · ÁUDIO ANÔNIMO',
@@ -1174,11 +1174,11 @@ const ROOMS = {
         x:22, y:13,
         name:'CARLÃO DO PASTEL',
         sub:'DEPUTADO · CASO RP-9',
-        hp:10,
+        hp:20,
         intro:[
           '— "Repórterzinho. Você não tem ideia com quem está mexendo."',
           '— "Meu advogado já tem seu nome. Vou processar a Jornalzão do Cidadão por dano moral, calúnia, difamação."',
-          '— "Some daqui antes que eu chame meus assessores."',
+          '— "Some daqui antes que eu chame meus aliados."',
         ],
         shouts:[
           'Some daqui, some daqui!',
@@ -1571,11 +1571,11 @@ function update(dt) {
     if (cleared > 0) {
       game.chiefCharges--;
       game.chiefPulse = 1.0;
-      toast(`editora-chefe entrou na linha · ${cleared} assessor${cleared>1?'es':''} fora · ${game.chiefCharges} carga${game.chiefCharges===1?'':'s'}`);
+      toast(`editora-chefe entrou na linha · ${cleared} aliado${cleared>1?'s':''} fora · ${game.chiefCharges} carga${game.chiefCharges===1?'':'s'}`);
       SFX.chief();
       game.shake = 4;
     } else {
-      toast('editora não atende — nenhum assessor à vista');
+      toast('editora não atende — nenhum aliado à vista');
     }
   } else if (pressed['v'] && game.abilities.chief && game.chiefCharges <= 0) {
     toast('editora sem cargas — você está sozinho');
@@ -1615,7 +1615,7 @@ function update(dt) {
         if (b._invuln > 0) {
           // skip — boss in invuln frames
         } else if (shielded) {
-          toast('os assessores blindam o deputado · use o pedido [c]');
+          toast('os aliados blindam o deputado · use o pedido [c]');
           flashSparks(proj.x, proj.y, '#c0392b');
           proj.life = 0;
           continue;
@@ -1643,7 +1643,7 @@ function update(dt) {
         if (e._hp <= 0) {
           e.defeated = true;
           flashSparks(e._x + TILE/2, e.y*TILE + TILE/2, '#d4a017');
-          toast(e.kind === 'assessor' ? 'assessor neutralizado' : 'lobista exposto');
+          toast(e.kind === 'assessor' ? 'aliado neutralizado' : 'lobista exposto');
           SFX.enemyDown();
         } else {
           flashSparks(e._x + TILE/2, e.y*TILE + TILE/2, '#c0392b');
@@ -2002,11 +2002,11 @@ function updateBoss(dt) {
   const liveAssessors = ROOMS[game.room].entities.filter(e =>
     e.type === 'enemy' && e.kind === 'assessor' && !e.defeated
   ).length;
-  const maxAssessors = b._enraged ? 3 : 2;
+  const maxAssessors = b._enraged ? 5 : 3;
   b._spawnTimer--;
   if (b._spawnTimer <= 0 && liveAssessors < maxAssessors) {
     spawnAssessor();
-    b._spawnTimer = b._enraged ? 220 : 320;
+    b._spawnTimer = b._enraged ? 130 : 200;
   } else if (liveAssessors >= maxAssessors) {
     b._spawnTimer = 60;
   }
@@ -2014,7 +2014,7 @@ function updateBoss(dt) {
   // enraged trigger at half HP
   if (!b._enraged && b._hp <= b._maxHp / 2) {
     b._enraged = true;
-    toast('Carlão enfurecido — vai chamar mais assessores');
+    toast('Carlão enfurecido — vai chamar mais aliados');
     game.shake = 8;
   }
 }
@@ -2048,7 +2048,7 @@ function spawnAssessor() {
     y: 13,
     range: 5,
     speed: 1.05,
-    name: 'ASSESSOR',
+    name: 'ALIADO',
     hp: 3,
     _x: startPx,
     _anchor: anchorPx,
