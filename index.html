@@ -348,10 +348,6 @@
             <span style="font-size:18px">▶</span>
             <span data-pt="Jogar agora" data-en="Play now">Play now</span>
           </a>
-          <div class="se-meta">
-            <span data-pt="~5 minutos" data-en="~5 minutes">~5 minutes</span>
-            <span data-pt="📱 mobile-friendly" data-en="📱 mobile-friendly">📱 mobile-friendly</span>
-          </div>
           <button class="se-skip" onclick="seClose()" data-pt="depois" data-en="maybe later">maybe later</button>
         </div>
       </div>
@@ -468,13 +464,6 @@
           c.fillStyle = 'rgba(0,0,0,.18)';
           c.fillRect(0, y, W, 1);
         }
-        // headline ticker top right
-        c.fillStyle = 'rgba(212,160,23,.42)';
-        c.font = 'bold 9px monospace';
-        c.fillText('• AO VIVO · APURAÇÃO EM ANDAMENTO · 04:09', 280, 50);
-        c.fillStyle = 'rgba(232,227,208,.22)';
-        c.fillText('lead: tip anônimo · emendas · CNPJ Plenitude', 280, 64);
-        c.fillText('checagem: empenho 0192/2023', 280, 76);
         requestAnimationFrame(draw);
       }
       draw();

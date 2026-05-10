@@ -405,6 +405,28 @@
   }
   @keyframes bossGoFlash { 50% { opacity:0; } }
 
+  .boss-shout {
+    position:absolute; left:50%; top:36%;
+    transform:translate(-50%,-50%);
+    z-index:10;
+    font-family:'Special Elite', monospace;
+    font-size:54px; line-height:1.05;
+    color:#c0392b;
+    text-shadow:0 0 35px rgba(192,57,43,.7), 0 0 6px rgba(0,0,0,.95);
+    letter-spacing:.04em;
+    text-align:center;
+    pointer-events:none;
+    max-width:88%;
+    animation:bossShoutShake .55s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes bossShoutShake {
+    0%   { opacity:0; transform:translate(-50%,-50%) scale(.7); }
+    40%  { opacity:1; transform:translate(-50%,-50%) scale(1.08); }
+    55%  { transform:translate(-52%,-50%) scale(1); }
+    70%  { transform:translate(-48%,-50%) scale(1); }
+    100% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  }
+
   .toast.danger {
     border-color:#c0392b; color:#c0392b;
     box-shadow:0 0 24px rgba(192,57,43,.35);
@@ -638,13 +660,14 @@
     <div class="boss-name-big" id="bossNameBig">CARLÃO DO PASTEL</div>
     <div class="boss-name-small" id="bossNameSmall">DEPUTADO · CASO RP-9</div>
   </div>
+  <div class="boss-shout hidden" id="bossShout"></div>
   <div class="boss-go hidden" id="bossGo">GO!</div>
 
   <!-- TITLE -->
   <div class="overlay" id="titleScreen">
     <h1>Sinais Enterrados</h1>
-    <div class="tag">um jogo de investigação · folha apurada</div>
-    <p>Chegou um áudio anônimo na caixa segura. Cita o gabinete do deputado fictício <b style="color:#d4a017">Carlão do Pastel</b> e um CNPJ recém-aberto. <b style="color:#d4a017">Sua tarefa</b>: apurar e fechar a matéria — Portal da Transparência, Junta Comercial, LAI, TFA, fontes. Lobistas vão tentar te empurrar pra fora.</p>
+    <div class="tag">um jogo de investigação · jornalzão do cidadão</div>
+    <p>Você é um jornalista investigativo. Chegou uma dica de pauta por meio de um e-mail criptografado. A fonte diz que o gabinete do deputado <b style="color:#d4a017">Carlão do Pastel</b> desvia recursos de emendas parlamentares por meio de assessores e empresas de fachada. Você vai usar ferramentas de jornalista — Lei de Acesso à Informação, pesquisa em acervos públicos, portal de transparência e relatórios — para descobrir o que aconteceu e tentar publicar a matéria. Lobistas e assessores vão tentar te atrapalhar.</p>
     <div class="keys">
       <span><b>← →</b> mover</span>
       <span><b>↑ / W</b> pular</span>
@@ -653,7 +676,7 @@
     </div>
     <button class="btn" id="startBtn">Começar a apuração</button>
     <a href="../index.html" style="margin-top:18px;font-size:10px;letter-spacing:.32em;color:rgba(232,227,208,.4);text-decoration:none;text-transform:uppercase;border-bottom:1px solid rgba(232,227,208,.15);padding-bottom:2px">← voltar ao portfólio</a>
-    <div class="credit">por Luiz Toledo · luizftoledo.github.io · caso fictício</div>
+    <div class="credit">por Luiz Fernando Toledo · luizftoledo.github.io · caso fictício</div>
   </div>
 
   <!-- FIRED (game over) -->
@@ -668,7 +691,7 @@
       </p>
       <p class="art-p">
         <span class="art-method">RH</span>
-        A Folha Apurada lamenta informar que seu vínculo está rescindido a partir desta data. As pistas que você apurou ficaram no notebook que você devolveu na portaria.
+        A Jornalzão do Cidadão lamenta informar que seu vínculo está rescindido a partir desta data. As pistas que você apurou ficaram no notebook que você devolveu na portaria.
       </p>
       <p class="end-closing" style="border-top-color:rgba(192,57,43,.45)">
         Os lobistas chegaram primeiro. A matéria não saiu desta vez.
@@ -685,9 +708,9 @@
     <div class="tag">edição extra · matéria publicada</div>
     <div class="end-stats" id="endStats"></div>
     <div class="end-paper">
-      <div class="end-kicker">EXCLUSIVO · FOLHA APURADA</div>
+      <div class="end-kicker">EXCLUSIVO · JORNALZÃO DO CIDADÃO</div>
       <h2 class="end-headline" id="endHead">Emendas de R$ 4 mi de Carlão do Pastel pararam em ONG presidida por ex-motorista do gabinete</h2>
-      <div class="end-byline" id="endByline">Por Luiz Toledo · Folha Apurada · com documentos, fontes e auditoria preliminar do TFA</div>
+      <div class="end-byline" id="endByline">Por Luiz Toledo · Jornalzão do Cidadão · com documentos, fontes e auditoria preliminar do TFA</div>
       <div class="end-article" id="cluesRecap"></div>
       <p class="end-closing">A reportagem procurou o gabinete do deputado Carlão do Pastel por mensagem, e-mail e telefone, em três oportunidades, e não obteve retorno até o fechamento desta edição. O TFA, o Instituto Plenitude e a Pastel & Cia foram igualmente procurados. O espaço segue aberto para manifestação.</p>
     </div>
@@ -948,18 +971,18 @@ const ROOMS = {
       { type:'desk', x:5, y:13 }, { type:'desk', x:12, y:13 }, { type:'desk', x:19, y:13 },
       { type:'npc', x:5, y:13, name:'EDITOR', dialog:[
         'Toledo. Caiu um áudio anônimo na caixa segura.',
-        'A voz cita um "Instituto Plenitude". CNPJ aberto há seis meses.',
+        'A fonte cita um "Instituto Plenitude". CNPJ aberto há seis meses.',
         'A pessoa diz que esse CNPJ recebeu emenda do Carlão do Pastel.',
-        'Vai pro Arquivo Público (→). Puxa o empenho, confere o estatuto, vê se a história cabe.',
+        'Vai pro Arquivo Público (→). Puxa o empenho, confere o estatuto, ver se a história faz algum sentido.',
         'E olho aberto: assessores e lobistas tentam empurrar repórter pra fora antes da gente ler tudo.',
       ]},
       { type:'clue', x:7, y:11, ord:1,
         method:'CAIXA SEGURA · ÁUDIO ANÔNIMO',
         text:'Áudio anônimo de 41 segundos. Voz de mulher: "olha as emendas pro Plenitude. ninguém aqui dentro entende o CNPJ."',
-        article:'A reportagem teve acesso a um áudio anônimo recebido pelo canal seguro da Folha Apurada. Uma voz feminina não identificada cita o Instituto Plenitude e pede que se examine o cadastro da entidade.' },
+        article:'A reportagem teve acesso a um áudio anônimo recebido pelo canal seguro da Jornalzão do Cidadão. Uma voz feminina não identificada cita o Instituto Plenitude e pede que se examine o cadastro da entidade.' },
       { type:'clue', x:24, y:13, ord:2,
         method:'PAUTA · BACKGROUND',
-        text:'Mural de pauta: três sobrinhos do deputado contratados como assessores parlamentares em 2022. Festas em iates registradas em redes sociais. Nada criminal — ainda.',
+        text:'Mural de pauta: três sobrinhos do deputado contratados como assessores parlamentares em 2022. Festas em iates registradas em redes sociais.',
         article:'Levantamento da reportagem mostra que o gabinete de Carlão tem três familiares contratados como assessores e registros públicos de viagens em iates de doadores de campanha. Os fatos, isoladamente, não configuram irregularidade, mas compõem o pano de fundo do caso.' },
       { type:'door', x:29, y:13, dir:'right', to:'arquivo', spawnAt:{ x:1, y:13 } },
     ]
@@ -1154,8 +1177,12 @@ const ROOMS = {
         hp:10,
         intro:[
           '— "Repórterzinho. Você não tem ideia com quem está mexendo."',
-          '— "Meu advogado já tem seu nome. Vou processar a Folha Apurada por dano moral, calúnia, difamação."',
+          '— "Meu advogado já tem seu nome. Vou processar a Jornalzão do Cidadão por dano moral, calúnia, difamação."',
           '— "Some daqui antes que eu chame meus assessores."',
+        ],
+        shouts:[
+          'Some daqui, some daqui!',
+          'O cara quer quebrar meu esquema, velho.',
         ] },
     ]
   },
@@ -1803,6 +1830,7 @@ function hideBossUI() {
   document.getElementById('bossIntro').classList.add('hidden');
   document.getElementById('bossIntro').classList.remove('show');
   document.getElementById('bossNameCard').classList.add('hidden');
+  document.getElementById('bossShout').classList.add('hidden');
   document.getElementById('bossGo').classList.add('hidden');
 }
 function buildBossHpBar(max, current) {
@@ -1890,9 +1918,28 @@ function updateBossIntro() {
       buildBossHpBar(game.boss._maxHp, bi.hpFilled);
       SFX.dialog();
     }
+    // big shouts while HP fills (e.g. "Some daqui, some daqui!")
+    const shouts = game.boss.shouts;
+    if (shouts && shouts.length) {
+      const shout = document.getElementById('bossShout');
+      const halfway = Math.floor((game.boss._maxHp * 7) / 2);
+      if (bi.t === 1) {
+        shout.textContent = shouts[0];
+        shout.classList.remove('hidden');
+        shout.style.animation = 'none';
+        shout.offsetWidth;
+        shout.style.animation = '';
+      } else if (shouts[1] && bi.t === halfway) {
+        shout.textContent = shouts[1];
+        shout.style.animation = 'none';
+        shout.offsetWidth;
+        shout.style.animation = '';
+      }
+    }
     if (bi.hpFilled >= game.boss._maxHp && bi.t > game.boss._maxHp * 7 + 28) {
       bi.phase = 4; bi.t = 0;
       document.getElementById('bossNameCard').classList.add('hidden');
+      document.getElementById('bossShout').classList.add('hidden');
       const go = document.getElementById('bossGo');
       go.classList.remove('hidden');
       SFX.bossGo();
@@ -2117,7 +2164,7 @@ function drawNewsroomBG() {
   // headline ticker
   ctx.fillStyle = 'rgba(212,160,23,.55)';
   ctx.font = '10px JetBrains Mono';
-  ctx.fillText('• AO VIVO · FOLHA APURADA · APURAÇÃO EM ANDAMENTO ·', 480, 80);
+  ctx.fillText('• AO VIVO · JORNALZÃO DO CIDADÃO · APURAÇÃO EM ANDAMENTO ·', 480, 80);
   ctx.fillStyle = 'rgba(232,227,208,.22)';
   ctx.fillText('lead: tip anônimo · emendas Carlão do Pastel · 04:09', 480, 100);
   ctx.fillText('checagem: CNPJ Plenitude · empenho 0192/2023', 480, 116);
