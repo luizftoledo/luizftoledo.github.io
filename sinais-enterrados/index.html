@@ -603,9 +603,30 @@ function ensureAudio() {
   audioCtx = new Ctx();
   return audioCtx;
 }
+// iOS/Safari/Chrome mobile: AudioContext starts suspended.
+// Call this synchronously inside any user gesture (click/touch/keydown).
+function unlockAudio() {
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  if (ctx.state === 'suspended' || ctx.state === 'interrupted') {
+    ctx.resume();
+  }
+  if (!unlockAudio._done) {
+    // Silent buffer to fully unlock on iOS
+    try {
+      const buf = ctx.createBuffer(1, 1, 22050);
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.connect(ctx.destination);
+      src.start(0);
+    } catch (e) {}
+    unlockAudio._done = true;
+  }
+}
 function tone(freq, duration, type='square', vol=0.06, slideTo=null) {
   if (!soundOn) return;
   const ctx = ensureAudio(); if (!ctx) return;
+  if (ctx.state !== 'running') ctx.resume();
   const t = ctx.currentTime;
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
@@ -2026,6 +2047,7 @@ function endGame() {
 
 /* ---------- WIRE UP ---------- */
 document.getElementById('startBtn').addEventListener('click', () => {
+  unlockAudio();  // synchronously inside the gesture — iOS demand
   document.getElementById('titleScreen').classList.add('hidden');
   document.getElementById('hud').classList.remove('hidden');
   game.player.hp = 3;
@@ -2033,17 +2055,20 @@ document.getElementById('startBtn').addEventListener('click', () => {
   updateHearts();
   document.getElementById('clueCount').textContent = `0/${game.totalClues}`;
   game.state = 'play';
-  // user gesture — unlock audio
-  ensureAudio()?.resume();
-  setMute(!soundOn ? true : false);  // refresh button state
+  setMute(!soundOn);  // refresh button state
 });
 document.getElementById('replayBtn').addEventListener('click', () => location.reload());
 document.getElementById('firedRetry').addEventListener('click', () => location.reload());
 document.getElementById('muteBtn').addEventListener('click', () => {
+  unlockAudio();
   setMute(soundOn);
-  ensureAudio()?.resume();
 });
 setMute(!soundOn);  // sync button on load
+
+// Extra audio-unlock safety: any first touch/click anywhere unlocks too
+['touchstart', 'mousedown', 'keydown'].forEach(ev => {
+  window.addEventListener(ev, () => { unlockAudio(); }, { once:false, passive:true });
+});
 
 requestAnimationFrame(loop);
 </script>
