@@ -1965,11 +1965,13 @@ def run(force=False, start_year=START_YEAR_DEFAULT, end_year=None):
 
     write_json(REPORT_FILE, report)
     write_json(METADATA_FILE, metadata)
-    write_jsonl_gz(SAMPLES_FILE, samples)
+    # Samples (request_samples*.jsonl.gz) intentionally not written — dashboard now ships
+    # only aggregated statistics. Re-enable by uncommenting if individual-request search is needed.
+    # write_jsonl_gz(SAMPLES_FILE, samples)
 
     print(f"[ok] relatório salvo em: {REPORT_FILE}")
     print(f"[ok] metadata salva em: {METADATA_FILE}")
-    print(f"[ok] base de pedidos negados salva em: {SAMPLES_FILE} ({len(samples)} linhas)")
+    print(f"[ok] samples não gravados (modo apenas-estatísticas)")
     print(f"[ok] anos processados/reutilizados: {len(year_payloads)}")
     print(f"[ok] anos atualizados nesta execução: {refreshed}")
 

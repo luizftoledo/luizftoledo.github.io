@@ -1860,10 +1860,10 @@
         : '';
     } catch (error) {
       requestSamples = [];
-      samplesLoadedBySource[sourceId] = false;
+      samplesLoadedBySource[sourceId] = true;
       sampleLoadNotice = '';
-      searchStatus.textContent = `Não foi possível carregar a base de pedidos desta fonte: ${error.message}`;
-      searchStatus.classList.add('error');
+      searchStatus.textContent = 'Busca em pedidos individuais foi descontinuada nesta versão — apenas estatísticas agregadas estão disponíveis.';
+      searchStatus.classList.remove('error');
     }
   }
 
