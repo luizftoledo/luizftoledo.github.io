@@ -863,6 +863,19 @@ const SFX = {
     tone(880, 0.06, 'square', 0.07);
     setTimeout(()=>tone(1175, 0.18, 'triangle', 0.07), 80);
   },
+  bossJump:() => {
+    tone(220, 0.10, 'square', 0.05, 440);
+    setTimeout(()=>noise(0.04, 0.025), 80);
+  },
+  bossLand:() => {
+    tone(80, 0.18, 'sawtooth', 0.08, 40);
+    noise(0.16, 0.06);
+  },
+  discurso:() => {
+    tone(330, 0.18, 'sawtooth', 0.06, 247);
+    setTimeout(()=>tone(247, 0.18, 'square', 0.05, 185), 60);
+    setTimeout(()=>tone(165, 0.22, 'sawtooth', 0.05, 110), 140);
+  },
 };
 function setMute(m) {
   soundOn = !m;
@@ -872,6 +885,50 @@ function setMute(m) {
     btn.textContent = soundOn ? '🔊' : '🔈';
     btn.classList.toggle('muted', !soundOn);
   }
+  if (!soundOn) stopBossMusic();
+}
+
+/* ---------- BOSS MUSIC (procedural suspense/adventure loop) ---------- */
+let bossMusic = null;
+function startBossMusic() {
+  if (!soundOn) return;
+  if (bossMusic) return;
+  const ctx = ensureAudio(); if (!ctx) return;
+  // 8-step ostinato in D minor — pulsing bass + dissonant stabs + melodic adventure line
+  let step = 0;
+  const pattern = [
+    { bass: 73.4,  stab: null,  lead: 587.3 }, // D2,                 D5
+    { bass: 73.4,  stab: null,  lead: null  },
+    { bass: 73.4,  stab: 277.2, lead: 698.5 }, // C#5 stab,            F5
+    { bass: 87.3,  stab: null,  lead: 659.3 }, // F2,                  E5
+    { bass: 73.4,  stab: null,  lead: 587.3 },
+    { bass: 73.4,  stab: 311.1, lead: null  }, // D#5 stab
+    { bass: 98.0,  stab: null,  lead: 523.3 }, // G2,                  C5
+    { bass: 65.4,  stab: 207.7, lead: 493.9 }, // C2 + Ab4,            B4
+  ];
+  const stepMs = 360;
+  bossMusic = setInterval(() => {
+    if (!soundOn) { stopBossMusic(); return; }
+    const s = pattern[step % pattern.length];
+    // pulsing bass — heartbeat under tension
+    tone(s.bass, 0.32, 'triangle', 0.05, s.bass * 0.94);
+    // dissonant stab — suspense
+    if (s.stab) {
+      setTimeout(()=>tone(s.stab, 0.22, 'sawtooth', 0.035, s.stab * 0.85), 60);
+    }
+    // melodic lead — adventure motif
+    if (s.lead) {
+      setTimeout(()=>tone(s.lead, 0.18, 'triangle', 0.028, s.lead * 1.02), 120);
+    }
+    // distant rumble on beat 1
+    if (step % pattern.length === 0) {
+      setTimeout(()=>noise(0.08, 0.018), 180);
+    }
+    step++;
+  }, stepMs);
+}
+function stopBossMusic() {
+  if (bossMusic) { clearInterval(bossMusic); bossMusic = null; }
 }
 
 /* ---------- INPUT ---------- */
@@ -1300,6 +1357,7 @@ function setRoom(name, spawnAt) {
   game.boss = null;
   game.bossIntro = null;
   game.bossDefeat = null;
+  stopBossMusic();
   hideBossUI();
   if (room.isBoss) {
     const bossEnt = room.entities.find(e => e.type === 'boss');
@@ -1951,6 +2009,7 @@ function updateBossIntro() {
       game.state = 'play';
       game.bossIntro = null;
       toast('+ pedido formal [c] · + editora-chefe [v] (2x)');
+      startBossMusic();
     }
   }
 }
@@ -1972,6 +2031,30 @@ function updateBoss(dt) {
   const b = game.boss;
   if (!b || b.defeated) return;
   if (b._invuln > 0) b._invuln--;
+  if (b._groundY === undefined) b._groundY = b.y * TILE;
+  if (b._y === undefined) b._y = b._groundY;
+
+  // gravity / jump physics — always apply, even when stunned
+  b._vy = (b._vy || 0) + 0.32;
+  const wasAirborne = !!b._airborne;
+  b._y += b._vy;
+  if (b._y >= b._groundY) {
+    b._y = b._groundY;
+    b._vy = 0;
+    if (wasAirborne) {
+      game.shake = Math.max(game.shake || 0, b._enraged ? 6 : 3);
+      SFX.bossLand();
+      if (b._groundPound) {
+        b._groundPound = false;
+        spawnDiscurso(b, -1);
+        spawnDiscurso(b,  1);
+      }
+    }
+    b._airborne = false;
+  } else {
+    b._airborne = true;
+  }
+
   if (b._stunned > 0) {
     b._stunned--;
     b._anim += 0.04;
@@ -1991,10 +2074,26 @@ function updateBoss(dt) {
   const px = game.player.x + game.player.w/2;
   b._dir = (px < b._x + 18) ? -1 : 1;
 
-  // attack timer
+  // jump trigger (only when grounded)
+  b._jumpCd = (b._jumpCd === undefined ? 180 : b._jumpCd - 1);
+  if (b._jumpCd <= 0 && !b._airborne) {
+    const doPound = b._enraged && Math.random() < 0.45;
+    b._vy = doPound ? -8.4 : -6;
+    if (doPound) b._groundPound = true;
+    b._patrolDir = b._dir; // hop toward player
+    SFX.bossJump();
+    b._jumpCd = b._enraged ? 110 : 200;
+  }
+
+  // attack timer — mix processo + discurso, no attacks mid-air
   b._attackTimer--;
-  if (b._attackTimer <= 0) {
-    spawnProcesso(b);
+  if (b._attackTimer <= 0 && !b._airborne) {
+    const discursoChance = b._enraged ? 0.5 : 0.32;
+    if (Math.random() < discursoChance) {
+      spawnDiscurso(b, b._dir);
+    } else {
+      spawnProcesso(b);
+    }
     b._attackTimer = b._enraged ? 75 : 110;
   }
 
@@ -2024,7 +2123,7 @@ function spawnProcesso(b) {
   const dir = (px < b._x + 18) ? -1 : 1;
   game.bossProjectiles.push({
     x: b._x + 18 + dir*16,
-    y: b.y*TILE + 14,
+    y: (b._y !== undefined ? b._y : b.y*TILE) + 14,
     vx: dir * 3.4,
     vy: -4.7,
     gravity: 0.18,
@@ -2033,6 +2132,22 @@ function spawnProcesso(b) {
     rotV: dir * 0.22,
   });
   SFX.processo();
+}
+
+function spawnDiscurso(b, dir) {
+  dir = dir || b._dir || 1;
+  game.bossProjectiles.push({
+    x: b._x + 18 + dir * 18,
+    y: (b._y !== undefined ? b._y : b.y*TILE) + 14,
+    vx: dir * 5.6,
+    vy: 0,
+    gravity: 0,
+    life: 110,
+    rot: 0,
+    rotV: dir * 0.08,
+    kind: 'discurso',
+  });
+  SFX.discurso();
 }
 
 function spawnAssessor() {
@@ -2070,10 +2185,14 @@ function updateBossProjectiles() {
     bp.y += bp.vy;
     bp.rot += bp.rotV;
     bp.life--;
-    // hit ground
-    if (bp.y >= (ROWS - 3) * TILE) {
+    // hit ground (arcing only)
+    if (bp.kind !== 'discurso' && bp.y >= (ROWS - 3) * TILE) {
       bp.life = 0;
       flashSparks(bp.x, (ROWS-3)*TILE - 4, '#c0392b');
+    }
+    // discurso dies when offscreen
+    if (bp.kind === 'discurso' && (bp.x < -40 || bp.x > W + 40)) {
+      bp.life = 0;
     }
   }
   // collision with player
@@ -2115,6 +2234,7 @@ function onBossDefeated() {
     if (e.type === 'enemy' && e.kind === 'assessor' && !e.defeated) e.defeated = true;
   }
   SFX.bossDie();
+  stopBossMusic();
   game.state = 'bossDefeat';
   game.bossDefeat = { t: 0 };
   game.shake = 14;
@@ -2618,7 +2738,7 @@ function drawEntities() {
           // already animated by intro state, but draw at current _x
         }
         const bx0 = (e._x !== undefined ? e._x : e.x*TILE);
-        const by0 = e.y*TILE - 16;     // boss is bigger, shifted up
+        const by0 = (e._y !== undefined ? e._y : e.y*TILE) - 16;     // boss is bigger, shifted up
         const stunned = (e._stunned || 0) > 0;
         const facing = (e._dir || -1);
         const bob = Math.sin(e._anim || 0) * 1.6;
@@ -2908,6 +3028,40 @@ function drawProjectiles() {
 function drawBossProjectiles() {
   for (const bp of game.bossProjectiles) {
     const a = Math.min(1, bp.life/30);
+
+    if (bp.kind === 'discurso') {
+      const dir = Math.sign(bp.vx) || 1;
+      ctx.save();
+      ctx.translate(bp.x, bp.y);
+      ctx.rotate(bp.rot);
+      // shockwave body — yellow→red gradient
+      const lg = ctx.createLinearGradient(-22*dir, 0, 22*dir, 0);
+      lg.addColorStop(0,   'rgba(255,180,0,0)');
+      lg.addColorStop(0.5, `rgba(255,180,0,${a*0.55})`);
+      lg.addColorStop(1,   `rgba(255,80,0,${a*0.9})`);
+      ctx.fillStyle = lg;
+      ctx.fillRect(-22, -8, 44, 16);
+      // bright leading edge
+      ctx.fillStyle = `rgba(255,255,255,${a})`;
+      ctx.fillRect(18*dir, -6, 4, 12);
+      // soundwave bars
+      ctx.strokeStyle = `rgba(255,180,0,${a*0.9})`;
+      ctx.lineWidth = 1.5;
+      for (let k = -2; k <= 2; k++) {
+        ctx.beginPath();
+        ctx.moveTo(k*7, -4 - Math.abs(k)*0.6);
+        ctx.lineTo(k*7,  4 + Math.abs(k)*0.6);
+        ctx.stroke();
+      }
+      ctx.restore();
+      // trail
+      for (let i = 1; i < 4; i++) {
+        ctx.fillStyle = `rgba(255,180,0,${a*0.22/i})`;
+        ctx.fillRect(bp.x - bp.vx*i*0.5 - 3, bp.y - 4, 6, 8);
+      }
+      continue;
+    }
+
     ctx.save();
     ctx.translate(bp.x, bp.y);
     ctx.rotate(bp.rot);
@@ -3043,6 +3197,7 @@ function loop(t) {
 /* ---------- FIRED ---------- */
 function firedGame() {
   game.state = 'fired';
+  stopBossMusic();
   document.getElementById('firedScreen').classList.remove('hidden');
 }
 
