@@ -23,6 +23,14 @@ jobs:
       - name: Run scraper
         run: python scripts/scrape_pesquisas_tse.py
 
+      - name: Install poppler (pdftotext)
+        run: sudo apt-get install -y poppler-utils
+
+      - name: Baixar questionários PesqEle
+        # Tolerante a erros de rede transitórios — o cache permite retry no próximo run
+        continue-on-error: true
+        run: python scripts/scrape_pesqele_questionarios.py --retry-erros --delay 0.8
+
       - name: Commit data updates
         id: commit
         run: |

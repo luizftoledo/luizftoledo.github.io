@@ -305,6 +305,48 @@
     color: var(--ink-mute);
     font-weight: 700;
   }
+  details.questionario { margin-top: 6px; font-size: 13px; }
+  details.questionario summary {
+    cursor: pointer;
+    color: var(--ink-soft);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  details.questionario[open] summary { color: var(--ink); }
+  details.questionario .body {
+    background: var(--bg-soft);
+    border-left: 3px solid var(--rule-strong);
+    padding: 12px 14px;
+    margin-top: 8px;
+  }
+  details.questionario .q-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  details.questionario .q-actions a { color: var(--ink-mute); }
+  details.questionario pre.q-text {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.45;
+    max-height: 420px;
+    overflow: auto;
+    margin: 0;
+    padding: 10px 12px;
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    white-space: pre;
+  }
+  p.q-note {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--ink-mute);
+    font-style: italic;
+  }
 
   .empty {
     padding: 48px 0;
@@ -486,12 +528,18 @@
 const STATE = {
   pesquisas: [],
   novas: new Set(),
+  questionarios: {},
   atualizadoEm: null,
   filtroEmpresa: "",
   filtroBusca: "",
   janela: "7",
   incluirPassadas: false,
 };
+
+function idSafe(raw) {
+  // BR067312026 -> BR-06731-2026 (espelha format_protocolo do scraper Python)
+  return raw && raw.length === 11 ? `${raw.slice(0, 2)}-${raw.slice(2, 7)}-${raw.slice(7)}` : raw;
+}
 
 const fmtDate = (iso) => {
   if (!iso) return "—";
@@ -583,6 +631,28 @@ function render() {
   container.innerHTML = html;
 }
 
+function renderQuestionario(p) {
+  const q = STATE.questionarios[p.id];
+  if (!q) return "";
+  if (q.status === "ok" && q.file) {
+    return `
+      <details class="questionario">
+        <summary>Questionário aplicado</summary>
+        <div class="body">
+          <div class="q-actions">
+            <a href="data/${escape(q.file)}" download>Baixar .txt</a>
+            <a href="https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml" target="_blank" rel="noopener" title="Cole o protocolo no campo Número do registro.">PDF original (TSE) →</a>
+          </div>
+          <pre class="q-text" data-src="data/${escape(q.file)}">Carregando…</pre>
+        </div>
+      </details>`;
+  }
+  if (q.status === "ok_imagem") {
+    return `<p class="q-note">Questionário disponível apenas como PDF de imagem (sem texto extraível) — <a href="https://pesqele-divulgacao.tse.jus.br/app/pesquisa/listar.xhtml" target="_blank" rel="noopener">abrir no PesqEle</a> com o protocolo <code>${escape(idSafe(p.id))}</code>.</p>`;
+  }
+  return "";
+}
+
 function renderCard(p) {
   const isNew = STATE.novas.has(p.id);
   const cargoBits = (p.cargo || "").split(",").map((s) => s.trim()).filter(Boolean);
@@ -621,6 +691,7 @@ function renderCard(p) {
               ${p.plano_amostral ? `<h4>Plano amostral</h4><p>${escape(p.plano_amostral)}</p>` : ""}
             </div>
           </details>` : ""}
+        ${renderQuestionario(p)}
       </div>
       <div class="col-side">
         <span class="id">${escape(p.id)}</span>
@@ -645,6 +716,22 @@ function populateEmpresas() {
 
 function bind() {
   document.getElementById("results").addEventListener("click", async (e) => {
+    const summary = e.target.closest("details.questionario > summary");
+    if (summary) {
+      const details = summary.parentElement;
+      // Espera o browser togglar o details, então carrega lazy
+      setTimeout(() => {
+        if (!details.open || details.dataset.loaded === "1") return;
+        const pre = details.querySelector("pre.q-text");
+        if (!pre) return;
+        const src = pre.dataset.src;
+        fetch(src)
+          .then((r) => (r.ok ? r.text() : Promise.reject(`HTTP ${r.status}`)))
+          .then((txt) => { pre.textContent = txt; details.dataset.loaded = "1"; })
+          .catch((err) => { pre.textContent = `Erro ao carregar: ${err}`; });
+      }, 0);
+      return;
+    }
     const btn = e.target.closest("button[data-copy]");
     if (!btn) return;
     try {
@@ -739,6 +826,12 @@ async function load() {
         STATE.novas = new Set(novas.map((p) => p.id));
       }
     } catch (e) { /* novas.json é opcional */ }
+
+    // Try questionarios.json (optional)
+    try {
+      const rq = await fetch(`data/questionarios.json?t=${Date.now()}`);
+      if (rq.ok) STATE.questionarios = await rq.json();
+    } catch (e) { /* questionarios.json é opcional */ }
 
     populateEmpresas();
     bind();
