@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Direct Shopping · Games de 2000 × Em 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bungee&family=Oswald:wght@500;700&family=Space+Mono:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f1e7cf;
+  --paper-2:#ece1c2;
+  --paper-3:#e3d6b1;
+  --card:#fff8e7;
+  --rule:#7a6a4a;
+  --rule-light:#c9b888;
+  --ink:#1c1814;
+  --ink-2:#3a3026;
+  --ink-3:#6b5d44;
+  --accent:#ffd60a;
+  --red:#d12127;
+  --magenta:#e91e63;
+  --blue:#1f3eb0;
+  --green:#0e7a3a;
+  --purple:#7b2eaa;
+  --orange:#e8590c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Space Mono',monospace;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+body{
+  background-color:var(--paper);
+  background-image:
+    radial-gradient(circle at 18% 12%, rgba(209,33,39,.04), transparent 50%),
+    radial-gradient(circle at 82% 88%, rgba(31,62,176,.04), transparent 50%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 .1  0 0 0 0 .08  0 0 0 0 .05  0 0 0 .07 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+a{color:var(--blue);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{color:var(--red)}
+
+/* ============== HEADER ============== */
+header{
+  background:var(--paper);
+  border-bottom:4px solid var(--ink);
+  padding:24px 24px 36px;
+  position:relative;
+}
+header::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-10px;
+  height:2px;
+  background:var(--ink);
+}
+.masthead{
+  max-width:1100px;
+  margin:0 auto 28px;
+  border-top:3px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:10px 0 8px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  font-size:11px;
+  color:var(--ink);
+}
+.masthead .left, .masthead .right{display:flex;gap:18px;align-items:center}
+.masthead .dot{width:6px;height:6px;background:var(--red);display:inline-block;border-radius:50%}
+.masthead .ed{color:var(--ink-3);font-weight:500}
+.headline{
+  max-width:1100px;
+  margin:0 auto;
+  text-align:center;
+}
+.headline .kicker{
+  color:var(--red);
+  font-family:'Oswald',sans-serif;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  font-size:12px;
+  margin-bottom:14px;
+}
+.headline h1{
+  font-family:'Bungee',sans-serif;
+  font-size:clamp(34px,6vw,68px);
+  letter-spacing:.01em;
+  line-height:.95;
+  margin-bottom:18px;
+  color:var(--ink);
+}
+.headline h1 .x{color:var(--magenta);padding:0 .12em}
+.headline .sub{
+  color:var(--ink-2);
+  font-family:'Special Elite',monospace;
+  font-size:15px;
+  max-width:720px;
+  margin:0 auto;
+  line-height:1.55;
+}
+
+.terms{
+  max-width:1100px;
+  margin:28px auto 0;
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:10px 0;
+  display:flex;
+  gap:32px;
+  justify-content:center;
+  flex-wrap:wrap;
+  font-family:'Special Elite',monospace;
+  font-size:12px;
+  color:var(--ink-2);
+  letter-spacing:.02em;
+}
+.terms span::before{content:"✱ ";color:var(--red)}
+
+.toggle-wrap{max-width:520px;margin:32px auto 0}
+.toggle-label{
+  font-family:'Oswald',sans-serif;
+  font-size:11px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  text-align:center;
+  margin-bottom:8px;
+}
+.toggle{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:var(--paper);
+  border:2px solid var(--ink);
+  overflow:hidden;
+}
+.toggle button{
+  background:transparent;
+  color:var(--ink);
+  border:0;
+  padding:14px 18px;
+  font-family:'Archivo Black',sans-serif;
+  font-size:13px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background .15s,color .15s;
+}
+.toggle button.active{background:var(--ink);color:var(--paper)}
+.toggle button:not(.active):hover{background:var(--paper-3)}
+.note{
+  max-width:680px;
+  margin:18px auto 0;
+  color:var(--ink-2);
+  font-family:'Special Elite',monospace;
+  font-size:13px;
+  line-height:1.6;
+  text-align:center;
+}
+.note b{color:var(--red);font-weight:normal}
+#status{
+  margin:14px auto 0;
+  color:var(--ink-3);
+  font-size:11px;
+  font-family:'Space Mono',monospace;
+  letter-spacing:.05em;
+  text-align:center;
+  max-width:520px;
+}
+.why-two{
+  max-width:720px;
+  margin:24px auto 0;
+  background:var(--card);
+  border:1.5px solid var(--ink);
+  padding:18px 24px;
+  position:relative;
+}
+.why-two::before{
+  content:"?";
+  position:absolute;
+  top:-22px;
+  left:24px;
+  background:var(--red);
+  color:#fff;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  font-family:'Bungee',sans-serif;
+  font-size:24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:3px solid var(--paper);
+}
+.why-two-title{
+  font-family:'Bungee',sans-serif;
+  font-size:14px;
+  letter-spacing:.04em;
+  color:var(--ink);
+  margin-bottom:10px;
+  padding-left:38px;
+}
+.why-two-body{
+  font-family:'Special Elite',monospace;
+  font-size:13px;
+  line-height:1.65;
+  color:var(--ink-2);
+}
+.why-two-body b{color:var(--red);font-weight:normal}
+
+/* ============== SECTIONS ============== */
+section{padding:48px 24px 16px;max-width:1400px;margin:0 auto}
+.sec-head{
+  display:flex;
+  align-items:stretch;
+  margin-bottom:8px;
+  border-bottom:3px solid var(--ink);
+}
+.sec-num{
+  background:var(--ink);
+  color:var(--accent);
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:18px;
+  letter-spacing:.15em;
+  padding:8px 14px;
+  display:flex;
+  align-items:center;
+}
+.sec-title{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Bungee',sans-serif;
+  font-size:18px;
+  letter-spacing:.04em;
+  padding:8px 16px;
+  flex:1;
+  display:flex;
+  align-items:center;
+  text-transform:uppercase;
+}
+.sec-title .count{
+  margin-left:auto;
+  font-family:'Oswald',sans-serif;
+  font-size:12px;
+  letter-spacing:.18em;
+  color:var(--ink-3);
+  text-transform:uppercase;
+  font-weight:500;
+}
+section .lead{
+  color:var(--ink-2);
+  font-family:'Special Elite',monospace;
+  font-size:13px;
+  margin:14px 4px 22px;
+  border-left:3px solid var(--red);
+  padding:4px 12px;
+}
+
+/* ============== GRID ============== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:14px;
+}
+
+/* ============== CARD ============== */
+.card{
+  background:var(--card);
+  border:1.5px solid var(--ink);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform .15s, box-shadow .15s;
+  position:relative;
+  cursor:pointer;
+}
+.card:hover{
+  transform:translate(-2px,-2px);
+  box-shadow:4px 4px 0 var(--ink);
+}
+.card::before{
+  content:"REF " attr(data-ref);
+  position:absolute;
+  top:6px;
+  right:8px;
+  font-family:'Special Elite',monospace;
+  font-size:9px;
+  letter-spacing:.1em;
+  color:var(--ink);
+  z-index:3;
+  background:rgba(255,248,231,.85);
+  padding:1px 5px;
+  border:1px solid var(--rule-light);
+}
+.card::after{
+  content:"⌕ ver anúncio";
+  position:absolute;
+  bottom:88px;
+  left:8px;
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:10px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:#fff;
+  background:var(--ink);
+  padding:4px 8px;
+  z-index:3;
+  opacity:0;
+  transition:opacity .15s;
+}
+.card:hover::after{opacity:1}
+.imgwrap{
+  position:relative;
+  aspect-ratio:1 / 1.25;
+  background:var(--paper-2);
+  overflow:hidden;
+  border-bottom:1.5px solid var(--ink);
+}
+.imgwrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  opacity:0;
+  transition:opacity .4s ease;
+}
+.imgwrap img.loaded{opacity:1}
+.skeleton{
+  position:absolute;
+  inset:0;
+  background:var(--paper-2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px;
+  text-align:center;
+  color:var(--ink-3);
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  letter-spacing:.05em;
+  overflow:hidden;
+}
+.skeleton::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.4) 50%,transparent 100%);
+  animation:shimmer 1.8s infinite;
+}
+.skeleton.placeholder::before{display:none}
+.skeleton.placeholder{color:var(--ink-3)}
+@keyframes shimmer{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(100%)}
+}
+.tag{
+  position:absolute;
+  top:8px;
+  left:8px;
+  font-family:'Archivo Black',sans-serif;
+  font-size:10px;
+  padding:4px 7px;
+  letter-spacing:.08em;
+  z-index:2;
+  color:#fff;
+  border:1px solid var(--ink);
+}
+.tag.n64{background:var(--purple)}
+.tag.ps1, .tag.ps2{background:var(--blue)}
+.tag.dc{background:var(--orange)}
+.tag.gbc{background:var(--green)}
+.tag.ngpc{background:var(--ink);color:var(--accent)}
+.tag.console{background:#fff;color:var(--ink)}
+
+.body{
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  flex:1;
+}
+.title{
+  font-family:'Archivo Black',sans-serif;
+  font-size:13px;
+  letter-spacing:.02em;
+  line-height:1.2;
+  min-height:32px;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  color:var(--ink);
+}
+.prices{
+  border-top:1px dashed var(--rule);
+  padding-top:10px;
+  margin-top:auto;
+  margin-left:-12px;
+  margin-right:-12px;
+  margin-bottom:-12px;
+}
+.p2000{
+  padding:0 12px 4px;
+  font-size:11px;
+  color:var(--ink-3);
+}
+.p2000 b{color:var(--ink)}
+.parc{
+  padding:0 12px 8px;
+  font-family:'Archivo Black',sans-serif;
+  font-size:11px;
+  color:var(--red);
+  letter-spacing:.04em;
+}
+.today{
+  background:var(--red);
+  color:#fff;
+  padding:10px 12px;
+  position:relative;
+}
+.today::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 12px);
+  opacity:.35;
+}
+.today .label{
+  font-family:'Oswald',sans-serif;
+  font-weight:500;
+  font-size:10px;
+  letter-spacing:.18em;
+  opacity:.9;
+  margin-bottom:2px;
+  text-transform:uppercase;
+}
+.today .val{
+  font-family:'Archivo Black',sans-serif;
+  font-size:17px;
+  line-height:1;
+}
+.today .sm{
+  font-family:'Special Elite',monospace;
+  font-size:10px;
+  margin-top:4px;
+  opacity:.95;
+}
+
+/* ============== INTERSTITIAL ============== */
+.interstitial{
+  max-width:1400px;
+  margin:36px auto 0;
+  padding:0 24px;
+}
+.interstitial .strip{
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--ink);
+  padding:14px 0;
+  text-align:center;
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:var(--red);
+}
+.interstitial .strip span{color:var(--ink-3);font-weight:500;letter-spacing:.18em;font-size:11px}
+
+/* ============== FOOTER ============== */
+footer{
+  background:var(--paper-2);
+  border-top:4px solid var(--ink);
+  padding:48px 24px 64px;
+  margin-top:48px;
+}
+footer .inner{max-width:1100px;margin:0 auto}
+footer h3{
+  font-family:'Bungee',sans-serif;
+  font-size:14px;
+  color:var(--ink);
+  letter-spacing:.04em;
+  margin-bottom:12px;
+  border-bottom:1px solid var(--ink);
+  padding-bottom:8px;
+}
+footer .block{margin-bottom:36px}
+footer .block p{
+  color:var(--ink-2);
+  font-family:'Special Elite',monospace;
+  font-size:13px;
+  line-height:1.65;
+  max-width:780px;
+  margin-bottom:8px;
+}
+footer .block p b{color:var(--red);font-weight:normal}
+.nw-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:14px;
+  margin-top:16px;
+}
+.nw-grid a{
+  display:block;
+  border:1.5px solid var(--ink);
+  overflow:hidden;
+  transition:transform .15s,box-shadow .15s;
+  text-decoration:none;
+}
+.nw-grid a:hover{
+  transform:translate(-2px,-2px);
+  box-shadow:4px 4px 0 var(--ink);
+}
+.nw-grid img{width:100%;display:block}
+.nw-grid figcaption{
+  padding:8px 10px;
+  background:var(--card);
+  color:var(--ink);
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  letter-spacing:.02em;
+  border-top:1px solid var(--ink);
+}
+.colophon{
+  border-top:1px solid var(--ink);
+  margin-top:32px;
+  padding-top:16px;
+  text-align:center;
+  font-family:'Oswald',sans-serif;
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+}
+
+/* ============== MODAL ============== */
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(28,24,20,.88);
+  z-index:1000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+}
+.modal-backdrop.open{display:flex}
+.modal{
+  background:var(--paper);
+  border:3px solid var(--ink);
+  max-width:980px;
+  width:100%;
+  max-height:90vh;
+  overflow:auto;
+  position:relative;
+  box-shadow:8px 8px 0 var(--ink);
+}
+.modal-head{
+  background:var(--ink);
+  color:var(--paper);
+  padding:14px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  border-bottom:3px solid var(--ink);
+}
+.modal-head .h{
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:12px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.modal-head .h b{color:#fff}
+.modal-close{
+  background:var(--accent);
+  color:var(--ink);
+  border:0;
+  width:36px;
+  height:36px;
+  font-family:'Archivo Black',sans-serif;
+  font-size:20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1;
+}
+.modal-close:hover{background:#fff}
+.modal-body{padding:28px 32px 32px}
+.modal-body .submeta{
+  font-family:'Special Elite',monospace;
+  color:var(--ink-2);
+  font-size:14px;
+  line-height:1.55;
+}
+.modal-body .submeta b{color:var(--red);font-weight:normal}
+.modal-layout{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:24px;
+  margin-bottom:24px;
+  align-items:start;
+}
+.modal-cover{
+  background:var(--card);
+  border:1.5px solid var(--ink);
+  aspect-ratio:1 / 1.25;
+  position:relative;
+  overflow:hidden;
+}
+.modal-cover img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.modal-cover img:not([src]){display:none}
+.cover-fallback{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  text-align:center;
+  background:repeating-linear-gradient(0deg,var(--paper-2) 0 14px,transparent 14px 28px);
+}
+.cover-fallback .fb-rule{
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:.28em;
+  color:var(--ink-3);
+  margin-bottom:10px;
+}
+.cover-fallback .fb-sub{
+  font-family:'Special Elite',monospace;
+  font-size:12px;
+  line-height:1.5;
+  color:var(--ink-2);
+}
+.modal-info h2{
+  font-family:'Bungee',sans-serif;
+  font-size:32px;
+  letter-spacing:.02em;
+  line-height:1;
+  margin-bottom:8px;
+  color:var(--ink);
+}
+.modal-wikilink{margin-top:10px}
+.modal-wikilink a{
+  font-family:'Oswald',sans-serif;
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--blue);
+  font-weight:700;
+  text-decoration:none;
+  border-bottom:2px solid var(--blue);
+  padding-bottom:2px;
+}
+.modal-wikilink a:hover{color:var(--red);border-color:var(--red)}
+.modal-detail{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  margin-bottom:20px;
+}
+.modal-detail .col{
+  background:var(--card);
+  border:1.5px solid var(--ink);
+  padding:18px 20px;
+}
+.modal-detail .col .l{
+  font-family:'Oswald',sans-serif;
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-bottom:6px;
+}
+.modal-detail .col .v{
+  font-family:'Archivo Black',sans-serif;
+  font-size:22px;
+  color:var(--ink);
+}
+.modal-detail .col .x{
+  font-family:'Special Elite',monospace;
+  font-size:12px;
+  color:var(--ink-2);
+  margin-top:6px;
+}
+.modal-detail .col.now{background:var(--red);color:#fff}
+.modal-detail .col.now .l{color:#fff;opacity:.85}
+.modal-detail .col.now .v{color:#fff}
+.modal-detail .col.now .x{color:#fff;opacity:.9}
+.modal-detail.three{grid-template-columns:repeat(3,1fr)}
+
+.modal-notes{
+  font-family:'Special Elite',monospace;
+  font-size:13px;
+  color:var(--ink-2);
+  line-height:1.55;
+  padding-top:14px;
+  border-top:1px dashed var(--rule);
+  margin-top:20px;
+}
+.modal-notes b{color:var(--red);font-weight:normal}
+.modal-notes a{color:var(--blue)}
+
+/* CHART */
+.chart-block, .insights-block{margin-top:24px}
+.chart-title{
+  font-family:'Bungee',sans-serif;
+  font-size:14px;
+  color:var(--ink);
+  letter-spacing:.04em;
+  margin-bottom:6px;
+}
+.chart-lead{
+  font-family:'Special Elite',monospace;
+  color:var(--ink-2);
+  font-size:13px;
+  margin-bottom:14px;
+}
+.chart-legend{
+  display:flex;
+  gap:24px;
+  margin-bottom:12px;
+  font-family:'Oswald',sans-serif;
+  font-size:11px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  flex-wrap:wrap;
+}
+.chart-legend .dot{
+  width:14px;
+  height:4px;
+  display:inline-block;
+  vertical-align:middle;
+  margin-right:6px;
+}
+.chart-legend .dot.red{background:var(--red)}
+.chart-legend .dot.gold{background:var(--accent);border:1px solid var(--ink)}
+.chart-wrap{
+  background:var(--card);
+  border:1.5px solid var(--ink);
+  padding:18px 12px 8px;
+  overflow-x:auto;
+}
+.chart-wrap svg{display:block;width:100%;height:auto;min-width:520px}
+.chart-axis text{font-family:'Space Mono',monospace;font-size:9px;fill:var(--ink-3)}
+.chart-grid line{stroke:var(--rule-light);stroke-width:.5;stroke-dasharray:2 3}
+.chart-baseline{stroke:var(--ink);stroke-width:1}
+.chart-line-ipca{fill:none;stroke:var(--red);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.chart-line-sm{fill:none;stroke:#caa505;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.chart-point{stroke-width:1.5;stroke:var(--paper)}
+.chart-point.ipca{fill:var(--red)}
+.chart-point.sm{fill:var(--accent);stroke:var(--ink)}
+.chart-label-end{
+  font-family:'Archivo Black',sans-serif;
+  font-size:10px;
+}
+
+.insights{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.insights li{
+  background:var(--card);
+  border:1.5px solid var(--ink);
+  padding:14px 16px;
+  margin-bottom:10px;
+  font-family:'Special Elite',monospace;
+  font-size:14px;
+  line-height:1.55;
+  color:var(--ink);
+  position:relative;
+  padding-left:46px;
+}
+.insights li::before{
+  content:attr(data-num);
+  position:absolute;
+  left:14px;
+  top:14px;
+  font-family:'Bungee',sans-serif;
+  font-size:14px;
+  color:var(--red);
+  letter-spacing:.05em;
+}
+.insights li b{color:var(--red);font-weight:normal}
+
+@media (max-width:600px){
+  header{padding:18px 16px 28px}
+  section{padding:32px 12px 8px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .title{font-size:11px;min-height:28px}
+  .today .val{font-size:14px}
+  .parc{font-size:10px}
+  .p2000{font-size:10px}
+  .toggle button{font-size:11px;padding:12px}
+  .terms{gap:12px;font-size:11px}
+  .sec-num{font-size:14px;padding:6px 10px}
+  .sec-title{font-size:13px;padding:6px 10px}
+  .masthead{font-size:10px;gap:8px}
+  .card::after{display:none}
+  .modal{max-height:94vh}
+  .modal-body{padding:20px}
+  .modal-info h2{font-size:22px}
+  .modal-detail{grid-template-columns:1fr;gap:10px}
+  .modal-detail.three{grid-template-columns:1fr}
+  .modal-layout{grid-template-columns:120px 1fr;gap:14px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="masthead">
+    <div class="left">
+      <span class="dot"></span>
+      <span>Direct Shopping</span>
+      <span class="ed">Catálogo brasileiro de games</span>
+    </div>
+    <div class="right">
+      <span>Mar / 2000</span>
+      <span class="dot"></span>
+    </div>
+  </div>
+
+  <div class="headline">
+    <p class="kicker">Anúncio especial · 45 itens · cobertura nacional</p>
+    <h1>Games de 2000 <span class="x">×</span> Em 2026</h1>
+    <p class="sub">Preços de catálogo no Brasil em mar/2000 corrigidos pela inflação<br>e pelo salário mínimo.</p>
+  </div>
+
+  <div class="terms">
+    <span>Pague em 3× sem juros no cartão</span>
+    <span>Pelos Correios para todo Brasil</span>
+    <span>Atendimento de seg. a sex.</span>
+  </div>
+
+  <div class="toggle-wrap">
+    <p class="toggle-label">Como você quer comparar?</p>
+    <div class="toggle" role="tablist">
+      <button id="btn-ipca" class="active" data-mode="ipca">Pela inflação</button>
+      <button id="btn-sm" data-mode="sm">Pelo salário mínimo</button>
+    </div>
+  </div>
+
+  <p class="note" id="note">
+    <b>Pela inflação (IPCA):</b> em média, os preços ficaram 4,75 vezes mais altos desde mar/2000. Então R$ 1 daquela época vale R$ 4,75 hoje em mercadoria.
+  </p>
+
+  <div class="why-two">
+    <div class="why-two-title">Por que dois números diferentes?</div>
+    <div class="why-two-body">
+      Os preços, em média, subiram <b>5 vezes</b> desde 2000 (é o que mede a inflação, ou IPCA).<br>
+      Mas o salário mínimo brasileiro subiu <b>12 vezes</b> — quase o dobro dos preços.<br>
+      Resultado: comprar um jogo hoje "rouba" menos do salário do que em 2000, mesmo que <i>pareça</i> mais caro em reais. Os dois botões acima mostram esses dois ângulos.
+    </div>
+  </div>
+
+  <p id="status">Carregando capas…</p>
+</header>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num">01</div>
+    <div class="sec-title">Hardware <span class="count">6 itens · consoles e portáteis</span></div>
+  </div>
+  <div class="grid" id="grid-hardware"></div>
+</section>
+
+<div class="interstitial"><div class="strip">02 · Software <span>· cartuchos, CDs e GD-ROMs</span></div></div>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num">02</div>
+    <div class="sec-title">Nintendo 64 <span class="count">17 títulos</span></div>
+  </div>
+  <div class="grid" id="grid-n64"></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num">03</div>
+    <div class="sec-title">PlayStation <span class="count">9 títulos</span></div>
+  </div>
+  <div class="grid" id="grid-ps1"></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num">04</div>
+    <div class="sec-title">Dreamcast <span class="count">6 títulos</span></div>
+  </div>
+  <div class="grid" id="grid-dc"></div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <div class="sec-num">05</div>
+    <div class="sec-title">Game Boy Color <span class="count">4 títulos</span></div>
+  </div>
+  <div class="grid" id="grid-gbc"></div>
+</section>
+
+<footer>
+  <div class="inner">
+
+    <div class="block">
+      <h3>Metodologia</h3>
+      <p>Preços médios de catálogo praticados no varejo brasileiro em <b>março de 2000</b>, compilados de anúncios de catálogo do varejo brasileiro de games (entre eles o "Direct Shopping") e de revistas especializadas da época (Nintendo World, EGM Brasil, SuperGamePower).</p>
+      <p><b>IPCA:</b> fator <b>4,7506</b> (mar/2000 → mai/2026, +375% acumulado, Calculadora do Cidadão / Banco Central do Brasil).</p>
+      <p><b>Salário mínimo:</b> R$ 136,00 em mar/2000 → R$ 1.621,00 em 2026 (Decreto 12.797/2025). Fator <b>11,9191</b>, ou seja, ~2,51× além do IPCA — régua do poder de compra real do trabalhador.</p>
+    </div>
+
+    <div class="block">
+      <h3>Edições originais consultadas</h3>
+      <p>Capas das revistas Nintendo World hospedadas pelo <a href="https://www.retroavengers.com.br/" target="_blank" rel="noopener">Retroavengers</a> — clique para acessar o post correspondente, que disponibiliza o PDF da edição inteira.</p>
+      <div class="nw-grid">
+        <a href="https://www.retroavengers.com.br/2023/10/31/nintendo-world-no-06/" target="_blank" rel="noopener">
+          <img src="https://www.retroavengers.com.br/wp-content/uploads/2023/10/Nintendo-World-no-006-001-227x300.jpg" alt="Nintendo World nº 06" loading="lazy">
+          <figcaption>NW nº 06 · 1999 · Zelda OoT</figcaption>
+        </a>
+        <a href="https://www.retroavengers.com.br/2023/02/16/nintendo-world-no-20/" target="_blank" rel="noopener">
+          <img src="https://www.retroavengers.com.br/wp-content/uploads/2023/02/Nintendo-World-no-020-001-227x300.jpg" alt="Nintendo World nº 20" loading="lazy">
+          <figcaption>NW nº 20 · Abr/2000 · Pokémon Stadium</figcaption>
+        </a>
+        <a href="https://www.retroavengers.com.br/2023/05/23/nintendo-world-no-22/" target="_blank" rel="noopener">
+          <img src="https://www.retroavengers.com.br/wp-content/uploads/2023/05/Nintendo-World-no-022-001-227x300.jpg" alt="Nintendo World nº 22" loading="lazy">
+          <figcaption>NW nº 22 · Mai/2000 · Perfect Dark · E3</figcaption>
+        </a>
+        <a href="https://www.retroavengers.com.br/2023/12/13/nintendo-world-no-31/" target="_blank" rel="noopener">
+          <img src="https://www.retroavengers.com.br/wp-content/uploads/2023/12/Nintendo-World-no-031-001-227x300.jpg" alt="Nintendo World nº 31" loading="lazy">
+          <figcaption>NW nº 31 · 2001 · Pokémon Stadium 2</figcaption>
+        </a>
+        <a href="https://www.retroavengers.com.br/2023/07/21/gamers-no-33-2/" target="_blank" rel="noopener">
+          <img src="https://www.retroavengers.com.br/wp-content/uploads/2023/07/Nintendo-World-no-033-001-227x300.jpg" alt="Nintendo World nº 33" loading="lazy">
+          <figcaption>NW nº 33 · 2001 · Zelda Oracle</figcaption>
+        </a>
+        <a href="https://www.retroavengers.com.br/2024/10/02/nintendo-world-no-39/" target="_blank" rel="noopener">
+          <img src="https://www.retroavengers.com.br/wp-content/uploads/2024/10/Nintendo-World-no-039-001-227x300.jpg" alt="Nintendo World nº 39" loading="lazy">
+          <figcaption>NW nº 39 · 2002 · GBA · GameCube</figcaption>
+        </a>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Imagens dos jogos</h3>
+      <p>As capas dos jogos vêm da <b>Wikipedia em inglês</b>. Jogos sem capa individual hospedada (Pokémon Yellow, Silver e Red) foram retirados do catálogo.</p>
+    </div>
+
+    <div class="colophon">
+      Direct Shopping · Catálogo Nº 02 · Mar/2000 — releitura em 2026
+    </div>
+  </div>
+</footer>
+
+<!-- ============== MODAL ============== -->
+<div class="modal-backdrop" id="modal" role="dialog" aria-modal="true">
+  <div class="modal" role="document">
+    <div class="modal-head">
+      <div class="h">Detalhes · <b id="modal-kicker">—</b></div>
+      <button class="modal-close" id="modal-close" aria-label="Fechar">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-layout">
+        <figure class="modal-cover" id="modal-cover">
+          <img id="modal-img" alt="">
+          <div class="cover-fallback" id="modal-fallback">
+            <div class="fb-rule">SEM CAPA INDIVIDUAL</div>
+            <div class="fb-sub" id="modal-fallback-sub">Cartucho sem box art própria hospedada na Wikipedia.</div>
+          </div>
+        </figure>
+        <div class="modal-info">
+          <h2 id="modal-title">—</h2>
+          <p class="submeta" id="modal-submeta">—</p>
+          <p class="modal-wikilink"><a id="modal-wikilink" href="#" target="_blank" rel="noopener">↗ Ver artigo do jogo na Wikipedia (EN)</a></p>
+        </div>
+      </div>
+
+      <div class="modal-detail three">
+        <div class="col">
+          <div class="l">Preço em Mar/2000</div>
+          <div class="v" id="modal-then">—</div>
+          <div class="x" id="modal-parc">—</div>
+        </div>
+        <div class="col now">
+          <div class="l">Hoje · IPCA</div>
+          <div class="v" id="modal-ipca">—</div>
+          <div class="x" id="modal-ipca-sm">—</div>
+        </div>
+        <div class="col">
+          <div class="l">Hoje · Salário Mínimo</div>
+          <div class="v" id="modal-sm">—</div>
+          <div class="x" id="modal-sm-2000">—</div>
+        </div>
+      </div>
+
+      <div class="chart-block">
+        <h3 class="chart-title">Evolução do preço · 2000 → 2026</h3>
+        <p class="chart-lead">O mesmo cartucho, ano a ano, corrigido por duas réguas independentes.</p>
+        <div class="chart-legend">
+          <span><span class="dot red"></span> IPCA · inflação acumulada</span>
+          <span><span class="dot gold"></span> Salário mínimo · poder de compra</span>
+        </div>
+        <div class="chart-wrap" id="chart-wrap"></div>
+      </div>
+
+      <div class="insights-block">
+        <h3 class="chart-title">O que o gráfico mostra</h3>
+        <ul class="insights" id="modal-insights"></ul>
+      </div>
+
+      <p class="modal-notes">
+        Preço de mar/2000 compilado de anúncios de catálogo do varejo brasileiro de games (entre eles o <b>Direct Shopping</b>) e de revistas especializadas. Correções: IPCA via <a href="https://www3.bcb.gov.br/CALCIDADAO/" target="_blank" rel="noopener">Calculadora do Cidadão</a> do Banco Central; salário mínimo conforme Decreto 12.797/2025. Os valores anuais do IPCA são aproximações construídas com o IPCA acumulado dezembro a dezembro.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DADOS
+// ============================================================
+const IPCA_FACTOR = 4.7506;
+const SM_2000 = 136;
+const SM_2026 = 1621;
+const SM_FACTOR = SM_2026 / SM_2000;
+
+// IPCA acumulado desde mar/2000 até dez/cada ano (mai/2026 para o último)
+// Aproximações construídas a partir do IPCA anual do IBGE / Banco Central.
+const IPCA_BY_YEAR = {
+  2000: 1.0610, 2001: 1.1422, 2002: 1.2857, 2003: 1.4045, 2004: 1.5106,
+  2005: 1.5961, 2006: 1.6451, 2007: 1.7185, 2008: 1.8194, 2009: 1.8978,
+  2010: 2.0103, 2011: 2.1424, 2012: 2.2657, 2013: 2.4006, 2014: 2.5536,
+  2015: 2.8265, 2016: 3.0036, 2017: 3.0937, 2018: 3.2114, 2019: 3.3553,
+  2020: 3.5076, 2021: 3.8674, 2022: 4.1041, 2023: 4.2904, 2024: 4.4992,
+  2025: 4.6600, 2026: 4.7506
+};
+// Salário mínimo nominal vigente em cada ano (R$). Fonte: legislação federal.
+const SM_BY_YEAR = {
+  2000: 136, 2001: 180, 2002: 200, 2003: 240, 2004: 260,
+  2005: 300, 2006: 350, 2007: 380, 2008: 415, 2009: 465,
+  2010: 510, 2011: 545, 2012: 622, 2013: 678, 2014: 724,
+  2015: 788, 2016: 880, 2017: 937, 2018: 954, 2019: 998,
+  2020: 1045, 2021: 1100, 2022: 1212, 2023: 1320, 2024: 1412,
+  2025: 1518, 2026: 1621
+};
+
+// Para "ver anúncio original": cada item aceita campo opcional `source`.
+// Convenção: arquivo em ./anuncios/{slug}.jpg . Se não existir, fallback elegante.
+function srcOf(it){
+  if(it.source) return it.source;
+  const slug = it.wiki.toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  return `anuncios/${slug}.jpg`;
+}
+
+const ITEMS = {
+  hardware: [
+    {title:"Nintendo 64 + 2 controllers", wiki:"Nintendo 64", imgUrl:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Nintendo-64-wController-L.jpg/500px-Nintendo-64-wController-L.jpg", price:459.00, parc:"3× R$ 153,00", date:"2000", platformTag:"n64"},
+    {title:"PlayStation DualShock", wiki:"PlayStation (console)", imgUrl:"https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/PlayStation-SCPH-1000-with-Controller.png/500px-PlayStation-SCPH-1000-with-Controller.png", price:349.00, parc:"2× R$ 174,50", date:"2000", platformTag:"ps1"},
+    {title:"Dreamcast Tectoy (Console)", wiki:"Dreamcast", imgUrl:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Dreamcast-Console-Set.png/500px-Dreamcast-Console-Set.png", price:899.01, parc:"3× R$ 299,67", date:"2000", platformTag:"dc"},
+    {title:"Game Boy Color", wiki:"Game Boy Color", price:299.01, parc:"3× R$ 99,67", date:"2000", platformTag:"gbc"},
+    {title:"Neo Geo Pocket Color", wiki:"Neo Geo Pocket Color", price:309.76, parc:"2× R$ 154,88", date:"2000", platformTag:"ngpc"},
+    {title:"PlayStation 2 (importado, mercado paralelo)", wiki:"PlayStation 2", imgUrl:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Sony-PlayStation-2-70001-Console-BR.jpg/500px-Sony-PlayStation-2-70001-Console-BR.jpg", price:2500.00, parc:"Sem parcelamento", date:"2000", platformTag:"ps2"},
+  ],
+  n64: [
+    {title:"Pokémon Stadium", wiki:"Pokémon Stadium", price:199.00, parc:"3× R$ 66,33", date:"Mar/2000"},
+    {title:"Zelda: Majora's Mask", wiki:"The Legend of Zelda: Majora's Mask", price:179.00, parc:"3× R$ 59,67", date:"Out/2000"},
+    {title:"Perfect Dark", wiki:"Perfect Dark", price:169.00, parc:"3× R$ 56,33", date:"Mai/2000"},
+    {title:"Paper Mario", wiki:"Paper Mario (video game)", price:159.00, parc:"3× R$ 53,00", date:"Ago/2000"},
+    {title:"Banjo-Tooie", wiki:"Banjo-Tooie", price:169.00, parc:"3× R$ 56,33", date:"Nov/2000"},
+    {title:"Mario Tennis", wiki:"Mario Tennis", price:149.00, parc:"3× R$ 49,67", date:"Ago/2000"},
+    {title:"Zelda: Ocarina of Time", wiki:"The Legend of Zelda: Ocarina of Time", price:138.99, parc:"3× R$ 46,33", date:"Mar/2000"},
+    {title:"Donkey Kong 64", wiki:"Donkey Kong 64", price:219.00, parc:"3× R$ 73,00", date:"Mar/2000"},
+    {title:"Super Smash Bros.", wiki:"Super Smash Bros. (video game)", price:168.99, parc:"3× R$ 56,33", date:"Mar/2000"},
+    {title:"Mario Party 2", wiki:"Mario Party 2", price:168.99, parc:"3× R$ 56,33", date:"Mar/2000"},
+    {title:"Rayman 2", wiki:"Rayman 2: The Great Escape", price:168.99, parc:"3× R$ 56,33", date:"Mar/2000"},
+    {title:"Pokémon Snap", wiki:"Pokémon Snap", price:168.99, parc:"3× R$ 56,33", date:"Mar/2000"},
+    {title:"Jet Force Gemini", wiki:"Jet Force Gemini", price:168.99, parc:"3× R$ 56,33", date:"Mar/2000"},
+    {title:"Super Mario 64", wiki:"Super Mario 64", price:99.00, parc:"3× R$ 33,00", date:"Mar/2000"},
+    {title:"Toy Story 2: Buzz Lightyear", wiki:"Toy Story 2: Buzz Lightyear to the Rescue", price:168.99, parc:"3× R$ 56,33", date:"Mar/2000"},
+    {title:"WWF No Mercy", wiki:"WWF No Mercy (video game)", price:159.00, parc:"3× R$ 53,00", date:"Nov/2000"},
+    {title:"ISS 98", wiki:"International Superstar Soccer '98", price:129.00, parc:"3× R$ 43,00", date:"Mar/2000"},
+  ],
+  ps1: [
+    {title:"Tony Hawk's Pro Skater 2", wiki:"Tony Hawk's Pro Skater 2", price:119.00, parc:"Original", date:"Set/2000"},
+    {title:"Final Fantasy IX", wiki:"Final Fantasy IX", price:139.00, parc:"Original", date:"Jul/2000"},
+    {title:"Chrono Cross", wiki:"Chrono Cross", price:139.00, parc:"Original", date:"Ago/2000"},
+    {title:"Tekken 3", wiki:"Tekken 3", price:99.00, parc:"Original", date:"2000"},
+    {title:"Gran Turismo 2", wiki:"Gran Turismo 2", price:129.00, parc:"Original", date:"2000"},
+    {title:"Metal Gear Solid", wiki:"Metal Gear Solid (1998 video game)", price:109.00, parc:"Original", date:"2000"},
+    {title:"Crash Bandicoot 3: Warped", wiki:"Crash Bandicoot: Warped", price:99.00, parc:"Original", date:"2000"},
+    {title:"Resident Evil 3: Nemesis", wiki:"Resident Evil 3: Nemesis", price:119.00, parc:"Original", date:"2000"},
+    {title:"Dino Crisis 2", wiki:"Dino Crisis 2", price:129.00, parc:"Original", date:"Set/2000"},
+  ],
+  dc: [
+    {title:"Resident Evil Code: Veronica", wiki:"Resident Evil – Code: Veronica", price:149.00, parc:"Original", date:"Fev/2000"},
+    {title:"Jet Set Radio", wiki:"Jet Set Radio", price:139.00, parc:"Original", date:"Out/2000"},
+    {title:"Marvel vs. Capcom 2", wiki:"Marvel vs. Capcom 2: New Age of Heroes", price:139.00, parc:"Original", date:"Jun/2000"},
+    {title:"Shenmue", wiki:"Shenmue (video game)", price:149.00, parc:"Original", date:"2000"},
+    {title:"Sonic Adventure", wiki:"Sonic Adventure", price:119.00, parc:"Original", date:"2000"},
+    {title:"Crazy Taxi", wiki:"Crazy Taxi (video game)", price:119.00, parc:"Original", date:"2000"},
+  ],
+  gbc: [
+    {title:"Pokémon Gold Version", wiki:"Pokémon Gold and Silver", imgUrl:"https://upload.wikimedia.org/wikipedia/en/4/4c/Pok%C3%A9mon_box_art_-_Gold_Version.png", price:119.00, parc:"3× R$ 39,67", date:"Out/2000"},
+    {title:"Pokémon Blue Version", wiki:"Pokémon Red and Blue", price:99.00, parc:"3× R$ 33,00", date:"Mar/2000"},
+    {title:"Zelda: Link's Awakening DX", wiki:"The Legend of Zelda: Link's Awakening", price:109.00, parc:"3× R$ 36,33", date:"2000"},
+    {title:"Pokémon Pinball", wiki:"Pokémon Pinball", price:99.00, parc:"3× R$ 33,00", date:"Mar/2000"},
+  ],
+};
+
+const PLATFORM_LABEL = {
+  n64:"N64", ps1:"PS1", ps2:"PS2", dc:"DC", gbc:"GBC", ngpc:"NGPC", console:"CONSOLE"
+};
+
+// Index para lookup no modal
+const ITEM_INDEX = {};
+let refCounter = 0;
+function nextRef(){ refCounter++; return String(refCounter).padStart(3,'0'); }
+
+function fmt(v){
+  return v.toLocaleString('pt-BR',{minimumFractionDigits:2, maximumFractionDigits:2});
+}
+
+function cardHTML(it, defaultPlatform){
+  const platform = it.platformTag || defaultPlatform;
+  const tagLabel = PLATFORM_LABEL[platform] || platform.toUpperCase();
+  const ref = nextRef();
+  ITEM_INDEX[ref] = {...it, platform, source: srcOf(it)};
+  const imgUrlAttr = it.imgUrl ? ` data-img-url="${it.imgUrl.replace(/"/g,'&quot;')}"` : '';
+  const skipAttr = it.imgSkip ? ` data-img-skip="1"` : '';
+  return `
+    <article class="card" data-wiki="${it.wiki.replace(/"/g,'&quot;')}" data-price="${it.price}" data-ref="${ref}"${imgUrlAttr}${skipAttr}>
+      <div class="imgwrap">
+        <span class="tag ${platform}">${tagLabel}</span>
+        <div class="skeleton">${it.title}</div>
+        <img alt="${it.title}" data-fallback="${it.title.replace(/"/g,'&quot;')}">
+      </div>
+      <div class="body">
+        <div class="title">${it.title}</div>
+        <div class="prices">
+          <div class="p2000">${it.date}: <b>R$ ${fmt(it.price)}</b></div>
+          <div class="parc">${it.parc}</div>
+          <div class="today">
+            <div class="label" data-label>Hoje (IPCA)</div>
+            <div class="val" data-val>R$ 0,00</div>
+            <div class="sm" data-sm></div>
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderGrid(id, items, platform){
+  const el = document.getElementById(id);
+  el.innerHTML = items.map(it => cardHTML(it, platform)).join('');
+}
+
+renderGrid('grid-hardware', ITEMS.hardware, 'console');
+renderGrid('grid-n64', ITEMS.n64, 'n64');
+renderGrid('grid-ps1', ITEMS.ps1, 'ps1');
+renderGrid('grid-dc', ITEMS.dc, 'dc');
+renderGrid('grid-gbc', ITEMS.gbc, 'gbc');
+
+// ============================================================
+// TOGGLE IPCA/SM
+// ============================================================
+let mode = 'ipca';
+
+function recalc(){
+  const cards = document.querySelectorAll('.card');
+  cards.forEach(card => {
+    const price = parseFloat(card.dataset.price);
+    const labelEl = card.querySelector('[data-label]');
+    const valEl = card.querySelector('[data-val]');
+    const smEl = card.querySelector('[data-sm]');
+    if(mode === 'ipca'){
+      const today = price * IPCA_FACTOR;
+      const smHoje = today / SM_2026;
+      labelEl.textContent = 'Hoje (IPCA)';
+      valEl.textContent = 'R$ ' + fmt(today);
+      smEl.textContent = fmt(smHoje) + ' SM hoje';
+    } else {
+      const smEm2000 = price / SM_2000;
+      const today = smEm2000 * SM_2026;
+      labelEl.textContent = 'Hoje (SM)';
+      valEl.textContent = 'R$ ' + fmt(today);
+      smEl.textContent = 'Custava ' + fmt(smEm2000) + ' SM em 2000';
+    }
+  });
+  const note = document.getElementById('note');
+  if(mode === 'ipca'){
+    note.innerHTML = '<b>Pela inflação (IPCA):</b> em média, os preços ficaram 4,75 vezes mais altos desde mar/2000. Então R$ 1 daquela época vale R$ 4,75 hoje em mercadoria.';
+  } else {
+    note.innerHTML = '<b>Pelo salário mínimo:</b> o mínimo era R$ 136 em mar/2000, hoje é R$ 1.621 — quase 12 vezes maior. Como o salário subiu mais do que os preços, R$ 1 de 2000 equivale a R$ 11,92 hoje em poder de compra do trabalhador.';
+  }
+}
+
+document.getElementById('btn-ipca').addEventListener('click', () => {
+  mode = 'ipca';
+  document.getElementById('btn-ipca').classList.add('active');
+  document.getElementById('btn-sm').classList.remove('active');
+  recalc();
+});
+document.getElementById('btn-sm').addEventListener('click', () => {
+  mode = 'sm';
+  document.getElementById('btn-sm').classList.add('active');
+  document.getElementById('btn-ipca').classList.remove('active');
+  recalc();
+});
+
+recalc();
+
+// ============================================================
+// MODAL — Anúncio original
+// ============================================================
+const modal = document.getElementById('modal');
+const modalImg = document.getElementById('modal-img');
+const modalFallback = document.getElementById('modal-fallback');
+
+function openModal(ref){
+  const it = ITEM_INDEX[ref];
+  if(!it) return;
+  document.getElementById('modal-title').textContent = it.title;
+  document.getElementById('modal-kicker').textContent = `${PLATFORM_LABEL[it.platform] || it.platform} · REF ${ref}`;
+  document.getElementById('modal-submeta').innerHTML =
+    `<b>${it.date}</b> · ${it.parc} · Preço de catálogo no varejo brasileiro.`;
+
+  // Link Wikipedia
+  const wikiLink = document.getElementById('modal-wikilink');
+  wikiLink.href = `https://en.wikipedia.org/wiki/${encodeURIComponent(it.wiki.replace(/ /g,'_'))}`;
+
+  const then = it.price;
+  const ipca = then * IPCA_FACTOR;
+  const sm2000 = then / SM_2000;
+  const smHoje = sm2000 * SM_2026;
+  const ipcaSm = ipca / SM_2026;
+
+  document.getElementById('modal-then').textContent = 'R$ ' + fmt(then);
+  document.getElementById('modal-parc').textContent = it.parc + ' · era ' + fmt(sm2000) + ' SM';
+  document.getElementById('modal-ipca').textContent = 'R$ ' + fmt(ipca);
+  document.getElementById('modal-ipca-sm').textContent = fmt(ipcaSm) + ' SM hoje';
+  document.getElementById('modal-sm').textContent = 'R$ ' + fmt(smHoje);
+  document.getElementById('modal-sm-2000').textContent = fmt(sm2000) + ' SM em 2000';
+
+  // Capa: reusa a do card. Se card está em placeholder, mostra fallback.
+  const cardImg = document.querySelector(`.card[data-ref="${ref}"] .imgwrap img`);
+  const cardSkeleton = document.querySelector(`.card[data-ref="${ref}"] .skeleton`);
+  const hasCardCover = cardImg && cardImg.src && cardImg.classList.contains('loaded');
+  if(hasCardCover){
+    modalImg.style.display = 'block';
+    modalImg.src = cardImg.src;
+    modalFallback.style.display = 'none';
+  } else {
+    modalImg.style.display = 'none';
+    modalFallback.style.display = 'flex';
+    document.getElementById('modal-fallback-sub').textContent =
+      'Box art não disponível na Wikipedia em inglês.';
+  }
+
+  // Gráfico + insights
+  renderChart(then);
+  renderInsights(then, it.title);
+
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderChart(basePrice){
+  const years = Object.keys(IPCA_BY_YEAR).map(Number).sort((a,b)=>a-b);
+  const series = years.map(y => ({
+    year: y,
+    ipca: basePrice * IPCA_BY_YEAR[y],
+    sm:   basePrice * (SM_BY_YEAR[y] / SM_BY_YEAR[2000])
+  }));
+
+  const W = 600, H = 260, PL = 48, PR = 60, PT = 16, PB = 28;
+  const innerW = W - PL - PR, innerH = H - PT - PB;
+  const maxY = Math.max(...series.map(s => Math.max(s.ipca, s.sm)));
+  const niceMax = Math.ceil(maxY/100)*100;
+  const xOf = (y) => PL + ((y - years[0]) / (years[years.length-1] - years[0])) * innerW;
+  const yOf = (v) => PT + innerH - (v / niceMax) * innerH;
+
+  // grid horizontal: 4 linhas
+  const gridLines = [];
+  const ticks = [0, niceMax*0.25, niceMax*0.5, niceMax*0.75, niceMax];
+  for(const t of ticks){
+    gridLines.push(`<line x1="${PL}" x2="${PL+innerW}" y1="${yOf(t)}" y2="${yOf(t)}"/>`);
+  }
+  // labels eixo Y
+  const yLabels = ticks.map(t =>
+    `<text x="${PL-8}" y="${yOf(t)+3}" text-anchor="end">R$ ${Math.round(t).toLocaleString('pt-BR')}</text>`
+  ).join('');
+  // labels eixo X (a cada 4 anos)
+  const xLabels = years
+    .filter(y => y % 4 === 0 || y === years[years.length-1])
+    .map(y => `<text x="${xOf(y)}" y="${H-PB+16}" text-anchor="middle">${y}</text>`)
+    .join('');
+
+  // polylines
+  const ptsIpca = series.map(s => `${xOf(s.year)},${yOf(s.ipca)}`).join(' ');
+  const ptsSm   = series.map(s => `${xOf(s.year)},${yOf(s.sm)}`).join(' ');
+
+  // pontos finais com labels
+  const last = series[series.length-1];
+  const endLabels = `
+    <text class="chart-label-end" x="${xOf(last.year)+6}" y="${yOf(last.ipca)+4}" fill="${'#d12127'}">R$ ${fmt(last.ipca)}</text>
+    <text class="chart-label-end" x="${xOf(last.year)+6}" y="${yOf(last.sm)+4}" fill="${'#8a7000'}">R$ ${fmt(last.sm)}</text>
+  `;
+
+  const svg = `
+    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" aria-label="Gráfico de preço corrigido ano a ano">
+      <g class="chart-grid">${gridLines.join('')}</g>
+      <line class="chart-baseline" x1="${PL}" x2="${PL+innerW}" y1="${yOf(0)}" y2="${yOf(0)}"/>
+      <g class="chart-axis">${yLabels}${xLabels}</g>
+      <polyline class="chart-line-ipca" points="${ptsIpca}"/>
+      <polyline class="chart-line-sm" points="${ptsSm}"/>
+      <circle class="chart-point ipca" cx="${xOf(last.year)}" cy="${yOf(last.ipca)}" r="4"/>
+      <circle class="chart-point sm" cx="${xOf(last.year)}" cy="${yOf(last.sm)}" r="4"/>
+      ${endLabels}
+    </svg>
+  `;
+  document.getElementById('chart-wrap').innerHTML = svg;
+  return series;
+}
+
+function renderInsights(basePrice, gameTitle){
+  const sm2000 = basePrice / SM_2000;
+  const ipca = basePrice * IPCA_FACTOR;
+  const sm  = sm2000 * SM_2026;
+  const gap = sm - ipca;
+  const gapPct = ((sm/ipca) - 1) * 100;
+
+  // Encontra ano em que SM superou IPCA por margem significativa
+  let crossYear = null;
+  const years = Object.keys(IPCA_BY_YEAR).map(Number).sort((a,b)=>a-b);
+  for(const y of years){
+    const ipcaV = basePrice * IPCA_BY_YEAR[y];
+    const smV   = basePrice * (SM_BY_YEAR[y] / SM_BY_YEAR[2000]);
+    if(smV / ipcaV > 1.10){ crossYear = y; break; }
+  }
+
+  const smHojeFracao = ipca / SM_2026; // fração de SM hoje, pelo IPCA
+  const insights = [
+    `Em 2000, esse item custava <b>R$ ${fmt(basePrice)}</b> — o equivalente a <b>${fmt(sm2000)} salários mínimos</b> da época (o SM valia R$ 136). Era preciso trabalhar mais de ${Math.ceil(sm2000*22)} dias só para pagar.`,
+    `Se a gente atualizasse esse preço só pela inflação (a régua dos preços, IPCA), daria <b>R$ ${fmt(ipca)}</b> em 2026. É a linha vermelha do gráfico.`,
+    `Mas o salário mínimo subiu MAIS do que a inflação desde 2000. Pra ocupar a mesma fatia do salário do trabalhador, hoje o item precisaria custar <b>R$ ${fmt(sm)}</b> — quase ${gapPct >= 100 ? Math.round(gapPct/100+1) : '2'}× o valor que a inflação sozinha indica. É a linha amarela.`,
+    `Tradução prática: em 2000, isso valia ${fmt(sm2000)} SM. Hoje, o mesmo R$ ${fmt(ipca)} (pela inflação) é só <b>${fmt(smHojeFracao)} SM</b>. Comprar isso ficou <b>mais fácil</b> pro brasileiro, mesmo que pareça mais caro em reais.${crossYear ? ` O descolamento entre as duas réguas começa em ${crossYear} — quando o governo passou a dar aumentos reais ao salário mínimo, acima da inflação (sobretudo entre 2003 e 2014).` : ''}`
+  ];
+
+  const ul = document.getElementById('modal-insights');
+  ul.innerHTML = insights.map((t,i) =>
+    `<li data-num="${String(i+1).padStart(2,'0')}">${t}</li>`
+  ).join('');
+}
+
+function closeModal(){
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.card');
+  if(card){
+    openModal(card.dataset.ref);
+  }
+});
+
+// ============================================================
+// CARREGAMENTO DE CAPAS — Wikipedia API:Pageimages
+// ============================================================
+const CARDS = Array.from(document.querySelectorAll('.card'));
+const TOTAL = CARDS.length;
+let done = 0;
+let success = 0;
+const statusEl = document.getElementById('status');
+
+function updateStatus(final=false){
+  if(final){
+    const missing = TOTAL - success;
+    statusEl.textContent = `${success} capas carregadas${missing>0 ? ` · ${missing} sem imagem na Wikipedia` : ''}`;
+    if(missing === 0){
+      setTimeout(()=>{ statusEl.style.transition='opacity .6s'; statusEl.style.opacity='0'; }, 2000);
+    }
+  } else {
+    statusEl.textContent = `Carregando capas… ${done}/${TOTAL}`;
+  }
+}
+
+async function fetchCover(card){
+  // skip explícito → placeholder
+  if(card.dataset.imgSkip){
+    applyPlaceholder(card);
+    done++; updateStatus(done === TOTAL);
+    return;
+  }
+  // override de URL
+  if(card.dataset.imgUrl){
+    try{
+      await applyCover(card, card.dataset.imgUrl);
+      success++;
+    }catch(_){ applyPlaceholder(card); }
+    done++; updateStatus(done === TOTAL);
+    return;
+  }
+  const wiki = card.dataset.wiki;
+  const url = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&pithumbsize=400&pilicense=any&redirects=1&origin=*&titles=${encodeURIComponent(wiki)}`;
+  try{
+    const r = await fetch(url);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const data = await r.json();
+    const pages = data?.query?.pages || {};
+    const firstKey = Object.keys(pages)[0];
+    const thumb = firstKey ? pages[firstKey]?.thumbnail?.source : null;
+    if(thumb){
+      try{ await applyCover(card, thumb); success++; }
+      catch(_){ console.warn('Falha ao carregar capa de', wiki); }
+    } else {
+      applyPlaceholder(card);
+      console.warn('Sem capa para:', wiki);
+    }
+  } catch(err){
+    applyPlaceholder(card);
+    console.warn('Falha ao buscar capa de', wiki, err.message);
+  } finally {
+    done++;
+    updateStatus(done === TOTAL);
+  }
+}
+
+function applyCover(card, src){
+  return new Promise((resolve,reject) => {
+    const img = card.querySelector('.imgwrap img');
+    const skel = card.querySelector('.skeleton');
+    img.onload = () => {
+      img.classList.add('loaded');
+      if(skel) skel.style.display = 'none';
+      resolve();
+    };
+    img.onerror = () => {
+      applyPlaceholder(card);
+      reject(new Error('img load failed'));
+    };
+    img.src = src;
+  });
+}
+
+function applyPlaceholder(card){
+  const skel = card.querySelector('.skeleton');
+  if(skel){
+    skel.classList.add('placeholder');
+  }
+}
+
+async function runPool(items, concurrency){
+  const queue = items.slice();
+  const workers = Array.from({length:concurrency}, async () => {
+    while(queue.length){
+      const card = queue.shift();
+      await fetchCover(card);
+    }
+  });
+  await Promise.all(workers);
+}
+
+runPool(CARDS, 6);
+</script>
+
+</body>
+</html>
