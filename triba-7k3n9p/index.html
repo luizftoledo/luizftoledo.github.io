@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SERÁ QUE VOCÊ VAI CANTAR NO TRIBA HOJE?</title>
+
+<!-- Não indexar em buscadores -->
+<meta name="robots" content="noindex,nofollow,nosnippet,noarchive">
+<meta name="googlebot" content="noindex,nofollow">
+
+<!-- Open Graph (preview em WhatsApp, Telegram, etc.) -->
+<meta property="og:title" content="Será que você vai cantar no Triba hoje?">
+<meta property="og:description" content="O teste da verdade 🎙️">
+<meta property="og:image" content="https://luizftoledo.github.io/triba-7k3n9p/triba-banner.png">
+<meta property="og:image:width" content="1024">
+<meta property="og:image:height" content="1536">
+<meta property="og:url" content="https://luizftoledo.github.io/triba-7k3n9p/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Será que você vai cantar no Triba hoje?">
+<meta name="twitter:description" content="O teste da verdade 🎙️">
+<meta name="twitter:image" content="https://luizftoledo.github.io/triba-7k3n9p/triba-banner.png">
+
+<style>
+  .disclaimer {
+    position: fixed;
+    bottom: 4px; left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(8px, 1.1vw, 11px);
+    color: rgba(255,255,255,0.75);
+    text-align: center;
+    font-family: -apple-system, 'Helvetica Neue', sans-serif;
+    letter-spacing: 0.05em;
+    z-index: 100;
+    pointer-events: none;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    max-width: 95%;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE', cursive;
+    background: linear-gradient(135deg, #ff006e, #fb5607, #ffbe0b, #8338ec, #3a86ff);
+    background-size: 400% 400%;
+    animation: bg 12s ease infinite;
+    color: #fff;
+  }
+  @keyframes bg {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .tela {
+    position: fixed;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(8px, 2vh, 18px) 12px;
+    gap: clamp(6px, 1.5vh, 14px);
+    overflow: hidden;
+  }
+  .tela.ativa { display: flex; }
+
+  .banner {
+    width: auto;
+    max-width: min(90vw, 360px);
+    max-height: 55vh;
+    object-fit: contain;
+    border: 4px solid #000;
+    border-radius: 14px;
+    box-shadow: 6px 6px 0 #000;
+  }
+
+  h1.titulo {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: clamp(24px, 5.5vw, 60px);
+    line-height: 1.05;
+    text-shadow: 4px 4px 0 #000, -2px -2px 0 #ffbe0b;
+    color: #fff;
+    transform: rotate(-2deg);
+    animation: balanco 3s ease-in-out infinite;
+  }
+  @keyframes balanco {
+    0%, 100% { transform: rotate(-2deg); }
+    50%      { transform: rotate(2deg); }
+  }
+  .texto-grande {
+    font-size: clamp(18px, 3.2vw, 32px);
+    line-height: 1.25;
+    max-width: 880px;
+    text-shadow: 3px 3px 0 #000;
+    color: #fff;
+  }
+  .texto-medio {
+    font-size: clamp(15px, 2.2vw, 22px);
+    line-height: 1.35;
+    max-width: 800px;
+    text-shadow: 2px 2px 0 #000;
+  }
+  .opcoes {
+    display: grid;
+    gap: clamp(6px, 1vh, 12px);
+    max-width: 720px;
+    width: 100%;
+  }
+  .grid-horarios { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+  .grid-musicas  { grid-template-columns: 1fr; gap: clamp(6px, 0.8vh, 10px); }
+  .grid-luan     { grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  button.opcao {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: clamp(15px, 2.4vw, 22px);
+    padding: clamp(8px, 1.4vh, 14px) clamp(10px, 2vw, 18px);
+    background: #ffbe0b;
+    color: #000;
+    border: 3px solid #000;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #000;
+    transition: transform 0.1s, box-shadow 0.1s;
+    font-weight: bold;
+    line-height: 1.15;
+  }
+  button.opcao:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #000;
+    background: #ff006e;
+    color: #fff;
+  }
+  button.opcao:nth-child(odd) { background: #8338ec; color: #fff; }
+  button.opcao:nth-child(odd):hover { background: #ff006e; color: #fff; }
+  button.opcao.outros { background: #fff; color: #000; }
+  button.opcao.outros:hover { background: #000; color: #ffbe0b; }
+  button.opcao.luan {
+    background: #00ff88; color: #000;
+    font-size: clamp(13px, 1.8vw, 18px);
+    padding: clamp(8px, 1.2vh, 12px) clamp(10px, 1.6vw, 16px);
+  }
+  button.opcao.luan:hover { background: #000; color: #00ff88; }
+  button.opcao.sim {
+    background: #00ff88; color: #000;
+    font-size: clamp(22px, 3.2vw, 36px);
+    padding: clamp(16px, 2.5vh, 24px);
+  }
+  button.opcao.nao {
+    background: #ff006e; color: #fff;
+    font-size: clamp(22px, 3.2vw, 36px);
+    padding: clamp(16px, 2.5vh, 24px);
+  }
+
+  button.comecar {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: clamp(20px, 3.2vw, 36px);
+    padding: clamp(14px, 2vh, 20px) clamp(28px, 5vw, 44px);
+    background: #00ff88;
+    color: #000;
+    border: 5px solid #000;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 8px 8px 0 #000;
+    font-weight: bold;
+    animation: pulsar 1.2s ease-in-out infinite;
+  }
+  @keyframes pulsar {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.06); }
+  }
+  button.comecar:hover { background: #ff006e; color: #fff; }
+  button.reset {
+    font-family: 'Comic Sans MS', cursive;
+    font-size: clamp(14px, 1.8vw, 18px);
+    padding: 10px 22px;
+    background: #fff;
+    color: #000;
+    border: 3px solid #000;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #000;
+  }
+  button.reset:hover { background: #ffbe0b; }
+
+  .emoji-grande {
+    font-size: clamp(50px, 9vw, 100px);
+    line-height: 1;
+    animation: balanco 2s ease-in-out infinite;
+  }
+  .fim-feliz {
+    background: linear-gradient(135deg, #00ff88, #ffbe0b, #ff006e);
+    background-size: 300% 300%;
+    animation: bg 4s ease infinite;
+  }
+  .fim-triste {
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    color: #fff;
+  }
+  .youtube {
+    width: auto;
+    max-width: min(86vw, 480px);
+    max-height: 36vh;
+    aspect-ratio: 16/9;
+    border: 4px solid #000;
+    border-radius: 10px;
+    box-shadow: 6px 6px 0 #000;
+    background: #000;
+  }
+  .youtube iframe { width: 100%; height: 100%; border: 0; border-radius: 6px; }
+  iframe.spotify {
+    width: min(86vw, 480px);
+    max-height: 40vh;
+    height: 320px;
+    border-radius: 12px;
+    border: 4px solid #000;
+    box-shadow: 6px 6px 0 #000;
+    display: block;
+  }
+  .link-spotify {
+    color: #ffbe0b;
+    text-decoration: underline;
+    font-size: clamp(14px, 1.8vw, 18px);
+  }
+  .confete {
+    position: fixed; inset: 0; pointer-events: none; z-index: 999;
+  }
+  .confete span {
+    position: absolute; font-size: 28px;
+    animation: queda linear infinite;
+  }
+  @keyframes queda {
+    0%   { transform: translateY(-50px) rotate(0); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0.4; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TELA 0 — INÍCIO -->
+<section class="tela ativa" id="tela-inicio">
+  <img src="triba-banner.png" alt="Será que você consegue cantar no Triba hoje?" class="banner">
+  <p class="texto-grande">O teste da verdade 🎙️</p>
+  <button class="comecar" onclick="ir('tela-horario')">QUERO TENTAR! 🎙️</button>
+</section>
+
+<!-- TELA 1 — HORÁRIO -->
+<section class="tela" id="tela-horario">
+  <h1 class="titulo">QUE HORAS VOCÊ VAI CHEGAR?</h1>
+  <p class="texto-medio">Clica no horário aí embaixo 👇</p>
+  <div class="opcoes grid-horarios" id="grid-h"></div>
+</section>
+
+<!-- TELA 2 — MÚSICA -->
+<section class="tela" id="tela-musica">
+  <h1 class="titulo">O QUE VOCÊ VAI CANTAR?</h1>
+  <p class="texto-medio">Escolhe com cuidado, hein 🎤</p>
+  <div class="opcoes grid-musicas">
+    <button class="opcao" onclick="resposta('linkin')">🎸 LINKIN PARK</button>
+    <button class="opcao" onclick="resposta('linkin')">🎸 LINKIN PARK</button>
+    <button class="opcao luan" onclick="ir('tela-luan')">
+      🎸 Apenas se você for o LUAN: Pearl Jam, Audioslave, Aerosmith, Soundgarden
+    </button>
+    <button class="opcao" onclick="resposta('linkin')">🎸 LINKIN PARK</button>
+    <button class="opcao" onclick="resposta('rihanna')">🎤 RIHANNA</button>
+    <button class="opcao" onclick="resposta('triste')" style="background:#1a1a2e;color:#fff">
+      😭 Qualquer uma, desde que seja MUITO, muito triste. MUITO MESMO.
+    </button>
+    <button class="opcao outros" onclick="resposta('outros')">🎵 OUTROS</button>
+  </div>
+</section>
+
+<!-- TELA 2.5 — É O LUAN? -->
+<section class="tela" id="tela-luan">
+  <h1 class="titulo">VOCÊ É O LUAN MESMO???</h1>
+  <img src="luan.jpg" alt="Foto do Luan no show do Jorge & Mateus"
+       style="max-width:min(85vw, 380px); max-height:34vh; object-fit:contain;
+              border:4px solid #000; border-radius:14px; box-shadow:6px 6px 0 #000;"
+       onerror="this.style.display='none'">
+  <p class="texto-medio">Responde com sinceridade 🙏</p>
+  <div class="opcoes grid-luan" style="max-width:480px">
+    <button class="opcao sim" onclick="ir('tela-luan-publico')">SIM 🎸</button>
+    <button class="opcao nao" onclick="resposta('outros')">NÃO 😬</button>
+  </div>
+</section>
+
+<!-- TELA 2.6 — COMO TÁ O PÚBLICO? -->
+<section class="tela" id="tela-luan-publico">
+  <h1 class="titulo">MAS COMO QUE TÁ<br>DE PÚBLICO LÁ HOJE?</h1>
+  <p class="texto-medio">Importante pra avaliar 👀</p>
+  <div class="opcoes grid-luan" style="max-width:560px">
+    <button class="opcao sim" onclick="respostaLuan('muita')">MUITA<br>GENTE 🔥</button>
+    <button class="opcao nao" onclick="respostaLuan('pouca')">POUCA<br>GENTE 😴</button>
+  </div>
+</section>
+
+<!-- TELA 3A — FELIZ -->
+<section class="tela fim-feliz" id="tela-feliz">
+  <div class="confete" id="confete"></div>
+  <div class="emoji-grande">🎉🎤🥳</div>
+  <h1 class="titulo" style="color:#000;text-shadow:5px 5px 0 #fff">
+    NOSSOS APLAUSOS JÁ PODEM SER OUVIDOS DO TERMINAL SÃO PAULO!
+  </h1>
+  <p class="texto-grande" style="color:#000;text-shadow:2px 2px 0 #fff">
+    👏 Pode pegar o microfone! 🎶
+  </p>
+  <div class="youtube" id="yt-feliz"></div>
+  <button class="reset" onclick="resetar()">Recomeçar 🔁</button>
+</section>
+
+<!-- TELA 3B — TARDE -->
+<section class="tela fim-triste" id="tela-tarde">
+  <div class="emoji-grande">⚽😢</div>
+  <h1 class="titulo" style="color:#ffbe0b">CHEGOU TARDE DEMAIS!!!</h1>
+  <p class="texto-grande">
+    Melhor ir ver <b style="color:#ffbe0b">o filme do Pelé.</b>
+  </p>
+  <div class="youtube" id="yt-tarde"></div>
+  <button class="reset" onclick="resetar()">Tentar de novo 🔁</button>
+</section>
+
+<!-- TELA 3C — OUTROS -->
+<section class="tela fim-triste" id="tela-outros">
+  <div class="emoji-grande">😢</div>
+  <h1 class="titulo" style="color:#ff006e">INFELIZMENTE NÃO SERÁ DESSA VEZ...</h1>
+  <p class="texto-medio">
+    Mas tem essa playlist pra você avaliar de novo e recomeçar o teste 👇
+  </p>
+  <iframe class="spotify"
+          src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO47cwRq?utm_source=generator"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"></iframe>
+  <a href="https://open.spotify.com/playlist/37i9dQZF1DZ06evO47cwRq" target="_blank" class="link-spotify">abrir no Spotify ↗</a>
+  <button class="reset" onclick="resetar()">Recomeçar o teste 🔁</button>
+</section>
+
+
+
+<!-- TELA 3D — LUAN FELIZ (sim Luan + muita gente + horário OK) -->
+<section class="tela fim-feliz" id="tela-luan-feliz">
+  <div class="confete" id="confete-luan"></div>
+  <img src="luan-felizao.jpg" alt="Luan felizão"
+       style="max-width:min(60vw, 260px); max-height:32vh; object-fit:contain;
+              border:4px solid #000; border-radius:14px; box-shadow:6px 6px 0 #000;"
+       onerror="this.style.display='none'">
+  <h1 class="titulo" style="color:#000;text-shadow:5px 5px 0 #fff">
+    NOSSOS APLAUSOS JÁ PODEM SER OUVIDOS DO TERMINAL SÃO PAULO!
+  </h1>
+  <div class="youtube" id="yt-luan-feliz"></div>
+  <button class="reset" onclick="resetar()">Recomeçar 🔁</button>
+</section>
+
+<!-- TELA 3E — LUAN VAZIO (sim Luan + pouca gente) -->
+<section class="tela fim-triste" id="tela-luan-vazio">
+  <div class="emoji-grande">😴</div>
+  <h1 class="titulo" style="color:#ffbe0b">VAZIO HOJE...</h1>
+  <p class="texto-grande">
+    Aí com pouco público<br>melhor ir pro<br>
+    <b style="color:#ffbe0b">Jorge & Mateus</b> de novo 🎤
+  </p>
+  <img src="luan.jpg" alt="Jorge e Mateus"
+       style="max-width:min(70vw, 320px); max-height:32vh; object-fit:contain;
+              border:4px solid #000; border-radius:14px; box-shadow:6px 6px 0 #000;"
+       onerror="this.style.display='none'">
+  <button class="reset" onclick="resetar()">Recomeçar 🔁</button>
+</section>
+
+<!-- TELA 3F — TRISTE FELIZ (música triste + horário OK) -->
+<section class="tela fim-triste" id="tela-triste-feliz">
+  <div class="emoji-grande">😭🎤</div>
+  <h1 class="titulo" style="color:#ffbe0b">VENHA CHORAR<br>CONOSCO!!!</h1>
+  <p class="texto-grande">
+    Você é mais do que bem-vindo(a)<br>
+    pro karaokê das almas perdidas 🖤
+  </p>
+  <div class="youtube" id="yt-triste-feliz"></div>
+  <button class="reset" onclick="resetar()">Recomeçar 🔁</button>
+</section>
+
+<!-- TELA 3G — TRISTE TARDE (música triste + chegou tarde) -->
+<section class="tela fim-triste" id="tela-triste-tarde">
+  <div class="emoji-grande">😭⏰</div>
+  <h1 class="titulo" style="color:#ff006e">132 NA FILA!!</h1>
+  <p class="texto-grande">
+    Nesse horário aí<br>
+    melhor ficar chorando em casa,<br>
+    <b style="color:#ffbe0b">my friend</b> 🥲<br>
+    Já tem <b>132 na fila</b> kkk
+  </p>
+  <div class="youtube" id="yt-triste-tarde"></div>
+  <button class="reset" onclick="resetar()">Tentar de novo 🔁</button>
+</section>
+
+<div class="disclaimer">É BRINCADEIRA, N TENHO NENHUMA RELAÇÃO COM O EVENTO, NÃO ME PROCESSEM</div>
+
+<script>
+let chegouTarde = false;
+
+function ir(id) {
+  document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativa'));
+  document.getElementById(id).classList.add('ativa');
+}
+
+function resetar() {
+  ['yt-feliz', 'yt-tarde', 'yt-luan-feliz', 'yt-triste-feliz', 'yt-triste-tarde'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '';
+  });
+  ['confete', 'confete-luan'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '';
+  });
+  chegouTarde = false;
+  ir('tela-inicio');
+}
+
+function montarHorarios() {
+  const grid = document.getElementById('grid-h');
+  const horas = [];
+  for (let h = 18; h <= 23; h++) { horas.push([h, 0]); horas.push([h, 30]); }
+  horas.push([0, 0]); horas.push([0, 30]);
+  horas.forEach(([h, m]) => {
+    const b = document.createElement('button');
+    b.className = 'opcao';
+    const hh = String(h).padStart(2, '0');
+    const mm = String(m).padStart(2, '0');
+    b.textContent = `${hh}h${mm}`;
+    b.onclick = () => escolheHorario(h, m);
+    grid.appendChild(b);
+  });
+}
+
+function escolheHorario(h, m) {
+  const minutos = h * 60 + m;
+  const tarde22h30 = 22 * 60 + 30;
+  const tardeManha = 5 * 60;
+  chegouTarde = (minutos >= tarde22h30) || (minutos < tardeManha);
+  ir('tela-musica');
+}
+
+const VIDEOS = {
+  linkin:       'eVTXPUF4Oz4',  // Linkin Park — In the End
+  rihanna:      'tg00YEETFzg',  // Rihanna — Only Girl
+  luan:         'CxKWTzr-k6s',  // Pearl Jam — Alive
+  tarde:        'qhRT-OWdNeg',  // Filme do Pelé (trailer)
+  tristeFeliz:  '4N3N1MlvVc4',  // Gary Jules — Mad World
+  tristeTarde:  'k_Ix3MZE6tk',  // Adele — Someone Like You (extra triste)
+};
+
+function resposta(tipo) {
+  if (tipo === 'outros') {
+    ir('tela-outros');
+    return;
+  }
+  if (tipo === 'triste') {
+    if (chegouTarde) {
+      montarYoutube('yt-triste-tarde', VIDEOS.tristeTarde);
+      ir('tela-triste-tarde');
+    } else {
+      montarYoutube('yt-triste-feliz', VIDEOS.tristeFeliz);
+      ir('tela-triste-feliz');
+    }
+    return;
+  }
+  // linkin / rihanna
+  if (chegouTarde) {
+    montarYoutube('yt-tarde', VIDEOS.tarde);
+    ir('tela-tarde');
+  } else {
+    montarYoutube('yt-feliz', VIDEOS[tipo]);
+    chuvaConfete('confete');
+    ir('tela-feliz');
+  }
+}
+
+function respostaLuan(publico) {
+  if (publico === 'pouca') {
+    ir('tela-luan-vazio');
+    return;
+  }
+  // muita gente — Luan é bem-vindo a qualquer hora 🎸
+  montarYoutube('yt-luan-feliz', VIDEOS.luan);
+  chuvaConfete('confete-luan');
+  ir('tela-luan-feliz');
+}
+
+function montarYoutube(slotId, videoId) {
+  document.getElementById(slotId).innerHTML =
+    `<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0"
+             allow="autoplay; encrypted-media; picture-in-picture"
+             allowfullscreen></iframe>`;
+}
+
+function chuvaConfete(elId) {
+  const c = document.getElementById(elId || 'confete');
+  if (!c) return;
+  c.innerHTML = '';
+  const emojis = ['🎉','🎊','🎤','🌟','🎶','🥳','💛','💖','🎸','🎵'];
+  for (let i = 0; i < 50; i++) {
+    const s = document.createElement('span');
+    s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    s.style.left = Math.random() * 100 + '%';
+    s.style.animationDuration = (3 + Math.random() * 4) + 's';
+    s.style.animationDelay = Math.random() * 2 + 's';
+    c.appendChild(s);
+  }
+}
+
+montarHorarios();
+</script>
+</body>
+</html>
