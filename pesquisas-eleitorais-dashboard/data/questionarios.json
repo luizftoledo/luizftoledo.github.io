@@ -271,6 +271,14 @@
     "ts": "2026-05-13T15:44:56.636700+00:00",
     "txt_bytes": 3114
   },
+  "BR012552026": {
+    "file": "questionarios/BR-01255-2026.txt",
+    "pdf_bytes": 307560,
+    "sha256": "ee75d0bef96a5e218b5939792e150570b78efabbeb8f0071c8f7d37dc0bf2c3a",
+    "status": "ok",
+    "ts": "2026-05-18T15:48:36.008120+00:00",
+    "txt_bytes": 8679
+  },
   "BR013412026": {
     "file": "questionarios/BR-01341-2026.txt",
     "pdf_bytes": 438509,
@@ -470,6 +478,14 @@
     "ts": "2026-05-13T15:03:57.429267+00:00",
     "txt_bytes": 18787
   },
+  "BR020842026": {
+    "file": "questionarios/BR-02084-2026.txt",
+    "pdf_bytes": 792402,
+    "sha256": "0940b013b5582418ebe28df5e71568b7747826f4347501afafe1b33170ee8f02",
+    "status": "ok",
+    "ts": "2026-05-18T15:48:44.634139+00:00",
+    "txt_bytes": 3878
+  },
   "BR021132026": {
     "file": "questionarios/BR-02113-2026.txt",
     "pdf_bytes": 941857,
@@ -509,6 +525,14 @@
     "status": "ok",
     "ts": "2026-05-13T14:54:50.339076+00:00",
     "txt_bytes": 9110
+  },
+  "BR023422026": {
+    "file": "questionarios/BR-02342-2026.txt",
+    "pdf_bytes": 231408,
+    "sha256": "48f4d97ef057d6047a3e14b6a276dccbd9d9bed1b30e31d74446018f3ca050c2",
+    "status": "ok",
+    "ts": "2026-05-18T15:48:19.043695+00:00",
+    "txt_bytes": 9231
   },
   "BR024102026": {
     "file": "questionarios/BR-02410-2026.txt",
@@ -1754,6 +1778,14 @@
     "ts": "2026-05-13T14:51:38.250403+00:00",
     "txt_bytes": 16610
   },
+  "BR082622026": {
+    "file": "questionarios/BR-08262-2026.txt",
+    "pdf_bytes": 126121,
+    "sha256": "89f636fb2769680eaaae1b6c4067cc59a15c93ef5b28db6fa6a6574e9291430b",
+    "status": "ok",
+    "ts": "2026-05-18T15:48:26.884266+00:00",
+    "txt_bytes": 3530
+  },
   "BR082822026": {
     "file": "questionarios/BR-08282-2026.txt",
     "pdf_bytes": 79566,
@@ -2081,5 +2113,10 @@
     "status": "ok",
     "ts": "2026-05-13T15:03:06.144322+00:00",
     "txt_bytes": 4864
+  },
+  "BR099872026": {
+    "msg": "protocolo não encontrado na busca",
+    "status": "erro",
+    "ts": "2026-05-18T15:48:48.803592+00:00"
   }
 }
