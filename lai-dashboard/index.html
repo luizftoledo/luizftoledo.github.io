@@ -271,8 +271,7 @@
     .charts h2,
     .tables h2,
     .orgs h2,
-    .methodology h2,
-    .ai-panel h2 {
+    .methodology h2 {
       margin: 0;
       font-size: 1.02rem;
     }
@@ -437,9 +436,7 @@
     .tables,
     .sigilo100-block,
     .orgs,
-    .search-panel,
-    .learn-more,
-    .ai-panel {
+    .learn-more {
       padding: 1rem 1.1rem;
       display: grid;
       gap: 0.7rem;
@@ -796,99 +793,6 @@
       font-weight: 700;
     }
 
-    .search-controls {
-      display: grid;
-      gap: 0.55rem;
-    }
-
-    .filter-row {
-      display: grid;
-      grid-template-columns: minmax(120px, 150px) minmax(200px, 1fr) minmax(170px, 230px) minmax(170px, 230px) minmax(0, 1fr) 120px;
-      gap: 0.52rem;
-      align-items: stretch;
-    }
-
-    .preset-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      align-items: center;
-    }
-
-    .preset-btn {
-      border: 1px solid #d0cbc0;
-      border-radius: 999px;
-      background: #faf8f4;
-      color: #4c4742;
-      font-size: 0.78rem;
-      padding: 0.3rem 0.62rem;
-      cursor: pointer;
-    }
-
-    .preset-btn:hover {
-      background: #f2eee7;
-    }
-
-    .search-status {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.82rem;
-      line-height: 1.4;
-    }
-
-    .search-panel .table-wrap table {
-      table-layout: fixed;
-    }
-
-    .search-panel .table-wrap td {
-      vertical-align: top;
-    }
-
-    .search-panel .table-wrap details {
-      margin-top: 0.24rem;
-    }
-
-    .search-panel .table-wrap details summary {
-      cursor: pointer;
-      color: #4f4a44;
-      font-size: 0.8rem;
-      line-height: 1.4;
-      list-style: none;
-    }
-
-    .search-panel .table-wrap details summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .search-panel .table-wrap details summary::before {
-      content: "▸ ";
-      color: #6e675e;
-    }
-
-    .search-panel .table-wrap details[open] summary::before {
-      content: "▾ ";
-    }
-
-    .search-panel .table-wrap details p {
-      margin: 0.28rem 0 0;
-      color: #4a443d;
-      line-height: 1.45;
-      white-space: normal;
-    }
-
-    .ai-row {
-      display: grid;
-      gap: 0.58rem;
-    }
-
-    .ai-key-row {
-      grid-template-columns: minmax(200px, 1fr) 180px 180px;
-    }
-
-    .ai-question-row {
-      grid-template-columns: minmax(0, 1fr) 130px;
-    }
-
     input,
     select,
     textarea,
@@ -923,80 +827,6 @@
 
     button:hover { filter: brightness(1.03); transform: translateY(-1px); }
     button:disabled { opacity: 0.62; cursor: wait; transform: none; }
-
-    .btn-ai {
-      background: linear-gradient(120deg, #2f6f9f, #3f8f6d);
-      color: #fff;
-    }
-
-    .btn-ai-secondary {
-      border: 1px solid #c8c2b8;
-      background: #fbf9f6;
-      color: #4f4a44;
-    }
-
-    .ai-chat {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: #fcfbf9;
-      padding: 0.65rem;
-      min-height: 180px;
-      max-height: 420px;
-      overflow: auto;
-      display: grid;
-      gap: 0.42rem;
-    }
-
-    .ai-msg {
-      border: 1px solid #e4e1db;
-      border-radius: 10px;
-      padding: 0.52rem 0.58rem;
-      background: #fff;
-      display: grid;
-      gap: 0.32rem;
-      font-size: 0.86rem;
-      line-height: 1.4;
-    }
-
-    .ai-msg.user {
-      border-color: #cad9e6;
-      background: #f4f8fc;
-    }
-
-    .ai-msg .role {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #6c6660;
-      font-weight: 700;
-    }
-
-    .ai-msg .txt p,
-    .ai-msg .txt ul,
-    .ai-msg .txt ol {
-      margin: 0;
-    }
-
-    .ai-msg .txt ul,
-    .ai-msg .txt ol {
-      padding-left: 1.1rem;
-    }
-
-    .ai-msg .txt code {
-      font-family: "JetBrains Mono", monospace;
-      font-size: 0.8rem;
-      background: #f3f1ec;
-      border: 1px solid #e1ddd5;
-      border-radius: 6px;
-      padding: 0.1rem 0.22rem;
-    }
-
-    .ai-note {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.82rem;
-      line-height: 1.45;
-    }
 
     .methodology {
       padding: 1rem 1.1rem;
@@ -1075,8 +905,6 @@
 
     .narrative strong,
     .org-card strong,
-    .search-status strong,
-    .ai-msg .txt strong,
     .table-wrap strong {
       padding: 0 0.2em;
       border-radius: 0.28em;
@@ -1171,11 +999,6 @@
         grid-template-columns: 1fr;
       }
 
-      .filter-row,
-      .ai-key-row,
-      .ai-question-row {
-        grid-template-columns: 1fr;
-      }
     }
   </style>
 </head>
@@ -1373,40 +1196,6 @@
 
     </section>
 
-    <section class="card search-panel">
-      <h2>Pesquisar dentro dos pedidos negados (filtros prontos)</h2>
-      <div class="search-controls">
-        <div class="filter-row">
-          <select id="search-year"></select>
-          <select id="search-org"></select>
-          <select id="search-decision-group"></select>
-          <select id="search-theme"></select>
-          <input id="search-query" type="text" placeholder="Busque palavra no teor do pedido (ex.: passagens, prontuário, licitação)">
-          <button class="btn-ai-secondary" id="btn-search-requests" type="button">Buscar</button>
-        </div>
-        <div class="preset-row" id="preset-row"></div>
-        <p class="search-status" id="search-status">Carregando base para busca...</p>
-      </div>
-      <article class="table-card">
-        <h3>Resultados da busca em pedidos negados</h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Ano</th>
-                <th>Órgão</th>
-                <th>Motivo e tema</th>
-                <th>Links</th>
-                <th>Texto do pedido</th>
-                <th>Texto da resposta</th>
-              </tr>
-            </thead>
-            <tbody id="table-search-results"></tbody>
-          </table>
-        </div>
-      </article>
-    </section>
-
     <section class="card methodology">
       <h2>Nota metodológica (como os dados foram tratados)</h2>
       <div class="methodology-content" id="methodology-content">
@@ -1436,30 +1225,6 @@
       </article>
     </section>
 
-    <footer class="card ai-panel">
-      <h2>Evite negativas com ajuda da IA</h2>
-      <div class="ai-row ai-key-row">
-        <input id="gemini-key" type="password" placeholder="Cole sua Gemini API key (fica só no seu navegador)">
-        <select id="ai-year-filter"></select>
-        <select id="ai-org-filter"></select>
-      </div>
-      <div class="ai-chat" id="ai-chat" aria-live="polite"></div>
-      <div class="ai-row ai-question-row">
-        <textarea id="ai-question" placeholder="Descreva seu caso concreto: o que você quer pedir, para qual órgão, e qual negativa recebeu (se houver)."></textarea>
-        <button class="btn-ai" id="btn-ask-ai" type="button">Perguntar</button>
-      </div>
-      <div class="ai-row" style="grid-template-columns: 180px;">
-        <button class="btn-ai-secondary" id="btn-ai-reset" type="button">Nova conversa</button>
-      </div>
-      <p class="ai-note">
-        Este chat usa os dados da página para responder suas dúvidas e sugerir caminhos práticos para pedido e recurso.
-        Para funcionar, use a sua própria Gemini API key. Você cria essa chave no
-        <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a>:
-        entre com sua conta Google, clique em "Create API key" e cole a chave aqui.
-        Ela fica salva só no seu navegador.
-      </p>
-      <p class="ai-note error" id="ai-status"></p>
-    </footer>
   </main>
 
   <aside class="course-popup" id="course-popup-lai" aria-live="polite">

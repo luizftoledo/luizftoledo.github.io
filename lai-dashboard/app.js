@@ -17,9 +17,6 @@
     },
   };
 
-  const GEMINI_STORAGE_KEY = 'lai_dashboard_gemini_key';
-  const GEMINI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
-  const GEMINI_CONTINUE_PROMPT = 'Continue exatamente de onde parou, sem repetir o que já respondeu.';
 
   const nFmt = new Intl.NumberFormat('pt-BR');
   const pFmt = new Intl.NumberFormat('pt-BR', {
@@ -62,54 +59,20 @@
 
   const orgCards = document.getElementById('org-cards');
 
-  const searchYear = document.getElementById('search-year');
-  const searchOrg = document.getElementById('search-org');
-  const searchDecisionGroup = document.getElementById('search-decision-group');
-  const searchTheme = document.getElementById('search-theme');
-  const searchQuery = document.getElementById('search-query');
-  const searchBtn = document.getElementById('btn-search-requests');
-  const presetRow = document.getElementById('preset-row');
-  const searchStatus = document.getElementById('search-status');
-  const tableSearchResults = document.getElementById('table-search-results');
-
-  const geminiKeyInput = document.getElementById('gemini-key');
-  const aiYearFilter = document.getElementById('ai-year-filter');
-  const aiOrgFilter = document.getElementById('ai-org-filter');
-  const aiChat = document.getElementById('ai-chat');
-  const aiQuestion = document.getElementById('ai-question');
-  const aiAskBtn = document.getElementById('btn-ask-ai');
-  const aiResetBtn = document.getElementById('btn-ai-reset');
-  const aiStatus = document.getElementById('ai-status');
   const methodologyContent = document.getElementById('methodology-content');
   const sourcesList = document.getElementById('sources-list');
 
   const chartInstances = [];
-  const MOBILE_SAMPLE_LIMIT = 25000;
-  const MOBILE_LIGHT_MODE = (() => {
-    const smallScreen = window.matchMedia ? window.matchMedia('(max-width: 820px)').matches : false;
-    const lowRam = Number.isFinite(Number(navigator.deviceMemory)) && Number(navigator.deviceMemory) <= 4;
-    const saveData = Boolean(navigator.connection && navigator.connection.saveData);
-    return smallScreen || lowRam || saveData;
-  })();
 
   let reportData = null;
   let metadata = null;
-  let requestSamples = [];
   let sourceCatalog = {};
   let sourceDataMap = {};
-  let samplesBySource = {};
-  let samplesLoadedBySource = {};
   let activeSourceId = '';
   let reasonTableMode = 'global';
   let reasonSelectedYear = '';
   let sigilo100SelectedYear = 'geral';
-  let lastSearchResults = [];
   let partialYearCtx = null;
-
-  let aiMessages = [];
-  let aiHistory = [];
-  let aiContextStamp = '';
-  let sampleLoadNotice = '';
 
   function esc(text) {
     return (text || '').toString()
@@ -139,18 +102,6 @@
       || normalized === 'sem decisao registrada'
       || normalized === 'sem motivo registrado'
       || normalized === 'outros temas';
-  }
-
-  function isSearchRowUseful(row) {
-    if (!row) return false;
-    if (normalizeForSearch(row.decision_group || '') === 'negado') return true;
-    const text = (row.text_excerpt || '').toString().trim();
-    const hasText = text.length >= 16 && !isPlaceholderText(text);
-    const hasSubject = !isPlaceholderText(row.subject || '');
-    const hasDecision = !isPlaceholderText(row.decision || '');
-    const hasReason = !isPlaceholderText(row.reason || '');
-    const hasTheme = !isPlaceholderText(row.theme || '');
-    return hasText || hasSubject || hasDecision || hasReason || hasTheme;
   }
 
   function formatDateTime(iso) {
@@ -199,54 +150,6 @@
     if (!name) return '';
     if (name.length <= 40) return name;
     return `${name.slice(0, 39)}...`;
-  }
-
-  function setSearchControlsDisabled(disabled) {
-    [searchYear, searchOrg, searchDecisionGroup, searchTheme, searchQuery].forEach((el) => {
-      if (!el) return;
-      el.disabled = disabled;
-    });
-  }
-
-  function setSearchDeferredState() {
-    requestSamples = [];
-    lastSearchResults = [];
-    searchYear.innerHTML = '<option value="">Ano: todos</option>';
-    searchOrg.innerHTML = '<option value="">Órgão: todos</option>';
-    searchTheme.innerHTML = '<option value="">Tema detectado: todos</option>';
-    renderSearchDecisionOptions();
-    presetRow.innerHTML = '<span class="search-status">Filtros prontos ficam ativos depois de carregar a base textual.</span>';
-    tableSearchResults.innerHTML = '<tr><td colspan="6">Modo leve no mobile: toque em <strong>Carregar pedidos</strong> para abrir a busca detalhada.</td></tr>';
-    searchStatus.textContent = 'Modo leve no mobile ativo. A tabela de pedidos será carregada sob demanda para evitar travamentos.';
-    searchStatus.classList.remove('error');
-    setSearchControlsDisabled(true);
-    searchBtn.disabled = false;
-    searchBtn.textContent = 'Carregar pedidos';
-  }
-
-  async function ensureRequestSamplesReady(sourceId) {
-    if (samplesLoadedBySource[sourceId]) {
-      requestSamples = samplesBySource[sourceId] || [];
-      return true;
-    }
-
-    searchBtn.disabled = true;
-    searchBtn.textContent = 'Carregando...';
-    searchStatus.classList.remove('error');
-    searchStatus.textContent = 'Carregando base textual de pedidos negados...';
-    try {
-      await loadRequestSamples(sourceId);
-      if (!samplesLoadedBySource[sourceId]) return false;
-      renderSearchFilters();
-      setSearchControlsDisabled(false);
-      searchBtn.textContent = 'Buscar';
-      return true;
-    } finally {
-      searchBtn.disabled = false;
-      if (!samplesLoadedBySource[sourceId]) {
-        searchBtn.textContent = 'Carregar pedidos';
-      }
-    }
   }
 
   function compactText(text, limit = 220) {
@@ -430,22 +333,6 @@
     return resp.json();
   }
 
-  async function fetchGzipText(url) {
-    const resp = await fetch(url, { cache: 'no-store' });
-    if (!resp.ok) {
-      throw new Error(`HTTP ${resp.status} ao carregar ${url}`);
-    }
-    const gzBuffer = await resp.arrayBuffer();
-    if ('DecompressionStream' in window) {
-      const stream = new Blob([gzBuffer]).stream().pipeThrough(new DecompressionStream('gzip'));
-      return new Response(stream).text();
-    }
-    if (window.pako && typeof window.pako.ungzip === 'function') {
-      return window.pako.ungzip(new Uint8Array(gzBuffer), { to: 'string' });
-    }
-    throw new Error('Navegador sem suporte local para descompactar gzip (pako/DecompressionStream).');
-  }
-
   function destroyCharts() {
     while (chartInstances.length) {
       const chart = chartInstances.pop();
@@ -580,8 +467,6 @@
     const comparisonRule = (((m.monitoring_rules || {}).government_diagnosis) || '').trim();
     const topRateRule = (((m.monitoring_rules || {}).top_denial_rate_current_year) || '').trim();
     const themeRule = (((m.monitoring_rules || {}).theme_worsening) || '').trim();
-    const samplingMethodRaw = (((m.sampling_for_search || {}).method) || '').toString();
-    const samplingMethod = samplingMethodRaw.replace(/top\s*10\+pf/gi, 'top 10');
 
     methodologyContent.innerHTML = `
       ${sourceScope ? `<p><strong>Escopo desta fonte:</strong> ${esc(sourceScope)}.</p>` : ''}
@@ -621,15 +506,6 @@
             </tbody>
           </table>
         </div>
-      </details>
-
-      <details class="methodology-details">
-        <summary>Base da tabela de pedidos e links</summary>
-        <ul>
-          <li><strong>Escopo da busca textual:</strong> ${samplingMethod ? esc(samplingMethod) : '--'}.</li>
-          <li><strong>Volume carregado:</strong> <strong>${nFmt.format(Number((m.sampling_for_search || {}).sample_count || 0))}</strong> pedidos negados.</li>
-          <li><strong>Links de pedido:</strong> a tabela tenta mostrar <code>Original</code> (API), <code>BuscaLAI</code> e <code>Anexo</code> quando disponíveis. Em parte dos pedidos antigos, o link público pode ter sido removido da origem.</li>
-        </ul>
       </details>
 
       <details class="methodology-details">
@@ -1397,476 +1273,6 @@
     }).join('');
   }
 
-  function renderSearchDecisionOptions() {
-    searchDecisionGroup.innerHTML = [
-      '<option value="negado">Decisão: apenas acesso negado</option>',
-    ].join('');
-    searchDecisionGroup.value = 'negado';
-    searchDecisionGroup.disabled = true;
-  }
-
-  function renderSearchFilters() {
-    const years = [...new Set(requestSamples.map((row) => Number(row.year)).filter(Boolean))].sort((a, b) => b - a);
-    const orgs = [...new Set(requestSamples.map((row) => row.org).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
-    const themes = (((reportData.search_dashboard || {}).available_themes) || [...new Set(requestSamples.map((row) => row.theme).filter(Boolean))]).slice(0, 30);
-
-    searchYear.innerHTML = `<option value="">Ano: todos</option>${years.map((year) => `<option value="${year}">${year}</option>`).join('')}`;
-    searchOrg.innerHTML = `<option value="">Órgão: todos</option>${orgs.map((org) => `<option value="${esc(org)}">${esc(shortOrgName(org))}</option>`).join('')}`;
-    searchTheme.innerHTML = `<option value="">Tema detectado: todos</option>${themes.map((theme) => `<option value="${esc(theme)}">${esc(theme)}</option>`).join('')}`;
-
-    renderSearchDecisionOptions();
-
-    const presets = (reportData.search_dashboard || {}).presets || [];
-    presetRow.innerHTML = `<span class="search-status">Filtros prontos:</span>${presets.map((preset) => (
-      `<button class="preset-btn" type="button" data-preset-id="${esc(preset.id)}">${esc(preset.label)}</button>`
-    )).join('')}`;
-
-    presetRow.querySelectorAll('[data-preset-id]').forEach((btn) => {
-      btn.addEventListener('click', () => applyPreset(btn.getAttribute('data-preset-id')));
-    });
-    setSearchControlsDisabled(false);
-    searchDecisionGroup.disabled = true;
-    searchBtn.textContent = 'Buscar';
-  }
-
-  function applyPreset(presetId) {
-    const presets = (reportData.search_dashboard || {}).presets || [];
-    const preset = presets.find((item) => item.id === presetId);
-    if (!preset) return;
-
-    const filters = preset.filters || {};
-    searchYear.value = filters.year || '';
-    searchOrg.value = filters.org || '';
-    searchDecisionGroup.value = filters.decision_group || 'negado';
-    searchTheme.value = filters.theme || '';
-    runRequestSearch();
-  }
-
-  function renderExpandableText(fullText, fallbackText = '', limit = 260) {
-    const full = (fullText || fallbackText || '').toString().replace(/\s+/g, ' ').trim();
-    if (!full) return '--';
-    const short = compactText(full, limit);
-    if (short === full) return esc(full);
-    return `<details><summary>${esc(short)}</summary><p>${esc(full)}</p></details>`;
-  }
-
-  function runRequestSearch() {
-    if (!samplesLoadedBySource[activeSourceId]) {
-      tableSearchResults.innerHTML = '<tr><td colspan="6">A base de pedidos negados ainda não foi carregada neste aparelho. Toque em <strong>Carregar pedidos</strong>.</td></tr>';
-      searchStatus.textContent = 'Modo leve no mobile: a base textual é carregada sob demanda.';
-      searchStatus.classList.remove('error');
-      return;
-    }
-
-    const year = searchYear.value;
-    const org = searchOrg.value;
-    const decisionGroup = searchDecisionGroup.value || 'negado';
-    const theme = searchTheme.value;
-
-    const queryRaw = searchQuery.value.trim();
-    const queryNorm = normalizeForSearch(queryRaw);
-    const queryTokens = queryNorm ? queryNorm.split(' ').filter(Boolean) : [];
-
-    let filtered = requestSamples;
-
-    if (year) {
-      filtered = filtered.filter((row) => String(row.year) === String(year));
-    }
-    if (org) {
-      filtered = filtered.filter((row) => row.org === org);
-    }
-    if (decisionGroup && decisionGroup !== 'todos') {
-      filtered = filtered.filter((row) => row.decision_group === decisionGroup);
-    }
-    if (theme) {
-      filtered = filtered.filter((row) => row.theme === theme);
-    }
-    if (queryTokens.length) {
-      filtered = filtered.filter((row) => queryTokens.every((token) => row.search_blob.includes(token)));
-    }
-
-    filtered = [...filtered].sort((a, b) => {
-      const yearDiff = Number(b.year || 0) - Number(a.year || 0);
-      if (yearDiff !== 0) return yearDiff;
-      return String(a.org || '').localeCompare(String(b.org || ''), 'pt-BR');
-    });
-
-    lastSearchResults = filtered;
-
-    const shown = filtered.slice(0, 220);
-
-    tableSearchResults.innerHTML = shown.length
-      ? shown.map((row) => `
-        <tr>
-          <td>${row.year || '--'}</td>
-          <td>${esc(row.org || '--')}</td>
-          <td>${[
-            row.reason ? `<span class="key-pill">${esc(row.reason)}</span>` : '',
-            row.theme ? `<span class="mini-tag">${esc(row.theme)}</span>` : '',
-          ].filter(Boolean).join(' ') || '--'}</td>
-          <td>${[
-            row.request_public_link ? `<a href="${esc(row.request_public_link)}" target="_blank" rel="noopener noreferrer">Original</a>` : '',
-            (row.request_buscalai_link && row.request_buscalai_link !== row.request_public_link)
-              ? `<a href="${esc(row.request_buscalai_link)}" target="_blank" rel="noopener noreferrer">BuscaLAI</a>`
-              : '',
-            (row.request_api_link && row.request_api_link !== row.request_public_link)
-              ? `<a href="${esc(row.request_api_link)}" target="_blank" rel="noopener noreferrer">API</a>`
-              : '',
-            (row.request_attachment_link && row.request_attachment_link !== row.request_public_link && row.request_attachment_link !== row.request_buscalai_link && row.request_attachment_link !== row.request_api_link)
-              ? `<a href="${esc(row.request_attachment_link)}" target="_blank" rel="noopener noreferrer">Anexo</a>`
-              : '',
-          ].filter(Boolean).join(' · ') || '--'}</td>
-          <td>
-            <div><strong>${esc(row.subject || '--')}</strong></div>
-            ${renderExpandableText(row.request_text || row.text_excerpt || '', row.text_excerpt || '')}
-          </td>
-          <td>${renderExpandableText(row.response_text || row.response_excerpt || '', row.response_excerpt || '')}</td>
-        </tr>
-      `).join('')
-      : '<tr><td colspan="6">Nenhum resultado para esse filtro.</td></tr>';
-
-    const notice = sampleLoadNotice ? ` ${esc(sampleLoadNotice)}` : '';
-    searchStatus.innerHTML = `Busca em <strong>${nFmt.format(requestSamples.length)}</strong> pedidos negados carregados desta fonte. Resultado atual: <strong>${nFmt.format(filtered.length)}</strong> registros${filtered.length > shown.length ? ` (mostrando ${nFmt.format(shown.length)}).` : '.'}${notice}`;
-  }
-
-  function saveGeminiKey() {
-    localStorage.setItem(GEMINI_STORAGE_KEY, geminiKeyInput.value.trim());
-  }
-
-  function restoreGeminiKey() {
-    const saved = localStorage.getItem(GEMINI_STORAGE_KEY);
-    if (saved) geminiKeyInput.value = saved;
-  }
-
-  function renderInlineMarkdown(raw) {
-    let text = esc((raw || '').toString());
-    text = text.replace(/`([^`\n]+)`/g, '<code>$1</code>');
-    text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    text = text.replace(/__([^_]+)__/g, '<strong>$1</strong>');
-    return text;
-  }
-
-  function renderAiMarkdown(text) {
-    const blocks = (text || '').toString().split(/\n{2,}/).map((b) => b.trim()).filter(Boolean);
-    return blocks.map((block) => {
-      const lines = block.split('\n');
-      if (lines.every((line) => /^\s*[-*]\s+/.test(line))) {
-        const items = lines.map((line) => `<li>${renderInlineMarkdown(line.replace(/^\s*[-*]\s+/, ''))}</li>`).join('');
-        return `<ul>${items}</ul>`;
-      }
-      if (lines.every((line) => /^\s*\d+[.)]\s+/.test(line))) {
-        const items = lines.map((line) => `<li>${renderInlineMarkdown(line.replace(/^\s*\d+[.)]\s+/, ''))}</li>`).join('');
-        return `<ol>${items}</ol>`;
-      }
-      return `<p>${renderInlineMarkdown(block).replace(/\n/g, '<br>')}</p>`;
-    }).join('');
-  }
-
-  function renderAiChat() {
-    if (!aiMessages.length) {
-      aiChat.innerHTML = '<article class="ai-msg"><span class="role">analista ia</span><div class="txt"><p>Pronto. Descreva seu caso e eu te ajudo com leitura da negativa e texto de pedido/recurso.</p></div></article>';
-      return;
-    }
-    aiChat.innerHTML = aiMessages.map((msg) => {
-      const roleLabel = msg.role === 'user' ? 'você' : 'analista ia';
-      const cssRole = msg.role === 'user' ? 'user' : 'assistant';
-      const body = msg.role === 'user'
-        ? `<p>${esc(msg.text).replace(/\n/g, '<br>')}</p>`
-        : renderAiMarkdown(msg.text);
-      return `<article class="ai-msg ${cssRole}"><span class="role">${roleLabel}</span><div class="txt">${body}</div></article>`;
-    }).join('');
-    aiChat.scrollTop = aiChat.scrollHeight;
-  }
-
-  function pushAiMessage(role, text) {
-    aiMessages.push({ role, text: (text || '').toString() });
-    renderAiChat();
-    return aiMessages.length - 1;
-  }
-
-  function updateAiMessage(index, text) {
-    if (!Number.isInteger(index) || !aiMessages[index]) return;
-    aiMessages[index].text = (text || '').toString();
-    renderAiChat();
-  }
-
-  function resetAiConversation(message) {
-    aiHistory = [];
-    aiMessages = [];
-    if (message) aiMessages.push({ role: 'assistant', text: message });
-    aiContextStamp = '';
-    renderAiChat();
-  }
-
-  function populateAiFilters() {
-    const years = (reportData.series || []).map((row) => row.year);
-    aiYearFilter.innerHTML = `<option value="">Contexto IA: todos os anos</option>${years.map((year) => `<option value="${year}">Ano ${year}</option>`).join('')}`;
-
-    const orgs = (reportData.org_top10_plus_pf || reportData.org_top5_plus_pf || []).map((row) => row.org);
-    aiOrgFilter.innerHTML = `<option value="">Contexto IA: sem foco em órgão</option>${orgs.map((org) => `<option value="${esc(org)}">${esc(shortOrgName(org))}</option>`).join('')}`;
-  }
-
-  function computeAiContextStamp() {
-    return JSON.stringify({
-      aiYear: aiYearFilter.value || '',
-      aiOrg: aiOrgFilter.value || '',
-      searchYear: searchYear.value || '',
-      searchOrg: searchOrg.value || '',
-      searchDecision: searchDecisionGroup.value || 'negado',
-      searchTheme: searchTheme.value || '',
-      searchQuery: normalizeForSearch(searchQuery.value || ''),
-      updated: (metadata || {}).updated_at || reportData.generated_at || '',
-    });
-  }
-
-  function maybeResetAiHistoryOnContextChange() {
-    const stamp = computeAiContextStamp();
-    if (aiContextStamp && aiContextStamp !== stamp) {
-      const hadHistory = aiHistory.length > 0;
-      aiHistory = [];
-      if (hadHistory && aiStatus) {
-        aiStatus.textContent = 'Contexto atualizado. A próxima resposta vai usar o novo recorte.';
-      }
-    }
-    aiContextStamp = stamp;
-  }
-
-  function buildAiContextPayload() {
-    const aiYear = aiYearFilter.value ? Number(aiYearFilter.value) : null;
-    const aiOrg = aiOrgFilter.value || null;
-
-    const focusYear = aiYear
-      ? (reportData.series || []).find((row) => Number(row.year) === aiYear) || null
-      : null;
-    const focusOrg = aiOrg
-      ? ((reportData.org_profiles || {})[aiOrg] || null)
-      : null;
-
-    return {
-      painel: 'LAI Dashboard',
-      atualizado_em: (metadata || {}).updated_at || reportData.generated_at || '',
-      fonte_dados: (reportData.source || {}).portal_url || '',
-      precedentes_url: ((reportData.source || {}).precedentes_url) || '',
-      geral: reportData.overall || {},
-      foco_ano: focusYear,
-      foco_orgao: focusOrg,
-      top_motivos: (reportData.top_reasons || []).slice(0, 12),
-      top_temas: (reportData.top_themes || []).slice(0, 12),
-      top_orgaos: (reportData.org_top10_plus_pf || reportData.org_top5_plus_pf || []).slice(0, 12),
-      filtros_busca_atual: {
-        year: searchYear.value || '',
-        org: searchOrg.value || '',
-        decision_group: searchDecisionGroup.value || 'negado',
-        theme: searchTheme.value || '',
-        query: searchQuery.value.trim() || '',
-      },
-      resultados_busca: lastSearchResults.slice(0, 40).map((row) => ({
-        year: row.year,
-        org: row.org,
-        decision: row.decision,
-        theme: row.theme,
-        subject: row.subject,
-        request_link: row.request_link,
-        text_excerpt: row.text_excerpt,
-        response_excerpt: row.response_excerpt || '',
-      })),
-      aviso_base: (reportData.search_dashboard || {}).sample_method || '',
-    };
-  }
-
-  function buildAiSystemPrompt() {
-    return [
-      'Você é um analista de transparência pública e LAI no Brasil.',
-      'Responda sempre em português do Brasil, sem jargão e de forma direta.',
-      'Objetivo: ajudar o usuário a entender negativas e montar pedidos/recursos melhores.',
-      'Estrutura padrão em 4 blocos curtos: leitura do caso, motivo provável da negativa, argumentos para recurso, exemplo de texto pronto.',
-      'Use apenas o contexto JSON fornecido. Não invente números ou fatos.',
-      'Quando faltar base, diga: "sem evidência suficiente na base desta página".',
-      'Para precedentes, oriente consulta no link oficial de precedentes (CGU/CMRI) enviado no contexto.',
-      'Quando for útil, inclua checklist simples: o que pedir, para qual órgão, período temporal e formato de entrega da informação.',
-      'Não substitua orientação jurídica formal; mantenha tom informativo e prático.',
-    ].join('\n');
-  }
-
-  function extractGeminiAnswer(data) {
-    return (data.candidates || [])
-      .flatMap((candidate) => (((candidate || {}).content || {}).parts || []))
-      .map((part) => (typeof part?.text === 'string' ? part.text : ''))
-      .join('\n')
-      .trim();
-  }
-
-  function extractGeminiFinishReason(data) {
-    return ((data.candidates || [])[0] || {}).finishReason || '';
-  }
-
-  async function callGemini(apiKey, contents, systemPrompt) {
-    const resp = await fetch(GEMINI_ENDPOINT, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-goog-api-key': apiKey,
-      },
-      body: JSON.stringify({
-        contents,
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        generationConfig: {
-          temperature: 0.2,
-          maxOutputTokens: 4096,
-          responseMimeType: 'text/plain',
-        },
-      }),
-    });
-
-    const data = await resp.json();
-    if (!resp.ok) {
-      throw new Error(data?.error?.message || `HTTP ${resp.status}`);
-    }
-    return data;
-  }
-
-  async function askGemini() {
-    aiStatus.textContent = '';
-
-    const apiKey = geminiKeyInput.value.trim();
-    const question = aiQuestion.value.trim();
-
-    if (!apiKey) {
-      pushAiMessage('assistant', 'Cole sua Gemini API key para usar o chat.');
-      return;
-    }
-    if (!question) {
-      pushAiMessage('assistant', 'Escreva uma pergunta primeiro.');
-      return;
-    }
-
-    saveGeminiKey();
-    maybeResetAiHistoryOnContextChange();
-
-    aiAskBtn.disabled = true;
-    aiQuestion.value = '';
-
-    const cleanQuestion = question.replace(/\s+/g, ' ').trim();
-    pushAiMessage('user', cleanQuestion);
-    const pendingIndex = pushAiMessage('assistant', 'Analisando seu caso com base no painel...');
-
-    const contextPayload = buildAiContextPayload();
-    const systemPrompt = buildAiSystemPrompt();
-    const contextText = `CONTEXTO_JSON_DA_PAGINA:\n${JSON.stringify(contextPayload)}`;
-
-    try {
-      const conversation = [
-        { role: 'user', parts: [{ text: contextText }] },
-        ...aiHistory,
-        { role: 'user', parts: [{ text: cleanQuestion }] },
-      ];
-
-      const chunks = [];
-      let finishReason = '';
-
-      for (let attempt = 0; attempt < 5; attempt += 1) {
-        const response = await callGemini(apiKey, conversation, systemPrompt);
-        const piece = extractGeminiAnswer(response);
-        finishReason = extractGeminiFinishReason(response);
-
-        if (piece) {
-          chunks.push(piece);
-          conversation.push({ role: 'model', parts: [{ text: piece }] });
-          updateAiMessage(pendingIndex, `${chunks.join('\n\n')}${finishReason === 'MAX_TOKENS' ? '\n\n[continuando...]' : ''}`);
-        }
-
-        if (finishReason !== 'MAX_TOKENS') break;
-        conversation.push({ role: 'user', parts: [{ text: GEMINI_CONTINUE_PROMPT }] });
-      }
-
-      let answer = chunks.join('\n\n').trim();
-      if (!answer) answer = 'Sem evidência suficiente na base desta página para responder com segurança.';
-      if (finishReason === 'MAX_TOKENS') answer += '\n\n[resposta cortada por limite de tokens]';
-
-      updateAiMessage(pendingIndex, answer);
-
-      aiHistory.push({ role: 'user', parts: [{ text: cleanQuestion }] });
-      aiHistory.push({ role: 'model', parts: [{ text: answer }] });
-      if (aiHistory.length > 16) aiHistory = aiHistory.slice(-16);
-    } catch (error) {
-      updateAiMessage(pendingIndex, `Falha ao consultar Gemini: ${error.message}`);
-      aiStatus.textContent = `Erro no Gemini: ${error.message}`;
-    } finally {
-      aiAskBtn.disabled = false;
-      aiQuestion.focus();
-    }
-  }
-
-  async function loadRequestSamples(sourceId) {
-    if (samplesLoadedBySource[sourceId]) {
-      requestSamples = samplesBySource[sourceId];
-      return;
-    }
-
-    const sourceCfg = ((sourceDataMap[sourceId] || {}).cfg) || {};
-    const samplePath = sourceCfg.samples_file || ((reportData.search_dashboard || {}).sample_file) || './data/request_samples.jsonl.gz';
-
-    try {
-      const text = await fetchGzipText(samplePath);
-      const isMobileMode = window.matchMedia('(max-width: 680px)').matches || (Number(navigator.deviceMemory || 0) > 0 && Number(navigator.deviceMemory || 0) <= 4);
-      const maxRows = isMobileMode ? MOBILE_SAMPLE_LIMIT : Number.POSITIVE_INFINITY;
-      const parsed = [];
-      let parsedCount = 0;
-
-      const lines = text.split('\n');
-      for (let i = 0; i < lines.length; i += 1) {
-        const line = lines[i].trim();
-        if (!line) continue;
-        let row = null;
-        try {
-          row = JSON.parse(line);
-        } catch {
-          row = null;
-        }
-        if (!row) continue;
-        const normalizedRow = (() => {
-          const idPedido = (row.id_pedido || '').toString().trim();
-          const linkPack = resolveRequestLinks(
-            idPedido,
-            row.request_public_link || '',
-            row.request_attachment_link || row.request_link || '',
-            row.request_link || '',
-            row.request_buscalai_link || '',
-          );
-          const reqText = (row.request_text || row.text_excerpt || '');
-          const respText = (row.response_text || row.response_excerpt || '');
-          return {
-            ...row,
-            ...linkPack,
-            id_pedido: idPedido,
-            year: Number(row.year || 0),
-            decision_group: (row.decision_group || (normalizeForSearch(row.decision || '') === 'acesso negado' ? 'negado' : 'outros')),
-            request_text: reqText,
-            response_text: respText,
-            search_blob: normalizeForSearch(`${row.org || ''} ${row.subject || ''} ${reqText} ${row.text_excerpt || ''} ${respText} ${row.response_excerpt || ''} ${row.theme || ''} ${row.decision || ''} ${row.reason || ''}`),
-          };
-        })();
-        if (!isSearchRowUseful(normalizedRow)) continue;
-        parsed.push(normalizedRow);
-        parsedCount += 1;
-        if (parsedCount >= maxRows) break;
-      }
-
-      samplesBySource[sourceId] = parsed;
-      samplesLoadedBySource[sourceId] = true;
-      requestSamples = parsed;
-      sampleLoadNotice = (isMobileMode && Number.isFinite(maxRows) && parsedCount >= maxRows)
-        ? `Modo leve no mobile: primeiros ${nFmt.format(maxRows)} pedidos para estabilidade.`
-        : '';
-    } catch (error) {
-      requestSamples = [];
-      samplesLoadedBySource[sourceId] = true;
-      sampleLoadNotice = '';
-      searchStatus.textContent = 'Busca em pedidos individuais foi descontinuada nesta versão — apenas estatísticas agregadas estão disponíveis.';
-      searchStatus.classList.remove('error');
-    }
-  }
-
   async function loadSourceCatalogAndData() {
     let indexPayload = null;
     try {
@@ -1878,8 +1284,6 @@
     const catalog = (indexPayload && indexPayload.sources) ? indexPayload.sources : FALLBACK_SOURCES;
     sourceCatalog = catalog;
     sourceDataMap = {};
-    samplesBySource = {};
-    samplesLoadedBySource = {};
 
     const entries = Object.entries(catalog);
     for (const [id, rawCfg] of entries) {
@@ -1927,19 +1331,6 @@
     renderMethodology();
     renderSourcesFooter();
 
-    restoreGeminiKey();
-    populateAiFilters();
-    resetAiConversation('Pronto. Descreva seu caso e eu te ajudo com leitura da negativa e rascunho de pedido/recurso.');
-    if (MOBILE_LIGHT_MODE && !samplesLoadedBySource[sourceId]) {
-      setSearchDeferredState();
-      return;
-    }
-
-    await loadRequestSamples(sourceId);
-    renderSearchFilters();
-    setSearchControlsDisabled(false);
-    searchBtn.textContent = 'Buscar';
-    runRequestSearch();
   }
 
   function bindEvents() {
@@ -1978,48 +1369,6 @@
       });
     }
 
-    searchBtn.addEventListener('click', async () => {
-      if (!samplesLoadedBySource[activeSourceId]) {
-        const ready = await ensureRequestSamplesReady(activeSourceId);
-        if (!ready) return;
-      }
-      runRequestSearch();
-    });
-    [searchYear, searchOrg, searchDecisionGroup, searchTheme].forEach((el) => {
-      el.addEventListener('change', () => {
-        if (!samplesLoadedBySource[activeSourceId]) return;
-        runRequestSearch();
-      });
-    });
-    searchQuery.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter') {
-        event.preventDefault();
-        if (!samplesLoadedBySource[activeSourceId]) {
-          ensureRequestSamplesReady(activeSourceId).then((ready) => {
-            if (ready) runRequestSearch();
-          });
-          return;
-        }
-        runRequestSearch();
-      }
-    });
-
-    aiAskBtn.addEventListener('click', askGemini);
-    aiQuestion.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' && !event.shiftKey) {
-        event.preventDefault();
-        askGemini();
-      }
-    });
-
-    aiResetBtn.addEventListener('click', () => {
-      resetAiConversation('Nova conversa iniciada. Pode mandar seu caso.');
-    });
-
-    [aiYearFilter, aiOrgFilter, searchYear, searchOrg, searchDecisionGroup, searchTheme].forEach((el) => {
-      el.addEventListener('change', maybeResetAiHistoryOnContextChange);
-    });
-    searchQuery.addEventListener('input', maybeResetAiHistoryOnContextChange);
   }
 
   async function boot() {
