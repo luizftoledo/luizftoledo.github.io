@@ -169,13 +169,12 @@
       </div>
       <ul class="nav-links" id="navLinks">
         <li><a href="#investigative">Reporting</a></li>
-        <li><a href="#interviews">Interviews</a></li>
         <li><a href="#short-videos">Videos</a></li>
-        <li><a href="#awards">Awards</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#courses-workshops">Courses &amp; workshops</a></li>
+        <li class="nav-sep" aria-hidden="true"></li>
         <li><a href="resume.html">Resume</a></li>
-        <li><a href="https://datafixers.org/index_en.html" target="_blank" rel="noopener noreferrer">Data journalism</a></li>
+        <li><a href="https://datafixers.org/index_en.html" target="_blank" rel="noopener noreferrer">Innovation Lab</a></li>
       </ul>
       <div class="nav-actions">
         <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" title="Menu">
@@ -185,7 +184,7 @@
     </div>
   </nav>
 
-  <!-- ── Sinais Enterrados — popup chamativo ────────────────────────── -->
+  <!-- ── Curso de Jornalismo Investigativo — popup chamativo ─────────── -->
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
   <style>
     .se-popup-overlay {
@@ -220,11 +219,10 @@
       background:#0a0e1a;
       overflow:hidden;
     }
-    .se-art canvas {
+    .se-art img {
       position:absolute; inset:0;
       width:100%; height:100%;
-      image-rendering:pixelated;
-      image-rendering:crisp-edges;
+      object-fit:cover;
     }
     .se-art::after {
       content:''; position:absolute; inset:0;
@@ -327,28 +325,27 @@
       .se-btn { padding:12px 28px; font-size:12px; letter-spacing:.28em; }
     }
   </style>
-  <div class="se-popup-overlay" id="sePopup" role="dialog" aria-modal="true" aria-labelledby="seTitle">
+  <div class="se-popup-overlay" id="sePopup" role="dialog" aria-modal="true" aria-label="Curso de Jornalismo Investigativo">
     <div class="se-card">
       <button class="se-close" onclick="seClose()" aria-label="close">×</button>
       <div class="se-art">
-        <canvas id="seArt" width="640" height="360"></canvas>
-        <span class="se-tag-floating" data-pt="novo · jogo" data-en="new · game">new · game</span>
+        <img id="seArt" src="https://cursos.datafixers.org/investiga26/hero_og.jpg" alt="Curso de Jornalismo Investigativo — Luiz Fernando Toledo & Juliana Faddul" loading="lazy">
+        <span class="se-tag-floating" data-pt="novo · curso" data-en="new · course">new · course</span>
         <div class="se-art-title">
-          <h2 id="seTitle" class="se-title">Sinais Enterrados</h2>
-          <div class="se-subtitle" data-pt="um jogo de investigação" data-en="an investigation game">an investigation game</div>
+          <div class="se-subtitle" data-pt="4 encontros ao vivo · com Juliana Faddul" data-en="4 live sessions · with Juliana Faddul">4 encontros ao vivo · com Juliana Faddul</div>
         </div>
       </div>
       <div class="se-body">
         <p class="se-pitch"
-           data-pt="Áudio anônimo na caixa segura. CNPJ recém-aberto. Emendas que se perdem no meio. <b>Apure documento por documento, esquive dos lobistas, publique.</b>"
-           data-en="An anonymous tip lands on the secure inbox. A freshly registered shell company. Public funds that disappear in between. <b>Investigate document by document, dodge the lobbyists, publish.</b>">
+           data-pt="Dados e LAI, como vender sua pauta, financiamento e apuração nas ruas. <b>Aulas ao vivo, não gravadas, com certificado ao final.</b>"
+           data-en="Data and FOI requests, how to pitch your story, funding and street reporting. <b>Live, ungraded sessions with a certificate at the end.</b>">
         </p>
         <div class="se-cta-row">
-          <a href="https://jogos.datafixers.org/sinais-enterrados/" class="se-btn" onclick="seMarkSeen()">
-            <span style="font-size:18px">▶</span>
-            <span data-pt="Jogar agora" data-en="Play now">Play now</span>
+          <a href="https://cursos.datafixers.org/investiga26/" class="se-btn" onclick="seMarkSeen()">
+            <span style="font-size:16px">✎</span>
+            <span data-pt="Entrar na lista de espera" data-en="Join the waitlist">Entrar na lista de espera</span>
           </a>
-          <button class="se-skip" onclick="seClose()" data-pt="depois" data-en="maybe later">maybe later</button>
+          <button class="se-skip" onclick="seClose()" data-pt="depois" data-en="maybe later">depois</button>
         </div>
       </div>
     </div>
@@ -362,111 +359,6 @@
         if (!text) return;
         if (text.includes('<')) el.innerHTML = text; else el.textContent = text;
       });
-
-      // ---------- pixel-art animated key art on canvas ----------
-      const cv = document.getElementById('seArt');
-      const c = cv.getContext('2d');
-      c.imageSmoothingEnabled = false;
-      let t = 0;
-      function draw() {
-        t++;
-        const W = 640, H = 360;
-        // background
-        const g = c.createLinearGradient(0, 0, 0, H);
-        g.addColorStop(0, '#0d1426'); g.addColorStop(1, '#080c18');
-        c.fillStyle = g; c.fillRect(0, 0, W, H);
-        // distant stars
-        for (let i = 0; i < 60; i++) {
-          c.fillStyle = `rgba(255,255,255,${0.05 + 0.18 * ((i*7)%5)/5})`;
-          c.fillRect((i*97)%W, (i*53)%180, 1, 1);
-        }
-        // window frame back
-        c.fillStyle = 'rgba(212,160,23,.05)';
-        c.fillRect(60, 30, 200, 110);
-        c.strokeStyle = 'rgba(212,160,23,.22)'; c.lineWidth = 1;
-        c.strokeRect(60, 30, 200, 110);
-        c.beginPath(); c.moveTo(160,30); c.lineTo(160,140); c.moveTo(60,85); c.lineTo(260,85); c.stroke();
-        // archive shelves on right
-        for (let i = 0; i < 4; i++) {
-          const x = 380 + i * 60, y = 90 + (i%2)*4;
-          c.fillStyle = '#3a2818';
-          c.fillRect(x, y, 50, 130);
-          for (let k = 0; k < 6; k++) {
-            c.fillStyle = ['#7a4a28','#5a3818','#8a5a32','#6a4020','#4a3018'][k%5];
-            c.fillRect(x + 2 + k*7.5, y + 4, 6, 122);
-          }
-          c.fillStyle = '#1a0e08'; c.fillRect(x, y+128, 50, 2);
-        }
-        // ground
-        c.fillStyle = '#1a2030';
-        c.fillRect(0, 280, W, 80);
-        c.fillStyle = '#3a4a6e'; c.fillRect(0, 280, W, 3);
-        // distant lobbyist (silhouette)
-        const lx = 100, ly = 244 + Math.sin(t*0.04)*1;
-        c.globalAlpha = 0.6;
-        c.fillStyle = '#0a0a0a'; c.fillRect(lx+6, ly+24, 5, 8); c.fillRect(lx+15, ly+24, 5, 8);
-        c.fillStyle = '#1a1822'; c.fillRect(lx+4, ly+10, 18, 14);
-        c.fillStyle = '#7a1f1f'; c.fillRect(lx+12, ly+10, 2, 10);
-        c.fillStyle = '#c89a78'; c.fillRect(lx+7, ly+1, 12, 10);
-        c.fillStyle = '#1a0e08'; c.fillRect(lx+7, ly+1, 12, 3);
-        c.fillStyle = '#ff3030'; c.fillRect(lx+10, ly+6, 1, 2); c.fillRect(lx+15, ly+6, 1, 2);
-        c.fillStyle = '#3a2810'; c.fillRect(lx+22, ly+15, 6, 8);
-        c.globalAlpha = 1;
-        // journalist (center, larger)
-        const jx = 304, jy = 232 + Math.sin(t*0.06)*2;
-        // shadow
-        c.fillStyle = 'rgba(0,0,0,.45)';
-        c.beginPath(); c.ellipse(jx+18, jy+58, 22, 3, 0, 0, Math.PI*2); c.fill();
-        // legs
-        const step = Math.floor(t*0.06)%2;
-        c.fillStyle = '#1a1f2e';
-        c.fillRect(jx+6 +step*2, jy+44, 8, 12);
-        c.fillRect(jx+22-step*2, jy+44, 8, 12);
-        // body
-        c.fillStyle = '#2a2f44'; c.fillRect(jx+4, jy+24, 28, 22);
-        // collar
-        c.fillStyle = '#e8e3d0'; c.fillRect(jx+15, jy+24, 6, 6);
-        // notebook
-        c.fillStyle = '#d4a017'; c.fillRect(jx+28, jy+30, 6, 9);
-        c.fillStyle = '#a07a10'; c.fillRect(jx+28, jy+30, 6, 1);
-        // head
-        c.fillStyle = '#d8b89c'; c.fillRect(jx+8, jy+6, 20, 18);
-        // hair
-        c.fillStyle = '#1f1410'; c.fillRect(jx+8, jy+6, 20, 6);
-        c.fillRect(jx+24, jy+11, 4, 3);
-        // glasses
-        c.strokeStyle = '#d4a017'; c.lineWidth = 1.5;
-        c.strokeRect(jx+18, jy+15, 7, 5);
-        // eye
-        c.fillStyle = '#0a0a0a'; c.fillRect(jx+20, jy+17, 2, 2);
-        // floating clue paper to the right of journalist
-        const cx = 460 + Math.sin(t*0.04)*3;
-        const cy = 200 + Math.sin(t*0.05)*5;
-        // clue glow
-        const cg = c.createRadialGradient(cx+12, cy+15, 4, cx+12, cy+15, 70);
-        cg.addColorStop(0, 'rgba(212,160,23,.5)'); cg.addColorStop(1, 'rgba(212,160,23,0)');
-        c.fillStyle = cg; c.fillRect(cx-50, cy-50, 130, 130);
-        // paper
-        c.fillStyle = '#e8e3d0'; c.fillRect(cx, cy, 26, 32);
-        c.fillStyle = '#d4a017'; c.fillRect(cx, cy, 26, 4);
-        c.fillStyle = '#1a1a1a';
-        for (let i = 0; i < 5; i++) c.fillRect(cx+3, cy+8+i*4, 20, 1);
-        c.fillStyle = '#c0392b'; c.fillRect(cx+18, cy+22, 6, 6);
-        // sparkle particles around clue
-        for (let i = 0; i < 4; i++) {
-          const px = cx + 12 + Math.cos(t*0.05 + i*1.5) * 28;
-          const py = cy + 15 + Math.sin(t*0.05 + i*1.5) * 22;
-          c.fillStyle = `rgba(212,160,23,${0.6 + 0.3*Math.sin(t*0.1 + i)})`;
-          c.fillRect(px|0, py|0, 2, 2);
-        }
-        // CRT scanlines
-        for (let y = 0; y < H; y += 3) {
-          c.fillStyle = 'rgba(0,0,0,.18)';
-          c.fillRect(0, y, W, 1);
-        }
-        requestAnimationFrame(draw);
-      }
-      draw();
 
       // ---------- popup show/hide logic ----------
       // sempre mostra (sem flag de "já viu") — fica visível em todas as visitas
@@ -506,15 +398,15 @@
                 <li class="carousel-slide current-slide">
                   <div class="video-container">
                     <iframe class="carousel-video"
-                      src="https://www.youtube.com/embed/r5Ihpa2DQIg?enablejsapi=1&rel=0&mute=1&autoplay=1&playsinline=1"
-                      title="Presentation video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                      src="https://www.youtube.com/embed/SkX6MKU9gAQ?enablejsapi=1&rel=0&start=22&mute=1&autoplay=1&playsinline=1"
+                      title="Video reporting" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                   </div>
                 </li>
                 <li class="carousel-slide">
                   <div class="video-container">
                     <iframe class="carousel-video"
-                      src="https://www.youtube.com/embed/SkX6MKU9gAQ?enablejsapi=1&start=22&mute=1&playsinline=1"
-                      title="Video reporting" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                      src="https://www.youtube.com/embed/r5Ihpa2DQIg?enablejsapi=1&rel=0&mute=1&playsinline=1"
+                      title="Presentation video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                   </div>
                 </li>
                 <li class="carousel-slide">
@@ -539,11 +431,8 @@
             </div>
           </div>
           <p style="font-size: 0.8rem; color: var(--muted); margin-top: 8px; text-align: center;">
-            <i class="fas fa-info-circle"></i> The first video is a BBC podcast interview presenting an investigation
-            into
-            fake
-            alcohol sellers on social media. If the video doesn't load, <a href="https://youtu.be/mH3-zrkq5-E"
-              target="_blank" style="color: #333; text-decoration: underline;">watch it on YouTube</a>.
+            <i class="fas fa-film"></i> See more videos <a href="#short-videos"
+              style="color: var(--accent); text-decoration: underline;">here</a>.
           </p>
         </div>
       </div>
@@ -1298,46 +1187,9 @@
 
     <section id="projects" class="section" data-reveal>
       <div class="container">
-        <h2 class="section-title">Projects &amp; Courses</h2>
-
-        <!-- ── Dashboards & Tools ───────────────────────────────────────── -->
-        <h3 style="font-size:1.1rem;font-weight:700;margin:2rem 0 1rem;color:var(--text)">Data tools &amp; dashboards</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
-
-          <a href="a-lai-que-pegou/" class="story-link" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s;position:relative" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
-            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">NEWSLETTER · WEEKLY</div>
-            <div style="font-weight:700;color:var(--text);margin-bottom:.3rem">A LAI que pegou</div>
-            <div style="font-size:.83rem;color:var(--muted)">Automated weekly newsletter that scans Brazil's public FOI database (Busca LAI) and highlights the most relevant requests of the week. Portuguese 🇧🇷</div>
-          </a>
-
-          <a href="https://dashboards.datafixers.org/lai/" class="story-link" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
-            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">TRANSPARENCY</div>
-            <div style="font-weight:700;color:var(--text);margin-bottom:.3rem">Negativas na LAI</div>
-            <div style="font-size:.83rem;color:var(--muted)">Monitor freedom of information request denial rates across Brazilian federal agencies — aggregated statistics.</div>
-          </a>
-
-          <a href="https://ferramentas.datafixers.org/simulador-reacoes/" class="story-link" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
-            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">AI TOOL</div>
-            <div style="font-weight:700;color:var(--text);margin-bottom:.3rem">News reaction simulator</div>
-            <div style="font-size:.83rem;color:var(--muted)">AI-powered tool that simulates how different audiences might react to a news story.</div>
-          </a>
-
-          <a href="https://jogos.datafixers.org/sinais-enterrados/" class="story-link" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
-            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">GAME · METROIDVANIA · PT-BR <span style="background:rgba(212,160,23,.15);color:#d4a017;border:1px solid rgba(212,160,23,.4);padding:1px 6px;border-radius:4px;margin-left:.4rem;font-size:.7rem">NEW</span></div>
-            <div style="font-weight:700;color:var(--text);margin-bottom:.3rem">Sinais Enterrados</div>
-            <div style="font-size:.83rem;color:var(--muted)">Short investigative game (fictional case). Look into a tip about misuse of parliamentary amendments — dodge lobbyists, gather evidence, publish the story. ~5 minutes. (In Portuguese.)</div>
-          </a>
-
-          <a href="https://datafixers.org/campanha_10_dias/" class="story-link" style="display:block;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;text-decoration:none;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.1)'" onmouseout="this.style.boxShadow=''">
-            <div style="font-size:.75rem;font-weight:600;color:var(--accent);margin-bottom:.3rem">GAME · STRATEGY · PT-BR <span style="background:rgba(212,160,23,.15);color:#d4a017;border:1px solid rgba(212,160,23,.4);padding:1px 6px;border-radius:4px;margin-left:.4rem;font-size:.7rem">NEW</span></div>
-            <div style="font-weight:700;color:var(--text);margin-bottom:.3rem">10 dias</div>
-            <div style="font-size:.83rem;color:var(--muted)">Election campaign game: you have 10 days to run for mayor. Make legal, grey-zone or banned moves (AI bots, mass WhatsApp blasts, bought followers) and risk being disqualified by the electoral court. Inspired by real reporting on AI in elections. (In Portuguese.)</div>
-          </a>
-
-        </div>
 
         <!-- ── Courses & Workshops ──────────────────────────────────────── -->
-        <h2 id="courses-workshops" class="section-title" style="margin-top:3rem;scroll-margin-top:80px">Courses &amp; workshops</h2>
+        <h2 id="courses-workshops" class="section-title" style="scroll-margin-top:80px">Courses &amp; workshops</h2>
 
         <h3 style="font-size:1.05rem;font-weight:700;color:var(--text);margin:1rem 0 .75rem;max-width:860px">Como usar IA no jornalismo? (Em português)</h3>
         <div style="position:relative;width:100%;max-width:860px;aspect-ratio:16/9;overflow:hidden;border-radius:10px;border:1px solid var(--border);margin-bottom:1.25rem">
