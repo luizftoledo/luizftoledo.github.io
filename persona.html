@@ -3,621 +3,1474 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Palace of Secrets — A Phantom Press Heist | Luiz Fernando Toledo</title>
+  <link rel="icon" type="image/png" href="images/persona/calling_card.png">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <!-- SEO & Open Graph -->
-  <title>Luiz Fernando Toledo - Data & Investigative Journalist</title>
-  <meta name="description"
-    content="Portfolio of Luiz Fernando Toledo, a Data & Investigative Journalist, researcher, and instructor. Award-winning reporting on environmental crimes, public spending, and transparency.">
-  <meta property="og:title" content="Luiz Fernando Toledo - Data & Investigative Journalist">
-  <meta property="og:description"
-    content="Award-winning Brazilian journalist based in London. Expert in data journalism, environmental investigations, and transparency.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://luizftoledo.github.io/">
-  <meta property="og:image" content="https://luizftoledo.github.io/epstein_brazil_victims.png">
+    html, body {
+      height: 100%;
+      background: #0c0a0e;
+      overflow: hidden;
+      font-family: 'Press Start 2P', monospace;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
+    }
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    crossorigin="anonymous" referrerpolicy="no-referrer">
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;700&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="persona.css">
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(190, 20, 40, .14), transparent 50%),
+        radial-gradient(circle at 80% 88%, rgba(190, 20, 40, .10), transparent 50%),
+        #0c0a0e;
+    }
 
-  <link rel="icon" type="image/png" href="favicon.png">
+    .screen-wrap {
+      position: relative;
+      width: min(100vw - 16px, 168vh - 290px, 760px);
+      aspect-ratio: 4 / 3;
+      background: #000;
+      border: 6px solid #1c1216;
+      border-radius: 10px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .7), inset 0 0 16px rgba(0, 0, 0, .8);
+    }
 
-  <script>
-    // Force dark mode sitewide
-    document.documentElement.setAttribute('data-theme', 'dark');
-  </script>
+    canvas#screen {
+      width: 100%;
+      height: 100%;
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      border-radius: 4px;
+    }
+
+    /* ===== controls below the screen (never over the image) ===== */
+    .pad {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: min(100vw - 16px, 760px);
+      padding: 10px 14px;
+      background: #161014;
+      border: 2px solid #321820;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+    }
+
+    .dpad {
+      position: relative;
+      width: 108px;
+      height: 108px;
+      flex: 0 0 auto;
+    }
+
+    .dpad button {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      background: #2a1018;
+      border: 2px solid #5a1c28;
+      color: #d8a8b0;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+    }
+
+    .dpad button:active { background: #7a1424; }
+    .dpad .up { top: 0; left: 36px; }
+    .dpad .down { bottom: 0; left: 36px; }
+    .dpad .left { top: 36px; left: 0; }
+    .dpad .right { top: 36px; right: 0; }
+    .dpad .mid { top: 36px; left: 36px; background: #1c0c10; border-color: #1c0c10; pointer-events: none; border-radius: 4px; }
+
+    .pad-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .pill-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      letter-spacing: .08em;
+      color: #f0dce0;
+      background: #38101c;
+      border: 2px solid #6a1c2c;
+      border-radius: 999px;
+      padding: 9px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .pill-btn:active { background: #7a1424; }
+
+    .key-hint {
+      font-size: 7px;
+      line-height: 1.7;
+      color: #7c5860;
+      text-align: center;
+    }
+
+    .ab {
+      position: relative;
+      width: 116px;
+      height: 96px;
+      flex: 0 0 auto;
+    }
+
+    .ab button {
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 15px;
+      color: #fff;
+      cursor: pointer;
+      border: 0;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, .45);
+      touch-action: none;
+    }
+
+    .ab button:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, .45); }
+    .ab .a { right: 0; top: 0; background: #c01428; border: 2px solid #f04858; }
+    .ab .b { left: 0; bottom: 0; background: #2a2230; border: 2px solid #5c4c68; }
+
+    .quit-link {
+      position: fixed;
+      top: 10px;
+      right: 12px;
+      z-index: 60;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      color: #98808a;
+      text-decoration: none;
+      border: 2px solid #44202c;
+      padding: 7px 10px;
+      border-radius: 6px;
+      background: rgba(12, 10, 14, .8);
+    }
+
+    .quit-link:hover { color: #fff; border-color: #c01428; }
+
+    @media (max-width: 560px) {
+      body { gap: 8px; padding: 6px; }
+      .pad { padding: 8px 8px; gap: 6px; }
+      .dpad { width: 96px; height: 96px; }
+      .dpad button { width: 32px; height: 32px; }
+      .dpad .up, .dpad .down { left: 32px; }
+      .dpad .mid { top: 32px; left: 32px; }
+      .key-hint { display: none; }
+      .ab { width: 104px; height: 88px; }
+      .ab button { width: 48px; height: 48px; }
+    }
+  </style>
 </head>
 
 <body>
-  <div class="progress-bar" id="progressBar"></div>
-  <nav>
-    <div class="container nav-inner">
-      <div class="brand">
-        <a href="#" class="logo">
-          <span class="logo-text">LFT</span><span class="logo-dot">.</span>
-        </a>
-      </div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#investigative">Reporting</a></li>
-        <li><a href="#interviews">Interviews</a></li>
-        <li><a href="#short-videos">Videos</a></li>
-        <li><a href="#awards">Awards</a></li>
-        <li><a href="resume.html">Resume</a></li>
-        <li><a href="https://datafixers.org" target="_blank" rel="noopener noreferrer">Data Journalism</a></li>
-      </ul>
-      <div class="nav-actions">
-        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" title="Menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-    </div>
-  </nav>
+  <a class="quit-link" href="index.html">EXIT &rsaquo;</a>
 
-  <section class="hero section">
-    <div class="container">
-      <div class="hero-text">
-        <div style="text-align: center; margin-bottom: 2rem; position: relative; display: inline-block;">
-          <!-- Comic style burst background -->
-          <div
-            style="position: absolute; top: -20px; left: -20px; width: 120%; height: 120%; background: var(--p5-white); clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); z-index: -1;">
-          </div>
-
-          <img src="images/persona/persona_avatar_transparent.png" alt="Persona 5 Avatar"
-            style="width: 250px; display: block; filter: drop-shadow(5px 5px 0 var(--p5-black));">
-        </div>
-        <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
-        <p>Brazilian journalist, researcher and instructor based in London, with a proven track record of producing and
-          managing impactful projects related to Brazil.</p>
-        <p>My reporting has been translated into <a href="https://www.bbc.com/zhongwen/articles/cx20nxkkqk0o/simp"
-            target="_blank" rel="noopener noreferrer" class="highlight">various languages</a>, reaching thousands of
-          readers in Brazil and abroad.</p>
-      </div>
-
-      <!-- Restored Video Carousel -->
-      <div class="hero-media">
-        <div class="video-carousel"
-          style="border: 4px solid var(--p5-black); box-shadow: 10px 10px 0 var(--p5-red); background: #000; padding: 10px; transform: skew(-1deg);">
-          <div class="carousel-track-container" style="overflow: hidden; position: relative;">
-            <ul class="carousel-track"
-              style="display: flex; list-style: none; padding: 0; margin: 0; transition: transform 0.5s ease-in-out;">
-              <li class="carousel-slide current-slide" style="min-width: 100%;">
-                <div class="video-container"
-                  style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
-                  <iframe class="carousel-video"
-                    src="https://www.youtube.com/embed/r5Ihpa2DQIg?enablejsapi=1&rel=0&mute=1&autoplay=1&playsinline=1"
-                    title="Presentation video" allow="autoplay; encrypted-media" allowfullscreen
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"></iframe>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <p
-          style="font-size: 0.9rem; color: var(--p5-white); background: var(--p5-black); display: inline-block; padding: 5px; margin-top: 10px; transform: skew(-2deg);">
-          <i class="fas fa-info-circle" style="color: var(--p5-accent);"></i> The first video is a BBC podcast interview
-          presenting
-          an investigation into fake alcohol sellers on social media. If the video doesn't load, <a
-            href="https://youtu.be/mH3-zrkq5-E" target="_blank"
-            style="color: var(--p5-accent); text-decoration: underline; background: #000;">watch it on YouTube</a>.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="impact-grid" class="section">
-    <div class="container">
-      <div class="impact-grid">
-        <div class="impact-card">
-          <h3><i class="fas fa-newspaper icon-p5"></i> Reporting Impact</h3>
-          <p>Stories I wrote <a href="https://news.fiquemsabendo.com.br/p/exclusivo-acessamos-as-notas-fiscais"
-              target="_blank" rel="noopener noreferrer">exposed</a> a former president's misuse of
-            public funds, <a
-              href="http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/"
-              target="_blank" rel="noopener noreferrer">uncovered</a> a bid fraud that saved R$
-            15&nbsp;million from a city's
-            budget and <a
-              href="https://www.cnnbrasil.com.br/nacional/apos-reportagem-da-cnn-empresa-de-taxi-aereo-e-primeira-a-ser-cassada-no-pais/"
-              target="_blank" rel="noopener noreferrer">enabled</a> the shutdown of companies involved
-            in illegal activities.
-          </p>
-        </div>
-
-        <div class="impact-card">
-          <h3><i class="fas fa-chalkboard-teacher icon-p5"></i> Training</h3>
-          <p>Attended world-class conferences as instructor in Brazil, USA, UK, Portugal, Malaysia, Sweden and others.
-            Trained over 2,000 journalists through online and in-person workshops.</p>
-        </div>
-
-        <div class="impact-card">
-          <h3><i class="fas fa-book icon-p5"></i> Research</h3>
-          <p>Masters degrees in Data Journalism (Columbia) and Public Administration (FGV‑EAESP). Research-assistant at
-            POLIS‑Cambridge (2024–2026). Former research fellow at Oxford (2021), Columbia (2022–2023) and NED
-            (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en"
-              target="_blank" rel="noopener noreferrer">My research was used by the government</a> to
-            improve transparency policies.</p>
-        </div>
-
-        <div class="impact-card">
-          <h3><i class="fas fa-robot icon-p5"></i> Civil Tech</h3>
-          <p>Over the last three years, I have used generative AI in journalism for data analysis and
-            investigations. In 2025, I built a <a href="https://datafixers.org/l-ai-notebook.html" target="_blank"
-              rel="noopener noreferrer">tool</a> that helps reporters search millions of Brazilian public records. In
-            2026, I launched <a href="https://datafixers.org/index_en.html#dashboards" target="_blank"
-              rel="noopener noreferrer">public-interest data analysis dashboards</a> on Datafixers.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="investigative" class="investigative section">
-    <div class="container">
-      <h2 class="section-title"><i class="fas fa-search icon-p5"></i> Investigative Reporting</h2>
-
-      <div class="featured-article">
-        <img src="epstein_brazil_victims.png" alt="Jeffrey Epstein's link to Brazil revealed in new documents"
-          loading="lazy">
-        <div class="featured-content">
-          <div class="tags">
-            <span class="tag">BBC News Brasil</span>
-          </div>
-          <h3>Jeffrey Epstein's link to Brazil revealed in new documents</h3>
-          <p>The BBC analyzed more than 10,000 documents released by the US Department of Justice and identified
-            possible Brazilian victims of Jeffrey Epstein's sexual crimes. From the documents, we found a victim who
-            told us that <a href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank"
-              rel="noopener noreferrer" style="color: var(--p5-accent);">more than 50 Brazilian women</a> passed through
-            his mansion.</p>
-          <div class="links">
-            <a href="https://www.bbc.com/portuguese/articles/cnv2937j42ro" target="_blank"
-              rel="noopener noreferrer">Read the story (Portuguese)</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="cards">
-        <div class="card-article">
-          <img src="fake_alcohol_social_media.png"
-            alt="How fake bottle caps and seals fuel Brazil's counterfeit alcohol market" loading="lazy">
-          <div class="card-content">
-            <span class="tag">BBC News Brasil</span>
-            <h3>How fake bottle caps and seals fuel Brazil's counterfeit alcohol market</h3>
-            <p>This investigation dismantled a network of over 10,000 people selling bottle parts for beverage
-              counterfeiting and triggered a police investigation.</p>
-            <a href="https://www.bbc.com/portuguese/articles/ce84kg923ero" target="_blank">Read the story</a>
-          </div>
-        </div>
-
-        <div class="card-article">
-          <img src="amazon_fish_trade.png" alt="Giant Amazon fish turned into luxury handbags" loading="lazy">
-          <div class="card-content">
-            <span class="tag">BBC News Brasil</span>
-            <h3>Giant Amazon fish turned into luxury handbags – but who profits?</h3>
-            <p>The thick, patterned skin of the once-at-risk pirarucu fish is in demand for high-end fashion, but the
-              fishermen want more money.</p>
-            <a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o.amp" target="_blank">Read the story</a>
-          </div>
-        </div>
-
-        <div class="card-article">
-          <img src="slave_labor_public_funds.png" alt="Secret Budget Amendment Linked to Slave Labor" loading="lazy">
-          <div class="card-content">
-            <span class="tag">BBC News Brasil</span>
-            <h3>Secret Budget Amendment Linked to Slave Labor</h3>
-            <p>Investigation reveals how a budget amendment supported by Chamber President Hugo Motta funded
-              construction using stones produced by workers in slave-like conditions.</p>
-            <a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank">Read the story</a>
-          </div>
-        </div>
-
-        <!-- Restored missing articles -->
-        <div class="card-article">
-          <img src="meat_industry_abuse.png" alt="Brazilians Face Abuse in Irish Meat Industry" loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">BBC News Brasil</span>
-            </div>
-            <h3>Brazilians Face Abuse in Irish Meat Industry</h3>
-            <p>Exclusive investigation exposes precarious working conditions and abuse faced by Brazilian workers in
-              Ireland’s meat processing industry.</p>
-            <div class="links">
-              <a href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank"
-                rel="noopener noreferrer">Read the story (Portuguese)</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-article">
-          <img src="illegal_artifacts.png" alt="Indigenous objects containing animal parts are freely sold online"
-            loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">UOL</span>
-            </div>
-            <h3>Failed enforcement: indigenous objects containing animal parts are freely sold online</h3>
-            <p>A 2‑month investigation into animal feather smuggling and how companies benefit from exploiting
-              indigenous communities in Brazil.</p>
-            <div class="links">
-              <a href="https://tab.uol.com.br/noticias/redacao/2024/07/31/venda-ilegal-de-artefatos-indigenas-cresce-com-baixa-fiscalizacao-nas-redes.htm"
-                target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-article">
-          <img src="land_grabbing.png" alt="Political Backing Fuels Land Grabbing in Brazil's Distrito Federal"
-            loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">Revista Piauí</span>
-            </div>
-            <h3>Political Backing Fuels Land Grabbing in Brazil's Distrito FEDERAL</h3>
-            <p>In the Distrito Federal, Brazil, a significant issue of land grabbing in conservation areas is emerging,
-              intensified by political support.</p>
-            <div class="links">
-              <a href="https://piaui.folha.uol.com.br/distrito-federal-grileiros-car-brasilia/" target="_blank"
-                rel="noopener noreferrer">Read the story (Portuguese)</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="short-videos" class="short-videos section">
-    <div class="container">
-      <h2 class="section-title"><i class="fas fa-tv icon-p5"></i> Video reporting</h2>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-        <div class="featured-video" style="border: 4px solid var(--p5-black); transform: skew(-2deg);">
-          <iframe loading="lazy" src="https://www.youtube.com/embed/HEwY0WKeKjc?rel=0" allow="autoplay; encrypted-media"
-            allowfullscreen style="width: 100%; aspect-ratio: 16/9; border: 0;"></iframe>
-        </div>
-        <div class="featured-video" style="border: 4px solid var(--p5-black); transform: skew(-2deg);">
-          <iframe loading="lazy" src="https://www.youtube.com/embed/RhHz-bizvs0" allow="autoplay; encrypted-media"
-            allowfullscreen style="width: 100%; aspect-ratio: 16/9; border: 0;"></iframe>
-        </div>
-      </div>
-
-      <h3 class="subsection-title"
-        style="margin: 40px 0 24px; font-size: 1.5rem; color: var(--p5-black); background: var(--p5-white); display: inline-block; padding: 5px 10px; transform: skew(-3deg);">
-        Short-form video reporting for social media</h3>
-
-      <div class="reels-carousel-container">
-        <button class="reels-btn reels-btn-left p5-btn" aria-label="Scroll left"
-          style="padding: 10px; height: 50px; z-index: 10;">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="reels-carousel">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVO4gD_j5T4/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPfEs-4lTI3/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DOgpYz4lKwY/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPKauEVD71z/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DMq7vPfC4Os/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DJUu11hILPM/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DKuiChEMt8W/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DNCAw5SIF1J/"
-            data-instgrm-version="14"></blockquote>
-        </div>
-        <button class="reels-btn reels-btn-right p5-btn" aria-label="Scroll right"
-          style="padding: 10px; height: 50px; z-index: 10;">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-      </div>
-      <script async src="https://www.instagram.com/embed.js"></script>
-    </div>
-  </section>
-
-  <section id="interviews" class="interviews section">
-    <div class="container">
-      <h2 class="section-title"><i class="fas fa-microphone-alt icon-p5"></i> Interviews</h2>
-      <div class="interview-list"
-        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-        <div class="impact-card">
-          <h3>Bellingcat's Stage Talks</h3>
-          <p>I was interviewed by Bellingcat to discuss how to use public records and data to investigate environmental
-            crimes in Brazil. Held in English.</p>
-          <iframe loading="lazy" src="https://open.spotify.com/embed/episode/4qtV3XWFUwFtan4jThFKX1"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen
-            style="width: 100%; height: 152px; border: 0;"></iframe>
-        </div>
-        <div class="impact-card">
-          <h3>Global Investigative Journalism Conference</h3>
-          <p>Panel discussion on investigating environmental crimes at GIJC 2023 in Gothenburg, Sweden.</p>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/urDaCInPdvY?start=19" allowfullscreen
-            style="width: 100%; aspect-ratio: 16/9; border: 0;"></iframe>
-        </div>
-        <div class="impact-card">
-          <h3>SBT News</h3>
-          <p>Discussion about transparency and investigative journalism in Brazil.</p>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/rqvT39YIsP0?start=149" allowfullscreen
-            style="width: 100%; aspect-ratio: 16/9; border: 0;"></iframe>
-        </div>
-        <div class="impact-card">
-          <h3>TV Globo/G1 Podcast (O Assunto)</h3>
-          <p>Podcast discussion about corporate expenses investigation.</p>
-          <iframe loading="lazy" src="https://open.spotify.com/embed/episode/1UsnrR0DjRKHyd1fPlVtmn"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen
-            style="width: 100%; height: 152px; border: 0;"></iframe>
-        </div>
-        <div class="impact-card">
-          <h3>FIL Lisbon Conference</h3>
-          <p>Presentation about DataFixers.org at the Lisbon International Fair.</p>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/dw5q9ZXMaWE?start=26" allowfullscreen
-            style="width: 100%; aspect-ratio: 16/9; border: 0;"></iframe>
-        </div>
-        <div class="impact-card">
-          <h3>CNN Brasil</h3>
-          <p>Interview about air charter investigation and transparency in government spending.</p>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/PP8bv7osKMo?start=35" allowfullscreen
-            style="width: 100%; aspect-ratio: 16/9; border: 0;"></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="awards" class="awards section">
-    <div class="container">
-      <h2 class="section-title"><i class="fas fa-trophy icon-p5"></i> Awards and Honorable Mentions</h2>
-      <ul id="awards-list" class="award-list collapsed">
-        <li><span class="award-year">2024</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Gabo 2024 – coverage with InfoAmazonia and Datafixers.org</span><span
-            class="award-source">Fundación Gabo</span></li>
-        <li class="shortlist"><span class="award-year">2024</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards</span><span
-            class="award-source">Sigma Awards</span></li>
-        <li><span class="award-year">2023</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Claudio Weber Abramo – Categoria Dados Abertos</span><span
-            class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
-        <li><span class="award-year">2023</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Claudio Weber Abramo – Categoria Investigação</span><span
-            class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
-        <li class="shortlist"><span class="award-year">2023</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Premio Roche 2023</span><span
-            class="award-source">Premio Roche</span></li>
-        <li><span class="award-year">2022</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Transparência e Fiscalização Pública – Câmara dos Deputados (with Fiquem
-            Sabendo)</span><span class="award-source">Câmara dos Deputados</span></li>
-        <li class="shortlist"><span class="award-year">2022</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2022 –
-            Má alimentação à Brasileira</span><span class="award-source">Escola de Dados/Open Knowledge Brasil</span>
-        </li>
-        <li class="shortlist"><span class="award-year">2022</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Open
-            Lux</span><span class="award-source">Sigma Awards</span></li>
-        <li class="shortlist"><span class="award-year">2022</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Personal
-            portfolio</span><span class="award-source">Sigma Awards</span></li>
-        <li class="shortlist"><span class="award-year">2022</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Revealing the
-            Brazilian military pension</span><span class="award-source">Sigma Awards</span></li>
-        <li class="shortlist"><span class="award-year">2021</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">IREE 2021</span><span
-            class="award-source">IREE</span></li>
-        <li class="shortlist"><span class="award-year">2021</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Shedding light
-            on government pension</span><span class="award-source">Sigma Awards</span></li>
-        <li class="shortlist"><span class="award-year">2021</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Chloroquine and
-            the Brazilian Army</span><span class="award-source">Sigma Awards</span></li>
-        <li><span class="award-year">2021</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Jornalismo Mosca 2021 – Solteiragate</span><span class="award-source">Jornalismo
-            Mosca</span></li>
-        <li class="shortlist"><span class="award-year">2021</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2021 –
-            Solteiragate</span><span class="award-source">Transparência Brasil</span></li>
-        <li class="shortlist"><span class="award-year">2019</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2019 – Personal
-            portfolio</span><span class="award-source">Sigma Awards</span></li>
-        <li><span class="award-year">2019</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Claudio Weber Abramo 2019 – Newsletter Don’t “LAI” to me</span><span
-            class="award-source">Transparência Brasil</span></li>
-        <li><span class="award-year">2018</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Reportagem, 2nd place) – A rede bolsonarista
-            de desinformação</span><span class="award-source">Estado de São Paulo</span></li>
-        <li class="shortlist"><span class="award-year">2018</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Premio ANPR 2018 – Fraude em cotas
-            raciais</span><span class="award-source">ANPR</span></li>
-        <li><span class="award-year">2018</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Serviço) – Estadão Verifica</span><span
-            class="award-source">Estado de São Paulo</span></li>
-        <li><span class="award-year">2017</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 2nd place) – Fraude em
-            transparência em SP</span><span class="award-source">Estado de São Paulo</span></li>
-        <li><span class="award-year">2017</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 3rd place) – Internações
-            psiquiátricas (série)</span><span class="award-source">Estado de São Paulo</span></li>
-        <li><span class="award-year">2017</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Premio ANPR 2017 – Denunciando uma rede de pornografia infantil</span><span
-            class="award-source">ANPR</span></li>
-        <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span><span
-            class="award-source">Instituto Ayrton Senna</span></li>
-        <li><span class="award-year">2011</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Premio ASU/Schaeffer 2011 – A história da mulher que adotou seis crianças</span><span
-            class="award-source">ASU/Schaeffer</span></li>
-      </ul>
-      <button class="show-more-btn"
-        onclick="const list = document.getElementById('awards-list'); list.classList.toggle('collapsed'); this.textContent = list.classList.contains('collapsed') ? 'Show More' : 'Show Less';">
-        Show More
-      </button>
-    </div>
-  </section>
-
-  <section class="grants section">
-    <div class="container">
-      <h2 class="section-title"><i class="fas fa-certificate icon-p5"></i> Scholarships, Fellowships and Grants</h2>
-      <ul class="award-list">
-        <li><span class="award-year">2024</span><span class="award-title">Together for Conservation (EJN,
-            2024)</span><span class="award-source">Earth Journalism Network</span></li>
-        <li><span class="award-year">2023–2024</span><span class="award-title">National Endowment for Democracy (NED) –
-            Reagan‑Fascell fellowship (2023–2024)</span><span class="award-source">NED</span></li>
-        <li><span class="award-year">2022</span><span class="award-title">Person of the Year 2022 – Brazilian American
-            Chamber of Commerce</span><span class="award-source">Brazilian American Chamber of Commerce</span></li>
-        <li><span class="award-year">2021–2022</span><span class="award-title">Columbia Journalism School (US$ 91,500 in
-            tuition) 2021/2022</span><span class="award-source">Columbia University</span></li>
-        <li><span class="award-year">2020</span><span class="award-title">ICFJ Latin America Grantee 2020 – FOIA –
-            Brazil and US project</span><span class="award-source">ICFJ</span></li>
-        <li><span class="award-year">2019</span><span class="award-title">EAESP‑FGV – Full scholarship for a master of
-            science in Public Administration (2019)</span><span class="award-source">FGV</span></li>
-        <li><span class="award-year">2019</span><span class="award-title">Instituto Ling’s Visionary Journalist US$
-            60,000 scholarship (2019) – Jornalista de Visão</span><span class="award-source">Instituto Ling</span></li>
-        <li><span class="award-year">2018</span><span class="award-title">ICFJ Emerging Leaders Program / fellow
-            2018</span><span class="award-source">ICFJ</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <footer class="footer section">
-    <div class="container">
-      <!-- Simplified Surprise (Moved to top of footer) -->
-      <div class="p5-surprise-container" id="p5Surprise">
-        <img src="images/persona/treasure_chest.png" alt="Treasure Chest" class="p5-surprise-img" id="surpriseImg">
-        <div class="p5-surprise-title" id="surpriseTitle">TREASURE CHEST!</div>
-        <div class="p5-surprise-subtitle" id="surpriseSubtitle">OPEN IT</div>
-      </div>
-
-      <div style="margin-top: 40px;">
-        <h2>Get in touch</h2>
-        <div
-          style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-          <i class="fas fa-envelope-open-text fa-3x icon-p5" style="color: var(--p5-white);"></i>
-          <p style="text-align: left; margin: 0;">Interested in collaboration, have a story tip, or want to discuss
-            investigative journalism? I'd love to hear
-            from you.</p>
-        </div>
-        <div class="socials" style="text-align: center; margin-top: 20px;">
-          <a href="mailto:lft29@cam.ac.uk"><i class="fas fa-envelope"></i></a>
-          <a href="https://twitter.com/toledoluizf" target="_blank" rel="noopener noreferrer"><i
-              class="fab fa-twitter"></i></a>
-          <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i
-              class="fab fa-linkedin-in"></i></a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-
-
-  <!-- Music Toggle Button -->
-  <div
-    style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 10000; align-items: flex-end;">
-    <button id="musicToggle" class="p5-btn">
-      <i class="fas fa-play" id="musicIcon"></i>
-    </button>
-    <a href="index.html" class="p5-btn">
-      <i class="fas fa-mask"></i> Return to Reality
-    </a>
+  <div class="screen-wrap">
+    <canvas id="screen" width="1024" height="768"></canvas>
   </div>
 
-  <audio id="personaAudio" src="persona_5_life_will_change.mp3" loop></audio>
+  <div class="pad">
+    <div class="dpad">
+      <button class="up" data-dir="up">▲</button>
+      <button class="left" data-dir="left">◀</button>
+      <div class="mid dpad-mid"></div>
+      <button class="right" data-dir="right">▶</button>
+      <button class="down" data-dir="down">▼</button>
+    </div>
+    <div class="pad-center">
+      <button class="pill-btn" id="noteBtn">HEIST</button>
+      <div class="key-hint">ARROWS/WASD&nbsp;MOVE<br>Z/ENTER&nbsp;=&nbsp;A&nbsp;&nbsp;X/ESC&nbsp;=&nbsp;B</div>
+    </div>
+    <div class="ab">
+      <button class="b" data-btn="B">B</button>
+      <button class="a" data-btn="A">A</button>
+    </div>
+  </div>
 
   <script>
-    const audio = document.getElementById('personaAudio');
-    const musicToggle = document.getElementById('musicToggle');
-    const musicIcon = document.getElementById('musicIcon');
-    let isPlaying = false;
+    'use strict';
 
-    // Try to play automatically
-    window.addEventListener('load', () => {
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          isPlaying = true;
-          musicIcon.className = 'fas fa-pause';
-        }).catch(error => {
-          console.log("Autoplay blocked, waiting for user interaction");
-          isPlaying = false;
-          musicIcon.className = 'fas fa-play';
-        });
+    /* =====================================================================
+       PALACE OF SECRETS — A PHANTOM PRESS HEIST
+       DS-resolution demake (256x192). Persona 5 metaphor: a masked
+       journalist infiltrates a corrupt politician's mental Palace to
+       steal the Treasure — THE DOSSIER — and publish the truth.
+       Pure stealth, no combat. Original WebAudio chiptune.
+       ===================================================================== */
+
+    const cv = document.getElementById('screen'), g = cv.getContext('2d');
+    g.scale(4, 4);               // buffer 4x: nítido também no Safari
+    g.imageSmoothingEnabled = false;
+
+    /* =====================================================================
+       PALETTE & SPRITES
+       ===================================================================== */
+    const PAL = {
+      '.': null,
+      'o': '#000000',
+      'k': '#15151c', 'K': '#262633',          /* thief coat */
+      'h': '#1b2030', 'H': '#2a3248',          /* hair */
+      'w': '#f4f2ec', 'W': '#c6c2ba',          /* white mask / paper */
+      'r': '#c01428', 'R': '#e83040',          /* red */
+      'q': '#6e0c18',                          /* deep red */
+      'x': '#8e1220', 'X': '#a81a2c',          /* carpet */
+      'g': '#c9a23c', 'G': '#ecd06a',          /* gold */
+      'b': '#22386e', 'B': '#3c5cb0',          /* shadow mask blue */
+      'n': '#101018', 'N': '#202030',          /* shadow suit */
+      's': '#565a64', 'S': '#828893',          /* steel */
+      'm': '#d6d2c8', 'M': '#9e9a92',          /* marble */
+      'f': '#181820', 'F': '#1f1f29',          /* floor */
+      'c': '#0e0e13',                          /* near-black */
+      'u': '#262630', 'U': '#30303d',          /* wall brick */
+      'y': '#ecd84e', 'Y': '#f6ec9a',          /* post-it */
+      'd': '#07070a',                          /* void */
+      'e': '#1e8a4a', 'E': '#35c46e'           /* exit green */
+    };
+
+    function makeSprite(rows, scale = 1) {
+      const h = rows.length, w = Math.max(...rows.map(r => r.length));
+      const c = document.createElement('canvas');
+      c.width = w * scale; c.height = h * scale;
+      const x = c.getContext('2d');
+      for (let j = 0; j < h; j++) for (let i = 0; i < rows[j].length; i++) {
+        const col = PAL[rows[j][i]];
+        if (col) { x.fillStyle = col; x.fillRect(i * scale, j * scale, scale, scale); }
       }
+      return c;
+    }
+
+    function flipSprite(c) {
+      const f = document.createElement('canvas');
+      f.width = c.width; f.height = c.height;
+      const x = f.getContext('2d');
+      x.translate(c.width, 0); x.scale(-1, 1); x.drawImage(c, 0, 0);
+      return f;
+    }
+
+    /* ---------- THE PHANTOM (journalist thief) 14x18, 4 directions ---------- */
+    const PF = {
+      down_stand: [
+        '....oooooo....', '...ohhhhhho...', '..ohhhhhhhho..', '..ohHhhhhHho..',
+        '..owwwwwwwwo..', '..owowwwwowo..', '..owwwwwwwwo..', '...owwwwwwo...',
+        '....okkkko....', '..okkkkkkkko..', '.okKkkkkkkKko.', '.oRkkkkkkkkRo.',
+        '.oRkkkkkkkkRo.', '..okkkkkkkko..', '..okkkkkkkko..', '...okkkkkko...',
+        '...oko..oko...', '...ooo..ooo...'
+      ],
+      down_walk: [
+        '....oooooo....', '...ohhhhhho...', '..ohhhhhhhho..', '..ohHhhhhHho..',
+        '..owwwwwwwwo..', '..owowwwwowo..', '..owwwwwwwwo..', '...owwwwwwo...',
+        '....okkkko....', '..okkkkkkkko..', '.okKkkkkkkKko.', '.oRkkkkkkkkRo.',
+        '.oRkkkkkkkkRo.', '..okkkkkkkko..', '..okkkkkkkko..', '...okkkkkko...',
+        '..oko...oko...', '..ooo...ooo...'
+      ],
+      up_stand: [
+        '....oooooo....', '...ohhhhhho...', '..ohhhhhhhho..', '..ohHhhhHhho..',
+        '..ohhhhhhhho..', '..ohhhhhhhho..', '..ohhhhhhhho..', '...ohhhhhho...',
+        '....okkkko....', '..okkkkkkkko..', '.okKkkkkkkKko.', '.oRkkkkkkkkRo.',
+        '.oRkkkkkkkkRo.', '..okkkkkkkko..', '..okkkkkkkko..', '...okkkkkko...',
+        '...oko..oko...', '...ooo..ooo...'
+      ],
+      up_walk: [
+        '....oooooo....', '...ohhhhhho...', '..ohhhhhhhho..', '..ohHhhhHhho..',
+        '..ohhhhhhhho..', '..ohhhhhhhho..', '..ohhhhhhhho..', '...ohhhhhho...',
+        '....okkkko....', '..okkkkkkkko..', '.okKkkkkkkKko.', '.oRkkkkkkkkRo.',
+        '.oRkkkkkkkkRo.', '..okkkkkkkko..', '..okkkkkkkko..', '...okkkkkko...',
+        '..oko...oko...', '..ooo...ooo...'
+      ],
+      side_stand: [
+        '....oooooo....', '...ohhhhhho...', '..ohhhhhhhho..', '..ohhhhhhhho..',
+        '..ohhwwwwwwo..', '..ohhwwowwwo..', '..ohhwwwwwwo..', '...ohwwwwwo...',
+        '....okkkko....', '...okkkkkko...', '..okkkkkkkKo..', '..okkkkkkRko..',
+        '..okkkkkkRko..', '..okkkkkkkko..', '...okkkkkko...', '...okkkkko....',
+        '...oko.oko....', '...ooo.ooo....'
+      ],
+      side_walk: [
+        '....oooooo....', '...ohhhhhho...', '..ohhhhhhhho..', '..ohhhhhhhho..',
+        '..ohhwwwwwwo..', '..ohhwwowwwo..', '..ohhwwwwwwo..', '...ohwwwwwo...',
+        '....okkkko....', '...okkkkkko...', '..okkkkkkkKo..', '..okkkkkkRko..',
+        '..okkkkkkRko..', '..okkkkkkkko..', '...okkkkkko...', '..okkkkkko....',
+        '..oko...oko...', '..ooo...ooo...'
+      ]
+    };
+
+    /* ---------- SHADOW (palace security) 14x18 ---------- */
+    const GF = {
+      down_stand: [
+        '....oooooo....', '...obbbbbbo...', '..obbbbbbbbo..', '..obBbbbbBbo..',
+        '..obbobbobbo..', '..obbbbbbbbo..', '..obbbbbbbbo..', '...obbbbbbo...',
+        '....onnnno....', '..onnnRRnnno..', '.onnnnRRnnnno.', '.oNnnnRRnnnNo.',
+        '.onnnnnnnnnno.', '..onnnnnnnno..', '..onnnnnnnno..', '...onnnnnno...',
+        '...ono..ono...', '...ooo..ooo...'
+      ],
+      down_walk: [
+        '....oooooo....', '...obbbbbbo...', '..obbbbbbbbo..', '..obBbbbbBbo..',
+        '..obbobbobbo..', '..obbbbbbbbo..', '..obbbbbbbbo..', '...obbbbbbo...',
+        '....onnnno....', '..onnnRRnnno..', '.onnnnRRnnnno.', '.oNnnnRRnnnNo.',
+        '.onnnnnnnnnno.', '..onnnnnnnno..', '..onnnnnnnno..', '...onnnnnno...',
+        '..ono...ono...', '..ooo...ooo...'
+      ],
+      up_stand: [
+        '....oooooo....', '...onnnnnno...', '..onnnnnnnno..', '..onNnnnnNno..',
+        '..onnnnnnnno..', '..onnnnnnnno..', '..onnnnnnnno..', '...onnnnnno...',
+        '....onnnno....', '..onnnnnnnno..', '.onnnnnnnnnno.', '.oNnnnnnnnnNo.',
+        '.onnnnnnnnnno.', '..onnnnnnnno..', '..onnnnnnnno..', '...onnnnnno...',
+        '...ono..ono...', '...ooo..ooo...'
+      ],
+      up_walk: [
+        '....oooooo....', '...onnnnnno...', '..onnnnnnnno..', '..onNnnnnNno..',
+        '..onnnnnnnno..', '..onnnnnnnno..', '..onnnnnnnno..', '...onnnnnno...',
+        '....onnnno....', '..onnnnnnnno..', '.onnnnnnnnnno.', '.oNnnnnnnnnNo.',
+        '.onnnnnnnnnno.', '..onnnnnnnno..', '..onnnnnnnno..', '...onnnnnno...',
+        '..ono...ono...', '..ooo...ooo...'
+      ],
+      side_stand: [
+        '....oooooo....', '...onnnnnno...', '..onnnnnnnno..', '..onnbbbbbbo..',
+        '..onnbbobbbo..', '..onnbbbbbbo..', '..onnbbbbbbo..', '...onbbbbbo...',
+        '....onnnno....', '...onnnnnno...', '..onnnnnnnNo..', '..onnnnnRnno..',
+        '..onnnnnRnno..', '..onnnnnnnno..', '...onnnnnno...', '...onnnnno....',
+        '...ono.ono....', '...ooo.ooo....'
+      ],
+      side_walk: [
+        '....oooooo....', '...onnnnnno...', '..onnnnnnnno..', '..onnbbbbbbo..',
+        '..onnbbobbbo..', '..onnbbbbbbo..', '..onnbbbbbbo..', '...onbbbbbo...',
+        '....onnnno....', '...onnnnnno...', '..onnnnnnnNo..', '..onnnnnRnno..',
+        '..onnnnnRnno..', '..onnnnnnnno..', '...onnnnnno...', '..onnnnnno....',
+        '..ono...ono...', '..ooo...ooo...'
+      ]
+    };
+
+    function buildActor(frames) {
+      const f = {};
+      for (const k in frames) f[k] = makeSprite(frames[k]);
+      /* frame order: [stand, stepA, stand, stepB] */
+      return {
+        down: [f.down_stand, f.down_walk, f.down_stand, flipSprite(f.down_walk)],
+        up: [f.up_stand, f.up_walk, f.up_stand, flipSprite(f.up_walk)],
+        left: [flipSprite(f.side_stand), flipSprite(f.side_walk), flipSprite(f.side_stand), flipSprite(f.side_walk)],
+        right: [f.side_stand, f.side_walk, f.side_stand, f.side_walk]
+      };
+    }
+    const SPR = { player: buildActor(PF), guard: buildActor(GF) };
+
+    /* ---------- key items ---------- */
+    const ITEM_SRC = {
+      badge: [
+        '..oooooo..', '.ogggggGo.', '.ogwwggGo.', '.ogwwggGo.',
+        '.ogggggGo.', '.ogRRRRGo.', '..oooooo..'
+      ],
+      map: [
+        '.oooooooo.', '.owwwwwwo.', '.owrwwrwo.', '.owwrrwwo.',
+        '.owrwwrwo.', '.owwwwwwo.', '.oooooooo.'
+      ],
+      pass: [
+        '.oooooooo.', '.oyyyyyyo.', '.oyokoyyo.', '.oyyyyoyo.',
+        '.oyoyokyo.', '.oyyyyyyo.', '.oooooooo.'
+      ],
+      dossier: [
+        '.oooooooo.', '.orrrrrro.', '.oRwwwwRo.', '.oRwwwwRo.',
+        '.oRwwwwRo.', '.orrrrrro.', '.oooooooo.'
+      ]
+    };
+    const ITEMS = {};
+    for (const k in ITEM_SRC) ITEMS[k] = makeSprite(ITEM_SRC[k]);
+
+    const imgCard = new Image(); imgCard.src = 'images/persona/calling_card.png';
+    function drawSmooth(img, x, y, w, h) {
+      g.imageSmoothingEnabled = true;
+      g.drawImage(img, x, y, w, h);
+      g.imageSmoothingEnabled = false;
+    }
+    const imgChest = new Image(); imgChest.src = 'images/persona/treasure_chest.png';
+
+    /* =====================================================================
+       TILES (16px)
+       ===================================================================== */
+    const T = 16;
+    const TILE_SRC = {
+      floor: [
+        'cfffffffffffffff', 'fffffffFffffffff', 'ffFfffffffffffff', 'ffffffffffffFfff',
+        'fffffffffFffffff', 'cfffffffffffffff', 'fffFffffffffffff', 'ffffffffffffffff',
+        'cfffffffffFfffff', 'ffffffFfffffffff', 'ffffffffffffffff', 'ffFffffffffFffff',
+        'ffffffffffffffff', 'fffffffffFffffff', 'cfffFfffffffffff', 'ffffffffffffffff'
+      ],
+      carpet: [
+        'qxxxxxxxxxxxxxxx', 'xxxxxxxXxxxxxxxx', 'xxXxxxxxxxxxXxxx', 'xxxxxxXXXxxxxxxx',
+        'xxxxxXXxXXxxxxxx', 'xxxxXXxxxXXxxxxx', 'xxxXXxxxxxXXxxxx', 'xxxxXXxxxXXxxxxx',
+        'xxxxxXXxXXxxxxxx', 'xxxxxxXXXxxxxxxx', 'xxXxxxxxxxxxXxxx', 'xxxxxxxXxxxxxxxx',
+        'xxxxxxxxxxxxxxxx', 'xXxxxxxxxxxxxxXx', 'xxxxxxxxXxxxxxxx', 'qxxxxxxxxxxxxxxx'
+      ],
+      wall: [
+        'qqqqqqqqqqqqqqqq', 'rrrrrrrrrrrrrrrr', 'qqqqqqqqqqqqqqqq', 'gggggggggggggggg',
+        'cccccccccccccccc', 'uuuuuuucuuuuuuuc', 'uUuuuuucuuUuuuuc', 'uuuuuuucuuuuuuuc',
+        'cccccccccccccccc', 'uuucuuuuuuucuuuu', 'uuucuuUuuuucuuuu', 'uuucuuuuuuucuuuu',
+        'cccccccccccccccc', 'uuuuuuucuuuuuuuc', 'uuUuuuucuuuuUuuc', 'cccccccccccccccc'
+      ],
+      column: [
+        'cfffffffffffffff', 'ffffommmmoffffff', 'fffommmmmmoFffff', 'ffommWWmmmmoffff',
+        'ffomWWmmmmMoffff', 'ffommmmmmmMoffff', 'ffommmmmmmMoffff', 'ffommmmmmMMoffff',
+        'ffommmmmmMMoffff', 'ffommmmmMMMoffff', 'ffoGggggggGoffff', 'ffogggggggGoFfff',
+        'foGgggggggggoffff', 'foggggggggggofff', 'foooooooooooofff', 'cfffffffffffffff'
+      ],
+      safe: [
+        'cfffffffffffffff', 'foossssssssoofff', 'fosSSSSSSSSssoff', 'fosSssssssSssoff',
+        'fosSsoooossSsoff', 'fosSsoSSosssoff.', 'fosSsoSSossssoff', 'fosSsoooossSsoff',
+        'fossssssGgssoff.', 'fosSssssssSssoff', 'fosssssssssssoff', 'foosoofffoosooff',
+        'cfffffffffffffff', 'ffffffFfffffffff', 'cfffffffffffFfff', 'ffffffffffffffff'
+      ],
+      vase: [
+        'cfffffffffffffff', 'fffffoGGgoffffff', 'ffffoGrrqgoFffff', 'fffoGrrRrqgoffff',
+        'ffoGrrRRrrqgofff', 'ffoGrRRrrrqgofff', 'ffoGrRrrrrqgofff', 'ffoGrrrrrqqgofff',
+        'fffoGrrrqqgoffff', 'ffffoGrqqgofffff', 'fffffoGggoffffff', 'ffffoGGggGofffff',
+        'fffoooooooooffff', 'ffffffFfffffffff', 'cfffffffffffffff', 'ffffffffffffffff'
+      ],
+      door: [
+        'gggggggggggggggg', 'goqqqqqqqqqqqqog', 'goqrrrrqqrrrrqog', 'goqrRRrqqrRRrqog',
+        'goqrrrrqqrrrrqog', 'goqrrrrqqrrrrqog', 'goqrrGoqqoGrrqog', 'goqrrGoqqoGrrqog',
+        'goqrrrrqqrrrrqog', 'goqrrrrqqrrrrqog', 'goqrRRrqqrRRrqog', 'goqrrrrqqrrrrqog',
+        'goqrrrrqqrrrrqog', 'goqqqqqqqqqqqqog', 'gggggggggggggggg', 'gggggggggggggggg'
+      ],
+      dooropen: [
+        'gggggggggggggggg', 'godddddddddddddog', 'goddddddddddddog', 'goddddddddddddog',
+        'goddddddddddddog', 'goddddddddddddog', 'goddddddddddddog', 'goddddddddddddog',
+        'goddddddddddddog', 'goddddddddddddog', 'goddddddddddddog', 'goddddddddddddog',
+        'goddddddddddddog', 'goddddddddddddog', 'gggggggggggggggg', 'gggggggggggggggg'
+      ],
+      pedestal: [
+        'cfffffffffffffff', 'ffoooooooooooff.', 'ffommmmmmmmmoff.', 'ffomWWmmmmmMoff.',
+        'ffommmmmmmmMoff.', 'ffoooooooooooff.', 'fffommmmmmmofff.', 'fffommmmmmMofff.',
+        'fffommmmmmMofff.', 'fffommmmmmMofff.', 'ffoooooooooooff.', 'ffommmmmmmmmoff.',
+        'ffomgGggGgmmoff.', 'ffoooooooooooff.', 'cfffffffffffffff', 'ffffffffffffffff'
+      ],
+      exit: [
+        'qxxxxxxxxxxxxxxq', 'xwwxxxxxxxxxxwwx', 'xwxxxxxxxxxxxxwx', 'xxxxxwwwwwwxxxxx',
+        'xxxxxxwwwwxxxxxx', 'xxxxxxxwwxxxxxxx', 'xxxxxxxxxxxxxxxx', 'xxxxxwwwwwwxxxxx',
+        'xxxxxxwwwwxxxxxx', 'xxxxxxxwwxxxxxxx', 'xxxxxxxxxxxxxxxx', 'xxxxxwwwwwwxxxxx',
+        'xxxxxxwwwwxxxxxx', 'xxxxxxxwwxxxxxxx', 'xwxxxxxxxxxxxxwx', 'qwwxxxxxxxxxxwwq'
+      ]
+    };
+    /* fix accidental short rows: pad with 'f' */
+    for (const k in TILE_SRC) TILE_SRC[k] = TILE_SRC[k].map(r => (r + 'ffffffffffffffff').slice(0, 16).replace(/\./g, 'f'));
+    const TILES = {};
+    for (const k in TILE_SRC) TILES[k] = makeSprite(TILE_SRC[k]);
+
+    /* =====================================================================
+       THE PALACE — 26x18 map
+       # wall  . floor  r carpet  c column  s safe  v vase(cover)
+       D vault door  T treasure pedestal  E palace entrance
+       B badge key  M vault-map key  P password key (spawn markers)
+       ===================================================================== */
+    const MAP_STR = [
+      '##########################',
+      '#...v....########....v...#',
+      '#.c..s...#..TT..#..s...P.#',
+      '#........#......#........#',
+      '#...c....###D####....c...#',
+      '#rrrrrrrrrrrrrrrrrrrrrrrr#',
+      '#..v........r........v...#',
+      '#.###..###.#r#.###..###..#',
+      '#.#......#.#r#.#......#..#',
+      '#.#.####.#.#r#.#.####.#..#',
+      '#.#..B##.#.#r#.#.##M..#..#',
+      '#.#.####.#.#r#.#.####.#..#',
+      '#.#......#.#r#.#......#..#',
+      '#.###..###.#r#.###..###..#',
+      '#....v......r......v.....#',
+      '#rrrrrrrrrrrrrrrrrrrrrrrr#',
+      '#....c....v.E.v....c.....#',
+      '##########################'
+    ];
+    const MAPW = MAP_STR[0].length, MAPH = MAP_STR.length;
+    const CHAR2TILE = {
+      '#': 'wall', '.': 'floor', 'r': 'carpet', 'c': 'column', 's': 'safe',
+      'v': 'vase', 'D': 'door', 'T': 'pedestal', 'E': 'exit',
+      'B': 'floor', 'M': 'floor', 'P': 'floor'
+    };
+    function mapChar(x, y) {
+      if (x < 0 || y < 0 || x >= MAPW || y >= MAPH) return '#';
+      return MAP_STR[y][x];
+    }
+    function tileAt(x, y) {
+      const ch = mapChar(x, y);
+      if (ch === 'D') return game.doorOpen ? 'dooropen' : 'door';
+      return CHAR2TILE[ch] || 'floor';
+    }
+    const SOLID_TILES = { wall: 1, column: 1, safe: 1, door: 1, pedestal: 1 };
+    const SIGHT_TILES = { wall: 1, column: 1, safe: 1, door: 1 };
+    const isSolid = (x, y) => !!SOLID_TILES[tileAt(x, y)];
+    const blocksSight = (x, y) => !!SIGHT_TILES[tileAt(x, y)];
+
+    /* key spawns scanned from the map */
+    const KEY_DEFS = [];
+    for (let y = 0; y < MAPH; y++) for (let x = 0; x < MAPW; x++) {
+      const ch = MAP_STR[y][x];
+      if (ch === 'B') KEY_DEFS.push({ id: 'badge', x, y, label: 'VISITOR BADGE' });
+      if (ch === 'M') KEY_DEFS.push({ id: 'map', x, y, label: 'VAULT MAP' });
+      if (ch === 'P') KEY_DEFS.push({ id: 'pass', x, y, label: 'PASSWORD' });
+    }
+    const DOOR_POS = { x: 12, y: 4 };
+    const TREASURE_POS = { x: 12, y: 2 };
+    const SPAWN = { x: 12, y: 15 };
+    /* alarm respawn point per zone (0 lobby / 1 halls / 2 top floor) */
+    const ZONE_ENTRY = [[12, 15], [12, 14], [12, 5]];
+    const ZONE_NAME = ['THE LOBBY', 'THE HALLS', 'THE TOP FLOOR'];
+    const zoneOfRow = y => y >= 14 ? 0 : y >= 5 ? 1 : 2;
+
+    /* =====================================================================
+       GUARDS (Shadows) — fixed patrol routes
+       ===================================================================== */
+    const GUARD_DEFS = [
+      { path: [[3, 8], [8, 8], [8, 12], [3, 12]], name: 'SHADOW GUARD' },
+      { path: [[21, 8], [16, 8], [16, 12], [21, 12]], name: 'SHADOW GUARD' },
+      { path: [[17, 3], [23, 3]], name: 'SHADOW LAWYER' },
+      { path: [[2, 5], [23, 5]], name: 'SHADOW BUTLER' },
+      { path: [[23, 15], [2, 15]], name: 'SHADOW INTERN' }
+    ];
+    const CONE_LEN = 58, CONE_HALF = 0.5;
+    let guards = [];
+    function makeGuards() {
+      guards = GUARD_DEFS.map(d => ({
+        name: d.name, path: d.path,
+        px: d.path[0][0], py: d.path[0][1],
+        wi: 1, wait: 0, fx: 1, fy: 0, animT: 0
+      }));
+      guards.forEach(gd => {
+        const wp = gd.path[1];
+        const dx = wp[0] - gd.px, dy = wp[1] - gd.py;
+        gd.fx = Math.abs(dx) >= Math.abs(dy) ? Math.sign(dx) || 1 : 0;
+        gd.fy = gd.fx ? 0 : Math.sign(dy) || 0;
+      });
+    }
+
+    /* =====================================================================
+       STATE
+       ===================================================================== */
+    const game = {
+      state: 'title',
+      px: SPAWN.x, py: SPAWN.y, dir: 'up',
+      moving: false, moveT: 0, fromX: SPAWN.x, fromY: SPAWN.y,
+      step: 0,
+      keysHave: {},                 /* badge / map / pass */
+      doorOpen: false,
+      dossier: false,
+      escape: false,
+      alert: 0,
+      hidden: false,
+      grace: 0,
+      spot: null,                   /* {t, guard} caught cutscene */
+      msg: null,                    /* {lines, after} */
+      cardT: 0, bustedT: 0, winT: 0, winSel: 0,
+      exitNagged: false,
+      animClock: 0
+    };
+    makeGuards();
+    const keyCount = () => ['badge', 'map', 'pass'].filter(k => game.keysHave[k]).length;
+    const allKeys = () => keyCount() === 3;
+
+    function resetRun() {
+      game.keysHave = {};
+      game.doorOpen = false; game.dossier = false; game.escape = false;
+      game.alert = 0; game.hidden = false; game.spot = null; game.msg = null;
+      game.px = game.fromX = SPAWN.x; game.py = game.fromY = SPAWN.y;
+      game.dir = 'up'; game.moving = false; game.moveT = 0;
+      game.grace = 2; game.exitNagged = false;
+      makeGuards();
+    }
+
+    /* =====================================================================
+       INPUT — keyboard + DOM pad + canvas touch zones
+       ===================================================================== */
+    const keys = {};
+    const KEYMAP = {
+      ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
+      w: 'up', s: 'down', a: 'left', d: 'right',
+      z: 'A', Enter: 'A', ' ': 'A', x: 'B', Escape: 'B', Backspace: 'B'
+    };
+    let pressQueue = [];
+    window.addEventListener('keydown', e => {
+      const k = KEYMAP[e.key];
+      if (!k) return;
+      e.preventDefault();
+      initAudio();
+      if (!keys[k]) pressQueue.push(k);
+      keys[k] = true;
     });
+    window.addEventListener('keyup', e => { const k = KEYMAP[e.key]; if (k) keys[k] = false; });
 
-    // Fallback: Click anywhere to start if not playing
-    document.addEventListener('click', () => {
-      if (!isPlaying) {
-        audio.play().then(() => {
-          isPlaying = true;
-          musicIcon.className = 'fas fa-pause';
-        }).catch(e => console.error("Audio play failed:", e));
+    document.querySelectorAll('.dpad button').forEach(btn => {
+      const dir = btn.dataset.dir;
+      const dn = e => { e.preventDefault(); initAudio(); if (!keys[dir]) pressQueue.push(dir); keys[dir] = true; };
+      const up = e => { e.preventDefault(); keys[dir] = false; };
+      btn.addEventListener('pointerdown', dn);
+      btn.addEventListener('pointerup', up);
+      btn.addEventListener('pointerleave', up);
+      btn.addEventListener('pointercancel', up);
+    });
+    document.querySelectorAll('.ab button').forEach(btn => {
+      btn.addEventListener('pointerdown', e => { e.preventDefault(); initAudio(); pressQueue.push(btn.dataset.btn); });
+    });
+    document.getElementById('noteBtn').addEventListener('pointerdown', e => { e.preventDefault(); initAudio(); pressQueue.push('note'); });
+
+    let zones = [];
+    function zone(x, y, w, h, act, data) { zones.push({ x, y, w, h, act, data }); }
+    cv.addEventListener('pointerdown', e => {
+      initAudio();
+      const r = cv.getBoundingClientRect();
+      const x = (e.clientX - r.left) * 256 / r.width, y = (e.clientY - r.top) * 192 / r.height;
+      for (const z of zones) {
+        if (x >= z.x && x < z.x + z.w && y >= z.y && y < z.y + z.h) { pressQueue.push(z); return; }
       }
-    }, { once: true });
+      pressQueue.push('A');
+    });
+    function popPress() { return pressQueue.shift(); }
+    const isA = p => p === 'A' || (p && p.act === 'A');
+    const isB = p => p === 'B' || (p && p.act === 'B');
+    const isNote = p => p === 'note' || (p && p.act === 'note');
 
-    // Toggle Button Logic
-    if (musicToggle) {
-      musicToggle.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent document click from interfering
-        if (isPlaying) {
-          audio.pause();
-          isPlaying = false;
-          musicIcon.className = 'fas fa-play';
+    /* =====================================================================
+       DRAW HELPERS — Persona-style angular UI
+       ===================================================================== */
+    function px(x, y, w, h, col) { g.fillStyle = col; g.fillRect(x | 0, y | 0, w, h); }
+
+    function poly(pts, col) {
+      g.fillStyle = col;
+      g.beginPath();
+      g.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]);
+      g.closePath(); g.fill();
+    }
+
+    /* angular black panel with diagonal-cut corners, white edge, red accent */
+    function frameP5(x, y, w, h, o = {}) {
+      const cut = o.cut !== undefined ? o.cut : 6;
+      const pts = [
+        [x + cut, y], [x + w, y], [x + w, y + h - cut],
+        [x + w - cut, y + h], [x, y + h], [x, y + cut]
+      ];
+      /* drop shadow */
+      poly(pts.map(p => [p[0] + 2, p[1] + 2]), 'rgba(0,0,0,.55)');
+      poly(pts, o.bg || 'rgba(12,9,13,.96)');
+      g.strokeStyle = o.edge || '#f4f2ec';
+      g.lineWidth = 1;
+      g.beginPath();
+      g.moveTo(pts[0][0], pts[0][1]);
+      for (let i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]);
+      g.closePath(); g.stroke();
+      if (o.acc !== false) {
+        poly([[x + cut, y], [x + cut + 9, y], [x, y + cut + 9], [x, y + cut]], o.acc || '#d01830');
+      }
+    }
+
+    function text(str, x, y, col = '#f4f2ec', size = 8) {
+      g.font = size + 'px "Press Start 2P"';
+      g.textBaseline = 'top';
+      g.fillStyle = col;
+      g.fillText(str, x, y);
+    }
+
+    function textC(str, cx, y, col, size = 8) {
+      g.font = size + 'px "Press Start 2P"';
+      const w = g.measureText(str).width;
+      text(str, Math.round(cx - w / 2), y, col, size);
+    }
+
+    /* white text with hard black shadow (P5 poster look) */
+    function textShadow(str, x, y, col, size, shadow = '#000') {
+      text(str, x + 2, y + 2, shadow, size);
+      text(str, x, y, col, size);
+    }
+    function textCShadow(str, cx, y, col, size, shadow = '#000') {
+      g.font = size + 'px "Press Start 2P"';
+      const w = g.measureText(str).width;
+      textShadow(str, Math.round(cx - w / 2), y, col, size, shadow);
+    }
+
+    /* jagged P5 star splash */
+    function splash(cx, cy, rOut, rIn, n, col, rot = 0) {
+      const pts = [];
+      for (let i = 0; i < n * 2; i++) {
+        const r = (i % 2 ? rIn : rOut) * (0.82 + 0.36 * ((i * 7919) % 13) / 13);
+        const a = rot + i * Math.PI / n;
+        pts.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
+      }
+      poly(pts, col);
+    }
+
+    /* =====================================================================
+       AUDIO — original chiptune (acid-jazz-ish), WebAudio only
+       ===================================================================== */
+    const audio = { ctx: null, master: null, music: null, noise: null, next: 0, step: 0 };
+    const m2f = m => 440 * Math.pow(2, (m - 69) / 12);
+
+    function initAudio() {
+      if (audio.ctx) { if (audio.ctx.state === 'suspended') audio.ctx.resume(); return; }
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      const ctx = audio.ctx = new AC();
+      audio.master = ctx.createGain(); audio.master.gain.value = .5;
+      audio.master.connect(ctx.destination);
+      audio.music = ctx.createGain(); audio.music.gain.value = .42;
+      audio.music.connect(audio.master);
+      const buf = ctx.createBuffer(1, ctx.sampleRate * .4, ctx.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      audio.noise = buf;
+      audio.next = ctx.currentTime + .08;
+      audio.step = 0;
+      setInterval(musicTick, 30);
+    }
+
+    function osc(type, freq, t0, dur, gain, dest, slideTo) {
+      const ctx = audio.ctx;
+      const o = ctx.createOscillator(), gn = ctx.createGain();
+      o.type = type; o.frequency.setValueAtTime(freq, t0);
+      if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
+      gn.gain.setValueAtTime(gain, t0);
+      gn.gain.exponentialRampToValueAtTime(.0008, t0 + dur);
+      o.connect(gn); gn.connect(dest || audio.music);
+      o.start(t0); o.stop(t0 + dur + .02);
+    }
+
+    function hat(t0, gain, dur, fc) {
+      const ctx = audio.ctx;
+      const src = ctx.createBufferSource(); src.buffer = audio.noise;
+      const f = ctx.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = fc || 6500;
+      const gn = ctx.createGain();
+      gn.gain.setValueAtTime(gain, t0);
+      gn.gain.exponentialRampToValueAtTime(.0008, t0 + dur);
+      src.connect(f); f.connect(gn); gn.connect(audio.music);
+      src.start(t0); src.stop(t0 + dur + .02);
+    }
+
+    function kick(t0, gain) {
+      osc('sine', 110, t0, .14, gain || .16, audio.music, 42);
+    }
+
+    /* calm theme: lazy walking bass + swung hats. escape: driving pulse */
+    const BASS_CALM = [38, 41, 45, 48, 50, 48, 46, 45, 43, 46, 50, 53, 50, 48, 45, 41];
+    const BASS_ESC = [38, 38, 50, 38, 41, 38, 53, 38, 36, 36, 48, 36, 43, 43, 46, 47];
+    const STAB_DM7 = [62, 65, 69, 72], STAB_G7 = [55, 59, 62, 65], STAB_DIM = [62, 65, 68, 71];
+
+    function scheduleStep(s, t) {
+      const st = game.state;
+      if (st === 'title' || st === 'win' || st === 'busted') return;
+      const esc = game.escape;
+      if (!esc) {
+        if (s % 2 === 0) {
+          const n = BASS_CALM[(s >> 1) % 16];
+          osc('triangle', m2f(n), t, .30, .15);
+        }
+        hat(t, s % 2 ? .045 : .022, .035);
+        if (s % 16 === 4 || s % 16 === 12) hat(t, .035, .09, 2200);
+        if (s % 32 === 6) STAB_DM7.forEach(n => osc('square', m2f(n), t, .16, .018));
+        if (s % 32 === 22) STAB_G7.forEach(n => osc('square', m2f(n), t, .16, .018));
+      } else {
+        const n = BASS_ESC[s % 16];
+        osc('sawtooth', m2f(n), t, .11, .09);
+        if (s % 4 === 0) kick(t, .15);
+        hat(t, s % 2 ? .05 : .028, s % 16 === 14 ? .12 : .03);
+        if (s % 16 === 8) STAB_DIM.forEach(n => osc('square', m2f(n), t, .12, .02));
+        if (s % 32 === 30) osc('square', m2f(74), t, .2, .03, audio.music, m2f(80));
+      }
+    }
+
+    function musicTick() {
+      const ctx = audio.ctx;
+      while (audio.next < ctx.currentTime + .12) {
+        scheduleStep(audio.step, audio.next);
+        const esc = game.escape;
+        const bpm = esc ? 164 : 102;
+        let dur = 60 / bpm / 2;
+        if (!esc) dur *= (audio.step % 2 === 0) ? 1.18 : 0.82;  /* swing */
+        audio.next += dur;
+        audio.step++;
+      }
+    }
+
+    /* ---------- sfx ---------- */
+    function sfx(fn) { if (audio.ctx) fn(audio.ctx.currentTime + .01); }
+    const sfxKey = () => sfx(t => { osc('square', m2f(76), t, .09, .06, audio.master); osc('square', m2f(83), t + .09, .14, .06, audio.master); });
+    const sfxSpot = () => sfx(t => { osc('sawtooth', 660, t, .09, .1, audio.master); osc('sawtooth', 470, t + .1, .22, .1, audio.master, 180); });
+    const sfxHide = () => sfx(t => osc('triangle', 220, t, .08, .06, audio.master, 150));
+    const sfxCard = () => sfx(t => {
+      hat(t, .12, .4, 1200);
+      [62, 65, 69, 74].forEach((n, i) => osc('square', m2f(n), t + .12 + i * .07, .18, .05, audio.master));
+    });
+    const sfxDossier = () => sfx(t => [62, 65, 69, 74, 77].forEach((n, i) => osc('triangle', m2f(n), t + i * .08, .2, .07, audio.master)));
+    const sfxBusted = () => sfx(t => [50, 46, 43, 38].forEach((n, i) => osc('sawtooth', m2f(n), t + i * .14, .22, .08, audio.master)));
+    const sfxWin = () => sfx(t => [62, 66, 69, 74, 78, 81].forEach((n, i) => osc('square', m2f(n), t + i * .11, .26, .06, audio.master)));
+
+    /* =====================================================================
+       WORLD LOGIC
+       ===================================================================== */
+    const CATCH_LINES = [
+      ["'HEY! Press badges don't", "work after midnight!'"],
+      ["'Sir, this is a PRIVATE", "palace of corruption.'"],
+      ["'You'll be hearing from all", "forty of our lawyers!'"],
+      ["'No photos! ESPECIALLY", "not of the evidence!'"],
+      ["'Security! The truth is", "trying to get in again!'"]
+    ];
+
+    function showMsg(lines, after) { game.msg = { lines, after: after || null }; }
+
+    function tryMove(dx, dy, dir) {
+      game.dir = dir;
+      const nx = game.px + dx, ny = game.py + dy;
+      const ch = mapChar(nx, ny);
+      if (ch === 'D' && !game.doorOpen) { bumpDoor(); return; }
+      if (ch === 'T') { bumpTreasure(); return; }
+      if (isSolid(nx, ny)) return;
+      game.fromX = game.px; game.fromY = game.py;
+      game.px = nx; game.py = ny;
+      game.moving = true; game.moveT = 0;
+      game.hidden = false;
+    }
+
+    let doorCooldown = 0, treasureCooldown = 0;
+    function bumpDoor() {
+      if (doorCooldown > 0) return;
+      doorCooldown = .6;
+      if (allKeys()) startCard();
+      else showMsg(['The vault door is sealed.', 'It wants a badge, a map and', "somebody's password. Rude."]);
+    }
+    function bumpTreasure() {
+      if (treasureCooldown > 0 || !game.doorOpen || game.dossier) return;
+      treasureCooldown = .6;
+      takeDossier();
+    }
+
+    function startCard() {
+      game.state = 'card';
+      game.cardT = 0;
+      sfxCard();
+    }
+    function finishCard() {
+      game.doorOpen = true;
+      game.state = 'world';
+      game.grace = 1.5;
+      showMsg(['The palace shudders. Upstairs', 'the vault swings open and the', 'TREASURE materializes. Go!']);
+    }
+
+    function takeDossier() {
+      game.dossier = true;
+      game.escape = true;
+      game.grace = 2;
+      sfxDossier();
+      showMsg(['You take THE DOSSIER!', "ALARM! 'SOMEONE IS STEALING", "OUR SECRETS!' Run to the exit!"]);
+    }
+
+    function spotPlayer(gd) {
+      if (game.spot || game.state !== 'world') return;
+      game.spot = { t: 0, guard: gd };
+      game.hidden = false;
+      sfxSpot();
+    }
+
+    function applyAlarm() {
+      game.alert++;
+      game.spot = null;
+      if (game.alert >= 3) {
+        game.state = 'busted';
+        game.bustedT = 0;
+        sfxBusted();
+        return;
+      }
+      const z = zoneOfRow(game.py);
+      const e = ZONE_ENTRY[z];
+      game.px = game.fromX = e[0];
+      game.py = game.fromY = e[1];
+      game.moving = false; game.moveT = 0;
+      game.dir = 'up';
+      game.grace = 2;
+    }
+
+    function finishStep() {
+      game.step++;
+      /* key pickup */
+      for (const k of KEY_DEFS) {
+        if (!game.keysHave[k.id] && k.x === game.px && k.y === game.py) {
+          game.keysHave[k.id] = true;
+          sfxKey();
+          if (k.id === 'badge') showMsg(['Got the VISITOR BADGE!', 'The photo looks nothing like', "you. Security won't care."]);
+          if (k.id === 'map') showMsg(['Got the VAULT MAP! Helpfully', "labeled 'TOTALLY NOT THE", "VAULT' in red marker."]);
+          if (k.id === 'pass') showMsg(['Got the PASSWORD! The intern', 'taped it under the keyboard,', 'as the prophecy foretold.']);
+        }
+      }
+      /* exit */
+      if (mapChar(game.px, game.py) === 'E') {
+        if (game.dossier) { doWin(); return; }
+        if (!game.exitNagged) {
+          game.exitNagged = true;
+          showMsg(['Leaving with no scoop?', 'Your editor would cry. The', 'Treasure is upstairs. Go.']);
+        }
+      } else game.exitNagged = false;
+    }
+
+    function doWin() {
+      game.state = 'win';
+      game.winT = 0; game.winSel = 0;
+      sfxWin();
+    }
+
+    function facingTile() {
+      const d = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }[game.dir];
+      return { x: game.px + d[0], y: game.py + d[1] };
+    }
+
+    /* ---------- guards ---------- */
+    function updateGuard(gd, dt) {
+      const sp = game.escape ? 3.6 : 2.0;
+      gd.animT += dt * (sp / 2);
+      if (gd.wait > 0) { gd.wait -= dt; return; }
+      const wp = gd.path[gd.wi];
+      const dx = wp[0] - gd.px, dy = wp[1] - gd.py;
+      const dist = Math.hypot(dx, dy);
+      if (dist < .04) {
+        gd.px = wp[0]; gd.py = wp[1];
+        gd.wi = (gd.wi + 1) % gd.path.length;
+        gd.wait = .35;
+        const nw = gd.path[gd.wi];
+        const ndx = nw[0] - gd.px, ndy = nw[1] - gd.py;
+        if (Math.abs(ndx) >= Math.abs(ndy)) { gd.fx = Math.sign(ndx) || gd.fx; gd.fy = 0; }
+        else { gd.fy = Math.sign(ndy) || gd.fy; gd.fx = 0; }
+        return;
+      }
+      const m = Math.min(dist, sp * dt);
+      gd.px += dx / dist * m; gd.py += dy / dist * m;
+      if (Math.abs(dx) >= Math.abs(dy)) { gd.fx = Math.sign(dx); gd.fy = 0; }
+      else { gd.fy = Math.sign(dy); gd.fx = 0; }
+    }
+
+    function castRay(cx, cy, ang, maxd) {
+      const ca = Math.cos(ang), sa = Math.sin(ang);
+      let d = 0;
+      while (d < maxd) {
+        d += 3;
+        const x = cx + ca * d, y = cy + sa * d;
+        if (blocksSight(Math.floor(x / T), Math.floor(y / T))) return d;
+      }
+      return maxd;
+    }
+
+    function canSee(gd, wx, wy) {
+      const gx = gd.px * T + 8, gy = gd.py * T + 8;
+      const dx = wx - gx, dy = wy - gy;
+      const dist = Math.hypot(dx, dy);
+      if (dist > CONE_LEN || dist < 1) return dist < 10;
+      const fa = Math.atan2(gd.fy, gd.fx);
+      let da = Math.atan2(dy, dx) - fa;
+      while (da > Math.PI) da -= 2 * Math.PI;
+      while (da < -Math.PI) da += 2 * Math.PI;
+      if (Math.abs(da) > CONE_HALF) return false;
+      const steps = Math.ceil(dist / 4);
+      for (let i = 1; i < steps; i++) {
+        const x = gx + dx * i / steps, y = gy + dy * i / steps;
+        if (blocksSight(Math.floor(x / T), Math.floor(y / T))) return false;
+      }
+      return true;
+    }
+
+    function playerPixelCenter() {
+      const lerp = game.moving ? game.moveT : 1;
+      const wx = (game.fromX + (game.px - game.fromX) * lerp) * T;
+      const wy = (game.fromY + (game.py - game.fromY) * lerp) * T;
+      return [wx + 8, wy + 8, wx, wy];
+    }
+
+    /* ---------- world update ---------- */
+    function updateWorld(dt) {
+      if (doorCooldown > 0) doorCooldown -= dt;
+      if (treasureCooldown > 0) treasureCooldown -= dt;
+      if (game.grace > 0) game.grace -= dt;
+
+      /* caught cutscene */
+      if (game.spot) {
+        game.spot.t += dt;
+        if (game.spot.t > 1.0) {
+          const L = CATCH_LINES[Math.floor(Math.random() * CATCH_LINES.length)];
+          const nextAlert = game.alert + 1;
+          const tail = nextAlert >= 3 ? 'The palace has had ENOUGH.' :
+            'Dragged back to ' + ZONE_NAME[zoneOfRow(game.py)] + '.';
+          showMsg([L[0], L[1], tail], 'alarm');
+          game.spot = null;
+        }
+        return;
+      }
+
+      if (game.msg) {
+        const p = popPress();
+        if (isA(p) || isB(p)) {
+          const after = game.msg.after;
+          game.msg = null;
+          if (after === 'alarm') applyAlarm();
+        }
+        return;
+      }
+
+      const p = popPress();
+      if (isNote(p) || isB(p)) { game.state = 'status'; return; }
+      if (isA(p)) {
+        if (game.hidden) { game.hidden = false; sfxHide(); }
+        else if (tileAt(game.px, game.py) === 'vase') { game.hidden = true; sfxHide(); }
+        else {
+          const f = facingTile(), ch = mapChar(f.x, f.y);
+          if (ch === 'D' && !game.doorOpen) bumpDoor();
+          else if (ch === 'T') {
+            if (game.doorOpen && !game.dossier) takeDossier();
+            else if (!game.doorOpen) showMsg(['A marble pedestal, waiting', 'for a Treasure that only a', 'calling card can summon.']);
+          }
+          else if (ch === 's') showMsg(['A decorative safe. Empty,', "like the palace's promises."]);
+          else if (ch === 'c') showMsg(['A column of pure ego.', 'Load-bearing, apparently.']);
+        }
+      }
+
+      if (!game.hidden) {
+        if (game.moving) {
+          game.moveT += dt * 5.2;
+          if (game.moveT >= 1) { game.moving = false; game.moveT = 0; finishStep(); }
         } else {
-          audio.play();
-          isPlaying = true;
-          musicIcon.className = 'fas fa-pause';
+          /* quick taps count too (queued press), then held keys */
+          const DIRS = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] };
+          if (typeof p === 'string' && DIRS[p]) tryMove(DIRS[p][0], DIRS[p][1], p);
+          else if (keys.up) tryMove(0, -1, 'up');
+          else if (keys.down) tryMove(0, 1, 'down');
+          else if (keys.left) tryMove(-1, 0, 'left');
+          else if (keys.right) tryMove(1, 0, 'right');
         }
-      });
-    }
+      }
 
-    // Toggle Menu for Mobile
-    const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-
-    if (menuToggle && navLinks) {
-      menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-      });
-    }
-
-    // Reels Carousel Navigation
-    const reelsCarousel = document.querySelector('.reels-carousel');
-    const leftBtn = document.querySelector('.reels-btn-left');
-    const rightBtn = document.querySelector('.reels-btn-right');
-
-    if (reelsCarousel && leftBtn && rightBtn) {
-      leftBtn.addEventListener('click', () => {
-        reelsCarousel.scrollBy({ left: -320, behavior: 'smooth' });
-      });
-
-      rightBtn.addEventListener('click', () => {
-        reelsCarousel.scrollBy({ left: 320, behavior: 'smooth' });
-      });
-    }
-
-    // Treasure Chest Logic (Simplified)
-    const surpriseBox = document.getElementById('p5Surprise');
-    const surpriseImg = document.getElementById('surpriseImg');
-    const surpriseTitle = document.getElementById('surpriseTitle');
-    const surpriseSubtitle = document.getElementById('surpriseSubtitle');
-
-    let isOpened = false;
-
-    if (surpriseBox) {
-      surpriseBox.addEventListener('click', () => {
-        if (!isOpened) {
-          // Change to Calling Card
-          surpriseImg.src = 'images/persona/calling_card.png';
-          surpriseTitle.innerText = "TAKE YOUR HEART";
-          surpriseSubtitle.innerText = "Thanks for visiting!";
-
-          // Add shake effect
-          surpriseImg.classList.add('shake');
-          setTimeout(() => surpriseImg.classList.remove('shake'), 500);
-
-          isOpened = true;
+      /* guards patrol + detection */
+      for (const gd of guards) updateGuard(gd, dt);
+      if (game.grace <= 0 && !game.hidden && game.state === 'world') {
+        const [pcx, pcy] = playerPixelCenter();
+        for (const gd of guards) {
+          if (canSee(gd, pcx, pcy)) { spotPlayer(gd); break; }
         }
-      });
+      }
     }
+
+    /* ---------- world draw ---------- */
+    function drawCone(gd, camX, camY) {
+      const gx = gd.px * T + 8 - camX, gy = gd.py * T + 8 - camY;
+      const fa = Math.atan2(gd.fy, gd.fx);
+      const pts = [[gx, gy]];
+      const N = 9;
+      for (let i = 0; i <= N; i++) {
+        const a = fa - CONE_HALF + (2 * CONE_HALF) * i / N;
+        const d = castRay(gd.px * T + 8, gd.py * T + 8, a, CONE_LEN);
+        pts.push([gx + Math.cos(a) * d, gy + Math.sin(a) * d]);
+      }
+      const pulse = game.escape ? .26 + .08 * Math.sin(game.animClock * 8) : .18;
+      poly(pts, 'rgba(228,26,44,' + pulse + ')');
+      g.strokeStyle = 'rgba(244,60,72,' + (pulse + .12) + ')';
+      g.lineWidth = 1;
+      g.beginPath();
+      g.moveTo(pts[1][0], pts[1][1]);
+      for (let i = 2; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]);
+      g.stroke();
+    }
+
+    function actorFrame(set, dirKey, animT, moving) {
+      const frames = set[dirKey];
+      if (!moving) return frames[0];
+      const seq = [1, 0, 3, 0];
+      return frames[seq[Math.floor(animT * 4) % 4]];
+    }
+
+    function drawWorld() {
+      zones = [];
+      const [pcx, pcy, wx, wy] = playerPixelCenter();
+      let camX = Math.round(wx - 128 + 8), camY = Math.round(wy - 96 + 9);
+      camX = Math.max(0, Math.min(MAPW * T - 256, camX));
+      camY = Math.max(0, Math.min(MAPH * T - 192, camY));
+
+      const x0 = Math.floor(camX / T), y0 = Math.floor(camY / T);
+      for (let j = y0; j <= y0 + 13 && j < MAPH; j++)
+        for (let i = x0; i <= x0 + 17 && i < MAPW; i++)
+          g.drawImage(TILES[tileAt(i, j)], i * T - camX, j * T - camY);
+
+      /* keys on the floor */
+      const bob = Math.sin(game.animClock * 4) * 1.5;
+      for (const k of KEY_DEFS) {
+        if (game.keysHave[k.id]) continue;
+        g.drawImage(ITEMS[k.id], k.x * T - camX + 3, k.y * T - camY + 4 + bob);
+      }
+
+      /* the Treasure (after calling card) */
+      if (game.doorOpen && !game.dossier) {
+        const ty = TREASURE_POS.y * T - camY - 12 + Math.sin(game.animClock * 3) * 1.5;
+        const tx = TREASURE_POS.x * T - camX - 2;
+        g.fillStyle = 'rgba(232,48,64,' + (.22 + .1 * Math.sin(game.animClock * 5)) + ')';
+        g.beginPath(); g.arc(tx + 18, ty + 18, 22, 0, 7); g.fill();
+        drawSmooth(imgChest, tx, ty, 36, 36);
+      }
+
+      /* vision cones under actors */
+      for (const gd of guards) drawCone(gd, camX, camY);
+
+      /* guards */
+      for (const gd of guards) {
+        const dirKey = gd.fx === 1 ? 'right' : gd.fx === -1 ? 'left' : gd.fy === -1 ? 'up' : 'down';
+        const fr = actorFrame(SPR.guard, dirKey, gd.animT, gd.wait <= 0);
+        g.drawImage(fr, Math.round(gd.px * T - camX + 1), Math.round(gd.py * T - camY - 4));
+      }
+
+      /* player (blinks while in grace) */
+      const blink = game.grace > 0 && Math.floor(game.animClock * 8) % 2 === 0;
+      if (!blink) {
+        const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
+        const seq = [1, 0, 3, 0];
+        const fr = game.moving ? SPR.player[game.dir][seq[phase]] : SPR.player[game.dir][0];
+        g.drawImage(fr, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
+      }
+      /* hidden: vase covers the player */
+      if (game.hidden) {
+        g.drawImage(TILES.vase, game.px * T - camX, game.py * T - camY);
+        textCShadow('HIDDEN', wx - camX + 8, wy - camY - 14, '#f4f2ec', 6);
+      }
+
+      /* "!" over the guard that spotted you */
+      if (game.spot) {
+        const gd = game.spot.guard;
+        const sx = gd.px * T - camX + 8, sy = gd.py * T - camY - 18;
+        splash(sx, sy + 6, 11, 6, 7, '#d01830', game.animClock);
+        textCShadow('!', sx, sy, '#fff', 9);
+        g.fillStyle = 'rgba(190,10,30,' + (.20 + .14 * Math.sin(game.spot.t * 22)) + ')';
+        g.fillRect(0, 0, 256, 192);
+      }
+
+      /* escape: red alarm pulse */
+      if (game.escape && !game.spot) {
+        g.fillStyle = 'rgba(200,12,32,' + (.08 + .07 * Math.sin(game.animClock * 7)) + ')';
+        g.fillRect(0, 0, 256, 192);
+        if (Math.floor(game.animClock * 2) % 2) textCShadow('ESCAPE!', 128, 4, '#ff5060', 8);
+      }
+
+      drawHUD();
+
+      if (game.msg) {
+        frameP5(3, 140, 250, 48, {});
+        game.msg.lines.forEach((l, i) => text(l, 13, 147 + i * 11, '#f4f2ec', 7));
+        if (Math.floor(game.animClock * 3) % 2) text('▼', 240, 178, '#e83040', 7);
+        zone(0, 0, 256, 192, 'A');
+      }
+    }
+
+    function drawHUD() {
+      frameP5(2, 2, 96, 30, { cut: 5 });
+      text('ALERT', 8, 7, '#f4f2ec', 6);
+      for (let i = 0; i < 3; i++) {
+        const ax = 48 + i * 14;
+        poly([[ax, 13], [ax + 9, 13], [ax + 4.5, 5]], i < game.alert ? '#e83040' : '#3a2630');
+      }
+      const ids = ['badge', 'map', 'pass'];
+      ids.forEach((id, i) => {
+        const ix = 8 + i * 14;
+        if (game.keysHave[id]) g.drawImage(ITEMS[id], ix, 18);
+        else { g.globalAlpha = .25; g.drawImage(ITEMS[id], ix, 18); g.globalAlpha = 1; }
+      });
+      if (game.dossier) {
+        g.drawImage(ITEMS.dossier, 56, 18);
+        if (Math.floor(game.animClock * 3) % 2) text('!', 68, 19, '#e83040', 7);
+      }
+      zone(2, 2, 96, 30, 'note');
+    }
+
+    /* =====================================================================
+       TITLE
+       ===================================================================== */
+    /* mini calling card (crisp pixel version for the title) */
+    const CARD_MINI = makeSprite([
+      '.rrrrrrrrrrrrrr.',
+      'rwwwwwwwwwwwwwwr',
+      'rwwwwwooooowwwwr',
+      'rwwwwwooooowwwwr',
+      'rwwwwwoRRoowwwwr',
+      'rwwwooooooooowwr',
+      'rwwwwwwwwwwwwwwr',
+      'rwwrrwwrrwwrrwwr',
+      'rwwwwwwwwwwwwwwr',
+      'rwwooooooooowwwr',
+      'rwwwwwwwwwwwwwwr',
+      'rwwooooooowwwwwr',
+      'rwwwwwwwwwwwwwwr',
+      'rwwwwrrwrrwwwwwr',
+      'rwwwwrrrrrwwwwwr',
+      'rwwwwwrrrwwwwwwr',
+      'rwwwwwwrwwwwwwwr',
+      'rwwwwwwwwwwwwwwr',
+      '.rrrrrrrrrrrrrr.'
+    ], 3);
+
+    let titleT = 0;
+    function drawTitle(dt) {
+      zones = [];
+      titleT += dt;
+      px(0, 0, 256, 192, '#0a080c');
+      /* sliding diagonal stripes */
+      g.save();
+      for (let i = 0; i < 7; i++) {
+        const off = ((titleT * 14 + i * 52) % 360) - 60;
+        poly([[off, 192], [off + 70, 0], [off + 86, 0], [off + 16, 192]], 'rgba(160,12,28,.10)');
+      }
+      g.restore();
+      /* big jagged splash behind the logo */
+      splash(118, 78, 86, 46, 9, '#6e0c18', titleT * .05 + .4);
+      splash(118, 76, 76, 40, 9, '#c01428', -titleT * .03);
+      textCShadow('PALACE', 118, 44, '#f4f2ec', 16, '#000');
+      textCShadow('OF SECRETS', 118, 68, '#f4f2ec', 14, '#000');
+      textCShadow('A PHANTOM PRESS HEIST', 118, 94, '#ffd2d8', 6, '#000');
+
+      /* the phantom, big */
+      const wf = Math.floor(titleT * 3) % 4;
+      const fr = SPR.player.right[[1, 0, 3, 0][wf]];
+      g.drawImage(fr, 0, 0, 14, 18, 206, 108, 42, 54);
+      /* calling card peeking */
+      g.save();
+      g.translate(24, 136); g.rotate(-.18 + Math.sin(titleT * 1.4) * .05);
+      g.drawImage(CARD_MINI, -24, -28);
+      g.restore();
+
+      if (Math.floor(titleT * 2) % 2) textCShadow('- PRESS A TO START -', 128, 130, '#f4f2ec', 7);
+      textC('sneak past the shadows', 128, 158, '#9a7c84', 6);
+      textC('steal the dossier. publish.', 128, 170, '#9a7c84', 6);
+      textC('stealth only - no combat', 128, 182, '#5c4850', 5);
+      zone(0, 0, 256, 192, 'A');
+    }
+
+    function updateTitle() {
+      const p = popPress();
+      if (isA(p)) { resetRun(); game.state = 'world'; }
+    }
+
+    /* =====================================================================
+       CALLING CARD CUTSCENE
+       ===================================================================== */
+    function drawCard(dt) {
+      zones = [];
+      game.cardT += dt;
+      const t = game.cardT;
+      px(0, 0, 256, 192, '#070509');
+      splash(128, 96, 96, 50, 10, '#6e0c18', t * .35);
+      splash(128, 96, 84, 44, 10, '#c01428', -t * .25);
+      if (imgCard.complete) {
+        const pop = 1 + Math.max(0, .5 - t) * 1.4;
+        const s = 124 * pop;
+        g.save();
+        g.translate(128, 96);
+        g.rotate(Math.sin(t * 2.2) * .07);
+        drawSmooth(imgCard, -s / 2, -s / 2, s, s);
+        g.restore();
+      }
+      if (t < .18) { g.fillStyle = 'rgba(255,255,255,' + (1 - t / .18) + ')'; g.fillRect(0, 0, 256, 192); }
+      textCShadow('A CALLING CARD!', 128, 6, '#f4f2ec', 9);
+      textC("'We have taken notice of your", 128, 164, '#ffd2d8', 5);
+      textC("sins. We will take your secrets.'", 128, 173, '#ffd2d8', 5);
+      textC('- sincerely, the press', 128, 182, '#9a7c84', 5);
+      if (t > 1.2 && Math.floor(t * 2) % 2) textCShadow('PRESS A', 128, 146, '#fff', 7);
+      zone(0, 0, 256, 192, 'A');
+    }
+
+    function updateCard() {
+      const p = popPress();
+      if (game.cardT > 1.2 && (isA(p) || isB(p))) finishCard();
+    }
+
+    /* =====================================================================
+       BUSTED (3 alerts)
+       ===================================================================== */
+    function drawBusted(dt) {
+      zones = [];
+      game.bustedT += dt;
+      px(0, 0, 256, 192, '#0a080c');
+      splash(128, 70, 90, 46, 9, '#6e0c18', .3);
+      splash(128, 68, 78, 40, 9, '#c01428', -.2);
+      textCShadow('ESCORTED', 128, 44, '#f4f2ec', 15);
+      textCShadow('OUT!', 128, 68, '#f4f2ec', 15);
+      textC("'And don't come back without", 128, 110, '#ffd2d8', 6);
+      textC("a subpoena!' the shadows yell.", 128, 121, '#ffd2d8', 6);
+      textC('The intern re-tapes the', 128, 138, '#9a7c84', 6);
+      textC('password. The heist resets.', 128, 149, '#9a7c84', 6);
+      if (game.bustedT > .8 && Math.floor(game.bustedT * 2) % 2)
+        textCShadow('PRESS A TO RE-INFILTRATE', 128, 172, '#fff', 7);
+      zone(0, 0, 256, 192, 'A');
+    }
+
+    function updateBusted() {
+      const p = popPress();
+      if (game.bustedT > .8 && (isA(p) || isB(p))) { resetRun(); game.state = 'world'; }
+    }
+
+    /* =====================================================================
+       WIN — front page
+       ===================================================================== */
+    function drawWin(dt) {
+      zones = [];
+      game.winT += dt;
+      px(0, 0, 256, 192, '#f1ece0');
+      /* halftone paper dots */
+      g.fillStyle = 'rgba(0,0,0,.05)';
+      for (let j = 0; j < 24; j++) for (let i = 0; i < 32; i++)
+        if ((i + j) % 2) g.fillRect(i * 8 + 3, j * 8 + 3, 1, 1);
+      px(0, 0, 256, 24, '#101014');
+      textC('THE PHANTOM PRESS', 128, 4, '#f1ece0', 8);
+      textC('FINAL EDITION - 1 COIN', 128, 15, '#9a948a', 5);
+
+      textCShadow('TAKE THE', 128, 34, '#101014', 14, '#c01428');
+      textCShadow('TRUTH', 128, 56, '#101014', 14, '#c01428');
+      px(38, 78, 180, 2, '#c01428');
+      textC('THE SCOOP IS PUBLISHED', 128, 86, '#c01428', 7);
+
+      textC('Palace of secrets collapses as', 128, 102, '#3a3630', 5);
+      textC('leaked dossier hits front page.', 128, 111, '#3a3630', 5);
+      textC('Officials decline to comment,', 128, 120, '#3a3630', 5);
+      textC('loudly, for several hours.', 128, 129, '#3a3630', 5);
+
+      if (imgChest.complete) drawSmooth(imgChest, 16, 96, 44, 44);
+      if (imgCard.complete) {
+        g.save(); g.translate(222, 118); g.rotate(.2);
+        drawSmooth(imgCard, -20, -20, 40, 40); g.restore();
+      }
+      if (Math.floor(game.winT * 2) % 2) textC('HEIST COMPLETE!', 128, 142, '#c01428', 8);
+
+      const selA = game.winSel === 0, selB = game.winSel === 1;
+      frameP5(26, 160, 120, 24, { bg: selA ? '#c01428' : '#1c1216', edge: selA ? '#fff' : '#6e5a60', acc: false, cut: 5 });
+      textC('EXIT TO SITE', 86, 168, '#fff', 6);
+      zone(26, 160, 120, 24, 'win', 'exit');
+      frameP5(152, 160, 80, 24, { bg: selB ? '#c01428' : '#1c1216', edge: selB ? '#fff' : '#6e5a60', acc: false, cut: 5 });
+      textC('PLAY ON', 192, 168, '#fff', 6);
+      zone(152, 160, 80, 24, 'win', 'stay');
+    }
+
+    function updateWin() {
+      const p = popPress();
+      if (!p) return;
+      if (p === 'left' || p === 'right') { game.winSel ^= 1; return; }
+      if (p && p.act === 'win') {
+        if (p.data === 'exit') window.location.href = 'index.html';
+        else { resetRun(); game.state = 'world'; }
+        return;
+      }
+      if (isA(p)) {
+        if (game.winSel === 0) window.location.href = 'index.html';
+        else { resetRun(); game.state = 'world'; }
+      }
+    }
+
+    /* =====================================================================
+       HEIST STATUS (pill button / B)
+       ===================================================================== */
+    function drawStatus() {
+      zones = [];
+      px(0, 0, 256, 192, '#0a080c');
+      for (let i = 0; i < 6; i++)
+        poly([[i * 52 - 30, 192], [i * 52 + 30, 0], [i * 52 + 42, 0], [i * 52 - 18, 192]], 'rgba(160,12,28,.08)');
+
+      frameP5(6, 5, 244, 22, {});
+      text('HEIST STATUS', 16, 12, '#f4f2ec', 8);
+      text('B:CLOSE', 196, 13, '#9a7c84', 6);
+
+      frameP5(6, 33, 244, 70, { acc: false });
+      text('THE THREE SEALS', 16, 39, '#e83040', 6);
+      const rows = [
+        ['badge', 'VISITOR BADGE', 'west wing loop'],
+        ['map', 'VAULT MAP', 'east wing loop'],
+        ['pass', 'PASSWORD', 'top floor desk']
+      ];
+      rows.forEach((r, i) => {
+        const y = 50 + i * 17;
+        g.drawImage(ITEMS[r[0]], 16, y);
+        const got = game.keysHave[r[0]];
+        text(r[1], 32, y + 1, got ? '#f4f2ec' : '#6e5a60', 6);
+        text(got ? 'SECURED' : r[2], 152, y + 1, got ? '#35c46e' : '#6e5a60', 5);
+      });
+
+      frameP5(6, 109, 244, 38, { acc: false });
+      text('OBJECTIVE', 16, 115, '#e83040', 6);
+      let obj1, obj2;
+      if (game.dossier) { obj1 = 'RUN. Exit through the lobby'; obj2 = 'doors before the shadows bite.'; }
+      else if (game.doorOpen) { obj1 = 'The Treasure is real. Take'; obj2 = 'THE DOSSIER from the vault.'; }
+      else if (allKeys()) { obj1 = 'Send the calling card at the'; obj2 = 'vault door on the top floor.'; }
+      else { obj1 = 'Collect the 3 seals. Stay out'; obj2 = 'of the red cones. Vases hide you.'; }
+      text(obj1, 16, 126, '#f4f2ec', 6);
+      text(obj2, 16, 136, '#f4f2ec', 6);
+
+      frameP5(6, 153, 244, 34, { acc: false });
+      text('ALERT', 16, 159, '#e83040', 6);
+      for (let i = 0; i < 3; i++) {
+        const ax = 64 + i * 16;
+        poly([[ax, 168], [ax + 11, 168], [ax + 5.5, 158]], i < game.alert ? '#e83040' : '#3a2630');
+      }
+      text('3 strikes = escorted out', 110, 160, '#9a7c84', 5);
+      text('A: hide on a vase tile', 16, 173, '#9a7c84', 5);
+      text('cones = shadow eyes', 140, 173, '#9a7c84', 5);
+      zone(0, 0, 256, 192, 'B');
+    }
+
+    function updateStatus() {
+      const p = popPress();
+      if (isA(p) || isB(p) || isNote(p)) game.state = 'world';
+    }
+
+    /* =====================================================================
+       LOOP
+       ===================================================================== */
+    let last = 0;
+    function loop(ts) {
+      const dt = Math.min(.05, (ts - last) / 1000 || 0);
+      last = ts;
+      game.animClock += dt;
+      g.clearRect(0, 0, 256, 192);
+
+      if (game.state === 'title') { updateTitle(); if (game.state === 'world') drawWorld(); else drawTitle(dt); }
+      else if (game.state === 'world') { updateWorld(dt); if (game.state === 'world') drawWorld(); else if (game.state === 'card') drawCard(0); else if (game.state === 'busted') drawBusted(0); else if (game.state === 'win') drawWin(0); }
+      else if (game.state === 'card') { updateCard(); if (game.state === 'card') drawCard(dt); else drawWorld(); }
+      else if (game.state === 'busted') { updateBusted(); if (game.state === 'busted') drawBusted(dt); else drawWorld(); }
+      else if (game.state === 'status') { updateStatus(); if (game.state === 'status') drawStatus(); else drawWorld(); }
+      else if (game.state === 'win') { updateWin(); drawWin(dt); }
+
+      requestAnimationFrame(loop);
+    }
+
+    Promise.race([
+      document.fonts.load('8px "Press Start 2P"'),
+      new Promise(r => setTimeout(r, 1200))
+    ]).then(() => requestAnimationFrame(loop));
+
+    /* =====================================================================
+       TEST HOOKS
+       ===================================================================== */
+    window.__game = game;
+    window.__guards = () => guards;
+    window.__giveKeys = () => { game.keysHave = { badge: true, map: true, pass: true }; };
+    window.__warp = (x, y) => { game.px = game.fromX = x; game.py = game.fromY = y; game.moving = false; game.moveT = 0; };
+    window.__card = () => startCard();
+    window.__openVault = () => { game.doorOpen = true; };
+    window.__dossier = () => takeDossier();
+    window.__alarm = () => spotPlayer(guards[0]);
+    window.__win = () => doWin();
+    window.__reset = () => resetRun();
   </script>
-
-
 </body>
 
 </html>

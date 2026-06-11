@@ -3,770 +3,1429 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO & Open Graph -->
-  <title>Luiz Fernando Toledo - Data & Investigative Journalist</title>
-  <meta name="description"
-    content="Portfolio of Luiz Fernando Toledo, a Data & Investigative Journalist, researcher, and instructor. Award-winning reporting on environmental crimes, public spending, and transparency.">
-  <meta property="og:title" content="Luiz Fernando Toledo - Data & Investigative Journalist">
-  <meta property="og:description"
-    content="Award-winning Brazilian journalist based in London. Expert in data journalism, environmental investigations, and transparency.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://luizftoledo.github.io/">
-  <meta property="og:image" content="https://luizftoledo.github.io/epstein_brazil_victims.png">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    crossorigin="anonymous" referrerpolicy="no-referrer">
-  <link href="https://fonts.googleapis.com/css2?family=Vt323&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="stardew.css">
-
-  <script>
-    // Junimo & Confetti Logic
-    // Junimo & Confetti Logic
-    document.addEventListener("DOMContentLoaded", () => {
-      const junimoObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          const junimos = document.querySelector('.junimo-parade');
-          if (entry.isIntersecting && junimos && !junimos.classList.contains('visible')) {
-            // Trigger Confetti
-            createConfetti();
-
-            // Show Junimos after short delay
-            setTimeout(() => {
-              junimos.classList.add('visible');
-            }, 500);
-          }
-        });
-      }, { threshold: 0.1 }); // Trigger when 10% of footer is visible
-
-      const footer = document.querySelector('footer');
-      if (footer) junimoObserver.observe(footer);
-    });
-
-    function createConfetti() {
-      const colors = ['#ff0', '#f00', '#0f0', '#00f', '#f0f', '#0ff'];
-      for (let i = 0; i < 50; i++) {
-        const conf = document.createElement('div');
-        conf.classList.add('confetti');
-        conf.style.left = Math.random() * 100 + 'vw';
-        conf.style.top = Math.random() * -20 + 'vh'; // Start above viewport
-        conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        conf.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        // Random shape
-        if (Math.random() > 0.5) conf.style.borderRadius = '50%';
-
-        document.body.appendChild(conf);
-
-        // Cleanup
-        setTimeout(() => conf.remove(), 4000);
-      }
-    }
-  </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Pauta Valley — Investigative Farming | Luiz Fernando Toledo</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    /* Junimo Dance Animation */
-    @keyframes junimoDance {
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-15px);
-      }
+    html, body {
+      height: 100%;
+      background: #170f08;
+      overflow: hidden;
+      font-family: 'Press Start 2P', monospace;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
     }
 
-    .junimo-parade {
-      position: relative;
-      margin: 0 auto 20px auto;
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      z-index: 10;
-      opacity: 0;
-      transition: opacity 1s;
+      justify-content: center;
+      gap: 12px;
+      padding: 10px;
+      background:
+        radial-gradient(circle at 25% 15%, rgba(150, 110, 50, .14), transparent 50%),
+        radial-gradient(circle at 75% 85%, rgba(70, 130, 60, .12), transparent 50%),
+        #170f08;
     }
 
-    .junimo-parade.visible {
-      opacity: 1;
+    .screen-wrap {
+      position: relative;
+      width: min(100vw - 16px, 168vh - 290px, 760px);
+      aspect-ratio: 4 / 3;
+      background: #000;
+      border: 6px solid #2c2014;
+      border-radius: 10px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .65), inset 0 0 16px rgba(0, 0, 0, .8);
     }
 
-    .junimo-sprite {
-      width: 150px;
-      height: auto;
+    canvas#screen {
+      width: 100%;
+      height: 100%;
+      display: block;
       image-rendering: pixelated;
-      margin-bottom: 0px;
-      /* touch bottom */
+      image-rendering: crisp-edges;
+      border-radius: 4px;
     }
 
-    .junimo-parade.visible .junimo-sprite {
-      animation: junimoDance 0.6s ease-in-out infinite;
+    /* ===== controls below the screen (never over the image) ===== */
+    .pad {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: min(100vw - 16px, 760px);
+      padding: 10px 14px;
+      background: #221709;
+      border: 2px solid #3c2c16;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
     }
 
-    .junimo-message {
-      font-family: 'Vt323', monospace;
-      font-size: 28px;
-      color: #fff;
-      text-shadow: 3px 3px 0 #000;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 5px 10px;
+    .dpad {
+      position: relative;
+      width: 108px;
+      height: 108px;
+      flex: 0 0 auto;
+    }
+
+    .dpad button {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      background: #4a3820;
+      border: 2px solid #66502e;
+      color: #e0cb9a;
       border-radius: 8px;
-      margin-bottom: 5px;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+    }
+
+    .dpad button:active { background: #6e5630; }
+    .dpad .up { top: 0; left: 36px; }
+    .dpad .down { bottom: 0; left: 36px; }
+    .dpad .left { top: 36px; left: 0; }
+    .dpad .right { top: 36px; right: 0; }
+    .dpad .mid { top: 36px; left: 36px; background: #32250f; border-color: #32250f; pointer-events: none; border-radius: 4px; }
+
+    .pad-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .pill-btn {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      letter-spacing: .08em;
+      color: #f0dfae;
+      background: #44351c;
+      border: 2px solid #6e5830;
+      border-radius: 999px;
+      padding: 9px 16px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .pill-btn:active { background: #6e5630; }
+
+    .key-hint {
+      font-size: 7px;
+      line-height: 1.7;
+      color: #8a774e;
       text-align: center;
     }
 
-    /* Confetti */
-    .confetti {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background-color: #f0f;
-      animation: confetti-fall 3s linear forwards;
-      z-index: 1000;
+    .ab {
+      position: relative;
+      width: 116px;
+      height: 96px;
+      flex: 0 0 auto;
     }
 
-    @keyframes confetti-fall {
-      0% {
-        transform: translateY(-10vh) rotate(0deg);
-        opacity: 1;
-      }
+    .ab button {
+      position: absolute;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 15px;
+      color: #fff;
+      cursor: pointer;
+      border: 0;
+      box-shadow: 0 4px 0 rgba(0, 0, 0, .45);
+      touch-action: none;
+    }
 
-      100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-      }
+    .ab button:active { transform: translateY(2px); box-shadow: 0 2px 0 rgba(0, 0, 0, .45); }
+    .ab .a { right: 0; top: 0; background: #4e8a38; border: 2px solid #7ab85c; }
+    .ab .b { left: 0; bottom: 0; background: #9c5230; border: 2px solid #c87c50; }
+
+    .quit-link {
+      position: fixed;
+      top: 10px;
+      right: 12px;
+      z-index: 60;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      color: #9a8a64;
+      text-decoration: none;
+      border: 2px solid #4a3820;
+      padding: 7px 10px;
+      border-radius: 6px;
+      background: rgba(23, 15, 8, .8);
+    }
+
+    .quit-link:hover { color: #fff; border-color: #9a8a64; }
+
+    @media (max-width: 560px) {
+      body { gap: 8px; padding: 6px; }
+      .pad { padding: 8px 8px; gap: 6px; }
+      .dpad { width: 96px; height: 96px; }
+      .dpad button { width: 32px; height: 32px; }
+      .dpad .up, .dpad .down { left: 32px; }
+      .dpad .mid { top: 32px; left: 32px; }
+      .key-hint { display: none; }
+      .ab { width: 104px; height: 88px; }
+      .ab button { width: 48px; height: 48px; }
     }
   </style>
-
-  <link rel="icon" type="image/png" href="favicon.png">
-
-  <script>
-    // Force dark mode sitewide
-    document.documentElement.setAttribute('data-theme', 'dark');
-  </script>
-  <script async src="https://www.instagram.com/embed.js"></script>
 </head>
 
 <body>
-  <div class="progress-bar" id="progressBar"></div>
-  <nav>
-    <div class="container nav-inner">
-      <div class="brand">
-        <a href="#" class="logo">
-          <span class="logo-text">LFT</span><span class="logo-dot">.</span>
-        </a>
-      </div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#investigative">Reporting</a></li>
-        <li><a href="#interviews">Interviews</a></li>
-        <li><a href="#short-videos">Videos</a></li>
-        <li><a href="#awards">Awards</a></li>
-        <li><a href="resume.html">Resume</a></li>
-        <li><a href="https://datafixers.org" target="_blank" rel="noopener noreferrer">Data Journalism</a></li>
-      </ul>
-      <div class="nav-actions">
-        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" title="Menu">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
+  <a class="quit-link" href="index.html">EXIT &rsaquo;</a>
+
+  <div class="screen-wrap">
+    <canvas id="screen" width="1024" height="768"></canvas>
+  </div>
+
+  <div class="pad">
+    <div class="dpad">
+      <button class="up" data-dir="up">▲</button>
+      <button class="left" data-dir="left">◀</button>
+      <div class="mid dpad-mid"></div>
+      <button class="right" data-dir="right">▶</button>
+      <button class="down" data-dir="down">▼</button>
     </div>
-  </nav>
-
-  <section class="hero section">
-    <div class="container">
-      <div class="hero-text">
-        <div style="text-align: center; margin-bottom: 1rem;">
-          <img src="images/stardew/stardew_avatar_final_hat.png" alt="Luiz Pixel Art"
-            style="width: 128px; display: inline-block; image-rendering: pixelated;">
-        </div>
-        <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
-        <p>Brazilian journalist, researcher and instructor based in London, with a proven track record of producing and
-          managing impactful projects related to Brazil.</p>
-        <p>My reporting has been translated into <a href="https://www.bbc.com/zhongwen/articles/cx20nxkkqk0o/simp"
-            target="_blank" rel="noopener noreferrer" class="highlight">various languages</a>, reaching thousands of
-          readers in Brazil and abroad.</p>
-      </div>
-      <div class="hero-media">
-        <div class="video-carousel">
-          <div class="carousel-track-container">
-            <ul class="carousel-track">
-              <li class="carousel-slide current-slide">
-                <div class="video-container">
-                  <iframe class="carousel-video"
-                    src="https://www.youtube.com/embed/r5Ihpa2DQIg?enablejsapi=1&rel=0&mute=1&autoplay=1&playsinline=1"
-                    title="Presentation video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                </div>
-              </li>
-              <li class="carousel-slide">
-                <div class="video-container">
-                  <iframe class="carousel-video"
-                    src="https://www.youtube.com/embed/SkX6MKU9gAQ?enablejsapi=1&start=22&mute=1&playsinline=1"
-                    title="Video reporting" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                </div>
-              </li>
-              <li class="carousel-slide">
-                <div class="video-container">
-                  <iframe class="carousel-video"
-                    src="https://www.youtube.com/embed/65AnDszCevA?enablejsapi=1&mute=1&playsinline=1"
-                    title="Third video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <button class="carousel-button carousel-button--left is-hidden">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="carousel-button carousel-button--right">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-          <div class="carousel-nav">
-            <button class="carousel-indicator current-slide"></button>
-            <button class="carousel-indicator"></button>
-            <button class="carousel-indicator"></button>
-          </div>
-        </div>
-        <p style="font-size: 0.8rem; color: var(--muted); margin-top: 8px; text-align: center;">
-          <i class="fas fa-info-circle"></i> The first video is a BBC podcast interview presenting an investigation into
-          fake
-          alcohol sellers on social media. If the video doesn't load, <a href="https://youtu.be/mH3-zrkq5-E"
-            target="_blank" style="color: #5c3510; text-decoration: underline;">watch it on YouTube</a>.
-        </p>
-      </div>
+    <div class="pad-center">
+      <button class="pill-btn" id="toolBtn">TOOL · HOE</button>
+      <div class="key-hint">ARROWS/WASD&nbsp;MOVE&nbsp;&nbsp;C&nbsp;=&nbsp;TOOL<br>Z/ENTER&nbsp;=&nbsp;A&nbsp;&nbsp;X/ESC&nbsp;=&nbsp;B</div>
     </div>
-  </section>
-
-  <section id="impact-grid" class="section">
-    <div class="container">
-      <div class="impact-grid">
-        <div class="impact-card">
-          <h3>
-            <img src="images/stardew/stardew_icon_newspaper_1767209976035.png" alt="Reporting"
-              style="width: 32px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-            Reporting Impact
-          </h3>
-          <p>Stories I wrote <a href="https://news.fiquemsabendo.com.br/p/exclusivo-acessamos-as-notas-fiscais"
-              target="_blank" rel="noopener noreferrer" class="highlight">exposed</a> a former president's misuse of
-            public funds, <a
-              href="http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/"
-              target="_blank" rel="noopener noreferrer" class="highlight">uncovered</a> a bid fraud that saved R$
-            15&nbsp;million from a city's
-            budget and <a
-              href="https://www.cnnbrasil.com.br/nacional/apos-reportagem-da-cnn-empresa-de-taxi-aereo-e-primeira-a-ser-cassada-no-pais/"
-              target="_blank" rel="noopener noreferrer" class="highlight">enabled</a> the shutdown of companies involved
-            in illegal activities.
-          </p>
-        </div>
-
-        <div class="impact-card">
-          <h3>
-            <img src="images/stardew/stardew_icon_scarecrow_1767209989609.png" alt="Training"
-              style="width: 32px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-            Training
-          </h3>
-          <p>Attended world-class conferences as instructor in Brazil, USA, UK, Portugal, Malaysia, Sweden and others.
-            Trained over 2,000 journalists through online and in-person workshops.</p>
-        </div>
-
-        <div class="impact-card">
-          <h3>
-            <img src="images/stardew/stardew_icon_wizard_scroll_1767210004376.png" alt="Research"
-              style="width: 32px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-            Research
-          </h3>
-          <p>Masters degrees in Data Journalism (Columbia) and Public Administration (FGV‑EAESP). Research-assistant at
-            POLIS‑Cambridge (2024–2026). Former research fellow at Oxford (2021), Columbia (2022–2023) and NED
-            (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en"
-              target="_blank" rel="noopener noreferrer" class="highlight">My research was used by the government</a> to
-            improve transparency policies.</p>
-        </div>
-
-        <div class="impact-card">
-          <h3>
-            <img src="images/stardew/stardew_icon_geode_crusher_1767210025115.png" alt="Civil Tech"
-              style="width: 32px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-            Civil Tech
-          </h3>
-          <p>Over the last three years, I have used generative AI in journalism for data analysis, fact-checking, and
-            investigations. In 2025, I built a <a href="https://datafixers.org/l-ai-notebook.html" target="_blank"
-              rel="noopener noreferrer" class="highlight">tool</a> that helps reporters search millions of Brazilian
-            public records. In 2026, I launched two public Civil Tech dashboards: one on <a
-              href="https://luizftoledo.github.io/ibama-dashboard/" target="_blank" rel="noopener noreferrer"
-              class="highlight">environmental fines in Brazil</a>, and another on <a
-              href="https://dashboards.datafixers.org/lai/" target="_blank" rel="noopener noreferrer"
-              class="highlight">public records requests (LAI/FOIA-style)</a>.</p>
-        </div>
-      </div>
+    <div class="ab">
+      <button class="b" data-btn="B">B</button>
+      <button class="a" data-btn="A">A</button>
     </div>
-  </section>
+  </div>
 
-  <section id="investigative" class="investigative section">
-    <div class="container">
-      <h2 class="section-title">
-        <img src="images/stardew/stardew_signboard_1767209930677.png" alt=""
-          style="width: 64px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Investigative Reporting
-      </h2>
-      <div class="featured-article">
-        <img src="epstein_brazil_victims.png" alt="Jeffrey Epstein's link to Brazil revealed in new documents"
-          loading="lazy">
-        <div class="featured-content">
-          <div class="tags">
-            <span class="tag">BBC News Brasil</span>
-          </div>
-          <h3>Jeffrey Epstein's link to Brazil revealed in new documents</h3>
-          <p>The BBC analyzed more than 10,000 documents released by the US Department of Justice and identified
-            possible Brazilian victims of Jeffrey Epstein's sexual crimes. From the documents, we found a victim who
-            told us that <a href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank"
-              rel="noopener noreferrer">more than 50 Brazilian women</a> passed through his mansion.</p>
-          <div class="links">
-            <a href="https://www.bbc.com/portuguese/articles/cnv2937j42ro" target="_blank"
-              rel="noopener noreferrer">Read the story (Portuguese)</a>
-          </div>
-        </div>
-      </div>
-      <div class="cards">
-        <div class="card-article">
-          <img src="fake_alcohol_social_media.png"
-            alt="How fake bottle caps and seals fuel Brazil's counterfeit alcohol market" loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">BBC News Brasil</span>
-            </div>
-            <h3>How fake bottle caps and seals fuel Brazil's counterfeit alcohol market</h3>
-            <p>This investigation dismantled a network of over 10,000 people selling bottle parts for beverage
-              counterfeiting and triggered a police investigation.</p>
-            <div class="links">
-              <a href="https://www.bbc.com/portuguese/articles/ce84kg923ero" target="_blank"
-                rel="noopener noreferrer">Read the story (Portuguese)</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-article">
-          <img src="amazon_fish_trade.png" alt="Giant Amazon fish turned into luxury handbags – but who profits?"
-            loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">BBC News Brasil</span>
-            </div>
-            <h3>Giant Amazon fish turned into luxury handbags – but who profits?</h3>
-            <p>The thick, patterned skin of the once-at-risk pirarucu fish is in demand for high-end fashion, but the
-              fishermen want more money.</p>
-            <div class="links">
-              <a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o.amp" target="_blank"
-                rel="noopener noreferrer">Read the story</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-article">
-          <img src="slave_labor_public_funds.png" alt="Secret Budget Amendment Linked to Slave Labor" loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">BBC News Brasil</span>
-            </div>
-            <h3>Secret Budget Amendment Linked to Slave Labor</h3>
-            <p>Investigation reveals how a budget amendment supported by Chamber President&nbsp;Hugo&nbsp;Motta funded
-              construction using stones produced by workers in slave‑like conditions.</p>
-            <div class="links">
-              <a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank"
-                rel="noopener noreferrer">Read the story (Portuguese)</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-article">
-          <img src="meat_industry_abuse.png" alt="Brazilians Face Abuse in Irish Meat Industry" loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">BBC News Brasil</span>
-            </div>
-            <h3>Brazilians Face Abuse in Irish Meat Industry</h3>
-            <p>Exclusive investigation exposes precarious working conditions and abuse faced by Brazilian workers in
-              Ireland’s meat processing industry.</p>
-            <div class="links">
-              <a href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank"
-                rel="noopener noreferrer">Read the story (Portuguese)</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-article">
-          <img src="illegal_artifacts.png" alt="Indigenous objects containing animal parts are freely sold online"
-            loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">UOL</span>
-            </div>
-            <h3>Failed enforcement: indigenous objects containing animal parts are freely sold online</h3>
-            <p>A 2‑month investigation into animal feather smuggling and how companies benefit from exploiting
-              indigenous communities in Brazil.</p>
-            <div class="links">
-              <a href="https://tab.uol.com.br/noticias/redacao/2024/07/31/venda-ilegal-de-artefatos-indigenas-cresce-com-baixa-fiscalizacao-nas-redes.htm"
-                target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
-            </div>
-          </div>
-        </div>
+  <script>
+    'use strict';
 
-        <div class="card-article">
-          <img src="land_grabbing.png" alt="Political Backing Fuels Land Grabbing in Brazil's Distrito Federal"
-            loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">Revista Piauí</span>
-            </div>
-            <h3>Political Backing Fuels Land Grabbing in Brazil's Distrito&nbsp;Federal</h3>
-            <p>In the Distrito Federal, Brazil, a significant issue of land grabbing in conservation areas is
-              emerging,
-              intensified by political support. These activities are particularly rampant in the Colônia
-              Agrícola&nbsp;26&nbsp;de&nbsp;Setembro, a settlement approximately 26&nbsp;km from the Palácio do
-              Planalto, housing around 35,000 residents.</p>
-            <div class="links">
-              <a href="https://piaui.folha.uol.com.br/distrito-federal-grileiros-car-brasilia/" target="_blank"
-                rel="noopener noreferrer">Read the story (Portuguese)</a>
-            </div>
-          </div>
-        </div>
-        <div class="card-article">
-          <img src="timber_illegal_trade_music.png" alt="A world heritage site under attack in Brazil" loading="lazy">
-          <div class="card-content">
-            <div class="tags">
-              <span class="tag">Revista Piauí</span>
-              <span class="tag">OCCRP</span>
-            </div>
-            <h3>A world heritage site under attack in Brazil</h3>
-            <p>Brazilwood is being driven to extinction by an industry not often associated with organized crime:
-              classical music. Tests on a sample of the confiscated wood show it was logged in a protected forest.</p>
-            <div class="links">
-              <a href="https://piaui.folha.uol.com.br/um-parque-no-coracao-do-contrabando-de-pau-brasil/"
-                target="_blank" rel="noopener noreferrer">Read the story (Portuguese)</a>
-            </div>
-          </div>
-        </div>
-      </div>
+    /* =====================================================================
+       PAUTA VALLEY — a journalist's farm.
+       Stardew-style demake at DS resolution (256x192).
+       The garden is the story list: till leads, water them with reporting,
+       harvest front pages. Dig the DEAD ARCHIVE for 3 rare documents.
+       ===================================================================== */
 
-    </div>
-  </section>
+    const cv = document.getElementById('screen'), g = cv.getContext('2d');
+    g.scale(4, 4);               // buffer 4x: nítido também no Safari
+    g.imageSmoothingEnabled = false;
 
-  <section id="short-videos" class="short-videos section">
-    <div class="container">
-      <h2 class="section-title">
-        <img src="images/stardew/stardew_icon_tv_frame_1767210074309.png" alt=""
-          style="width: 48px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Video reporting
-      </h2>
-      <div class="featured-video" style="padding: 10px; background: #5c3510; border-radius: 8px;">
-        <iframe loading="lazy" src="https://www.youtube.com/embed/HEwY0WKeKjc?rel=0" allow="autoplay; encrypted-media"
-          allowfullscreen></iframe>
+    /* =====================================================================
+       PALETTE & SPRITES
+       ===================================================================== */
+    const PAL = {
+      '.': null,
+      'k': '#2b1d12', 'K': '#43301f',
+      'w': '#f7f3e8', 'W': '#d8d2c0',
+      'y': '#e9c64f', 'Y': '#f6e294',
+      'o': '#d98a3c', 'O': '#f0b264',
+      'r': '#c25043', 'R': '#e2796a', 'z': '#8f3328',
+      's': '#eab98c', 'S': '#c98f63',
+      'g': '#7a5a36', 'G': '#9d7a4a', 'h': '#5b4226',
+      'e': '#3f7d3b', 'E': '#5ba255',
+      'l': '#8cc468', 'L': '#a9da85', 'd': '#5d9448',
+      't': '#8a6a44', 'T': '#6d4f2f',
+      'x': '#5d4128', 'X': '#46301c',
+      'u': '#3f7fae', 'U': '#6fb1d8',
+      'p': '#33282a', 'P': '#4a3c40',
+      'c': '#5a5a5f', 'C': '#8b8b8f',
+      'n': '#191417', 'N': '#2e2630',
+      'i': '#4a3f48', 'I': '#5a4e58',
+      'q': '#caa36a', 'Q': '#e0c890'
+    };
 
-      </div>
-      <div class="embed-grid youtube-grid">
-        <iframe loading="lazy" src="https://www.youtube.com/embed/RhHz-bizvs0" allow="autoplay; encrypted-media"
-          allowfullscreen></iframe>
-        <iframe loading="lazy" src="https://www.youtube.com/embed/SkX6MKU9gAQ" allow="autoplay; encrypted-media"
-          allowfullscreen></iframe>
-      </div>
-
-      <h3 class="subsection-title" style="margin: 40px 0 24px; font-size: 1.5rem; color: var(--accent);">Short-form
-        video reporting for social media</h3>
-
-      <div class="reels-carousel-container">
-        <button class="reels-btn reels-btn-left" aria-label="Scroll left"><i class="fas fa-chevron-left"></i></button>
-        <div class="reels-carousel">
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVO4gD_j5T4/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPfEs-4lTI3/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DOgpYz4lKwY/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPKauEVD71z/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DMq7vPfC4Os/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DJUu11hILPM/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DKuiChEMt8W/"
-            data-instgrm-version="14"></blockquote>
-          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DNCAw5SIF1J/"
-            data-instgrm-version="14"></blockquote>
-        </div>
-        <button class="reels-btn reels-btn-right" aria-label="Scroll right"><i
-            class="fas fa-chevron-right"></i></button>
-      </div>
-    </div>
-  </section>
-
-  <section id="interviews" class="interviews section">
-    <div class="container">
-      <h2 class="section-title">
-        <img src="images/stardew/stardew_icon_newspaper_1767209976035.png" alt=""
-          style="width: 48px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Interviews
-      </h2>
-      <div class="interview-list">
-        <div class="interview-card">
-          <h3>Bellingcat's Stage Talks</h3>
-          <p>I was interviewed by Bellingcat to discuss how to use public records and data to investigate environmental
-            crimes in Brazil. Held in English.</p>
-          <iframe loading="lazy" src="https://open.spotify.com/embed/episode/4qtV3XWFUwFtan4jThFKX1"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="interview-card">
-          <h3>Global Investigative Journalism Conference (GIJC)</h3>
-          <p>Panel discussion on investigating environmental crimes at GIJC 2023 in Gothenburg, Sweden.</p>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/urDaCInPdvY?start=19" allowfullscreen></iframe>
-        </div>
-        <div class="interview-card">
-          <h3>SBT News</h3>
-          <p>Discussion about transparency and investigative journalism in Brazil.</p>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/rqvT39YIsP0?start=149" allowfullscreen></iframe>
-        </div>
-        <div class="interview-card">
-          <h3>TV Globo/G1 Podcast (O Assunto)</h3>
-          <p>Podcast discussion about corporate expenses investigation.</p>
-          <iframe loading="lazy" src="https://open.spotify.com/embed/episode/1UsnrR0DjRKHyd1fPlVtmn"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="interview-card">
-          <h3>FIL Lisbon Conference</h3>
-          <p>Presentation about DataFixers.org at the Lisbon International Fair.</p>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/dw5q9ZXMaWE?start=26" allowfullscreen></iframe>
-        </div>
-        <div class="interview-card">
-          <h3>CNN Brasil</h3>
-          <p>Interview about air charter investigation and transparency in government spending.</p>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/PP8bv7osKMo?start=35" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="awards" class="awards section">
-    <div class="container">
-      <h2 class="section-title">
-        <img src="images/stardew/stardew_icon_golden_star_1767210038643.png" alt=""
-          style="width: 48px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Awards and Honorable Mentions
-      </h2>
-      <ul class="award-list collapsed">
-        <li><span class="award-year">2024</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Gabo 2024 – coverage with InfoAmazonia and Datafixers.org</span><span
-            class="award-source">Fundación Gabo</span></li>
-        <li class="shortlist"><span class="award-year">2024</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards</span><span
-            class="award-source">Sigma Awards</span></li>
-        <li><span class="award-year">2023</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Claudio Weber Abramo – Categoria Dados Abertos</span><span
-            class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
-        <li><span class="award-year">2023</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Claudio Weber Abramo – Categoria Investigação</span><span
-            class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
-        <li class="shortlist"><span class="award-year">2023</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Premio Roche 2023</span><span
-            class="award-source">Premio Roche</span></li>
-        <li><span class="award-year">2022</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Transparência e Fiscalização Pública – Câmara dos Deputados (with Fiquem
-            Sabendo)</span><span class="award-source">Câmara dos Deputados</span></li>
-        <li class="shortlist"><span class="award-year">2022</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2022 –
-            Má alimentação à Brasileira</span><span class="award-source">Escola de Dados/Open Knowledge Brasil</span>
-        </li>
-        <li class="shortlist"><span class="award-year">2022</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Open
-            Lux</span><span class="award-source">Sigma Awards</span></li>
-        <li class="shortlist"><span class="award-year">2022</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Personal
-            portfolio</span><span class="award-source">Sigma Awards</span></li>
-        <li class="shortlist"><span class="award-year">2022</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Revealing the
-            Brazilian military pension</span><span class="award-source">Sigma Awards</span></li>
-        <li class="shortlist"><span class="award-year">2021</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">IREE 2021</span><span
-            class="award-source">IREE</span></li>
-        <li class="shortlist"><span class="award-year">2021</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Shedding light
-            on government pension</span><span class="award-source">Sigma Awards</span></li>
-        <li class="shortlist"><span class="award-year">2021</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Chloroquine and
-            the Brazilian Army</span><span class="award-source">Sigma Awards</span></li>
-        <li><span class="award-year">2021</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Jornalismo Mosca 2021 – Solteiragate</span><span class="award-source">Jornalismo
-            Mosca</span></li>
-        <li class="shortlist"><span class="award-year">2021</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2021 –
-            Solteiragate</span><span class="award-source">Transparência Brasil</span></li>
-        <li class="shortlist"><span class="award-year">2019</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2019 – Personal
-            portfolio</span><span class="award-source">Sigma Awards</span></li>
-        <li><span class="award-year">2019</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Claudio Weber Abramo 2019 – Newsletter Don’t “LAI” to me</span><span
-            class="award-source">Transparência Brasil</span></li>
-        <li><span class="award-year">2018</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Reportagem, 2nd place) – A rede bolsonarista
-            de desinformação</span><span class="award-source">Estado de São Paulo</span></li>
-        <li class="shortlist"><span class="award-year">2018</span><span
-            class="award-status shortlist">Shortlist</span><span class="award-title">Premio ANPR 2018 – Fraude em cotas
-            raciais</span><span class="award-source">ANPR</span></li>
-        <li><span class="award-year">2018</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Serviço) – Estadão Verifica</span><span
-            class="award-source">Estado de São Paulo</span></li>
-        <li><span class="award-year">2017</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 2nd place) – Fraude em
-            transparência em SP</span><span class="award-source">Estado de São Paulo</span></li>
-        <li><span class="award-year">2017</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 3rd place) – Internações
-            psiquiátricas (série)</span><span class="award-source">Estado de São Paulo</span></li>
-        <li><span class="award-year">2017</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Premio ANPR 2017 – Denunciando uma rede de pornografia infantil</span><span
-            class="award-source">ANPR</span></li>
-        <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span><span
-            class="award-source">Instituto Ayrton Senna</span></li>
-        <li><span class="award-year">2011</span><span class="award-status winner">🏆 Winner</span><span
-            class="award-title">Premio ASU/Schaeffer 2011 – A história da mulher que adotou seis crianças</span><span
-            class="award-source">ASU/Schaeffer</span></li>
-      </ul>
-      <button class="show-more-btn"
-        onclick="const list = document.querySelector('.award-list'); list.classList.toggle('collapsed'); this.textContent = list.classList.contains('collapsed') ? 'Show More' : 'Show Less';">Show
-        More</button>
-    </div>
-  </section>
-
-  <section class="grants section">
-    <div class="container">
-      <h2 class="section-title">
-        <img src="images/stardew/stardew_icon_wizard_scroll_1767210004376.png" alt=""
-          style="width: 48px; display: inline-block; vertical-align: middle; image-rendering: pixelated; margin-right: 8px;">
-        Scholarships, Fellowships and Grants
-      </h2>
-      <ul class="grant-list">
-        <li><span class="grant-year">2024</span><span class="grant-title">Together for Conservation (EJN,
-            2024)</span><span class="grant-source">Earth Journalism Network</span></li>
-        <li><span class="grant-year">2023–2024</span><span class="grant-title">National Endowment for Democracy (NED) –
-            Reagan‑Fascell fellowship (2023–2024)</span><span class="grant-source">NED</span></li>
-        <li><span class="grant-year">2022</span><span class="grant-title">Person of the Year 2022 – Brazilian American
-            Chamber of Commerce</span><span class="grant-source">Brazilian American Chamber of Commerce</span></li>
-        <li><span class="grant-year">2021–2022</span><span class="grant-title">Columbia Journalism School (US$ 91,500 in
-            tuition) 2021/2022</span><span class="grant-source">Columbia University</span></li>
-        <li><span class="grant-year">2020</span><span class="grant-title">ICFJ Latin America Grantee 2020 – FOIA –
-            Brazil and US project</span><span class="grant-source">ICFJ</span></li>
-        <li><span class="grant-year">2019</span><span class="grant-title">EAESP‑FGV – Full scholarship for a master of
-            science in Public Administration (2019)</span><span class="grant-source">FGV</span></li>
-        <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$
-            60,000 scholarship (2019) – Jornalista de Visão</span><span class="grant-source">Instituto Ling</span></li>
-        <li><span class="grant-year">2018</span><span class="grant-title">ICFJ Emerging Leaders Program / fellow
-            2018</span><span class="grant-source">ICFJ</span></li>
-      </ul>
-    </div>
-  </section>
-
-  <footer class="footer section">
-    <div class="container">
-      <div class="junimo-parade">
-        <div class="junimo-message">Thanks for visiting!</div>
-        <img src="images/stardew/junimos_group.png" alt="Junimos" class="junimo-sprite">
-      </div>
-      <h2>
-        Get in touch
-      </h2>
-      <div
-        style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-        <img src="images/stardew/stardew_icon_mailbox_1767210051532.png" alt=""
-          style="width: 48px; height: auto; image-rendering: pixelated; flex-shrink: 0;">
-        <p style="text-align: left; margin: 0;">Interested in collaboration, have a story tip, or want to discuss
-          investigative journalism? I'd love to hear
-          from you.</p>
-      </div>
-      <div class="socials">
-        <a href="mailto:lft29@cam.ac.uk"><i class="fas fa-envelope"></i></a>
-        <a href="https://twitter.com/toledoluizf" target="_blank" rel="noopener noreferrer"><i
-            class="fab fa-twitter"></i></a>
-        <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i
-            class="fab fa-linkedin-in"></i></a>
-      </div>
-    </div>
-  </footer>
-
-
-
-  <script src="scripts/main.js"></script>
-  <!-- Interactive Background -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
-  <script src="scripts/stardew_background.js"></script>
-</body>
-
-<!-- Return to Reality Button -->
-<div
-  style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 10000; align-items: flex-end;">
-
-  <!-- Music Toggle Button -->
-  <button id="musicToggle"
-    style="background: var(--sd-accent-color); color: #fff; padding: 10px 15px; border-radius: 8px; font-family: 'Vt323', monospace; font-size: 20px; border: 3px solid #1a4216; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 50px;">
-    <i class="fas fa-volume-mute" id="musicIcon"></i>
-  </button>
-
-  <a href="index.html"
-    style="background: var(--sd-accent-color); color: #fff; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-family: 'Vt323', monospace; font-size: 20px; border: 3px solid #1a4216; box-shadow: 4px 4px 0 rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px;">
-    <i class="fas fa-bus"></i> Back to reality
-  </a>
-</div>
-
-<!-- Hidden YouTube Player -->
-<div id="player" style="display: none;"></div>
-
-<script>
-  // YouTube IFrame Player API
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  var player;
-  var isPlaying = false;
-  var musicToggle = document.getElementById('musicToggle');
-  var musicIcon = document.getElementById('musicIcon');
-
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '1',
-      width: '1',
-      videoId: 'nLuNcAJ4dXk',
-      playerVars: {
-        'autoplay': 1,
-        'loop': 1,
-        'playlist': 'nLuNcAJ4dXk',
-        'controls': 0,
-        'showinfo': 0
-      },
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
+    function makeSprite(rows, scale = 1) {
+      const h = rows.length, w = Math.max(...rows.map(r => r.length));
+      const c = document.createElement('canvas');
+      c.width = w * scale; c.height = h * scale;
+      const x = c.getContext('2d');
+      for (let j = 0; j < h; j++) for (let i = 0; i < rows[j].length; i++) {
+        const col = PAL[rows[j][i]];
+        if (col) { x.fillStyle = col; x.fillRect(i * scale, j * scale, scale, scale); }
       }
+      return c;
+    }
+
+    function flipSprite(c) {
+      const f = document.createElement('canvas');
+      f.width = c.width; f.height = c.height;
+      const x = f.getContext('2d');
+      x.translate(c.width, 0); x.scale(-1, 1); x.drawImage(c, 0, 0);
+      return f;
+    }
+
+    /* ---------- journalist farmer 14x18, straw hat, 4 directions ---------- */
+    /* hat = y/Y straw with wide brim, shirt = e/E green, satchel = g/G
+       leather (a reporter never drops the bag), pants = p. */
+    const PF = {
+      down_stand: [
+        '....kyyyyk....', '...kyYYYYyk...', '..kyyyyyyyyk..', '.kyyyyyyyyyyk.',
+        '..ksyyyyyysk..', '..ksssssssck..', '..kscksscksk..', '..kssssssssk..',
+        '...ksssssk....', '..keeeeeeeek..', '.keEeeeeeeEek.', '.keegggggeeek.',
+        '.ksegGGGgeesk.', '..kegggggeek..', '..kppppppppk..', '...kppkkppk...',
+        '...kppk.kppk..', '...kkkk.kkkk..'
+      ],
+      down_walk: [
+        '....kyyyyk....', '...kyYYYYyk...', '..kyyyyyyyyk..', '.kyyyyyyyyyyk.',
+        '..ksyyyyyysk..', '..ksssssssck..', '..kscksscksk..', '..kssssssssk..',
+        '...ksssssk....', '..keeeeeeeek..', '.keEeeeeeeEek.', '.keegggggeeek.',
+        '.ksegGGGgeesk.', '..kegggggeek..', '..kppppppppk..', '...kpppkppk...',
+        '..kppk..kpk...', '..kkk...kkk...'
+      ],
+      up_stand: [
+        '....kyyyyk....', '...kyYYYYyk...', '..kyyyyyyyyk..', '.kyyyyyyyyyyk.',
+        '..kyyyyyyyyk..', '..kyyyyyyyyk..', '..ksyyyyyysk..', '...kyyyyyyk...',
+        '....kyyyyk....', '..keeeeeeeek..', '.keeeeeeeeeek.', '.keegeeeegeek.',
+        '.ksegeeeegesk.', '..kegggggggk..', '..kppppppppk..', '...kppkkppk...',
+        '...kppk.kppk..', '...kkkk.kkkk..'
+      ],
+      up_walk: [
+        '....kyyyyk....', '...kyYYYYyk...', '..kyyyyyyyyk..', '.kyyyyyyyyyyk.',
+        '..kyyyyyyyyk..', '..kyyyyyyyyk..', '..ksyyyyyysk..', '...kyyyyyyk...',
+        '....kyyyyk....', '..keeeeeeeek..', '.keeeeeeeeeek.', '.keegeeeegeek.',
+        '.ksegeeeegesk.', '..kegggggggk..', '..kppppppppk..', '...kpppkppk...',
+        '..kppk..kpk...', '..kkk...kkk...'
+      ],
+      side_stand: [
+        '....kyyyyk....', '...kyYYYYyk...', '..kyyyyyyyyk..', '.kyyyyyyyyyyk.',
+        '..kyyyyyscck..', '..kyyysssssk..', '..kyysscksck..', '...kyssssssk..',
+        '....ksssssk...', '...keeeeeek...', '..keeeeeeEek..', '..keegggeeek..',
+        '..keegGGgesk..', '..keegggeeek..', '...kppppppk...', '...kpppppk....',
+        '...kppkppk....', '...kkk.kkk....'
+      ],
+      side_walk: [
+        '....kyyyyk....', '...kyYYYYyk...', '..kyyyyyyyyk..', '.kyyyyyyyyyyk.',
+        '..kyyyyyscck..', '..kyyysssssk..', '..kyysscksck..', '...kyssssssk..',
+        '....ksssssk...', '...keeeeeek...', '..keeeeeeEek..', '..keegggeeek..',
+        '..keegGGgesk..', '..keegggeeek..', '...kppppppk...', '..kppkpppk....',
+        '..kpk..kppk...', '..kk....kkk...'
+      ]
+    };
+
+    const SPR = {};
+    (function () {
+      const f = {};
+      for (const k in PF) f[k] = makeSprite(PF[k]);
+      // [stand, stepA, stand, stepB]
+      SPR.player = {
+        down: [f.down_stand, f.down_walk, f.down_stand, flipSprite(f.down_walk)],
+        up: [f.up_stand, f.up_walk, f.up_stand, flipSprite(f.up_walk)],
+        left: [flipSprite(f.side_stand), flipSprite(f.side_walk), flipSprite(f.side_stand), flipSprite(f.side_walk)],
+        right: [f.side_stand, f.side_walk, f.side_stand, f.side_walk]
+      };
+    })();
+
+    /* =====================================================================
+       TILES (16px)
+       ===================================================================== */
+    const T = 16;
+    const TILE_SRC = {
+      grass: [
+        'llllllllllllllll', 'llllllllllllllll', 'lllllLllllllllll', 'llllllllllllllll',
+        'llllllllllLlllll', 'llLlllllllllllll', 'llllllllllllllll', 'lllllllLllllllll',
+        'llllllllllllllll', 'lLllllllllllllll', 'llllllllllllLlll', 'llllllllllllllll',
+        'llllLlllllllllll', 'llllllllllllllll', 'llllllllLlllllll', 'llllllllllllllll'
+      ],
+      grass2: [
+        'llllllllllllllll', 'llllLlllllllllll', 'llllllllllllllll', 'llllllllllLlllll',
+        'llllllllllllllll', 'llllllllllllllll', 'llLlllllllllllll', 'llllllllllllllll',
+        'llllllllllllLlll', 'llllllllllllllll', 'lllllLllllllllll', 'llllllllllllllll',
+        'llllllllllllllll', 'llllllllLlllllll', 'llllllllllllllll', 'lLllllllllllllll'
+      ],
+      tree: [
+        'llkkkkkkkkkkkkll', 'lkdeeeEEEeeeedkl', 'kdeEEEeeeeEEEedk', 'kdEEEEEeeEEEEEdk',
+        'kdeEEeeEEeeEEedk', 'kdeeeEEEEEeeeedk', 'kdeEEeEEEEeEEedk', 'kdEEEeeeeeeEEEdk',
+        'kdeEEeeeeeeEEedk', 'lkdeeeEEEeeeedkl', 'llkkddEEEddkkkll', 'llllkkkkkkkkllll',
+        'llllllkggkllllll', 'lllllkGggGklllll', 'lllllkkggkklllll', 'llllllllllllllll'
+      ],
+      water: [
+        'uuuuuuuuuuuuuuuu', 'uuuUUuuuuuuuuuuu', 'uuuuuuuuuUUuuuuu', 'uuuuuuuuuuuuuuuu',
+        'uUUuuuuuuuuuuUUu', 'uuuuuuUUuuuuuuuu', 'uuuuuuuuuuuuuuuu', 'uuuuuuuuuuUUuuuu',
+        'uuUUuuuuuuuuuuuu', 'uuuuuuuuUUuuuuuu', 'uuuuuuuuuuuuuuUU', 'uUuuuuuuuuuuuuuu',
+        'uuuuuUUuuuuuuuuu', 'uuuuuuuuuuuUuuuu', 'uuuuuuuuuuuuuuuu', 'uuUUuuuuuuuuuuuu'
+      ],
+      water2: [
+        'uuuuuuuuuuuuuuuu', 'uuuuUUuuuuuuuuuu', 'uuuuuuuuuuUUuuuu', 'uuuuuuuuuuuuuuuu',
+        'uuUUuuuuuuuuuUUu', 'uuuuuuuUUuuuuuuu', 'uuuuuuuuuuuuuuuu', 'uuuuuuuuuuuUUuuu',
+        'uuuUUuuuuuuuuuuu', 'uuuuuuuuuUUuuuuu', 'uuuuuuuuuuuuuUUu', 'uuUuuuuuuuuuuuuu',
+        'uuuuuuUUuuuuuuuu', 'uuuuuuuuuuuuUuuu', 'uuuuuuuuuuuuuuuu', 'uuuUUuuuuuuuuuuu'
+      ],
+      flower: [
+        'llllllllllllllll', 'llllllllllllllll', 'lllllrrlllllllll', 'llllrYrrllllllll',
+        'lllllrrlllllllll', 'llllllklllllllll', 'llllllklllllllll', 'llllllllllllllll',
+        'llllllllllyyllll', 'lllllllllyRyylll', 'llllllllllyyllll', 'lllllllllllkllll',
+        'lllllllllllkllll', 'llLlllllllllllll', 'llllllllllllllll', 'llllllllllllllll'
+      ],
+      flower2: [
+        'llllllllllllllll', 'llllllllllllllll', 'lllllrrlllllllll', 'llllrrYrllllllll',
+        'lllllrrlllllllll', 'llllllklllllllll', 'llllllklllllllll', 'llllllllllllllll',
+        'llllllllllyyllll', 'llllllllyyRyllll', 'llllllllllyyllll', 'lllllllllllkllll',
+        'lllllllllllkllll', 'llLlllllllllllll', 'llllllllllllllll', 'llllllllllllllll'
+      ],
+      sign: [
+        'llllllllllllllll', 'llkkkkkkkkkkkkll', 'llkGGGGGGGGGGkll', 'llkGkGkkGkkGGkll',
+        'llkGGGGGGGGGGkll', 'llkGkkGkGkkGGkll', 'llkGGGGGGGGGGkll', 'llkkkkkkkkkkkkll',
+        'llllllkggkllllll', 'llllllkggkllllll', 'llllllkggkllllll', 'llllllkggkllllll',
+        'lllllkkggkklllll', 'llllllllllllllll', 'llllllllllllllll', 'llllllllllllllll'
+      ],
+      fence: [
+        'llllllllllllllll', 'llllllllllllllll', 'lkgglllkgglllkgg', 'lkGGklllkGGkllkG',
+        'lkggklllkggkllkg', 'kggggggggggggggg', 'kGGGGGGGGGGGGGGG', 'lkggklllkggkllkg',
+        'kggggggggggggggg', 'kGGGGGGGGGGGGGGG', 'lkggklllkggkllkg', 'lkggklllkggkllkg',
+        'lkkkklllkkkkllkk', 'llllllllllllllll', 'llllllllllllllll', 'llllllllllllllll'
+      ],
+      soil: [
+        'ttttTtttttttttTt', 'tttttttttTtttttt', 'tTtttttttttttttt', 'ttttttttttttTttt',
+        'ttTttttTtttttttt', 'tttttttttttttttt', 'tttttTttttttTttt', 'tttttttttttttttt',
+        'tTtttttttTtttttt', 'ttttttttttttttTt', 'ttttTttttttttttt', 'tttttttttTtttttt',
+        'tTttttttttttttTt', 'ttttttTttttttttt', 'tttttttttttttttt', 'ttTttttttttTtttt'
+      ],
+      tilled: [
+        'TTTTTTTTTTTTTTTT', 'tttttttttttttttt', 'ttttttXttttttttt', 'TTTTTTTTTTTTTTTT',
+        'TTTTTTTTTTXTTTTT', 'tttttttttttttttt', 'ttXttttttttttttt', 'TTTTTTTTTTTTTTTT',
+        'TTTTTTTTTTTTTTTT', 'tttttttttttXtttt', 'tttttttttttttttt', 'TTTTTXTTTTTTTTTT',
+        'TTTTTTTTTTTTTTTT', 'tttttttttttttttt', 'ttttttttXttttttt', 'TTTTTTTTTTTTTTTT'
+      ],
+      tilledwet: [
+        'XXXXXXXXXXXXXXXX', 'xxxxxxxxxxxxxxxx', 'xxxxxxkxxxxxxxxx', 'XXXXXXXXXXXXXXXX',
+        'XXXXXXXXXXkXXXXX', 'xxxxxxxxxxxxxxxx', 'xxkxxxxxxxxxxxxx', 'XXXXXXXXXXXXXXXX',
+        'XXXXXXXXXXXXXXXX', 'xxxxxxxxxxxkxxxx', 'xxxxxxxxxxxxxxxx', 'XXXXXkXXXXXXXXXX',
+        'XXXXXXXXXXXXXXXX', 'xxxxxxxxxxxxxxxx', 'xxxxxxxxkxxxxxxx', 'XXXXXXXXXXXXXXXX'
+      ],
+      roof: [
+        'zzzzzzzzzzzzzzzz', 'RRrrrrRRrrrrRRrr', 'rrrrrrrrrrrrrrrr', 'rrrrrrrrrrrrrrrr',
+        'zzzzzzzzzzzzzzzz', 'rrRRrrrrRRrrrrRR', 'rrrrrrrrrrrrrrrr', 'rrrrrrrrrrrrrrrr',
+        'zzzzzzzzzzzzzzzz', 'RRrrrrRRrrrrRRrr', 'rrrrrrrrrrrrrrrr', 'rrrrrrrrrrrrrrrr',
+        'zzzzzzzzzzzzzzzz', 'rrRRrrrrRRrrrrRR', 'rrrrrrrrrrrrrrrr', 'zzzzzzzzzzzzzzzz'
+      ],
+      wall: [
+        'kkkkkkkkkkkkkkkk', 'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGGgGGGg',
+        'GGGgGGGgGGGgGGGg', 'GGGgGGhgGGGgGGGg', 'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGGgGGGg',
+        'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGhgGGGg', 'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGGgGGGg',
+        'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGGgGGGg', 'hhhhhhhhhhhhhhhh'
+      ],
+      window: [
+        'kkkkkkkkkkkkkkkk', 'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGGgGGGg', 'GGkkkkkkkkkkkkGg',
+        'GGkUUUUUkUUUUkGg', 'GGkUUUUUkUUUUkGg', 'GGkUuuUUkUuUUkGg', 'GGkkkkkkkkkkkkGg',
+        'GGkUUuUUkUUuUkGg', 'GGkUUUUUkUUUUkGg', 'GGkUUUUUkUUUUkGg', 'GGkkkkkkkkkkkkGg',
+        'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGGgGGGg', 'GGGgGGGgGGGgGGGg', 'hhhhhhhhhhhhhhhh'
+      ],
+      door: [
+        'kkkkkkkkkkkkkkkk', 'GGgkkkkkkkkkkgGg', 'GGgkhhhhhhhhkgGg', 'GGgkhKhhhhKhkgGg',
+        'GGgkhhhhhhhhkgGg', 'GGgkhhhhhhhhkgGg', 'GGgkhKhhhhKhkgGg', 'GGgkhhhhhhhhkgGg',
+        'GGgkhhhhhhyykgGg', 'GGgkhhhhhhyykgGg', 'GGgkhhhhhhhhkgGg', 'GGgkhKhhhhKhkgGg',
+        'GGgkhhhhhhhhkgGg', 'GGgkhhhhhhhhkgGg', 'GGgkhhhhhhhhkgGg', 'hhhhhhhhhhhhhhhh'
+      ],
+      mailbox: [
+        'llllllllllllllll', 'lllkkkkkkkkkllll', 'llkrrrrrrrrrkLll', 'llkrRRrrrrrrklll',
+        'llkrrrrrrkkrklll', 'llkrrrrrrkkrklll', 'llkrrrrrrrrrklll', 'lllkkkkkkkkkllll',
+        'llllllkggklllLll', 'llllllkggkllllll', 'llLlllkggkllllll', 'llllllkggkllllll',
+        'llllllkggkllllll', 'lllllkkggkklllll', 'llllllllllllllll', 'llllllllllllllll'
+      ],
+      rockface: [
+        'kckkkkkckkkkkckk', 'cCCCCcCCCCCcCCCc', 'cCCCCcCCCCCcCCCc', 'cccccccccccccccc',
+        'CCcCCCCCcCCCCCcC', 'CCcCCCCCcCCCCCcC', 'cccccccccccccccc', 'cCCCcCCCCCCcCCCc',
+        'cCCCcCCCCCCcCCCc', 'cccccccccccccccc', 'CCcCCCCcCCCCCCcC', 'CCcCCCCcCCCCCCcC',
+        'cccccccccccccccc', 'cCCCCCcCCCCcCCCc', 'cCCCCCcCCCCcCCCc', 'kkckkkkkckkkkkck'
+      ],
+      cavemouth: [
+        'kckkkkkckkkkkckk', 'cCCCCcCCCCCcCCCc', 'cCCcckkkkkkccCCc', 'cccckknnnnkkcccc',
+        'CCckknnnnnnkkccC', 'CCcknnnnnnnnkccC', 'ccknnnnnnnnnnkcc', 'cCknnnnnnnnnnkCc',
+        'cCknnnnnnnnnnkCc', 'ccknnnnnnnnnnkcc', 'CCknnnnnnnnnnkcC', 'CCknnnnnnnnnnkcC',
+        'ccknnnnnnnnnnkcc', 'cCknnnnnnnnnnkCc', 'cCknnnnnnnnnnkCc', 'kkknnnnnnnnnnkkk'
+      ],
+      cwall: [
+        'NnnNNNnNNNnnNNNn', 'NNNNnNNNNNNnNNNN', 'nnnnnnnnnnnnnnnn', 'NNnNNNNnNNNNNnNN',
+        'NNnNNNNnNNNNNnNN', 'nnnnnnnnnnnnnnnn', 'NnNNNnNNNNnNNNNn', 'NnNNNnNNNNnNNNNn',
+        'nnnnnnnnnnnnnnnn', 'NNNnNNNNnNNNNnNN', 'NNNnNNNNnNNNNnNN', 'nnnnnnnnnnnnnnnn',
+        'NnNNNNnNNNnNNNNN', 'NnNNNNnNNNnNNNNN', 'nnnnnnnnnnnnnnnn', 'nNNnnnNnnnNNnnnN'
+      ],
+      cfloor: [
+        'iiiiIiiiiiiiiiIi', 'iiiiiiiiiIiiiiii', 'iIiiiiiiiiiiiiii', 'iiiiiiiiiiiiIiii',
+        'iiIiiiiniiiiiiii', 'iiiiiiiiiiiiiiii', 'iiiiiIiiiiiiIiii', 'iiiiiiiiiiiiiiii',
+        'iIiiiiiiiniiiiii', 'iiiiiiiiiiiiiiIi', 'iiiiIiiiiiiiiiii', 'iiiiiiiiiniiiiii',
+        'iIiiiiiiiiiiiiIi', 'iiiiiiIiiiiiiiii', 'iiiiiiiiiiiiiiii', 'iiIiiiiiiiiIiiii'
+      ],
+      ladder: [
+        'iiiiIiiiiiiiiiIi', 'iiiwwiiiiiwwiiii', 'iiikgkiiiikgkiii', 'iiikgkkkkkkgkiii',
+        'iiikgGGGGGGgkiii', 'iiikgkiiiikgkiii', 'iiikgkiiiikgkiii', 'iiikgGGGGGGgkiii',
+        'iiikgkiiiikgkiii', 'iiikgkiiiikgkiii', 'iiikgGGGGGGgkiii', 'iiikgkiiiikgkiii',
+        'iiikgkiiiikgkiii', 'iiikgGGGGGGgkiii', 'iiikgkiiiikgkiii', 'iiIkkkiiiikkkiii'
+      ]
+    };
+    const TILES = {};
+    for (const k in TILE_SRC) TILES[k] = makeSprite(TILE_SRC[k]);
+
+    /* ---------- objects & items (transparent overlays) ---------- */
+    const OBJ_SRC = {
+      stone: [
+        '................', '................', '................', '................',
+        '................', '.....kkkkk......', '....kCCCCck.....', '...kCCcCCCck....',
+        '...kcCCCCccck...', '...kccCCcccck...', '....kcccccck....', '.....kkkkkk.....',
+        '................', '................', '................', '................'
+      ],
+      branch: [
+        '................', '................', '................', '................',
+        '................', '..kgg...........', '...kggkk..ee....', '....kgggk.kE....',
+        '.....kgggkgk....', '......kggggk....', '.......kggk.....', '........kk......',
+        '................', '................', '................', '................'
+      ],
+      rock: [
+        '................', '................', '....kkkkkkk.....', '...kCCCCCCck....',
+        '..kCCcCCCCCck...', '..kCCCCCcCCck...', '.kCcCCCCCCCcck..', '.kCCCCcCCCcccK..',
+        '.kcCCCCCCcccck..', '.kccCCcCCccccK..', '..kcccccccccK...', '..Kccccccccck...',
+        '...kkkkkkkkk....', '................', '................', '................'
+      ],
+      doc: [
+        '................', '................', '................', '....kkkkkkk.....',
+        '....kwwwwwk.....', '....kwKKwwk.....', '....kwwwwwk.....', '....kwKKKwk.....',
+        '....kwwwwwk.....', '....kwKKwwk.....', '....kwwwwwk.....', '....kkkkkkk.....',
+        '................', '................', '................', '................'
+      ],
+      coffee: [
+        '................', '................', '................', '......w...w.....',
+        '.....w...w......', '....kkkkkkk.....', '...kwwwwwwwkk...', '...kwKKKKKwkgk..',
+        '...kwwwwwwwkgk..', '...kwwwwwwwkk...', '....kwwwwwk.....', '.....kkkkk......',
+        '................', '................', '................', '................'
+      ],
+      lead: [
+        '................', '................', '................', '...kkkk.........',
+        '..kyyyykkkkkkk..', '..kyYYYYYYYYyk..', '..kyYYYYYYYYyk..', '..kyyyyyyyyyyk..',
+        '..kyyyyyyyyyyk..', '..kkkkkkkkkkkk..', '................', '................',
+        '................', '................', '................', '................'
+      ]
+    };
+    const OBJS = {};
+    for (const k in OBJ_SRC) OBJS[k] = makeSprite(OBJ_SRC[k]);
+
+    /* ---------- crop stages (drawn over tilled soil) ---------- */
+    const CROP_SRC = [
+      [ /* 0: seeds */
+        '................', '................', '................', '................',
+        '................', '................', '................', '......k..k......',
+        '....k...........', '.........k......', '......k.........', '................',
+        '................', '................', '................', '................'
+      ],
+      [ /* 1: sprout */
+        '................', '................', '................', '................',
+        '................', '................', '................', '......eE........',
+        '.....eEe.E......', '......ed.e......', '.......d........', '.......d........',
+        '................', '................', '................', '................'
+      ],
+      [ /* 2: plant */
+        '................', '................', '................', '....E...........',
+        '...eEe...E......', '....e...eEe.....', '..E..e.e.e......', '.eEe..ee........',
+        '...e.eEe........', '....ee.d.e......', '.....d.d........', '.....dd.........',
+        '......d.........', '................', '................', '................'
+      ],
+      [ /* 3: MATURE PAUTA — golden star + paper bloom */
+        '......kyk.......', '.....kyYyk......', '....kyYYYyk.....', '.....kyYyk......',
+        '......kyk.......', '...eEe...eEe....', '..eEkwwwwwkEe...', '...ekwKKwwke....',
+        '..Eekwwwwwke....', '...ekwKKKwkeE...', '..eekwwwwwkee...', '...ekkkkkkke....',
+        '....ed.d.de.....', '.....d.d.d......', '......ddd.......', '.......d........'
+      ]
+    ];
+    const CROPS = CROP_SRC.map(r => makeSprite(r));
+
+    /* big art (title / win screens ONLY — different style, never overworld) */
+    const imgAvatar = new Image(); imgAvatar.src = 'images/stardew/stardew_avatar_final_hat.png';
+    const imgPaper = new Image(); imgPaper.src = 'images/stardew/stardew_icon_newspaper_1767209976035.png';
+
+    /* =====================================================================
+       MAPS — farm 24x16 + dead archive 24x16
+       ===================================================================== */
+    const FARM_STR = [
+      '########################',
+      '#,,,,,,,,,,%C%,,,,,,,,*#',
+      '#,*,RRRRRR,,,,,,,~~~~,,#',
+      '#,,,RRRRRR,,,,,,,~~~~,,#',
+      '#,,,,VDvV,,M,,,,,~~~,,,#',
+      '#,,,,!,,,,,,,L,,,,,,,,*#',
+      '#,*,,,,,,,O,,,,,O,,,,,,#',
+      '#,FFFFFFFFFFFF,,,,L,,,,#',
+      '#,Ftttttttttt,,,,,,,,*,#',
+      '#,Ftttttttttt,,O,,,,,,,#',
+      '#,Ftttttttttt,,,,,L,,,,#',
+      '#,Ftttttttttt,,,,,,,,,,#',
+      '#,Ftttttttttt,*,,,O,,,,#',
+      '#,FFFFFFFFFF,,,,,,,,,,,#',
+      '#,,*,,,,,,L,,,,,O,,,*,,#',
+      '########################'
+    ];
+    const CAVE_STR = [
+      '########################',
+      '######............######',
+      '###.....O....O.......###',
+      '##...O.........O...O..##',
+      '##.......###.........###',
+      '#...O....###....O......#',
+      '#.........#.....O....###',
+      '#...O........O........##',
+      '##.....O..........O...##',
+      '##..........##........##',
+      '###...O.....##...O....##',
+      '###........O.........###',
+      '####...O........O...####',
+      '#####.......X......#####',
+      '########........########',
+      '########################'
+    ];
+    const MAPW = 24, MAPH = 16;
+
+    const FARM_T = {
+      '#': 'tree', ',': 'grass', '*': 'flower', '%': 'rockface', 'C': 'cavemouth',
+      '~': 'water', 'R': 'roof', 'V': 'wall', 'v': 'window', 'D': 'door',
+      'M': 'mailbox', '!': 'sign', 'F': 'fence', 't': 'soil', 'O': 'grass', 'L': 'grass'
+    };
+    const CAVE_T = { '#': 'cwall', '.': 'cfloor', 'O': 'cfloor', 'X': 'ladder' };
+    const SOLID = {
+      tree: 1, water: 1, roof: 1, wall: 1, window: 1, door: 1,
+      mailbox: 1, sign: 1, fence: 1, rockface: 1, cwall: 1
+    };
+
+    /* =====================================================================
+       STATE
+       ===================================================================== */
+    const TOOLS = ['HOE', 'SEEDS', 'CAN', 'HAND', 'PICKAXE'];
+    const COST = { till: 4, water: 1, stone: 4, branch: 2, rock: 7 };
+    const ENERGY_MAX = 100;
+
+    const game = {
+      state: 'title',
+      map: 'farm',
+      px: 7, py: 6, dir: 'down',
+      moving: false, moveT: 0, fromX: 7, fromY: 6,
+      step: 0,
+      tool: 0,
+      day: 1,
+      energy: ENERGY_MAX,
+      published: 0,
+      rareDocs: 0,
+      leads: 0,
+      farm: {},                      // "x,y" -> {tilled, wet, crop:{stage, watered}}
+      objs: { farm: {}, cave: {} },  // "x,y" -> 'stone'|'branch'|'rock'
+      rareRocks: {},                 // "x,y" -> true
+      items: [],                     // {x,y,type} on the farm
+      msg: null,                     // {pages:[[lines]], idx}
+      confirm: null,                 // {lines, yes}
+      toast: null,                   // {txt, t}
+      sleeping: null,                // {t, advanced}
+      caveVisited: false,
+      won: false,
+      winSel: 0,
+      animClock: 0, titleT: 0, winT: 0
+    };
+
+    /* scatter initial objects from the map strings */
+    (function () {
+      for (let y = 0; y < MAPH; y++) for (let x = 0; x < MAPW; x++) {
+        const cf = FARM_STR[y][x], cc = CAVE_STR[y][x];
+        if (cf === 'O') game.objs.farm[x + ',' + y] = 'stone';
+        if (cf === 'L') game.objs.farm[x + ',' + y] = 'branch';
+        if (cc === 'O') game.objs.cave[x + ',' + y] = 'rock';
+      }
+      /* pick the 3 rare-document rocks */
+      const keys = Object.keys(game.objs.cave);
+      for (let i = keys.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [keys[i], keys[j]] = [keys[j], keys[i]];
+      }
+      keys.slice(0, 3).forEach(k => game.rareRocks[k] = true);
+    })();
+
+    function tileAt(x, y, map) {
+      map = map || game.map;
+      if (x < 0 || y < 0 || x >= MAPW || y >= MAPH) return map === 'farm' ? 'tree' : 'cwall';
+      const ch = (map === 'farm' ? FARM_STR : CAVE_STR)[y][x];
+      return (map === 'farm' ? FARM_T : CAVE_T)[ch] || 'grass';
+    }
+    const objAt = (x, y) => game.objs[game.map][x + ',' + y];
+    const itemAt = (x, y) => game.map === 'farm' ? game.items.find(i => i.x === x && i.y === y) : null;
+
+    /* =====================================================================
+       INPUT — keyboard + DOM pad + canvas touch zones
+       ===================================================================== */
+    const keys = {};
+    const KEYMAP = {
+      ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
+      w: 'up', s: 'down', a: 'left', d: 'right',
+      W: 'up', S: 'down', A: 'left', D: 'right',
+      z: 'A', Z: 'A', Enter: 'A', ' ': 'A',
+      x: 'B', X: 'B', Escape: 'B', Backspace: 'B',
+      c: 'tool', C: 'tool'
+    };
+    let pressQueue = [];
+    window.addEventListener('keydown', e => {
+      const k = KEYMAP[e.key];
+      if (!k) return;
+      e.preventDefault();
+      if (!keys[k]) pressQueue.push(k);
+      keys[k] = true;
     });
-  }
+    window.addEventListener('keyup', e => { const k = KEYMAP[e.key]; if (k) keys[k] = false; });
 
-  function onPlayerReady(event) {
-    // Attempt autoplay
-    event.target.playVideo();
-    // Some browsers block this unless muted, but user wants music.
-    // We update UI based on success.
-  }
+    document.querySelectorAll('.dpad button').forEach(btn => {
+      const dir = btn.dataset.dir;
+      const dn = e => { e.preventDefault(); if (!keys[dir]) pressQueue.push(dir); keys[dir] = true; };
+      const up = e => { e.preventDefault(); keys[dir] = false; };
+      btn.addEventListener('pointerdown', dn);
+      btn.addEventListener('pointerup', up);
+      btn.addEventListener('pointerleave', up);
+      btn.addEventListener('pointercancel', up);
+    });
+    document.querySelectorAll('.ab button').forEach(btn => {
+      btn.addEventListener('pointerdown', e => { e.preventDefault(); pressQueue.push(btn.dataset.btn); });
+    });
+    const toolBtn = document.getElementById('toolBtn');
+    toolBtn.addEventListener('pointerdown', e => { e.preventDefault(); pressQueue.push('tool'); });
 
-  function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-      isPlaying = true;
-      musicIcon.className = 'fas fa-volume-up';
-    } else {
-      isPlaying = false;
-      musicIcon.className = 'fas fa-volume-mute';
+    let zones = [];
+    function zone(x, y, w, h, act, data) { zones.push({ x, y, w, h, act, data }); }
+    cv.addEventListener('pointerdown', e => {
+      const r = cv.getBoundingClientRect();
+      const x = (e.clientX - r.left) * 256 / r.width, y = (e.clientY - r.top) * 192 / r.height;
+      for (const z of zones) {
+        if (x >= z.x && x < z.x + z.w && y >= z.y && y < z.y + z.h) { pressQueue.push(z); return; }
+      }
+      pressQueue.push('A'); // tap outside any zone = A
+    });
+    function popPress() { return pressQueue.shift(); }
+    const isA = p => p === 'A' || (p && p.act === 'A');
+    const isB = p => p === 'B' || (p && p.act === 'B');
+    const isTool = p => p === 'tool' || (p && p.act === 'tool');
+
+    /* =====================================================================
+       DRAW HELPERS
+       ===================================================================== */
+    function px(x, y, w, h, col) { g.fillStyle = col; g.fillRect(x | 0, y | 0, w, h); }
+
+    function frame9(x, y, w, h, opts = {}) {
+      const bg = opts.bg || '#f8f4e4', edge = opts.edge || '#c89858', dark = opts.dark || '#6b4626';
+      px(x + 2, y + 2, w - 4, h - 4, bg);
+      px(x + 2, y, w - 4, 2, dark); px(x + 2, y + h - 2, w - 4, 2, dark);
+      px(x, y + 2, 2, h - 4, dark); px(x + w - 2, y + 2, 2, h - 4, dark);
+      px(x + 2, y + 2, w - 4, 1, edge); px(x + 2, y + h - 3, w - 4, 1, edge);
+      px(x + 2, y + 2, 1, h - 4, edge); px(x + w - 3, y + 2, 1, h - 4, edge);
     }
-  }
 
-  musicToggle.addEventListener('click', function () {
-    if (isPlaying) {
-      player.pauseVideo();
-    } else {
-      player.playVideo();
+    function text(str, x, y, col = '#303030', size = 8) {
+      g.font = size + 'px "Press Start 2P"';
+      g.textBaseline = 'top';
+      g.fillStyle = col;
+      g.fillText(str, x, y);
     }
-  });
-</script>
+
+    function textC(str, cx, y, col, size = 8) {
+      g.font = size + 'px "Press Start 2P"';
+      const w = g.measureText(str).width;
+      text(str, Math.round(cx - w / 2), y, col, size);
+    }
+
+    function bar(x, y, w, ratio, colFull) {
+      px(x - 1, y - 1, w + 2, 6, '#43301f');
+      px(x, y, w, 4, '#e8e0cc');
+      const col = colFull || (ratio > .5 ? '#58c858' : ratio > .25 ? '#f0c020' : '#e05038');
+      px(x, y, Math.max(0, Math.round(w * ratio)), 4, col);
+    }
+
+    /* =====================================================================
+       CHIPTUNE — original 8-bar loops, pure WebAudio, no samples
+       ===================================================================== */
+    let AC = null, musGain = null, musTimer = null, musTheme = null, musNodes = [];
+    const midi = n => 440 * Math.pow(2, (n - 69) / 12);
+
+    const THEMES = {
+      farm: {
+        bpm: 116, vol: .045,
+        voices: [
+          {
+            wave: 'square', vol: .55, notes: [
+              [67, .5], [69, .5], [72, 1], [67, 1], [64, 1],
+              [65, .5], [67, .5], [69, 1], [65, 1], [62, 1],
+              [64, .5], [65, .5], [67, 1], [64, 1], [60, 1],
+              [62, 1], [64, 1], [55, 2],
+              [67, .5], [69, .5], [72, 1], [74, 1], [76, 1],
+              [74, .5], [72, .5], [69, 1], [67, 2],
+              [65, 1], [67, 1], [69, 1], [72, 1],
+              [67, 1], [64, 1], [60, 2]
+            ]
+          },
+          {
+            wave: 'triangle', vol: 1, notes: [
+              [36, 1], [43, 1], [36, 1], [43, 1],
+              [41, 1], [48, 1], [41, 1], [48, 1],
+              [36, 1], [43, 1], [36, 1], [43, 1],
+              [43, 1], [50, 1], [43, 1], [50, 1],
+              [36, 1], [43, 1], [36, 1], [43, 1],
+              [41, 1], [48, 1], [41, 1], [48, 1],
+              [43, 1], [50, 1], [43, 1], [50, 1],
+              [36, 1], [43, 1], [36, 2]
+            ]
+          }
+        ]
+      },
+      cave: {
+        bpm: 84, vol: .05,
+        voices: [
+          {
+            wave: 'triangle', vol: .9, notes: [
+              [57, 2], [60, 1], [59, 1],
+              [57, 2], [55, 2],
+              [53, 2], [57, 1], [60, 1],
+              [55, 4],
+              [57, 2], [60, 1], [64, 1],
+              [62, 2], [60, 2],
+              [59, 2], [55, 2],
+              [57, 4]
+            ]
+          },
+          {
+            wave: 'triangle', vol: .8, notes: [
+              [33, 2], [40, 2], [33, 2], [40, 2],
+              [29, 2], [36, 2], [31, 2], [38, 2],
+              [33, 2], [40, 2], [33, 2], [40, 2],
+              [31, 2], [38, 2], [33, 4]
+            ]
+          }
+        ]
+      }
+    };
+
+    function ensureAC() {
+      if (AC) return;
+      try {
+        AC = new (window.AudioContext || window.webkitAudioContext)();
+        musGain = AC.createGain();
+        musGain.gain.value = 1;
+        musGain.connect(AC.destination);
+      } catch (e) { AC = null; }
+    }
+
+    function noteAt(t, m, dur, wave, vol, dest) {
+      const o = AC.createOscillator();
+      o.type = wave; o.frequency.setValueAtTime(midi(m), t);
+      const e = AC.createGain();
+      e.gain.setValueAtTime(0.0001, t);
+      e.gain.linearRampToValueAtTime(vol, t + .015);
+      e.gain.setValueAtTime(vol, Math.max(t + .02, t + dur - .05));
+      e.gain.linearRampToValueAtTime(0.0001, t + dur);
+      o.connect(e); e.connect(dest);
+      o.start(t); o.stop(t + dur + .03);
+    }
+
+    function stopMusic() {
+      if (musTimer) clearTimeout(musTimer);
+      musTimer = null; musTheme = null;
+      musNodes.forEach(n => { try { n.disconnect(); } catch (e) { } });
+      musNodes = [];
+    }
+
+    function playTheme(name) {
+      if (!AC || musTheme === name) return;
+      stopMusic();
+      musTheme = name;
+      if (AC.state === 'suspended') AC.resume().catch(() => { });
+      scheduleLoop(AC.currentTime + .08);
+    }
+
+    function scheduleLoop(t0) {
+      if (!musTheme) return;
+      const th = THEMES[musTheme], spb = 60 / th.bpm;
+      const gn = AC.createGain();
+      gn.gain.value = th.vol;
+      gn.connect(musGain);
+      musNodes.push(gn);
+      let dur = 0;
+      for (const v of th.voices) {
+        let t = t0;
+        for (const [m, b] of v.notes) {
+          if (m > 0) noteAt(t, m, b * spb * .92, v.wave, v.vol, gn);
+          t += b * spb;
+        }
+        dur = Math.max(dur, t - t0);
+      }
+      musTimer = setTimeout(() => scheduleLoop(t0 + dur), Math.max(50, (t0 + dur - AC.currentTime) * 1000 - 250));
+    }
+
+    function playJingle() {
+      if (!AC) return;
+      const gn = AC.createGain(); gn.gain.value = .06; gn.connect(musGain);
+      const t = AC.currentTime + .05;
+      [[72, 0, .18], [76, .18, .18], [79, .36, .18], [84, .54, .5]].forEach(([m, off, d]) =>
+        noteAt(t + off, m, d, 'square', .6, gn));
+    }
+
+    function sfx(m, d = .08, wave = 'square') {
+      if (!AC) return;
+      const gn = AC.createGain(); gn.gain.value = .04; gn.connect(musGain);
+      noteAt(AC.currentTime + .01, m, d, wave, .6, gn);
+    }
+
+    /* =====================================================================
+       MESSAGES / TOASTS
+       ===================================================================== */
+    function say(...pages) { game.msg = { pages, idx: 0 }; }
+    function toast(txt) { game.toast = { txt, t: 0 }; }
+
+    const SIGN_PAGES = [
+      ['HOW TO GROW A STORY:', 'C or TOOL swaps tools.', 'HOE tills the plot. SEEDS', 'plant a story seed (a tip).'],
+      ['CAN waters = REPORTING.', 'Water daily + sleep in bed:', '3 watered days = ripe PAUTA.', 'HAND harvests = PUBLISH!'],
+      ['Goal: 4 front pages + the 3', 'rare documents buried in the', 'DEAD ARCHIVE (cave up north).', 'Low energy? Coffee or bed.']
+    ];
+    const MAIL = [
+      ['EDITOR: Welcome to Pauta', 'Valley. Four front pages or', "you're back on traffic duty.", '- M.'],
+      ['EDITOR: Lawyers called.', 'Keep digging anyway.', '- M.'],
+      ['EDITOR: A source says the', 'archive cave hides 3 rare', 'documents. Bring a pickaxe.', '- M.'],
+      ['EDITOR: Reminder that', 'coffee is not a food group.', '(Drink it anyway.)', '- M.']
+    ];
+    const HEADLINES = [
+      'CITY BUYS 500 INVISIBLE CHAIRS',
+      "MAYOR'S COW LISTED AS ADVISOR",
+      'SECRET FUND PAID FOR A PARROT',
+      'BRIDGE TO NOWHERE HAS NO ROAD',
+      'AUDIT FINDS BUDGET IN MATTRESS',
+      'GHOST PAYROLL HAUNTS TOWN HALL'
+    ];
+    const RARE_FLAVOR = [
+      'A 1987 ledger. Names. Dates.',
+      'A sealed deposition. Whoa.',
+      'Microfilm: the smoking gun!'
+    ];
+
+    /* =====================================================================
+       WORLD LOGIC
+       ===================================================================== */
+    function syncToolBtn() {
+      toolBtn.textContent = 'TOOL · ' + TOOLS[game.tool];
+    }
+
+    function cycleTool() {
+      const n = game.map === 'cave' ? 5 : 4;
+      game.tool = (game.tool + 1) % n;
+      syncToolBtn();
+      sfx(72, .05);
+      toast(TOOLS[game.tool]);
+    }
+
+    function spendEnergy(cost) {
+      if (game.energy < cost) {
+        say(['You are out of energy.', 'Even the coffee judges you.', 'Crawl into bed and sleep.']);
+        return false;
+      }
+      game.energy -= cost;
+      return true;
+    }
+
+    function facingTile() {
+      const d = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }[game.dir];
+      return { x: game.px + d[0], y: game.py + d[1] };
+    }
+
+    function collectItem(it) {
+      game.items = game.items.filter(i => i !== it);
+      sfx(79, .07);
+      if (it.type === 'coffee') {
+        game.energy = Math.min(ENERGY_MAX, game.energy + 25);
+        toast('HOT COFFEE +25 ENERGY');
+      } else if (it.type === 'doc') {
+        game.leads++;
+        toast('LEAKED MEMO. SPICY. +1 LEAD');
+      } else {
+        game.leads++;
+        toast('TIP: FOLLOW THE MONEY. +1 LEAD');
+      }
+    }
+
+    function useTool() {
+      const f = facingTile(), key = f.x + ',' + f.y;
+      const tool = TOOLS[game.tool];
+      const base = tileAt(f.x, f.y);
+      const obj = objAt(f.x, f.y);
+      const cell = game.farm[key];
+
+      if (tool === 'HOE') {
+        if (game.map !== 'farm' || base !== 'soil') return toast("CAN'T TILL THAT");
+        if (cell && cell.tilled) return toast('ALREADY TILLED');
+        if (!spendEnergy(COST.till)) return;
+        game.farm[key] = { tilled: true, wet: false, crop: null };
+        sfx(50, .07, 'triangle');
+        toast('PLOT OPENED. PITCH IT!');
+      } else if (tool === 'SEEDS') {
+        if (!cell || !cell.tilled) return toast('TILL THE SOIL FIRST');
+        if (cell.crop) return toast('ALREADY PLANTED');
+        cell.crop = { stage: 0, watered: cell.wet };
+        sfx(64, .06);
+        toast('STORY SEED PLANTED');
+      } else if (tool === 'CAN') {
+        if (!cell || !cell.tilled) return toast('NOTHING TO WATER');
+        if (cell.wet) return toast('ALREADY REPORTED TODAY');
+        if (!spendEnergy(COST.water)) return;
+        cell.wet = true;
+        if (cell.crop) cell.crop.watered = true;
+        sfx(60, .09, 'triangle');
+        toast('WATERED = REPORTING DONE');
+      } else if (tool === 'HAND') {
+        if (cell && cell.crop && cell.crop.stage >= 3) {
+          delete game.farm[key];
+          game.published++;
+          playJingle();
+          say(['EXTRA! EXTRA! You publish:', '"' + HEADLINES[(game.published - 1) % HEADLINES.length] + '"', '(' + game.published + '/4 front pages)']);
+          return;
+        }
+        if (obj === 'stone') {
+          if (!spendEnergy(COST.stone)) return;
+          delete game.objs.farm[key];
+          sfx(45, .08, 'triangle');
+          toast('STONE CLEARED');
+          return;
+        }
+        if (obj === 'branch') {
+          if (!spendEnergy(COST.branch)) return;
+          delete game.objs.farm[key];
+          sfx(52, .07, 'triangle');
+          toast('BRANCH CLEARED');
+          return;
+        }
+        const it = itemAt(f.x, f.y) || itemAt(game.px, game.py);
+        if (it) return collectItem(it);
+        toast('NOTHING TO GRAB');
+      } else if (tool === 'PICKAXE') {
+        if (game.map !== 'cave') return toast('ONLY IN THE ARCHIVE');
+        if (obj !== 'rock') return toast('SWING AT A ROCK');
+        if (!spendEnergy(COST.rock)) return;
+        delete game.objs.cave[key];
+        sfx(43, .1, 'square');
+        if (game.rareRocks[key]) {
+          delete game.rareRocks[key];
+          game.rareDocs++;
+          playJingle();
+          say(['RARE DOCUMENT ' + game.rareDocs + '/3!', RARE_FLAVOR[(game.rareDocs - 1) % 3], 'The archive remembers.']);
+        } else {
+          toast('JUST GRAVEL AND REGRET');
+        }
+      }
+    }
+
+    function interact() {
+      /* A button: collect > talk to things > use tool */
+      const it = itemAt(game.px, game.py) || (() => { const f = facingTile(); return itemAt(f.x, f.y); })();
+      if (it) return collectItem(it);
+
+      const f = facingTile(), t = tileAt(f.x, f.y);
+      if (t === 'sign') return say(...SIGN_PAGES);
+      if (t === 'mailbox') return say(MAIL[(game.day - 1) % MAIL.length]);
+      if (t === 'door') {
+        game.confirm = { lines: ['Crawl into bed and sleep', 'until tomorrow?'], yes: startSleep };
+        return;
+      }
+      if (t === 'water') return say(['The pond is calm.', 'Somewhere down there:', 'an off-the-record fish.']);
+      if (t === 'cavemouth') return enterCave();
+      useTool();
+    }
+
+    function startSleep() {
+      game.confirm = null;
+      game.sleeping = { t: 0, advanced: false };
+    }
+
+    function advanceDay() {
+      game.day++;
+      game.energy = ENERGY_MAX;
+      for (const k in game.farm) {
+        const c = game.farm[k];
+        if (c.crop && c.crop.watered && c.crop.stage < 3) c.crop.stage++;
+        if (c.crop) c.crop.watered = false;
+        c.wet = false;
+      }
+      spawnItems(3);
+    }
+
+    function spawnItems(n) {
+      const types = ['coffee', 'doc', 'lead', 'coffee'];
+      let guard = 200;
+      while (n > 0 && guard-- > 0) {
+        const x = 1 + Math.floor(Math.random() * (MAPW - 2));
+        const y = 1 + Math.floor(Math.random() * (MAPH - 2));
+        if (tileAt(x, y, 'farm') !== 'grass') continue;
+        if (game.objs.farm[x + ',' + y]) continue;
+        if (game.items.some(i => i.x === x && i.y === y)) continue;
+        if (game.map === 'farm' && x === game.px && y === game.py) continue;
+        game.items.push({ x, y, type: types[Math.floor(Math.random() * types.length)] });
+        n--;
+      }
+    }
+
+    function enterCave() {
+      game.map = 'cave';
+      game.px = 12; game.py = 12; game.fromX = 12; game.fromY = 12;
+      game.moving = false; game.dir = 'up';
+      game.tool = 4; syncToolBtn();
+      playTheme('cave');
+      if (!game.caveVisited) {
+        game.caveVisited = true;
+        say(
+          ['THE DEAD ARCHIVE.', 'Dust. Boxes. Cold coffee', 'from 1994. You grab an old', 'PICKAXE off a shelf.'],
+          ['PICKAXE added as 5th tool.', 'Crack the rocks: 3 RARE', 'DOCUMENTS are buried here.', 'Each swing costs energy!']
+        );
+      }
+    }
+
+    function exitCave() {
+      game.map = 'farm';
+      game.px = 12; game.py = 2; game.fromX = 12; game.fromY = 2;
+      game.moving = false; game.dir = 'down';
+      if (game.tool === 4) { game.tool = 3; syncToolBtn(); }
+      playTheme('farm');
+    }
+
+    function tryMove(dx, dy, dir) {
+      game.dir = dir;
+      const nx = game.px + dx, ny = game.py + dy;
+      if (SOLID[tileAt(nx, ny)] || objAt(nx, ny)) return;
+      game.fromX = game.px; game.fromY = game.py;
+      game.px = nx; game.py = ny;
+      game.moving = true; game.moveT = 0;
+    }
+
+    function finishStep() {
+      game.step++;
+      const t = tileAt(game.px, game.py);
+      if (game.map === 'farm' && t === 'cavemouth') enterCave();
+      else if (game.map === 'cave' && t === 'ladder') exitCave();
+    }
+
+    function updateWorld(dt) {
+      if (game.sleeping) {
+        const s = game.sleeping;
+        s.t += dt * .9;
+        if (s.t >= 1 && !s.advanced) { s.advanced = true; advanceDay(); }
+        if (s.t >= 2) {
+          game.sleeping = null;
+          toast('DAY ' + game.day + '. CROPS GREW. GO!');
+        }
+        return;
+      }
+
+      if (!game.won && game.published >= 4 && game.rareDocs >= 3 && !game.msg && !game.confirm) {
+        game.won = true;
+        game.state = 'win';
+        game.winT = 0; game.winSel = 0;
+        stopMusic();
+        playJingle();
+        return;
+      }
+
+      if (game.msg) {
+        const p = popPress();
+        if (isA(p) || isB(p)) {
+          game.msg.idx++;
+          if (game.msg.idx >= game.msg.pages.length) game.msg = null;
+        }
+        return;
+      }
+
+      if (game.confirm) {
+        const p = popPress();
+        if (p && p.act === 'yes') { const y = game.confirm.yes; game.confirm = null; y(); }
+        else if (p && p.act === 'no') game.confirm = null;
+        else if (isA(p)) { const y = game.confirm.yes; game.confirm = null; y(); }
+        else if (isB(p)) game.confirm = null;
+        return;
+      }
+
+      const p = popPress();
+      if (isTool(p)) cycleTool();
+      else if (isA(p)) interact();
+
+      if (game.moving) {
+        game.moveT += dt * 5.2;
+        if (game.moveT >= 1) { game.moving = false; game.moveT = 0; finishStep(); }
+      } else {
+        if (keys.up) tryMove(0, -1, 'up');
+        else if (keys.down) tryMove(0, 1, 'down');
+        else if (keys.left) tryMove(-1, 0, 'left');
+        else if (keys.right) tryMove(1, 0, 'right');
+      }
+
+      if (game.toast) { game.toast.t += dt; if (game.toast.t > 1.6) game.toast = null; }
+    }
+
+    /* =====================================================================
+       WORLD DRAW
+       ===================================================================== */
+    function drawWorld() {
+      zones = [];
+      const lerp = game.moving ? game.moveT : 1;
+      const wx = (game.fromX + (game.px - game.fromX) * lerp) * T;
+      const wy = (game.fromY + (game.py - game.fromY) * lerp) * T;
+      let camX = Math.round(wx - 128 + 8), camY = Math.round(wy - 96 + 9);
+      camX = Math.max(0, Math.min(MAPW * T - 256, camX));
+      camY = Math.max(0, Math.min(MAPH * T - 192, camY));
+
+      const animFrame = Math.floor(game.animClock * 1.6) % 2;
+      const x0 = Math.floor(camX / T), y0 = Math.floor(camY / T);
+      for (let j = y0; j <= y0 + 13 && j < MAPH; j++)
+        for (let i = x0; i <= x0 + 17 && i < MAPW; i++) {
+          let t = tileAt(i, j);
+          if (t === 'water' && animFrame) t = 'water2';
+          else if (t === 'flower' && animFrame) t = 'flower2';
+          else if (t === 'grass' && ((i * 7 + j * 13) % 5 === 0)) t = 'grass2';
+          const key = i + ',' + j;
+          if (t === 'soil' && game.farm[key] && game.farm[key].tilled)
+            t = game.farm[key].wet ? 'tilledwet' : 'tilled';
+          g.drawImage(TILES[t], i * T - camX, j * T - camY);
+
+          const cell = game.farm[key];
+          if (game.map === 'farm' && cell && cell.crop)
+            g.drawImage(CROPS[cell.crop.stage], i * T - camX, j * T - camY);
+
+          const obj = game.objs[game.map][key];
+          if (obj) {
+            g.drawImage(OBJS[obj], i * T - camX, j * T - camY);
+            if (obj === 'rock' && game.rareRocks[key] && (game.animClock * 2 + i) % 3 < .4) {
+              px(i * T - camX + 4 + (i % 5), j * T - camY + 4 + (j % 4), 1, 1, '#f6e294');
+              px(i * T - camX + 10 - (j % 3), j * T - camY + 8, 1, 1, '#ffffff');
+            }
+          }
+        }
+
+      if (game.map === 'farm') {
+        for (const it of game.items) {
+          const bob = Math.sin(game.animClock * 3 + it.x) * 1.5;
+          g.drawImage(OBJS[it.type], it.x * T - camX, it.y * T - camY + bob - 2);
+        }
+      }
+
+      /* player: stepA -> stand -> stepB -> stand (same cycle as pokemon.html) */
+      const dirFrames = SPR.player[game.dir];
+      const seq = [1, 0, 3, 0];
+      const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
+      const frame = game.moving ? dirFrames[seq[phase]] : dirFrames[0];
+      g.drawImage(frame, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
+
+      /* dusk overlay: the day grows old as your energy burns */
+      if (game.map === 'farm') {
+        const a = 1 - game.energy / ENERGY_MAX;
+        if (a > .02) {
+          px(0, 0, 256, 192, 'rgba(244,128,38,' + (a * .22).toFixed(3) + ')');
+          px(0, 0, 256, 192, 'rgba(38,26,88,' + (a * .26).toFixed(3) + ')');
+        }
+      } else {
+        px(0, 0, 256, 192, 'rgba(12,6,22,.22)');
+      }
+
+      /* HUD */
+      frame9(2, 2, 170, 30, { bg: 'rgba(248,244,228,.95)' });
+      text('DAY ' + game.day + '  NEWS ' + game.published + '/4  DOC ' + game.rareDocs + '/3', 8, 7, '#5b4226', 6);
+      text('E', 8, 18, '#9c5230', 6);
+      bar(17, 19, 56, game.energy / ENERGY_MAX);
+      text(TOOLS[game.tool], 80, 18, '#3f6d3b', 6);
+      zone(2, 2, 170, 30, 'tool');
+
+      if (game.toast) {
+        const a = game.toast.t > 1.2 ? 1 - (game.toast.t - 1.2) / .4 : 1;
+        g.globalAlpha = Math.max(0, Math.min(1, a));
+        g.font = '6px "Press Start 2P"';
+        const w = g.measureText(game.toast.txt).width + 14;
+        frame9(Math.round(128 - w / 2), 122, Math.round(w), 17, { bg: '#2e2418', edge: '#8a6a44', dark: '#150e07' });
+        textC(game.toast.txt, 128, 128, '#f6e294', 6);
+        g.globalAlpha = 1;
+      }
+
+      if (game.msg) {
+        frame9(4, 138, 248, 50);
+        game.msg.pages[game.msg.idx].forEach((l, i) => text(l, 12, 145 + i * 11, '#3a2c18', 7));
+        text('▼', 240, 178, '#c25043', 7);
+        zone(0, 0, 256, 192, 'A');
+      } else if (game.confirm) {
+        frame9(28, 70, 200, 56);
+        game.confirm.lines.forEach((l, i) => text(l, 38, 78 + i * 11, '#3a2c18', 7));
+        frame9(48, 100, 70, 18, { bg: '#4e8a38', edge: '#7ab85c', dark: '#2c5420' });
+        textC('A: YES', 83, 106, '#ffffff', 6);
+        zone(48, 100, 70, 18, 'yes');
+        frame9(138, 100, 70, 18, { bg: '#9c5230', edge: '#c87c50', dark: '#5c2c14' });
+        textC('B: NO', 173, 106, '#ffffff', 6);
+        zone(138, 100, 70, 18, 'no');
+      }
+
+      if (game.sleeping) {
+        const t = game.sleeping.t;
+        const a = t < 1 ? t : 2 - t;
+        px(0, 0, 256, 192, 'rgba(8,4,16,' + Math.min(1, a * 1.2).toFixed(3) + ')');
+        if (t > .5 && t < 1.5) {
+          textC('DAY ' + game.day, 128, 84, '#f6e294', 10);
+          textC('zZz...', 128, 102, '#9a8a64', 7);
+        }
+      }
+    }
+
+    /* =====================================================================
+       TITLE & WIN
+       ===================================================================== */
+    function drawTitle(dt) {
+      zones = [];
+      game.titleT += dt;
+      const grad = g.createLinearGradient(0, 0, 0, 192);
+      grad.addColorStop(0, '#2c4a6e'); grad.addColorStop(.5, '#7a5a36');
+      grad.addColorStop(.78, '#5d9448'); grad.addColorStop(1, '#3f6d3b');
+      g.fillStyle = grad; g.fillRect(0, 0, 256, 192);
+
+      /* setting sun, low on the horizon */
+      g.fillStyle = '#f0b264'; g.beginPath(); g.arc(226, 146, 15, 0, 7); g.fill();
+      g.fillStyle = '#f6e294'; g.beginPath(); g.arc(226, 146, 10, 0, 7); g.fill();
+
+      for (let i = 0; i < 16; i++) g.drawImage(TILES.grass, i * 16, 176);
+      g.drawImage(TILES.soil, 32, 176);
+      g.drawImage(TILES.tilled, 48, 176);
+      g.drawImage(TILES.tilled, 64, 176); g.drawImage(CROPS[3], 64, 160);
+      g.drawImage(TILES.tilled, 80, 176); g.drawImage(CROPS[1], 80, 172);
+      g.drawImage(TILES.flower, 176, 176);
+      g.drawImage(TILES.fence, 208, 176); g.drawImage(TILES.fence, 224, 176); g.drawImage(TILES.fence, 240, 176);
+
+      const wf = Math.floor(game.titleT * 3) % 4;
+      g.drawImage(SPR.player.right[[1, 0, 3, 0][wf]], 116, 156);
+
+      /* big-art portrait, title screen only */
+      if (imgAvatar.complete && imgAvatar.naturalWidth) {
+        frame9(6, 118, 56, 56, { bg: '#2b1d12', edge: '#c89858', dark: '#43301f' });
+        g.imageSmoothingEnabled = true;
+        g.drawImage(imgAvatar, 10, 122, 48, 48);
+        g.imageSmoothingEnabled = false;
+      }
+
+      textC('PAUTA VALLEY', 129, 25, '#2b1d12', 14);
+      textC('PAUTA VALLEY', 128, 24, '#f6e294', 14);
+      textC('the farm where stories grow', 128, 48, '#f8f4e4', 6);
+      px(48, 62, 160, 1, '#c89858');
+      textC('till leads - water with facts', 128, 70, '#e0cb9a', 6);
+      textC('harvest 4 front pages + dig', 128, 81, '#e0cb9a', 6);
+      textC('3 rare docs from the archive', 128, 92, '#e0cb9a', 6);
+      if (Math.floor(game.titleT * 2) % 2) textC('- PRESS A TO START -', 128, 112, '#ffffff', 7);
+      zone(0, 0, 256, 192, 'A');
+    }
+
+    function updateTitle() {
+      const p = popPress();
+      if (!p) return;
+      ensureAC();
+      playTheme('farm');
+      game.state = 'world';
+      syncToolBtn();
+    }
+
+    function leaveWin() {
+      game.state = 'world';
+      playTheme(game.map === 'cave' ? 'cave' : 'farm');
+    }
+
+    function drawWin(dt) {
+      zones = [];
+      game.winT += dt;
+      px(0, 0, 256, 192, '#f8f4e4');
+      px(0, 0, 256, 34, '#2b1d12');
+      textC('THE PAUTA VALLEY TRIBUNE', 128, 7, '#f8f4e4', 8);
+      textC('harvest edition - day ' + game.day, 128, 21, '#c8b890', 6);
+
+      textC('FRONT PAGE!', 128, 42, Math.floor(game.winT * 2) % 2 ? '#c25043' : '#8f3328', 14);
+
+      px(20, 62, 216, 1, '#9a8a64');
+      textC('Reporter-farmer L. TOLEDO grows', 128, 68, '#43301f', 5);
+      textC('4 stories from seed and digs 3', 128, 77, '#43301f', 5);
+      textC('rare documents out of the archive.', 128, 86, '#43301f', 5);
+      textC('Sources: ' + game.leads + ' leads. Editor: "fine."', 128, 95, '#8a6a44', 5);
+      px(20, 106, 216, 1, '#9a8a64');
+
+      if (imgPaper.complete && imgPaper.naturalWidth) {
+        g.imageSmoothingEnabled = true;
+        g.drawImage(imgPaper, 18, 112, 42, 42);
+        g.drawImage(imgPaper, 196, 112, 42, 42);
+        g.imageSmoothingEnabled = false;
+      }
+      g.drawImage(CROPS[3], 72, 122);
+      g.drawImage(OBJS.doc, 104, 122);
+      g.drawImage(OBJS.coffee, 136, 122);
+      g.drawImage(CROPS[3], 168, 122);
+
+      textC(game.winSel === 0 ? '> back to the homepage <' : '> keep farming stories <', 128, 154, '#8a6a44', 5);
+      const selA = game.winSel === 0, selB = game.winSel === 1;
+      frame9(24, 164, 120, 22, { bg: selA ? '#c25043' : '#9c5230', edge: selA ? '#e2796a' : '#b06a40', dark: '#5c2014' });
+      textC('EXIT TO SITE', 84, 172, '#ffffff', 6);
+      zone(24, 164, 120, 22, 'win', 'exit');
+      frame9(156, 164, 76, 22, { bg: selB ? '#4e8a38' : '#3f6d3b', edge: selB ? '#7ab85c' : '#5a8a4c', dark: '#234018' });
+      textC('PLAY ON', 194, 172, '#ffffff', 6);
+      zone(156, 164, 76, 22, 'win', 'stay');
+    }
+
+    function updateWin() {
+      const p = popPress();
+      if (!p) return;
+      if (p === 'left' || p === 'right') { game.winSel ^= 1; return; }
+      if (p && p.act === 'win') {
+        if (p.data === 'exit') window.location.href = 'index.html';
+        else leaveWin();
+        return;
+      }
+      if (isA(p)) {
+        if (game.winSel === 0) window.location.href = 'index.html';
+        else leaveWin();
+        return;
+      }
+      if (isB(p)) leaveWin();
+    }
+
+    /* =====================================================================
+       LOOP
+       ===================================================================== */
+    spawnItems(3);
+
+    let last = 0;
+    function loop(ts) {
+      const dt = Math.min(.05, (ts - last) / 1000 || 0);
+      last = ts;
+      game.animClock += dt;
+      g.clearRect(0, 0, 256, 192);
+
+      if (game.state === 'title') { updateTitle(); if (game.state === 'title') drawTitle(dt); else drawWorld(); }
+      else if (game.state === 'world') { updateWorld(dt); if (game.state === 'world') drawWorld(); else drawWin(dt); }
+      else if (game.state === 'win') { updateWin(); if (game.state === 'win') drawWin(dt); else drawWorld(); }
+
+      requestAnimationFrame(loop);
+    }
+
+    Promise.race([
+      document.fonts.load('8px "Press Start 2P"'),
+      new Promise(r => setTimeout(r, 1200))
+    ]).then(() => requestAnimationFrame(loop));
+
+    /* =====================================================================
+       TEST HOOKS
+       ===================================================================== */
+    window.__game = game;
+    window.__give = (pub, docs) => { game.published = pub; game.rareDocs = docs; };
+    window.__act = {
+      useTool, interact, cycleTool, advanceDay, enterCave, exitCave,
+      sleep: startSleep,
+      setTool: i => { game.tool = i; syncToolBtn(); },
+      warp: (map, x, y, dir) => {
+        game.map = map; game.px = x; game.py = y;
+        game.fromX = x; game.fromY = y; game.moving = false;
+        if (dir) game.dir = dir;
+        playTheme(map === 'cave' ? 'cave' : 'farm');
+      }
+    };
+  </script>
+</body>
 
 </html>
