@@ -257,7 +257,8 @@
     </div>
     <div class="pad-center">
       <button class="pill-btn" id="toolBtn">TOOL · HOE</button>
-      <div class="key-hint">ARROWS/WASD&nbsp;MOVE&nbsp;&nbsp;C&nbsp;=&nbsp;TOOL<br>Z/ENTER&nbsp;=&nbsp;A&nbsp;&nbsp;X/ESC&nbsp;=&nbsp;B</div>
+      <button class="pill-btn" id="bagBtn">BAG · I</button>
+      <div class="key-hint">ARROWS/WASD&nbsp;MOVE&nbsp;&nbsp;C&nbsp;=&nbsp;TOOL&nbsp;&nbsp;I&nbsp;=&nbsp;BAG<br>Z/ENTER&nbsp;=&nbsp;A&nbsp;&nbsp;X/ESC&nbsp;=&nbsp;B</div>
     </div>
     <div class="ab">
       <button class="b" data-btn="B">B</button>
@@ -265,7 +266,7 @@
     </div>
   </div>
 
-  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER use &nbsp;·&nbsp; C or 1-5 tools &nbsp;·&nbsp; X/ESC cancel</div>
+  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER use &nbsp;·&nbsp; C or 1-5 tools &nbsp;·&nbsp; I bag &nbsp;·&nbsp; X/ESC cancel</div>
 
   <audio id="bgm" src="stardew_theme.m4a" loop preload="auto"></audio>
 
@@ -519,6 +520,12 @@
         'iIiiiiiiiniiiiii', 'iiiiiiiiiiiiiiIi', 'iiiiIiiiiiiiiiii', 'iiiiiiiiiniiiiii',
         'iIiiiiiiiiiiiiIi', 'iiiiiiIiiiiiiiii', 'iiiiiiiiiiiiiiii', 'iiIiiiiiiiiIiiii'
       ],
+      shop: [
+        'lkkkkkkkkkkkkkkl', 'krrwwrrwwrrwwrrk', 'krrwwrrwwrrwwrrk', 'lkkkkkkkkkkkkkkl',
+        'lkglllllllllllgk', 'lkglllllllllllgk', 'lkgkkkkkkkkkkkgk', 'lkgGGGGGGGGGGGgk',
+        'lkgGyykqQqkOOGgk', 'lkgGyykqQqkOOGgk', 'lkgGGGGGGGGGGGgk', 'lkgggggggggggggk',
+        'lkglllllllllllgk', 'lkglllllllllllgk', 'lkkklllllllllkkl', 'llllllllllllllll'
+      ],
       ladder: [
         'iiiiIiiiiiiiiiIi', 'iiiwwiiiiiwwiiii', 'iiikgkiiiikgkiii', 'iiikgkkkkkkgkiii',
         'iiikgGGGGGGgkiii', 'iiikgkiiiikgkiii', 'iiikgkiiiikgkiii', 'iiikgGGGGGGgkiii',
@@ -566,10 +573,75 @@
         '..kyyyykkkkkkk..', '..kyYYYYYYYYyk..', '..kyYYYYYYYYyk..', '..kyyyyyyyyyyk..',
         '..kyyyyyyyyyyk..', '..kkkkkkkkkkkk..', '................', '................',
         '................', '................', '................', '................'
+      ],
+      photo: [
+        '................', '................', '...kkkkkkkkkk...', '...kwwwwwwwwk...',
+        '...kwqqqqqqwk...', '...kwqOOssqwk...', '...kwqOsOsqwk...', '...kwqssOOqwk...',
+        '...kwqqqqqqwk...', '...kwwwwwwwwk...', '...kkkkkkkkkk...', '................',
+        '................', '................', '................', '................'
+      ],
+      scoop: [
+        '................', '................', '................', '.....kkkkkk.....',
+        '....krrrrrrk....', '...krrwrrwrrk...', '...krwrrrrwrk...', '...kkkkkkkkkk...',
+        '......kwwk......', '......kwwk......', '......kWWk......', '......kkkk......',
+        '................', '................', '................', '................'
+      ],
+      ore: [
+        '................', '................', '................', '................',
+        '.....kkkkk......', '....kyYYYyk.....', '...kyYyyYYyk....', '...kyyYYyyyk....',
+        '...kYyyyYYyk....', '....kyyYyyk.....', '.....kkkkk......', '................',
+        '................', '................', '................', '................'
+      ],
+      seedbag: [
+        '................', '................', '.....kkkk.......', '....kqQQqk......',
+        '.....kqqk.......', '....kttttk......', '...kttttttk.....', '..kttTttTttk....',
+        '..kttttttttk....', '..ktyktyktyk....', '..ktYktYktYk....', '...kttttttk.....',
+        '....kkkkkk......', '................', '................', '................'
+      ],
+      energybar: [
+        '................', '................', '................', '................',
+        '................', '..kkkkkkkkkk....', '..kyYYYYYYyk....', '..kyOyyOyyyk....',
+        '..kyYYYYYYyk....', '..kkkkkkkkkk....', '................', '................',
+        '................', '................', '................', '................'
+      ],
+      luckypen: [
+        '................', '................', '..........kk....', '.........kuUk...',
+        '........kuUk....', '.......kuUk.....', '......kuUk......', '.....kuUk.......',
+        '....ksk.........', '...kk...........', '................', '................',
+        '................', '................', '................', '................'
+      ],
+      fertilizer: [
+        '................', '................', '................', '.....kkkk.......',
+        '....kGGGGk......', '...kGgGGgGk.....', '...kGGeeGGk.....', '...kGeEEeGk.....',
+        '...kGGeeGGk.....', '...kGgGGgGk.....', '....kkkkkk......', '................',
+        '................', '................', '................', '................'
       ]
     };
     const OBJS = {};
     for (const k in OBJ_SRC) OBJS[k] = makeSprite(OBJ_SRC[k]);
+
+    /* ---------- economy: items, sell prices, shop buy prices ---------- */
+    const ITEMS = {
+      seed: { name: 'STORY SEED', icon: 'seedbag', sell: 12 },
+      coffee: { name: 'COFFEE', icon: 'coffee', sell: 15 },
+      doc: { name: 'LEAKED MEMO', icon: 'doc', sell: 35 },
+      lead: { name: 'HOT TIP', icon: 'lead', sell: 50 },
+      photo: { name: 'OLD PHOTO', icon: 'photo', sell: 80 },
+      scoop: { name: 'MUSHROOM SCOOP', icon: 'scoop', sell: 20 },
+      ore: { name: 'ORE', icon: 'ore', sell: 45 },
+      energybar: { name: 'ENERGY BAR', icon: 'energybar', sell: 35 },
+      luckypen: { name: 'LUCKY PEN', icon: 'luckypen', sell: 50 },
+      fertilizer: { name: 'FERTILIZER', icon: 'fertilizer', sell: 30 }
+    };
+    const BUY_PRICE = { seed: 25, coffee: 40, energybar: 70, luckypen: 100, fertilizer: 60 };
+    const BUY_BLURB = {
+      seed: 'plant a story',
+      coffee: '+25 energy now',
+      energybar: '+50 energy now',
+      luckypen: 'next story x2 pay',
+      fertilizer: 'crop grows 1d faster'
+    };
+    const PUBLISH_PAY = 120;
 
     /* ---------- crop stages (drawn over tilled soil) ---------- */
     const CROP_SRC = [
@@ -612,7 +684,7 @@
       '#,,,,,,,,,,%C%,,,,,,,,*#',
       '#,*,RRRRRR,,,,,,,~~~~,,#',
       '#,,,RRRRRR,,,,,,,~~~~,,#',
-      '#,,,,VDvV,,M,,,,,~~~,,,#',
+      '#,,,,VDvV,,M,B,,,~~~,,,#',
       '#,,,,!,,,,,,,L,,,,,,,,*#',
       '#,*,,,,,,,O,,,,,O,,,,,,#',
       '#,FFFFFFFFFFFF,,,,L,,,,#',
@@ -648,12 +720,13 @@
     const FARM_T = {
       '#': 'tree', ',': 'grass', '*': 'flower', '%': 'rockface', 'C': 'cavemouth',
       '~': 'water', 'R': 'roof', 'V': 'wall', 'v': 'window', 'D': 'door',
-      'M': 'mailbox', '!': 'sign', 'F': 'fence', 't': 'soil', 'O': 'grass', 'L': 'grass'
+      'M': 'mailbox', '!': 'sign', 'F': 'fence', 't': 'soil', 'O': 'grass', 'L': 'grass',
+      'B': 'shop'
     };
     const CAVE_T = { '#': 'cwall', '.': 'cfloor', 'O': 'cfloor', 'X': 'ladder' };
     const SOLID = {
       tree: 1, water: 1, roof: 1, wall: 1, window: 1, door: 1,
-      mailbox: 1, sign: 1, fence: 1, rockface: 1, cwall: 1
+      mailbox: 1, sign: 1, fence: 1, rockface: 1, cwall: 1, shop: 1
     };
 
     /* =====================================================================
@@ -742,6 +815,11 @@
       published: 0,
       rareDocs: 0,
       leads: 0,
+      gold: 50,
+      inv: { seed: 3 },              // item id -> count (seeds are finite!)
+      luckyPen: false,               // next published story pays double
+      shop: null,                    // {tab:0 buy /1 sell, sel}
+      bag: false,
       farm: {},                      // "x,y" -> {tilled, wet, crop:{stage, watered}}
       objs: { farm: {}, cave: {} },  // "x,y" -> 'stone'|'branch'|'rock'
       rareRocks: {},                 // "x,y" -> true
@@ -793,7 +871,8 @@
       z: 'A', Z: 'A', Enter: 'A', ' ': 'A',
       '1': 't0', '2': 't1', '3': 't2', '4': 't3', '5': 't4',
       x: 'B', X: 'B', Escape: 'B', Backspace: 'B',
-      c: 'tool', C: 'tool'
+      c: 'tool', C: 'tool',
+      i: 'bag', I: 'bag'
     };
     let pressQueue = [];
     window.addEventListener('keydown', e => {
@@ -819,6 +898,7 @@
     });
     const toolBtn = document.getElementById('toolBtn');
     toolBtn.addEventListener('pointerdown', e => { e.preventDefault(); pressQueue.push('tool'); });
+    document.getElementById('bagBtn').addEventListener('pointerdown', e => { e.preventDefault(); pressQueue.push('bag'); });
 
     let zones = [];
     function zone(x, y, w, h, act, data) { zones.push({ x, y, w, h, act, data }); }
@@ -1015,7 +1095,9 @@
     const SIGN_PAGES = [
       ['HOW TO GROW A STORY:', 'C or TOOL swaps tools.', 'HOE tills the plot. SEEDS', 'plant a story seed (a tip).'],
       ['CAN waters = REPORTING.', 'Water daily + sleep in bed:', '3 watered days = ripe PAUTA.', 'HAND harvests = PUBLISH!'],
-      ['Goal: 4 front pages + the 3', 'rare documents buried in the', 'DEAD ARCHIVE (cave up north).', 'Low energy? Coffee or bed.']
+      ['Publishing pays 120g. Spend', "it at MIRNA'S NEWSSTAND (the", 'striped stand by the house).', 'Stock rotates every day!'],
+      ['Press I (or BAG) to check', 'your loot, gold and goals.', 'Seeds are finite - buy more', 'before the garden starves.'],
+      ['THE GOAL: publish 4 front', 'pages + dig 3 rare docs in', 'the DEAD ARCHIVE cave up', 'north. Then you can retire.']
     ];
     const MAIL = [
       ['EDITOR: Welcome to Pauta', 'Valley. Four front pages or', "you're back on traffic duty.", '- M.'],
@@ -1079,13 +1161,17 @@
       if (it.type === 'coffee') {
         game.energy = Math.min(ENERGY_MAX, game.energy + 25);
         toast('HOT COFFEE +25 ENERGY');
-      } else if (it.type === 'doc') {
-        game.leads++;
-        toast('LEAKED MEMO. SPICY. +1 LEAD');
-      } else {
-        game.leads++;
-        toast('TIP: FOLLOW THE MONEY. +1 LEAD');
+        return;
       }
+      game.inv[it.type] = (game.inv[it.type] || 0) + 1;
+      if (it.type === 'doc' || it.type === 'lead') game.leads++;
+      const PICK_MSG = {
+        doc: 'LEAKED MEMO. SPICY.',
+        lead: 'HOT TIP: FOLLOW THE MONEY',
+        photo: 'OLD PHOTO! ARCHIVE GOLD',
+        scoop: 'MUSHROOM SCOOP. EARTHY.'
+      };
+      toast((PICK_MSG[it.type] || ITEMS[it.type].name) + ' (BAGGED)');
     }
 
     function useTool() {
@@ -1105,9 +1191,18 @@
       } else if (tool === 'SEEDS') {
         if (!cell || !cell.tilled) return toast('TILL THE SOIL FIRST');
         if (cell.crop) return toast('ALREADY PLANTED');
-        cell.crop = { stage: 0, watered: cell.wet };
-        sfx(64, .06);
-        toast('STORY SEED PLANTED');
+        if (!(game.inv.seed > 0)) return toast('NO SEEDS! BUY AT THE STAND');
+        game.inv.seed--;
+        if (game.inv.fertilizer > 0) {
+          game.inv.fertilizer--;
+          cell.crop = { stage: 1, watered: cell.wet };
+          sfx(64, .06);
+          toast('PLANTED + FERTILIZED!');
+        } else {
+          cell.crop = { stage: 0, watered: cell.wet };
+          sfx(64, .06);
+          toast('STORY SEED PLANTED (' + game.inv.seed + ' LEFT)');
+        }
       } else if (tool === 'CAN') {
         if (!cell || !cell.tilled) return toast('NOTHING TO WATER');
         if (cell.wet) return toast('ALREADY REPORTED TODAY');
@@ -1120,8 +1215,15 @@
         if (cell && cell.crop && cell.crop.stage >= 3) {
           delete game.farm[key];
           game.published++;
+          let pay = PUBLISH_PAY;
+          let payLine = 'Editor wires ' + pay + 'g. Nice.';
+          if (game.luckyPen) {
+            pay *= 2; game.luckyPen = false;
+            payLine = 'LUCKY PEN! Editor wires ' + pay + 'g!';
+          }
+          game.gold += pay;
           playJingle();
-          say(['EXTRA! EXTRA! You publish:', '"' + HEADLINES[(game.published - 1) % HEADLINES.length] + '"', '(' + game.published + '/4 front pages)']);
+          say(['EXTRA! EXTRA! You publish:', '"' + HEADLINES[(game.published - 1) % HEADLINES.length] + '"', payLine, '(' + game.published + '/4 front pages)']);
           return;
         }
         if (obj === 'stone') {
@@ -1152,6 +1254,9 @@
           game.rareDocs++;
           playJingle();
           say(['RARE DOCUMENT ' + game.rareDocs + '/3!', RARE_FLAVOR[(game.rareDocs - 1) % 3], 'The archive remembers.']);
+        } else if (Math.random() < .35) {
+          game.inv.ore = (game.inv.ore || 0) + 1;
+          toast('ORE CHUNK! (SELLS FOR 45g)');
         } else {
           toast('JUST GRAVEL AND REGRET');
         }
@@ -1171,6 +1276,7 @@
         return;
       }
       if (t === 'water') return say(['The pond is calm.', 'Somewhere down there:', 'an off-the-record fish.']);
+      if (t === 'shop') return openShop();
       if (t === 'cavemouth') return enterCave();
       useTool();
     }
@@ -1189,11 +1295,12 @@
         if (c.crop) c.crop.watered = false;
         c.wet = false;
       }
-      spawnItems(3);
+      /* fresh forage: yesterday's leftovers vanish, new random haul appears */
+      game.items = [];
+      spawnItems(2 + Math.floor(Math.random() * 3));
     }
 
     function spawnItems(n) {
-      const types = ['coffee', 'doc', 'lead', 'coffee'];
       let guard = 200;
       while (n > 0 && guard-- > 0) {
         const x = 1 + Math.floor(Math.random() * (MAPW - 2));
@@ -1202,9 +1309,91 @@
         if (game.objs.farm[x + ',' + y]) continue;
         if (game.items.some(i => i.x === x && i.y === y)) continue;
         if (game.map === 'farm' && x === game.px && y === game.py) continue;
-        game.items.push({ x, y, type: types[Math.floor(Math.random() * types.length)] });
+        const r = Math.random();
+        const type = r < .08 ? 'photo' : r < .3 ? 'doc' : r < .5 ? 'lead' : r < .72 ? 'scoop' : 'coffee';
+        game.items.push({ x, y, type });
         n--;
       }
+    }
+
+    /* =====================================================================
+       SHOP & BAG
+       ===================================================================== */
+    function openShop() {
+      game.shop = { tab: 0, sel: 0 };
+      sfx(76, .06);
+    }
+
+    /* daily rotating stock: 3-4 items, deterministic by day number */
+    function shopStock() {
+      const pool = ['seed', 'coffee', 'energybar', 'luckypen', 'fertilizer'];
+      const n = 3 + (game.day % 2);
+      const out = [];
+      for (let i = 0; i < n; i++) out.push(pool[(game.day * 2 + i) % pool.length]);
+      return out;
+    }
+
+    const sellList = () => Object.keys(ITEMS).filter(k => game.inv[k] > 0);
+
+    function buyItem(id) {
+      const price = BUY_PRICE[id];
+      if (game.gold < price) { sfx(40, .08); return toast('NOT ENOUGH GOLD'); }
+      if (id === 'luckypen' && game.luckyPen) return toast('PEN ALREADY INKED');
+      game.gold -= price;
+      sfx(88, .06);
+      if (id === 'coffee') {
+        game.energy = Math.min(ENERGY_MAX, game.energy + 25);
+        toast('COFFEE! +25 ENERGY');
+      } else if (id === 'energybar') {
+        game.energy = Math.min(ENERGY_MAX, game.energy + 50);
+        toast('ENERGY BAR! +50 ENERGY');
+      } else if (id === 'luckypen') {
+        game.luckyPen = true;
+        toast('LUCKY PEN: NEXT STORY x2');
+      } else {
+        game.inv[id] = (game.inv[id] || 0) + 1;
+        toast('BOUGHT ' + ITEMS[id].name);
+      }
+    }
+
+    function sellItem(id) {
+      if (!(game.inv[id] > 0)) return;
+      game.inv[id]--;
+      game.gold += ITEMS[id].sell;
+      sfx(83, .06);
+      toast('SOLD ' + ITEMS[id].name + ' +' + ITEMS[id].sell + 'g');
+    }
+
+    function updateShop() {
+      const p = popPress();
+      if (!p) return;
+      const s = game.shop;
+      const list = s.tab === 0 ? shopStock() : sellList();
+      if (isB(p) || p === 'bag') { game.shop = null; sfx(60, .05); return; }
+      if (p === 'left' || p === 'right') { s.tab ^= 1; s.sel = 0; sfx(72, .04); return; }
+      if (p && p.act === 'shoptab') { s.tab = p.data; s.sel = 0; sfx(72, .04); return; }
+      if (p === 'up') { s.sel = Math.max(0, s.sel - 1); return; }
+      if (p === 'down') { s.sel = Math.min(Math.max(0, list.length - 1), s.sel + 1); return; }
+      if (p && p.act === 'shoprow') {
+        const id = list[p.data];
+        if (!id) return;
+        s.sel = p.data;
+        s.tab === 0 ? buyItem(id) : sellItem(id);
+        s.sel = Math.min(s.sel, Math.max(0, (s.tab === 0 ? shopStock() : sellList()).length - 1));
+        return;
+      }
+      if (p === 'A') { // keyboard Z only; canvas taps hit shop zones
+        const id = list[s.sel];
+        if (!id) return toast(s.tab === 0 ? 'SOLD OUT TODAY' : 'BAG IS EMPTY');
+        s.tab === 0 ? buyItem(id) : sellItem(id);
+        s.sel = Math.min(s.sel, Math.max(0, (s.tab === 0 ? shopStock() : sellList()).length - 1));
+      }
+    }
+
+    function updateBag() {
+      const p = popPress();
+      if (!p) return;
+      if (isB(p) || isA(p) || p === 'bag') { game.bag = false; sfx(60, .05); }
     }
 
     function enterCave() {
@@ -1258,6 +1447,9 @@
         return;
       }
 
+      if (game.shop) { updateShop(); return; }
+      if (game.bag) { updateBag(); return; }
+
       if (!game.won && game.published >= 4 && game.rareDocs >= 3 && !game.msg && !game.confirm) {
         game.won = true;
         game.state = 'win';
@@ -1287,6 +1479,7 @@
 
       const p = popPress();
       if (isTool(p)) cycleTool();
+      else if (p === 'bag' || (p && p.act === 'bag')) { game.bag = true; sfx(76, .05); }
       else if (p && p.act === 'toolslot') selectTool(p.data);
       else if (typeof p === 'string' && p.length === 2 && p[0] === 't') selectTool(+p[1]);
       else if (isA(p)) interact();
@@ -1374,7 +1567,13 @@
       text('E', 8, 18, '#9c5230', 6);
       bar(17, 19, 56, game.energy / ENERGY_MAX);
       text(TOOLS[game.tool], 80, 18, '#3f6d3b', 6);
+      text(game.gold + 'g', 130, 18, '#a87818', 6);
       zone(2, 2, 170, 30, 'tool');
+
+      /* BAG chip (tap or press I) */
+      frame9(214, 2, 40, 15, { bg: 'rgba(248,244,228,.95)' });
+      text('BAG', 224, 7, '#5b4226', 6);
+      zone(214, 2, 40, 15, 'bag');
 
       /* toolbar estilo Stardew (embaixo, sprites; nome acima do slot escolhido) */
       const nTools = game.map === 'cave' ? 5 : 4;
@@ -1434,6 +1633,9 @@
         zone(138, 100, 70, 18, 'no');
       }
 
+      if (game.shop) drawShop();
+      else if (game.bag) drawBag();
+
       if (game.sleeping) {
         const t = game.sleeping.t;
         const a = t < 1 ? t : 2 - t;
@@ -1443,6 +1645,82 @@
           textC('zZz...', 128, 102, '#9a8a64', 7);
         }
       }
+    }
+
+    /* ---------- shop panel ---------- */
+    function drawShop() {
+      zones = [];                    // shop owns the whole screen
+      const s = game.shop;
+      frame9(12, 6, 232, 180);
+      text("MIRNA'S NEWSSTAND", 22, 13, '#5b4226', 7);
+      {
+        g.font = '7px "Press Start 2P"';
+        const gs = game.gold + 'g';
+        text(gs, Math.round(234 - g.measureText(gs).width), 13, '#a87818', 7);
+      }
+      /* tabs */
+      const tabs = ['BUY', 'SELL'];
+      for (let i = 0; i < 2; i++) {
+        const tx = 22 + i * 60, on = s.tab === i;
+        frame9(tx, 25, 52, 15, on ? { bg: '#c25043', edge: '#e2796a', dark: '#5c2014' } : { bg: '#d9b061', edge: '#e8d098', dark: '#6b4626' });
+        textC(tabs[i], tx + 26, 30, on ? '#ffffff' : '#5b4226', 6);
+        zone(tx, 25, 52, 15, 'shoptab', i);
+      }
+      const list = s.tab === 0 ? shopStock() : sellList();
+      s.sel = Math.min(s.sel, Math.max(0, list.length - 1));
+      if (!list.length) {
+        textC(s.tab === 0 ? 'SOLD OUT. COME BACK TOMORROW.' : 'YOUR BAG IS EMPTY.', 128, 90, '#8a6a44', 6);
+      }
+      const rowH = 17, y0 = 46;
+      list.slice(0, 7).forEach((id, i) => {
+        const ry = y0 + i * rowH, sel = i === s.sel;
+        if (sel) px(20, ry - 1, 216, rowH - 1, '#f0e0b0');
+        g.drawImage(OBJS[ITEMS[id].icon], 22, ry - 1);
+        text(ITEMS[id].name, 42, ry + 4, sel ? '#3a2c18' : '#6b5638', 6);
+        if (s.tab === 0) {
+          text(BUY_BLURB[id], 42, ry + 11, '#9a8a64', 5);
+          const pr = BUY_PRICE[id] + 'g';
+          g.font = '6px "Press Start 2P"';
+          text(pr, Math.round(232 - g.measureText(pr).width), ry + 4, game.gold >= BUY_PRICE[id] ? '#3f6d3b' : '#c25043', 6);
+        } else {
+          text('x' + game.inv[id], 42, ry + 11, '#9a8a64', 5);
+          const pr = '+' + ITEMS[id].sell + 'g';
+          g.font = '6px "Press Start 2P"';
+          text(pr, Math.round(232 - g.measureText(pr).width), ry + 4, '#3f6d3b', 6);
+        }
+        zone(20, ry - 1, 216, rowH, 'shoprow', i);
+      });
+      textC(s.tab === 0 ? 'Z BUY · ←→ TAB · X CLOSE' : 'Z SELL · ←→ TAB · X CLOSE', 128, 174, '#8a6a44', 5);
+      zone(0, 0, 256, 192, 'noop'); // swallow stray taps
+    }
+
+    /* ---------- bag panel: inventory + goals ---------- */
+    function drawBag() {
+      zones = [];
+      frame9(12, 6, 232, 180);
+      text('REPORTER BAG', 22, 13, '#5b4226', 7);
+      {
+        g.font = '7px "Press Start 2P"';
+        const gs = game.gold + 'g';
+        text(gs, Math.round(234 - g.measureText(gs).width), 13, '#a87818', 7);
+      }
+      px(20, 24, 216, 1, '#c89858');
+      const list = sellList();
+      if (!list.length) textC('Empty. Even the lint quit.', 128, 50, '#8a6a44', 6);
+      list.slice(0, 12).forEach((id, i) => {
+        const col = i % 2, row = Math.floor(i / 2);
+        const ix = 22 + col * 110, iy = 29 + row * 16;
+        g.drawImage(OBJS[ITEMS[id].icon], ix, iy - 2);
+        text(ITEMS[id].name, ix + 18, iy + 1, '#3a2c18', 5);
+        text('x' + game.inv[id] + ' · ' + ITEMS[id].sell + 'g', ix + 18, iy + 8, '#9a8a64', 5);
+      });
+      if (game.luckyPen) text('LUCKY PEN INKED: NEXT STORY x2', 22, 126, '#3f7fae', 5);
+      px(20, 134, 216, 1, '#c89858');
+      text('GOAL: PUBLISH 4 FRONT PAGES +', 22, 140, '#8f3328', 6);
+      text('DIG 3 RARE DOCS IN THE CAVE', 22, 149, '#8f3328', 6);
+      text('NEWS ' + game.published + '/4   DOCS ' + game.rareDocs + '/3   LEADS ' + game.leads, 22, 160, '#3f6d3b', 6);
+      textC('I / X CLOSE', 128, 174, '#8a6a44', 5);
+      zone(0, 0, 256, 192, 'B');
     }
 
     /* =====================================================================
@@ -1503,7 +1781,9 @@
         say(
           ['Welcome to JOURNALISM VALLEY!', 'Grow stories like crops:', 'till a plot, plant a tip,', 'water it with facts daily.'],
           ['Swap tools on the bar below', '(tap a slot, C key or 1-5).', 'Sleep in bed to grow watered', 'crops and refill energy.'],
-          ['Goal: publish 4 front pages', 'and dig 3 rare documents in', 'the DEAD ARCHIVE cave up', 'north. Coffee helps. Go!']
+          ['Each published story pays', "120g. Spend it at MIRNA'S", 'NEWSSTAND by the house -', 'stock rotates every day.'],
+          ['Press I (or the BAG button)', 'for your inventory, gold and', 'goals. You start with 3 story', 'seeds. Yes, only 3. Budget!'],
+          ['GOAL: publish 4 front pages', 'and dig 3 rare documents in', 'the DEAD ARCHIVE cave up', 'north. Coffee helps. Go!']
         );
       }
     }
@@ -1623,6 +1903,9 @@
     window.__act = {
       useTool, interact, cycleTool, advanceDay, enterCave, exitCave,
       sleep: startSleep,
+      openShop, openBag: () => { game.bag = true; },
+      give: (item, n) => { game.inv[item] = (game.inv[item] || 0) + (n == null ? 1 : n); },
+      gold: n => { game.gold = n; },
       setTool: i => { game.tool = i; syncToolBtn(); },
       warp: (map, x, y, dir) => {
         game.map = map; game.px = x; game.py = y;
