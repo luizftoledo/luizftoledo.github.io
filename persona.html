@@ -180,11 +180,68 @@
       .ab { width: 104px; height: 88px; }
       .ab button { width: 48px; height: 48px; }
     }
+
+    /* desktop (mouse + teclado): esconde o pad, mostra dica de teclas, tela maior */
+    .kbd-bar {
+      display: none;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      line-height: 1.8;
+      color: #8d8498;
+      text-align: center;
+      padding: 4px 10px;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .pad { display: none; }
+      .kbd-bar { display: block; }
+      .screen-wrap { width: min(100vw - 16px, 152vh - 120px, 840px); }
+    }
+
+    .quit-link {
+      font-size: 9px !important;
+      color: #fff !important;
+      border: 2px solid #e07868 !important;
+      background: rgba(192, 70, 60, .92) !important;
+      border-radius: 8px !important;
+      padding: 9px 13px !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
+    }
+    .quit-link:hover { background: #d85848 !important; }
+
+    .audio-ctl {
+      position: fixed;
+      top: 10px;
+      left: 12px;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(25, 22, 30, .92);
+      border: 2px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
+    .audio-ctl button {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 12px;
+      background: none;
+      border: 0;
+      color: #d8d0e0;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .audio-ctl input[type=range] { width: 74px; accent-color: #b04a40; cursor: pointer; }
+    @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
 </head>
 
 <body>
-  <a class="quit-link" href="index.html">EXIT &rsaquo;</a>
+    <div class="audio-ctl">
+    <button id="muteBtn" aria-label="mute">♪</button>
+    <input id="volRange" type="range" min="0" max="100" value="60" aria-label="volume">
+  </div>
+  <a class="quit-link" href="index.html">&larr; PORTFOLIO</a>
 
   <div class="screen-wrap">
     <canvas id="screen" width="1024" height="768"></canvas>
@@ -207,6 +264,8 @@
       <button class="a" data-btn="A">A</button>
     </div>
   </div>
+
+  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER act/hide &nbsp;·&nbsp; X/ESC status</div>
 
   <audio id="bgm" src="persona_5_life_will_change.mp3" loop preload="auto"></audio>
 
@@ -1264,9 +1323,18 @@
       zone(0, 0, 256, 192, 'A');
     }
 
+    let introShown = false;
     function updateTitle() {
       const p = popPress();
-      if (isA(p)) { resetRun(); game.state = 'world'; }
+      if (isA(p)) {
+        resetRun(); game.state = 'world';
+        if (!introShown) {
+          introShown = true;
+          showMsg(['Welcome to the PALACE.', 'Steal THE DOSSIER: grab 3', 'keys, dodge the red vision', 'cones of the Shadows.'], () =>
+            showMsg(['Press A near vases to HIDE.', 'Spotted 3 times = escorted', 'out. With all keys, reach', 'the vault up top.'], () =>
+              showMsg(['After the calling card,', 'take the treasure and RUN', 'to the entrance. Good luck,', 'phantom reporter.'])));
+        }
+      }
     }
 
     /* =====================================================================
@@ -1466,6 +1534,29 @@
     /* =====================================================================
        TEST HOOKS
        ===================================================================== */
+
+    /* ---------- volume master (persistido entre os jogos) ---------- */
+    (function () {
+      const volRange = document.getElementById('volRange');
+      const muteBtn = document.getElementById('muteBtn');
+      let masterVol = parseFloat(localStorage.getItem('lft_game_vol') || '.6');
+      let muted = localStorage.getItem('lft_game_mute') === '1';
+      window.__applyVol = function () {
+        const v = muted ? 0 : masterVol;
+        const el = document.getElementById('bgm');
+        if (el) el.volume = .8 * v;
+        if (audio && audio.master) audio.master.gain.value = v * .85;
+        volRange.value = Math.round(masterVol * 100);
+        muteBtn.textContent = muted ? '✕' : '♪';
+        localStorage.setItem('lft_game_vol', masterVol);
+        localStorage.setItem('lft_game_mute', muted ? '1' : '0');
+      };
+      volRange.addEventListener('input', () => { masterVol = volRange.value / 100; muted = false; window.__applyVol(); });
+      muteBtn.addEventListener('click', () => { muted = !muted; window.__applyVol(); });
+      window.__applyVol();
+      setInterval(window.__applyVol, 1500); // reaplica (áudio criado depois do load)
+    })();
+
     window.__game = game;
     window.__guards = () => guards;
     window.__giveKeys = () => { game.keysHave = { badge: true, map: true, pass: true }; };

@@ -152,22 +152,71 @@
     .ab .a { right: 0; top: 0; background: #c0463c; border: 2px solid #e07868; }
     .ab .b { left: 0; bottom: 0; background: #3e5468; border: 2px solid #648098; }
 
+    /* ===== topo: sair fácil + volume ===== */
     .quit-link {
       position: fixed;
       top: 10px;
       right: 12px;
       z-index: 60;
       font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
-      color: #8d8498;
+      font-size: 9px;
+      color: #fff;
       text-decoration: none;
-      border: 2px solid #3a3050;
-      padding: 7px 10px;
-      border-radius: 6px;
-      background: rgba(20, 16, 26, .8);
+      border: 2px solid #e07868;
+      padding: 9px 13px;
+      border-radius: 8px;
+      background: rgba(192, 70, 60, .92);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
     }
 
-    .quit-link:hover { color: #fff; border-color: #8d8498; }
+    .quit-link:hover { background: #d85848; }
+
+    .audio-ctl {
+      position: fixed;
+      top: 10px;
+      left: 12px;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(29, 23, 38, .92);
+      border: 2px solid #2e2640;
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
+
+    .audio-ctl button {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 12px;
+      background: none;
+      border: 0;
+      color: #cfc2e8;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .audio-ctl input[type=range] {
+      width: 74px;
+      accent-color: #b04a40;
+      cursor: pointer;
+    }
+
+    /* desktop (mouse + teclado): esconde o pad, mostra dica de teclas, tela maior */
+    .kbd-bar {
+      display: none;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      line-height: 1.8;
+      color: #8d8498;
+      text-align: center;
+      padding: 4px 10px;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .pad { display: none; }
+      .kbd-bar { display: block; }
+      .screen-wrap { width: min(100vw - 16px, 152vh - 120px, 840px); }
+    }
 
     @media (max-width: 560px) {
       body { gap: 8px; padding: 6px; }
@@ -175,17 +224,21 @@
       .dpad { width: 96px; height: 96px; }
       .dpad button { width: 32px; height: 32px; }
       .dpad .up, .dpad .down { left: 32px; }
-      .dpad .left, .dpad .right { }
       .dpad .mid { top: 32px; left: 32px; }
       .key-hint { display: none; }
       .ab { width: 104px; height: 88px; }
       .ab button { width: 48px; height: 48px; }
+      .audio-ctl input[type=range] { width: 52px; }
     }
   </style>
 </head>
 
 <body>
-  <a class="quit-link" href="index.html">EXIT &rsaquo;</a>
+  <div class="audio-ctl">
+    <button id="muteBtn" aria-label="mute">♪</button>
+    <input id="volRange" type="range" min="0" max="100" value="60" aria-label="volume">
+  </div>
+  <a class="quit-link" href="index.html">&larr; PORTFOLIO</a>
 
   <div class="screen-wrap">
     <!-- buffer interno 4x (1024x768) pra ficar nítido mesmo onde o CSS borra (Safari) -->
@@ -210,6 +263,8 @@
     </div>
   </div>
 
+  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER = A &nbsp;·&nbsp; X/ESC = B (notebook)</div>
+
   <audio id="mGrass" src="grass_route.m4a" loop preload="auto"></audio>
   <audio id="mBattle" src="pkost_music.mp3" loop preload="auto"></audio>
   <audio id="mWin" src="vitoria.mp3" preload="auto"></audio>
@@ -218,19 +273,38 @@
     'use strict';
 
     /* =====================================================================
-       ROUTE 26 — INVESTIGATIVE EDITION (v2, tela única)
-       Demake em resolução de DS (256x192). Tema: jornalismo investigativo.
-       Capture os 9 documentos selvagens do matinho via pedidos FOIA.
+       ROUTE 26 — INVESTIGATIVE EDITION (v3)
+       Demake em resolução de DS (256x192, buffer 4x). Tema: jornalismo.
+       Capture 3 documentos selvagens no matinho via pedidos FOIA.
        ===================================================================== */
 
     const cv = document.getElementById('screen'), g = cv.getContext('2d');
     g.scale(4, 4);               // coordenadas lógicas continuam 256x192
     g.imageSmoothingEnabled = false;
 
+    const WIN_N = 3;             // capturas necessárias pra fechar o caderno
+
+    /* ---------- áudio + volume ---------- */
     const mGrass = document.getElementById('mGrass');
     const mBattle = document.getElementById('mBattle');
     const mWin = document.getElementById('mWin');
-    mGrass.volume = .55; mBattle.volume = .5; mWin.volume = .6;
+    const BASE_VOL = [[mGrass, .9], [mBattle, .82], [mWin, 1]];
+
+    let masterVol = parseFloat(localStorage.getItem('lft_game_vol') || '.6');
+    let muted = localStorage.getItem('lft_game_mute') === '1';
+    const volRange = document.getElementById('volRange');
+    const muteBtn = document.getElementById('muteBtn');
+
+    function applyVol() {
+      BASE_VOL.forEach(([el, b]) => el.volume = muted ? 0 : b * masterVol);
+      volRange.value = Math.round(masterVol * 100);
+      muteBtn.textContent = muted ? '✕' : '♪';
+      localStorage.setItem('lft_game_vol', masterVol);
+      localStorage.setItem('lft_game_mute', muted ? '1' : '0');
+    }
+    volRange.addEventListener('input', () => { masterVol = volRange.value / 100; muted = false; applyVol(); });
+    muteBtn.addEventListener('click', () => { muted = !muted; applyVol(); });
+    applyVol();
 
     function playMusic(which) {
       [mGrass, mBattle, mWin].forEach(a => { if (a !== which) { a.pause(); a.currentTime = 0; } });
@@ -342,7 +416,20 @@
       };
     })();
 
-    /* ---------- criaturas 24x24 (resolução dobrada) ---------- */
+    /* pokébola de item no chão (10x9) */
+    const BALL_SPR = makeSprite([
+      '...kkkk...',
+      '..krrrrk..',
+      '.krrRrrrk.',
+      '.krrrrrrk.',
+      'kkkkkkkkkk',
+      '.kwwkkwwk.',
+      '.kwwwwwwk.',
+      '..kwwwwk..',
+      '...kkkk...'
+    ]);
+
+    /* ---------- criaturas 24x24 ---------- */
     const DEX_SRC = {
       PAPYR: [
         '......kkkkkkkkkkk.......',
@@ -527,7 +614,7 @@
       ]
     };
 
-    /* rate = dificuldade base de captura (tipo catch rate do Pokémon) */
+    /* rate = facilidade base de captura (tipo catch rate do Pokémon) */
     const DEX = [
       { id: 'PAPYR', name: 'PAPYR', kind: 'Loose Record', lv: [3, 6], hp: 20, atk: 4, enc: .24, rate: .80, blurb: 'A runaway public record. Hates being archived.' },
       { id: 'SIGILO', name: 'SIGILO', kind: 'Redaction Bar', lv: [4, 7], hp: 26, atk: 5, enc: .18, rate: .70, blurb: 'A living redaction. Hides the truth behind itself.' },
@@ -547,7 +634,7 @@
     const imgFoia = new Image(); imgFoia.src = 'images/pokemon/foia_paper.png';
 
     /* =====================================================================
-       TILES (16px) — com variações e animação
+       TILES (16px)
        ===================================================================== */
     const T = 16;
     const TILE_SRC = {
@@ -648,9 +735,25 @@
     const CHAR2TILE = { '#': 'tree', ',': 'grass', ';': 'tall', '=': 'path', '~': 'water', '*': 'flower', '!': 'sign', 'F': 'fence' };
     const SOLID = { tree: 1, water: 1, sign: 1, fence: 1 };
     const SIGN_TEXT = {
-      '3,4': ['ROUTE 26 - FOIA FIELDS', 'Wild documents live in the', 'tall grass. Fill all 9 slots', 'of your source notebook!'],
-      '21,11': ['TIP: weaken a document to', 'raise your FOIA catch odds.', 'SUBPOENA corners it for an', 'even better chance!']
+      '3,4': [
+        ['ROUTE 26 - FOIA FIELDS', 'Wild documents live in the', 'tall grass. File 3 of them', 'to close your notebook!']
+      ],
+      '21,11': [
+        ['TIP: weaken a document to', 'raise your FOIA catch odds.', 'SUBPOENA corners it for an', 'even better chance!'],
+        ['Pick up the red balls lying', 'around: coffee restores HP,', 'espresso restores move PP.']
+      ]
     };
+
+    /* pokébolas com itens no chão (posições em tiles andáveis) */
+    const BALLS = [
+      { x: 14, y: 1, item: 'coffee' },
+      { x: 25, y: 1, item: 'espresso' },
+      { x: 9, y: 8, item: 'coffee' },
+      { x: 5, y: 12, item: 'espresso' },
+      { x: 24, y: 16, item: 'coffee' },
+      { x: 16, y: 18, item: 'coffee' },
+      { x: 26, y: 12, item: 'espresso' }
+    ];
 
     /* =====================================================================
        ESTADO
@@ -662,12 +765,14 @@
       step: 0,
       caught: {},
       hp: 60, maxhp: 60,
-      coffee: 3,
+      items: { coffee: 0, espresso: 0 },   // começa de mãos vazias
+      balls: {},                            // pokébolas já coletadas
+      tutorialDone: false,
       battle: null,
-      msg: null,
+      msg: null,                            // { pages: [[linhas]], idx }
       rustle: null,
       dexSel: 0,
-      winT: 0, animClock: 0
+      winT: 0, winSel: 0, animClock: 0
     };
     const caughtCount = () => Object.keys(game.caught).length;
 
@@ -690,7 +795,6 @@
     });
     window.addEventListener('keyup', e => { const k = KEYMAP[e.key]; if (k) keys[k] = false; });
 
-    /* pad físico */
     document.querySelectorAll('.dpad button').forEach(btn => {
       const dir = btn.dataset.dir;
       const dn = e => { e.preventDefault(); if (!keys[dir]) pressQueue.push(dir); keys[dir] = true; };
@@ -705,7 +809,6 @@
     });
     document.getElementById('noteBtn').addEventListener('pointerdown', e => { e.preventDefault(); pressQueue.push('note'); });
 
-    /* toque/clique direto na tela (zonas por frame) */
     let zones = [];
     function zone(x, y, w, h, act, data) { zones.push({ x, y, w, h, act, data }); }
     cv.addEventListener('pointerdown', e => {
@@ -714,7 +817,7 @@
       for (const z of zones) {
         if (x >= z.x && x < z.x + z.w && y >= z.y && y < z.y + z.h) { pressQueue.push(z); return; }
       }
-      pressQueue.push('A'); // toque fora de zona = A (avança diálogo)
+      pressQueue.push('A');
     });
     function popPress() { return pressQueue.shift(); }
     const isA = p => p === 'A' || (p && p.act === 'A');
@@ -747,12 +850,19 @@
       text(str, Math.round(cx - w / 2), y, col, size);
     }
 
+    function splash(str, cx, cy, col, size = 11) {
+      textC(str, cx + 1, cy + 1, '#1c1410', size);
+      textC(str, cx, cy, col, size);
+    }
+
     function hpBar(x, y, w, ratio) {
       px(x - 1, y - 1, w + 2, 6, '#404040');
       px(x, y, w, 4, '#e8e8e0');
       const col = ratio > .5 ? '#58c858' : ratio > .2 ? '#f0c020' : '#e05038';
       px(x, y, Math.max(0, Math.round(w * ratio)), 4, col);
     }
+
+    function showMsg(...pages) { game.msg = { pages, idx: 0 }; }
 
     /* =====================================================================
        OVERWORLD
@@ -773,10 +883,20 @@
 
     function finishStep() {
       game.step++;
+      /* pokébola no chão? */
+      const ball = BALLS.find(b => b.x === game.px && b.y === game.py && !game.balls[b.x + ',' + b.y]);
+      if (ball) {
+        game.balls[ball.x + ',' + ball.y] = true;
+        game.items[ball.item]++;
+        showMsg(ball.item === 'coffee'
+          ? ['You found a COFFEE!', '(Restores 25 HP in battle.)']
+          : ['You found an ESPRESSO!', '(Restores 5 PP to every', 'move in battle.)']);
+        return;
+      }
       if (tileAt(game.px, game.py) === 'tall') {
         game.rustle = { x: game.px, y: game.py, t: 0 };
-        const allButBoss = DEX.slice(0, N_ALL - 1).every(d => game.caught[d.id]);
-        if (!game.caught.GOVRECORD && allButBoss && Math.random() < .30) return startBattle(DEX[N_ALL - 1]);
+        if (!game.caught.GOVRECORD && caughtCount() >= WIN_N - 1 && Math.random() < .25)
+          return startBattle(DEX[N_ALL - 1]);
         if (Math.random() < .15) {
           const pool = DEX.slice(0, N_ALL - 1);
           let r = Math.random() * pool.reduce((s, d) => s + d.enc, 0);
@@ -794,14 +914,17 @@
     function updateWorld(dt) {
       if (game.msg) {
         const p = popPress();
-        if (isA(p) || isB(p)) game.msg = null;
+        if (isA(p) || isB(p)) {
+          game.msg.idx++;
+          if (game.msg.idx >= game.msg.pages.length) game.msg = null;
+        }
         return;
       }
       const p = popPress();
       if (isA(p)) {
         const f = facingTile(), key = f.x + ',' + f.y, t = tileAt(f.x, f.y);
-        if (t === 'sign' && SIGN_TEXT[key]) game.msg = { lines: SIGN_TEXT[key] };
-        else if (t === 'water') game.msg = { lines: ['The pond is calm.', 'A shredded document', 'floats by...'] };
+        if (t === 'sign' && SIGN_TEXT[key]) showMsg(...SIGN_TEXT[key]);
+        else if (t === 'water') showMsg(['The pond is calm.', 'A shredded document', 'floats by...']);
       }
       if (p === 'note' || isB(p)) { game.state = 'dex'; game.dexSel = 0; return; }
 
@@ -838,14 +961,19 @@
           g.drawImage(TILES[t], i * T - camX, j * T - camY);
         }
 
-      /* personagem: ciclo passoA → parado → passoB → parado (contínuo) */
+      /* pokébolas no chão */
+      for (const b of BALLS) {
+        if (game.balls[b.x + ',' + b.y]) continue;
+        g.drawImage(BALL_SPR, b.x * T - camX + 3, b.y * T - camY + 4);
+      }
+
+      /* personagem: ciclo passoA → parado → passoB → parado */
       const dirFrames = SPR.player[game.dir];
       const seq = [1, 0, 3, 0];
       const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
       const frame = game.moving ? dirFrames[seq[phase]] : dirFrames[0];
       g.drawImage(frame, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
 
-      /* matinho cobre os pés quando dentro dele */
       if (tileAt(game.px, game.py) === 'tall' && !game.moving)
         g.drawImage(TILES.tall, game.px * T - camX, game.py * T - camY);
 
@@ -859,17 +987,19 @@
       }
 
       /* HUD compacto */
-      frame9(2, 2, 116, 26, { bg: 'rgba(248,248,240,.95)' });
-      text('NOTEBOOK ' + caughtCount() + '/' + N_ALL, 8, 7, '#384878', 6);
+      frame9(2, 2, 130, 26, { bg: 'rgba(248,248,240,.95)' });
+      text('NOTEBOOK ' + Math.min(caughtCount(), WIN_N) + '/' + WIN_N, 8, 7, '#384878', 6);
       text('HP', 8, 17, '#e07820', 6);
-      hpBar(24, 18, 50, game.hp / game.maxhp);
-      text('☕x' + game.coffee, 84, 16, '#6b4226', 7);
-      zone(2, 2, 116, 26, 'note');
+      hpBar(24, 18, 44, game.hp / game.maxhp);
+      text('☕' + game.items.coffee, 76, 16, '#6b4226', 7);
+      text('⚡' + game.items.espresso, 102, 16, '#a07818', 7);
+      zone(2, 2, 130, 26, 'note');
 
       if (game.msg) {
         frame9(4, 138, 248, 50);
-        game.msg.lines.forEach((l, i) => text(l, 12, 145 + i * 11, '#303030', 7));
-        text('▼', 240, 178, '#e05038', 7);
+        game.msg.pages[game.msg.idx].forEach((l, i) => text(l, 12, 144 + i * 11, '#303030', 7));
+        text(game.msg.idx < game.msg.pages.length - 1 ? '▼' : '✕', 240, 178, '#e05038', 7);
+        zone(0, 0, 256, 192, 'A');
       }
     }
 
@@ -877,12 +1007,14 @@
        BATALHA
        ===================================================================== */
     const MOVES = [
-      { name: 'TOUGH QUESTION', dmg: [5, 9], desc: 'Reliable jab' },
-      { name: 'CROSS-CHECK', dmg: [7, 11], desc: 'Solid hit' },
-      { name: 'DATA SCRAPE', dmg: [3, 14], desc: 'Wild swing' },
-      { name: 'EXPOSE', dmg: [9, 13], desc: 'Heavy hit' },
-      { name: 'SUBPOENA', dmg: null, desc: 'Corner target:catch odds UP' }
+      { name: 'TOUGH QUESTION', dmg: [5, 9], pp: 20, fx: 'question', desc: 'Reliable jab' },
+      { name: 'COLD CALL', dmg: [6, 10], pp: 15, fx: 'ring', desc: 'Surprise hit' },
+      { name: 'CROSS-CHECK', dmg: [7, 11], pp: 12, fx: 'cross', desc: 'Solid hit' },
+      { name: 'DATA SCRAPE', dmg: [3, 14], pp: 12, fx: 'rain', desc: 'Wild swing' },
+      { name: 'EXPOSE', dmg: [9, 13], pp: 8, fx: 'flash', desc: 'Heavy hit' },
+      { name: 'SUBPOENA', dmg: null, pp: 8, fx: 'stamp', desc: 'Catch odds UP' }
     ];
+    game.pp = MOVES.map(m => m.pp);
     const ENEMY_MOVES = ['REDACT', 'DELAY RESPONSE', 'SPIN STORY', 'JARGON WALL', 'APPEAL', 'STONEWALL'];
 
     function startBattle(species) {
@@ -892,8 +1024,9 @@
         ehp: species.hp, emax: species.hp, ehpShow: species.hp, phpShow: game.hp,
         cornered: false,
         phase: 'intro', introT: 0,
-        queue: [], menuSel: 0, moveSel: 0,
-        lungeT: 0, eLungeT: 0, eFlashT: 0, shake: 0, t: 0,
+        queue: [], menuSel: 0, moveSel: 0, bagSel: 0,
+        lungeT: 0, eLungeT: 0, eFlashT: 0, efxT: 0, shake: 0, t: 0,
+        fx: null,                 // { kind, t, mi } efeito do golpe do jogador
         foia: null
       };
       game.state = 'battle';
@@ -907,7 +1040,7 @@
 
     function endBattle() {
       game.battle = null;
-      if (caughtCount() >= N_ALL) { game.state = 'win'; game.winT = 0; playMusic(mWin); return; }
+      if (caughtCount() >= WIN_N) { game.state = 'win'; game.winT = 0; game.winSel = 0; playMusic(mWin); return; }
       game.state = 'world'; playMusic(mGrass);
     }
 
@@ -915,14 +1048,23 @@
       const b = game.battle;
       const dmg = Math.max(1, Math.round(b.sp.atk * (0.7 + Math.random() * 0.7)));
       game.hp = Math.max(0, game.hp - dmg);
-      b.eLungeT = 1; b.shake = 1;
+      b.eLungeT = 1; b.shake = 1; b.efxT = 1;
       const mv = ENEMY_MOVES[Math.floor(Math.random() * ENEMY_MOVES.length)];
       bmsg([b.sp.name + ' used ' + mv + '!', 'Your credibility took ' + dmg + ' damage.'], game.hp <= 0 ? 'faint' : 'menu');
     }
 
     function doAttack(mi) {
       const b = game.battle, m = MOVES[mi];
+      if (game.pp[mi] <= 0) { bmsg(['No uses left for ' + m.name + '!', 'Drink an ESPRESSO to', 'restore your moves.'], 'menu'); return; }
+      game.pp[mi]--;
       b.lungeT = 1;
+      b.fx = { kind: m.fx, t: 0, mi };
+      b.phase = 'atkfx';
+    }
+
+    function resolveAttack() {
+      const b = game.battle, m = MOVES[b.fx.mi];
+      b.fx = null;
       if (!m.dmg) { // SUBPOENA
         b.cornered = true;
         bmsg(['You served a SUBPOENA!', b.sp.name + ' is cornered -', 'it cannot dodge the request!'], 'enemy');
@@ -953,31 +1095,53 @@
       b.phase = 'anim';
     }
 
+    const CATCH_LINES = [
+      ['Gotcha! NAME was FILED', 'in your notebook!'],
+      ['Access GRANTED! NAME is', 'now on the public record!'],
+      ['The archive opens. NAME', 'is officially yours!']
+    ];
+    const FAIL_LINES = [
+      ['It BROKE OUT of the file!', 'NAME refuses to comply.'],
+      ['Request DENIED! "Article 23",', 'says NAME, smugly.'],
+      ['So close! NAME slipped', 'out of the paperwork.']
+    ];
+
     function resolveFoia() {
       const b = game.battle;
       if (b.foia.success) {
         game.caught[b.sp.id] = true;
-        b.caughtNow = true;
-        bmsg(['Gotcha! ' + b.sp.name + ' was', 'FILED in your notebook!', '(' + caughtCount() + '/' + N_ALL + ' sources secured)'], 'end');
+        game.lastInfo = b.sp;
+        const l = CATCH_LINES[Math.floor(Math.random() * CATCH_LINES.length)]
+          .map(s => s.replace('NAME', b.sp.name));
+        bmsg([...l, '(' + Math.min(caughtCount(), WIN_N) + '/' + WIN_N + ' sources secured)'], 'end');
       } else {
-        const cries = ['It broke out of the file!', 'The request was DENIED!', 'Argh! So close!'];
-        bmsg([cries[b.foia.shakes % cries.length], b.sp.name + ' resists.', 'Weaken it and try again!'], 'enemy');
+        const l = FAIL_LINES[Math.floor(Math.random() * FAIL_LINES.length)]
+          .map(s => s.replace('NAME', b.sp.name));
+        bmsg([...l, 'Weaken it and try again!'], 'enemy');
       }
       b.foia = null;
     }
 
-    function doCoffee() {
+    function useBagItem(which) {
       const b = game.battle;
-      if (game.coffee <= 0) { bmsg(['No coffee left!', 'A journalist without coffee...'], 'menu'); return; }
-      game.coffee--;
-      game.hp = Math.min(game.maxhp, game.hp + 25);
-      bmsg(['You drank strong coffee.', 'Credibility restored by 25!'], 'enemy');
+      if (which === 'coffee') {
+        if (game.items.coffee <= 0) { bmsg(['No coffee in the bag!', 'Find red balls on the route.'], 'menu'); return; }
+        game.items.coffee--;
+        game.hp = Math.min(game.maxhp, game.hp + 25);
+        bmsg(['You drank strong coffee.', 'Credibility restored by 25!'], 'enemy');
+      } else {
+        if (game.items.espresso <= 0) { bmsg(['No espresso in the bag!', 'Find red balls on the route.'], 'menu'); return; }
+        game.items.espresso--;
+        MOVES.forEach((m, i) => game.pp[i] = Math.min(m.pp, game.pp[i] + 5));
+        bmsg(['A double shot of espresso!', 'All moves restored 5 PP.'], 'enemy');
+      }
     }
 
     function updateBattle(dt) {
       const b = game.battle;
       b.t += dt;
       if (b.eFlashT > 0) b.eFlashT -= dt * 2.5;
+      if (b.efxT > 0) b.efxT -= dt * 1.6;
       if (b.shake > 0) b.shake -= dt * 2;
       if (b.lungeT > 0) b.lungeT -= dt * 3;
       if (b.eLungeT > 0) b.eLungeT -= dt * 3;
@@ -991,10 +1155,16 @@
         return;
       }
 
+      if (b.phase === 'atkfx' && b.fx) {
+        b.fx.t += dt;
+        if (b.fx.t >= .7) resolveAttack();
+        return;
+      }
+
       if (b.phase === 'anim' && b.foia) {
         b.foia.t += dt;
-        const total = 1 + .5 + b.foia.shakes * .55 + .35;
-        if (b.foia.t >= total) { resolveFoia(); }
+        const total = 1 + .5 + b.foia.shakes * .55 + .95;   // arremesso + flash + chacoalhadas + splash
+        if (b.foia.t >= total) resolveFoia();
         return;
       }
 
@@ -1011,6 +1181,7 @@
           else if (next === 'flee' || next === 'end') endBattle();
           else if (next === 'faint') {
             game.hp = Math.round(game.maxhp / 2);
+            MOVES.forEach((m, i) => game.pp[i] = m.pp);
             bmsg(['You blacked out from stress!', 'An editor revived you with', 'deadline pressure...'], 'end');
           }
         }
@@ -1035,6 +1206,14 @@
         }
         else if (isA(p)) doAttack(b.moveSel);
         else if (p && p.act === 'move') { b.moveSel = p.data; doAttack(p.data); }
+        return;
+      }
+
+      if (b.phase === 'bag') {
+        if (isB(p) || (p && p.act === 'back')) { b.phase = 'menu'; return; }
+        if (p === 'up' || p === 'down') b.bagSel ^= 1;
+        else if (isA(p)) useBagItem(b.bagSel === 0 ? 'coffee' : 'espresso');
+        else if (p && p.act === 'bag') { b.bagSel = p.data; useBagItem(p.data === 0 ? 'coffee' : 'espresso'); }
       }
     }
 
@@ -1042,7 +1221,7 @@
       const b = game.battle;
       if (a === 'fight') { b.phase = 'moves'; b.moveSel = 0; }
       else if (a === 'foia') doFoia();
-      else if (a === 'bag') doCoffee();
+      else if (a === 'bag') { b.phase = 'bag'; b.bagSel = 0; }
       else if (a === 'run') {
         if (b.sp.id === 'GOVRECORD') bmsg(['You cannot run from', 'public records!'], 'menu');
         else bmsg(['You got away safely.', '(The story can wait.)'], 'flee');
@@ -1050,7 +1229,6 @@
     }
 
     function drawBattleBg() {
-      /* céu com sol e nuvens */
       const grad = g.createLinearGradient(0, 0, 0, 110);
       grad.addColorStop(0, '#68b8ec'); grad.addColorStop(1, '#c4e8f8');
       g.fillStyle = grad; g.fillRect(0, 0, 256, 110);
@@ -1061,12 +1239,10 @@
         g.beginPath(); g.ellipse(cx, cy, r, r * .45, 0, 0, 7); g.fill();
         g.beginPath(); g.ellipse(cx + r * .7, cy + 3, r * .7, r * .35, 0, 0, 7); g.fill();
       });
-      /* mata ao fundo */
       g.fillStyle = '#4e9050';
       for (let i = 0; i < 16; i++) { g.beginPath(); g.ellipse(i * 17 + 8, 108, 12, 9, 0, 0, 7); g.fill(); }
       g.fillStyle = '#3c7842';
       for (let i = 0; i < 16; i++) { g.beginPath(); g.ellipse(i * 17, 112, 11, 7, 0, 0, 7); g.fill(); }
-      /* campo com faixas de tom */
       g.fillStyle = '#8cc45c'; g.fillRect(0, 110, 256, 82);
       g.fillStyle = '#80b854'; g.fillRect(0, 126, 256, 22);
       g.fillStyle = '#74ac4c'; g.fillRect(0, 148, 256, 44);
@@ -1080,6 +1256,65 @@
       g.fillStyle = 'rgba(0,0,0,.12)'; g.beginPath(); g.ellipse(cx, cy + 1, rx * .8, ry * .6, 0, 0, 7); g.fill();
     }
 
+    /* efeitos visuais dos golpes (sobre o inimigo em ~186,60) */
+    function drawAttackFx(fx) {
+      const t = fx.t / .7;             // 0..1
+      const ex = 186, ey = 60;
+      g.save();
+      if (fx.kind === 'question') {
+        for (let i = 0; i < 3; i++) {
+          const tt = Math.max(0, Math.min(1, t * 1.4 - i * .18));
+          if (tt <= 0 || tt >= 1) continue;
+          const x = 95 + (ex - 95) * tt, y = 130 - Math.sin(tt * Math.PI) * 70 - i * 8;
+          splash('?', x, y, i % 2 ? '#f8d048' : '#fff', 10);
+        }
+        if (t > .75) splash('!', ex, ey - 10, '#f85838', 12);
+      } else if (fx.kind === 'ring') {
+        for (let i = 0; i < 3; i++) {
+          const tt = t * 1.3 - i * .22;
+          if (tt <= 0 || tt > 1) continue;
+          g.strokeStyle = 'rgba(124,255,240,' + (1 - tt) + ')';
+          g.lineWidth = 2;
+          g.beginPath(); g.arc(ex, ey, 8 + tt * 34, 0, 7); g.stroke();
+        }
+      } else if (fx.kind === 'cross') {
+        const tt = Math.min(1, t * 1.6);
+        g.strokeStyle = 'rgba(255,255,255,.95)'; g.lineWidth = 3;
+        g.beginPath(); g.moveTo(ex - 34, ey - 34); g.lineTo(ex - 34 + tt * 68, ey - 34 + tt * 68); g.stroke();
+        if (t > .35) {
+          const t2 = Math.min(1, (t - .35) * 1.8);
+          g.beginPath(); g.moveTo(ex + 34, ey - 34); g.lineTo(ex + 34 - t2 * 68, ey - 34 + t2 * 68); g.stroke();
+        }
+      } else if (fx.kind === 'rain') {
+        g.font = '7px "Press Start 2P"';
+        for (let i = 0; i < 10; i++) {
+          const yy = ((t * 130 + i * 23) % 90) + ey - 50;
+          g.fillStyle = i % 2 ? '#48e088' : '#a8ffc8';
+          g.fillText(i % 3 ? '1' : '0', ex - 36 + (i * 17) % 72, yy);
+        }
+      } else if (fx.kind === 'flash') {
+        if (t < .45) {
+          g.fillStyle = 'rgba(255,255,255,' + (.9 - t * 1.6) + ')';
+          g.fillRect(0, 0, 256, 192);
+        }
+        for (let i = 0; i < 8; i++) {
+          const a = i * Math.PI / 4, rr = t * 46;
+          g.strokeStyle = 'rgba(248,208,72,' + (1 - t) + ')'; g.lineWidth = 2;
+          g.beginPath(); g.moveTo(ex + Math.cos(a) * 10, ey + Math.sin(a) * 10);
+          g.lineTo(ex + Math.cos(a) * rr, ey + Math.sin(a) * rr); g.stroke();
+        }
+      } else if (fx.kind === 'stamp') {
+        const drop = Math.min(1, t * 1.8);
+        g.drawImage(imgFoia, ex - 14, -30 + drop * (ey - 4), 28, 28);
+        if (t > .6) {
+          g.strokeStyle = 'rgba(200,60,50,' + (1 - (t - .6) * 2.5) + ')'; g.lineWidth = 2;
+          g.beginPath(); g.arc(ex, ey + 6, 16 + (t - .6) * 50, 0, 7); g.stroke();
+          splash('SERVED!', ex, ey - 28, '#f85838', 8);
+        }
+      }
+      g.restore();
+    }
+
     function drawBattle() {
       zones = [];
       const b = game.battle;
@@ -1088,15 +1323,19 @@
       const intro = b.phase === 'intro' ? b.introT : 1;
       const shakeX = b.shake > 0 ? Math.round(Math.sin(b.t * 60) * 3 * b.shake) : 0;
 
-      /* plataformas */
       platform(186, 96, 58, 15, '#9cd06c', '#6c9c48');
       platform(62, 166, 60, 16, '#88bc5c', '#5c8c40');
 
-      /* inimigo (desliza na entrada) */
+      /* inimigo */
       const eX = 150 + (1 - intro) * 130;
       const eLunge = b.eLungeT > 0 ? Math.round(Math.sin(b.eLungeT * Math.PI) * -8) : 0;
       const bob = Math.sin(b.t * 2.5) * 2;
-      const hideEnemy = b.foia && b.foia.t > 1.0 && !(b.foia.t > 1.5 + b.foia.shakes * .55 && !b.foia.success);
+      let hideEnemy = false;
+      if (b.foia) {
+        const f = b.foia;
+        const breakT = 1.5 + f.shakes * .55;        // quando o resultado aparece
+        hideEnemy = f.t > 1.0 && !(f.t > breakT && !f.success);
+      }
       if (!hideEnemy) {
         const flash = b.eFlashT > 0 && Math.floor(b.t * 24) % 2;
         if (!flash) {
@@ -1105,20 +1344,37 @@
         }
       }
 
-      /* jornalista (desliza na entrada) */
+      /* jornalista */
       const pX = 16 - (1 - intro) * 110;
       const lunge = b.lungeT > 0 ? Math.round(Math.sin(b.lungeT * Math.PI) * 10) : 0;
       g.drawImage(imgTrainerBack, pX + lunge + shakeX, 92, 86, 86);
 
-      /* papel FOIA: voo + chacoalhadas */
+      /* golpe inimigo: rasgos vermelhos sobre o jogador */
+      if (b.efxT > .3) {
+        const tt = 1 - b.efxT;
+        g.strokeStyle = 'rgba(232,72,56,' + Math.min(1, b.efxT) + ')';
+        g.lineWidth = 3;
+        for (let i = 0; i < 3; i++) {
+          g.beginPath();
+          g.moveTo(30 + i * 16, 100 + tt * 20);
+          g.lineTo(54 + i * 16, 150 + tt * 20);
+          g.stroke();
+        }
+      }
+
+      /* efeito do golpe do jogador */
+      if (b.phase === 'atkfx' && b.fx) drawAttackFx(b.fx);
+
+      /* papel FOIA: voo + chacoalhadas + resultado */
       if (b.foia) {
         const f = b.foia, t = f.t;
-        if (t < 1) { // voo em arco
+        const breakT = 1.5 + f.shakes * .55;
+        if (t < 1) {
           const fx = 95 + t * 95, fy = 130 - Math.sin(t * Math.PI) * 85;
           g.save(); g.translate(fx, fy); g.rotate(t * 10);
           g.drawImage(imgFoia, -11, -11, 22, 22);
           g.restore();
-        } else { // papel no chão chacoalhando
+        } else if (t <= breakT || f.success) {
           const sh = Math.max(0, t - 1.5);
           const idx = Math.floor(sh / .55);
           const local = (sh % .55) / .55;
@@ -1126,9 +1382,29 @@
           g.save(); g.translate(186 + wob, 84); g.rotate(wob * .04);
           g.drawImage(imgFoia, -13, -13, 26, 26);
           g.restore();
-          if (t < 1.4) { // flash de absorção
+          if (t < 1.4) {
             g.fillStyle = 'rgba(255,255,255,' + Math.max(0, .9 - (t - 1) * 2.5) + ')';
             g.beginPath(); g.arc(186, 70, 40, 0, 7); g.fill();
+          }
+        }
+        /* resultado: estrelinhas (sucesso) ou estouro (falha) */
+        if (t > breakT) {
+          const rt = Math.min(1, (t - breakT) / .9);
+          if (f.success) {
+            for (let i = 0; i < 7; i++) {
+              const a = i * Math.PI * 2 / 7 + rt;
+              const rr = 12 + rt * 26;
+              splash('★', 186 + Math.cos(a) * rr, 80 + Math.sin(a) * rr * .6, i % 2 ? '#f8d048' : '#fff', 8);
+            }
+            splash('GOTCHA!', 186, 44, '#f8d048', 11);
+          } else {
+            g.fillStyle = 'rgba(255,255,255,' + Math.max(0, .8 - rt * 1.6) + ')';
+            g.beginPath(); g.arc(186, 76, 14 + rt * 30, 0, 7); g.fill();
+            for (let i = 0; i < 6; i++) {
+              const a = i * Math.PI / 3;
+              px(186 + Math.cos(a) * (16 + rt * 30) - 2, 76 + Math.sin(a) * (12 + rt * 22) - 2, 4, 4, '#f5f5ef');
+            }
+            splash('BROKE FREE!', 186, 44, '#f85838', 9);
           }
         }
       }
@@ -1148,11 +1424,10 @@
       hpBar(154, 116, 86, b.phpShow / game.maxhp);
       text(Math.round(b.phpShow) + '/' + game.maxhp, 168, 126, '#484848', 7);
 
-      /* barras de HP animadas */
       b.ehpShow += (b.ehp - b.ehpShow) * Math.min(1, .12);
       b.phpShow += (game.hp - b.phpShow) * Math.min(1, .12);
 
-      /* ---- área de diálogo/menus (parte de baixo da MESMA tela) ---- */
+      /* ---- área de diálogo/menus ---- */
       if (b.phase === 'msg' && b.queue.length) {
         frame9(2, 142, 252, 48, { bg: '#283038', edge: '#687888', dark: '#101820' });
         b.queue[0].lines.forEach((l, i) => text(l, 10, 149 + i * 10, '#f8f8f8', 7));
@@ -1173,37 +1448,53 @@
       } else if (b.phase === 'moves') {
         frame9(2, 142, 252, 48, { bg: '#f8f8f0' });
         MOVES.forEach((m, i) => {
-          const x = 12 + (i % 2) * 124, y = 147 + Math.floor(i / 2) * 13;
+          const x = 12 + (i % 2) * 124, y = 147 + Math.floor(i / 2) * 12;
+          const noPp = game.pp[i] <= 0;
           if (b.moveSel === i) px(x - 6, y + 1, 4, 7, '#c84838');
-          text(m.name, x, y, i === b.moveSel ? '#202020' : '#585858', 6);
-          zone(x - 7, y - 3, 122, 13, 'move', i);
+          text(m.name.length > 12 ? m.name.slice(0, 12) : m.name, x, y, noPp ? '#b0b0a8' : (i === b.moveSel ? '#202020' : '#585858'), 6);
+          text(String(game.pp[i]), x + 102, y, noPp ? '#c05040' : '#788858', 6);
+          zone(x - 7, y - 3, 122, 12, 'move', i);
         });
         const m = MOVES[b.moveSel];
-        text(m.dmg ? ('PWR ' + m.dmg[0] + '-' + m.dmg[1]) : 'STATUS', 140, 173, '#385888', 6);
-        text('B:BACK', 208, 181, '#888', 5);
-        zone(206, 176, 48, 14, 'back');
-      } else if (b.phase === 'anim') {
+        px(4, 180, 248, 1, '#c8c8c0');
+        text((m.dmg ? 'PWR ' + m.dmg[0] + '-' + m.dmg[1] : 'STATUS') + ' PP ' + game.pp[b.moveSel] + '/' + m.pp + ' ' + m.desc, 10, 182, '#385888', 5);
+        text('B:BACK', 218, 182, '#888', 5);
+        zone(208, 178, 46, 12, 'back');
+      } else if (b.phase === 'bag') {
+        frame9(2, 142, 252, 48, { bg: '#f8f8f0' });
+        const items = [
+          ['COFFEE x' + game.items.coffee, 'restores 25 HP'],
+          ['ESPRESSO x' + game.items.espresso, 'restores 5 PP to all moves']
+        ];
+        items.forEach(([label, sub], i) => {
+          const y = 149 + i * 15;
+          if (b.bagSel === i) px(8, y + 1, 4, 7, '#c84838');
+          text(label, 16, y, '#303030', 7);
+          text(sub, 124, y + 1, '#787870', 5);
+          zone(6, y - 3, 240, 14, 'bag', i);
+        });
+        text('B:BACK', 216, 182, '#888', 5);
+        zone(206, 178, 48, 14, 'back');
+      } else if (b.phase === 'anim' || b.phase === 'atkfx') {
         frame9(2, 142, 252, 48, { bg: '#283038', edge: '#687888', dark: '#101820' });
-        text(b.foia && b.foia.t < 1 ? 'You filed a FOIA request!' : '...processing...', 10, 158, '#f8f8f8', 7);
+        if (b.phase === 'anim') text(b.foia && b.foia.t < 1 ? 'You filed a FOIA request!' : '...processing...', 10, 158, '#f8f8f8', 7);
       } else if (b.phase === 'intro') {
         frame9(2, 142, 252, 48, { bg: '#283038', edge: '#687888', dark: '#101820' });
       }
 
-      /* dica de chance de captura quando no menu */
       if (b.phase === 'menu') {
         const pc = Math.round(catchChance(b) * 100);
         text('FOIA odds: ' + pc + '%', 8, 130, '#fff', 6);
-        px(6, 128, 86, 1, 'rgba(255,255,255,.0)');
       }
     }
 
     /* =====================================================================
-       CADERNO (DEX) — grade 3x3
+       CADERNO (DEX)
        ===================================================================== */
     function updateDex() {
       const p = popPress();
       if (!p) return;
-      if (isA(p) === false && isB(p) === false && typeof p === 'string') {
+      if (typeof p === 'string' && !['A', 'B'].includes(p)) {
         const cols = 3;
         if (p === 'left') game.dexSel = Math.max(0, game.dexSel - 1);
         if (p === 'right') game.dexSel = Math.min(N_ALL - 1, game.dexSel + 1);
@@ -1223,7 +1514,7 @@
         if ((i + j) % 2) px(i * 16, j * 16, 16, 16, '#243652');
       frame9(4, 3, 248, 20, { bg: '#f0f0e0' });
       text('SOURCE NOTEBOOK', 70, 9, '#384878', 8);
-      text(caughtCount() + '/' + N_ALL, 220, 9, '#303030', 8);
+      text(Math.min(caughtCount(), WIN_N) + '/' + WIN_N, 220, 9, '#303030', 8);
 
       DEX.forEach((d, i) => {
         const x = 8 + (i % 3) * 82, y = 27 + Math.floor(i / 3) * 42;
@@ -1272,22 +1563,19 @@
         const sx = (i * 47) % 256, sy = (i * 31) % 70;
         if (Math.floor(titleT * 2 + i) % 3) px(sx, sy, 1, 1, '#cfe8ff');
       }
-      /* lua */
       g.fillStyle = '#e8e8d8'; g.beginPath(); g.arc(218, 28, 11, 0, 7); g.fill();
       g.fillStyle = '#16283e'; g.beginPath(); g.arc(222, 24, 9, 0, 7); g.fill();
 
       for (let i = 0; i < 16; i++) g.drawImage(TILES.tall, i * 16, 176);
       const wf = Math.floor(titleT * 3) % 4;
       g.drawImage(SPR.player.right[[1, 0, 3, 0][wf]], 121, 155);
-
-      /* criaturas espiando */
       if (DEX[0].sprite) g.drawImage(DEX[0].sprite, 22, 150, 28, 28);
       if (DEX[2].sprite) g.drawImage(DEX[2].sprite, 206, 148, 28, 28);
 
       textC('ROUTE 26', 128, 40, '#f8d048', 12);
       textC('INVESTIGATIVE EDITION', 128, 60, '#f8f8f8', 8);
       px(44, 76, 168, 1, '#48688a');
-      textC('catch all 9 wild documents', 128, 86, '#9ab8d0', 6);
+      textC('catch 3 wild documents', 128, 86, '#9ab8d0', 6);
       textC('hiding in the tall grass', 128, 97, '#9ab8d0', 6);
       if (Math.floor(titleT * 2) % 2) textC('- PRESS A TO START -', 128, 126, '#f8f8f8', 7);
       zone(0, 0, 256, 192, 'A');
@@ -1295,7 +1583,18 @@
 
     function updateTitle() {
       const p = popPress();
-      if (isA(p)) { game.state = 'world'; playMusic(mGrass); }
+      if (isA(p)) {
+        game.state = 'world';
+        playMusic(mGrass);
+        if (!game.tutorialDone) {
+          game.tutorialDone = true;
+          showMsg(
+            ['Welcome to ROUTE 26!', 'Wild documents hide in the', 'tall grass. Walk into it and', 'they will jump you.'],
+            ['In battle: weaken a document,', 'then FILE FOIA to catch it.', 'The lower its HP, the better', 'your odds (shown on screen).'],
+            ['Moves have limited PP - pick', 'up the red balls around the', 'route for coffee & espresso.', 'File 3 documents to win!']
+          );
+        }
+      }
     }
 
     function drawWin(dt) {
@@ -1305,32 +1604,44 @@
       px(0, 0, 256, 36, '#202020');
       textC('THE DAILY RECORD', 128, 8, '#f8f4e8', 9);
       textC('special edition', 128, 23, '#c8c0a8', 6);
-      textC('SCOOP! ALL ' + N_ALL + ' SOURCES', 128, 48, '#202020', 9);
+      textC('SCOOP! 3 SOURCES', 128, 48, '#202020', 9);
       textC('SECURED VIA FOIA', 128, 63, '#202020', 9);
       px(24, 80, 208, 1, '#888');
       textC('Journalist L. TOLEDO closes the', 128, 88, '#404040', 5);
-      textC('notebook: every wild document', 128, 97, '#404040', 5);
-      textC('is now on the public record.', 128, 106, '#404040', 5);
-      DEX.forEach((d, i) => {
-        const x = 18 + i * 25;
-        if (d.sprite) g.drawImage(d.sprite, x, 118, 22, 22);
-        else g.drawImage(imgGovRecord, x, 118, 22, 22);
+      textC('notebook: the documents are', 128, 97, '#404040', 5);
+      textC('now on the public record.', 128, 106, '#404040', 5);
+      const got = DEX.filter(d => game.caught[d.id]);
+      got.forEach((d, i) => {
+        const x = 128 - got.length * 16 + i * 32;
+        if (d.sprite) g.drawImage(d.sprite, x, 116, 28, 28);
+        else g.drawImage(imgGovRecord, x, 116, 28, 28);
       });
-      if (Math.floor(game.winT * 2) % 2) textC('CASE CLOSED!', 128, 148, '#c83828', 8);
-      frame9(28, 162, 116, 24, { bg: '#c84838', edge: '#f0a890', dark: '#802818' });
-      textC('EXIT TO SITE', 86, 170, '#fff', 6);
+      if (Math.floor(game.winT * 2) % 2) textC('CASE CLOSED!', 128, 150, '#c83828', 8);
+      const s0 = game.winSel === 0, s1 = game.winSel === 1;
+      frame9(28, 162, 116, 24, { bg: s0 ? '#e05848' : '#c84838', edge: '#f0a890', dark: s0 ? '#f8d048' : '#802818' });
+      textC((s0 ? '> ' : '') + 'EXIT TO SITE', 86, 170, '#fff', 6);
       zone(28, 162, 116, 24, 'win', 'exit');
-      frame9(150, 162, 80, 24, { bg: '#385888', edge: '#88a8d8', dark: '#182848' });
-      textC('PLAY ON', 190, 170, '#fff', 6);
+      frame9(150, 162, 80, 24, { bg: s1 ? '#4870a8' : '#385888', edge: '#88a8d8', dark: s1 ? '#f8d048' : '#182848' });
+      textC((s1 ? '> ' : '') + 'PLAY ON', 190, 170, '#fff', 6);
       zone(150, 162, 80, 24, 'win', 'stay');
     }
 
     function updateWin() {
       const p = popPress();
+      const stay = () => {
+        game.caught = {}; game.balls = {}; game.items = { coffee: 0, espresso: 0 };
+        game.hp = game.maxhp;
+        MOVES.forEach((m, i) => game.pp[i] = m.pp);
+        game.state = 'world'; playMusic(mGrass);
+      };
+      if (p === 'left' || p === 'right') { game.winSel ^= 1; return; }
       if (p && p.act === 'win') {
         if (p.data === 'exit') window.location.href = 'index.html';
-        else { game.caught = {}; game.hp = game.maxhp; game.coffee = 3; game.state = 'world'; playMusic(mGrass); }
-      } else if (isA(p)) { window.location.href = 'index.html'; }
+        else stay();
+      } else if (isA(p)) {
+        if (game.winSel === 0) window.location.href = 'index.html';
+        else stay();
+      }
     }
 
     /* =====================================================================

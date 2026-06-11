@@ -180,11 +180,68 @@
       .ab { width: 104px; height: 88px; }
       .ab button { width: 48px; height: 48px; }
     }
+
+    /* desktop (mouse + teclado): esconde o pad, mostra dica de teclas, tela maior */
+    .kbd-bar {
+      display: none;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      line-height: 1.8;
+      color: #8d8498;
+      text-align: center;
+      padding: 4px 10px;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .pad { display: none; }
+      .kbd-bar { display: block; }
+      .screen-wrap { width: min(100vw - 16px, 152vh - 120px, 840px); }
+    }
+
+    .quit-link {
+      font-size: 9px !important;
+      color: #fff !important;
+      border: 2px solid #e07868 !important;
+      background: rgba(192, 70, 60, .92) !important;
+      border-radius: 8px !important;
+      padding: 9px 13px !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
+    }
+    .quit-link:hover { background: #d85848 !important; }
+
+    .audio-ctl {
+      position: fixed;
+      top: 10px;
+      left: 12px;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(25, 22, 30, .92);
+      border: 2px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      padding: 6px 12px;
+    }
+    .audio-ctl button {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 12px;
+      background: none;
+      border: 0;
+      color: #d8d0e0;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .audio-ctl input[type=range] { width: 74px; accent-color: #b04a40; cursor: pointer; }
+    @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
 </head>
 
 <body>
-  <a class="quit-link" href="index.html">EXIT &rsaquo;</a>
+    <div class="audio-ctl">
+    <button id="muteBtn" aria-label="mute">♪</button>
+    <input id="volRange" type="range" min="0" max="100" value="60" aria-label="volume">
+  </div>
+  <a class="quit-link" href="index.html">&larr; PORTFOLIO</a>
 
   <div class="screen-wrap">
     <canvas id="screen" width="1024" height="768"></canvas>
@@ -207,6 +264,8 @@
       <button class="a" data-btn="A">A</button>
     </div>
   </div>
+
+  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER use &nbsp;·&nbsp; C or 1-5 tools &nbsp;·&nbsp; X/ESC cancel</div>
 
   <audio id="bgm" src="stardew_theme.m4a" loop preload="auto"></audio>
 
@@ -601,6 +660,73 @@
        STATE
        ===================================================================== */
     const TOOLS = ['HOE', 'SEEDS', 'CAN', 'HAND', 'PICKAXE'];
+
+    /* ícones 14x14 das ferramentas (toolbar estilo Stardew) */
+    const TOOL_ICON_SRC = [
+      [ // HOE
+        '..........kk..',
+        '.........kCCk.',
+        '........kCcCk.',
+        '.......kCck.k.',
+        '......kCck....',
+        '.....kGgkk....',
+        '....kGgk......',
+        '...kGgk.......',
+        '..kGgk........',
+        '.kGgk.........',
+        '.kgk..........',
+        '..k...........'
+      ],
+      [ // SEEDS
+        '.....kkkk.....',
+        '....kqQQqk....',
+        '.....kqqk.....',
+        '....kttttk....',
+        '...kttttttk...',
+        '..kttTttTttk..',
+        '..ktttttttttk.',
+        '..ktyktyktytk.',
+        '..ktYktYktYtk.',
+        '...kttttttk...',
+        '....kkkkkk....'
+      ],
+      [ // CAN
+        '....kk........',
+        '...kUuk.......',
+        '..kkkkkk..kk..',
+        '.kuuuuuukkUk..',
+        'kukuuuuuukUk..',
+        'kuukUUuuuuk...',
+        'kukuuuuuuk....',
+        '.kuuuuuuuk....',
+        '..kuuuuuk.....',
+        '...kkkkk......'
+      ],
+      [ // HAND
+        '...kk.kk......',
+        '..kssksskk....',
+        '..kssssssk....',
+        '.kksssssssk...',
+        'kskssssssssk..',
+        'kssssssssssk..',
+        '.kssssssssk...',
+        '..kssssssk....',
+        '...kqqqqk.....',
+        '....kkkk......'
+      ],
+      [ // PICKAXE
+        '...kkkkkkkk...',
+        '..kCCccccCCk..',
+        '.kCk.kGgk.kCk.',
+        '.kk..kGgk..kk.',
+        '.....kGgk.....',
+        '.....kGgk.....',
+        '.....kGgk.....',
+        '.....kGgk.....',
+        '......kk......'
+      ]
+    ];
+    const TOOL_ICONS = TOOL_ICON_SRC.map(m => makeSprite(m));
     const COST = { till: 4, water: 1, stone: 4, branch: 2, rock: 7 };
     const ENERGY_MAX = 100;
 
@@ -665,6 +791,7 @@
       w: 'up', s: 'down', a: 'left', d: 'right',
       W: 'up', S: 'down', A: 'left', D: 'right',
       z: 'A', Z: 'A', Enter: 'A', ' ': 'A',
+      '1': 't0', '2': 't1', '3': 't2', '4': 't3', '5': 't4',
       x: 'B', X: 'B', Escape: 'B', Backspace: 'B',
       c: 'tool', C: 'tool'
     };
@@ -917,6 +1044,15 @@
       toolBtn.textContent = 'TOOL · ' + TOOLS[game.tool];
     }
 
+    function selectTool(i) {
+      if (i === 4 && game.map !== 'cave') { toast('PICKAXE: cave only!'); return; }
+      if (game.tool === i) return;
+      game.tool = i;
+      syncToolBtn();
+      sfx(72, .05);
+      toast(TOOLS[i]);
+    }
+
     function cycleTool() {
       const n = game.map === 'cave' ? 5 : 4;
       game.tool = (game.tool + 1) % n;
@@ -1153,6 +1289,8 @@
 
       const p = popPress();
       if (isTool(p)) cycleTool();
+      else if (p && p.act === 'toolslot') selectTool(p.data);
+      else if (typeof p === 'string' && p.length === 2 && p[0] === 't') selectTool(+p[1]);
       else if (isA(p)) interact();
 
       if (game.moving) {
@@ -1240,6 +1378,37 @@
       text(TOOLS[game.tool], 80, 18, '#3f6d3b', 6);
       zone(2, 2, 170, 30, 'tool');
 
+      /* toolbar estilo Stardew (embaixo, sprites; nome acima do slot escolhido) */
+      const nTools = game.map === 'cave' ? 5 : 4;
+      const tbW = nTools * 21 + 3, tbX = Math.round(128 - tbW / 2), tbY = 168;
+      px(tbX - 2, tbY - 2, tbW + 4, 26, 'rgba(43,29,18,.85)');
+      for (let i = 0; i < nTools; i++) {
+        const x = tbX + 2 + i * 21, y = tbY;
+        const sel = game.tool === i;
+        px(x, y, 20, 20, sel ? '#f6e294' : '#d9b061');
+        const bc = sel ? '#c25043' : '#5b4226';
+        px(x, y, 20, 1, bc); px(x, y + 19, 20, 1, bc);
+        px(x, y, 1, 20, bc); px(x + 19, y, 1, 20, bc);
+        if (sel) {
+          px(x + 1, y + 1, 18, 1, '#e2796a'); px(x + 1, y + 18, 18, 1, '#e2796a');
+          px(x + 1, y + 1, 1, 18, '#e2796a'); px(x + 18, y + 1, 1, 18, '#e2796a');
+        }
+        g.drawImage(TOOL_ICONS[i], x + 3, y + 3);
+        text(String(i + 1), x + 14, y + 13, 'rgba(91,66,38,.75)', 5);
+        zone(x, y, 20, 20, 'toolslot', i);
+      }
+      {
+        const sel = game.tool;
+        if (sel < nTools) {
+          g.font = '6px "Press Start 2P"';
+          const nm = TOOLS[sel];
+          const w = g.measureText(nm).width + 10;
+          const lx = Math.round(tbX + 2 + sel * 21 + 10 - w / 2);
+          px(lx, tbY - 13, w, 11, 'rgba(43,29,18,.85)');
+          text(nm, lx + 5, tbY - 10, '#f6e294', 6);
+        }
+      }
+
       if (game.toast) {
         const a = game.toast.t > 1.2 ? 1 - (game.toast.t - 1.2) / .4 : 1;
         g.globalAlpha = Math.max(0, Math.min(1, a));
@@ -1322,6 +1491,7 @@
       zone(0, 0, 256, 192, 'A');
     }
 
+    let introShown = false;
     function updateTitle() {
       const p = popPress();
       if (!p) return;
@@ -1329,6 +1499,14 @@
       playTheme('farm');
       game.state = 'world';
       syncToolBtn();
+      if (!introShown) {
+        introShown = true;
+        say(
+          ['Welcome to JOURNALISM VALLEY!', 'Grow stories like crops:', 'till a plot, plant a tip,', 'water it with facts daily.'],
+          ['Swap tools on the bar below', '(tap a slot, C key or 1-5).', 'Sleep in bed to grow watered', 'crops and refill energy.'],
+          ['Goal: publish 4 front pages', 'and dig 3 rare documents in', 'the DEAD ARCHIVE cave up', 'north. Coffee helps. Go!']
+        );
+      }
     }
 
     function leaveWin() {
@@ -1418,6 +1596,29 @@
     /* =====================================================================
        TEST HOOKS
        ===================================================================== */
+
+    /* ---------- volume master (persistido entre os jogos) ---------- */
+    (function () {
+      const volRange = document.getElementById('volRange');
+      const muteBtn = document.getElementById('muteBtn');
+      let masterVol = parseFloat(localStorage.getItem('lft_game_vol') || '.6');
+      let muted = localStorage.getItem('lft_game_mute') === '1';
+      window.__applyVol = function () {
+        const v = muted ? 0 : masterVol;
+        const el = document.getElementById('bgm');
+        if (el) el.volume = .75 * v;
+        if (typeof musGain !== 'undefined' && musGain) musGain.gain.value = v * 1.4;
+        volRange.value = Math.round(masterVol * 100);
+        muteBtn.textContent = muted ? '✕' : '♪';
+        localStorage.setItem('lft_game_vol', masterVol);
+        localStorage.setItem('lft_game_mute', muted ? '1' : '0');
+      };
+      volRange.addEventListener('input', () => { masterVol = volRange.value / 100; muted = false; window.__applyVol(); });
+      muteBtn.addEventListener('click', () => { muted = !muted; window.__applyVol(); });
+      window.__applyVol();
+      setInterval(window.__applyVol, 1500); // reaplica (áudio criado depois do load)
+    })();
+
     window.__game = game;
     window.__give = (pub, docs) => { game.published = pub; game.rareDocs = docs; };
     window.__act = {
