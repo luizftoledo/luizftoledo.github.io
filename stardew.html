@@ -208,6 +208,8 @@
     </div>
   </div>
 
+  <audio id="bgm" src="stardew_theme.m4a" loop preload="auto"></audio>
+
   <script>
     'use strict';
 
@@ -826,18 +828,22 @@
     }
 
     function stopMusic() {
+      const el = document.getElementById('bgm');
+      if (el) { el.pause(); el.currentTime = 0; }
+      musTheme = null;
       if (musTimer) clearTimeout(musTimer);
       musTimer = null; musTheme = null;
       musNodes.forEach(n => { try { n.disconnect(); } catch (e) { } });
       musNodes = [];
     }
 
+    const bgm = document.getElementById('bgm');
+    bgm.volume = .45;
+
     function playTheme(name) {
-      if (!AC || musTheme === name) return;
-      stopMusic();
+      // música original do site (tema Stardew) — mesma faixa na fazenda e na caverna
       musTheme = name;
-      if (AC.state === 'suspended') AC.resume().catch(() => { });
-      scheduleLoop(AC.currentTime + .08);
+      bgm.play().catch(() => { });
     }
 
     function scheduleLoop(t0) {
