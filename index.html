@@ -56,6 +56,29 @@
   </script>
   <script async src="https://www.instagram.com/embed.js"></script>
   <style>
+    /* Retrato + título no hero */
+    .hero-title-row {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin-bottom: 4px;
+    }
+
+    .hero-portrait {
+      width: 172px;
+      height: 172px;
+      flex: 0 0 auto;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      box-shadow: 0 0 0 6px rgba(124, 255, 240, 0.08), 0 12px 36px rgba(0, 0, 0, 0.45);
+    }
+
+    @media (max-width: 900px) {
+      .hero-title-row { gap: 16px; }
+      .hero-portrait { width: 104px; height: 104px; }
+    }
+
     /* Expand/Collapse logic for Awards */
     .award-list.collapsed li:nth-child(n+6) {
       display: none;
@@ -379,7 +402,10 @@
     <section id="about" class="hero section">
       <div class="container">
         <div class="hero-text">
-          <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
+          <div class="hero-title-row">
+            <img src="images/luiz-avatar.jpg" alt="Luiz Fernando Toledo" class="hero-portrait" fetchpriority="high">
+            <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
+          </div>
           <p>Brazilian journalist, researcher and instructor based in London, with a proven track record of producing
             and
             managing impactful projects related to Brazil.</p>

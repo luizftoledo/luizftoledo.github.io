@@ -2,158 +2,1182 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Battle - Luiz Fernando Toledo</title>
-    <link rel="stylesheet" href="pokemon.css">
-    <link rel="icon" type="image/png" href="images/pokemon/foia_paper.png">
-    <!-- Press Start 2P for authentic 8-bit feel -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Route 26 — Investigative Edition | Luiz Fernando Toledo</title>
+  <link rel="icon" type="image/png" href="images/pokemon/foia_paper.png">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: #1a1417;
+      overflow: hidden;
+      font-family: 'Press Start 2P', monospace;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(120, 80, 160, .15), transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(60, 120, 160, .12), transparent 50%),
+        #1a1417;
+    }
+
+    /* ============ carcaça do DS ============ */
+    .ds-shell {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 22px 26px;
+      background: linear-gradient(160deg, #2e2a33, #221e26);
+      border-radius: 26px;
+      border: 2px solid #443e4c;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 255, 255, .08);
+      position: relative;
+    }
+
+    .ds-screen {
+      position: relative;
+      width: 512px;
+      height: 384px;
+      background: #000;
+      border: 10px solid #14111a;
+      border-radius: 8px;
+      box-shadow: inset 0 0 18px rgba(0, 0, 0, .9);
+    }
+
+    .ds-screen canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+
+    .ds-hinge {
+      height: 10px;
+      margin: -4px 30px;
+      background: linear-gradient(90deg, #181420, #2a2530 30%, #2a2530 70%, #181420);
+      border-radius: 5px;
+    }
+
+    .ds-brand {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 7px;
+      letter-spacing: .35em;
+      color: #6b6375;
+    }
+
+    /* responsivo: escala a carcaça inteira */
+    @media (max-width: 620px), (max-height: 940px) {
+      .ds-shell { transform: scale(var(--ds-scale, 1)); transform-origin: center; }
+    }
+
+    /* botão de sair discreto */
+    .quit-link {
+      position: fixed;
+      top: 12px;
+      right: 14px;
+      z-index: 60;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      color: #8d8498;
+      text-decoration: none;
+      border: 2px solid #443e4c;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background: rgba(20, 17, 26, .7);
+    }
+
+    .quit-link:hover { color: #fff; border-color: #8d8498; }
+  </style>
 </head>
 
 <body>
-    <div class="game-container">
-        <div class="scene">
-            <!-- Background -->
-            <div class="battle-bg"></div>
+  <a class="quit-link" href="index.html">EXIT &rsaquo;</a>
 
-
-
-            <!-- Enemy Side -->
-            <div class="enemy-base"></div>
-            <div class="enemy-sprite">
-                <img src="images/pokemon/monster_record_v2.png" alt="Government Record Monster" id="enemyImg">
-            </div>
-            <div class="enemy-status-box">
-                <div class="status-name">GOV. RECORD</div>
-                <div class="status-level">Lv.50</div>
-                <div class="hp-bar-container">
-                    <div class="hp-label">HP</div>
-                    <div class="hp-bar-bg">
-                        <div class="hp-bar-fill" id="enemyHpBar"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Player Side -->
-            <div class="player-base"></div>
-            <div class="player-sprite">
-                <img src="images/pokemon/trainer_back_v2.png" alt="Trainer Back" id="playerImg">
-            </div>
-            <div class="player-status-box">
-                <div class="status-name">JOURNALIST</div>
-                <div class="status-level">Lv.99</div>
-                <div class="hp-bar-container">
-                    <div class="hp-label">HP</div>
-                    <div class="hp-bar-bg">
-                        <div class="hp-bar-fill" style="width: 100%;"></div>
-                    </div>
-                </div>
-                <div class="hp-numbers">2000/2000</div>
-            </div>
-
-            <!-- Effects -->
-            <div class="flash-overlay" id="flashOverlay"></div>
-            <div class="foia-projectile" id="foiaProjectile">
-                <img src="images/pokemon/foia_paper.png" alt="FOIA Request">
-            </div>
-
-            <!-- UI / Text Box -->
-            <div class="dialog-box" id="dialogBox">
-                <div class="dialog-text" id="dialogText"></div>
-                <div class="continue-arrow" id="continueArrow">▼</div>
-            </div>
-
-            <!-- Battle Menu -->
-            <div class="battle-menu" id="battleMenu" style="display: none;">
-                <div class="menu-options">
-                    <div class="menu-row">
-                        <div class="menu-option" data-action="fight">FOIA REQUEST</div>
-                        <div class="menu-option" data-action="bag">BAG</div>
-                    </div>
-                    <div class="menu-row">
-                        <div class="menu-option" data-action="pokemon">PKMN</div>
-                        <div class="menu-option" data-action="run">RUN</div>
-                    </div>
-                </div>
-                <div class="menu-prompt">What will<br>JOURNALIST do?</div>
-            </div>
-            <!-- Proceed Button (Hidden by default) -->
-            <button id="proceedBtn"
-                style="display: none; position: absolute; bottom: 40%; left: 50%; transform: translateX(-50%); padding: 15px 20px; font-family: 'Press Start 2P', cursive; font-size: 10px; background: #3888f8; color: white; border: 4px solid #fff; cursor: pointer; box-shadow: 0 0 10px rgba(56, 136, 248, 0.5); z-index: 10;">
-                Congratulations! Go back to the portfolio
-            </button>
-        </div>
-
-        <!-- Post-Battle Portfolio Layer -->
-        <div id="portfolioLayer"
-            style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f8f8f8; overflow-y: auto; z-index: 100;">
-            <!-- Walking Protagonist Overlay -->
-            <div id="walkingSprite"
-                style="position: fixed; bottom: 20px; right: 20px; width: 64px; height: 64px; z-index: 200;"></div>
-
-            <div class="portfolio-content"
-                style="padding: 40px; font-family: 'Press Start 2P', cursive; color: #202020;">
-                <h1
-                    style="text-align: center; margin-bottom: 40px; font-size: 24px; border-bottom: 4px solid #202020; padding-bottom: 20px;">
-                    LUIZ'S PC</h1>
-
-                <div class="poke-card"
-                    style="background: #fff; border: 4px solid #202020; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 4px 4px 0 #ccc;">
-                    <h2 style="font-size: 16px; margin-bottom: 15px;">> TRAINER INFO</h2>
-                    <p style="font-size: 12px; line-height: 2;">
-                        NAME: LUIZ<br>
-                        CLASS: DATA JOURNALIST<br>
-                        BADGES: 8 (AWARDS)<br>
-                        PLAY TIME: 999:59
-                    </p>
-                </div>
-
-                <div class="poke-card"
-                    style="background: #fff; border: 4px solid #202020; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 4px 4px 0 #ccc;">
-                    <h2 style="font-size: 16px; margin-bottom: 15px;">> ALL PROJECTS</h2>
-                    <p style="font-size: 10px; color: #666; margin-bottom: 10px;">(Scroll to see more)</p>
-                    <!-- Replicating some project data here -->
-                    <div style="border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;">
-                        <p style="color: #d82020;">[!] EPSTEIN FILES</p>
-                        <p style="font-size: 10px; margin-top: 5px;">Investigative reporting on international crime
-                            rings.</p>
-                    </div>
-                    <div style="border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;">
-                        <p style="color: #2080d8;">[!] AMAZON FISH</p>
-                        <p style="font-size: 10px; margin-top: 5px;">Tracking environmental crimes in the rainforest.
-                        </p>
-                    </div>
-                    <div style="border-bottom: 2px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;">
-                        <p style="color: #20d860;">[!] FAKE ALCOHOL</p>
-                        <p style="font-size: 10px; margin-top: 5px;">Dismantling counterfeit networks in Brazil.</p>
-                    </div>
-                </div>
-
-                <div style="text-align: center; margin-top: 40px;">
-                    <button onclick="window.location.href='index.html'"
-                        style="font-family: 'Press Start 2P'; padding: 15px; background: #fff; border: 4px solid #202020; cursor: pointer;">SAVE
-                        & QUIT</button>
-                </div>
-            </div>
-        </div>
+  <div class="ds-shell" id="dsShell">
+    <div class="ds-screen">
+      <canvas id="top" width="256" height="192"></canvas>
     </div>
-
-    <!-- Start Overlay for Mobile/Autoplay -->
-    <div id="startOverlay"
-        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; background: #000; color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: 'Press Start 2P', cursive;">
-        <h1 style="font-size: 20px; margin-bottom: 20px; color: #f8f8f8; text-align: center; line-height: 1.5;">POKEMON
-            BATTLE<br><span style="font-size: 12px; color: #ccc;">(Portfolio Edition)</span></h1>
-        <button id="startBtn"
-            style="padding: 15px 30px; font-family: 'Press Start 2P', cursive; font-size: 12px; background: #f85838; color: white; border: 4px solid #fff; cursor: pointer; box-shadow: 0 0 10px rgba(248, 88, 56, 0.5);">CLICK
-            TO START</button>
+    <div class="ds-hinge"></div>
+    <div class="ds-screen">
+      <canvas id="bot" width="256" height="192"></canvas>
     </div>
+    <div class="ds-brand">INVESTIGATIVE&nbsp;&nbsp;EDITION</div>
+  </div>
 
-    <audio id="battleMusic" src="pkost_music.mp3" loop></audio>
-    <audio id="victoryMusic" src="vitoria.mp3"></audio>
+  <audio id="mGrass" src="grass_route.m4a" loop preload="auto"></audio>
+  <audio id="mBattle" src="pkost_music.mp3" loop preload="auto"></audio>
+  <audio id="mWin" src="vitoria.mp3" preload="auto"></audio>
 
-    <script src="scripts/pokemon.js"></script>
+  <script>
+    'use strict';
 
+    /* =====================================================================
+       ROUTE 26 — INVESTIGATIVE EDITION
+       Um demake estilo Nintendo DS (duas telas, bottom touch) do easter egg.
+       Tema: jornalismo investigativo — capture documentos selvagens no mato
+       usando pedidos FOIA até fechar o caderno de fontes.
+       ===================================================================== */
+
+    const topC = document.getElementById('top'), tc = topC.getContext('2d');
+    const botC = document.getElementById('bot'), bc = botC.getContext('2d');
+    tc.imageSmoothingEnabled = false;
+    bc.imageSmoothingEnabled = false;
+
+    const mGrass = document.getElementById('mGrass');
+    const mBattle = document.getElementById('mBattle');
+    const mWin = document.getElementById('mWin');
+    mGrass.volume = .55; mBattle.volume = .5; mWin.volume = .6;
+
+    function playMusic(which) {
+      [mGrass, mBattle, mWin].forEach(a => { if (a !== which) { a.pause(); a.currentTime = 0; } });
+      if (which) which.play().catch(() => { });
+    }
+
+    /* ---------- escala responsiva da carcaça ---------- */
+    function fitShell() {
+      const shell = document.getElementById('dsShell');
+      // offsetWidth/Height ignoram transform — são o tamanho natural
+      const s = Math.min(window.innerWidth / (shell.offsetWidth + 8), window.innerHeight / (shell.offsetHeight + 8), 1);
+      shell.style.transform = s < 1 ? `scale(${s})` : '';
+    }
+    window.addEventListener('resize', fitShell);
+
+    /* =====================================================================
+       PIXEL ART — paleta e sprites desenhados em mapas de caracteres
+       ===================================================================== */
+    const PAL = {
+      '.': null,
+      'k': '#1c1410', 'K': '#33241b',           // contorno / sombra
+      'h': '#4a3526', 'H': '#6b4c33',           // cabelo
+      's': '#e8b88a', 'S': '#c98f63',           // pele
+      'b': '#3d6fb5', 'B': '#5b8fd4',           // camisa azul
+      'p': '#2b2b33', 'P': '#44444f',           // calça
+      'g': '#7a5a36', 'G': '#9c7848',           // bolsa / madeira
+      'w': '#f5f5ef', 'W': '#cfcfc6',           // branco / papel
+      'r': '#c8504a', 'R': '#e87f72',           // vermelho
+      'y': '#e8c84a', 'Y': '#f5e08a',           // amarelo
+      'e': '#3a7a3c', 'E': '#56a356',           // verde escuro/médio
+      'l': '#7cc46a', 'L': '#a8dd8c',           // verde claro
+      'c': '#3a3a3a', 'C': '#777777',           // cinza
+      'u': '#3a6ea8', 'U': '#6aa8d8',           // água
+      'm': '#8a4a9c', 'M': '#b87ac8',           // roxo
+      'o': '#d88a3a', 'O': '#f0b060',           // laranja
+      'n': '#10242c', 'N': '#1c3a46'            // glitch escuro
+    };
+
+    function makeSprite(rows, scale = 1) {
+      const h = rows.length, w = rows[0].length;
+      const cv = document.createElement('canvas');
+      cv.width = w * scale; cv.height = h * scale;
+      const x = cv.getContext('2d');
+      for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+        const col = PAL[rows[j][i]];
+        if (col) { x.fillStyle = col; x.fillRect(i * scale, j * scale, scale, scale); }
+      }
+      return cv;
+    }
+
+    function flipSprite(cv) {
+      const f = document.createElement('canvas');
+      f.width = cv.width; f.height = cv.height;
+      const x = f.getContext('2d');
+      x.translate(cv.width, 0); x.scale(-1, 1); x.drawImage(cv, 0, 0);
+      return f;
+    }
+
+    /* ---------- personagem: jornalista 14x18, 4 direções ---------- */
+    const PLAYER_FRAMES_SRC = {
+      down_stand: [
+        '....kkkkkk....',
+        '...khhhhhhk...',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..kshhhhhhsk..',
+        '..ksssssssck..',
+        '..kscksscksk..',
+        '..kssssssssk..',
+        '...ksssssk....',
+        '..kbbbbbbbbk..',
+        '.kbBbbbbbbBbk.',
+        '.kbbgggggbbbk.',
+        '.ksbgGGGgbbsk.',
+        '..kbgggggbbk..',
+        '..kppppppppk..',
+        '...kppkkppk...',
+        '...kppk.kppk..',
+        '...kkkk.kkkk..'
+      ],
+      down_walk: [
+        '....kkkkkk....',
+        '...khhhhhhk...',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..kshhhhhhsk..',
+        '..ksssssssck..',
+        '..kscksscksk..',
+        '..kssssssssk..',
+        '...ksssssk....',
+        '..kbbbbbbbbk..',
+        '.kbBbbbbbbBbk.',
+        '.kbbgggggbbbk.',
+        '.ksbgGGGgbbsk.',
+        '..kbgggggbbk..',
+        '..kppppppppk..',
+        '...kpppkppk...',
+        '..kppk..kpk...',
+        '..kkk...kkk...'
+      ],
+      up_stand: [
+        '....kkkkkk....',
+        '...khhhhhhk...',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..kshhhhhhsk..',
+        '...khhhhhhk...',
+        '....khhhhk....',
+        '..kbbbbbbbbk..',
+        '.kbbbbbbbbbbk.',
+        '.kbbgbbbbgbbk.',
+        '.ksbgbbbbgbsk.',
+        '..kbgggggggk..',
+        '..kppppppppk..',
+        '...kppkkppk...',
+        '...kppk.kppk..',
+        '...kkkk.kkkk..'
+      ],
+      up_walk: [
+        '....kkkkkk....',
+        '...khhhhhhk...',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..kshhhhhhsk..',
+        '...khhhhhhk...',
+        '....khhhhk....',
+        '..kbbbbbbbbk..',
+        '.kbbbbbbbbbbk.',
+        '.kbbgbbbbgbbk.',
+        '.ksbgbbbbgbsk.',
+        '..kbgggggggk..',
+        '..kppppppppk..',
+        '...kpppkppk...',
+        '..kppk..kpk...',
+        '..kkk...kkk...'
+      ],
+      side_stand: [
+        '....kkkkkk....',
+        '...khhhhhhk...',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..khhhhhscck..',
+        '..khhhsssssk..',
+        '..khhsscksck..',
+        '...khssssssk..',
+        '....ksssssk...',
+        '...kbbbbbbk...',
+        '..kbbbbbbBbk..',
+        '..kbbgggbbbk..',
+        '..kbbgGGgbsk..',
+        '..kbbgggbbbk..',
+        '...kppppppk...',
+        '...kpppppk....',
+        '...kppkppk....',
+        '...kkk.kkk....'
+      ],
+      side_walk: [
+        '....kkkkkk....',
+        '...khhhhhhk...',
+        '..khhhhhhhhk..',
+        '..khhhhhhhhk..',
+        '..khhhhhscck..',
+        '..khhhsssssk..',
+        '..khhsscksck..',
+        '...khssssssk..',
+        '....ksssssk...',
+        '...kbbbbbbk...',
+        '..kbbbbbbBbk..',
+        '..kbbgggbbbk..',
+        '..kbbgGGgbsk..',
+        '..kbbgggbbbk..',
+        '...kppppppk...',
+        '..kppkpppk....',
+        '..kpk..kppk...',
+        '..kk....kkk...'
+      ]
+    };
+
+    const SPR = {};
+    (function buildPlayer() {
+      const f = {};
+      for (const k in PLAYER_FRAMES_SRC) f[k] = makeSprite(PLAYER_FRAMES_SRC[k]);
+      SPR.player = {
+        down: [f.down_stand, f.down_walk, f.down_stand, flipSprite(f.down_walk)],
+        up: [f.up_stand, f.up_walk, f.up_stand, flipSprite(f.up_walk)],
+        left: [flipSprite(f.side_stand), flipSprite(f.side_walk), flipSprite(f.side_stand), flipSprite(f.side_walk)],
+        right: [f.side_stand, f.side_walk, f.side_stand, f.side_walk]
+      };
+    })();
+
+    /* ---------- criaturas (16x16) — fauna do jornalismo ---------- */
+    const DEX_SRC = {
+      PAPYR: [ // documento fugitivo
+        '...kkkkkkkkk....',
+        '..kwwwwwwwwkk...',
+        '..kwwwwwwwwkwk..',
+        '..kwwwwwwwwkkk..',
+        '..kwkwwwkwwwwk..',
+        '..kwkkwwkkwwwk..',
+        '..kwwwwwwwwwwk..',
+        '..kwwcccccwwwk..',
+        '..kwwwwwwwwwwk..',
+        '..kwcccwcccwwk..',
+        '..kwwwwwwwwwwk..',
+        '..kwcccccccwwk..',
+        '..kwwwwwwwwwwk..',
+        '..kkwwwwwwwwkk..',
+        '...kwk.kwk.kw...',
+        '...kk...kk..k...'
+      ],
+      SIGILO: [ // tarja de sigilo viva
+        '................',
+        '................',
+        '..kkkkkkkkkkkk..',
+        '.kppppppppppppk.',
+        '.kpPpppppppPppk.',
+        '.kppwkppppwkppk.',
+        '.kppkkppppkkppk.',
+        '.kpppppkkpppppk.',
+        '.kppppppppppppk.',
+        '.kpPppppppppPpk.',
+        '..kkkkkkkkkkkk..',
+        '....kpk..kpk....',
+        '....kpk..kpk....',
+        '...kppk..kppk...',
+        '...kkk....kkk...',
+        '................'
+      ],
+      LEAKY: [ // a gota vazada (whistleblower)
+        '.......kk.......',
+        '......kUuk......',
+        '.....kUuuuk.....',
+        '....kUuuuuuk....',
+        '...kUuuuuuuuk...',
+        '..kUuuuuuuuuuk..',
+        '..kuuwkuuwkuuk..',
+        '..kuukkuukkuuk..',
+        '.kuuuuuuuuuuuuk.',
+        '.kuuukwwwwkuuuk.',
+        '.kuuukwwwwkuuuk.',
+        '.kuuuukkkkuuuuk.',
+        '..kuuuuuuuuuuk..',
+        '...kuuuuuuuuk...',
+        '....kkuuuukk....',
+        '......kkkk......'
+      ],
+      SPINNER: [ // doutor do spin, cartola roxa
+        '....kkkkkkkk....',
+        '...kmmmmmmmmk...',
+        '...kmMmmmmMmk...',
+        '...kmmmmmmmmk...',
+        '..kkkkkkkkkkkk..',
+        '.kmmmmmmmmmmmmk.',
+        '..kssssssssssk..',
+        '..kswkssswkssk..',
+        '..kskkssskkssk..',
+        '..kssssssssssk..',
+        '..kssskkkksssk..',
+        '...kssssssssk...',
+        '..kmsk.ks.smk...',
+        '..kmk..kk..mk...',
+        '..kk...kk...k...',
+        '................'
+      ],
+      DEEPFAKE: [ // rosto duplo glitchado
+        '....kkkkkkkk....',
+        '...knnnnNNNNk...',
+        '..knnnnnNNNNNk..',
+        '..knnnnnNNNNNk..',
+        '..knwknnNwkNNk..',
+        '..knkknnNkkNNk..',
+        '..knnnnnNNNNNk..',
+        '..knnnknNNkNNk..',
+        '..knnnnnNNNNNk..',
+        '..knkkknNkkkNk..',
+        '..knnnnnNNNNNk..',
+        '...knnnnNNNNk...',
+        '....knnkkNNk....',
+        '...knk....kNk...',
+        '...kk......kk...',
+        '................'
+      ]
+    };
+
+    const DEX = [
+      { id: 'PAPYR', name: 'PAPYR', kind: 'Loose Record', lv: [3, 6], hp: 18, atk: 4, rate: .30, blurb: 'A runaway public record. Hates being archived.' },
+      { id: 'SIGILO', name: 'SIGILO', kind: 'Redaction Bar', lv: [4, 7], hp: 24, atk: 5, rate: .25, blurb: 'A living redaction. Hides the truth behind itself.' },
+      { id: 'LEAKY', name: 'LEAKY', kind: 'Whistle Drop', lv: [5, 9], hp: 22, atk: 6, rate: .20, blurb: 'A leaked drop of intel. Squeaks when nervous.' },
+      { id: 'SPINNER', name: 'SPINNER', kind: 'Spin Doctor', lv: [6, 10], hp: 28, atk: 7, rate: .15, blurb: 'Twists every fact it touches. Very slippery.' },
+      { id: 'DEEPFAKE', name: 'DEEPFAKE', kind: 'Synthetic Lie', lv: [8, 12], hp: 32, atk: 8, rate: .10, blurb: 'A fabricated face. Flickers between two truths.' },
+      { id: 'GOVRECORD', name: 'GOV.RECORD', kind: 'Sealed Archive', lv: [15, 15], hp: 60, atk: 10, rate: 0, blurb: 'The final sealed archive. Only a FOIA can open it.' }
+    ];
+
+    for (const d of DEX) if (DEX_SRC[d.id]) d.sprite = makeSprite(DEX_SRC[d.id]);
+
+    /* sprites externos (mantidos do jogo antigo) */
+    const imgTrainerBack = new Image(); imgTrainerBack.src = 'images/pokemon/trainer_back_v2.png';
+    const imgGovRecord = new Image(); imgGovRecord.src = 'images/pokemon/monster_record_v2.png';
+    const imgFoia = new Image(); imgFoia.src = 'images/pokemon/foia_paper.png';
+
+    /* =====================================================================
+       TILES & MAPA
+       ===================================================================== */
+    const T = 16;
+    const TILE_SRC = {
+      grass: [
+        'llllllllllllllll', 'llllllllllllllll', 'lllllLllllllllll', 'llllllllllllllll',
+        'llllllllllLlllll', 'llLlllllllllllll', 'llllllllllllllll', 'lllllllLllllllll',
+        'llllllllllllllll', 'lLllllllllllllll', 'llllllllllllLlll', 'llllllllllllllll',
+        'llllLlllllllllll', 'llllllllllllllll', 'llllllllLlllllll', 'llllllllllllllll'
+      ],
+      tall: [
+        'llllllllllllllll', 'leklekllekleklll', 'leekeeklekkeekll', 'lekeekeekeekekll',
+        'leekekeekekeekll', 'lkeekeklekeeklll', 'llekeellekekllll', 'lleekekleeekllll',
+        'leklekllekleklll', 'leekeeklekkeekll', 'lekeekeekeekekll', 'leekekeekekeekll',
+        'lkeekeklekeeklll', 'llekeellekeklhll', 'lleekekleeeklhll', 'llllllllllllllll'
+      ],
+      path: [
+        'OOOOOOOOOOOOOOOO', 'OOOoOOOOOOOOOOOO', 'OOOOOOOOOOoOOOOO', 'OOOOOOOOOOOOOOOO',
+        'OOOOOOoOOOOOOOOO', 'OOOOOOOOOOOOOoOO', 'OOoOOOOOOOOOOOOO', 'OOOOOOOOOOOOOOOO',
+        'OOOOOOOOOoOOOOOO', 'OOOOoOOOOOOOOOOO', 'OOOOOOOOOOOOOOoO', 'OOOOOOOOOOOOOOOO',
+        'OOoOOOOOOOoOOOOO', 'OOOOOOOOOOOOOOOO', 'OOOOOoOOOOOOOOOO', 'OOOOOOOOOOOOOOOO'
+      ].map(r => r.replace(/O/g, 'Y').replace(/o/g, 'y')),
+      tree: [
+        'llkkkkkkkkkkkkll', 'lkeeeeEEEeeeeekl', 'keeEEeeeeeEEeeek', 'keEEEEeeeEEEEeek',
+        'keeEEeeEeeEEeeek', 'keeeeeEEEeeeeeek', 'keeEeeEEEeeEeeek', 'keEEEeeeeeEEEeek',
+        'keeEEeeeeeEEeeek', 'lkeeeeeEeeeeeekl', 'llkkeeEEEeekkkll', 'llllkkkkkkkkllll',
+        'llllllkggkllllll', 'llllllkggkllllll', 'lllllkkggkklllll', 'llllllllllllllll'
+      ],
+      water: [
+        'uuuuuuuuuuuuuuuu', 'uuuUUuuuuuuuuuuu', 'uuuuuuuuuUUuuuuu', 'uuuuuuuuuuuuuuuu',
+        'uUUuuuuuuuuuuUUu', 'uuuuuuUUuuuuuuuu', 'uuuuuuuuuuuuuuuu', 'uuuuuuuuuuUUuuuu',
+        'uuUUuuuuuuuuuuuu', 'uuuuuuuuUUuuuuuu', 'uuuuuuuuuuuuuuUU', 'uUuuuuuuuuuuuuuu',
+        'uuuuuUUuuuuuuuuu', 'uuuuuuuuuuuUuuuu', 'uuuuuuuuuuuuuuuu', 'uuUUuuuuuuuuuuuu'
+      ],
+      flower: [
+        'llllllllllllllll', 'llllllllllllllll', 'lllllrrlllllllll', 'llllrYrrllllllll',
+        'lllllrrlllllllll', 'llllllklllllllll', 'llllllklllllllll', 'llllllllllllllll',
+        'llllllllllyyllll', 'lllllllllyRyylll', 'llllllllllyylll1', 'lllllllllllkllll',
+        'lllllllllllkllll', 'llLlllllllllllll', 'llllllllllllllll', 'llllllllllllllll'
+      ].map(r => r.replace(/1/g, 'l')),
+      sign: [
+        'llllllllllllllll', 'llkkkkkkkkkkkkll', 'llkGGGGGGGGGGkll', 'llkGkGkkGkkGGkll',
+        'llkGGGGGGGGGGkll', 'llkGkkGkGkkGGkll', 'llkGGGGGGGGGGkll', 'llkkkkkkkkkkkkll',
+        'llllllkggkllllll', 'llllllkggkllllll', 'llllllkggkllllll', 'llllllkggkllllll',
+        'lllllkkggkklllll', 'llllllllllllllll', 'llllllllllllllll', 'llllllllllllllll'
+      ]
+    };
+    const TILES = {};
+    for (const k in TILE_SRC) TILES[k] = makeSprite(TILE_SRC[k]);
+
+    /* legenda: # árvore, , grama, ; matinho, = caminho, ~ água, * flor, ! placa */
+    const MAP_STR = [
+      '############################',
+      '#,,,,,,;;;;;,,,,,,,,,,,,,,,#',
+      '#,*,,,,;;;;;,,,##,,;;;;;,*,#',
+      '#,,,,,,;;;;;,,,##,,;;;;;,,,#',
+      '#,,!,,,;;;;;,,,,,,,;;;;;,,,#',
+      '#======================,,,,#',
+      '#,,,,,,,,,,,====,,,,,,=,,,,#',
+      '#,,;;;;;,,,,=,,,,,,,,,=,,*,#',
+      '#,,;;;;;,,,,=,,~~~~,,,=====#',
+      '#,,;;;;;,,,,=,,~~~~,,,,,,,=#',
+      '#,,;;;;;,,,,=,,~~~~,,!,,,,=#',
+      '#,,,,,,,,,,,=,,,,,,,,,,,,,=#',
+      '#,*,,##,,,,,=============,=#',
+      '#,,,,##,,,,,,,,,,,,,,,,,=,=#',
+      '#,,,,,,,,;;;;;;,,,##,,,,===#',
+      '#,*,,,,,,;;;;;;,,,##,,,,,,,#',
+      '#,,,,,,,,;;;;;;,,,,,,,;;;;,#',
+      '#,,*,,,,,;;;;;;,*,,,,,;;;;,#',
+      '#,,,,,,,,,,,,,,,,,,,,,;;;;,#',
+      '############################'
+    ];
+    const MAPW = MAP_STR[0].length, MAPH = MAP_STR.length;
+    const CHAR2TILE = { '#': 'tree', ',': 'grass', ';': 'tall', '=': 'path', '~': 'water', '*': 'flower', '!': 'sign' };
+    const SOLID = { tree: 1, water: 1, sign: 1 };
+    const SIGN_TEXT = {
+      '3,4': ['ROUTE 26 — FOIA FIELDS', 'Wild documents live in the', 'tall grass. Catch all 6 to', 'close your source notebook!'],
+      '21,10': ['TIP: press A near grass.', 'COFFEE in your bag restores', 'credibility. GOV.RECORD only', 'shows up when 5 are caught.']
+    };
+
+    /* =====================================================================
+       ESTADO DO JOGO
+       ===================================================================== */
+    const game = {
+      state: 'title',           // title | world | battle | dex | win
+      px: 2, py: 5,             // posição em tiles
+      dir: 'right',
+      moving: false, moveT: 0, fromX: 2, fromY: 5,
+      step: 0,
+      caught: {},               // id -> true
+      hp: 50, maxhp: 50,
+      coffee: 3,
+      battle: null,
+      msg: null,                // {lines, cb}
+      rustle: null,             // anim do matinho
+      winT: 0
+    };
+
+    const caughtCount = () => Object.keys(game.caught).length;
+
+    /* =====================================================================
+       INPUT — teclado + touch na tela de baixo
+       ===================================================================== */
+    const keys = {};
+    const KEYMAP = {
+      ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
+      w: 'up', s: 'down', a: 'left', d: 'right',
+      z: 'A', Enter: 'A', ' ': 'A', x: 'B', Escape: 'B', Backspace: 'B'
+    };
+    let pressQueue = [];
+
+    window.addEventListener('keydown', e => {
+      const k = KEYMAP[e.key];
+      if (!k) return;
+      e.preventDefault();
+      if (!keys[k]) pressQueue.push(k);
+      keys[k] = true;
+    });
+    window.addEventListener('keyup', e => { const k = KEYMAP[e.key]; if (k) keys[k] = false; });
+
+    /* zonas de toque da tela de baixo (coordenadas no canvas 256x192) */
+    let touchZones = [];
+    function zone(x, y, w, h, act, data) { touchZones.push({ x, y, w, h, act, data }); }
+
+    function canvasPos(e) {
+      const r = botC.getBoundingClientRect();
+      const t = e.touches ? e.touches[0] : e;
+      return { x: (t.clientX - r.left) * 256 / r.width, y: (t.clientY - r.top) * 192 / r.height };
+    }
+
+    let heldZone = null;
+    function handleDown(e) {
+      e.preventDefault();
+      const p = canvasPos(e);
+      for (const z of touchZones) {
+        if (p.x >= z.x && p.x < z.x + z.w && p.y >= z.y && p.y < z.y + z.h) {
+          if (z.act === 'dir') { heldZone = z; keys[z.data] = true; }
+          else pressQueue.push(z.act === 'btn' ? z.data : z);
+          return;
+        }
+      }
+    }
+    function handleUp(e) {
+      e.preventDefault();
+      if (heldZone) { keys[heldZone.data] = false; heldZone = null; }
+    }
+    botC.addEventListener('mousedown', handleDown);
+    botC.addEventListener('mouseup', handleUp);
+    botC.addEventListener('mouseleave', handleUp);
+    botC.addEventListener('touchstart', handleDown, { passive: false });
+    botC.addEventListener('touchend', handleUp, { passive: false });
+    botC.addEventListener('touchcancel', handleUp, { passive: false });
+
+    function popPress() { return pressQueue.shift(); }
+
+    /* =====================================================================
+       HELPERS DE DESENHO
+       ===================================================================== */
+    function px(ctx, x, y, w, h, col) { ctx.fillStyle = col; ctx.fillRect(x | 0, y | 0, w, h); }
+
+    function frame9(ctx, x, y, w, h, opts = {}) {
+      // caixa de diálogo estilo DS
+      const bg = opts.bg || '#f8f8f0', edge = opts.edge || '#5878a8', dark = opts.dark || '#385888';
+      px(ctx, x + 2, y + 2, w - 4, h - 4, bg);
+      px(ctx, x + 2, y, w - 4, 2, dark); px(ctx, x + 2, y + h - 2, w - 4, 2, dark);
+      px(ctx, x, y + 2, 2, h - 4, dark); px(ctx, x + w - 2, y + 2, 2, h - 4, dark);
+      px(ctx, x + 2, y + 2, w - 4, 1, edge); px(ctx, x + 2, y + h - 3, w - 4, 1, edge);
+      px(ctx, x + 2, y + 2, 1, h - 4, edge); px(ctx, x + w - 3, y + 2, 1, h - 4, edge);
+    }
+
+    function text(ctx, str, x, y, col = '#303030', size = 8) {
+      ctx.font = size + 'px "Press Start 2P"';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = col;
+      ctx.fillText(str, x, y);
+    }
+
+    function hpBar(ctx, x, y, w, ratio) {
+      px(ctx, x - 1, y - 1, w + 2, 6, '#404040');
+      px(ctx, x, y, w, 4, '#f8f8f8');
+      const col = ratio > .5 ? '#58c858' : ratio > .2 ? '#f0c020' : '#e05038';
+      px(ctx, x, y, Math.max(0, Math.round(w * ratio)), 4, col);
+    }
+
+    /* =====================================================================
+       OVERWORLD
+       ===================================================================== */
+    function tileAt(x, y) {
+      if (x < 0 || y < 0 || x >= MAPW || y >= MAPH) return 'tree';
+      return CHAR2TILE[MAP_STR[y][x]] || 'grass';
+    }
+
+    function tryMove(dx, dy, dir) {
+      game.dir = dir;
+      const nx = game.px + dx, ny = game.py + dy;
+      if (SOLID[tileAt(nx, ny)]) return;
+      game.fromX = game.px; game.fromY = game.py;
+      game.px = nx; game.py = ny;
+      game.moving = true; game.moveT = 0;
+    }
+
+    function finishStep() {
+      game.step++;
+      const t = tileAt(game.px, game.py);
+      if (t === 'tall') {
+        game.rustle = { x: game.px, y: game.py, t: 0 };
+        const all5 = DEX.slice(0, 5).every(d => game.caught[d.id]);
+        if (!game.caught.GOVRECORD && all5 && Math.random() < .25) return startBattle(DEX[5]);
+        if (Math.random() < .14) {
+          const pool = DEX.slice(0, 5);
+          let r = Math.random() * pool.reduce((s, d) => s + d.rate, 0);
+          for (const d of pool) { r -= d.rate; if (r <= 0) return startBattle(d); }
+          return startBattle(pool[0]);
+        }
+      }
+    }
+
+    function facingTile() {
+      const d = { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] }[game.dir];
+      return { x: game.px + d[0], y: game.py + d[1] };
+    }
+
+    function updateWorld(dt) {
+      if (game.msg) {
+        const p = popPress();
+        if (p === 'A' || p === 'B') game.msg = null;
+        return;
+      }
+      const p = popPress();
+      if (p === 'A') {
+        const f = facingTile();
+        const key = f.x + ',' + f.y;
+        if (tileAt(f.x, f.y) === 'sign' && SIGN_TEXT[key]) game.msg = { lines: SIGN_TEXT[key] };
+        else if (p === 'A' && tileAt(f.x, f.y) === 'water') game.msg = { lines: ['The pond is calm.', 'A shredded document', 'floats by...'] };
+      }
+      if (p === 'dex' || p === 'B') game.state = 'dex';
+
+      if (game.moving) {
+        game.moveT += dt * 6.5;
+        if (game.moveT >= 1) { game.moving = false; game.moveT = 0; finishStep(); }
+      } else {
+        if (keys.up) tryMove(0, -1, 'up');
+        else if (keys.down) tryMove(0, 1, 'down');
+        else if (keys.left) tryMove(-1, 0, 'left');
+        else if (keys.right) tryMove(1, 0, 'right');
+      }
+      if (game.rustle) { game.rustle.t += dt * 3; if (game.rustle.t > 1) game.rustle = null; }
+    }
+
+    function drawWorld() {
+      const lerp = game.moving ? game.moveT : 0;
+      const wx = (game.fromX + (game.px - game.fromX) * lerp) * T;
+      const wy = (game.fromY + (game.py - game.fromY) * lerp) * T;
+      let camX = Math.round(wx - 128 + 8), camY = Math.round(wy - 96 + 9);
+      camX = Math.max(0, Math.min(MAPW * T - 256, camX));
+      camY = Math.max(0, Math.min(MAPH * T - 192, camY));
+
+      const x0 = Math.floor(camX / T), y0 = Math.floor(camY / T);
+      for (let j = y0; j <= y0 + 13 && j < MAPH; j++)
+        for (let i = x0; i <= x0 + 17 && i < MAPW; i++)
+          tc.drawImage(TILES[tileAt(i, j)], i * T - camX, j * T - camY);
+
+      /* personagem */
+      const dirFrames = SPR.player[game.dir];
+      const fi = game.moving ? (game.step % 2 ? 1 : 3) : 0;
+      const frame = game.moving && game.moveT > .5 ? dirFrames[0] : dirFrames[fi];
+      tc.drawImage(frame, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
+
+      /* matinho na frente do personagem quando dentro dele */
+      if (tileAt(game.px, game.py) === 'tall' && !game.moving)
+        tc.drawImage(TILES.tall, game.px * T - camX, game.py * T - camY);
+
+      if (game.rustle) {
+        const r = game.rustle;
+        tc.fillStyle = 'rgba(120,200,90,.9)';
+        for (let i = 0; i < 4; i++) {
+          const a = r.t * Math.PI;
+          tc.fillRect(r.x * T - camX + 4 + i * 3, r.y * T - camY + 4 - Math.sin(a + i) * 6, 2, 2);
+        }
+      }
+
+      /* placa de mensagem */
+      if (game.msg) {
+        frame9(tc, 4, 130, 248, 58);
+        game.msg.lines.forEach((l, i) => text(tc, l, 12, 138 + i * 12, '#303030', 8));
+        text(tc, '▼', 238, 176, '#e05038', 8);
+      }
+    }
+
+    function drawWorldBottom() {
+      touchZones = [];
+      /* fundo da tela de baixo estilo menu HGSS */
+      px(bc, 0, 0, 256, 192, '#283848');
+      for (let j = 0; j < 12; j++) for (let i = 0; i < 16; i++)
+        if ((i + j) % 2) px(bc, i * 16, j * 16, 16, 16, '#2e4050');
+
+      /* D-pad */
+      const dx = 52, dy = 96;
+      px(bc, dx - 14, dy - 42, 28, 84, '#1a232e');
+      px(bc, dx - 42, dy - 14, 84, 28, '#1a232e');
+      px(bc, dx - 12, dy - 40, 24, 80, '#3e5468');
+      px(bc, dx - 40, dy - 12, 80, 24, '#3e5468');
+      bc.fillStyle = '#243240';
+      bc.beginPath(); bc.moveTo(dx, dy - 30); bc.lineTo(dx - 7, dy - 20); bc.lineTo(dx + 7, dy - 20); bc.fill();
+      bc.beginPath(); bc.moveTo(dx, dy + 30); bc.lineTo(dx - 7, dy + 20); bc.lineTo(dx + 7, dy + 20); bc.fill();
+      bc.beginPath(); bc.moveTo(dx - 30, dy); bc.lineTo(dx - 20, dy - 7); bc.lineTo(dx - 20, dy + 7); bc.fill();
+      bc.beginPath(); bc.moveTo(dx + 30, dy); bc.lineTo(dx + 20, dy - 7); bc.lineTo(dx + 20, dy + 7); bc.fill();
+      zone(dx - 14, dy - 44, 28, 30, 'dir', 'up');
+      zone(dx - 14, dy + 14, 28, 30, 'dir', 'down');
+      zone(dx - 44, dy - 14, 30, 28, 'dir', 'left');
+      zone(dx + 14, dy - 14, 30, 28, 'dir', 'right');
+
+      /* botões A/B */
+      function roundBtn(x, y, label, col) {
+        bc.fillStyle = '#1a232e'; bc.beginPath(); bc.arc(x, y, 17, 0, 7); bc.fill();
+        bc.fillStyle = col; bc.beginPath(); bc.arc(x, y, 14, 0, 7); bc.fill();
+        text(bc, label, x - 4, y - 5, '#fff', 9);
+      }
+      roundBtn(206, 78, 'A', '#b04a40');
+      roundBtn(168, 114, 'B', '#3e5468');
+      zone(188, 60, 36, 36, 'btn', 'A');
+      zone(150, 96, 36, 36, 'btn', 'B');
+
+      /* barra de status: caderno */
+      frame9(bc, 4, 4, 248, 30, { bg: '#f0f0e0' });
+      text(bc, 'SOURCE NOTEBOOK', 12, 10, '#385888', 7);
+      text(bc, caughtCount() + '/6 CAUGHT', 12, 20, '#303030', 7);
+      text(bc, 'HP ' + game.hp + '/' + game.maxhp, 150, 10, '#303030', 7);
+      text(bc, 'COFFEE x' + game.coffee, 150, 20, '#6b4226', 7);
+      zone(4, 4, 248, 30, 'btn', 'dex');
+
+      text(bc, 'B/TAP CARD: NOTEBOOK', 50, 174, '#7a8aa0', 7);
+    }
+
+    /* =====================================================================
+       CADERNO (DEX)
+       ===================================================================== */
+    function updateDex() {
+      const p = popPress();
+      if (p === 'A' || p === 'B' || (p && p.act === 'close')) game.state = 'world';
+    }
+
+    function drawDex() {
+      px(tc, 0, 0, 256, 192, '#203048');
+      frame9(tc, 6, 4, 244, 184, { bg: '#f0f0e0' });
+      text(tc, 'SOURCE NOTEBOOK', 64, 12, '#385888', 9);
+      DEX.forEach((d, i) => {
+        const y = 30 + i * 25;
+        const got = game.caught[d.id];
+        px(tc, 14, y, 228, 22, got ? '#d8e8d0' : '#e0e0d8');
+        px(tc, 14, y, 228, 1, '#a0a098');
+        if (got) {
+          if (d.sprite) tc.drawImage(d.sprite, 16, y + 3, 16, 16);
+          else tc.drawImage(imgGovRecord, 16, y + 3, 16, 16);
+          text(tc, d.name, 40, y + 3, '#283038', 8);
+          text(tc, d.kind, 40, y + 13, '#687078', 6);
+          text(tc, 'CAUGHT', 188, y + 8, '#388048', 7);
+        } else {
+          text(tc, '?????', 40, y + 8, '#909088', 8);
+        }
+      });
+    }
+
+    function drawDexBottom() {
+      touchZones = [];
+      px(bc, 0, 0, 256, 192, '#283848');
+      frame9(bc, 30, 60, 196, 70, { bg: '#f0f0e0' });
+      const last = game.lastInfo;
+      if (last) {
+        text(bc, last.name, 40, 70, '#385888', 8);
+        wrapText(bc, last.blurb, 40, 84, 180, '#404040', 7);
+      } else {
+        text(bc, 'Walk in tall grass to', 44, 80, '#404040', 7);
+        text(bc, 'find wild documents!', 44, 92, '#404040', 7);
+      }
+      frame9(bc, 88, 150, 80, 26, { bg: '#e8d8c0' });
+      text(bc, 'CLOSE', 108, 159, '#604020', 8);
+      zone(88, 150, 80, 26, 'btn', 'B');
+    }
+
+    function wrapText(ctx, str, x, y, maxW, col, size) {
+      const words = str.split(' ');
+      let line = '', yy = y;
+      ctx.font = size + 'px "Press Start 2P"';
+      for (const w of words) {
+        if (ctx.measureText(line + w).width > maxW) { text(ctx, line, x, yy, col, size); line = w + ' '; yy += size + 3; }
+        else line += w + ' ';
+      }
+      text(ctx, line, x, yy, col, size);
+    }
+
+    /* =====================================================================
+       BATALHA
+       ===================================================================== */
+    const MOVES = [
+      { name: 'TOUGH QUESTION', dmg: [4, 8] },
+      { name: 'CROSS-CHECK', dmg: [6, 10] },
+      { name: 'DATA SCRAPE', dmg: [3, 12] },
+      { name: 'EXPOSE', dmg: [8, 11] }
+    ];
+    const ENEMY_MOVES = ['REDACT', 'DELAY RESPONSE', 'SPIN STORY', 'JARGON WALL'];
+
+    function startBattle(species) {
+      const lv = species.lv[0] + Math.floor(Math.random() * (species.lv[1] - species.lv[0] + 1));
+      game.battle = {
+        sp: species, lv,
+        ehp: species.hp, emax: species.hp,
+        phase: 'intro',         // intro | menu | moves | anim | msg | caught | over
+        queue: [],
+        foiaT: 0, shake: 0, flash: 1, t: 0
+      };
+      game.state = 'battle';
+      playMusic(mBattle);
+      bmsg(['A wild ' + species.name + ' appeared!', '(' + species.kind + ')'], 'menu');
+    }
+
+    function bmsg(lines, next) {
+      game.battle.phase = 'msg';
+      game.battle.queue.push({ lines, next });
+    }
+
+    function endBattle(toWorld = true) {
+      game.battle = null;
+      if (caughtCount() >= 6) { game.state = 'win'; game.winT = 0; playMusic(mWin); return; }
+      if (toWorld) { game.state = 'world'; playMusic(mGrass); }
+    }
+
+    function enemyTurn() {
+      const b = game.battle;
+      const dmg = Math.max(1, Math.round(b.sp.atk * (0.7 + Math.random() * 0.7)));
+      game.hp = Math.max(0, game.hp - dmg);
+      b.shake = 1;
+      const mv = ENEMY_MOVES[Math.floor(Math.random() * ENEMY_MOVES.length)];
+      bmsg([b.sp.name + ' used ' + mv + '!', 'Your credibility took ' + dmg + ' damage.'], game.hp <= 0 ? 'faint' : 'menu');
+    }
+
+    function doAttack(mi) {
+      const b = game.battle;
+      const m = MOVES[mi];
+      const dmg = m.dmg[0] + Math.floor(Math.random() * (m.dmg[1] - m.dmg[0] + 1));
+      b.ehp = Math.max(0, b.ehp - dmg);
+      b.flash = 1;
+      if (b.ehp <= 0) {
+        bmsg(['You used ' + m.name + '!', b.sp.name + ' was debunked!', '...but it fled before you', 'could file it. Catch them!'], 'flee');
+      } else {
+        bmsg(['You used ' + m.name + '!', 'It dealt ' + dmg + ' damage.'], 'enemy');
+      }
+    }
+
+    function doFoia() {
+      const b = game.battle;
+      b.phase = 'anim';
+      b.foiaT = 0;
+      b.onAnimDone = () => {
+        const chance = .25 + .65 * (1 - b.ehp / b.emax);
+        if (Math.random() < chance) {
+          game.caught[b.sp.id] = true;
+          game.lastInfo = b.sp;
+          b.caughtFlag = true;
+          bmsg(['Gotcha! ' + b.sp.name + ' was', 'FILED in your notebook!', '(' + caughtCount() + '/6 sources secured)'], 'caughtEnd');
+        } else {
+          bmsg(['Oh no! The request was', 'DENIED. Article 23, they say.', b.sp.name + ' resists!'], 'enemy');
+        }
+      };
+    }
+
+    function doCoffee() {
+      if (game.coffee <= 0) return bmsg(['No coffee left!', 'A journalist without coffee...'], 'menu');
+      game.coffee--;
+      game.hp = Math.min(game.maxhp, game.hp + 20);
+      bmsg(['You drank strong coffee.', 'Credibility restored by 20!'], 'enemy');
+    }
+
+    function updateBattle(dt) {
+      const b = game.battle;
+      b.t += dt;
+      if (b.flash > 0) b.flash -= dt * 2;
+      if (b.shake > 0) b.shake -= dt * 2;
+
+      if (b.phase === 'anim') {
+        b.foiaT += dt * 1.2;
+        if (b.foiaT >= 1) { b.phase = 'msg'; b.onAnimDone(); }
+        return;
+      }
+
+      const p = popPress();
+      if (b.phase === 'msg') {
+        if (p === 'A' || p === 'B') {
+          const cur = b.queue.shift();
+          const next = cur ? cur.next : 'menu';
+          if (b.queue.length) return;
+          if (next === 'menu') b.phase = 'menu';
+          else if (next === 'enemy') enemyTurn();
+          else if (next === 'flee') endBattle();
+          else if (next === 'caughtEnd') endBattle();
+          else if (next === 'faint') {
+            game.hp = Math.round(game.maxhp / 2);
+            bmsg(['You blacked out from stress!', '...an editor revived you', 'with deadline pressure.'], 'fleeHome');
+          }
+          else if (next === 'fleeHome') endBattle();
+        }
+        return;
+      }
+
+      if (b.phase === 'menu' && p && p.act === 'battle') {
+        const a = p.data;
+        if (a === 'fight') b.phase = 'moves';
+        else if (a === 'foia') doFoia();
+        else if (a === 'bag') doCoffee();
+        else if (a === 'run') {
+          if (b.sp.id === 'GOVRECORD') bmsg(['You cannot run from', 'public records!'], 'menu');
+          else bmsg(['You got away safely.', '(The story can wait.)'], 'flee');
+        }
+      } else if (b.phase === 'moves' && p) {
+        if (p === 'B') { b.phase = 'menu'; return; }
+        if (p.act === 'move') doAttack(p.data);
+        if (p.act === 'back') b.phase = 'menu';
+      }
+    }
+
+    function drawBattle() {
+      const b = game.battle;
+      /* céu HGSS */
+      const grad = tc.createLinearGradient(0, 0, 0, 192);
+      grad.addColorStop(0, '#78c8f0'); grad.addColorStop(.55, '#b8e4f8'); grad.addColorStop(.56, '#88c060'); grad.addColorStop(1, '#58a048');
+      tc.fillStyle = grad; tc.fillRect(0, 0, 256, 192);
+
+      /* plataformas */
+      tc.fillStyle = '#70b058';
+      tc.beginPath(); tc.ellipse(186, 92, 56, 16, 0, 0, 7); tc.fill();
+      tc.fillStyle = '#5c9848';
+      tc.beginPath(); tc.ellipse(64, 168, 62, 18, 0, 0, 7); tc.fill();
+
+      const shakeX = b.shake > 0 ? Math.round(Math.sin(b.t * 60) * 3 * b.shake) : 0;
+
+      /* inimigo */
+      const bob = Math.sin(b.t * 2.5) * 2;
+      if (!(b.phase === 'anim' && b.foiaT > .8)) {
+        if (b.flash > 0 && Math.floor(b.t * 20) % 2) { /* pisca ao tomar dano */ }
+        else if (b.sp.sprite) tc.drawImage(b.sp.sprite, 154, 28 + bob, 64, 64);
+        else tc.drawImage(imgGovRecord, 150, 20 + bob, 72, 72);
+      }
+
+      /* jornalista (costas) */
+      tc.drawImage(imgTrainerBack, 18 + shakeX, 96, 84, 84);
+
+      /* papel FOIA voando */
+      if (b.phase === 'anim') {
+        const t = b.foiaT;
+        const fx = 90 + t * 90, fy = 140 - Math.sin(t * Math.PI) * 90;
+        tc.save();
+        tc.translate(fx, fy); tc.rotate(t * 9);
+        tc.drawImage(imgFoia, -10, -10, 20, 20);
+        tc.restore();
+      }
+
+      /* caixa de status do inimigo */
+      frame9(tc, 6, 10, 120, 36, { bg: '#f8f8e8' });
+      text(tc, b.sp.name, 12, 16, '#303030', 7);
+      text(tc, 'Lv' + b.lv, 96, 16, '#303030', 7);
+      hpBar(tc, 30, 30, 84, b.ehp / b.emax);
+      text(tc, 'HP', 12, 28, '#e07820', 7);
+
+      /* caixa de status do jogador */
+      frame9(tc, 132, 130, 118, 42, { bg: '#f8f8e8' });
+      text(tc, 'JOURNALIST', 140, 136, '#303030', 7);
+      text(tc, 'Lv99', 216, 136, '#303030', 7);
+      hpBar(tc, 158, 150, 80, game.hp / game.maxhp);
+      text(tc, 'HP', 140, 148, '#e07820', 7);
+      text(tc, game.hp + '/' + game.maxhp, 168, 160, '#484848', 7);
+
+      /* mensagem */
+      if (b.phase === 'msg' && b.queue.length) {
+        frame9(tc, 2, 142, 252, 48, { bg: '#283038', edge: '#687888', dark: '#101820' });
+        b.queue[0].lines.forEach((l, i) => text(tc, l, 10, 149 + i * 10, '#f8f8f8', 7));
+        text(tc, '▼', 240, 180, '#f8b048', 7);
+      }
+    }
+
+    function drawBattleBottom() {
+      touchZones = [];
+      const b = game.battle;
+      /* fundo touch HGSS */
+      px(bc, 0, 0, 256, 192, '#203040');
+      for (let j = 0; j < 12; j++) for (let i = 0; i < 16; i++)
+        if ((i + j) % 2) px(bc, i * 16, j * 16, 16, 16, '#243648');
+
+      function bigBtn(x, y, w, h, label, sub, colA, colB, act, data) {
+        px(bc, x + 3, y + h, w, 4, 'rgba(0,0,0,.4)');
+        px(bc, x, y, w, h, colB);
+        px(bc, x + 3, y + 3, w - 6, h - 6, colA);
+        text(bc, label, x + Math.round(w / 2 - label.length * 4), y + Math.round(h / 2) - (sub ? 12 : 5), '#fff', 8);
+        if (sub) text(bc, sub, x + Math.round(w / 2 - sub.length * 3), y + Math.round(h / 2) + 2, 'rgba(255,255,255,.8)', 6);
+        zone(x, y, w, h, act, data);
+      }
+
+      if (b.phase === 'menu') {
+        bigBtn(10, 14, 114, 70, 'INVESTIGATE', 'attack moves', '#c85038', '#882818', 'battle', 'fight');
+        bigBtn(132, 14, 114, 70, 'FILE FOIA', 'try to catch!', '#3878c8', '#184888', 'battle', 'foia');
+        bigBtn(10, 96, 114, 60, 'BAG', 'coffee x' + game.coffee, '#c8a030', '#886810', 'battle', 'bag');
+        bigBtn(132, 96, 114, 60, 'RUN', 'drop the story', '#588048', '#305828', 'battle', 'run');
+        text(bc, 'WHAT WILL JOURNALIST DO?', 32, 170, '#9ab0c8', 7);
+      } else if (b.phase === 'moves') {
+        MOVES.forEach((m, i) => {
+          const x = 10 + (i % 2) * 122, y = 20 + Math.floor(i / 2) * 64;
+          bigBtn(x, y, 114, 52, m.name.length > 11 ? m.name.slice(0, 11) : m.name, m.dmg[0] + '-' + m.dmg[1] + ' dmg', '#486890', '#284868', 'move', i);
+        });
+        bigBtn(78, 152, 100, 28, 'BACK', null, '#606878', '#383e48', 'back', 0);
+      } else {
+        frame9(bc, 58, 70, 140, 50, { bg: '#f0f0e0' });
+        text(bc, b.phase === 'anim' ? 'FILING REQUEST...' : 'PRESS A TO CONTINUE', b.phase === 'anim' ? 64 : 58, 90, '#385888', 6);
+        zone(0, 0, 256, 192, 'btn', 'A');
+      }
+    }
+
+    /* =====================================================================
+       TITLE & WIN
+       ===================================================================== */
+    let titleT = 0;
+    function drawTitle(dt) {
+      titleT += dt;
+      px(tc, 0, 0, 256, 192, '#102030');
+      /* faixa de céu noturno com "matinho" */
+      const g = tc.createLinearGradient(0, 0, 0, 192);
+      g.addColorStop(0, '#16283e'); g.addColorStop(.7, '#1c3a2e'); g.addColorStop(1, '#234828');
+      tc.fillStyle = g; tc.fillRect(0, 0, 256, 192);
+      for (let i = 0; i < 24; i++) {
+        const sx = (i * 47) % 256, sy = (i * 31) % 80;
+        if (Math.floor(titleT * 2 + i) % 3) px(tc, sx, sy, 1, 1, '#cfe8ff');
+      }
+      for (let i = 0; i < 16; i++) tc.drawImage(TILES.tall, i * 16, 176);
+      tc.drawImage(SPR.player.right[Math.floor(titleT * 3) % 2 ? 1 : 0], 120, 156);
+
+      text(tc, 'ROUTE 26', 92, 38, '#f8d048', 9);
+      text(tc, 'INVESTIGATIVE EDITION', 45, 56, '#f8f8f8', 8);
+      px(tc, 44, 70, 168, 1, '#48688a');
+      text(tc, 'catch wild documents', 50, 82, '#9ab8d0', 7);
+      text(tc, 'in the tall grass', 62, 94, '#9ab8d0', 7);
+      if (Math.floor(titleT * 2) % 2) text(tc, '- PRESS A / TAP START -', 38, 126, '#f8f8f8', 7);
+    }
+
+    function drawTitleBottom() {
+      touchZones = [];
+      px(bc, 0, 0, 256, 192, '#182838');
+      frame9(bc, 48, 60, 160, 44, { bg: '#c84838', edge: '#f8a890', dark: '#802818' });
+      text(bc, 'START', 108, 78, '#fff', 9);
+      zone(48, 60, 160, 44, 'btn', 'A');
+      text(bc, 'ARROWS/WASD: MOVE', 56, 130, '#7a8aa0', 7);
+      text(bc, 'Z/ENTER: A   X: B', 60, 144, '#7a8aa0', 7);
+      text(bc, 'OR USE THE TOUCH SCREEN', 36, 158, '#7a8aa0', 7);
+    }
+
+    function updateTitle() {
+      const p = popPress();
+      if (p === 'A') {
+        game.state = 'world';
+        playMusic(mGrass);
+      }
+    }
+
+    function drawWin(dt) {
+      game.winT += dt;
+      px(tc, 0, 0, 256, 192, '#f8f4e8');
+      /* manchete de jornal */
+      px(tc, 0, 0, 256, 40, '#202020');
+      text(tc, 'THE DAILY RECORD', 56, 10, '#f8f4e8', 9);
+      text(tc, 'special edition', 86, 26, '#c8c0a8', 6);
+      text(tc, 'SCOOP! ALL 6 SOURCES', 30, 56, '#202020', 9);
+      text(tc, 'SECURED VIA FOIA', 54, 72, '#202020', 9);
+      px(tc, 24, 92, 208, 1, '#888');
+      text(tc, 'Journalist L. TOLEDO closes', 26, 102, '#404040', 6);
+      text(tc, 'the notebook: every wild', 26, 114, '#404040', 6);
+      text(tc, 'document is now on record.', 26, 126, '#404040', 6);
+      DEX.forEach((d, i) => {
+        const x = 40 + i * 30;
+        if (d.sprite) tc.drawImage(d.sprite, x, 140, 24, 24);
+        else tc.drawImage(imgGovRecord, x, 140, 24, 24);
+      });
+      if (Math.floor(game.winT * 2) % 2) text(tc, 'CASE CLOSED!', 84, 174, '#c83828', 8);
+    }
+
+    function drawWinBottom() {
+      touchZones = [];
+      px(bc, 0, 0, 256, 192, '#182838');
+      text(bc, 'CONGRATULATIONS!', 64, 40, '#f8d048', 8);
+      text(bc, 'you finished the route', 42, 58, '#9ab8d0', 7);
+      frame9(bc, 38, 90, 180, 36, { bg: '#c84838', edge: '#f8a890', dark: '#802818' });
+      text(bc, 'BACK TO PORTFOLIO', 60, 103, '#fff', 8);
+      zone(38, 90, 180, 36, 'win', 'exit');
+      frame9(bc, 58, 138, 140, 30, { bg: '#385888', edge: '#88a8d8', dark: '#182848' });
+      text(bc, 'KEEP WALKING', 80, 148, '#fff', 8);
+      zone(58, 138, 140, 30, 'win', 'stay');
+    }
+
+    function updateWin() {
+      const p = popPress();
+      if (p && p.act === 'win') {
+        if (p.data === 'exit') window.location.href = 'index.html';
+        else { game.caught = {}; game.hp = game.maxhp; game.coffee = 3; game.state = 'world'; playMusic(mGrass); }
+      }
+    }
+
+    /* =====================================================================
+       LOOP
+       ===================================================================== */
+    let last = 0;
+    function loop(ts) {
+      const dt = Math.min(.05, (ts - last) / 1000 || 0);
+      last = ts;
+      tc.clearRect(0, 0, 256, 192);
+
+      if (game.state === 'title') { updateTitle(); drawTitle(dt); drawTitleBottom(); }
+      else if (game.state === 'world') { updateWorld(dt); drawWorld(); drawWorldBottom(); }
+      else if (game.state === 'dex') { updateDex(); drawDex(); drawDexBottom(); }
+      else if (game.state === 'battle') {
+        updateBattle(dt);
+        if (game.state === 'battle' && game.battle) { drawBattle(); drawBattleBottom(); }
+      }
+      else if (game.state === 'win') { updateWin(); drawWin(dt); drawWinBottom(); }
+
+      requestAnimationFrame(loop);
+    }
+
+    document.fonts.load('8px "Press Start 2P"').then(() => {
+      fitShell();
+      requestAnimationFrame(loop);
+    });
+
+    /* hook de teste */
+    window.__game = game;
+    window.__startBattle = i => startBattle(DEX[i]);
+  </script>
 </body>
 
 </html>
