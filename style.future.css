@@ -81,21 +81,7 @@ nav a {
 nav .nav-links {
   list-style: none;
   display: flex;
-  gap: 0;
-  align-items: center;
-}
-
-nav .nav-links li {
-  display: flex;
-  align-items: center;
-}
-
-nav .nav-links li + li::before {
-  content: "";
-  width: 1px;
-  height: 15px;
-  background: rgba(255, 255, 255, 0.22);
-  margin: 0 16px;
+  gap: 20px;
 }
 
 nav .nav-links a {
@@ -107,6 +93,14 @@ nav .nav-links a {
 nav .nav-links a:hover {
   opacity: 1;
   color: var(--accent);
+}
+
+nav .nav-links .nav-sep {
+  width: 1px;
+  align-self: stretch;
+  margin: 2px 0;
+  background: var(--border);
+  pointer-events: none;
 }
 
 .icon-btn {
@@ -1140,18 +1134,11 @@ html[data-theme='light'] {
     display: flex;
   }
 
-  nav .nav-links li {
+  nav .nav-links .nav-sep {
     width: 100%;
-  }
-
-  nav .nav-links li + li::before {
-    display: none;
-  }
-
-  nav .nav-links li + li {
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
-    margin-top: 8px;
-    padding-top: 8px;
+    height: 1px;
+    align-self: auto;
+    margin: 4px 0;
   }
 
   .menu-toggle {

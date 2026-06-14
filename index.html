@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Spectral:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.future.css?v=7">
+  <link rel="stylesheet" href="style.future.css?v=6">
 
   <link rel="icon" type="image/png" href="favicon.png">
 
@@ -56,29 +56,6 @@
   </script>
   <script async src="https://www.instagram.com/embed.js"></script>
   <style>
-    /* Retrato + título no hero */
-    .hero-title-row {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      margin-bottom: 4px;
-    }
-
-    .hero-portrait {
-      width: 172px;
-      height: 172px;
-      flex: 0 0 auto;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-      box-shadow: 0 0 0 6px rgba(124, 255, 240, 0.08), 0 12px 36px rgba(0, 0, 0, 0.45);
-    }
-
-    @media (max-width: 900px) {
-      .hero-title-row { gap: 16px; }
-      .hero-portrait { width: 104px; height: 104px; }
-    }
-
     /* Expand/Collapse logic for Awards */
     .award-list.collapsed li:nth-child(n+6) {
       display: none;
@@ -195,6 +172,7 @@
         <li><a href="#short-videos">Videos</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#courses-workshops">Courses &amp; workshops</a></li>
+        <li class="nav-sep" aria-hidden="true"></li>
         <li><a href="resume.html">Resume</a></li>
         <li><a href="https://datafixers.org/index_en.html" target="_blank" rel="noopener noreferrer">Innovation Lab</a></li>
       </ul>
@@ -206,91 +184,201 @@
     </div>
   </nav>
 
-  <!-- ── Curso de Jornalismo Investigativo — banner de rodapé ─────────── -->
+  <!-- ── Curso de Jornalismo Investigativo — popup chamativo ─────────── -->
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
   <style>
-    .se-banner {
-      position:fixed; left:0; right:0; bottom:0; z-index:9999;
-      display:flex; align-items:center; gap:14px;
-      padding:10px 14px;
-      background:rgba(5,8,17,.96);
-      border-top:1px solid rgba(212,160,23,.45);
-      box-shadow:0 -12px 40px rgba(0,0,0,.55), 0 0 60px rgba(212,160,23,.07);
+    .se-popup-overlay {
+      position:fixed; inset:0; z-index:9999;
+      background:radial-gradient(ellipse at 50% 30%, rgba(13,20,38,.92) 0%, rgba(5,8,17,.98) 70%);
       backdrop-filter:blur(8px);
+      display:flex; align-items:center; justify-content:center;
+      padding:18px;
+      opacity:0; pointer-events:none;
+      transition:opacity .35s ease;
       font-family:'JetBrains Mono', ui-monospace, monospace;
-      transform:translateY(110%);
-      transition:transform .45s cubic-bezier(.2,.8,.2,1);
     }
-    .se-banner.show { transform:translateY(0); }
-    .se-thumb {
-      width:72px; height:44px; flex:0 0 auto;
+    .se-popup-overlay.show { opacity:1; pointer-events:auto; }
+    .se-popup-overlay::before {
+      content:''; position:absolute; inset:0;
+      background:repeating-linear-gradient(0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,.18) 3px, rgba(0,0,0,0) 4px);
+      pointer-events:none; mix-blend-mode:multiply;
+    }
+    .se-card {
+      position:relative;
+      width:min(720px, 100%);
+      background:#050811;
+      border:1px solid rgba(212,160,23,.5);
+      box-shadow:0 0 0 1px rgba(212,160,23,.18), 0 30px 80px rgba(0,0,0,.85), 0 0 120px rgba(212,160,23,.12);
+      overflow:hidden;
+      transform:scale(.96); transition:transform .35s cubic-bezier(.2,.8,.2,1);
+    }
+    .se-popup-overlay.show .se-card { transform:scale(1); }
+    .se-art {
+      position:relative;
+      aspect-ratio:16/9;
+      background:#0a0e1a;
+      overflow:hidden;
+    }
+    .se-art img {
+      position:absolute; inset:0;
+      width:100%; height:100%;
       object-fit:cover;
-      border:1px solid rgba(212,160,23,.4);
-      border-radius:4px;
     }
-    .se-copy { min-width:0; flex:1; }
-    .se-copy .se-title {
+    .se-art::after {
+      content:''; position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(5,8,17,.85) 100%),
+        radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,.45) 100%);
+      pointer-events:none;
+    }
+    .se-art-title {
+      position:absolute; left:0; right:0; bottom:14px;
+      text-align:center; z-index:2;
+      pointer-events:none;
+    }
+    .se-title {
       font-family:'Special Elite', monospace;
       color:#d4a017;
-      font-size:14px; line-height:1.2;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+      font-size:clamp(28px, 5vw, 44px); line-height:1;
+      margin:0;
+      letter-spacing:.02em;
+      text-shadow:0 0 22px rgba(212,160,23,.55), 0 4px 12px rgba(0,0,0,.7);
     }
-    .se-copy .se-sub {
-      font-size:10px; letter-spacing:.14em; text-transform:uppercase;
-      color:rgba(232,227,208,.55);
-      margin-top:3px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    .se-subtitle {
+      font-size:10px; letter-spacing:.45em;
+      color:rgba(232,227,208,.7); text-transform:uppercase;
+      margin-top:4px;
+      text-shadow:0 2px 6px rgba(0,0,0,.6);
+    }
+    .se-tag-floating {
+      position:absolute; top:12px; left:12px; z-index:2;
+      background:rgba(212,160,23,.18);
+      color:#d4a017;
+      border:1px solid #d4a017;
+      padding:3px 9px;
+      font-size:9px; letter-spacing:.3em; text-transform:uppercase;
+      animation:se-pulse 2s infinite;
+    }
+    @keyframes se-pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(212,160,23,.5); }
+      50%     { box-shadow:0 0 0 8px rgba(212,160,23,0); }
+    }
+    .se-body {
+      padding:18px 22px 18px;
+      color:#e8e3d0;
+      text-align:center;
+    }
+    .se-pitch {
+      font-family:'Special Elite', monospace;
+      font-size:14px; line-height:1.5;
+      color:#e8e3d0;
+      margin:0 0 14px;
+      max-width:480px; margin-left:auto; margin-right:auto;
+    }
+    .se-course-title {
+      font-family:'Special Elite', monospace;
+      color:#d4a017;
+      font-size:clamp(20px, 3.5vw, 28px); line-height:1.1;
+      margin:0 0 8px;
+      letter-spacing:.02em;
+      text-shadow:0 0 18px rgba(212,160,23,.4);
+    }
+    .se-pitch b { color:#d4a017; font-weight:normal; }
+    .se-cta-row {
+      display:flex; flex-direction:column; gap:6px; align-items:center;
     }
     .se-btn {
-      flex:0 0 auto;
-      display:inline-flex; align-items:center;
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
       background:#d4a017; color:#050811;
-      padding:10px 16px;
-      font-size:10.5px; letter-spacing:.18em; text-transform:uppercase;
+      padding:13px 38px;
+      font-family:'JetBrains Mono', monospace;
+      font-size:13px; letter-spacing:.32em; text-transform:uppercase;
       font-weight:700;
       text-decoration:none;
-      border-radius:4px;
-      transition:transform .15s, background .15s;
+      border:0; cursor:pointer;
+      transition:transform .15s, box-shadow .15s, background .15s;
+      box-shadow:0 0 30px rgba(212,160,23,.25);
     }
-    .se-btn:hover { transform:translateY(-1px); background:#e8b520; }
+    .se-btn:hover { transform:translateY(-2px); box-shadow:0 6px 40px rgba(212,160,23,.45); background:#e8b520; }
+    .se-meta {
+      font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+      color:rgba(232,227,208,.4);
+    }
+    .se-meta span::before { content:' · '; color:rgba(212,160,23,.5); }
+    .se-meta span:first-child::before { content:''; }
+    .se-skip {
+      background:transparent; border:0;
+      color:rgba(232,227,208,.4);
+      font-family:'JetBrains Mono', monospace;
+      font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+      cursor:pointer;
+      padding:6px;
+      margin-top:2px;
+      transition:color .15s;
+    }
+    .se-skip:hover { color:rgba(232,227,208,.85); }
     .se-close {
-      flex:0 0 auto;
+      position:absolute; top:10px; right:10px; z-index:3;
       width:30px; height:30px;
-      background:transparent; border:1px solid rgba(232,227,208,.22);
+      background:rgba(5,8,17,.7); border:1px solid rgba(232,227,208,.22);
       color:rgba(232,227,208,.7);
-      font-size:16px; cursor:pointer;
+      font-size:18px; cursor:pointer;
       display:flex; align-items:center; justify-content:center;
-      border-radius:4px;
-      transition:all .15s;
+      transition:all .15s; border-radius:4px;
     }
     .se-close:hover { color:#d4a017; border-color:#d4a017; }
-    @media (max-width: 640px) {
-      .se-thumb { display:none; }
-      .se-copy .se-title { font-size:12.5px; white-space:normal; }
-      .se-copy .se-sub { display:none; }
-      .se-btn { padding:9px 12px; font-size:9.5px; letter-spacing:.1em; }
+    @media (max-width: 480px) {
+      .se-body { padding:14px 16px 16px; }
+      .se-pitch { font-size:13px; }
+      .se-btn { padding:12px 28px; font-size:12px; letter-spacing:.28em; }
     }
   </style>
-  <div class="se-banner" id="seBanner" role="complementary" aria-label="Curso de Jornalismo Investigativo">
-    <img class="se-thumb" src="https://cursos.datafixers.org/investiga26/hero_og.jpg" alt="Curso de Jornalismo Investigativo" loading="lazy">
-    <div class="se-copy">
-      <div class="se-title">Curso de Jornalismo Investigativo — 3ª edição</div>
-      <div class="se-sub">4 encontros ao vivo · com Juliana Faddul · em português</div>
+  <div class="se-popup-overlay" id="sePopup" role="dialog" aria-modal="true" aria-label="Curso de Jornalismo Investigativo">
+    <div class="se-card">
+      <button class="se-close" onclick="seClose()" aria-label="close">×</button>
+      <div class="se-art">
+        <img id="seArt" src="https://cursos.datafixers.org/investiga26/hero_og.jpg" alt="Curso de Jornalismo Investigativo — Luiz Fernando Toledo & Juliana Faddul" loading="lazy">
+        <span class="se-tag-floating">Terceira edição</span>
+        <div class="se-art-title">
+          <div class="se-subtitle">4 encontros ao vivo · com Juliana Faddul</div>
+        </div>
+      </div>
+      <div class="se-body">
+        <h3 class="se-course-title">Curso de Jornalismo Investigativo</h3>
+        <p class="se-pitch">Dados e LAI, como vender sua pauta, financiamento e apuração nas ruas. <b>Aulas ao vivo, com certificado ao final.</b></p>
+        <div class="se-cta-row">
+          <a href="https://cursos.datafixers.org/investiga26/" class="se-btn" onclick="seMarkSeen()">
+            <span style="font-size:16px">✎</span>
+            <span>Entrar na lista de espera</span>
+          </a>
+          <p class="se-meta" style="margin:0">🇧🇷 Curso ministrado em português</p>
+          <button class="se-skip" onclick="seClose()">Ver mais tarde</button>
+        </div>
+      </div>
     </div>
-    <a href="https://cursos.datafixers.org/investiga26/" class="se-btn">Lista de espera</a>
-    <button class="se-close" onclick="seClose()" aria-label="Fechar aviso do curso">×</button>
   </div>
   <script>
     (function () {
-      // fecha e não volta na mesma sessão; reaparece em visita nova
+      // ---------- bilingual switching ----------
+      const lang = (document.documentElement.lang || 'en').toLowerCase().startsWith('pt') ? 'pt' : 'en';
+      document.querySelectorAll('#sePopup [data-en]').forEach(el => {
+        const text = el.dataset[lang];
+        if (!text) return;
+        if (text.includes('<')) el.innerHTML = text; else el.textContent = text;
+      });
+
+      // ---------- popup show/hide logic ----------
+      // sempre mostra (sem flag de "já viu") — fica visível em todas as visitas
       window.seClose = function () {
-        document.getElementById('seBanner').classList.remove('show');
-        try { sessionStorage.setItem('seBannerClosed', '1'); } catch (e) { }
+        document.getElementById('sePopup').classList.remove('show');
+        document.body.style.overflow = '';
       };
+      window.seMarkSeen = function () {};
       window.addEventListener('load', () => {
-        let closed = false;
-        try { closed = sessionStorage.getItem('seBannerClosed') === '1'; } catch (e) { }
-        if (!closed) setTimeout(() => document.getElementById('seBanner').classList.add('show'), 1500);
+        setTimeout(() => {
+          document.getElementById('sePopup').classList.add('show');
+          document.body.style.overflow = 'hidden';
+        }, 600);
       });
       addEventListener('keydown', e => { if (e.key === 'Escape') seClose(); });
     })();
@@ -300,10 +388,7 @@
     <section id="about" class="hero section">
       <div class="container">
         <div class="hero-text">
-          <div class="hero-title-row">
-            <img src="images/luiz-avatar.jpg" alt="Luiz Fernando Toledo" class="hero-portrait" fetchpriority="high">
-            <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
-          </div>
+          <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
           <p>Brazilian journalist, researcher and instructor based in London, with a proven track record of producing
             and
             managing impactful projects related to Brazil.</p>
@@ -426,6 +511,12 @@
               journalists. This has included founding a data journalism consultancy at Columbia University in 2023 —
               <a href="https://datafixers.org/" target="_blank" rel="noopener noreferrer" class="highlight">Datafixers</a>
               — and, later, a series of small scraping and data collection projects for various journalistic purposes.
+              This also includes creating a
+              <a href="https://datafixers.org/" target="_blank" rel="noopener noreferrer" class="highlight">data innovation lab</a>
+              that won a
+              <a href="https://brown.columbia.edu/22-23-magic/" target="_blank" rel="noopener noreferrer" class="highlight">US$ 100,000 award from Columbia and Stanford universities</a>
+              and the
+              <a href="https://premio.jornalismodedados.org.br/edicoes/2023/" target="_blank" rel="noopener noreferrer" class="highlight">prize for best data journalism project in Brazil</a>.
             </p>
           </div>
         </div>
