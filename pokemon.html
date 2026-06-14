@@ -1449,17 +1449,18 @@
         frame9(2, 142, 252, 48, { bg: '#f8f8f0' });
         MOVES.forEach((m, i) => {
           const x = 12 + (i % 2) * 124, y = 147 + Math.floor(i / 2) * 12;
+          const hitY = 143 + Math.floor(i / 2) * 13;
           const noPp = game.pp[i] <= 0;
           if (b.moveSel === i) px(x - 6, y + 1, 4, 7, '#c84838');
           text(m.name.length > 12 ? m.name.slice(0, 12) : m.name, x, y, noPp ? '#b0b0a8' : (i === b.moveSel ? '#202020' : '#585858'), 6);
           text(String(game.pp[i]), x + 102, y, noPp ? '#c05040' : '#788858', 6);
-          zone(x - 7, y - 3, 122, 12, 'move', i);
+          zone(x - 8, hitY, 124, 13, 'move', i);
         });
         const m = MOVES[b.moveSel];
         px(4, 180, 248, 1, '#c8c8c0');
         text((m.dmg ? 'PWR ' + m.dmg[0] + '-' + m.dmg[1] : 'STATUS') + ' PP ' + game.pp[b.moveSel] + '/' + m.pp + ' ' + m.desc, 10, 182, '#385888', 5);
         text('B:BACK', 218, 182, '#888', 5);
-        zone(208, 178, 46, 12, 'back');
+        zone(194, 182, 60, 10, 'back');
       } else if (b.phase === 'bag') {
         frame9(2, 142, 252, 48, { bg: '#f8f8f0' });
         const items = [

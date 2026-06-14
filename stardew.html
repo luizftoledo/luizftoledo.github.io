@@ -851,6 +851,58 @@
       keys.slice(0, 3).forEach(k => game.rareRocks[k] = true);
     })();
 
+    const SAVE_KEY = 'journalismValleySave';
+    let introShown = false;
+
+    function saveGame() {
+      try {
+        localStorage.setItem(SAVE_KEY, JSON.stringify({
+          version: 1,
+          map: game.map, px: game.px, py: game.py, dir: game.dir, tool: game.tool,
+          day: game.day, energy: game.energy, published: game.published,
+          rareDocs: game.rareDocs, leads: game.leads, gold: game.gold,
+          inv: game.inv, farm: game.farm, objs: game.objs, rareRocks: game.rareRocks,
+          items: game.items, luckyPen: game.luckyPen, caveVisited: game.caveVisited
+        }));
+      } catch (e) { }
+    }
+
+    function clearSave() {
+      try { localStorage.removeItem(SAVE_KEY); } catch (e) { }
+    }
+
+    function loadGame() {
+      let data;
+      try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (!raw) return false;
+        data = JSON.parse(raw);
+        if (!data || data.version !== 1 || (data.map !== 'farm' && data.map !== 'cave') ||
+          !Number.isFinite(data.px) || !Number.isFinite(data.py) ||
+          !data.inv || !data.farm || !data.objs || !data.objs.farm || !data.objs.cave ||
+          !data.rareRocks || !Array.isArray(data.items)) throw new Error('bad save');
+      } catch (e) {
+        clearSave();
+        return false;
+      }
+
+      game.state = 'title';
+      game.map = data.map === 'cave' ? 'cave' : 'farm';
+      game.px = data.px; game.py = data.py; game.fromX = data.px; game.fromY = data.py;
+      game.dir = data.dir || 'down'; game.moving = false; game.moveT = 0;
+      game.tool = data.tool || 0;
+      game.day = data.day || 1; game.energy = data.energy == null ? ENERGY_MAX : data.energy;
+      game.published = data.published || 0; game.rareDocs = data.rareDocs || 0;
+      game.leads = data.leads || 0; game.gold = data.gold == null ? 50 : data.gold;
+      game.inv = data.inv; game.farm = data.farm; game.objs = data.objs;
+      game.rareRocks = data.rareRocks; game.items = data.items;
+      game.luckyPen = !!data.luckyPen; game.caveVisited = !!data.caveVisited;
+      game.shop = null; game.bag = false; game.msg = null; game.confirm = null;
+      game.toast = null; game.sleeping = null; game.won = false; game.winSel = 0;
+      introShown = true;
+      return true;
+    }
+
     function tileAt(x, y, map) {
       map = map || game.map;
       if (x < 0 || y < 0 || x >= MAPW || y >= MAPH) return map === 'farm' ? 'tree' : 'cwall';
@@ -1161,6 +1213,7 @@
       if (it.type === 'coffee') {
         game.energy = Math.min(ENERGY_MAX, game.energy + 25);
         toast('HOT COFFEE +25 ENERGY');
+        saveGame();
         return;
       }
       game.inv[it.type] = (game.inv[it.type] || 0) + 1;
@@ -1172,6 +1225,7 @@
         scoop: 'MUSHROOM SCOOP. EARTHY.'
       };
       toast((PICK_MSG[it.type] || ITEMS[it.type].name) + ' (BAGGED)');
+      saveGame();
     }
 
     function useTool() {
@@ -1188,6 +1242,7 @@
         game.farm[key] = { tilled: true, wet: false, crop: null };
         sfx(50, .07, 'triangle');
         toast('PLOT OPENED. PITCH IT!');
+        saveGame();
       } else if (tool === 'SEEDS') {
         if (!cell || !cell.tilled) return toast('TILL THE SOIL FIRST');
         if (cell.crop) return toast('ALREADY PLANTED');
@@ -1203,6 +1258,7 @@
           sfx(64, .06);
           toast('STORY SEED PLANTED (' + game.inv.seed + ' LEFT)');
         }
+        saveGame();
       } else if (tool === 'CAN') {
         if (!cell || !cell.tilled) return toast('NOTHING TO WATER');
         if (cell.wet) return toast('ALREADY REPORTED TODAY');
@@ -1211,6 +1267,7 @@
         if (cell.crop) cell.crop.watered = true;
         sfx(60, .09, 'triangle');
         toast('WATERED = REPORTING DONE');
+        saveGame();
       } else if (tool === 'HAND') {
         if (cell && cell.crop && cell.crop.stage >= 3) {
           delete game.farm[key];
@@ -1224,6 +1281,7 @@
           game.gold += pay;
           playJingle();
           say(['EXTRA! EXTRA! You publish:', '"' + HEADLINES[(game.published - 1) % HEADLINES.length] + '"', payLine, '(' + game.published + '/4 front pages)']);
+          saveGame();
           return;
         }
         if (obj === 'stone') {
@@ -1231,6 +1289,7 @@
           delete game.objs.farm[key];
           sfx(45, .08, 'triangle');
           toast('STONE CLEARED');
+          saveGame();
           return;
         }
         if (obj === 'branch') {
@@ -1238,6 +1297,7 @@
           delete game.objs.farm[key];
           sfx(52, .07, 'triangle');
           toast('BRANCH CLEARED');
+          saveGame();
           return;
         }
         const it = itemAt(f.x, f.y) || itemAt(game.px, game.py);
@@ -1260,6 +1320,7 @@
         } else {
           toast('JUST GRAVEL AND REGRET');
         }
+        saveGame();
       }
     }
 
@@ -1298,6 +1359,7 @@
       /* fresh forage: yesterday's leftovers vanish, new random haul appears */
       game.items = [];
       spawnItems(2 + Math.floor(Math.random() * 3));
+      saveGame();
     }
 
     function spawnItems(n) {
@@ -1328,9 +1390,9 @@
     function shopStock() {
       const pool = ['seed', 'coffee', 'energybar', 'luckypen', 'fertilizer'];
       const n = 3 + (game.day % 2);
-      const out = [];
+      const out = ['seed'];
       for (let i = 0; i < n; i++) out.push(pool[(game.day * 2 + i) % pool.length]);
-      return out;
+      return out.filter((id, i) => i === out.indexOf(id)).slice(0, n);
     }
 
     const sellList = () => Object.keys(ITEMS).filter(k => game.inv[k] > 0);
@@ -1354,6 +1416,7 @@
         game.inv[id] = (game.inv[id] || 0) + 1;
         toast('BOUGHT ' + ITEMS[id].name);
       }
+      saveGame();
     }
 
     function sellItem(id) {
@@ -1362,6 +1425,7 @@
       game.gold += ITEMS[id].sell;
       sfx(83, .06);
       toast('SOLD ' + ITEMS[id].name + ' +' + ITEMS[id].sell + 'g');
+      saveGame();
     }
 
     function updateShop() {
@@ -1409,6 +1473,7 @@
           ['PICKAXE added as 5th tool.', 'Crack the rocks: 3 RARE', 'DOCUMENTS are buried here.', 'Each swing costs energy!']
         );
       }
+      saveGame();
     }
 
     function exitCave() {
@@ -1417,6 +1482,7 @@
       game.moving = false; game.dir = 'down';
       if (game.tool === 4) { game.tool = 3; syncToolBtn(); }
       playTheme('farm');
+      saveGame();
     }
 
     function tryMove(dx, dy, dir) {
@@ -1433,6 +1499,7 @@
       const t = tileAt(game.px, game.py);
       if (game.map === 'farm' && t === 'cavemouth') enterCave();
       else if (game.map === 'cave' && t === 'ladder') exitCave();
+      saveGame();
     }
 
     function updateWorld(dt) {
@@ -1456,6 +1523,7 @@
         game.winT = 0; game.winSel = 0;
         stopMusic();
         playJingle();
+        clearSave();
         return;
       }
 
@@ -1768,7 +1836,6 @@
       zone(0, 0, 256, 192, 'A');
     }
 
-    let introShown = false;
     function updateTitle() {
       const p = popPress();
       if (!p) return;
@@ -1776,6 +1843,7 @@
       playTheme('farm');
       game.state = 'world';
       syncToolBtn();
+      saveGame();
       if (!introShown) {
         introShown = true;
         say(
@@ -1851,7 +1919,8 @@
     /* =====================================================================
        LOOP
        ===================================================================== */
-    spawnItems(3);
+    if (!loadGame()) spawnItems(3);
+    syncToolBtn();
 
     let last = 0;
     function loop(ts) {
