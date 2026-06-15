@@ -1,310 +1,197 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-lang="en">The Brazil Files: Jeffrey Epstein's Hidden Network in South America</title>
-  <title data-lang="pt">Os Arquivos do Brasil: A Rede Oculta de Jeffrey Epstein na América do Sul</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="../shared/base.css">
-  
-  <style>
-    /* Additional styles for series homepage */
-    .series-intro {
-      background-color: #f5f5f5;
-      padding: 60px 40px;
-      margin: 80px 0;
-      border-radius: 4px;
-    }
-    
-    .series-intro p {
-      font-size: 18px;
-      line-height: 1.8;
-      margin-bottom: 20px;
-      color: #1a1a1a;
-    }
-    
-    .series-intro h3 {
-      font-family: var(--display);
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: #1a1a1a;
-      margin-top: 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Brazil Files — A rede de Jeffrey Epstein no Brasil | BBC News Brasil</title>
+<meta name="description" content="Índice da série investigativa de Luiz Fernando Toledo (BBC News Brasil) sobre as conexões de Jeffrey Epstein com o Brasil: reportagens em português e inglês, traduções e vídeos.">
+<meta property="og:title" content="The Brazil Files — A rede de Jeffrey Epstein no Brasil">
+<meta property="og:description" content="Série da BBC News Brasil: reportagens, versões internacionais e vídeos sobre as conexões de Epstein com o Brasil.">
+<meta property="og:image" content="https://luizftoledo.github.io/epstein_brazil_victims.png">
+<style>
+  :root{
+    --ink:#16130f; --muted:#6a655d; --line:#e6e1d6; --bg:#f6f3ec; --card:#fff;
+    --accent:#8a1414; --accent2:#1f4e6b; --chip:#f0ece1; --hi:#fff4cf;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;font-size:17px}
+  a{color:var(--accent2)}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+  header.top{background:#16130f;color:#f6f3ec;padding:46px 0 38px;border-bottom:5px solid var(--accent)}
+  header.top .kick{text-transform:uppercase;letter-spacing:.18em;font-size:12.5px;color:#e7b3b3;font-weight:700}
+  header.top h1{font-family:Georgia,"Times New Roman",serif;font-size:38px;line-height:1.12;margin:12px 0 8px;font-weight:800}
+  header.top .sub{font-size:18px;color:#d8d3c8;max-width:760px;margin:0}
+  header.top .by{font-size:13.5px;color:#b7b1a4;margin-top:16px}
+  .disc{background:#fbf7ee;border:1px solid var(--line);border-radius:8px;padding:13px 16px;font-size:13px;color:#5a554c;margin:22px 0}
+  .disc strong{color:var(--ink)}
+  section{margin:42px 0}
+  h2{font-family:Georgia,serif;font-size:25px;margin:0 0 6px;display:flex;align-items:baseline;gap:12px}
+  h2 .en{font-size:15px;color:var(--muted);font-weight:400;font-style:italic}
+  .h2line{height:3px;background:var(--accent);width:54px;margin:8px 0 20px;border-radius:2px}
+  /* videos */
+  .vids{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:18px}
+  @media(max-width:860px){.vids{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.vids{grid-template-columns:1fr}}
+  .vid{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+  .vid .frame{position:relative;width:100%;background:#000}
+  .vid.wide .frame{padding-top:56.25%}
+  .vid.tall .frame{padding-top:177.78%}
+  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vid .cap{padding:9px 12px;font-size:12.5px;color:var(--muted)}
+  .vid .cap b{color:var(--ink);font-weight:600}
+  /* tables */
+  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:15.5px}
+  thead th{background:#16130f;color:#f6f3ec;text-align:left;padding:11px 14px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+  tbody td{padding:13px 14px;border-top:1px solid var(--line);vertical-align:top}
+  tbody tr:hover{background:#fbf8f1}
+  .num{font-family:Georgia,serif;font-weight:800;color:var(--accent);font-size:18px;width:34px}
+  .t-pt{font-weight:600;color:var(--ink);display:block;margin-bottom:3px}
+  .t-en{font-size:13px;color:var(--muted);font-style:italic}
+  td.links{white-space:nowrap;width:1%}
+  .btn{display:inline-block;font-size:12.5px;font-weight:700;padding:5px 11px;border-radius:6px;text-decoration:none;margin:2px 0;white-space:nowrap}
+  .btn-bbc{background:var(--accent);color:#fff}
+  .btn-bbc:hover{background:#6e0f0f}
+  .btn-int{background:var(--chip);color:var(--ink);border:1px solid var(--line)}
+  .btn-int:hover{background:var(--hi)}
+  .intl{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.intl{grid-template-columns:1fr}}
+  .intl-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .intl-card.lead{grid-column:1/-1;border-left:5px solid var(--accent2)}
+  .intl-card .lng{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2);font-weight:800}
+  .intl-card .ttl{font-weight:600;margin:5px 0 8px;display:block}
+  .flags{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .flags a{font-size:13px;background:var(--chip);border:1px solid var(--line);border-radius:20px;padding:4px 12px;text-decoration:none;color:var(--ink)}
+  .flags a:hover{background:var(--hi)}
+  .note{background:#fff8e6;border:1px solid #f0d98a;border-radius:8px;padding:11px 15px;font-size:13.5px;margin:16px 0}
+  footer{background:#16130f;color:#cfc9bc;font-size:12.5px;padding:30px 0;margin-top:50px}
+  footer a{color:#e7b3b3}
+</style>
 </head>
-<body class="lang-en">
-  <!-- Disclaimer Bar -->
-  <div class="disclaimer-bar" id="disclaimerBar">
-    <div class="disclaimer-inner">
-      <div class="disclaimer-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/>
-        </svg>
+<body>
+
+<header class="top"><div class="wrap">
+  <div class="kick">BBC News Brasil · Investigação</div>
+  <h1>The Brazil Files</h1>
+  <p class="sub">A rede de Jeffrey Epstein no Brasil — uma investigação sobre as conexões do financista com modelos brasileiras, uma rede de aliciamento, vínculos financeiros em São Paulo e a investigação do MPF aberta após as reportagens.</p>
+  <p class="by">Por Luiz Fernando Toledo · BBC News Brasil, em Londres · 2025–2026</p>
+</div></header>
+
+<div class="wrap">
+
+  <p class="disc">As reportagens foram publicadas pela <strong>BBC News Brasil</strong> e por edições internacionais da BBC. Abaixo, os links para os originais, as versões traduzidas e os vídeos.</p>
+
+  <!-- VÍDEOS -->
+  <section>
+    <h2>Vídeos <span class="en">· Videos</span></h2>
+    <div class="h2line"></div>
+    <div class="vids">
+      <div class="vid wide">
+        <div class="frame"><iframe src="https://www.youtube.com/embed/Nl5eRXVkW9Y?rel=0" title="The Epstein–Brazil connection" loading="lazy" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+        <div class="cap"><b>The Epstein–Brazil connection</b> — reportagem em vídeo</div>
       </div>
-      <p class="disclaimer-text">
-        <strong data-lang="en">Important notice:</strong><strong data-lang="pt">Aviso importante:</strong>
-        <span data-lang="en"> This is an alternative layout version (scrollytelling) of a report originally published by <strong>BBC News Brasil</strong>. All journalistic content — texts, data, and reporting — is authored by BBC News Brasil. This version was generated by <strong>Claude Cowork</strong> solely for portfolio demonstration purposes by author Luiz Fernando Toledo. It does not represent, replace, or affiliate with the original BBC publication.</span>
-        <span data-lang="pt"> Esta é uma versão com layout alternativo (scrollytelling) de uma reportagem publicada originalmente pela <strong>BBC News Brasil</strong>. Todo o conteúdo jornalístico é de autoria da BBC News Brasil. Esta versão foi gerada por <strong>Claude Cowork</strong> exclusivamente para fins de portfólio do autor Luiz Fernando Toledo.</span>
-        <a href="https://www.bbc.com/portuguese" target="_blank" rel="noopener" class="disclaimer-link" data-lang="en">Read the original BBC reports ↗</a>
-        <a href="https://www.bbc.com/portuguese" target="_blank" rel="noopener" class="disclaimer-link" data-lang="pt">Leia as reportagens originais na BBC ↗</a>
-      </p>
-      <button class="disclaimer-close" id="disclaimerClose" aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-  </div>
-
-  <!-- Language Toggle Bar -->
-  <div class="lang-toggle-bar" id="langBar">
-    <div class="lang-toggle-inner">
-      <span class="lang-toggle-label" data-lang="en">Language:</span>
-      <span class="lang-toggle-label" data-lang="pt">Idioma:</span>
-      <button class="lang-btn active" id="btnEn">EN</button>
-      <button class="lang-btn" id="btnPt">PT</button>
-    </div>
-  </div>
-
-  <!-- Progress Bar -->
-  <div class="progress-bar" id="progressBar"></div>
-
-  <!-- Main Content -->
-  <article>
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content" style="background-image: url(artigo-1/imgs/photo-01.jpg); background-size: cover; background-position: center;">
-        <div class="hero-label fade-in" data-lang="en">INVESTIGATION SERIES</div>
-        <div class="hero-label fade-in" data-lang="pt">SÉRIE DE INVESTIGAÇÃO</div>
-        
-        <h1 class="hero-title fade-in" data-lang="en">The Brazil Files: Jeffrey Epstein's Hidden Network in South America</h1>
-        <h1 class="hero-title fade-in" data-lang="pt">Os Arquivos do Brasil: A Rede Oculta de Jeffrey Epstein na América do Sul</h1>
-        
-        <p class="hero-subtitle fade-in" data-lang="en">A 9-part BBC News Brasil investigation that uncovered Epstein's connections to Brazilian models, a recruitment network, financial ties to São Paulo, and a Federal Prosecution probe sparked by the reporting.</p>
-        <p class="hero-subtitle fade-in" data-lang="pt">Uma investigação em 9 partes da BBC News Brasil que revelou as conexões de Epstein com modelos brasileiras, uma rede de recrutamento, vínculos financeiros com São Paulo e uma investigação do MPF desencadeada pela reportagem.</p>
-        
-        <div class="hero-meta fade-in">
-          <span data-lang="en">By Luiz Fernando Toledo, BBC News Brasil em Londres</span>
-          <span data-lang="pt">Por Luiz Fernando Toledo, BBC News Brasil em Londres</span>
-          <span>February–March 2026</span>
-        </div>
+      <div class="vid tall">
+        <div class="frame"><iframe src="https://www.youtube.com/embed/QMMUbT24nCg?rel=0" title="Short — Epstein Brasil" loading="lazy" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+        <div class="cap">Short</div>
       </div>
-    </section>
-
-    <!-- Main Content -->
-    <main>
-      <!-- Series Overview -->
-      <section class="text-section">
-        <h2 data-lang="en">About this investigation</h2>
-        <h2 data-lang="pt">Sobre esta investigação</h2>
-        
-        <div class="series-intro">
-          <h3 data-lang="en">Key findings</h3>
-          <h3 data-lang="pt">Principais descobertas</h3>
-          
-          <p data-lang="en">In late 2024 and 2025, the U.S. Department of Justice released thousands of documents from the Jeffrey Epstein case following a federal court order. These files contain more than 4,000 references to Brazil—an extraordinary number that points to a systematic and deliberate effort to recruit and exploit Brazilian women.</p>
-          <p data-lang="pt">No final de 2024 e em 2025, o Departamento de Justiça dos EUA divulgou milhares de documentos do caso Jeffrey Epstein após determinação judicial. Esses arquivos contêm mais de 4 mil menções ao Brasil—um número extraordinário que aponta para um esforço sistemático e deliberado de recrutar e explorar mulheres brasileiras.</p>
-          
-          <p data-lang="en">This 9-part investigation by BBC News Brasil reveals how Epstein and his associates planned to infiltrate Brazil's modeling industry, the identities of the gatekeepers who facilitated connections, the financial transfers made to Brazilian women, and how the Federal Prosecution Service (MPF) launched an official investigation into human trafficking networks—directly sparked by this reporting.</p>
-          <p data-lang="pt">Esta investigação em 9 partes da BBC News Brasil revela como Epstein e seus associados planejavam se infiltrar na indústria de modelagem do Brasil, as identidades dos facilitadores das conexões, as transferências financeiras feitas a mulheres brasileiras, e como o Ministério Público Federal (MPF) abriu uma investigação oficial sobre redes de tráfico de pessoas—diretamente desencadeada por esta reportagem.</p>
-        </div>
-      </section>
-
-      <!-- Key Stats -->
-      <section class="stats-section">
-        <div class="stat-card fade-in" data-count="4000+">
-          <div class="stat-number">4000+</div>
-          <div class="stat-label" data-lang="en">Brazil mentions in Epstein files</div>
-          <div class="stat-label" data-lang="pt">Menções ao Brasil nos arquivos</div>
-        </div>
-        
-        <div class="stat-card fade-in" data-count="50+">
-          <div class="stat-number">50+</div>
-          <div class="stat-label" data-lang="en">Brazilian women at Epstein's properties</div>
-          <div class="stat-label" data-lang="pt">Mulheres brasileiras em propriedades</div>
-        </div>
-        
-        <div class="stat-card fade-in" data-count="9">
-          <div class="stat-number">9</div>
-          <div class="stat-label" data-lang="en">Articles in this investigation</div>
-          <div class="stat-label" data-lang="pt">Artigos nesta investigação</div>
-        </div>
-        
-        <div class="stat-card fade-in" data-count="1">
-          <div class="stat-number">1</div>
-          <div class="stat-label" data-lang="en">MPF investigation opened</div>
-          <div class="stat-label" data-lang="pt">Investigação do MPF aberta</div>
-        </div>
-      </section>
-
-      <!-- Series Articles Grid -->
-      <section class="text-section">
-        <h2 data-lang="en">The complete series</h2>
-        <h2 data-lang="pt">A série completa</h2>
-        
-        <div class="series-grid">
-          <!-- Article 1 -->
-          
-<a href="./artigo-1/index.html" class="series-card fade-in">
-            <div class="series-card-header">
-              <div class="series-card-label" data-lang="en">PART 1</div>
-              <div class="series-card-label" data-lang="pt">PARTE 1</div>
-              <h3 class="series-card-title" data-lang="en">Jeffrey Epstein funded Brazilian models and warned days before his arrest</h3>
-              <h3 class="series-card-title" data-lang="pt">Jeffrey Epstein financiou modelos brasileiras e avisou dias antes sobre sua prisão</h3>
-              <div class="series-card-date">Feb 9, 2026 | 9 min</div>
-            </div>
-            <div class="series-card-footer">
-              <span data-lang="en">Read more</span>
-              <span data-lang="pt">Leia mais</span>
-            </div>
-          </a>
-
-          <!-- Article 2 -->
-          
-<a href="./artigo-2/index.html" class="series-card fade-in">
-            <div class="series-card-header">
-              <div class="series-card-label" data-lang="en">PART 2</div>
-              <div class="series-card-label" data-lang="pt">PARTE 2</div>
-              <h3 class="series-card-title" data-lang="en">Inside epstein's Brazilian network: scouts, magazines, and fashion contests</h3>
-              <h3 class="series-card-title" data-lang="pt">Os indícios de como Epstein pretendia recrutar mulheres no Brasil</h3>
-              <div class="series-card-date">Feb 3, 2026 | 6 min</div>
-            </div>
-            <div class="series-card-footer">
-              <span data-lang="en">Read more</span>
-              <span data-lang="pt">Leia mais</span>
-            </div>
-          </a>
-
-          <!-- Article 3 -->
-          
-<a href="./artigo-3/index.html" class="series-card fade-in">
-            <div class="series-card-header">
-              <div class="series-card-label" data-lang="en">PART 3</div>
-              <div class="series-card-label" data-lang="pt">PARTE 3</div>
-              <h3 class="series-card-title" data-lang="en">New documents reveal epstein's ties to a 'major Brazilian group'</h3>
-              <h3 class="series-card-title" data-lang="pt">O elo do caso Epstein com o Brasil: 'grande grupo brasileiro'</h3>
-              <div class="series-card-date">Dec 23, 2025 | 9 min</div>
-            </div>
-            <div class="series-card-footer">
-              <span data-lang="en">Read more</span>
-              <span data-lang="pt">Leia mais</span>
-            </div>
-          </a>
-
-          <!-- Article 4 -->
-          
-<a href="./artigo-4/index.html" class="series-card fade-in">
-            <div class="series-card-header">
-              <div class="series-card-label" data-lang="en">PART 4</div>
-              <div class="series-card-label" data-lang="pt">PARTE 4</div>
-              <h3 class="series-card-title" data-lang="en">'around 50 Brazilian women' at epstein's mansion, survivor says</h3>
-              <h3 class="series-card-title" data-lang="pt">'umas 50 brasileiras' estiveram na mansão do bilionário, diz vítima</h3>
-              <div class="series-card-date">Dec 24, 2025 | 8 min</div>
-            </div>
-            <div class="series-card-footer">
-              <span data-lang="en">Read more</span>
-              <span data-lang="pt">Leia mais</span>
-            </div>
-          </a>
-
-          <!-- Article 5 -->
-          
-<a href="./artigo-5/index.html" class="series-card fade-in">
-            <div class="series-card-header">
-              <div class="series-card-label" data-lang="en">PART 5</div>
-              <div class="series-card-label" data-lang="pt">PARTE 5</div>
-              <h3 class="series-card-title" data-lang="en">BBC investigation prompts federal prosecution probe</h3>
-              <h3 class="series-card-title" data-lang="pt">MPF abre investigação sobre rede de aliciamento após reportagem da BBC</h3>
-              <div class="series-card-date">Feb 12, 2026 | 7 min</div>
-            </div>
-            <div class="series-card-footer">
-              <span data-lang="en">Read more</span>
-              <span data-lang="pt">Leia mais</span>
-            </div>
-          </a>
-
-          <!-- Article 6 -->
-          
-<a href="./artigo-6/index.html" class="series-card fade-in">
-            <div class="series-card-header">
-              <div class="series-card-label" data-lang="en">PART 6</div>
-              <div class="series-card-label" data-lang="pt">PARTE 6</div>
-              <h3 class="series-card-title" data-lang="en">Epstein had a Brazilian tax id and sought connections to businessmen</h3>
-              <h3 class="series-card-title" data-lang="pt">Epstein tinha CPF e tentou ponte com empresários brasileiros</h3>
-              <div class="series-card-date">Feb 12, 2026 | 11 min</div>
-            </div>
-            <div class="series-card-footer">
-              <span data-lang="en">Read more</span>
-              <span data-lang="pt">Leia mais</span>
-            </div>
-          </a>
-
-          <!-- Article 7 -->
-          
-<a href="./artigo-7/index.html" class="series-card fade-in">
-            <div class="series-card-header">
-              <div class="series-card-label" data-lang="en">PART 7</div>
-              <div class="series-card-label" data-lang="pt">PARTE 7</div>
-              <h3 class="series-card-title" data-lang="en">The mother who saved her daughter from epstein's network</h3>
-              <h3 class="series-card-title" data-lang="pt">A mãe que salvou a filha da rede de Epstein</h3>
-              <div class="series-card-date">Feb 26, 2026 | 15 min</div>
-            </div>
-            <div class="series-card-footer">
-              <span data-lang="en">Read more</span>
-              <span data-lang="pt">Leia mais</span>
-            </div>
-          </a>
-
-          <!-- Article 8 -->
-          
-<a href="./artigo-8/index.html" class="series-card fade-in">
-            <div class="series-card-header">
-              <div class="series-card-label" data-lang="en">PART 8</div>
-              <div class="series-card-label" data-lang="pt">PARTE 8</div>
-              <h3 class="series-card-title" data-lang="en">The property deed that placed Epstein in são paulo</h3>
-              <h3 class="series-card-title" data-lang="pt">A escritura que colocou Epstein em são paulo</h3>
-              <div class="series-card-date">Feb 14, 2026 | 6 min</div>
-            </div>
-            <div class="series-card-footer">
-              <span data-lang="en">Read more</span>
-              <span data-lang="pt">Leia mais</span>
-            </div>
-          </a>
-
-          <!-- Article 9 -->
-          
-<a href="./artigo-9/index.html" class="series-card fade-in">
-            <div class="series-card-header">
-              <div class="series-card-label" data-lang="en">PART 9</div>
-              <div class="series-card-label" data-lang="pt">PARTE 9</div>
-              <h3 class="series-card-title" data-lang="en">"they traded me like merchandise for us$10,000"</h3>
-              <h3 class="series-card-title" data-lang="pt">"me negociaram por us$ 10 mil"</h3>
-              <div class="series-card-date">Mar 11, 2026 | 15 min</div>
-            </div>
-            <div class="series-card-footer">
-              <span data-lang="en">Read more</span>
-              <span data-lang="pt">Leia mais</span>
-            </div>
-          </a>
-        </div>
-      </section>
-    </main>
-  </article>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-disclaimer">
-        <p data-lang="en"><strong>Investigative portfolio project:</strong> This scrollytelling series is an alternative layout format of BBC News Brasil's original reporting. All journalistic content, research, interviews, and data compilation are the work of BBC News Brasil and the author Luiz Fernando Toledo. This portfolio version was created by Claude Cowork for demonstration and archival purposes. For the original publication, please visit BBC News Brasil.</p>
-        <p data-lang="pt"><strong>Projeto de portfólio investigativo:</strong> Esta série scrollytelling é um formato de layout alternativo da reportagem original da BBC News Brasil. Todo o conteúdo jornalístico, pesquisa, entrevistas e compilação de dados são trabalho da BBC News Brasil e do autor Luiz Fernando Toledo. Esta versão de portfólio foi criada por Claude Cowork para fins de demonstração e arquivamento. Para a publicação original, visite BBC News Brasil.</p>
+      <div class="vid tall">
+        <div class="frame"><iframe src="https://www.youtube.com/embed/8w6Wz019f6E?rel=0" title="Short — Epstein Brasil" loading="lazy" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+        <div class="cap">Short</div>
+      </div>
+      <div class="vid tall">
+        <div class="frame"><iframe src="https://www.youtube.com/embed/-Gjf4ndATBQ?rel=0" title="Short — Epstein Brasil" loading="lazy" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+        <div class="cap">Short</div>
+      </div>
+      <div class="vid tall">
+        <div class="frame"><iframe src="https://www.youtube.com/embed/w7w38Q4OH2A?rel=0" title="Short — Epstein Brasil" loading="lazy" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
+        <div class="cap">Short</div>
       </div>
     </div>
-  </footer>
+  </section>
 
-  <script src="../shared/base.js"></script>
+  <!-- REPORTAGENS PT -->
+  <section>
+    <h2>Reportagens em português</h2>
+    <div class="h2line"></div>
+    <table>
+      <thead><tr><th>#</th><th>Reportagem</th><th>Ler</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td><span class="t-pt">Jeffrey Epstein financiou modelos brasileiras e avisou dias antes sobre sua prisão</span></td>
+          <td class="links"><a class="btn btn-bbc" href="https://www.bbc.com/portuguese/articles/cvg83wprk37o" target="_blank" rel="noopener">Original BBC ↗</a></td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td><span class="t-pt">Os indícios de como Epstein pretendia recrutar mulheres no Brasil</span></td>
+          <td class="links"><a class="btn btn-bbc" href="https://www.bbc.com/portuguese/articles/cm24mr6el23o" target="_blank" rel="noopener">Original BBC ↗</a></td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td><span class="t-pt">O elo do caso Epstein com o Brasil: 'grande grupo brasileiro'</span></td>
+          <td class="links"><a class="btn btn-bbc" href="https://www.bbc.com/portuguese/articles/cnv2937j42ro" target="_blank" rel="noopener">Original BBC ↗</a></td>
+        </tr>
+        <tr>
+          <td class="num">4</td>
+          <td><span class="t-pt">'Umas 50 brasileiras' estiveram na mansão do bilionário, diz vítima</span></td>
+          <td class="links"><a class="btn btn-bbc" href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank" rel="noopener">Original BBC ↗</a></td>
+        </tr>
+        <tr>
+          <td class="num">5</td>
+          <td><span class="t-pt">MPF abre investigação sobre rede de aliciamento após reportagem da BBC</span></td>
+          <td class="links"><a class="btn btn-bbc" href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank" rel="noopener">Original BBC ↗</a></td>
+        </tr>
+        <tr>
+          <td class="num">6</td>
+          <td><span class="t-pt">Epstein tinha CPF e tentou ponte com empresários brasileiros</span></td>
+          <td class="links"><a class="btn btn-bbc" href="https://www.bbc.com/portuguese/articles/c2047g008dgo" target="_blank" rel="noopener">Original BBC ↗</a></td>
+        </tr>
+        <tr>
+          <td class="num">7</td>
+          <td><span class="t-pt">A mãe que salvou a filha da rede de Epstein</span></td>
+          <td class="links"><a class="btn btn-bbc" href="https://www.bbc.com/portuguese/articles/c5y6g6yzev5o" target="_blank" rel="noopener">Original BBC ↗</a></td>
+        </tr>
+        <tr>
+          <td class="num">8</td>
+          <td><span class="t-pt">A escritura que colocou Epstein em São Paulo</span></td>
+          <td class="links"><a class="btn btn-bbc" href="https://www.bbc.com/portuguese/articles/cm21e7gnx0ro" target="_blank" rel="noopener">Original BBC ↗</a></td>
+        </tr>
+        <tr>
+          <td class="num">9</td>
+          <td><span class="t-pt">'Me negociaram por US$ 10 mil'</span></td>
+          <td class="links"><a class="btn btn-bbc" href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener">Original BBC ↗</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- INTERNACIONAL / EN -->
+  <section>
+    <h2>Versão internacional <span class="en">· International & translations</span></h2>
+    <div class="h2line"></div>
+    <div class="intl">
+      <div class="intl-card lead">
+        <span class="lng">English · BBC News</span>
+        <a class="ttl" href="https://www.bbc.com/news/articles/cr4576v66kno" target="_blank" rel="noopener">Epstein used modelling agent to recruit girls, Brazilian women tell BBC ↗</a>
+        <div style="font-size:13.5px;color:var(--muted)">A versão internacional da investigação, publicada em inglês e traduzida para vários idiomas:</div>
+        <div class="flags">
+          <a href="https://www.bbc.com/afrique/articles/c1d61vv5zp5o" target="_blank" rel="noopener">🇫🇷 Français</a>
+          <a href="https://www.bbc.com/polska/articles/cx2d5x51ed2o" target="_blank" rel="noopener">🇵🇱 Polski</a>
+          <a href="https://www.bbc.com/serbian/articles/c86yx735qqdo/lat" target="_blank" rel="noopener">🇷🇸 Srpski</a>
+          <a href="https://www.bbc.com/zhongwen/articles/crrxv49x1z9o/simp" target="_blank" rel="noopener">🇨🇳 中文</a>
+          <a href="https://www.bbc.com/ukrainian/articles/c15x1e1j947o" target="_blank" rel="noopener">🇺🇦 Українська</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer><div class="wrap">
+  <strong>The Brazil Files</strong> — série investigativa de Luiz Fernando Toledo / BBC News Brasil. As reportagens originais estão publicadas em <a href="https://www.bbc.com/portuguese" target="_blank" rel="noopener">bbc.com/portuguese</a>.
+  <br><br><a href="../../index.html">← Voltar ao portfólio</a>
+</div></footer>
+
 </body>
 </html>
