@@ -1,0 +1,21 @@
+/* Shared light-first theme layer for project pages with independent layouts. */
+:root { color-scheme: light; }
+.site-theme-toggle {
+  position: fixed; right: 18px; bottom: 18px; z-index: 10001;
+  display: inline-flex; align-items: center; gap: 8px;
+  min-height: 42px; padding: 0 13px;
+  border: 1px solid rgba(23, 34, 31, .26); border-radius: 999px;
+  color: #123d32; background: #fffdf8; box-shadow: 0 8px 24px rgba(23, 34, 31, .16);
+  font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .04em; cursor: pointer;
+}
+.site-theme-toggle:hover { background: #c7e55a; }
+html[data-site-theme="dark"] { color-scheme: dark; }
+html[data-site-theme="dark"] .site-theme-toggle {
+  color: #dfeee5; background: #17221f; border-color: rgba(223,238,229,.35);
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+html[data-site-theme="dark"] .site-theme-toggle:hover { color: #17221f; background: #c7e55a; }
+@media (max-width: 600px) {
+  .site-theme-toggle { right: 13px; bottom: 13px; min-height: 40px; padding: 0 11px; }
+}
