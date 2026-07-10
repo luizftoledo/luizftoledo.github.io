@@ -31,9 +31,11 @@
   h2 .en{font-size:15px;color:var(--muted);font-weight:400;font-style:italic}
   .h2line{height:3px;background:var(--accent);width:54px;margin:8px 0 20px;border-radius:2px}
   /* videos */
-  .vids{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:18px}
-  @media(max-width:860px){.vids{grid-template-columns:1fr 1fr}}
-  @media(max-width:560px){.vids{grid-template-columns:1fr}}
+  .vids{display:block}
+  .vids .wide{margin-bottom:18px}
+  .shorts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  @media(max-width:860px){.shorts{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.shorts{grid-template-columns:1fr}}
   .vid{background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05)}
   .vid .frame{position:relative;width:100%;background:#000}
   .vid.wide .frame{padding-top:56.25%}
@@ -128,6 +130,7 @@
         <div class="frame"><iframe src="https://www.youtube.com/embed/Nl5eRXVkW9Y?rel=0" title="The Epstein–Brazil connection" loading="lazy" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
         <div class="cap"><b>The Epstein–Brazil connection</b> — reportagem em vídeo</div>
       </div>
+      <div class="shorts">
       <div class="vid tall">
         <div class="frame"><iframe src="https://www.youtube.com/embed/QMMUbT24nCg?rel=0" title="Short — Epstein Brasil" loading="lazy" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
         <div class="cap">Short</div>
@@ -143,6 +146,7 @@
       <div class="vid tall">
         <div class="frame"><iframe src="https://www.youtube.com/embed/w7w38Q4OH2A?rel=0" title="Short — Epstein Brasil" loading="lazy" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>
         <div class="cap">Short</div>
+      </div>
       </div>
     </div>
   </section>
