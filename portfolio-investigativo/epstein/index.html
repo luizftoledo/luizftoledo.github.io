@@ -65,6 +65,14 @@
   .flags a{font-size:13px;background:var(--chip);border:1px solid var(--line);border-radius:20px;padding:4px 12px;text-decoration:none;color:var(--ink)}
   .flags a:hover{background:var(--hi)}
   .note{background:#fff8e6;border:1px solid #f0d98a;border-radius:8px;padding:11px 15px;font-size:13.5px;margin:16px 0}
+  .method{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent2);border-radius:10px;padding:24px 26px}
+  .method p{margin:0 0 14px}
+  .method p:last-child{margin-bottom:0}
+  .method-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+  @media(max-width:640px){.method-grid{grid-template-columns:1fr}}
+  .method-card{background:#fbf8f1;border:1px solid var(--line);border-radius:7px;padding:14px 16px}
+  .method-card h3{font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin:0 0 7px;color:var(--accent)}
+  .method-card p{font-size:14px;margin:0;color:var(--muted)}
   footer{background:#16130f;color:#cfc9bc;font-size:12.5px;padding:30px 0;margin-top:50px}
   footer a{color:#e7b3b3}
 </style>
@@ -82,6 +90,34 @@
 <div class="wrap">
 
   <p class="disc">As reportagens foram publicadas pela <strong>BBC News Brasil</strong> e por edições internacionais da BBC. Abaixo, os links para os originais, as versões traduzidas e os vídeos.</p>
+
+  <!-- METODOLOGIA -->
+  <section>
+    <h2>Como a investigação foi feita <span class="en">· Methodology</span></h2>
+    <div class="h2line"></div>
+    <div class="method">
+      <p>Esta série foi construída a partir de documentos disponibilizados pelo <a href="https://www.justice.gov/epstein" target="_blank" rel="noopener">US Department of Justice</a>. Desenvolvi uma metodologia de <em>webscraping</em> em etapas: buscas automatizadas por termos-chave identificavam assuntos e pessoas de interesse; cada descoberta levava a uma nova rodada de coleta e análise dos documentos relacionados.</p>
+      <p>Para localizar brasileiros citados nos arquivos, por exemplo, a investigação foi além de buscas por termos como “Brazil”, “Brazilian” ou “brasileiro”. Em mensagens de uma época anterior à popularização de tradutores automáticos e ferramentas de IA, muitos interlocutores brasileiros escreviam em inglês com padrões influenciados pelo português. Buscar por esses erros e construções recorrentes revelou pessoas e conversas que não apareceriam em uma pesquisa convencional.</p>
+      <div class="method-grid">
+        <div class="method-card">
+          <h3>Imagens e IA</h3>
+          <p>Ferramentas de inteligência artificial ajudaram a filtrar e categorizar as imagens do repositório, ampliando a capacidade de encontrar documentos e informações de interesse público.</p>
+        </div>
+        <div class="method-card">
+          <h3>Monitoramento contínuo</h3>
+          <p>À medida que a apuração se transformou em uma cobertura de meses, construí um clipping personalizado com Codex/OpenAI para localizar novas menções às relações de Epstein com brasileiros em veículos, canais digitais e redes sociais — não apenas na mídia tradicional.</p>
+        </div>
+        <div class="method-card">
+          <h3>Mapeamento de conexões</h3>
+          <p>Também foram construídos grafos de pessoas de interesse ligadas a Epstein a partir do Brasil. Eles ajudaram a organizar a investigação, visualizar conexões e orientar a checagem documental de indícios de uma rede de aliciamento e exploração sexual.</p>
+        </div>
+        <div class="method-card">
+          <h3>Apuração e verificação</h3>
+          <p>Automação e IA serviram para encontrar padrões e reduzir o universo de busca. As conclusões jornalísticas foram sustentadas por documentos, entrevistas e checagem editorial.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- VÍDEOS -->
   <section>
