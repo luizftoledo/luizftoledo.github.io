@@ -171,6 +171,21 @@ html[data-site-theme="dark"] .outlet-panel { background: #1b2b25 !important; }
 .award-status { border-radius: 0 !important; }
 .show-more-btn { border-radius: 0 !important; background: var(--forest) !important; color: white !important; }
 
+/* Resume: replace the compressed legacy NOW badges with a quiet status pill. */
+.resume-page .resume-item .now-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px !important;
+  padding: 3px 7px !important;
+  border: 1px solid var(--moss) !important;
+  border-radius: 999px !important;
+  background: transparent !important;
+  color: var(--forest) !important;
+  font: 500 10px/1 'DM Mono', monospace !important;
+  letter-spacing: .05em !important;
+  vertical-align: middle;
+}
+
 .footer { background: var(--forest) !important; color: white !important; padding: 100px 0 58px !important; }
 .footer::before { display: none; }
 .footer .container {
