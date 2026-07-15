@@ -74,7 +74,6 @@ nav .nav-links .nav-sep { background: var(--line); }
 .icon-btn { color: var(--forest) !important; border-color: var(--line) !important; background: transparent !important; }
 
 .hero { padding: 86px 0 112px; overflow: hidden; }
-.hero::after { content: 'JOURNALISM / DATA / INVESTIGATION'; font: 10px 'DM Mono', monospace; letter-spacing: .14em; color: var(--moss); position: absolute; left: 36px; bottom: 34px; }
 .hero .container { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(390px, .88fr); gap: 72px; align-items: center; }
 .hero-text { max-width: 770px; }
 .hero-text h1 { font: 500 clamp(3.6rem, 6.4vw, 6.6rem)/.9 'Newsreader', Georgia, serif; color: var(--forest); letter-spacing: -.075em; margin-bottom: 32px; }

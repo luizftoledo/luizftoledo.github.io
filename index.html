@@ -976,9 +976,13 @@
               class="award-source">ANPR</span></li>
           <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
               class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span>
+            <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="Hidden secret"
+              role="button" tabindex="0"
+              style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px; cursor: pointer; border-radius: 50%; z-index: 10;"
+              title="???">
             <span class="award-source">Instituto Ayrton Senna</span>
           </li>
-          <li><span
+          <li id="secretAwardLi" style="cursor: pointer; transition: all 0.2s;"><span
               class="award-year">2011</span><span class="award-status winner">🏆 Winner</span><span
               class="award-title">Premio ASU/Schaeffer 2011 – A história
               da mulher que adotou seis crianças</span><span class="award-source">ASU/Schaeffer</span></li>
@@ -1000,6 +1004,42 @@
         });
       }
 
+      // Add hover effect via JS since we can't easily add CSS to style tag
+      const secretLi = document.getElementById('secretAwardLi');
+      if (secretLi) {
+        secretLi.addEventListener('mouseenter', () => {
+          secretLi.style.transform = 'scale(1.02)';
+          secretLi.style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
+        });
+        secretLi.addEventListener('mouseleave', () => {
+          secretLi.style.transform = 'scale(1)';
+          secretLi.style.boxShadow = 'none';
+        });
+      }
+
+      // Pokemon Heart Gold Secret Trigger (Konami Code)
+      const konamiCode = [
+        "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+        "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+        "b", "a"
+      ];
+      let konamiIndex = 0;
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex] || e.key === konamiCode[konamiIndex].toLowerCase()) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+            konamiIndex = 0;
+            if (typeof triggerPokemonSecret === 'function') {
+              triggerPokemonSecret();
+            } else {
+              window.location.href = 'pokemon.html';
+            }
+          }
+        } else {
+          konamiIndex = 0; // Reset
+        }
+      });
     </script>
 
     <!-- Research & fellowships (visual trail) -->
@@ -1067,6 +1107,9 @@
               Brazil and US project</span><span class="grant-source">ICFJ</span></li>
           <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$
               60,000 scholarship (2019) – Jornalista de Visão</span>
+            <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="Hidden secret"
+              role="button" tabindex="0"
+              style="width: 16px; height: 16px; margin-left: 5px; cursor: pointer; opacity: 0.1; transition: opacity 0.3s; vertical-align: middle;">
             <span class="grant-source">Instituto Ling</span>
           </li>
           <li><span class="grant-year">2018</span><span class="grant-title">ICFJ Emerging Leaders Program / fellow
@@ -1145,14 +1188,6 @@
         <a href="stardew.html" aria-label="Open Journalism Valley" title="Journalism Valley">
           <img src="images/stardew/chicken.png" alt="Journalism Valley"
             style="width: 28px; height: 28px; opacity: 1; image-rendering: pixelated;">
-        </a>
-        <a href="pokemon.html" aria-label="Open Route 26" title="Route 26">
-          <img src="pokeball_secret.png" alt="Route 26"
-            style="width: 28px; height: 28px; image-rendering: pixelated;">
-        </a>
-        <a href="persona.html?secret=true" aria-label="Open Palace of Secrets" title="Palace of Secrets">
-          <img src="images/persona/treasure_chest.png" alt="Palace of Secrets"
-            style="width: 28px; height: 28px; image-rendering: pixelated;">
         </a>
       </div>
     </div>
