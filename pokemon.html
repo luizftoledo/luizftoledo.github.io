@@ -157,7 +157,7 @@
       position: fixed;
       top: 10px;
       right: 12px;
-      z-index: 60;
+      z-index: 100;
       font-family: 'Press Start 2P', monospace;
       font-size: 9px;
       color: #fff;
@@ -175,30 +175,70 @@
       position: fixed;
       top: 10px;
       left: 12px;
-      z-index: 60;
+      z-index: 100;
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: rgba(29, 23, 38, .92);
-      border: 2px solid #2e2640;
-      border-radius: 999px;
-      padding: 6px 12px;
+      gap: 6px;
+      background: rgba(248, 248, 240, .96);
+      border: 2px solid #384878;
+      border-radius: 8px;
+      padding: 6px 8px;
+      box-shadow: 0 5px 16px rgba(0, 0, 0, .35);
     }
 
     .audio-ctl button {
       font-family: 'Press Start 2P', monospace;
-      font-size: 12px;
-      background: none;
-      border: 0;
-      color: #cfc2e8;
+      font-size: 7px;
+      background: #384878;
+      border: 2px solid #7890b8;
+      color: #f8f8f0;
+      border-radius: 5px;
+      padding: 6px 7px;
       cursor: pointer;
       line-height: 1;
     }
 
+    .audio-ctl button:active { background: #5068a0; }
+
+    .audio-label {
+      color: #384878;
+      font-size: 7px;
+      line-height: 1;
+    }
+
     .audio-ctl input[type=range] {
-      width: 74px;
+      width: 86px;
       accent-color: #b04a40;
       cursor: pointer;
+    }
+
+    .screen-wrap:fullscreen,
+    .screen-wrap:-webkit-full-screen,
+    .screen-wrap.fullscreen-fallback {
+      width: 100vw;
+      height: 100vh;
+      max-width: none;
+      aspect-ratio: auto;
+      border: 0;
+      border-radius: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+    }
+
+    .screen-wrap:fullscreen canvas#screen,
+    .screen-wrap:-webkit-full-screen canvas#screen,
+    .screen-wrap.fullscreen-fallback canvas#screen {
+      width: min(100vw, 133.333vh);
+      height: min(75vw, 100vh);
+      border-radius: 0;
+    }
+
+    .screen-wrap.fullscreen-fallback {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
     }
 
     /* desktop (mouse + teclado): esconde o pad, mostra dica de teclas, tela maior */
@@ -228,7 +268,10 @@
       .key-hint { display: none; }
       .ab { width: 104px; height: 88px; }
       .ab button { width: 48px; height: 48px; }
+      .audio-ctl { left: 6px; top: 6px; padding: 5px; }
+      .audio-label { display: none; }
       .audio-ctl input[type=range] { width: 52px; }
+      .audio-ctl button { font-size: 6px; padding: 5px; }
     }
   </style>
   <script src="theme-toggle.js"></script>
@@ -236,8 +279,10 @@
 
 <body>
   <div class="audio-ctl">
-    <button id="muteBtn" aria-label="mute">♪</button>
+    <button id="muteBtn" aria-label="mute">MUTE</button>
+    <span class="audio-label">VOL</span>
     <input id="volRange" type="range" min="0" max="100" value="60" aria-label="volume">
+    <button id="fullscreenBtn" aria-label="fullscreen">FULL</button>
   </div>
   <a class="quit-link" href="index.html">&larr; PORTFOLIO</a>
 
@@ -256,7 +301,7 @@
     </div>
     <div class="pad-center">
       <button class="pill-btn" id="noteBtn">NOTEBOOK</button>
-      <div class="key-hint">ARROWS/WASD&nbsp;MOVE<br>Z/ENTER&nbsp;=&nbsp;A&nbsp;&nbsp;X/ESC&nbsp;=&nbsp;B</div>
+      <div class="key-hint">ARROWS/WASD&nbsp;MOVE<br>Z/ENTER&nbsp;=&nbsp;A&nbsp;&nbsp;X/ESC&nbsp;=&nbsp;B&nbsp;&nbsp;F&nbsp;FULL</div>
     </div>
     <div class="ab">
       <button class="b" data-btn="B">B</button>
@@ -264,7 +309,7 @@
     </div>
   </div>
 
-  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER = A &nbsp;·&nbsp; X/ESC = B (notebook)</div>
+  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER = A &nbsp;·&nbsp; X/ESC = B (notebook) &nbsp;·&nbsp; F fullscreen</div>
 
   <audio id="mGrass" src="grass_route.m4a" loop preload="auto"></audio>
   <audio id="mBattle" src="pkost_music.mp3" loop preload="auto"></audio>
@@ -280,6 +325,7 @@
        ===================================================================== */
 
     const cv = document.getElementById('screen'), g = cv.getContext('2d');
+    const screenWrap = document.querySelector('.screen-wrap');
     g.scale(4, 4);               // coordenadas lógicas continuam 256x192
     g.imageSmoothingEnabled = false;
 
@@ -295,11 +341,33 @@
     let muted = localStorage.getItem('lft_game_mute') === '1';
     const volRange = document.getElementById('volRange');
     const muteBtn = document.getElementById('muteBtn');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    let audioCtx = null, sfxGain = null;
+
+    function ensureAudio() {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return null;
+        audioCtx = new AC();
+        sfxGain = audioCtx.createGain();
+        sfxGain.connect(audioCtx.destination);
+      }
+      if (audioCtx.state === 'suspended') {
+        const p = audioCtx.resume();
+        if (p && p.catch) p.catch(() => { });
+      }
+      return audioCtx;
+    }
+
+    function setSfxGain() {
+      if (sfxGain) sfxGain.gain.value = muted ? 0 : masterVol;
+    }
 
     function applyVol() {
       BASE_VOL.forEach(([el, b]) => el.volume = muted ? 0 : b * masterVol);
+      setSfxGain();
       volRange.value = Math.round(masterVol * 100);
-      muteBtn.textContent = muted ? '✕' : '♪';
+      muteBtn.textContent = muted ? 'SOUND' : 'MUTE';
       localStorage.setItem('lft_game_vol', masterVol);
       localStorage.setItem('lft_game_mute', muted ? '1' : '0');
     }
@@ -311,6 +379,100 @@
       [mGrass, mBattle, mWin].forEach(a => { if (a !== which) { a.pause(); a.currentTime = 0; } });
       if (which) which.play().catch(() => { });
     }
+
+    function tone(freq, start, dur, type, gain = .18, bend = 0) {
+      const ctx = ensureAudio();
+      if (!ctx || muted) return;
+      const osc = ctx.createOscillator(), amp = ctx.createGain();
+      osc.type = type || 'square';
+      osc.frequency.setValueAtTime(freq, start);
+      if (bend) osc.frequency.exponentialRampToValueAtTime(Math.max(40, freq + bend), start + dur);
+      amp.gain.setValueAtTime(0.0001, start);
+      amp.gain.exponentialRampToValueAtTime(gain, start + .012);
+      amp.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+      osc.connect(amp); amp.connect(sfxGain);
+      osc.start(start); osc.stop(start + dur + .025);
+    }
+
+    function noiseHit(start, dur, gain, filterFreq) {
+      const ctx = ensureAudio();
+      if (!ctx || muted) return;
+      const frames = Math.max(1, Math.floor(ctx.sampleRate * dur));
+      const buf = ctx.createBuffer(1, frames, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < frames; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / frames);
+      const src = ctx.createBufferSource(), filt = ctx.createBiquadFilter(), amp = ctx.createGain();
+      src.buffer = buf;
+      filt.type = 'bandpass'; filt.frequency.value = filterFreq; filt.Q.value = 4;
+      amp.gain.setValueAtTime(gain, start);
+      amp.gain.exponentialRampToValueAtTime(0.0001, start + dur);
+      src.connect(filt); filt.connect(amp); amp.connect(sfxGain);
+      src.start(start); src.stop(start + dur);
+    }
+
+    function playSfx(kind) {
+      const ctx = ensureAudio();
+      if (!ctx || muted) return;
+      setSfxGain();
+      const t = ctx.currentTime + .01;
+      if (kind === 'hitPlayer') {
+        noiseHit(t, .11, .22, 720);
+        tone(120, t, .12, 'sawtooth', .12, -55);
+      } else if (kind === 'hitPlayerSuper') {
+        noiseHit(t, .16, .28, 380);
+        tone(180, t, .09, 'square', .16, -90);
+        tone(82, t + .06, .16, 'sawtooth', .13, -35);
+      } else if (kind === 'hitEnemy') {
+        tone(620, t, .05, 'square', .15, 120);
+        tone(390, t + .045, .07, 'square', .12, -70);
+      } else if (kind === 'flee') {
+        tone(520, t, .06, 'triangle', .12, -120);
+        tone(390, t + .07, .06, 'triangle', .11, -100);
+        tone(270, t + .14, .12, 'triangle', .10, -80);
+      } else if (kind === 'item') {
+        [523, 659, 784, 1046].forEach((f, i) => tone(f, t + i * .09, .08, 'square', .12));
+        tone(1318, t + .35, .16, 'triangle', .10);
+      } else if (kind === 'heal') {
+        [659, 784, 880, 1046, 880, 1046, 1318, 1568].forEach((f, i) => tone(f, t + i * .12, .10, i % 2 ? 'triangle' : 'square', .11));
+        tone(523, t + .94, .22, 'triangle', .09);
+      }
+    }
+
+    function currentFullscreenElement() {
+      return document.fullscreenElement || document.webkitFullscreenElement || null;
+    }
+
+    function syncFullscreenUi() {
+      const fs = currentFullscreenElement() === screenWrap || screenWrap.classList.contains('fullscreen-fallback');
+      fullscreenBtn.textContent = fs ? 'EXIT' : 'FULL';
+    }
+
+    function toggleFullscreen() {
+      if (screenWrap.classList.contains('fullscreen-fallback')) {
+        screenWrap.classList.remove('fullscreen-fallback');
+      } else if (currentFullscreenElement()) {
+        const exit = document.exitFullscreen || document.webkitExitFullscreen;
+        if (exit) {
+          const p = exit.call(document);
+          if (p && p.catch) p.catch(() => { });
+        }
+      } else if (screenWrap.requestFullscreen) {
+        const p = screenWrap.requestFullscreen();
+        if (p && p.catch) p.catch(() => {
+          screenWrap.classList.toggle('fullscreen-fallback');
+          syncFullscreenUi();
+        });
+      } else if (screenWrap.webkitRequestFullscreen) {
+        screenWrap.webkitRequestFullscreen();
+      } else {
+        screenWrap.classList.toggle('fullscreen-fallback');
+      }
+      setTimeout(syncFullscreenUi, 60);
+    }
+
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    document.addEventListener('fullscreenchange', syncFullscreenUi);
+    document.addEventListener('webkitfullscreenchange', syncFullscreenUi);
 
     /* =====================================================================
        PALETA & SPRITES
@@ -432,7 +594,7 @@
 
     /* ---------- criaturas 24x24 ---------- */
     const DEX_SRC = {
-      PAPYR: [
+      BADSCAN: [
         '......kkkkkkkkkkk.......',
         '.....kwwwwwwwwwwkk......',
         '.....kwwwwwwwwwwkWk.....',
@@ -456,7 +618,7 @@
         '.kwwkkwwkkwwwkkwwkkwwk..',
         '..kkk.kkk.kkkk.kkk.kkk..'
       ],
-      SIGILO: [
+      REDACTOR: [
         '........................',
         '........................',
         '...kkkkkkkkkkkkkkkkkk...',
@@ -476,7 +638,7 @@
         '....kkkk........kkkk....',
         '........................'
       ],
-      LEAKY: [
+      PAYWALL: [
         '...........kk..........',
         '..........kUUk..........',
         '.........kUUUUk.........',
@@ -500,7 +662,7 @@
         '.......kkuuuuukk........',
         '.........kkkkk..........'
       ],
-      SPINNER: [
+      PRESSSEC: [
         '......kkkkkkkkkkkk......',
         '.....kmmmmmmmmmmmmk.....',
         '.....kmMMmmmmmmMMmk.....',
@@ -543,7 +705,7 @@
         '.....kk..........kk.....',
         '........................'
       ],
-      LOBBY: [
+      LOBBYIST: [
         '.......kkkkkkk..........',
         '......keeeeeeek.........',
         '.....keeEEEEeeek........',
@@ -567,7 +729,7 @@
         '.......kEEeeeek.........',
         '........kkkkkk..........'
       ],
-      SHREDDR: [
+      SHREDDER: [
         '...kkkkkkkkkkkkkkkkk....',
         '..kCCCCCCCCCCCCCCCCCk...',
         '..kCwwkCCCCCCCCkwwCCk...',
@@ -589,7 +751,7 @@
         '...kkkk..........kkkk...',
         '........................'
       ],
-      TROLLBOT: [
+      BOTFARM: [
         '...........kk...........',
         '..........kyyk..........',
         '...........kk...........',
@@ -617,15 +779,15 @@
 
     /* rate = facilidade base de captura (tipo catch rate do Pokémon) */
     const DEX = [
-      { id: 'PAPYR', name: 'PAPYR', kind: 'Loose Record', lv: [3, 6], hp: 20, atk: 4, enc: .24, rate: .80, blurb: 'A runaway public record. Hates being archived.' },
-      { id: 'SIGILO', name: 'SIGILO', kind: 'Redaction Bar', lv: [4, 7], hp: 26, atk: 5, enc: .18, rate: .70, blurb: 'A living redaction. Hides the truth behind itself.' },
-      { id: 'LEAKY', name: 'LEAKY', kind: 'Whistle Drop', lv: [5, 9], hp: 24, atk: 6, enc: .14, rate: .60, blurb: 'A leaked drop of intel. Squeaks when nervous.' },
-      { id: 'TROLLBOT', name: 'TROLLBOT', kind: 'Reply Guy', lv: [5, 9], hp: 26, atk: 6, enc: .14, rate: .60, blurb: 'Argues in bad faith. Powered by engagement.' },
-      { id: 'LOBBY', name: 'LOBBY', kind: 'Tie Snake', lv: [6, 10], hp: 30, atk: 7, enc: .12, rate: .50, blurb: 'Slithers through corridors of power. Nice tie.' },
-      { id: 'SPINNER', name: 'SPINNER', kind: 'Spin Doctor', lv: [7, 11], hp: 32, atk: 7, enc: .08, rate: .45, blurb: 'Twists every fact it touches. Very slippery.' },
-      { id: 'SHREDDR', name: 'SHREDDR', kind: 'Paper Eater', lv: [8, 12], hp: 36, atk: 8, enc: .06, rate: .40, blurb: 'Eats evidence for breakfast. Jams sometimes.' },
-      { id: 'DEEPFAKE', name: 'DEEPFAKE', kind: 'Synthetic Lie', lv: [9, 13], hp: 38, atk: 9, enc: .04, rate: .35, blurb: 'A fabricated face. Flickers between two truths.' },
-      { id: 'GOVRECORD', name: 'GOV.RECORD', kind: 'Sealed Archive', lv: [16, 16], hp: 70, atk: 11, enc: 0, rate: .30, blurb: 'The final sealed archive. Only a FOIA opens it.' }
+      { id: 'BADSCAN', name: 'BADSCAN', kind: 'Unreadable PDF', type: 'DOCUMENT', lv: [6, 8], hp: 22, atk: 5, enc: .24, rate: .80, blurb: 'A crooked scan with no OCR. It blurs every fact.' },
+      { id: 'REDACTOR', name: 'REDACTOR', kind: 'Black Bar', type: 'LEGAL', lv: [7, 9], hp: 27, atk: 6, enc: .18, rate: .70, blurb: 'Covers names, dates and totals with official ink.' },
+      { id: 'PAYWALL', name: 'PAYWALL', kind: 'Subscriber Gate', type: 'TECH', lv: [8, 10], hp: 29, atk: 6, enc: .14, rate: .60, blurb: 'Blocks key records unless someone pays the toll.' },
+      { id: 'BOTFARM', name: 'BOTFARM', kind: 'Disinfo Bot', type: 'TECH', lv: [8, 10], hp: 30, atk: 7, enc: .14, rate: .60, blurb: 'Spams false leads until the thread becomes noise.' },
+      { id: 'LOBBYIST', name: 'LOBBYIST', kind: 'Quiet Fixer', type: 'LEGAL', lv: [9, 11], hp: 34, atk: 7, enc: .12, rate: .50, blurb: 'Whispers carve-outs into bills before daylight.' },
+      { id: 'PRESSSEC', name: 'PRESSSEC', kind: 'Evasive Briefing', type: 'DOCUMENT', lv: [10, 12], hp: 36, atk: 8, enc: .08, rate: .45, blurb: 'Answers a different question with a polished smile.' },
+      { id: 'SHREDDER', name: 'SHREDDER', kind: 'Record Destroyer', type: 'DOCUMENT', lv: [11, 13], hp: 40, atk: 8, enc: .06, rate: .40, blurb: 'Turns receipts into confetti before audit day.' },
+      { id: 'DEEPFAKE', name: 'DEEPFAKE', kind: 'Synthetic Source', type: 'DATA', lv: [12, 14], hp: 42, atk: 9, enc: .04, rate: .35, blurb: 'Looks credible until the metadata starts screaming.' },
+      { id: 'LAIDENY', name: 'LAI DENY', kind: 'FOI Bureaucrat', type: 'LEGAL', lv: [14, 14], hp: 64, atk: 10, enc: 0, rate: .30, blurb: 'The final denial letter. Only persistence opens it.' }
     ];
     for (const d of DEX) if (DEX_SRC[d.id]) d.sprite = makeSprite(DEX_SRC[d.id]);
     const N_ALL = DEX.length;
@@ -740,7 +902,8 @@
         ['ROUTE 26 - FOIA FIELDS', 'Wild documents live in the', 'tall grass. File 3 of them', 'to close your notebook!']
       ],
       '21,11': [
-        ['TIP: weaken a document to', 'raise your FOIA catch odds.', 'SUBPOENA corners it for an', 'even better chance!'],
+        ['TIP: weaken a document to', 'raise your FOIA catch odds.', 'Low HP means better access.'],
+        ['TIP: typed attacks matter.', 'DATA, DOCUMENT, LEGAL and', 'TECH expose different foes.'],
         ['Pick up the red balls lying', 'around: coffee restores HP,', 'espresso restores move PP.']
       ]
     };
@@ -756,26 +919,58 @@
       { x: 26, y: 12, item: 'espresso' }
     ];
 
+    const REDACAO = { x: 9, y: 2, w: 5, h: 4, doorX: 11, doorY: 5, exitX: 11, exitY: 6 };
+    const SHOP_ITEMS = [
+      { key: 'coffee', name: 'COFFEE', price: 45, desc: 'Restores 25 HP.' },
+      { key: 'espresso', name: 'ESPRESSO', price: 65, desc: 'Restores 5 PP.' }
+    ];
+
     /* =====================================================================
        ESTADO
        ===================================================================== */
+    const START_LEVEL = 10;
+    const START_MAX_HP = 58;
+    const PLAYER_TYPE = 'DOCUMENT';
+
     const game = {
       state: 'title',
       px: 2, py: 6, dir: 'right',
       moving: false, moveT: 0, fromX: 2, fromY: 6,
       step: 0,
       caught: {},
-      hp: 60, maxhp: 60,
+      level: START_LEVEL, xp: 0, nextXp: 90,
+      hp: START_MAX_HP, maxhp: START_MAX_HP,
+      money: 120,
       items: { coffee: 0, espresso: 0 },   // começa de mãos vazias
       balls: {},                            // pokébolas já coletadas
       tutorialDone: false,
       battle: null,
+      redacao: null,
+      gameOver: null,
       msg: null,                            // { pages: [[linhas]], idx }
       rustle: null,
       dexSel: 0,
       winT: 0, winSel: 0, animClock: 0
     };
     const caughtCount = () => Object.keys(game.caught).length;
+
+    function xpToNext(level) {
+      return 90 + Math.max(0, level - START_LEVEL) * 45;
+    }
+
+    function gainXp(amount) {
+      const lines = ['Gained ' + amount + ' EXP.'];
+      game.xp += amount;
+      while (game.xp >= game.nextXp) {
+        game.xp -= game.nextXp;
+        game.level++;
+        game.maxhp += 4;
+        game.hp = Math.min(game.maxhp, game.hp + 4);
+        game.nextXp = xpToNext(game.level);
+        lines.push('Level rose to Lv' + game.level + '!');
+      }
+      return lines;
+    }
 
     /* =====================================================================
        INPUT — teclado + pad DOM + toque no canvas
@@ -788,6 +983,17 @@
     };
     let pressQueue = [];
     window.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && screenWrap.classList.contains('fullscreen-fallback')) {
+        e.preventDefault();
+        screenWrap.classList.remove('fullscreen-fallback');
+        syncFullscreenUi();
+        return;
+      }
+      if (e.key && e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        toggleFullscreen();
+        return;
+      }
       const k = KEYMAP[e.key];
       if (!k) return;
       e.preventDefault();
@@ -873,9 +1079,47 @@
       return CHAR2TILE[MAP_STR[y][x]] || 'grass';
     }
 
+    function isRedacaoEntrance(x, y) {
+      return x === REDACAO.doorX && y === REDACAO.doorY;
+    }
+
+    function isRedacaoSolid(x, y) {
+      return x >= REDACAO.x && x < REDACAO.x + REDACAO.w && y >= REDACAO.y && y < REDACAO.y + REDACAO.h;
+    }
+
+    function restoreAtRedacao() {
+      game.hp = game.maxhp;
+      MOVES.forEach((m, i) => game.pp[i] = m.pp);
+    }
+
+    function enterRedacao() {
+      game.moving = false;
+      game.moveT = 0;
+      game.redacao = { sel: 0 };
+      game.state = 'redacao';
+      restoreAtRedacao();
+      playMusic(mGrass);
+      playSfx('heal');
+      showMsg(
+        ['Welcome to REDACAO!', 'HP and PP restored.', 'The newsroom shop is', 'open for supplies.']
+      );
+    }
+
+    function leaveRedacao() {
+      game.px = REDACAO.exitX; game.py = REDACAO.exitY;
+      game.fromX = game.px; game.fromY = game.py;
+      game.dir = 'down';
+      game.redacao = null;
+      game.msg = null;
+      game.state = 'world';
+      playMusic(mGrass);
+    }
+
     function tryMove(dx, dy, dir) {
       game.dir = dir;
       const nx = game.px + dx, ny = game.py + dy;
+      if (isRedacaoEntrance(nx, ny)) { enterRedacao(); return; }
+      if (isRedacaoSolid(nx, ny)) return;
       if (SOLID[tileAt(nx, ny)]) return;
       game.fromX = game.px; game.fromY = game.py;
       game.px = nx; game.py = ny;
@@ -889,6 +1133,7 @@
       if (ball) {
         game.balls[ball.x + ',' + ball.y] = true;
         game.items[ball.item]++;
+        playSfx('item');
         showMsg(ball.item === 'coffee'
           ? ['You found a COFFEE!', '(Restores 25 HP in battle.)']
           : ['You found an ESPRESSO!', '(Restores 5 PP to every', 'move in battle.)']);
@@ -896,7 +1141,7 @@
       }
       if (tileAt(game.px, game.py) === 'tall') {
         game.rustle = { x: game.px, y: game.py, t: 0 };
-        if (!game.caught.GOVRECORD && caughtCount() >= WIN_N - 1 && Math.random() < .25)
+        if (!game.caught.LAIDENY && caughtCount() >= WIN_N - 1 && Math.random() < .25)
           return startBattle(DEX[N_ALL - 1]);
         if (Math.random() < .15) {
           const pool = DEX.slice(0, N_ALL - 1);
@@ -941,6 +1186,25 @@
       if (game.rustle) { game.rustle.t += dt * 3; if (game.rustle.t > 1) game.rustle = null; }
     }
 
+    function drawRedacaoBuilding(camX, camY) {
+      const x = REDACAO.x * T - camX, y = REDACAO.y * T - camY;
+      px(x + 2, y + 10, REDACAO.w * T - 4, REDACAO.h * T - 12, '#d8d0b0');
+      px(x, y + 22, REDACAO.w * T, REDACAO.h * T - 22, '#f0e8c8');
+      px(x, y + 14, REDACAO.w * T, 8, '#b84838');
+      px(x + 5, y + 18, REDACAO.w * T - 10, 2, '#f8d8a8');
+      px(x + 8, y + 26, 16, 14, '#7890b8');
+      px(x + 56, y + 26, 16, 14, '#7890b8');
+      px(x + 10, y + 28, 12, 2, '#e8f8ff');
+      px(x + 58, y + 28, 12, 2, '#e8f8ff');
+      px(x + 33, y + 39, 14, 25, '#6b4c33');
+      px(x + 39, y + 42, 2, 5, '#f8d048');
+      px(x + 28, y + 4, 24, 10, '#f8f8f0');
+      textC('R', x + 40, y + 6, '#b84838', 7);
+      frame9(x + 12, y + 44, 22, 12, { bg: '#f8f8f0', edge: '#c8b890', dark: '#384878' });
+      text('NEWS', x + 15, y + 48, '#384878', 4);
+      textC('REDACAO', x + REDACAO.w * T / 2, y + 25, '#384878', 5);
+    }
+
     function drawWorld() {
       zones = [];
       // parado = posição NOVA (lerp 1); usar 0 fazia o sprite "voltar" ao tile anterior
@@ -961,6 +1225,8 @@
           else if (t === 'grass' && ((i * 7 + j * 13) % 5 === 0)) t = 'grass2';
           g.drawImage(TILES[t], i * T - camX, j * T - camY);
         }
+
+      drawRedacaoBuilding(camX, camY);
 
       /* pokébolas no chão */
       for (const b of BALLS) {
@@ -988,13 +1254,16 @@
       }
 
       /* HUD compacto */
-      frame9(2, 2, 130, 26, { bg: 'rgba(248,248,240,.95)' });
+      frame9(2, 2, 152, 36, { bg: 'rgba(248,248,240,.95)' });
       text('NOTEBOOK ' + Math.min(caughtCount(), WIN_N) + '/' + WIN_N, 8, 7, '#384878', 6);
+      text('Lv' + game.level, 102, 7, '#303030', 6);
       text('HP', 8, 17, '#e07820', 6);
       hpBar(24, 18, 44, game.hp / game.maxhp);
-      text('☕' + game.items.coffee, 76, 16, '#6b4226', 7);
-      text('⚡' + game.items.espresso, 102, 16, '#a07818', 7);
-      zone(2, 2, 130, 26, 'note');
+      text('R$' + game.money, 76, 17, '#388048', 6);
+      text('C' + game.items.coffee, 8, 28, '#6b4226', 6);
+      text('E' + game.items.espresso, 36, 28, '#a07818', 6);
+      text('XP ' + game.xp + '/' + game.nextXp, 66, 28, '#4868a0', 5);
+      zone(2, 2, 152, 36, 'note');
 
       if (game.msg) {
         frame9(4, 138, 248, 50);
@@ -1008,22 +1277,107 @@
        BATALHA
        ===================================================================== */
     const MOVES = [
-      { name: 'TOUGH QUESTION', dmg: [5, 9], pp: 20, fx: 'question', desc: 'Reliable jab' },
-      { name: 'COLD CALL', dmg: [6, 10], pp: 15, fx: 'ring', desc: 'Surprise hit' },
-      { name: 'CROSS-CHECK', dmg: [7, 11], pp: 12, fx: 'cross', desc: 'Solid hit' },
-      { name: 'DATA SCRAPE', dmg: [3, 14], pp: 12, fx: 'rain', desc: 'Wild swing' },
-      { name: 'EXPOSE', dmg: [9, 13], pp: 8, fx: 'flash', desc: 'Heavy hit' },
-      { name: 'SUBPOENA', dmg: null, pp: 8, fx: 'stamp', desc: 'Catch odds UP' }
+      { name: 'FACT CHECK', type: 'DATA', dmg: [8, 12], pp: 25, fx: 'question', desc: 'may poison', status: 'poison', statusChance: .22 },
+      { name: 'RECORD PULL', type: 'DOCUMENT', dmg: [7, 11], pp: 20, fx: 'stamp', desc: 'may sleep', status: 'sleep', statusChance: .18 },
+      { name: 'DATA SCRAPE', type: 'TECH', dmg: [9, 13], pp: 15, fx: 'rain', desc: 'may paralyze', status: 'paralysis', statusChance: .24 },
+      { name: 'LEGAL APPEAL', type: 'LEGAL', dmg: [10, 14], pp: 10, fx: 'flash', desc: 'may freeze', status: 'freeze', statusChance: .16 }
     ];
     game.pp = MOVES.map(m => m.pp);
-    const ENEMY_MOVES = ['REDACT', 'DELAY RESPONSE', 'SPIN STORY', 'JARGON WALL', 'APPEAL', 'STONEWALL'];
+    const ENEMY_MOVES = [
+      { name: 'DELAY LETTER', type: 'LEGAL', dmg: [5, 8], status: 'paralysis', statusChance: .16 },
+      { name: 'JARGON WALL', type: 'DOCUMENT', dmg: [5, 9], status: 'sleep', statusChance: .13 },
+      { name: 'SPIN BLAST', type: 'DATA', dmg: [6, 10], status: 'burn', statusChance: .18 },
+      { name: 'BROKEN LINK', type: 'TECH', dmg: [6, 9], status: 'poison', statusChance: .15 }
+    ];
+    const TYPE_EFFECTS = {
+      DATA: { TECH: 2, LEGAL: .5 },
+      DOCUMENT: { LEGAL: 2, TECH: .5 },
+      LEGAL: { DOCUMENT: 2, DATA: .5 },
+      TECH: { DATA: 2, DOCUMENT: .5 }
+    };
+    const STATUS_LABEL = {
+      paralysis: 'paralyzed',
+      sleep: 'asleep',
+      burn: 'burned',
+      poison: 'poisoned',
+      freeze: 'frozen'
+    };
+    const STATUS_SHORT = { paralysis: 'PARA', sleep: 'SLP', burn: 'BRN', poison: 'PSN', freeze: 'FRZ' };
+
+    function typeMult(moveType, targetType) {
+      return (TYPE_EFFECTS[moveType] && TYPE_EFFECTS[moveType][targetType]) || 1;
+    }
+
+    function effectivenessLine(mult) {
+      if (mult > 1) return 'Super effective!';
+      if (mult < 1) return 'Not very effective...';
+      return '';
+    }
+
+    function makeStatus(id) {
+      return { id, turns: id === 'sleep' ? 1 + Math.floor(Math.random() * 3) : 0 };
+    }
+
+    function applyStatus(target, id, chance, lines) {
+      const b = game.battle;
+      const key = target === 'enemy' ? 'enemyStatus' : 'playerStatus';
+      if (!id || b[key] || Math.random() >= chance) return;
+      b[key] = makeStatus(id);
+      lines.push((target === 'enemy' ? b.sp.name : 'JOURNALIST') + ' is ' + STATUS_LABEL[id] + '!');
+    }
+
+    function residualStatus(target, lines) {
+      const b = game.battle;
+      const st = target === 'enemy' ? b.enemyStatus : b.playerStatus;
+      if (!st || (st.id !== 'burn' && st.id !== 'poison')) return false;
+      const max = target === 'enemy' ? b.emax : game.maxhp;
+      const dmg = Math.max(1, Math.floor(max * (st.id === 'burn' ? .08 : .10)));
+      if (target === 'enemy') b.ehp = Math.max(0, b.ehp - dmg);
+      else game.hp = Math.max(0, game.hp - dmg);
+      lines.push((target === 'enemy' ? b.sp.name : 'JOURNALIST') + ' took ' + dmg + ' ' + st.id + ' dmg.');
+      return target === 'enemy' ? b.ehp <= 0 : game.hp <= 0;
+    }
+
+    function statusBlocks(target, next) {
+      const b = game.battle;
+      const key = target === 'enemy' ? 'enemyStatus' : 'playerStatus';
+      const st = b[key];
+      if (!st) return false;
+      const who = target === 'enemy' ? b.sp.name : 'JOURNALIST';
+      if (st.id === 'paralysis' && Math.random() < .28) {
+        bmsg([who + ' is paralyzed!', 'It cannot act this turn.'], next);
+        return true;
+      }
+      if (st.id === 'sleep') {
+        st.turns--;
+        if (st.turns <= 0) {
+          b[key] = null;
+          bmsg([who + ' woke up!'], next);
+        } else {
+          bmsg([who + ' is asleep.', 'No action this turn.'], next);
+        }
+        return true;
+      }
+      if (st.id === 'freeze') {
+        if (Math.random() < .25) {
+          b[key] = null;
+          bmsg([who + ' thawed out!'], next);
+        } else {
+          bmsg([who + ' is frozen solid!', 'No action this turn.'], next);
+        }
+        return true;
+      }
+      return false;
+    }
 
     function startBattle(species) {
       const lv = species.lv[0] + Math.floor(Math.random() * (species.lv[1] - species.lv[0] + 1));
+      const enemyMaxHp = species.hp + Math.max(0, lv - 6) * 2;
       game.battle = {
         sp: species, lv,
-        ehp: species.hp, emax: species.hp, ehpShow: species.hp, phpShow: game.hp,
+        ehp: enemyMaxHp, emax: enemyMaxHp, ehpShow: enemyMaxHp, phpShow: game.hp,
         cornered: false,
+        enemyStatus: null, playerStatus: null,
         phase: 'intro', introT: 0,
         queue: [], menuSel: 0, moveSel: 0, bagSel: 0,
         lungeT: 0, eLungeT: 0, eFlashT: 0, efxT: 0, shake: 0, t: 0,
@@ -1035,7 +1389,9 @@
     }
 
     function bmsg(lines, next) {
-      game.battle.queue.push({ lines, next });
+      for (let i = 0; i < lines.length; i += 4) {
+        game.battle.queue.push({ lines: lines.slice(i, i + 4), next: i + 4 >= lines.length ? next : 'msg' });
+      }
       game.battle.phase = 'msg';
     }
 
@@ -1045,18 +1401,68 @@
       game.state = 'world'; playMusic(mGrass);
     }
 
+    function startGameOver() {
+      game.battle = null;
+      game.msg = null;
+      game.gameOver = { t: 0 };
+      game.state = 'gameover';
+      playMusic(null);
+      playSfx('flee');
+    }
+
+    function resetAfterGameOver() {
+      game.hp = game.maxhp;
+      MOVES.forEach((m, i) => game.pp[i] = m.pp);
+      game.px = REDACAO.exitX; game.py = REDACAO.exitY;
+      game.fromX = game.px; game.fromY = game.py;
+      game.dir = 'down';
+      game.moving = false; game.moveT = 0;
+      game.battle = null;
+      game.gameOver = null;
+      game.redacao = null;
+      game.state = 'world';
+      playMusic(mGrass);
+      showMsg(['You whited out...', 'The REDACAO desk restored', 'your HP and PP.', 'Back to the story.']);
+    }
+
+    function battleReward(b) {
+      const boss = b.sp.id === 'LAIDENY' ? 80 : 0;
+      return Math.round((24 + b.lv * 5 + boss) / 5) * 5;
+    }
+
+    function battleXp(b) {
+      return 18 + b.lv * 3 + (b.sp.id === 'LAIDENY' ? 20 : 0);
+    }
+
+    function grantBattleRewards(b) {
+      const money = battleReward(b);
+      game.money += money;
+      return ['Earned R$' + money + '.'].concat(gainXp(battleXp(b)));
+    }
+
     function enemyTurn() {
       const b = game.battle;
-      const dmg = Math.max(1, Math.round(b.sp.atk * (0.7 + Math.random() * 0.7)));
+      if (statusBlocks('enemy', 'menu')) return;
+      const mv = ENEMY_MOVES[Math.floor(Math.random() * ENEMY_MOVES.length)];
+      const base = mv.dmg[0] + Math.floor(Math.random() * (mv.dmg[1] - mv.dmg[0] + 1));
+      const mult = typeMult(mv.type, PLAYER_TYPE);
+      const levelBump = Math.max(0, Math.floor((b.lv - 8) * .5));
+      const dmg = Math.max(1, Math.round((base + levelBump) * mult));
       game.hp = Math.max(0, game.hp - dmg);
       b.eLungeT = 1; b.shake = 1; b.efxT = 1;
-      const mv = ENEMY_MOVES[Math.floor(Math.random() * ENEMY_MOVES.length)];
-      bmsg([b.sp.name + ' used ' + mv + '!', 'Your credibility took ' + dmg + ' damage.'], game.hp <= 0 ? 'faint' : 'menu');
+      playSfx(mult > 1 ? 'hitPlayerSuper' : 'hitPlayer');
+      const lines = [b.sp.name + ' used ' + mv.name + '!', 'Your credibility took ' + dmg + ' damage.'];
+      const eff = effectivenessLine(mult);
+      if (eff) lines.push(eff);
+      applyStatus('player', mv.status, mv.statusChance, lines);
+      const fainted = game.hp <= 0 || residualStatus('player', lines);
+      bmsg(lines, fainted ? 'faint' : 'menu');
     }
 
     function doAttack(mi) {
       const b = game.battle, m = MOVES[mi];
       if (game.pp[mi] <= 0) { bmsg(['No uses left for ' + m.name + '!', 'Drink an ESPRESSO to', 'restore your moves.'], 'menu'); return; }
+      if (statusBlocks('player', 'enemy')) return;
       game.pp[mi]--;
       b.lungeT = 1;
       b.fx = { kind: m.fx, t: 0, mi };
@@ -1066,18 +1472,23 @@
     function resolveAttack() {
       const b = game.battle, m = MOVES[b.fx.mi];
       b.fx = null;
-      if (!m.dmg) { // SUBPOENA
-        b.cornered = true;
-        bmsg(['You served a SUBPOENA!', b.sp.name + ' is cornered -', 'it cannot dodge the request!'], 'enemy');
-        return;
-      }
-      const dmg = m.dmg[0] + Math.floor(Math.random() * (m.dmg[1] - m.dmg[0] + 1));
+      const base = m.dmg[0] + Math.floor(Math.random() * (m.dmg[1] - m.dmg[0] + 1));
+      const mult = typeMult(m.type, b.sp.type);
+      const dmg = Math.max(1, Math.round((base + Math.max(0, game.level - 8)) * mult));
       b.ehp = Math.max(0, b.ehp - dmg);
       b.eFlashT = 1;
+      playSfx('hitEnemy');
+      const lines = ['You used ' + m.name + '!', 'It dealt ' + dmg + ' damage.'];
+      const eff = effectivenessLine(mult);
+      if (eff) lines.push(eff);
       if (b.ehp <= 0) {
-        bmsg(['You used ' + m.name + '!', b.sp.name + ' was debunked!', 'But it shredded itself...', 'file them BEFORE they faint!'], 'flee');
+        const rewards = grantBattleRewards(b);
+        bmsg(['You used ' + m.name + '!', b.sp.name + ' was debunked!', 'The story advanced.'].concat(rewards), 'flee');
       } else {
-        bmsg(['You used ' + m.name + '!', 'It dealt ' + dmg + ' damage.'], 'enemy');
+        applyStatus('enemy', m.status, m.statusChance, lines);
+        const fainted = residualStatus('enemy', lines);
+        if (fainted) lines.push(b.sp.name + ' collapsed under the record.', ...grantBattleRewards(b));
+        bmsg(lines, fainted ? 'flee' : 'enemy');
       }
     }
 
@@ -1114,7 +1525,7 @@
         game.lastInfo = b.sp;
         const l = CATCH_LINES[Math.floor(Math.random() * CATCH_LINES.length)]
           .map(s => s.replace('NAME', b.sp.name));
-        bmsg([...l, '(' + Math.min(caughtCount(), WIN_N) + '/' + WIN_N + ' sources secured)'], 'end');
+        bmsg([...l, '(' + Math.min(caughtCount(), WIN_N) + '/' + WIN_N + ' sources secured)', ...grantBattleRewards(b)], 'end');
       } else {
         const l = FAIL_LINES[Math.floor(Math.random() * FAIL_LINES.length)]
           .map(s => s.replace('NAME', b.sp.name));
@@ -1129,11 +1540,13 @@
         if (game.items.coffee <= 0) { bmsg(['No coffee in the bag!', 'Find red balls on the route.'], 'menu'); return; }
         game.items.coffee--;
         game.hp = Math.min(game.maxhp, game.hp + 25);
+        playSfx('item');
         bmsg(['You drank strong coffee.', 'Credibility restored by 25!'], 'enemy');
       } else {
         if (game.items.espresso <= 0) { bmsg(['No espresso in the bag!', 'Find red balls on the route.'], 'menu'); return; }
         game.items.espresso--;
         MOVES.forEach((m, i) => game.pp[i] = Math.min(m.pp, game.pp[i] + 5));
+        playSfx('item');
         bmsg(['A double shot of espresso!', 'All moves restored 5 PP.'], 'enemy');
       }
     }
@@ -1181,9 +1594,7 @@
           else if (next === 'enemy') enemyTurn();
           else if (next === 'flee' || next === 'end') endBattle();
           else if (next === 'faint') {
-            game.hp = Math.round(game.maxhp / 2);
-            MOVES.forEach((m, i) => game.pp[i] = m.pp);
-            bmsg(['You blacked out from stress!', 'An editor revived you with', 'deadline pressure...'], 'end');
+            startGameOver();
           }
         }
         return;
@@ -1224,8 +1635,11 @@
       else if (a === 'foia') doFoia();
       else if (a === 'bag') { b.phase = 'bag'; b.bagSel = 0; }
       else if (a === 'run') {
-        if (b.sp.id === 'GOVRECORD') bmsg(['You cannot run from', 'public records!'], 'menu');
-        else bmsg(['You got away safely.', '(The story can wait.)'], 'flee');
+        if (b.sp.id === 'LAIDENY') bmsg(['You cannot run from', 'public records!'], 'menu');
+        else {
+          playSfx('flee');
+          bmsg(['You got away safely.', '(The story can wait.)'], 'flee');
+        }
       }
     }
 
@@ -1416,14 +1830,15 @@
       text('Lv' + b.lv, 100, 14, '#303030', 7);
       text('HP', 12, 27, '#e07820', 7);
       hpBar(30, 28, 88, b.ehpShow / b.emax);
-      if (b.cornered) text('CORNERED', 12, 37, '#b03828', 6);
+      text(b.enemyStatus ? STATUS_SHORT[b.enemyStatus.id] : b.sp.type, 12, 37, b.enemyStatus ? '#b03828' : '#4868a0', 5);
 
       frame9(128, 96, 122, 42, { bg: '#f8f8e8' });
       text('JOURNALIST', 136, 102, '#303030', 7);
-      text('Lv99', 218, 102, '#303030', 7);
+      text('Lv' + game.level, 216, 102, '#303030', 7);
       text('HP', 136, 115, '#e07820', 7);
       hpBar(154, 116, 86, b.phpShow / game.maxhp);
       text(Math.round(b.phpShow) + '/' + game.maxhp, 168, 126, '#484848', 7);
+      if (b.playerStatus) text(STATUS_SHORT[b.playerStatus.id], 136, 127, '#b03828', 5);
 
       b.ehpShow += (b.ehp - b.ehpShow) * Math.min(1, .12);
       b.phpShow += (game.hp - b.phpShow) * Math.min(1, .12);
@@ -1459,7 +1874,7 @@
         });
         const m = MOVES[b.moveSel];
         px(4, 180, 248, 1, '#c8c8c0');
-        text((m.dmg ? 'PWR ' + m.dmg[0] + '-' + m.dmg[1] : 'STATUS') + ' PP ' + game.pp[b.moveSel] + '/' + m.pp + ' ' + m.desc, 10, 182, '#385888', 5);
+        text(m.type + ' PWR ' + m.dmg[0] + '-' + m.dmg[1] + ' PP ' + game.pp[b.moveSel] + '/' + m.pp + ' ' + m.desc, 10, 182, '#385888', 5);
         text('B:BACK', 218, 182, '#888', 5);
         zone(194, 182, 60, 10, 'back');
       } else if (b.phase === 'bag') {
@@ -1593,7 +2008,8 @@
           showMsg(
             ['Welcome to ROUTE 26!', 'Wild documents hide in the', 'tall grass. Walk into it and', 'they will jump you.'],
             ['In battle: weaken a document,', 'then FILE FOIA to catch it.', 'The lower its HP, the better', 'your odds (shown on screen).'],
-            ['Moves have limited PP - pick', 'up the red balls around the', 'route for coffee & espresso.', 'File 3 documents to win!']
+            ['DATA, DOCUMENT, LEGAL and', 'TECH moves can hit harder', 'or weaker by type matchups.'],
+            ['Moves can paralyze, sleep,', 'burn, poison or freeze.', 'Pick up map items for HP', 'and PP. File 3 to win!']
           );
         }
       }
@@ -1647,23 +2063,141 @@
     }
 
     /* =====================================================================
+       REDACAO / SHOP
+       ===================================================================== */
+    function buyShopItem(idx) {
+      const it = SHOP_ITEMS[idx];
+      if (!it) return;
+      if (game.money < it.price) {
+        showMsg(['Not enough R$.', it.name + ' costs R$' + it.price + '.', 'Win battles to fund', 'the next request.']);
+        return;
+      }
+      game.money -= it.price;
+      game.items[it.key]++;
+      playSfx('item');
+      showMsg(['Bought ' + it.name + '!', 'Spent R$' + it.price + '.', 'Balance: R$' + game.money + '.']);
+    }
+
+    function updateRedacao() {
+      if (game.msg) {
+        const p = popPress();
+        if (isA(p) || isB(p)) {
+          game.msg.idx++;
+          if (game.msg.idx >= game.msg.pages.length) game.msg = null;
+        }
+        return;
+      }
+      const p = popPress();
+      if (!p) return;
+      if (isB(p) || (p && p.act === 'leave')) { leaveRedacao(); return; }
+      if (p === 'up') game.redacao.sel = (game.redacao.sel + SHOP_ITEMS.length - 1) % SHOP_ITEMS.length;
+      else if (p === 'down') game.redacao.sel = (game.redacao.sel + 1) % SHOP_ITEMS.length;
+      else if (isA(p)) buyShopItem(game.redacao.sel);
+      else if (p && p.act === 'shop') { game.redacao.sel = p.data; buyShopItem(p.data); }
+    }
+
+    function drawRedacao() {
+      zones = [];
+      px(0, 0, 256, 192, '#d8d0b0');
+      for (let y = 0; y < 192; y += 16) for (let x = 0; x < 256; x += 16)
+        if (((x + y) / 16) % 2) px(x, y, 16, 16, '#e8dcc0');
+      px(0, 0, 256, 30, '#283848');
+      textC('REDACAO', 128, 9, '#f8f8f0', 10);
+      textC('NEWSROOM CENTER', 128, 22, '#c8d8e8', 5);
+
+      frame9(10, 38, 236, 28, { bg: '#f8f8f0' });
+      text('HP and PP fully restored.', 18, 46, '#384878', 7);
+      text('Balance R$' + game.money, 18, 56, '#388048', 6);
+
+      px(18, 78, 90, 34, '#8a6848');
+      px(22, 82, 82, 8, '#a88058');
+      text('DESK', 48, 93, '#f8e8c8', 6);
+      px(170, 74, 56, 52, '#506878');
+      px(176, 80, 44, 8, '#7890a0');
+      px(176, 94, 44, 8, '#7890a0');
+      px(176, 108, 44, 8, '#7890a0');
+      text('ARCHIVE', 178, 132, '#384878', 5);
+
+      frame9(12, 124, 232, 52, { bg: '#f8f8f0' });
+      text('SHOP', 22, 131, '#c84838', 8);
+      SHOP_ITEMS.forEach((it, i) => {
+        const y = 146 + i * 13;
+        if (game.redacao.sel === i) px(20, y + 1, 4, 7, '#c84838');
+        text(it.name, 28, y, '#303030', 7);
+        text('R$' + it.price, 104, y, '#388048', 7);
+        text(it.desc, 146, y + 1, '#686860', 5);
+        zone(18, y - 3, 218, 13, 'shop', i);
+      });
+      text('B:EXIT', 202, 180, '#686860', 6);
+      zone(196, 176, 56, 16, 'leave');
+
+      if (game.msg) {
+        frame9(4, 138, 248, 50);
+        game.msg.pages[game.msg.idx].forEach((l, i) => text(l, 12, 144 + i * 11, '#303030', 7));
+        text(game.msg.idx < game.msg.pages.length - 1 ? '▼' : '✕', 240, 178, '#e05038', 7);
+        zone(0, 0, 256, 192, 'A');
+      }
+    }
+
+    /* =====================================================================
+       GAME OVER
+       ===================================================================== */
+    function updateGameOver(dt) {
+      if (!game.gameOver) game.gameOver = { t: 0 };
+      game.gameOver.t += dt;
+      const p = popPress();
+      if ((game.gameOver.t > 2.7 && (isA(p) || isB(p))) || game.gameOver.t > 4.8) resetAfterGameOver();
+    }
+
+    function drawGameOver() {
+      zones = [];
+      const t = game.gameOver ? game.gameOver.t : 0;
+      px(0, 0, 256, 192, '#f8f8f0');
+      if (t < .8) {
+        const a = Math.max(0, 1 - t / .8);
+        px(0, 0, 256, 192, '#ffffff');
+        if (a < .6) {
+          g.fillStyle = 'rgba(32,32,32,' + (1 - a) + ')';
+          g.fillRect(0, 0, 256, 192);
+        }
+        return;
+      }
+      px(0, 0, 256, 192, '#e8e8d8');
+      for (let y = 0; y < 192; y += 8) if ((y / 8) % 2) px(0, y, 256, 1, '#d0d0c0');
+      frame9(18, 32, 220, 112, { bg: '#f8f8f0', edge: '#7890b8', dark: '#384878' });
+      textC('JOURNALIST', 128, 52, '#303030', 9);
+      textC('WHITED OUT!', 128, 69, '#c84838', 10);
+      textC('Deadlines, denials and', 128, 93, '#505050', 6);
+      textC('missing records won this round.', 128, 104, '#505050', 6);
+      textC('Returning to REDACAO...', 128, 124, '#384878', 6);
+      if (t > 2.7 && Math.floor(t * 2) % 2) textC('PRESS A', 128, 158, '#303030', 7);
+      zone(0, 0, 256, 192, 'A');
+    }
+
+    /* =====================================================================
        LOOP
        ===================================================================== */
     let last = 0;
-    function loop(ts) {
-      const dt = Math.min(.05, (ts - last) / 1000 || 0);
-      last = ts;
+    function stepGame(dt) {
       game.animClock += dt;
       g.clearRect(0, 0, 256, 192);
 
       if (game.state === 'title') { updateTitle(); drawTitle(dt); }
       else if (game.state === 'world') { updateWorld(dt); drawWorld(); }
+      else if (game.state === 'redacao') { updateRedacao(); drawRedacao(); }
       else if (game.state === 'dex') { updateDex(); drawDex(); }
       else if (game.state === 'battle') {
         updateBattle(dt);
         if (game.state === 'battle' && game.battle) drawBattle();
       }
+      else if (game.state === 'gameover') { updateGameOver(dt); drawGameOver(); }
       else if (game.state === 'win') { updateWin(); drawWin(dt); }
+    }
+
+    function loop(ts) {
+      const dt = Math.min(.05, (ts - last) / 1000 || 0);
+      last = ts;
+      stepGame(dt);
 
       requestAnimationFrame(loop);
     }
@@ -1675,6 +2209,22 @@
     ]).then(() => requestAnimationFrame(loop));
 
     /* hooks de teste */
+    function renderGameToText() {
+      const b = game.battle;
+      return JSON.stringify({
+        state: game.state,
+        coords: 'origin top-left, x right, y down, logical canvas 256x192',
+        player: { x: game.px, y: game.py, dir: game.dir, level: game.level, xp: game.xp, nextXp: game.nextXp, hp: game.hp, maxhp: game.maxhp, money: game.money, status: b && b.playerStatus ? b.playerStatus.id : null },
+        battle: b ? { enemy: b.sp.name, type: b.sp.type, level: b.lv, hp: b.ehp, maxhp: b.emax, status: b.enemyStatus ? b.enemyStatus.id : null, phase: b.phase } : null,
+        items: game.items,
+        filed: caughtCount()
+      });
+    }
+    window.render_game_to_text = renderGameToText;
+    window.advanceTime = ms => {
+      const steps = Math.max(1, Math.round(ms / (1000 / 60)));
+      for (let i = 0; i < steps; i++) stepGame(1 / 60);
+    };
     window.__game = game;
     window.__startBattle = i => startBattle(DEX[i]);
   </script>
