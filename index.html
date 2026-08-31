@@ -156,6 +156,32 @@
       .outlets-row{grid-template-columns:1fr}
       .init-cards{grid-template-columns:1fr}
     }
+
+    /* Scoped addition: Investigating AI. Existing site styles remain unchanged. */
+    .ai-reporting-intro { max-width: 760px; color: var(--muted); font-size: 17px; line-height: 1.65; margin: -14px 0 28px; }
+    .ai-reporting-intro strong { color: var(--text); }
+    .ai-reporting .featured-article { margin-bottom: 28px; }
+    .ai-reporting .ai-video-feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 390px); gap: 0; align-items: start; }
+    .ai-reporting .ai-video-copy { padding: 28px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+    .ai-reporting .ai-video-copy h3 { margin: 0; }
+    .ai-reporting .ai-instagram-media { background: var(--surface); border-left: 1px solid var(--border); padding: 18px; min-width: 0; min-height: 0; height: auto; aspect-ratio: auto; overflow: visible; display: flex; align-items: flex-start; justify-content: center; }
+    .ai-reporting .ai-instagram-media iframe { display: block; width: min(100%, 390px); height: 720px; border: 0; }
+    .ai-reporting .ai-instagram-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; color: var(--accent); font: 600 12px 'JetBrains Mono', monospace; text-decoration: none; }
+    .ai-reporting .ai-instagram-link:hover { color: var(--text); border-color: var(--accent); }
+    .ai-reporting .featured-content h3 { max-width: 680px; }
+    .ai-reporting .ai-doctors-sequence { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 28px 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+    .ai-reporting .ai-doctors-image { grid-column: 1 / -1; border-bottom: 1px solid var(--border); background: var(--surface); }
+    .ai-reporting .ai-doctors-image img { width: 100%; max-height: 300px; object-fit: cover; object-position: center; }
+    .ai-reporting .ai-sequence-item { padding: 25px; }
+    .ai-reporting .ai-sequence-item + .ai-sequence-item { border-left: 1px solid var(--border); }
+    .ai-reporting .ai-sequence-item h3 { font-family: 'Spectral', Georgia, serif; font-size: 25px; line-height: 1.2; margin: 8px 0 9px; }
+    .ai-reporting .ai-sequence-item p { color: var(--muted); }
+    .ai-reporting .ai-translation-note { grid-column: 1 / -1; margin: 0; padding: 22px 24px; border-top: 1px solid var(--border); border-left: 3px solid var(--accent); background: rgba(255,255,255,.02); }
+    .ai-reporting .ai-translation-note h3 { font-family: 'Spectral', Georgia, serif; font-size: 25px; margin-bottom: 7px; }
+    .ai-reporting .ai-translation-note p { color: var(--muted); margin-bottom: 14px; }
+    .ai-reporting .ai-languages { display: inline; }
+    .ai-reporting .ai-languages a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed rgba(124,255,240,.45); font-size: 13px; }
+    @media (max-width: 768px) { .ai-reporting-intro { font-size: 16px; } .ai-reporting .ai-video-feature, .ai-reporting .ai-doctors-sequence { grid-template-columns: 1fr; } .ai-reporting .ai-instagram-media { border-left: 0; border-top: 1px solid var(--border); height: auto; } .ai-reporting .ai-sequence-item + .ai-sequence-item { border-left: 0; border-top: 1px solid var(--border); } .ai-reporting .ai-translation-note { grid-column: auto; } }
   </style>
   <script src="theme-toggle.js"></script>
 </head>
@@ -171,6 +197,7 @@
       </div>
       <ul class="nav-links" id="navLinks">
         <li><a href="#investigative">Reporting</a></li>
+        <li><a href="#investigating-ai">Investigating AI</a></li>
         <li><a href="#short-videos">Videos</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#courses-workshops">Courses &amp; workshops</a></li>
@@ -185,97 +212,6 @@
       </div>
     </div>
   </nav>
-
-  <!-- ── Curso de Jornalismo Investigativo — faixa de rodapé ─────────── -->
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-  <style>
-    .se-banner {
-      position:fixed; left:0; right:0; bottom:0; z-index:9999;
-      display:flex; align-items:center; justify-content:center; gap:16px;
-      padding:10px 56px 10px 16px;
-      background:rgba(5,8,17,.96);
-      border-top:1px solid rgba(212,160,23,.45);
-      box-shadow:0 -12px 40px rgba(0,0,0,.55), 0 0 60px rgba(212,160,23,.07);
-      backdrop-filter:blur(8px);
-      font-family:'JetBrains Mono', ui-monospace, monospace;
-      transform:translateY(110%);
-      transition:transform .45s cubic-bezier(.2,.8,.2,1);
-    }
-    .se-banner.show { transform:translateY(0); }
-    .se-thumb {
-      width:72px; height:44px; flex:0 0 auto;
-      object-fit:cover;
-      border:1px solid rgba(212,160,23,.4);
-      border-radius:4px;
-    }
-    .se-copy { min-width:0; flex:0 1 auto; text-align:left; }
-    .se-copy .se-title {
-      font-family:'Special Elite', monospace;
-      color:#d4a017;
-      font-size:14px; line-height:1.2;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .se-copy .se-sub {
-      font-size:10px; letter-spacing:.14em; text-transform:uppercase;
-      color:rgba(232,227,208,.55);
-      margin-top:3px;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .se-btn {
-      flex:0 0 auto;
-      display:inline-flex; align-items:center;
-      background:#d4a017; color:#050811;
-      padding:10px 18px;
-      font-size:10.5px; letter-spacing:.16em; text-transform:uppercase;
-      font-weight:700;
-      text-decoration:none;
-      border-radius:4px;
-      transition:transform .15s, background .15s;
-    }
-    .se-btn:hover { transform:translateY(-1px); background:#e8b520; }
-    .se-close {
-      position:absolute; right:14px; top:50%; transform:translateY(-50%);
-      width:30px; height:30px;
-      background:transparent; border:1px solid rgba(232,227,208,.22);
-      color:rgba(232,227,208,.7);
-      font-size:16px; cursor:pointer;
-      display:flex; align-items:center; justify-content:center;
-      border-radius:4px;
-      transition:all .15s;
-    }
-    .se-close:hover { color:#d4a017; border-color:#d4a017; }
-    @media (max-width: 720px) {
-      .se-banner { flex-wrap:wrap; justify-content:flex-start; gap:10px 12px; padding:10px 48px 10px 14px; }
-      .se-thumb { display:none; }
-      .se-copy { flex:1 1 100%; }
-      .se-copy .se-title { font-size:12.5px; white-space:normal; }
-      .se-copy .se-sub { display:none; }
-      .se-btn { padding:9px 14px; font-size:9.5px; letter-spacing:.1em; }
-    }
-  </style>
-  <div class="se-banner" id="seBanner" role="complementary" aria-label="Curso de Jornalismo Investigativo">
-    <img class="se-thumb" src="https://cursos.datafixers.org/investiga26/hero_og.jpg" alt="Curso de Jornalismo Investigativo" loading="lazy">
-    <div class="se-copy">
-      <div class="se-title">Curso de Jornalismo Investigativo — 3ª edição</div>
-      <div class="se-sub">4 encontros ao vivo · com Juliana Faddul · em português</div>
-    </div>
-    <a href="https://cursos.datafixers.org/investiga26/" class="se-btn">Quero entrar para a lista de espera</a>
-    <button class="se-close" onclick="seClose()" aria-label="Fechar aviso do curso">×</button>
-  </div>
-  <script>
-    (function () {
-      window.seClose = function () {
-        document.getElementById('seBanner').classList.remove('show');
-        try { sessionStorage.setItem('seBannerClosed', '1'); } catch (e) { }
-      };
-      window.addEventListener('load', () => {
-        let closed = false;
-        try { closed = sessionStorage.getItem('seBannerClosed') === '1'; } catch (e) { }
-        if (!closed) setTimeout(() => document.getElementById('seBanner').classList.add('show'), 1500);
-      });
-      addEventListener('keydown', e => { if (e.key === 'Escape') seClose(); });
-    })();
-  </script>
 
   <main>
     <section id="about" class="hero section">
@@ -421,6 +357,56 @@
       </div>
     </section>
 
+    <section id="investigating-ai" class="investigative ai-reporting section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Investigating AI</h2>
+        <p class="ai-reporting-intro"><strong>In 2026, investigating the impact of artificial intelligence on society has become a central focus of my reporting.</strong> These stories look at how synthetic media, automation and AI-generated authority are changing what people watch, how they work, whom they trust and how political influence spreads.</p>
+
+        <div class="featured-article ai-video-feature" data-reveal>
+          <div class="ai-video-copy">
+            <div class="tags"><span class="tag">BBC News Brasil</span><span class="tag">Featured investigation</span></div>
+            <h3>AI-generated videos that eroticise Brazil’s brutal history are reaching millions on YouTube</h3>
+            <p>I investigated how synthetic videos turn the history of slavery and racial violence in Brazil into a high-engagement spectacle — and the platforms, incentives and audiences that allow this material to spread at scale.</p>
+            <div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c3r0194grx2o" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the text version</span></a></div>
+          </div>
+          <div class="featured-media ai-instagram-media">
+            <iframe src="https://www.instagram.com/p/DcosT9TE5T3/embed/captioned" title="BBC News Brasil short video about AI-generated videos sexualising the history of slavery" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+            <a class="ai-instagram-link" href="https://www.instagram.com/p/DcosT9TE5T3/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Watch on Instagram</a>
+          </div>
+        </div>
+
+        <div class="ai-doctors-sequence" data-reveal>
+          <div class="ai-doctors-image"><img src="images/ai_fake_doctors_illustration.png" alt="AI-generated doctor illustration showing a doctor beside a computer keyboard" loading="lazy"></div>
+          <article class="ai-sequence-item">
+            <div class="tags"><span class="tag">BBC News Brasil · Part 1</span></div>
+            <h3>The global underground industry of fake AI doctors</h3>
+            <p>This investigation mapped a global network of AI-generated doctors using fear to go viral among older people in Brazil.</p>
+            <div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/cz0j8lp5xmvo" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the investigation</span></a></div>
+          </article>
+          <article class="ai-sequence-item">
+            <div class="tags"><span class="tag">BBC News Brasil · Follow-up</span></div>
+            <h3>‘Fatal harm’: a doctor finds his face cloned by AI</h3>
+            <p>After the first report, a doctor recognised that his face was being used in one of the channels mentioned by the BBC and decided to file a police report. Police then opened an investigation and cited the BBC report as a source.</p>
+            <div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/cn4ddgl7vkno" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the follow-up</span></a></div>
+          </article>
+          <div class="ai-translation-note">
+            <p>Following the widespread attention to our findings, YouTube removed most of the channels and videos. Versions of the report were published in several languages: <span class="ai-languages"><a href="https://www.bbc.com/pashto/articles/c1wxnn89d33o" target="_blank" rel="noopener noreferrer">Pashto (Afghanistan)</a>, <a href="https://www.bbc.com/hindi/articles/cp93521mr5po" target="_blank" rel="noopener noreferrer">Hindi (India)</a>, <a href="https://www.bbc.com/thai/articles/cevwy09zr7ro" target="_blank" rel="noopener noreferrer">Thai (Thailand)</a>, <a href="https://www.bbc.com/russian/articles/cg596z4zr83o" target="_blank" rel="noopener noreferrer">Russian (Russia)</a>, <a href="https://www.bbc.com/sinhala/articles/c770xzn54p0o" target="_blank" rel="noopener noreferrer">Sinhala (Sri Lanka)</a>, <a href="https://www.bbc.com/urdu/articles/cdx0rewvqqro" target="_blank" rel="noopener noreferrer">Urdu (Pakistan)</a>, <a href="https://www.bbc.com/tamil/articles/cy8z98k5grro" target="_blank" rel="noopener noreferrer">Tamil (India and Sri Lanka)</a> and <a href="https://www.bbc.com/ukrainian/articles/cvgyx17dk89o" target="_blank" rel="noopener noreferrer">Ukrainian (Ukraine)</a>.</span></p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Work &amp; platforms</span></div><h3>Workers saying goodbye to formal employment to chase the dream of making AI videos</h3><p>How the promise of an AI-powered creator economy is changing work, risk and expectations of financial independence.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c5yzyy730nro" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Children &amp; attention</span></div><h3>The flood of AI videos designed to ‘hypnotise’ children on YouTube</h3><p>An investigation into repetitive synthetic content built for attention — and experts’ concerns about effects that may last a lifetime.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/cx2xx1gp6jgo" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Elections</span></div><h3>The clandestine market for AI-made ‘candidate supporters’</h3><p>Behind the election: synthetic political fandom, automated WhatsApp bots and the infrastructure of influence.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c1k2zj3gdg7o" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Political influence</span></div><h3>We asked AI who to vote for — here’s what it said</h3><p>What happened when chatbots were asked to take a political position, despite rules against doing so.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c5y0kv55j11o" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Synthetic personas</span></div><h3>The AI character going viral with attacks on Lula’s government and Brazil’s Supreme Court</h3><p>Following a synthetic persona at the intersection of politics, virality and persuasion.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c7vq10lvv15o" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Mental health</span></div><h3>Your therapist is human — but may be using AI in therapy</h3><p>The hidden use of artificial intelligence in mental-health care and the risks for patients.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c1j9gnxnk4zo" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Public understanding</span></div><h3>The Brazilian creator translating the chaos of AI</h3><p>‘People are lost’: a story about making an emerging technology legible to a confused public.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c9v1292nrzro" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Workplaces</span></div><h3>What it’s like to interview for a job with artificial intelligence</h3><p>Efficiency may improve — but what happens to the human experience of being assessed?</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/cewyng440vro" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+        </div>
+      </div>
+    </section>
+
     <section id="investigative" class="investigative section">
       <div class="container">
         <h2 class="section-title">Investigative Reporting</h2>
@@ -510,10 +496,6 @@
                     style="background: rgba(0, 212, 160, 0.18); color: #00d4a0; border: 1px solid rgba(0, 212, 160, 0.4); border-radius: 4px; padding: 2px 7px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0;">NEW</span>
                 </a>
               </div>
-              <a href="portfolio-investigativo/epstein/index.html" class="story-link-series">
-                <span class="story-link-icon">↗</span>
-                Read full series — interactive (EN / PT)
-              </a>
             </div>
             </div>
           </div>
