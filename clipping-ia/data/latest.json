@@ -1,0 +1,106 @@
+{
+  "data": "9 de setembro de 2026",
+  "hora": "17:35 London",
+  "brasil": [
+    {
+      "tipo": "Fiscalização",
+      "data": "8 set 2026",
+      "tema": "IA e saúde",
+      "novo": true,
+      "titulo": "Governo cobra medidas sobre falsos médicos criados por IA no YouTube",
+      "resumo": "A AGU notificou o YouTube após levantamento do Ministério da Saúde sobre perfis que apresentavam personagens sintéticos como médicos e divulgavam alegações de saúde e produtos.",
+      "relevancia": "Pedir a base administrativa completa, os canais identificados, visualizações, produtos vendidos, critérios de encaminhamento e respostas da plataforma.",
+      "url": "https://www.gov.br/saude/pt-br"
+    },
+    {
+      "tipo": "Documento",
+      "data": "4 set 2026",
+      "tema": "Eleições 2026",
+      "novo": true,
+      "titulo": "TSE publica planos de conformidade de nove plataformas",
+      "resumo": "Google, Kwai, LinkedIn, Mercado Livre, Meta, OpenAI, Telegram, TikTok e X apresentaram planos sobre moderação, ordens judiciais, IA e integridade eleitoral.",
+      "relevancia": "Permite transformar compromissos das empresas em uma matriz comparável e auditável.",
+      "url": "https://www.tse.jus.br/comunicacao/noticias/2026/Setembro/planos-de-conformidade-das-plataformas-digitais-estao-disponiveis-no-portal-do-tse"
+    },
+    {
+      "tipo": "Decisão",
+      "data": "1 set 2026",
+      "tema": "Deepfakes",
+      "novo": true,
+      "titulo": "TSE delimita conceito de deepfake eleitoral",
+      "resumo": "A Corte definiu critérios para caracterizar conteúdo sintético realista ou verossímil e vinculou a incidência da vedação específica à caracterização como propaganda eleitoral.",
+      "relevancia": "A fronteira entre manifestação política, influenciadores e propaganda eleitoral tende a gerar nova jurisprudência durante a campanha.",
+      "url": "https://www.tse.jus.br/comunicacao/noticias/2026/Setembro/tse-fixa-tese-sobre-deepfake-e-delimita-regra-para-as-eleicoes-2026"
+    },
+    {
+      "tipo": "Consulta pública",
+      "data": "1 set 2026",
+      "tema": "Proteção de dados",
+      "novo": false,
+      "titulo": "ANPD abre tomada de subsídios sobre a próxima agenda regulatória",
+      "resumo": "A autoridade abriu consulta para definir prioridades regulatórias futuras, incluindo temas ligados a IA, crianças, biometria e direitos dos titulares.",
+      "relevancia": "As contribuições podem mostrar quais setores pressionam por inclusão, atraso ou desenho específico de novas regras.",
+      "url": "https://www.gov.br/anpd/pt-br/assuntos/noticias/anpd-abre-ts-agenda-regulatoria-e-avaliacao-de-resultado-regulatorio"
+    }
+  ],
+  "internacional": [
+    {
+      "tipo": "Regulação",
+      "data": "8 set 2026",
+      "tema": "Plataformas",
+      "novo": true,
+      "titulo": "Austrália propõe opção para desligar recomendações algorítmicas",
+      "resumo": "A proposta desloca a discussão de transparência algorítmica para a possibilidade de o usuário optar por um feed não recomendado.",
+      "relevancia": "É um modelo regulatório comparável às discussões brasileiras sobre plataformas e autonomia do usuário."
+    },
+    {
+      "tipo": "Infraestrutura",
+      "data": "9 set 2026",
+      "tema": "Data centers",
+      "novo": true,
+      "titulo": "Google anuncia novo pacote bilionário de infraestrutura de IA na Finlândia",
+      "resumo": "O investimento combina capacidade computacional, energia e infraestrutura elétrica.",
+      "relevancia": "Serve como benchmark para avaliar incentivos, contrapartidas, energia e empregos de políticas brasileiras para data centers."
+    }
+  ],
+  "academico": [
+    {
+      "tipo": "Preprint",
+      "data": "11 jul 2026",
+      "titulo": "Large Language Models in Misinformation Ecosystems: Misuse, Defense, and Vulnerability",
+      "autores": "Lingwei Wei, Dou Hu, Wei Zhou, Songlin Hu, Philip S. Yu",
+      "metodo": "Revisão estruturada e framework de riscos para LLMs em ecossistemas de desinformação.",
+      "achado": "O risco não se limita à geração de conteúdo falso e inclui ataques às fontes, aos sistemas de recuperação e aos fluxos de verificação.",
+      "relevancia": "Base útil para estudar confiabilidade e segurança de IA aplicada à apuração jornalística.",
+      "url": "https://arxiv.org/abs/2607.10402"
+    },
+    {
+      "tipo": "Preprint",
+      "data": "12 jul 2026",
+      "titulo": "Robo-Reporters: Evaluating Autonomous AI Agents as Algorithmic Gatekeepers in Computational Journalism",
+      "autores": "Obada Kraishan, Kulsawasd Jitkajornwanich, Kerk Kee",
+      "metodo": "200 experimentos controlados em 50 tarefas jornalísticas, comparando arquiteturas de agentes.",
+      "achado": "O estudo compara precisão, comportamento de processamento e custo temporal entre diferentes arquiteturas.",
+      "relevancia": "Metodologia diretamente adaptável para testar agentes em LAI, análise documental e jornalismo de dados.",
+      "url": "https://arxiv.org/abs/2607.10736"
+    },
+    {
+      "tipo": "Artigo revisado por pares",
+      "data": "7 ago 2026",
+      "titulo": "Artificial Intelligence in Journalism and Media Practice: A Systematic Review of Applications, Limitations, and Research Approaches",
+      "autores": "Gui Jun, Nasrullah Dharejo, Mumtaz Aini Alivi",
+      "metodo": "Revisão sistemática de 121 artigos, com análise temática, topic modelling e bibliometria.",
+      "achado": "Mapeia aplicações, limitações e lacunas da literatura recente sobre IA e jornalismo.",
+      "relevancia": "Bom ponto de partida para identificar lacunas de um futuro projeto de doutorado.",
+      "url": "https://doi.org/10.3390/journalmedia7030164"
+    }
+  ],
+  "perguntas": [
+    "Quais compromissos dos nove planos de conformidade do TSE podem ser auditados externamente?",
+    "Os principais chatbots obedecem de forma consistente às regras eleitorais quando recebem prompts de recomendação de voto?",
+    "Quais plataformas reportaram ao TSE riscos extraordinários ou operações de influência durante o ciclo eleitoral?",
+    "O que os primeiros relatórios de transparência do ECA Digital permitirão comparar entre plataformas?",
+    "Quanto o Brasil está concedendo em incentivos por MW efetivamente instalado em novos data centers?",
+    "É possível identificar redes de conteúdo criadas para influenciar respostas de sistemas generativos no Brasil?"
+  ]
+}
