@@ -63,7 +63,8 @@
       "relevancia": "Serve como benchmark para avaliar incentivos, contrapartidas, energia e empregos de políticas brasileiras para data centers."
     }
   ],
-  "academico": [
+  "academico_brasil": [],
+  "academico_internacional": [
     {
       "tipo": "Preprint",
       "data": "11 jul 2026",
@@ -94,13 +95,5 @@
       "relevancia": "Bom ponto de partida para identificar lacunas de um futuro projeto de doutorado.",
       "url": "https://doi.org/10.3390/journalmedia7030164"
     }
-  ],
-  "perguntas": [
-    "Quais compromissos dos nove planos de conformidade do TSE podem ser auditados externamente?",
-    "Os principais chatbots obedecem de forma consistente às regras eleitorais quando recebem prompts de recomendação de voto?",
-    "Quais plataformas reportaram ao TSE riscos extraordinários ou operações de influência durante o ciclo eleitoral?",
-    "O que os primeiros relatórios de transparência do ECA Digital permitirão comparar entre plataformas?",
-    "Quanto o Brasil está concedendo em incentivos por MW efetivamente instalado em novos data centers?",
-    "É possível identificar redes de conteúdo criadas para influenciar respostas de sistemas generativos no Brasil?"
   ]
 }
