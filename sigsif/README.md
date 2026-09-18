@@ -12,6 +12,9 @@ Duas fontes, que **não são equivalentes**:
 | [Portal de dados abertos](https://dados.agricultura.gov.br/dataset/servico-de-inspecao-federal-sif) (CKAN) | 11 CSVs, incluindo 2,2 mi de linhas de condenação | segundos |
 | [Consulta pública SIGSIF](https://extranet.agricultura.gov.br/sigsif_cons/!ap_estabelec_nacional_cons) | ficha por estabelecimento, com histórico de ocorrências | ~1h |
 
+Números conferidos em 18/09/2026: **3.166 estabelecimentos ativos** no site,
+3.147 SIFs distintos no CSV aberto.
+
 ## Uso
 
 ```bash
@@ -73,6 +76,14 @@ cancelados, só por LAI.
 **CPF mascarado no CSV, completo no site.** Ver "Ganchos de pauta". Se for
 cruzar titulares de plantas, a fonte utilizável é o site — com a
 responsabilidade que isso implica.
+
+**O dado aberto está atrasado em relação ao site.** Cruzando as duas fontes:
+**22 estabelecimentos aparecem na consulta pública e não constam do CSV** de
+dados abertos — entre eles Conservas Oderich, Três Corações e Alibem, além de
+vários armazéns frigoríficos. Os SIFs mais altos (7472 a 7477) indicam
+registros recentes que a exportação do portal ainda não pegou. Outros 3 estão
+no CSV e sumiram do site. Se a apuração depende de estar completa, varra o
+site; o CSV sozinho deixa buracos.
 
 **A base de condenação não identifica a planta.** Só traz UF de procedência.
 Serve para tendência e comparação entre estados — nunca para apontar um
