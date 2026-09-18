@@ -64,6 +64,70 @@ def busca_api(sif, data):
     return f"{sif}{data.strftime('%d%m%y')}"
 
 
+
+def escreve_painel(linhas, caminho):
+    """Painel local para percorrer a fila sem perder o lugar. Guarda o que já
+    foi consultado no localStorage do navegador."""
+    linhas_html = "\n".join(
+        f'<tr data-k="{l["sif"]}-{l["data_producao"]}">'
+        f'<td><input type=checkbox class=ok></td>'
+        f'<td class=sif>{l["sif"]}</td><td>{l["uf"]}</td>'
+        f'<td>{l["municipio"]}</td><td class=rs>{l["razao_social"][:38]}</td>'
+        f'<td>{l["data_producao"]}</td>'
+        f'<td><a href="{l["url"]}" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>'
+        for l in linhas)
+    html = """<!DOCTYPE html><html lang=pt-BR><meta charset=utf-8>
+<title>Fila de consultas - rastreabilidade Friboi</title>
+<style>
+ :root{--bg:#fff;--fg:#1a1a1a;--li:#e5e5e5;--mu:#666;--ac:#b00020}
+ @media(prefers-color-scheme:dark){:root{--bg:#161616;--fg:#eee;--li:#333;--mu:#999;--ac:#ff6b6b}}
+ body{background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif;
+      margin:0 auto;padding:24px 16px;max-width:900px}
+ h1{font-size:20px;margin:0 0 4px} p.sub{color:var(--mu);margin:0 0 20px;font-size:14px}
+ .bar{position:sticky;top:0;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--li);
+      margin-bottom:12px;font-size:14px}
+ table{border-collapse:collapse;width:100%} td,th{padding:7px 8px;border-bottom:1px solid var(--li);
+      text-align:left;font-size:14px} th{color:var(--mu);font-weight:600}
+ tr.feito{opacity:.4} .sif{font-variant-numeric:tabular-nums;font-weight:600}
+ .rs{color:var(--mu)} a{color:var(--ac);text-decoration:none;white-space:nowrap} a:hover{text-decoration:underline}
+ code{background:var(--li);padding:1px 5px;border-radius:3px;font-size:13px}
+</style>
+<h1>Fila de consultas &mdash; rastreabilidade Friboi</h1>
+<p class=sub>Cole <code>navegador/coletor.js</code> no console (F12) da aba da Friboi antes de come&ccedil;ar.
+Ele guarda cada tabela que aparecer; no fim, <code>friboiColetor.baixar()</code>.</p>
+<div class=bar><b id=prog>0</b> de <b id=tot>0</b> consultadas &middot;
+ <a href=# id=zerar>zerar marca&ccedil;&otilde;es</a></div>
+<table><thead><tr><th></th><th>SIF</th><th>UF</th><th>Munic&iacute;pio</th>
+<th>Empresa</th><th>Data</th><th></th></tr></thead><tbody>
+__LINHAS__
+</tbody></table>
+<script>
+const CH='friboi_fila_v1';
+const ler=()=>{try{return new Set(JSON.parse(localStorage.getItem(CH))||[])}catch(e){return new Set()}};
+let feito=ler();
+const trs=[...document.querySelectorAll('tbody tr')];
+document.getElementById('tot').textContent=trs.length;
+const pinta=()=>{
+  trs.forEach(tr=>{const k=tr.dataset.k,f=feito.has(k);
+    tr.classList.toggle('feito',f);tr.querySelector('.ok').checked=f;});
+  document.getElementById('prog').textContent=feito.size;
+  localStorage.setItem(CH,JSON.stringify([...feito]));
+};
+trs.forEach(tr=>{
+  const k=tr.dataset.k;
+  tr.querySelector('.ok').addEventListener('change',e=>{
+    e.target.checked?feito.add(k):feito.delete(k);pinta();});
+  // abrir o link ja marca como consultada
+  tr.querySelector('a').addEventListener('click',()=>{feito.add(k);pinta();});
+});
+document.getElementById('zerar').addEventListener('click',e=>{
+  e.preventDefault();feito=new Set();pinta();});
+pinta();
+</script></html>"""
+    with open(caminho, "w", encoding="utf-8") as f:
+        f.write(html.replace("__LINHAS__", linhas_html))
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -114,15 +178,17 @@ def main():
         w = csv.DictWriter(f, fieldnames=list(linhas[0].keys()), delimiter=";")
         w.writeheader(); w.writerows(linhas)
 
+    painel = os.path.join(DIR, "painel_consultas.html")
+    escreve_painel(linhas, painel)
+
     print(f"{len(alvo)} estabelecimentos x {len(datas)} datas = {len(linhas)} consultas")
-    print(f"-> {caminho}\n")
-    for l in linhas[:5]:
-        print(f"  SIF {l['sif']:>5} {l['uf']} {l['municipio'][:20]:20} {l['data_producao']}")
-        print(f"     {l['url']}")
-    if len(linhas) > 5:
-        print(f"  ... e mais {len(linhas)-5}")
-    print("\nAbra os links no navegador. O reCAPTCHA roda normalmente para você;\n"
-          "não há caminho automatizado legítimo para esta etapa.")
+    print(f"-> {caminho}")
+    print(f"-> {painel}   <- abra este arquivo no navegador")
+    print("\nComo usar:")
+    print("  1. abra painel_consultas.html no navegador")
+    print("  2. cole navegador/coletor.js no console (F12) da aba da Friboi")
+    print("  3. clique em cada consulta; o painel marca o que já foi feito")
+    print("  4. ao terminar:  friboiColetor.baixar()")
 
 
 if __name__ == "__main__":

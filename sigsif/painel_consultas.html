@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang=pt-BR><meta charset=utf-8>
+<title>Fila de consultas - rastreabilidade Friboi</title>
+<style>
+ :root{--bg:#fff;--fg:#1a1a1a;--li:#e5e5e5;--mu:#666;--ac:#b00020}
+ @media(prefers-color-scheme:dark){:root{--bg:#161616;--fg:#eee;--li:#333;--mu:#999;--ac:#ff6b6b}}
+ body{background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif;
+      margin:0 auto;padding:24px 16px;max-width:900px}
+ h1{font-size:20px;margin:0 0 4px} p.sub{color:var(--mu);margin:0 0 20px;font-size:14px}
+ .bar{position:sticky;top:0;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--li);
+      margin-bottom:12px;font-size:14px}
+ table{border-collapse:collapse;width:100%} td,th{padding:7px 8px;border-bottom:1px solid var(--li);
+      text-align:left;font-size:14px} th{color:var(--mu);font-weight:600}
+ tr.feito{opacity:.4} .sif{font-variant-numeric:tabular-nums;font-weight:600}
+ .rs{color:var(--mu)} a{color:var(--ac);text-decoration:none;white-space:nowrap} a:hover{text-decoration:underline}
+ code{background:var(--li);padding:1px 5px;border-radius:3px;font-size:13px}
+</style>
+<h1>Fila de consultas &mdash; rastreabilidade Friboi</h1>
+<p class=sub>Cole <code>navegador/coletor.js</code> no console (F12) da aba da Friboi antes de come&ccedil;ar.
+Ele guarda cada tabela que aparecer; no fim, <code>friboiColetor.baixar()</code>.</p>
+<div class=bar><b id=prog>0</b> de <b id=tot>0</b> consultadas &middot;
+ <a href=# id=zerar>zerar marca&ccedil;&otilde;es</a></div>
+<table><thead><tr><th></th><th>SIF</th><th>UF</th><th>Munic&iacute;pio</th>
+<th>Empresa</th><th>Data</th><th></th></tr></thead><tbody>
+<tr data-k="42-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>42</td><td>MT</td><td>BARRA DO GARÇAS</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E42%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="51-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>51</td><td>MT</td><td>PONTES E LACERDA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E51%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="175-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>175</td><td>RO</td><td>SÃO MIGUEL DO GUAPORÉ</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E175%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="200-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>200</td><td>MT</td><td>JUARA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E200%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="457-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>457</td><td>PA</td><td>MARABÁ</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E457%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="807-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>807</td><td>PA</td><td>REDENÇÃO</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E807%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="1110-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>1110</td><td>PA</td><td>SANTANA DO ARAGUAIA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E1110%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="2019-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>2019</td><td>MT</td><td>PEDRA PRETA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E2019%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="2350-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>2350</td><td>PA</td><td>TUCUMÃ</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E2350%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="2880-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>2880</td><td>RO</td><td>PIMENTA BUENO</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E2880%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="2951-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>2951</td><td>AC</td><td>RIO BRANCO</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E2951%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="2979-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>2979</td><td>MT</td><td>ARAPUTANGA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E2979%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="3000-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>3000</td><td>MT</td><td>DIAMANTINO</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E3000%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="3470-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>3470</td><td>MT</td><td>CONFRESA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E3470%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="4001-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>4001</td><td>TO</td><td>ARAGUAÍNA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E4001%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="4121-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>4121</td><td>MT</td><td>ÁGUA BOA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E4121%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="4149-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>4149</td><td>RO</td><td>PORTO VELHO</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E4149%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="4268-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>4268</td><td>MT</td><td>COLÍDER</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E4268%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="4302-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>4302</td><td>MT</td><td>ALTA FLORESTA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E4302%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="4333-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>4333</td><td>RO</td><td>VILHENA</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E4333%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+<tr data-k="5616-2026-09-15"><td><input type=checkbox class=ok></td><td class=sif>5616</td><td>PA</td><td>SANTA MARIA DAS BARREIRAS</td><td class=rs>JBS S/A</td><td>2026-09-15</td><td><a href="https://www.friboi.com.br/qualidade/rastreabilidade/?parm=%3CSIF%3E5616%3C%2FSIF%3E%3CDATA_PROD%3E15%2F09%2F2026%3C%2FDATA_PROD%3E" target="_blank" rel="noopener">consultar &rarr;</a></td></tr>
+</tbody></table>
+<script>
+const CH='friboi_fila_v1';
+const ler=()=>{try{return new Set(JSON.parse(localStorage.getItem(CH))||[])}catch(e){return new Set()}};
+let feito=ler();
+const trs=[...document.querySelectorAll('tbody tr')];
+document.getElementById('tot').textContent=trs.length;
+const pinta=()=>{
+  trs.forEach(tr=>{const k=tr.dataset.k,f=feito.has(k);
+    tr.classList.toggle('feito',f);tr.querySelector('.ok').checked=f;});
+  document.getElementById('prog').textContent=feito.size;
+  localStorage.setItem(CH,JSON.stringify([...feito]));
+};
+trs.forEach(tr=>{
+  const k=tr.dataset.k;
+  tr.querySelector('.ok').addEventListener('change',e=>{
+    e.target.checked?feito.add(k):feito.delete(k);pinta();});
+  // abrir o link ja marca como consultada
+  tr.querySelector('a').addEventListener('click',()=>{feito.add(k);pinta();});
+});
+document.getElementById('zerar').addEventListener('click',e=>{
+  e.preventDefault();feito=new Set();pinta();});
+pinta();
+</script></html>
