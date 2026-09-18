@@ -143,6 +143,93 @@ muitos de pessoas físicas. São dado de apuração, não de publicação.
 O scraper usa pausa de 0,3s entre requisições e retentativa exponencial. O
 SIGSIF é um sistema antigo e instável; não aumente a cadência.
 
+## Fazendas que abastecem a Friboi: como montar a apuração
+
+O objetivo — saber de quais fazendas sai a carne da Friboi, para investigar
+desmatamento — esbarra numa realidade que vale conhecer antes de investir tempo.
+
+### O que a página realmente devolve
+
+Lendo o componente que desenha o resultado, a API responde uma lista de:
+
+| campo | na tela |
+|---|---|
+| `date` | Data do abate |
+| `plot` | Lote |
+| `ranch` | **Fazenda** |
+| `city` | Município |
+
+É um array: **uma consulta (SIF + data) devolve vários lotes/fazendas**, então
+o rendimento por consulta é bom.
+
+Não vem coordenada, não vem CAR, não vem CPF do produtor. A JBS
+[retirou as coordenadas das fazendas em 2019](https://oeco.org.br/reportagens/jbs-reduz-transparencia-sobre-fazendas-de-pecuaria/)
+— antes disso dava para cruzar direto com mapas de desmatamento. Sobrou nome +
+município, e nome de fazenda não é identificador: há dezenas de "Fazenda Boa
+Esperança" pelo país (13 só entre os embargos ativos do Ibama).
+
+### Por que não existe versão automatizada
+
+A consulta exige `x-recaptcha-token`, validado no servidor:
+
+| requisição | resposta |
+|---|---|
+| sem header | `403 {"error":"token_required"}` |
+| token inválido | `403 {"error":"recaptcha_invalid"}` |
+
+O deeplink `?parm=<SIF>..</SIF><DATA_PROD>..</DATA_PROD>` **preenche os campos,
+não dispensa o captcha** — o reCAPTCHA roda igual. Automatizar o clique é
+justamente o que esse controle existe para impedir, então aqui o humano
+consulta e a ferramenta só recolhe.
+
+### O fluxo que funciona
+
+```bash
+# 1. monta a fila de consultas (SIF + data), com link já preenchido
+python3 friboi_links.py --datas 2026-03-15 --uf PA,RO,MT
+
+# 2. no navegador: abre os links e consulta.
+#    Antes, cole navegador/coletor.js no console (F12).
+#    Ele captura cada tabela que aparece e acumula.
+#    Ao final:  friboiColetor.baixar()
+
+# 3. cruza as fazendas com os embargos do Ibama
+python3 cruza_fazendas.py --entrada friboi_fazendas_2026-03-15.csv
+```
+
+O coletor não consulta nada sozinho e não toca no reCAPTCHA: ele lê a tabela
+que já está na sua tela, para você não copiar à mão.
+
+### O cruzamento
+
+`cruza_fazendas.py` casa `ranch` + `city` contra `NOME_IMOVEL` + `MUNICIPIO`
+dos [embargos do Ibama](https://dadosabertos.ibama.gov.br) (96.575 ativos,
+16.779 com nome de imóvel; PA e MT lideram). Traz nome do embargado, CPF/CNPJ,
+área, data, nº do TAD e coordenadas do termo.
+
+Duas cautelas embutidas no código:
+- **nomes genéricos são descartados** ("ZONA RURAL", "DESCONHECIDO", "ÁREA DE
+  X ha") — são 7,6% dos embargos nomeados e casariam com qualquer coisa;
+- a comparação ignora "Fazenda/Sítio/da/de" e compara o miolo do nome, então
+  "Fazenda Santa Júlia - Retiro São Domingos" e "Santa Julia" se encontram.
+
+Ainda assim **o que sai é pista, não prova**. Todo acerto precisa de
+confirmação no CAR, no processo do Ibama e com a empresa.
+
+### Caminhos que rendem mais que a raspagem
+
+1. **Pedir à JBS.** Acesso a dados para apuração é pedido normal de imprensa, e
+   a empresa tem compromissos públicos de rastreabilidade. Se recusarem, a
+   recusa é matéria — ainda mais depois de terem tirado as coordenadas do ar.
+2. **LAI ao MAPA pela GTA** (Guia de Trânsito Animal). É o registro legal do
+   deslocamento do gado, do produtor ao frigorífico — melhor que a
+   autodeclaração da empresa. Não é dado aberto; é pedido.
+3. **[Trase](https://trase.earth/open-data/datasets/supply-chains-brazil-beef)**
+   já mapeia a cadeia da carne por frigorífico e município, sob CC BY 4.0.
+4. **Prodes/Deter (INPE)** e **CAR/SICAR** para fechar o desmatamento na ponta.
+
+Nenhum desses tem captcha, e os três primeiros dão dado melhor que a página.
+
 ## Cruzando com a rastreabilidade da Friboi (JBS)
 
 A [consulta de rastreabilidade da Friboi](https://www.friboi.com.br/qualidade/rastreabilidade/)
