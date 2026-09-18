@@ -142,3 +142,59 @@ muitos de pessoas físicas. São dado de apuração, não de publicação.
 
 O scraper usa pausa de 0,3s entre requisições e retentativa exponencial. O
 SIGSIF é um sistema antigo e instável; não aumente a cadência.
+
+## Cruzando com a rastreabilidade da Friboi (JBS)
+
+A [consulta de rastreabilidade da Friboi](https://www.friboi.com.br/qualidade/rastreabilidade/)
+pede **SIF + data de produção**. O SIF é exatamente o que o SIGSIF entrega —
+as duas bases se encaixam.
+
+```bash
+python3 friboi_links.py --datas 2026-03-15 --uf PA,RO,MT
+```
+
+Gera um CSV de consultas prontas, com o link já preenchido.
+
+### Até onde dá para automatizar: não dá
+
+A página chama `GET /api/traceability?search=<SIF><ddMMyy>`, com o header
+`x-recaptcha-token` (reCAPTCHA v3 invisível, site key
+`6LdBnCwsAAAAAIZt7A2rPIEhui0Si4VJ6-9WLzY9`). Testado:
+
+| requisição | resposta |
+|---|---|
+| sem header | `403 {"error":"token_required"}` |
+| token inválido | `403 {"error":"recaptcha_invalid"}` |
+
+A validação é **server-side**. Isso é um controle antiautomação deliberado,
+num site privado — categoria diferente do SIGSIF, onde só faltava mandar
+User-Agent. O `robots.txt` da Friboi é permissivo (`Allow: /`), mas ele
+governa rastreamento de páginas, não a API: quem manda aqui é o reCAPTCHA.
+
+Então o script **prepara** a pesquisa e quem consulta é você, no navegador. O
+link sai preenchido porque a própria Friboi aceita um parâmetro para isso:
+
+```
+?parm=<SIF>457</SIF><DATA_PROD>15/03/2026</DATA_PROD>
+```
+
+Está no código do site (provavelmente para QR code em embalagem). Não é
+contorno de nada — é um recurso deles, usado como eles fizeram.
+
+Para volume, o caminho é pedir: à JBS, por assessoria, e ao MAPA, por LAI —
+o governo tem os dados de abate e de origem do gado por estabelecimento.
+
+### O recorte que interessa
+
+Dos 3.166 estabelecimentos ativos, **57 são JBS/Friboi**, e **41 têm classe
+de abatedouro**. Entre eles, plantas no arco do desmatamento: Marabá (SIF 457),
+Redenção (807) e Santana do Araguaia (1110), no PA; São Miguel do Guaporé
+(175), em RO; além de Barra do Garças, Pontes e Lacerda e Juara, no MT.
+
+É aí que a rastreabilidade vira pauta: pegar o SIF de uma planta amazônica,
+consultar as fazendas fornecedoras que a Friboi declara e cruzar com o
+[Prodes/Deter](http://terrabrasilis.dpi.inpe.br), o
+[embargo do Ibama](https://servicos.ibama.gov.br/ctf/publico/areasembargadas/ConsultaPublicaAreasEmbargadas.php)
+e o CAR. O padrão que a cobertura de triangulação de gado persegue é a
+fazenda "limpa" que aparece como fornecedora direta enquanto compra de uma
+embargada.
