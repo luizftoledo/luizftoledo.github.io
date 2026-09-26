@@ -269,7 +269,7 @@
 
   <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER use &nbsp;·&nbsp; C or 1-5 tools &nbsp;·&nbsp; I bag &nbsp;·&nbsp; X/ESC cancel</div>
 
-  <audio id="bgm" src="stardew_theme.m4a" loop preload="auto"></audio>
+  <audio id="bgm" loop preload="none"></audio>
 
   <script>
     'use strict';
@@ -819,6 +819,7 @@
       gold: 50,
       inv: { seed: 3 },              // item id -> count (seeds are finite!)
       luckyPen: false,               // next published story pays double
+      manualTool: false,              // one explicit tool choice overrides context
       shop: null,                    // {tab:0 buy /1 sell, sel}
       bag: false,
       farm: {},                      // "x,y" -> {tilled, wet, crop:{stage, watered}}
@@ -898,7 +899,7 @@
       game.inv = data.inv; game.farm = data.farm; game.objs = data.objs;
       game.rareRocks = data.rareRocks; game.items = data.items;
       game.luckyPen = !!data.luckyPen; game.caveVisited = !!data.caveVisited;
-      game.shop = null; game.bag = false; game.msg = null; game.confirm = null;
+      game.shop = null; game.bag = false; game.manualTool = false; game.msg = null; game.confirm = null;
       game.toast = null; game.sleeping = null; game.won = false; game.winSel = 0;
       introShown = true;
       return true;
@@ -1101,9 +1102,13 @@
     bgm.volume = .45;
 
     function playTheme(name) {
-      // música original do site (tema Stardew) — mesma faixa na fazenda e na caverna
+      stopMusic();
+      ensureAC();
       musTheme = name;
-      bgm.play().catch(() => { });
+      if (AC) {
+        AC.resume().catch(() => { });
+        scheduleLoop(AC.currentTime + .05);
+      }
     }
 
     function scheduleLoop(t0) {
@@ -1181,8 +1186,9 @@
 
     function selectTool(i) {
       if (i === 4 && game.map !== 'cave') { toast('PICKAXE: cave only!'); return; }
-      if (game.tool === i) return;
+      if (game.tool === i) { game.manualTool = true; return; }
       game.tool = i;
+      game.manualTool = true;
       syncToolBtn();
       sfx(72, .05);
     }
@@ -1190,6 +1196,7 @@
     function cycleTool() {
       const n = game.map === 'cave' ? 5 : 4;
       game.tool = (game.tool + 1) % n;
+      game.manualTool = true;
       syncToolBtn();
       sfx(72, .05);
     }
@@ -1340,7 +1347,26 @@
       if (t === 'water') return say(['The pond is calm.', 'Somewhere down there:', 'an off-the-record fish.']);
       if (t === 'shop') return openShop();
       if (t === 'cavemouth') return enterCave();
+      const suggested = smartTool(f.x, f.y);
+      if (!game.manualTool && suggested !== null) {
+        game.tool = suggested;
+        syncToolBtn();
+      }
       useTool();
+      game.manualTool = false;
+    }
+
+    function smartTool(x, y) {
+      const key = x + ',' + y;
+      const obj = objAt(x, y);
+      if (game.map === 'cave') return obj === 'rock' ? 4 : null;
+      if (obj === 'stone' || obj === 'branch') return 3;
+      const cell = game.farm[key];
+      if (cell && cell.crop && cell.crop.stage >= 3) return 3;
+      if (cell && cell.crop && !cell.wet) return 2;
+      if (cell && cell.tilled && !cell.crop) return 1;
+      if (tileAt(x, y) === 'soil' && (!cell || !cell.tilled)) return 0;
+      return null;
     }
 
     function startSleep() {
@@ -1497,6 +1523,8 @@
 
     function finishStep() {
       game.step++;
+      const found = itemAt(game.px, game.py);
+      if (found) collectItem(found);
       const t = tileAt(game.px, game.py);
       if (game.map === 'farm' && t === 'cavemouth') enterCave();
       else if (game.map === 'cave' && t === 'ladder') exitCave();
@@ -1557,10 +1585,10 @@
         game.moveT += dt * 5.2;
         if (game.moveT >= 1) { game.moving = false; game.moveT = 0; finishStep(); }
       } else {
-        if (keys.up) tryMove(0, -1, 'up');
-        else if (keys.down) tryMove(0, 1, 'down');
-        else if (keys.left) tryMove(-1, 0, 'left');
-        else if (keys.right) tryMove(1, 0, 'right');
+        if (p === 'up' || keys.up) tryMove(0, -1, 'up');
+        else if (p === 'down' || keys.down) tryMove(0, 1, 'down');
+        else if (p === 'left' || keys.left) tryMove(-1, 0, 'left');
+        else if (p === 'right' || keys.right) tryMove(1, 0, 'right');
       }
 
       if (game.toast) { game.toast.t += dt; if (game.toast.t > 1.3) game.toast = null; }
@@ -1569,6 +1597,39 @@
     /* =====================================================================
        WORLD DRAW
        ===================================================================== */
+    function drawFarmTileDetail(tile, i, j, x, y) {
+      const h = ((i * 73856093) ^ (j * 19349663)) >>> 0;
+      if (tile === 'grass' || tile === 'grass2') {
+        for (let k = 0; k < 2; k++) {
+          const gx = x + 2 + ((h >>> (k * 7)) % 11);
+          const gy = y + 3 + ((h >>> (k * 5 + 3)) % 10);
+          px(gx, gy + 1, 1, 2, '#60934c');
+          px(gx - 1, gy, 1, 2, '#c0db82');
+          px(gx + 1, gy + 2, 1, 1, '#e3e9a9');
+        }
+        if (h % 19 === 0) {
+          px(x + 9, y + 6, 3, 1, '#f9ebbc');
+          px(x + 10, y + 5, 1, 3, '#f9ebbc');
+          px(x + 10, y + 6, 1, 1, '#e3a069');
+        }
+      } else if (tile === 'soil' || tile === 'tilled' || tile === 'tilledwet') {
+        const dark = tile === 'soil' ? '#987047' : tile === 'tilled' ? '#513821' : '#2c2021';
+        const light = tile === 'soil' ? '#d2a879' : tile === 'tilled' ? '#a2784d' : '#735c50';
+        px(x + 3 + (h % 8), y + 3 + ((h >>> 6) % 8), 2, 1, dark);
+        px(x + 10 - (h % 5), y + 11, 2, 1, light);
+      } else if (tile === 'water' || tile === 'water2') {
+        const shift = Math.floor(game.animClock * 2) % 3;
+        px(x + 2 + shift, y + 4, 5, 1, '#a9e5e2');
+        px(x + 8 - shift, y + 11, 4, 1, '#366b9b');
+      } else if (tile === 'tree') {
+        px(x + 4, y + 3, 3, 1, '#c7e89a');
+        px(x + 3, y + 14, 10, 1, 'rgba(31,66,35,.35)');
+      } else if (tile === 'cfloor') {
+        px(x + 3 + (h % 8), y + 4 + ((h >>> 8) % 8), 2, 1, '#746577');
+        if (h % 5 === 0) px(x + 11, y + 12, 1, 1, '#b9a27d');
+      }
+    }
+
     function drawWorld() {
       zones = [];
       const lerp = game.moving ? game.moveT : 1;
@@ -1589,15 +1650,22 @@
           const key = i + ',' + j;
           if (t === 'soil' && game.farm[key] && game.farm[key].tilled)
             t = game.farm[key].wet ? 'tilledwet' : 'tilled';
-          g.drawImage(TILES[t], i * T - camX, j * T - camY);
+          const sx = i * T - camX, sy = j * T - camY;
+          g.drawImage(TILES[t], sx, sy);
+          drawFarmTileDetail(t, i, j, sx, sy);
 
           const cell = game.farm[key];
-          if (game.map === 'farm' && cell && cell.crop)
-            g.drawImage(CROPS[cell.crop.stage], i * T - camX, j * T - camY);
+          if (game.map === 'farm' && cell && cell.crop) {
+            g.fillStyle = 'rgba(35,26,16,.28)';
+            g.beginPath(); g.ellipse(sx + 8, sy + 14, 5, 2, 0, 0, 7); g.fill();
+            g.drawImage(CROPS[cell.crop.stage], sx, sy);
+          }
 
           const obj = game.objs[game.map][key];
           if (obj) {
-            g.drawImage(OBJS[obj], i * T - camX, j * T - camY);
+            g.fillStyle = 'rgba(35,26,16,.24)';
+            g.beginPath(); g.ellipse(sx + 8, sy + 13, 5, 2, 0, 0, 7); g.fill();
+            g.drawImage(OBJS[obj], sx, sy);
             if (obj === 'rock' && game.rareRocks[key] && (game.animClock * 2 + i) % 3 < .4) {
               px(i * T - camX + 4 + (i % 5), j * T - camY + 4 + (j % 4), 1, 1, '#f6e294');
               px(i * T - camX + 10 - (j % 3), j * T - camY + 8, 1, 1, '#ffffff');
@@ -1617,7 +1685,19 @@
       const seq = [1, 0, 3, 0];
       const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
       const frame = game.moving ? dirFrames[seq[phase]] : dirFrames[0];
+      g.fillStyle = 'rgba(39,55,29,.32)';
+      g.beginPath(); g.ellipse(Math.round(wx - camX + 8), Math.round(wy - camY + 15), 6, 2, 0, 0, 7); g.fill();
       g.drawImage(frame, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
+
+      if (!game.msg && !game.shop && !game.bag) {
+        const f = facingTile(), suggested = smartTool(f.x, f.y);
+        if (suggested !== null) {
+          const tx = f.x * T - camX, ty = f.y * T - camY;
+          g.strokeStyle = '#fff2a0';
+          g.lineWidth = 1;
+          g.strokeRect(tx + 1.5, ty + 1.5, 13, 13);
+        }
+      }
 
       /* dusk overlay: the day grows old as your energy burns */
       if (game.map === 'farm') {
@@ -1638,6 +1718,8 @@
       text(TOOLS[game.tool], 80, 18, '#3f6d3b', 6);
       text(game.gold + 'g', 130, 18, '#a87818', 6);
       zone(2, 2, 170, 30, 'tool');
+      px(173, 19, 81, 12, 'rgba(43,29,18,.88)');
+      text(game.manualTool ? 'A: ' + TOOLS[game.tool] : 'A: AUTO TOOL', 179, 22, '#fff2a0', 5);
 
       /* BAG chip (tap or press I) */
       frame9(214, 2, 40, 15, { bg: 'rgba(248,244,228,.95)' });
@@ -1848,11 +1930,8 @@
       if (!introShown) {
         introShown = true;
         say(
-          ['Welcome to JOURNALISM VALLEY!', 'Grow stories like crops:', 'till a plot, plant a tip,', 'water it with facts daily.'],
-          ['Swap tools on the bar below', '(tap a slot, C key or 1-5).', 'Sleep in bed to grow watered', 'crops and refill energy.'],
-          ['Each published story pays', "120g. Spend it at MIRNA'S", 'NEWSSTAND by the house -', 'stock rotates every day.'],
-          ['Press I (or the BAG button)', 'for your inventory, gold and', 'goals. You start with 3 story', 'seeds. Yes, only 3. Budget!'],
-          ['GOAL: publish 4 front pages', 'and dig 3 rare documents in', 'the DEAD ARCHIVE cave up', 'north. Coffee helps. Go!']
+          ['Grow stories on the brown', 'plots. Face one and press A:', 'till, plant, water, harvest.', 'Sleep to grow watered crops.'],
+          ['Publish 4 stories and find', '3 rare docs in the cave.', 'The stand sells more seeds.', 'BAG shows your inventory.']
         );
       }
     }
@@ -1984,6 +2063,12 @@
         playTheme(map === 'cave' ? 'cave' : 'farm');
       }
     };
+    window.render_game_to_text = () => JSON.stringify({
+      coordinates: 'tile grid, origin top-left, x right, y down',
+      state: game.state, map: game.map, player: { x: game.px, y: game.py, dir: game.dir },
+      day: game.day, energy: game.energy, stories: game.published, rareDocs: game.rareDocs,
+      tool: TOOLS[game.tool], bag: game.bag, shop: !!game.shop, message: !!game.msg
+    });
   </script>
 </body>
 

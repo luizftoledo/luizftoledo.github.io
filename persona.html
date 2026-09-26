@@ -302,9 +302,9 @@
       'n': '#101018', 'N': '#202030',          /* shadow suit */
       's': '#565a64', 'S': '#828893',          /* steel */
       'm': '#d6d2c8', 'M': '#9e9a92',          /* marble */
-      'f': '#181820', 'F': '#1f1f29',          /* floor */
+      'f': '#23232f', 'F': '#303041',          /* floor */
       'c': '#0e0e13',                          /* near-black */
-      'u': '#262630', 'U': '#30303d',          /* wall brick */
+      'u': '#2b2b39', 'U': '#3b3b4f',          /* wall brick */
       'y': '#ecd84e', 'Y': '#f6ec9a',          /* post-it */
       'd': '#07070a',                          /* void */
       'e': '#1e8a4a', 'E': '#35c46e'           /* exit green */
@@ -1163,6 +1163,30 @@
       return frames[seq[Math.floor(animT * 4) % 4]];
     }
 
+    function drawPalaceTileDetail(tile, i, j, x, y) {
+      const h = ((i * 73856093) ^ (j * 19349663)) >>> 0;
+      if (tile === 'floor') {
+        if (mapChar(i, j - 1) === '#') px(x, y, 16, 3, 'rgba(0,0,0,.32)');
+        px(x + 3 + (h % 8), y + 4 + ((h >>> 7) % 8), 2, 1, '#3d3d51');
+        if (h % 4 === 0) px(x + 12, y + 11, 1, 1, '#4c4a61');
+      } else if (tile === 'carpet') {
+        if (mapChar(i - 1, j) !== 'r') px(x, y, 1, 16, '#b48439');
+        if (mapChar(i + 1, j) !== 'r') px(x + 15, y, 1, 16, '#b48439');
+        if (mapChar(i, j - 1) !== 'r') px(x, y, 16, 1, '#d6ad50');
+        if (mapChar(i, j + 1) !== 'r') px(x, y + 15, 16, 1, '#673020');
+        if (h % 3 === 0) {
+          px(x + 7, y + 4, 2, 1, '#c6414c');
+          px(x + 6, y + 5, 4, 1, '#bd3946');
+        }
+      } else if (tile === 'wall') {
+        px(x + 2, y + 3, 3, 1, '#515068');
+        px(x + 11, y + 10, 2, 1, '#4b4a61');
+      } else if (tile === 'vase') {
+        px(x + 4, y + 2, 2, 1, '#f8df8d');
+        if (Math.floor(game.animClock * 3 + i) % 3 === 0) px(x + 12, y + 5, 1, 1, '#f6ecb0');
+      }
+    }
+
     function drawWorld() {
       zones = [];
       const [pcx, pcy, wx, wy] = playerPixelCenter();
@@ -1172,13 +1196,18 @@
 
       const x0 = Math.floor(camX / T), y0 = Math.floor(camY / T);
       for (let j = y0; j <= y0 + 13 && j < MAPH; j++)
-        for (let i = x0; i <= x0 + 17 && i < MAPW; i++)
-          g.drawImage(TILES[tileAt(i, j)], i * T - camX, j * T - camY);
+        for (let i = x0; i <= x0 + 17 && i < MAPW; i++) {
+          const tile = tileAt(i, j), sx = i * T - camX, sy = j * T - camY;
+          g.drawImage(TILES[tile], sx, sy);
+          drawPalaceTileDetail(tile, i, j, sx, sy);
+        }
 
       /* keys on the floor */
       const bob = Math.sin(game.animClock * 4) * 1.5;
       for (const k of KEY_DEFS) {
         if (game.keysHave[k.id]) continue;
+        g.fillStyle = 'rgba(246,208,106,.20)';
+        g.beginPath(); g.arc(k.x * T - camX + 8, k.y * T - camY + 8, 9, 0, 7); g.fill();
         g.drawImage(ITEMS[k.id], k.x * T - camX + 3, k.y * T - camY + 4 + bob);
       }
 
@@ -1198,6 +1227,8 @@
       for (const gd of guards) {
         const dirKey = gd.fx === 1 ? 'right' : gd.fx === -1 ? 'left' : gd.fy === -1 ? 'up' : 'down';
         const fr = actorFrame(SPR.guard, dirKey, gd.animT, gd.wait <= 0);
+        g.fillStyle = 'rgba(0,0,0,.34)';
+        g.beginPath(); g.ellipse(Math.round(gd.px * T - camX + 8), Math.round(gd.py * T - camY + 14), 6, 2, 0, 0, 7); g.fill();
         g.drawImage(fr, Math.round(gd.px * T - camX + 1), Math.round(gd.py * T - camY - 4));
       }
 
@@ -1207,6 +1238,8 @@
         const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
         const seq = [1, 0, 3, 0];
         const fr = game.moving ? SPR.player[game.dir][seq[phase]] : SPR.player[game.dir][0];
+        g.fillStyle = 'rgba(0,0,0,.38)';
+        g.beginPath(); g.ellipse(Math.round(wx - camX + 8), Math.round(wy - camY + 14), 6, 2, 0, 0, 7); g.fill();
         g.drawImage(fr, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
       }
       /* hidden: vase covers the player */
@@ -1260,6 +1293,10 @@
         if (Math.floor(game.animClock * 3) % 2) text('!', 68, 19, '#e83040', 7);
       }
       zone(2, 2, 96, 30, 'note');
+      frameP5(154, 2, 100, 24, { cut: 4, acc: false });
+      const goal = game.dossier ? 'REACH EXIT' : game.doorOpen ? 'TAKE DOSSIER' : allKeys() ? 'OPEN VAULT' : 'FIND 3 SEALS';
+      text('OBJECTIVE', 163, 7, '#e83040', 5);
+      text(goal, 163, 17, '#f4f2ec', 5);
     }
 
     /* =====================================================================
@@ -1331,9 +1368,8 @@
         resetRun(); game.state = 'world';
         if (!introShown) {
           introShown = true;
-          showMsg(['Welcome to the PALACE.', 'Steal THE DOSSIER: grab 3', 'keys, dodge the red vision', 'cones of the Shadows.'], () =>
-            showMsg(['Press A near vases to HIDE.', 'Spotted 3 times = escorted', 'out. With all keys, reach', 'the vault up top.'], () =>
-              showMsg(['After the calling card,', 'take the treasure and RUN', 'to the entrance. Good luck,', 'phantom reporter.'])));
+          showMsg(['Find 3 seals, then open the', 'vault and take THE DOSSIER.', 'Avoid red cones. Press A on', 'a vase to hide.'], () =>
+            showMsg(['After the treasure, run back', 'to the entrance. B opens', 'your status and clues.']));
         }
       }
     }
@@ -1568,6 +1604,12 @@
     window.__alarm = () => spotPlayer(guards[0]);
     window.__win = () => doWin();
     window.__reset = () => resetRun();
+    window.render_game_to_text = () => JSON.stringify({
+      coordinates: 'tile grid, origin top-left, x right, y down',
+      state: game.state, player: { x: game.px, y: game.py, dir: game.dir, hidden: game.hidden },
+      seals: keyCount(), alert: game.alert, doorOpen: game.doorOpen, dossier: game.dossier,
+      targets: KEY_DEFS.filter(k => !game.keysHave[k.id]).map(k => ({ id: k.id, x: k.x, y: k.y }))
+    });
   </script>
 </body>
 
