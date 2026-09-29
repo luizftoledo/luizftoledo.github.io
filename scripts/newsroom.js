@@ -132,8 +132,13 @@
       more: 'See all 25 awards and shortlists'
     },
     research: {
-      label: 'Research & fellowships', kicker: 'The library', title: 'Research & fellowships', anchor: '#research-fellowships',
+      label: 'Research & fellowships', kicker: 'Academic research, fellowships and degrees', title: 'Research & fellowships', anchor: '#research-fellowships',
       items: [
+        { t: 'Growing in and from Crisis: Environment, Labor, and Capital in Brazil\u2019s Exponential Prison Expansion', k: 'Annals of the American Association of Geographers · 2026', d: 'How prison managers claim the prison is useful against economic and environmental problems, and why those claims entrench the carceral system.', links: [['https://doi.org/10.1080/24694452.2026.2688357', 'Read the article ↗']] },
+        { t: 'The legal regime of classified information in Brazil', k: 'Cadernos EBAPE.BR (FGV)', d: 'With Marcio Cunha Filho. Classification escapes effective accountability and can lead agencies to overclassify public information.', links: [['https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/?lang=en', 'Read the article ↗']] },
+        { t: 'Failing to Grow: How Walls Become Doorways in the Making of Brazilian Mass Incarceration', k: 'Comparative Studies in Society and History · forthcoming' },
+        { t: 'Policy and its Underside: Planning for the Prison', k: 'Routledge Companion to Urban Planning · forthcoming' },
+        { t: 'Desclassificação tarjada: o sigilo de documentos das forças armadas brasileiras', k: 'Master\'s thesis · FGV EAESP · 2021', d: 'The Armed Forces declassified 394,400+ documents since 2013, but released them so heavily redacted that they stayed incomprehensible.', links: [['https://repositorio.fgv.br/items/e0088610-e3e2-4c40-afad-4461cf6e2df6', 'Read the thesis ↗']] },
         { t: 'Cambridge · POLIS', k: '2024 – present', d: 'Research assistant, Prison Consensus Project.' },
         { t: 'National Endowment for Democracy', k: '2023 – 2024', d: 'Reagan-Fascell fellow on AI in investigative journalism.' },
         { t: 'Brown Institute, Columbia', k: '2022 – 2023', d: 'Media innovation fellowship; US$100k grant to Datafixers.' },
@@ -142,17 +147,6 @@
         { t: 'FGV-EAESP', k: '2019 – 2021', d: 'MS Public Administration (full scholarship); FOI research adopted by government.' }
       ],
       more: 'Research, fellowships and grants'
-    },
-    academic: {
-      label: 'Academic research', kicker: 'Peer-reviewed research', title: 'Academic research', anchor: '#academic-research',
-      intro: 'Research on state secrecy and transparency in Brazil, and on the political economy of the country\'s prison expansion with the Prison Consensus Project at the University of Cambridge.',
-      items: [
-        { t: 'Growing in and from Crisis: Environment, Labor, and Capital in Brazil\u2019s Exponential Prison Expansion', k: 'Annals of the American Association of Geographers · 2026', d: 'How prison managers claim the prison is useful against economic and environmental problems, and why those claims entrench the carceral system.', links: [['https://doi.org/10.1080/24694452.2026.2688357', 'Read the article ↗']] },
-        { t: 'The legal regime of classified information in Brazil', k: 'Cadernos EBAPE.BR (FGV)', d: 'With Marcio Cunha Filho. Classification escapes effective accountability and can lead agencies to overclassify public information.', links: [['https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/?lang=en', 'Read the article ↗']] },
-        { t: 'Failing to Grow: How Walls Become Doorways in the Making of Brazilian Mass Incarceration', k: 'Comparative Studies in Society and History · forthcoming' },
-        { t: 'Policy and its Underside: Planning for the Prison', k: 'Routledge Companion to Urban Planning · forthcoming' },
-        { t: 'Desclassificação tarjada: o sigilo de documentos das forças armadas brasileiras', k: 'Master\'s thesis · FGV EAESP · 2021', d: 'The Armed Forces declassified 394,400+ documents since 2013, but released them so heavily redacted that they stayed incomprehensible.', links: [['https://repositorio.fgv.br/items/e0088610-e3e2-4c40-afad-4461cf6e2df6', 'Read the thesis ↗']] }
-      ]
     },
     courses: {
       label: 'Courses & workshops', kicker: 'The training corner', title: 'Courses & workshops', anchor: '#courses-workshops', video: 'course',
@@ -881,7 +875,8 @@
       // keep the whole tag inside the stage (the tail still points at the character)
       var hw = (h.w || (h.w = h.el.offsetWidth || 120)) / 2 + 8;
       if (vis) sx = Math.max(hw, Math.min(W - hw, sx));
-      h.el.style.transform = 'translate(' + sx.toFixed(1) + 'px,' + sy.toFixed(1) + 'px)';
+      // position through the `translate` property so the hover `scale` grows the tag in place
+      h.el.style.translate = 'calc(' + sx.toFixed(1) + 'px - 50%) calc(' + sy.toFixed(1) + 'px - 100%)';
       if (vis === h.el.classList.contains('is-hidden')) { h.el.classList.toggle('is-hidden', !vis); if (vis) h.el.removeAttribute('tabindex'); else h.el.tabIndex = -1; }
     });
     if (shown && !root.classList.contains('hots-ready')) { root.classList.add('hots-ready'); showCoach(); }
@@ -1142,7 +1137,7 @@
     { x: 20.95, y: 12.95, z: 13, sit: true, sx: 1, away: true, look: look() },
     { x: 21.75, y: 13.1, z: 13, sit: true, sx: 1, away: true, look: look() },
     { x: 22.55, y: 12.9, z: 13, sit: true, sx: 1, away: true, look: look() },
-    { key: 'academic', x: 8.6, y: 15.25, sx: -1, hold: 'journal', look: { skin: '#e8b995', hair: '#3b2a20', shirt: '#7a5c8e', style: 'short', glasses: true } },
+    { x: 8.6, y: 15.25, sx: -1, hold: 'journal', look: { skin: '#e8b995', hair: '#3b2a20', shirt: '#7a5c8e', style: 'short', glasses: true } },
     { key: 'awards', x: 13.3, y: 14.8, sx: -1, gesture: true, hold: 'trophy', look: { skin: '#e8b995', hair: '#c9a064', shirt: '#23262e', style: 'long' } }
   ];
   seated = seated.filter(function (s) { return !(Math.abs(s.x - 11.3) < .01 && Math.abs(s.y - 4.45) < .01); });
