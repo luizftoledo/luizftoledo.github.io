@@ -427,6 +427,41 @@
       }
     }, x + y);
   }
+  // the AI desk's screen: left, a face under a deepfake scan; right, a chat window typing
+  function drawAiMonitor(mx, sy, W, Hh, z0) {
+    box(mx, sy, z0, W, .08, Hh, { t: P.mon, l: P.mon, r: P.monL, dr: false });
+    onPlaneY(sy + .07, mx + .04, z0 + Hh - 1.5, function () {
+      var w = W * 32 - 2.6, h = Hh - 3;
+      ctx.fillStyle = '#11141a'; ctx.fillRect(0, 0, w, h);
+      // face (left half)
+      var fx = w * .27, fy = h * .52;
+      ctx.fillStyle = '#d9a07a'; ctx.beginPath(); ctx.ellipse(fx, fy, 4.2, 5.2, 0, 0, 7); ctx.fill();
+      ctx.fillStyle = '#2a1d17'; ctx.beginPath(); ctx.ellipse(fx, fy - 3.2, 4.4, 2.6, 0, Math.PI, 0); ctx.fill();
+      ctx.fillStyle = '#11141a'; ctx.fillRect(fx - 2.2, fy - .6, 1.1, .9); ctx.fillRect(fx + 1.1, fy - .6, 1.1, .9);
+      // mesh + scan line
+      var scan = (time / 28) % (h + 6) - 3;
+      ctx.strokeStyle = 'rgba(232,65,79,.55)'; ctx.lineWidth = .35;
+      for (var gx = -3; gx <= 3; gx += 1.5) { ctx.beginPath(); ctx.moveTo(fx + gx, fy - 5); ctx.lineTo(fx + gx * .8, fy + 5); ctx.stroke(); }
+      ctx.fillStyle = 'rgba(232,65,79,.8)'; ctx.fillRect(1, Math.max(1, Math.min(h - 1.6, scan)), w * .52, .6);
+      ctx.strokeStyle = '#e8414f'; ctx.lineWidth = .6;
+      [[fx - 6, fy - 7, 1, 1], [fx + 6, fy - 7, -1, 1], [fx - 6, fy + 7, 1, -1], [fx + 6, fy + 7, -1, -1]].forEach(function (c) {
+        ctx.beginPath(); ctx.moveTo(c[0], c[1] + 2 * c[3]); ctx.lineTo(c[0], c[1]); ctx.lineTo(c[0] + 2 * c[2], c[1]); ctx.stroke();
+      });
+      ctx.fillStyle = '#e8414f'; ctx.font = '700 2.3px "DM Mono",monospace'; ctx.fillText('SYNTHETIC 94%', 1.4, h - 1.2);
+      // chat window (right half)
+      var cx = w * .56, cw = w * .41;
+      ctx.fillStyle = '#1d2129'; ctx.fillRect(cx, 1, cw, h - 2);
+      var n = Math.floor(time / 900) % 5;
+      var bub = [[0, 6.5], [1, 5], [0, 7.5], [1, 4]];
+      for (var i = 0; i < Math.min(n, 4); i++) {
+        var right = bub[i][1] === 1 ? 0 : 1, bw = bub[i][1] * 1.3 + 3;
+        ctx.fillStyle = bub[i][0] ? '#e8414f' : '#8b93a1';
+        ctx.fillRect(right ? cx + cw - bw - 1 : cx + 1, 2 + i * 3.6, bw, 2.4);
+      }
+      if (n < 5 && (time / 300 | 0) % 2) { ctx.fillStyle = '#8b93a1'; ctx.fillRect(cx + 1.2, h - 3, 1, 1); ctx.fillRect(cx + 2.8, h - 3, 1, 1); ctx.fillRect(cx + 4.4, h - 3, 1, 1); }
+    });
+    if (P.night) { var gc = iso(mx + W / 2, sy + .4, z0 + 12); var g = ctx.createRadialGradient(gc[0], gc[1], 1, gc[0], gc[1], 30); g.addColorStop(0, 'rgba(232,65,79,.18)'); g.addColorStop(1, 'rgba(232,65,79,0)'); ctx.fillStyle = g; ctx.fillRect(gc[0] - 32, gc[1] - 32, 64, 64); }
+  }
   function drawBottle(x, y, z) {
     var b = iso(x, y, z);
     ctx.beginPath(); ctx.moveTo(b[0] - 3, b[1]); ctx.lineTo(b[0] - 3, b[1] - 10); ctx.quadraticCurveTo(b[0] - 3, b[1] - 14, b[0] - 1.2, b[1] - 15);
@@ -606,17 +641,6 @@
         ctx.strokeStyle = P.ink; ctx.lineWidth = .8; ctx.stroke();
       });
     }, 25);
-    prop(21 + 15.4, function () {
-      for (var r = 0; r < 3; r++) for (var i = 0; i < 3 - r; i++) {
-        var x = 20.2, y = 15.05 + i * .28 + r * .14, z = 4 + r * 7.5;
-        var a = iso(x, y, z), b = iso(x + 1.6, y, z);
-        ctx.strokeStyle = P.ink; ctx.lineWidth = 8.5; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
-        ctx.strokeStyle = '#b5462e'; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
-        ell(b[0], b[1], 3.6, 3.6, '#e07a4a', P.ink); ell(b[0], b[1], 1.5, 1.5, '#b5462e');
-      }
-      var tg = iso(21.4, 15.1, 26); ctx.fillStyle = '#fffdf8'; ctx.fillRect(tg[0] - 7, tg[1] - 4, 14, 7); ctx.strokeStyle = P.ink; ctx.lineWidth = .8; ctx.strokeRect(tg[0] - 7, tg[1] - 4, 14, 7);
-      ctx.fillStyle = '#c8283a'; ctx.font = '700 3.6px "DM Mono",monospace'; ctx.fillText('SEIZED', tg[0] - 5.6, tg[1] + 1);
-    }, 26);
   }
 
   /* the floating "AI bubble" */
@@ -834,7 +858,7 @@
 
   /* ================= hotspots ================= */
   var hots = [];
-  var hoverKey = null;
+  var hoverKey = null, touchUsed = false;
   function hotspotAt(key, posFn) { hots.push({ key: key, pos: posFn }); }
   function buildHotButtons() {
     if (!hotLayer) return;
@@ -860,8 +884,11 @@
       });
       function on() { hoverKey = h.key; root.classList.add('has-hover'); b.classList.add('is-hot'); if (!running) frame(performance.now()); }
       function off() { if (hoverKey === h.key) hoverKey = null; root.classList.remove('has-hover'); b.classList.remove('is-hot'); if (!running) frame(performance.now()); }
-      b.addEventListener('pointerenter', on); b.addEventListener('pointerleave', off); b.addEventListener('focus', on); b.addEventListener('blur', off);
-      b.addEventListener('pointerdown', on);
+      // hover effects only for a real mouse: on phones a tap must go straight to the section
+      // (changing the page on touch makes iOS treat the first tap as a hover)
+      b.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') on(); });
+      b.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') off(); });
+      b.addEventListener('focus', function () { if (!touchUsed) on(); }); b.addEventListener('blur', off);
       hotLayer.appendChild(b); h.el = b;
     });
   }
@@ -876,7 +903,11 @@
       var hw = (h.w || (h.w = h.el.offsetWidth || 120)) / 2 + 8;
       if (vis) sx = Math.max(hw, Math.min(W - hw, sx));
       // position through the `translate` property so the hover `scale` grows the tag in place
-      h.el.style.translate = 'calc(' + sx.toFixed(1) + 'px - 50%) calc(' + sy.toFixed(1) + 'px - 100%)';
+      // write to the DOM only when the tag really moved (fewer style changes = taps land reliably)
+      if (h.lx === undefined || Math.abs(h.lx - sx) > .4 || Math.abs(h.ly - sy) > .4) {
+        h.lx = sx; h.ly = sy;
+        h.el.style.translate = 'calc(' + sx.toFixed(1) + 'px - 50%) calc(' + sy.toFixed(1) + 'px - 100%)';
+      }
       if (vis === h.el.classList.contains('is-hidden')) { h.el.classList.toggle('is-hidden', !vis); if (vis) h.el.removeAttribute('tabindex'); else h.el.tabIndex = -1; }
     });
     if (shown && !root.classList.contains('hots-ready')) { root.classList.add('hots-ready'); showCoach(); }
@@ -899,10 +930,11 @@
     function hide() {
       if (!el.parentNode) return; el.classList.remove('show'); root.classList.remove('is-coaching');
       setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 400);
-      root.removeEventListener('pointerdown', hide); if (hotLayer) hotLayer.removeEventListener('pointerover', hide);
+      root.removeEventListener('pointerdown', hide); if (hotLayer) hotLayer.removeEventListener('pointerover', hideOnMouse);
     }
+    function hideOnMouse(e) { if (e.pointerType === 'mouse') hide(); }
     setTimeout(hide, 5200);
-    root.addEventListener('pointerdown', hide); if (hotLayer) hotLayer.addEventListener('pointerover', hide);
+    root.addEventListener('pointerdown', hide); if (hotLayer) hotLayer.addEventListener('pointerover', hideOnMouse);
   }
 
   /* ================= panel ================= */
@@ -1062,7 +1094,6 @@
     if (time > 2400 || reduce) walkers.forEach(function (w) { list.push({ k: w.x + w.y, f: function () { ctx.save(); ctx.globalAlpha = w.alpha; drawPerson(w); ctx.restore(); }, d: -1 }); });
     list.sort(function (a, b) { return a.k - b.k; });
     list.forEach(function (it) { if (it.d < 0) it.f(); else drop(it.d, it.f); });
-    drop(24, drawBubble);
     drop(4, drawTruss);
     drop(5, drawOnAirSign);
   }
@@ -1097,6 +1128,8 @@
   function stop() { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = 0; }
   function sync() { (visible && !document.hidden && !paused) ? start() : stop(); }
 
+  root.addEventListener('touchstart', function () { touchUsed = true; autoPan = false; }, { passive: true });
+  root.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') { touchUsed = true; autoPan = false; } }, { passive: true });
   /* drag to pan on narrow screens (horizontal only; vertical scrolling stays native) */
   var dragX0 = 0, pan0 = 0;
   canvas.addEventListener('pointerdown', function (e) { if (panMin >= 0) return; dragging = true; autoPan = false; dragX0 = e.clientX; pan0 = panX; });
@@ -1115,7 +1148,11 @@
   /* ================= build ================= */
   readTheme();
   studio();
-  pod(9.8, 2.4, 4, { B1: { single: true, thumb: YT.timeline.id }, B3: { mug: true } });
+  pod(9.8, 2.4, 4, { B1: { mug: true }, B3: { mug: true } });
+  prop(11.3 + 3.22 + .45, function () {
+    line(iso(11.3, 3.22, 29), iso(11.3, 3.22, 76), P.ink, 1.6);
+    drawAiMonitor(10.55, 3.22, 1.5, 34, 76);
+  }, 11.3 + 2.4);
   pod(14.8, 2.4, 4, { B2: { papers: true } });
   pod(19.8, 2.4, 3, { B0: { mug: true } });
   pod(9.8, 6.7, 4, { tv: { at: 1.5, key: 'doctors' }, B2: { papers: true } });
@@ -1127,7 +1164,7 @@
   lounge(); backWallStuff(); frontStuff();
   var ST = [
     { key: 'investigative', x: 11.05, y: 1.2, sx: -1, hold: 'papers', look: { skin: '#b97a52', hair: '#1b1512', shirt: '#f2efe8', style: 'short', glasses: true } },
-    { key: 'ai', x: 11.3, y: 4.45, sit: true, sx: -1, away: true, look: { skin: '#f1c7a5', hair: '#6b3a1e', shirt: '#3f7d79', style: 'long' } },
+    { key: 'ai', x: 11.3, y: 4.45, sit: true, sx: -1, away: true, tag: [1.1, 1.1, 30], look: { skin: '#f1c7a5', hair: '#6b3a1e', shirt: '#3f7d79', style: 'long' } },
     { key: 'research', x: 22.55, y: .98, sx: 1, away: true, hold: 'book', look: { skin: '#8a5a3c', hair: '#2a1d17', shirt: '#8d5a7a', style: 'bun' } },
     { key: 'initiatives', x: 16.3, y: 1.18, sx: 1, away: true, hold: 'folder', look: { skin: '#e8b995', hair: '#b58a4a', shirt: '#3a4150', style: 'short' } },
     { key: 'osint', x: .5, y: 12.4, sx: -1, away: true, gesture: true, hold: 'magnifier', look: { skin: '#d9a07a', hair: '#3b2a20', shirt: '#e3ab3a', style: 'curly' } },
@@ -1144,7 +1181,7 @@
   hotspotAt('videos', function () { return [anchor.x + .6, anchor.y + .6, 64]; });
   ST.forEach(function (st) {
     st.z = st.z || 0; st.walkT = 0;
-    if (st.key) hotspotAt(st.key, function () { return [st.x, st.y, st.z + (st.sit ? 60 : 68)]; });
+    if (st.key) hotspotAt(st.key, function () { return st.tag ? [st.x + st.tag[0], st.y + st.tag[1], st.z + st.tag[2]] : [st.x, st.y, st.z + (st.sit ? 60 : 68)]; });
   });
   seatedPeople = seated.map(function (s) { return { x: s.x, y: s.y, z: 0, sit: true, sx: s.face > 0 ? 1 : -1, away: s.face < 0, look: look(), walkT: 0 }; }).concat(ST);
   for (var i = 0; i < 11; i++) walkers.push(new Walker(i));

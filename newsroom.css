@@ -28,14 +28,21 @@ html[data-site-theme="dark"] #newsroom{background:#0a0b0f;border-bottom-color:rg
 #newsroom .nr-hot.is-hidden{opacity:0;pointer-events:none}
 #newsroom .nr-hot i{position:relative;width:6px;height:6px;border-radius:50%;background:#ff5a67;flex:none}
 #newsroom .nr-hot i::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1.5px solid #ff5a67;animation:nrRing 2.4s ease-out infinite;animation-delay:var(--d,0ms)}
-#newsroom .nr-hot:hover,#newsroom .nr-hot:focus-visible,#newsroom .nr-hot.is-hot{--tag:#c8283a;scale:1.1;z-index:2;box-shadow:0 6px 18px rgba(200,40,58,.35);border-color:rgba(255,255,255,.35)}
-#newsroom .nr-hot:hover i,#newsroom .nr-hot:focus-visible i,#newsroom .nr-hot.is-hot i{background:#fff}
-#newsroom .nr-hot:hover i::after,#newsroom .nr-hot.is-hot i::after{border-color:#fff}
-#newsroom.has-hover .nr-hot:not(.is-hot):not(:hover){opacity:.4}
 #newsroom .nr-hot:focus-visible{outline:2px solid var(--nr-ink);outline-offset:3px}
+#newsroom .nr-hot:focus-visible,#newsroom .nr-hot.is-hot{--tag:#c8283a;scale:1.1;z-index:2;box-shadow:0 6px 18px rgba(200,40,58,.35);border-color:rgba(255,255,255,.35)}
+#newsroom .nr-hot:focus-visible i,#newsroom .nr-hot.is-hot i{background:#fff}
+#newsroom .nr-hot.is-hot i::after{border-color:#fff}
+#newsroom .nr-hot:active{--tag:#c8283a}
+@media (hover:hover) and (pointer:fine){
+  #newsroom .nr-hot:hover{--tag:#c8283a;scale:1.1;z-index:2;box-shadow:0 6px 18px rgba(200,40,58,.35);border-color:rgba(255,255,255,.35)}
+  #newsroom .nr-hot:hover i{background:#fff}
+  #newsroom .nr-hot:hover i::after{border-color:#fff}
+  #newsroom.has-hover .nr-hot:not(.is-hot):not(:hover){opacity:.4}
+  html[data-site-theme="dark"] #newsroom .nr-hot:hover{--tag:#e8414f;color:#fff}
+}
+html[data-site-theme="dark"] #newsroom .nr-hot.is-hot{--tag:#e8414f;color:#fff}
 #newsroom.is-coaching .nr-hot:not(.is-hidden){animation:nrNudge 1.6s ease-in-out 2}
 html[data-site-theme="dark"] #newsroom .nr-hot{--tag:rgba(244,241,234,.8);color:#17191e;border-color:rgba(0,0,0,.12)}
-html[data-site-theme="dark"] #newsroom .nr-hot:hover,html[data-site-theme="dark"] #newsroom .nr-hot.is-hot{--tag:#e8414f;color:#fff}
 
 /* coach mark */
 #newsroom .nr-coach{position:absolute;left:50%;bottom:54px;z-index:4;display:flex;align-items:center;gap:10px;padding:9px 16px 9px 10px;border-radius:999px;background:#17191e;color:#fff;font:400 13.5px/1.2 'DM Sans',system-ui,sans-serif;box-shadow:0 10px 28px rgba(0,0,0,.25);pointer-events:none;opacity:0;transform:translate(-50%,10px);transition:opacity .35s,transform .35s cubic-bezier(.2,.8,.2,1);white-space:nowrap}
