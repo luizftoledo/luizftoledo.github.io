@@ -8,7 +8,9 @@
   'use strict';
   var root = document.getElementById('newsroom');
   if (!root) return;
-  var canvas = root.querySelector('canvas');
+  var stage = root.querySelector('.nr-stage') || root; // the drawing area (the text sits beside it on desktop, above it on phones)
+  var canvas = stage.querySelector('canvas');
+  var chipsNav = root.querySelector('.nr-chips');
   var ctx = canvas.getContext('2d');
   var hotLayer = root.querySelector('.nr-hotspots');
   var panel = root.querySelector('.nr-panel');
@@ -860,17 +862,44 @@
   var hots = [];
   var hoverKey = null, touchUsed = false;
   function hotspotAt(key, posFn) { hots.push({ key: key, pos: posFn }); }
+  var ORDER = ['investigative', 'ai', 'osint', 'videos', 'interviews', 'initiatives', 'awards', 'research', 'courses'];
+  function goTo(key, b, e) {
+    var d = SECTIONS[key];
+    if (LINK === null) { blip(); openPanel(key, b); return; }
+    if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0)) { blip(); return; }
+    if (e) e.preventDefault(); blip();
+    var target = LINK === '' && document.querySelector(d.anchor);
+    if (target) {
+      target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      try { history.replaceState(null, '', d.anchor); } catch (err) { /* ignore */ }
+    } else setTimeout(function () { location.href = (LINK || '') + d.anchor; }, 170);
+  }
+  function buildChips() {
+    if (!chipsNav) return;
+    chipsNav.innerHTML = '';
+    hots.forEach(function (h) {
+      var d = SECTIONS[h.key], a = document.createElement('a');
+      a.className = 'nr-chip'; a.href = (LINK || '') + d.anchor;
+      a.innerHTML = '<b></b><span></span>'; a.firstChild.textContent = h.n; a.lastChild.textContent = d.label;
+      a.addEventListener('click', function (e) { goTo(h.key, a, e); });
+      a.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { hoverKey = h.key; if (h.el) h.el.classList.add('is-hot'); root.classList.add('has-hover'); } });
+      a.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { hoverKey = null; if (h.el) h.el.classList.remove('is-hot'); root.classList.remove('has-hover'); } });
+      chipsNav.appendChild(a);
+    });
+  }
   function buildHotButtons() {
     if (!hotLayer) return;
     hotLayer.innerHTML = '';
+    hots.sort(function (a, b) { return ORDER.indexOf(a.key) - ORDER.indexOf(b.key); });
+    hots.forEach(function (h, i) { h.n = i + 1; });
     hots.forEach(function (h, i) {
       var d = SECTIONS[h.key], b = document.createElement(LINK !== null ? 'a' : 'button');
       if (LINK !== null) b.href = LINK + d.anchor; else b.type = 'button';
       b.className = 'nr-hot is-hidden'; b.style.setProperty('--d', (i * 110) + 'ms');
       b.setAttribute('aria-label', d.label + ': ' + d.title);
       b.setAttribute('aria-label', 'Open ' + d.title);
-      b.innerHTML = '<i aria-hidden="true"></i><span></span>';
-      b.querySelector('span').textContent = d.label;
+      b.innerHTML = '<i aria-hidden="true"></i><em aria-hidden="true"></em><span></span>';
+      b.querySelector('em').textContent = h.n; b.querySelector('span').textContent = d.label;
       b.addEventListener('click', function (e) {
         if (LINK !== null) {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0 || b.target === '_blank') { blip(); return; }
@@ -923,8 +952,8 @@
     var fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
     var el = document.createElement('div');
     el.className = 'nr-coach ' + (fine ? 'is-mouse' : 'is-touch'); el.setAttribute('role', 'status');
-    el.innerHTML = '<span class="nr-coach-ico">' + (fine ? ICON_MOUSE : ICON_TOUCH) + '</span><span><b>' + (fine ? 'Hover' : 'Tap') + '</b> a name tag ' + (fine ? '· click to open that section' : 'to open that section') + '</span>';
-    root.appendChild(el);
+    el.innerHTML = '<span class="nr-coach-ico">' + (fine ? ICON_MOUSE : ICON_TOUCH) + '</span><span><b>' + (fine ? 'Hover' : 'Tap') + '</b> ' + (fine ? 'a name tag · click to open that section' : (window.innerWidth < 760 ? 'a number or a section below' : 'a name tag to open that section')) + '</span>';
+    stage.appendChild(el);
     root.classList.add('is-coaching');
     requestAnimationFrame(function () { el.classList.add('show'); });
     function hide() {
@@ -1001,20 +1030,20 @@
   var W = 1, H = 1, dpr = 1, scale = 1, ox = 0, oy = 0, panX = 0, panMin = 0, panMax = 0, dragging = false, autoPan = true;
   var SC = { minX: iso(0, GD)[0] - 12, maxX: iso(GW, 0)[0] + 12, minY: iso(0, 0, WALL)[1] - 8, maxY: iso(GW, GD, -14)[1] + 4 };
   function resize() {
-    var r = root.getBoundingClientRect();
+    var r = stage.getBoundingClientRect();
     W = Math.max(1, r.width); H = Math.max(1, r.height);
     dpr = Math.min(dprCap, window.devicePixelRatio || 1);
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     var bw = SC.maxX - SC.minX, bh = SC.maxY - SC.minY, narrow = W < 760;
-    var padT = 10, padB = narrow ? 38 : 26;
+    var padT = 10, padB = narrow ? 8 : 26;
     var fit = Math.min((W - 20) / bw, (H - padT - padB) / bh);
-    scale = narrow ? Math.max(fit, Math.min(.6, (H - padT - padB) / bh)) : Math.min(fit, 1.3);
+    scale = Math.min(fit, 1.3); // the whole room always fits: no sideways dragging
     var sceneW = bw * scale;
     oy = padT + ((H - padT - padB) - bh * scale) / 2 - SC.minY * scale;
     if (sceneW <= W) { var left = (W - sceneW) / 2; if (W > 1180) left = Math.max(left, Math.min(W * .22, W - sceneW - 16)); ox = left - SC.minX * scale; panMin = panMax = 0; panX = 0; }
     else { ox = -SC.minX * scale; panMin = W - sceneW; panMax = 0; panX = Math.max(panMin, Math.min(panMax, panX || panMin * .5)); }
     root.classList.toggle('can-pan', panMin < 0);
-    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? '↔ Drag' : 'Click a name tag to jump to that section';
+    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? '↔ Drag' : (window.innerWidth < 760 ? 'Tap a number or a section below' : 'Click a name tag to jump to that section');
     if (!running) frame(performance.now());
   }
 
@@ -1185,7 +1214,7 @@
   });
   seatedPeople = seated.map(function (s) { return { x: s.x, y: s.y, z: 0, sit: true, sx: s.face > 0 ? 1 : -1, away: s.face < 0, look: look(), walkT: 0 }; }).concat(ST);
   for (var i = 0; i < 11; i++) walkers.push(new Walker(i));
-  buildHotButtons();
+  buildHotButtons(); buildChips();
   if (reduce) { time = 99999; walkers.forEach(function (w) { w.alpha = 1; }); if (pauseBtn) pauseBtn.hidden = true; }
   resize(); sync();
   if (reduce) frame(performance.now());

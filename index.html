@@ -23,7 +23,7 @@
   <link id="editorial-theme" rel="stylesheet" href="style.editorial.css?v=1">
 
   <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="newsroom.css?v=12">
+  <link rel="stylesheet" href="newsroom.css?v=13">
 
   <!-- SEO: Canonical & Twitter Cards -->
   <link rel="canonical" href="https://luizftoledo.github.io/">
@@ -231,14 +231,17 @@
 
   <main>
     <section id="newsroom" data-link-base="" aria-label="Interactive illustration: inside the newsroom">
-      <canvas aria-hidden="true"></canvas>
       <p class="sr-only">An illustrated broadcast newsroom seen from above: a studio on air, a video wall, rows of desks and people walking between them. Each reporter wears a name tag with a section of this portfolio; the tags jump to that section below.</p>
       <div class="nr-hud">
         <h2>I'm Luiz Fernando Toledo,</h2>
         <p><b>Brazilian journalist, researcher and instructor</b> based in <b>London</b>, with a proven track record of producing and managing <b>impactful projects related to Brazil</b>.</p>
         <p>My reporting has been translated into <a href="#epstein-investigation">several languages</a>, and my video reports have drawn <a href="https://datafixers.org/monitor-videos/" target="_blank" rel="noopener">over 10 million views</a> across social media.</p>
       </div>
-      <div class="nr-hotspots"></div>
+      <div class="nr-stage">
+        <canvas aria-hidden="true"></canvas>
+        <div class="nr-hotspots"></div>
+      </div>
+      <div class="nr-chips" role="navigation" aria-label="Portfolio sections"></div>
       <aside class="nr-panel" role="dialog" aria-labelledby="nr-panel-title" hidden>
         <button type="button" class="nr-close" aria-label="Close">×</button>
         <div class="nr-panel-body"></div>
@@ -1301,7 +1304,7 @@
   </footer>
 
   <script src="scripts/main.js"></script>
-  <script src="scripts/newsroom.js?v=12" defer></script>
+  <script src="scripts/newsroom.js?v=13" defer></script>
 
   <!-- Interactive Background -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
