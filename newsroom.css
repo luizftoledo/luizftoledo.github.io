@@ -147,3 +147,9 @@ html[data-site-theme="dark"] #newsroom .nr-coach{background:#f4f1ea;color:#17191
   #newsroom .nr-foot .nr-hint{display:none}
   #newsroom .nr-coach{font-size:12px;padding:7px 12px 7px 8px}
 }
+@media (min-width:1181px){
+  /* desktop: larger intro text beside the room */
+  #newsroom .nr-hud{max-width:360px;top:34px;left:40px}
+  #newsroom .nr-hud h2{font-size:clamp(2.3rem,2.9vw,3rem);margin:0 0 14px}
+  #newsroom .nr-hud p{font-size:17px;line-height:1.5;margin:0 0 12px}
+}

@@ -1036,16 +1036,17 @@
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     var bw = SC.maxX - SC.minX, bh = SC.maxY - SC.minY, narrow = W < 760;
     var padT = 10, padB = narrow ? 8 : 26;
-    var fit = Math.min((W - 20) / bw, (H - padT - padB) / bh);
+    // desktop: the room sits in the space to the right of the intro text (shrinking if needed), centred there
+    var hudR = 0;
+    if (W > 1180) {
+      var hud = root.querySelector('.nr-hud'), sr = stage.getBoundingClientRect();
+      if (hud && hud.offsetParent) hudR = hud.getBoundingClientRect().right - sr.left + 24;
+    }
+    var fit = Math.min((W - hudR - 20) / bw, (H - padT - padB) / bh);
     scale = Math.min(fit, 1.3); // the whole room always fits: no sideways dragging
     var sceneW = bw * scale;
     oy = padT + ((H - padT - padB) - bh * scale) / 2 - SC.minY * scale;
-    if (sceneW <= W) { var left = (W - sceneW) / 2; if (W > 1180) {
-        // centre the room in the space to the right of the intro text
-        var hud = root.querySelector('.nr-hud'), sr = stage.getBoundingClientRect();
-        var hudR = hud && hud.offsetParent ? hud.getBoundingClientRect().right - sr.left + 24 : 0;
-        left = sceneW <= W - hudR ? hudR + (W - hudR - sceneW) / 2 : Math.max(left, W - sceneW - 16);
-      } ox = left - SC.minX * scale; panMin = panMax = 0; panX = 0; }
+    if (sceneW <= W) { var left = hudR + (W - hudR - sceneW) / 2; ox = left - SC.minX * scale; panMin = panMax = 0; panX = 0; }
     else { ox = -SC.minX * scale; panMin = W - sceneW; panMax = 0; panX = Math.max(panMin, Math.min(panMax, panX || panMin * .5)); }
     root.classList.toggle('can-pan', panMin < 0);
     var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? '↔ Drag' : (window.innerWidth < 760 ? 'Tap a number or a section below' : 'Click a name tag to jump to that section');
