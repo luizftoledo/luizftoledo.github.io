@@ -23,6 +23,7 @@
   <link id="editorial-theme" rel="stylesheet" href="style.editorial.css?v=1">
 
   <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="newsroom.css?v=9">
 
   <!-- SEO: Canonical & Twitter Cards -->
   <link rel="canonical" href="https://luizftoledo.github.io/">
@@ -229,70 +230,22 @@
   </nav>
 
   <main>
-    <section id="about" class="hero section">
-      <div class="container">
-        <div class="hero-text">
-          <h1>I'm <span class="highlight">Luiz Fernando Toledo</span>,</h1>
-          <p>Brazilian journalist, researcher and instructor based in London, with a proven track record of producing
-            and
-            managing impactful projects related to Brazil.</p>
-          <p>My reporting has been translated into <a href="#epstein-investigation" class="highlight">several languages</a>, and my video reports have drawn <a href="https://datafixers.org/monitor-videos/" class="highlight">over 10 million views</a> across social media.</p>
-          <div class="hero-actions">
-            <a href="resume.html" class="btn btn-secondary">View resume</a>
-          </div>
-        </div>
-        <div class="hero-media">
-          <div class="video-carousel">
-            <div class="carousel-track-container">
-              <ul class="carousel-track">
-                <li class="carousel-slide current-slide">
-                  <div class="video-container">
-                    <iframe class="carousel-video"
-                      src="https://www.youtube.com/embed/QlunKw_CKPY?enablejsapi=1&rel=0&start=169&mute=1&autoplay=1&playsinline=1"
-                      title="Featured video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                  </div>
-                </li>
-                <li class="carousel-slide">
-                  <div class="video-container">
-                    <iframe class="carousel-video"
-                      src="https://www.youtube.com/embed/SkX6MKU9gAQ?enablejsapi=1&rel=0&start=22&mute=1&playsinline=1"
-                      title="Video reporting" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                  </div>
-                </li>
-                <li class="carousel-slide">
-                  <div class="video-container">
-                    <iframe class="carousel-video"
-                      src="https://www.youtube.com/embed/r5Ihpa2DQIg?enablejsapi=1&rel=0&mute=1&playsinline=1"
-                      title="Presentation video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                  </div>
-                </li>
-                <li class="carousel-slide">
-                  <div class="video-container">
-                    <iframe class="carousel-video"
-                      src="https://www.youtube.com/embed/65AnDszCevA?enablejsapi=1&mute=1&playsinline=1"
-                      title="Third video" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <button class="carousel-button carousel-button--left is-hidden">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="carousel-button carousel-button--right">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-            <div class="carousel-nav">
-              <button class="carousel-indicator current-slide"></button>
-              <button class="carousel-indicator"></button>
-              <button class="carousel-indicator"></button>
-              <button class="carousel-indicator"></button>
-            </div>
-          </div>
-          <p style="font-size: 0.8rem; color: var(--muted); margin-top: 8px; text-align: center;">
-            <i class="fas fa-film"></i> See more videos <a href="#short-videos"
-              style="color: var(--accent); text-decoration: underline;">here</a>.
-          </p>
-        </div>
+    <section id="newsroom" data-link-base="" aria-label="Interactive illustration: inside the newsroom">
+      <canvas aria-hidden="true"></canvas>
+      <p class="sr-only">An illustrated broadcast newsroom seen from above: a studio on air, a video wall, rows of desks and people walking between them. Each reporter wears a name tag with a section of this portfolio; the tags jump to that section below.</p>
+      <div class="nr-hud">
+        <h2>I'm Luiz Fernando Toledo,</h2>
+        <p><b>Brazilian journalist, researcher and instructor</b> based in <b>London</b>, with a proven track record of producing and managing <b>impactful projects related to Brazil</b>.</p>
+        <p>My reporting has been translated into <a href="#epstein-investigation">several languages</a>, and my video reports have drawn <a href="https://datafixers.org/monitor-videos/" target="_blank" rel="noopener">over 10 million views</a> across social media.</p>
+      </div>
+      <div class="nr-hotspots"></div>
+      <aside class="nr-panel" role="dialog" aria-labelledby="nr-panel-title" hidden>
+        <button type="button" class="nr-close" aria-label="Close">×</button>
+        <div class="nr-panel-body"></div>
+      </aside>
+      <div class="nr-foot">
+        <span class="nr-hint">Click a name tag to jump to that section</span>
+        <span><button type="button" data-nr-pause aria-pressed="false">Pause</button>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#impact-grid">See the work ↓</a></span>
       </div>
     </section>
 
@@ -845,20 +798,26 @@
         <h2 class="section-title">Video reporting</h2>
         <p class="video-monitor-link">Explore the <a href="https://datafixers.org/monitor-videos/" target="_blank" rel="noopener">video monitor ↗</a>.</p>
         <div class="featured-video">
-          <iframe loading="lazy" src="https://www.youtube.com/embed/M46TWtihWMs?rel=0" title="Os deepfakes que tentam te enganar - e gerar dinheiro | Eleições 2026" allow="autoplay; encrypted-media"
+          <iframe loading="lazy" src="https://www.youtube.com/embed/QlunKw_CKPY?rel=0&amp;start=169" title="AI, Deepfakes and the Fight for Brazil's Vote - Global Eye, BBC World Service" allow="autoplay; encrypted-media"
             allowfullscreen></iframe>
 
         </div>
         <div class="embed-grid youtube-grid">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/M46TWtihWMs" title="Os deepfakes que tentam te enganar - e gerar dinheiro | Eleições 2026" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/r5Ihpa2DQIg" title="The fake alcohol killing people in Brazil - What in the World podcast, BBC World Service" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/65AnDszCevA" title="Por que cada vez mais analistas falam em 'bolha' da inteligência artificial prestes a estourar" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
           <iframe loading="lazy" src="https://www.youtube.com/embed/Nl5eRXVkW9Y" title="Brasileira conta à BBC como foi aliciada para Epstein em São Paulo" allow="autoplay; encrypted-media"
             allowfullscreen></iframe>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/HEwY0WKeKjc" allow="autoplay; encrypted-media"
+          <iframe loading="lazy" src="https://www.youtube.com/embed/HEwY0WKeKjc" title="ChatGPT: o que você não vê" allow="autoplay; encrypted-media"
             allowfullscreen></iframe>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/RhHz-bizvs0" allow="autoplay; encrypted-media"
+          <iframe loading="lazy" src="https://www.youtube.com/embed/RhHz-bizvs0" title="Como redes sociais estão influenciando ida de jovens para o tráfico" allow="autoplay; encrypted-media"
             allowfullscreen></iframe>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/SkX6MKU9gAQ" allow="autoplay; encrypted-media"
+          <iframe loading="lazy" src="https://www.youtube.com/embed/SkX6MKU9gAQ" title="A curiosa linha do tempo da evolução da Inteligência Artificial" allow="autoplay; encrypted-media"
             allowfullscreen></iframe>
-          <iframe loading="lazy" src="https://www.youtube.com/embed/CzK178HYEB8" allow="autoplay; encrypted-media"
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CzK178HYEB8" title="Brasil poderia imitar política de detenção em massa de Bukele?" allow="autoplay; encrypted-media"
             allowfullscreen></iframe>
           <iframe loading="lazy" src="https://www.youtube.com/embed/ZPbhHhE22uY" title="Os médicos falsos feitos por IA que viralizam entre idosos no Brasil" allow="autoplay; encrypted-media"
             allowfullscreen></iframe>
@@ -1339,6 +1298,7 @@
   </footer>
 
   <script src="scripts/main.js"></script>
+  <script src="scripts/newsroom.js?v=9" defer></script>
 
   <!-- Interactive Background -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
