@@ -1040,7 +1040,12 @@
     scale = Math.min(fit, 1.3); // the whole room always fits: no sideways dragging
     var sceneW = bw * scale;
     oy = padT + ((H - padT - padB) - bh * scale) / 2 - SC.minY * scale;
-    if (sceneW <= W) { var left = (W - sceneW) / 2; if (W > 1180) left = Math.max(left, Math.min(W * .22, W - sceneW - 16)); ox = left - SC.minX * scale; panMin = panMax = 0; panX = 0; }
+    if (sceneW <= W) { var left = (W - sceneW) / 2; if (W > 1180) {
+        // centre the room in the space to the right of the intro text
+        var hud = root.querySelector('.nr-hud'), sr = stage.getBoundingClientRect();
+        var hudR = hud && hud.offsetParent ? hud.getBoundingClientRect().right - sr.left + 24 : 0;
+        left = sceneW <= W - hudR ? hudR + (W - hudR - sceneW) / 2 : Math.max(left, W - sceneW - 16);
+      } ox = left - SC.minX * scale; panMin = panMax = 0; panX = 0; }
     else { ox = -SC.minX * scale; panMin = W - sceneW; panMax = 0; panX = Math.max(panMin, Math.min(panMax, panX || panMin * .5)); }
     root.classList.toggle('can-pan', panMin < 0);
     var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? '↔ Drag' : (window.innerWidth < 760 ? 'Tap a number or a section below' : 'Click a name tag to jump to that section');
