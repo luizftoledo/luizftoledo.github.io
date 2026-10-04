@@ -2,6 +2,8 @@ export const BASE='https://resultados.tse.jus.br/oficial/ele2026/6257';
 export const RESULT=BASE+'/dados/br/br-c0001-e006257-u.json';
 export const INDEX=BASE+'/dados/br/br-e006257-ab.json';
 export type Candidate={number:string;name:string;party:string;votes:number|null;pct:number|null};
+export type StateResult={data:any;source:string;stale:boolean;error?:string};
+export async function refreshStateResults(previous:Record<string,StateResult>,ufs:string[]){const results={...previous};await pool(ufs,async uf=>{const source=BASE+'/dados/'+uf.toLowerCase()+'/'+uf.toLowerCase()+'-c0001-e006257-u.json';try{const data=await get(source);if(data.tpabr!=='uf'||data.cdabr!==uf.toLowerCase())throw new Error('Abrangência da UF inválida');results[uf]={data,source,stale:false};}catch(e){results[uf]={data:previous[uf]?.data??null,source,stale:true,error:(e as Error).message};}});return results;}
 export type Municipality={code:string;ibge:string;name:string;uf:string;source:string;indexSource:string;generated:string;status:string;sections:number|null;processed:number|null;electorate:number|null;turnout:number|null;valid:number|null;blank:number|null;nullVotes:number|null;votes:Candidate[];religionAvailable:boolean;stale?:boolean};
 export type State={uf:string;name:string;sections:number|null;processed:number|null;electorate:number|null;turnout:number|null;generated:string;status:string};
 export type Snapshot={checkedAt:string;national:any;municipal:Municipality[];states:State[];errors:string[];sheetUrl:string;religionSummary:any};
