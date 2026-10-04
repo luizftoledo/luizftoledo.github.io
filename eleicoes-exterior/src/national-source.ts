@@ -35,3 +35,5 @@ export async function refreshNational(previous:Snapshot):Promise<Snapshot>{
  }
  data.checkedAt=new Date().toISOString();return data;
 }
+
+export async function refreshHeadline(){const [national,index]=await Promise.all([get(RESULT),get(INDEX)]);if(national.cdabr!=='br'||national.tpabr!=='br')throw new Error('Abrangência nacional inválida');return {national,states:index.abr.filter((a:any)=>a.tpabr==='uf').map((a:any)=>stateFrom(a,index)),checkedAt:new Date().toISOString()};}
