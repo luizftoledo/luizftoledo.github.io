@@ -58,6 +58,13 @@ function candidates(data:Tse):Vote[]{
   return (data.carg??[]).filter(c=>c.cd==='1').flatMap(c=>c.agr.flatMap(a=>a.par.flatMap(p=>p.cand.map(v=>({name:v.nmu??v.nm,votes:n(v.vap),number:v.n,party:p.sg,pct:null})))));
 }
 
+function publicationTime(stamp:string):string|null {
+  const match=/^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})$/.exec(stamp);
+  if(!match)return null;
+  const [,day,month,year,hour,minute,second]=match;
+  return new Date(Date.UTC(Number(year),Number(month)-1,Number(day),Number(hour)+3,Number(minute),Number(second))).toISOString();
+}
+
 export async function liveData(request:Request){
   const errors:string[]=[];
   errors.push(...await updateBoletins());
@@ -76,6 +83,7 @@ export async function liveData(request:Request){
     const cities=rows.filter(r=>r.pais===country);const active=cities.filter(r=>!r.dispensada);
     const buCities=active.map(c=>({...c,bu:boletinsFor(c.codigo)}));
     const hasTotalized=active.some(c=>c.result&&n(c.result.s.st)>0);
+    const publishedAt=buCities.flatMap(c=>hasTotalized?(c.result?[publicationTime(c.result.dg+' '+c.result.hg)]:[]):c.bu.files.map(f=>publicationTime(f.auxGenerated))).filter((v):v is string=>v!==null).sort().at(-1)??null;
     const received=buCities.reduce((s,c)=>s+c.bu.received,0),buExpected=buCities.reduce((s,c)=>s+c.bu.expected,0);
     const voteMap=new Map<string,Vote>();
     for(const city of buCities){const list=hasTotalized?(city.result?candidates(city.result):[]):city.bu.votes;for(const v of list){const old=voteMap.get(v.number!);voteMap.set(v.number!,{...v,votes:v.votes+(old?.votes??0)});}}
@@ -85,7 +93,7 @@ export async function liveData(request:Request){
     const official=hasTotalized&&total>0;const shownVotes=votes;const tie=shownVotes.length>1&&shownVotes[0].votes===shownVotes[1].votes;
     const closes=active.map(c=>c.fecha_utc).sort();const opens=active.map(c=>c.primeiro_fecha_utc).sort();
     return {country,active:active.length>0,cities:buCities.map(c=>({name:c.cidade,code:c.codigo,url:c.url,processed:n(c.progress?.s?.st),expected:n(c.progress?.s?.ts),received:c.bu.received,buExpected:c.bu.expected,files:c.bu.files})),closeAt:closes.at(-1)??null,firstCloseAt:opens[0]??null,
-      electorate:active.every(c=>c.progress?.e?.te!==undefined)?active.reduce((sum,c)=>sum+n(c.progress?.e?.te),0):null,received,buExpected,buPct:buExpected&&received?received/buExpected*100:null,buComplete:buExpected>0&&received===buExpected&&!buCities.some(c=>c.bu.stale),processed,expected,pct:expected?processed/expected*100:null,votes:shownVotes,officialVotes:votes,complete,tie,
+      electorate:active.every(c=>c.progress?.e?.te!==undefined)?active.reduce((sum,c)=>sum+n(c.progress?.e?.te),0):null,publishedAt,received,buExpected,buPct:buExpected&&received?received/buExpected*100:null,buComplete:buExpected>0&&received===buExpected&&!buCities.some(c=>c.bu.stale),processed,expected,pct:expected?processed/expected*100:null,votes:shownVotes,officialVotes:votes,complete,tie,
       source:hasTotalized?'TSE':'BU TSE',status:!active.length?'Votação dispensada':complete?(tie?'Empate confirmado':'Mais votado · TSE concluído'):official?'Apuração parcial · TSE':received?(received===buExpected?'Todos os boletins disponíveis · aguardando totalização':'Boletins parciais · TSE'):'Aguardando boletins / totalização',
       stale:hasTotalized?tseStale||active.some(c=>c.stale):received?buCities.some(c=>c.bu.stale):false,
       checkedAt:hasTotalized?tseAt:buCities.map(c=>c.bu.checkedAt).filter(Boolean).sort().at(-1)??tseAt,warnings:[...(country.startsWith('Bélgica')?['Bruxelas reúne Bélgica e Luxemburgo. Não há separação dos países no arquivo municipal.']:[])]};
