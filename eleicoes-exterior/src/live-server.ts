@@ -5,7 +5,7 @@ import {updateBoletins,boletinsFor} from './bu-server';
 const BASE = 'https://resultados.tse.jus.br/oficial/ele2026/6257';
 const INDEX = BASE + '/dados/zz/zz-e006257-ab.json';
 type Candidate = { n: string; nm: string; nmu?: string; vap: string; pvap: string };
-type Tse = { f: string; ele: string; dg: string; hg: string; dt: string; ht: string; and: string; cdabr: string; tpabr: string; s: Record<string,string>; e?: Record<string,string>; carg?: {cd:string; agr:{par:{sg:string; cand:Candidate[]}[]}[]}[]; abr?: Tse[] };
+type Tse = { f: string; ele: string; t?:string; dv?:string; dg: string; hg: string; dt: string; ht: string; and: string; cdabr: string; tpabr: string; s: Record<string,string>; e?: Record<string,string>; v?:Record<string,string>; carg?: {cd:string; agr:{par:{sg:string; cand:Candidate[]}[]}[]}[]; abr?: Tse[] };
 export type Vote = {name: string; votes:number; pct:number|null; party?:string; number?:string};
 const n = (s: unknown) => Number(String(s ?? 0).replaceAll('.','')) || 0;
 type SourceValue = {body:string; checkedAt:string; retryAt?:number; etag?:string; modified?:string};
@@ -74,7 +74,7 @@ export async function liveData(request:Request){
   if(!index.length)index=fallback.index as unknown as Tse[];
   const byCode=new Map(index.map(x=>[x.cdabr,x]));
   const rows=localidades.map(l=>({...l,progress:byCode.get(l.codigo),result:null as Tse|null,stale:true,url:BASE+'/dados/zz/zz'+l.codigo+'-c0001-e006257-u.json'}));
-  const ready=rows.filter(x=>!x.dispensada&&n(x.progress?.s?.st)>0);
+  const ready=rows.filter(x=>!x.dispensada&&x.progress?.dt==='04/10/2026'&&n(x.progress?.s?.st)>0);
   // Somente municípios alterados no índice provocam novo download.
   let nextRequest=Date.now();
   const throttle=async()=>{const delay=Math.max(0,nextRequest-Date.now());nextRequest=Math.max(nextRequest,Date.now())+15;if(delay)await new Promise(resolve=>setTimeout(resolve,delay));};
@@ -82,7 +82,18 @@ export async function liveData(request:Request){
   const countries=[...new Set(rows.map(r=>r.pais))].map(country=>{
     const cities=rows.filter(r=>r.pais===country);const active=cities.filter(r=>!r.dispensada);
     const buCities=active.map(c=>({...c,bu:boletinsFor(c.codigo)}));
-    const hasTotalized=active.some(c=>c.result&&n(c.result.s.st)>0);
+    const hasTotalized=active.some(c=>c.result&&c.result.dt==='04/10/2026'&&c.result.dv!=='n'&&n(c.result.s.st)>0);
+    const selected=buCities.filter(c=>hasTotalized?c.result&&c.result.dt==='04/10/2026'&&c.result.dv!=='n'&&n(c.result.s.st)>0:c.bu.received>0);
+    // Cada município usa uma única fonte. Nunca somar o comparecimento do BU com o da totalização.
+    const readCount=(value:unknown)=>typeof value==='string'&&/^\d+$/.test(value)?Number(value):null;
+    const count=(key:'turnout'|'coveredElectorate'|'abstention'|'blank'|'nullVotes')=>{
+      const fields={turnout:['e','c'],coveredElectorate:['e','est'],abstention:['e','a'],blank:['v','vb'],nullVotes:['v','tvn']} as const;
+      const values=selected.map(c=>hasTotalized?readCount(c.result?.[fields[key][0]]?.[fields[key][1]]):c.bu[key]);
+      return values.length&&values.every(v=>v!==null)?values.reduce<number>((sum,v)=>sum+v!,0):null;
+    };
+    const electorate=active.every(c=>c.progress?.e?.te!==undefined)?active.reduce((sum,c)=>sum+n(c.progress?.e?.te),0):null;
+    const coveredElectorate=count('coveredElectorate'),turnout=count('turnout'),abstention=count('abstention');
+    const pendingElectorate=electorate!==null&&(coveredElectorate!==null||!selected.length)&&electorate>=(coveredElectorate??0)?electorate-(coveredElectorate??0):null;
     const publishedAt=buCities.flatMap(c=>hasTotalized?(c.result?[publicationTime(c.result.dg+' '+c.result.hg)]:[]):c.bu.files.map(f=>publicationTime(f.auxGenerated))).filter((v):v is string=>v!==null).sort().at(-1)??null;
     const received=buCities.reduce((s,c)=>s+c.bu.received,0),buExpected=buCities.reduce((s,c)=>s+c.bu.expected,0);
     const voteMap=new Map<string,Vote>();
@@ -93,9 +104,9 @@ export async function liveData(request:Request){
     const official=hasTotalized&&total>0;const shownVotes=votes;const tie=shownVotes.length>1&&shownVotes[0].votes===shownVotes[1].votes;
     const closes=active.map(c=>c.fecha_utc).sort();const opens=active.map(c=>c.primeiro_fecha_utc).sort();
     return {country,active:active.length>0,cities:buCities.map(c=>({name:c.cidade,code:c.codigo,url:c.url,processed:n(c.progress?.s?.st),expected:n(c.progress?.s?.ts),received:c.bu.received,buExpected:c.bu.expected,files:c.bu.files})),closeAt:closes.at(-1)??null,firstCloseAt:opens[0]??null,
-      electorate:active.every(c=>c.progress?.e?.te!==undefined)?active.reduce((sum,c)=>sum+n(c.progress?.e?.te),0):null,publishedAt,received,buExpected,buPct:buExpected&&received?received/buExpected*100:null,buComplete:buExpected>0&&received===buExpected&&!buCities.some(c=>c.bu.stale),processed,expected,pct:expected?processed/expected*100:null,votes:shownVotes,officialVotes:votes,complete,tie,
+      electorate,coveredElectorate,turnout,abstention,pendingElectorate,blank:count('blank'),nullVotes:count('nullVotes'),publishedAt,received,buExpected,buPct:buExpected&&received?received/buExpected*100:null,buComplete:buExpected>0&&received===buExpected&&!buCities.some(c=>c.bu.stale),processed,expected,pct:expected?processed/expected*100:null,votes:shownVotes,officialVotes:votes,complete,tie,
       source:hasTotalized?'TSE':'BU TSE',status:!active.length?'Votação dispensada':complete?(tie?'Empate confirmado':'Mais votado · TSE concluído'):official?'Apuração parcial · TSE':received?(received===buExpected?'Todos os boletins disponíveis · aguardando totalização':'Boletins parciais · TSE'):'Aguardando boletins / totalização',
-      stale:hasTotalized?tseStale||active.some(c=>c.stale):received?buCities.some(c=>c.bu.stale):false,
+      stale:hasTotalized?tseStale||active.some(c=>c.result?c.stale:n(c.progress?.s?.st)>0):received?buCities.some(c=>c.bu.stale):false,
       checkedAt:hasTotalized?tseAt:buCities.map(c=>c.bu.checkedAt).filter(Boolean).sort().at(-1)??tseAt,warnings:[...(country.startsWith('Bélgica')?['Bruxelas reúne Bélgica e Luxemburgo. Não há separação dos países no arquivo municipal.']:[])]};
   });
   return {totalizationAvailable:index.some(r=>r.dt==='04/10/2026'&&n(r.s?.st)>0),checkedAt:new Date().toISOString(),tseAt,tseStale,generated,countries,errors:[...new Set(errors)],indexUrl:INDEX};
