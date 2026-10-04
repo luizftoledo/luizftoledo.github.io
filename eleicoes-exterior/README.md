@@ -1,6 +1,6 @@
 # Eleições no exterior
 
-Painel público estático para GitHub Pages. Consulta diretamente resultados.tse.jus.br no navegador, a cada cinco segundos com verificação de boletins em rodízio. Não depende de API do ChatGPT, senha, g1 ou credencial privada.
+Painel público estático para GitHub Pages. Consulta diretamente resultados.tse.jus.br no navegador, a cada cinco segundos com verificação de boletins em rodízio.
 
 Fontes: eleição 6257, pleito 3220, primeiro turno de 2026. Boletins completos e totalização concluída são estados distintos. Seções agregadas não são contadas duas vezes. Arquivos inválidos ou indisponíveis preservam a última leitura com aviso.
 
