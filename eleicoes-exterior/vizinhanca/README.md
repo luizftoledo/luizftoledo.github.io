@@ -11,3 +11,6 @@ Voronoi calculado em projeção local equiretangular com correção de longitude
 Estas áreas são aproximações de proximidade dos locais, não limites de bairros ou regiões de domicílio de eleitores. Método inspirado no código aberto do Estadão: https://github.com/estadao/como-votou-sua-vizinhanca .
 
 Verificações iniciais: Aparecida SP (86/86, somas dos 12 candidatos iguais ao TSE), Aparecida PB (25/25, somas dos 12 candidatos iguais ao TSE); clique e tooltip; formato móvel de 390 px; auditoria nacional sem duplicações de seção principal.
+
+## Correção de carregamento
+Busca adicional por bairro, nome da escola e endereço cadastrado do local. Clique/seleção inicia a leitura dos boletins daquele ponto; carga municipal completa é opcional. Ausência de leitura aparece como indisponível, nunca como zero votos (inclusive CSV). Boletins lidos são preservados em IndexedDB por cidade. Erros ficam explícitos. Links aceitam municipio e local para abrir diretamente uma escola.
