@@ -14,3 +14,5 @@ Verificações iniciais: Aparecida SP (86/86, somas dos 12 candidatos iguais ao 
 
 ## Correção de carregamento
 Busca adicional por bairro, nome da escola e endereço cadastrado do local. Clique/seleção inicia a leitura dos boletins daquele ponto; carga municipal completa é opcional. Ausência de leitura aparece como indisponível, nunca como zero votos (inclusive CSV). Boletins lidos são preservados em IndexedDB por cidade. Erros ficam explícitos. Links aceitam municipio e local para abrir diretamente uma escola.
+
+Busca principal por rua/número/cidade/UF (ou CEP), com geocodificação temporária pela Esri: `forStorage=false`, sem guardar endereço ou coordenada pesquisada no cache/URL. Mostra candidato de endereço, indica aproximação quando não há correspondência por número, identifica município, calcula o local mais próximo com a mesma projeção do Voronoi e abre sua votação. Geocodificador configurável via config.json. Teste público: Avenida Paulista 1578, São Paulo (MASP), correspondência PointAddress, encaminha ao Colégio Dante Alighieri a 315 m.
