@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO & Open Graph -->
+  <title>Luiz Fernando Toledo - Data & Investigative Journalist</title>
+  <meta name="description"
+    content="Portfolio of Luiz Fernando Toledo, a Data & Investigative Journalist, researcher, and instructor. Award-winning reporting on environmental crimes, public spending, and transparency.">
+  <meta property="og:title" content="Luiz Fernando Toledo - Data & Investigative Journalist">
+  <meta property="og:description"
+    content="Award-winning Brazilian journalist based in London. Expert in data journalism, environmental investigations, and transparency.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://luizftoledo.github.io/">
+  <meta property="og:image" content="https://luizftoledo.github.io/epstein_brazil_victims.png">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Spectral:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.future.css?v=6">
+  <link id="editorial-theme" rel="stylesheet" href="style.editorial.css?v=1">
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="newsroom.css?v=14">
+
+  <!-- SEO: Canonical & Twitter Cards -->
+  <link rel="canonical" href="https://luizftoledo.github.io/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Luiz Fernando Toledo - Data & Investigative Journalist">
+  <meta name="twitter:description"
+    content="Award-winning Brazilian journalist based in London. Expert in data journalism, environmental investigations, and transparency.">
+  <meta name="twitter:image" content="https://luizftoledo.github.io/epstein_brazil_victims.png">
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Luiz Fernando Toledo",
+    "jobTitle": "Data & Investigative Journalist",
+    "url": "https://luizftoledo.github.io/",
+    "sameAs": [
+      "https://twitter.com/toledoluizf",
+      "https://linkedin.com/in/luizftoledo1"
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": "BBC World Service"
+    }
+  }
+  </script>
+
+  <script>
+    // Force dark mode sitewide
+    document.documentElement.setAttribute('data-theme', 'dark');
+  </script>
+  <script async src="https://www.instagram.com/embed.js"></script>
+  <style>
+    /* Expand/Collapse logic for Awards */
+    .award-list.collapsed li:nth-child(n+6) {
+      display: none;
+    }
+
+    .award-list {
+      transition: all 0.3s ease;
+    }
+
+    /* Pokeball hover effect (replaces inline onmouseover/onmouseout) */
+    .poke-secret-trigger:hover,
+    .poke-secret-trigger:focus {
+      opacity: 1 !important;
+    }
+
+    /* ============ Add-ons: outlets accordion, initiatives, research trail ============ */
+    /* Barra gradiente universal nos títulos de seção (e no subsection-title) */
+    h2.section-title::before,
+    h3.subsection-title::before{
+      content:'';display:inline-block;width:48px;height:4px;
+      background:linear-gradient(90deg,var(--accent),var(--accent-2));
+      border-radius:4px;margin-right:14px;vertical-align:middle;
+      transform-origin:left;
+      animation:barIn .8s .2s backwards cubic-bezier(.2,.8,.2,1);
+    }
+    @keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+    .outlets-wrap{margin-top:60px;padding-top:40px;border-top:1px dashed rgba(255,255,255,.08)}
+    .outlets-wrap .subsection-title{font-size:1.5rem;font-weight:700;margin:0 0 8px;color:var(--text);letter-spacing:-.01em}
+    .outlets-wrap .outlets-sub{color:var(--muted);margin-bottom:24px;font-size:15px;max-width:720px}
+    .outlets-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+    .outlet-chip{position:relative;text-align:left;cursor:pointer;background:rgba(14,17,23,.65);border:1px solid var(--border);border-radius:12px;padding:18px 18px;color:var(--text);font-family:inherit;transition:border-color .25s,transform .25s,background .25s;display:flex;flex-direction:column;gap:6px;min-height:96px;overflow:hidden}
+    .outlet-chip::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+    .outlet-chip:hover{border-color:rgba(124,255,240,.35);transform:translateY(-2px);background:rgba(20,24,32,.8)}
+    .outlet-chip:hover::after{transform:scaleX(1)}
+    .outlet-chip.active{border-color:rgba(124,255,240,.55);background:rgba(20,24,32,.9)}
+    .outlet-chip.active::after{transform:scaleX(1)}
+    .outlet-chip .outlet-name{font-size:18px;font-weight:900;letter-spacing:-.01em}
+    .outlet-chip .outlet-years{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em}
+    .outlet-chip .outlet-count{font-size:11.5px;color:var(--accent);font-weight:600;margin-top:auto}
+    .outlet-chip .caret{position:absolute;top:14px;right:14px;color:var(--muted);transition:transform .3s,color .25s;font-size:12px}
+    .outlet-chip.active .caret{transform:rotate(180deg);color:var(--accent)}
+
+    .outlet-panel{border:1px solid var(--border);border-radius:14px;background:linear-gradient(135deg,rgba(14,17,23,.75),rgba(14,17,23,.45));padding:0;overflow:hidden;max-height:0;opacity:0;transition:max-height .5s cubic-bezier(.2,.8,.2,1),opacity .3s,padding .3s}
+    .outlet-panel.open{max-height:3000px;opacity:1;padding:28px 32px}
+    .outlet-panel .panel-meta{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;margin-bottom:22px;padding-bottom:18px;border-bottom:1px dashed rgba(255,255,255,.08)}
+    .outlet-panel .panel-role{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+    .outlet-panel .panel-role b{color:var(--text);font-weight:700;margin-right:4px}
+    .outlet-panel .award{color:var(--accent);font-size:12.5px;font-weight:600}
+    .outlet-panel .stories{display:flex;flex-direction:column;gap:26px}
+    .outlet-panel .story{position:relative;padding-left:22px}
+    .outlet-panel .story::before{content:'';position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(124,255,240,.1)}
+    .outlet-panel .story h4{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:22px;line-height:1.25;color:var(--text);margin-bottom:6px;letter-spacing:-.01em}
+    .outlet-panel .story .lede{color:var(--muted);font-size:15px;line-height:1.6;font-family:'Spectral',serif;font-weight:500;margin-bottom:10px}
+    .outlet-panel .story .proof{display:inline-block;padding:6px 12px;margin:4px 0 10px;background:rgba(124,255,240,.08);border:1px solid rgba(124,255,240,.25);border-radius:6px;color:var(--accent);font-size:13px;font-weight:600}
+    .outlet-panel .story .proof i{margin-right:6px;opacity:.85}
+    .outlet-panel .story-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px}
+    .outlet-panel .chip-tool{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:4px 9px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text)}
+    .outlet-panel .chip-tool::before{content:'/';color:var(--accent);margin-right:-2px}
+    .outlet-panel .story-link-external{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(124,255,240,.4);padding-bottom:1px;transition:color .2s,border-color .2s;margin-left:auto}
+    .outlet-panel .story-link-external:hover{color:var(--accent-2);border-bottom-color:rgba(159,124,255,.5)}
+    .outlet-panel .story-link-external i{margin-left:5px;font-size:11px}
+
+    /* Initiatives */
+    .init-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .init-card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px 26px 24px;backdrop-filter:blur(8px);transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s;display:flex;flex-direction:column;gap:12px}
+    .init-card:hover{transform:translateY(-3px);border-color:rgba(124,255,240,.35)}
+    .init-card .when{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+    .init-card h3{font-size:22px;font-weight:900;letter-spacing:-.01em;line-height:1.2;margin:0}
+    .init-card .role{font-size:13.5px;color:var(--accent);font-weight:600;margin-top:-4px}
+    .init-card ul{list-style:none;padding:0;margin-top:4px;display:flex;flex-direction:column;gap:8px}
+    .init-card li{font-size:13.5px;color:var(--muted);line-height:1.5;padding-left:18px;position:relative}
+    .init-card li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700}
+    .init-card li b{color:var(--text);font-weight:600}
+    .init-card a{color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(124,255,240,.4)}
+
+    /* Research trail */
+    .research-trail{list-style:none;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;margin:0}
+    .research-trail::before{content:'';position:absolute;left:4%;right:4%;top:32px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)}
+    .research-step{position:relative;padding:0 10px;text-align:center}
+    .research-step .rnode{width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);margin:24px auto 16px;position:relative;z-index:1;transition:transform .25s,box-shadow .25s}
+    .research-step:hover .rnode{transform:scale(1.2);box-shadow:0 0 20px rgba(124,255,240,.4)}
+    .research-step .yr{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+    .research-step .inst{font-size:15px;font-weight:900;letter-spacing:-.01em;margin-bottom:4px;line-height:1.25}
+    .research-step .degree{font-size:12.5px;color:var(--muted);line-height:1.45;font-family:'Spectral',serif;font-style:italic}
+    .research-step .output{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);margin-top:8px;display:block}
+
+    @media (max-width:1100px){
+      .init-cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:1000px){
+      .outlets-row{grid-template-columns:repeat(3,1fr)}
+      .research-trail{grid-template-columns:repeat(2,1fr);row-gap:20px}
+      .research-trail::before{display:none}
+    }
+    @media (max-width:600px){
+      .outlets-row{grid-template-columns:1fr}
+      .init-cards{grid-template-columns:1fr}
+    }
+
+    /* Scoped addition: Investigating AI. Existing site styles remain unchanged. */
+    .ai-reporting-intro { max-width: 760px; color: var(--muted); font-size: 17px; line-height: 1.65; margin: -14px 0 28px; }
+    .ai-reporting-intro strong { color: var(--text); }
+    .ai-reporting .featured-article { margin-bottom: 28px; }
+    .ai-reporting .ai-video-feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 390px); gap: 0; align-items: start; }
+    .ai-reporting .ai-video-copy { padding: 28px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+    .ai-reporting .ai-video-copy h3 { margin: 0; }
+    .ai-reporting .ai-instagram-media { background: var(--surface); border-left: 1px solid var(--border); padding: 18px; min-width: 0; min-height: 0; height: auto; aspect-ratio: auto; overflow: visible; display: flex; align-items: flex-start; justify-content: center; }
+    .ai-reporting .ai-instagram-media iframe { display: block; width: min(100%, 390px); height: 720px; border: 0; }
+    .ai-reporting .ai-instagram-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; color: var(--accent); font: 600 12px 'JetBrains Mono', monospace; text-decoration: none; }
+    .ai-reporting .ai-instagram-link:hover { color: var(--text); border-color: var(--accent); }
+    .ai-reporting .featured-content h3 { max-width: 680px; }
+    .ai-reporting .ai-doctors-sequence { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 28px 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
+    .ai-reporting .ai-doctors-image { grid-column: 1 / -1; border-bottom: 1px solid var(--border); background: var(--surface); }
+    .ai-reporting .ai-doctors-image img { width: 100%; max-height: 300px; object-fit: cover; object-position: center; }
+    .ai-reporting .ai-sequence-item { padding: 25px; }
+    .ai-reporting .ai-sequence-item + .ai-sequence-item { border-left: 1px solid var(--border); }
+    .ai-reporting .ai-sequence-item h3 { font-family: 'Spectral', Georgia, serif; font-size: 25px; line-height: 1.2; margin: 8px 0 9px; }
+    .ai-reporting .ai-sequence-item p { color: var(--muted); }
+    .ai-reporting .ai-translation-note { grid-column: 1 / -1; margin: 0; padding: 22px 24px; border-top: 1px solid var(--border); border-left: 3px solid var(--accent); background: rgba(255,255,255,.02); }
+    .ai-reporting .ai-translation-note h3 { font-family: 'Spectral', Georgia, serif; font-size: 25px; margin-bottom: 7px; }
+    .ai-reporting .ai-translation-note p { color: var(--muted); margin-bottom: 14px; }
+    .ai-reporting .ai-languages { display: inline; }
+    .ai-reporting .ai-languages a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed rgba(124,255,240,.45); font-size: 13px; }
+    @media (max-width: 768px) { .ai-reporting-intro { font-size: 16px; } .ai-reporting .ai-video-feature, .ai-reporting .ai-doctors-sequence { grid-template-columns: 1fr; } .ai-reporting .ai-instagram-media { border-left: 0; border-top: 1px solid var(--border); height: auto; } .ai-reporting .ai-sequence-item + .ai-sequence-item { border-left: 0; border-top: 1px solid var(--border); } .ai-reporting .ai-translation-note { grid-column: auto; } }
+    /* Academic research */
+    .academic-research .ar-intro{max-width:720px;color:var(--muted);margin:0 0 28px;font-size:17px;line-height:1.55}
+    .academic-research .ar-list{list-style:none;margin:0;padding:0;display:grid;gap:0}
+    .academic-research .ar-list li{padding:24px 0;border-top:1px solid var(--border)}
+    .academic-research .ar-list li:last-child{border-bottom:1px solid var(--border)}
+    .academic-research .ar-venue{display:block;font:500 11px/1.4 'DM Mono','JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-2);margin-bottom:8px}
+    .academic-research h3{font-size:1.35rem;line-height:1.25;margin:0 0 8px;max-width:860px}
+    .academic-research h3 a{color:inherit;text-decoration:none}
+    .academic-research h3 a:hover{text-decoration:underline;text-underline-offset:4px}
+    .academic-research .ar-authors{font-size:14px;color:var(--muted);margin:0 0 8px}
+    .academic-research p{max-width:720px;margin:0 0 8px}
+    .academic-research .ar-group{font:600 12px/1.4 'DM Mono','JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:32px 0 4px}
+    .academic-research .ar-link{font-weight:600;font-size:14px;color:var(--accent-2)}
+  </style>
+  <script src="theme-toggle.js"></script>
+  <!-- VERSÃO ALTERNATIVA "PIXEL": mesmo conteúdo do index.html, só muda o visual -->
+  <meta name="robots" content="noindex">
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="pixel.css?v=1">
+  <script src="pixel.js?v=1"></script>
+</head>
+
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+  <nav>
+    <div class="container nav-inner">
+      <div class="brand">
+        <a href="#" class="logo">
+          <span class="logo-text">LFT</span><span class="logo-dot">.</span>
+        </a>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#investigative">Reporting</a></li>
+        <li><a href="#osint-investigations">OSINT Investigations</a></li>
+        <li><a href="#investigating-ai">Investigating AI</a></li>
+        <li><a href="#short-videos">Videos</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#courses-workshops">Courses &amp; workshops</a></li>
+        <li><a href="#research-fellowships">Research</a></li>
+        <li class="nav-sep" aria-hidden="true"></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="https://datafixers.org/index_en.html" target="_blank" rel="noopener noreferrer">Innovation Lab</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" title="Menu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section id="newsroom" data-link-base="" aria-label="Interactive illustration: inside the newsroom">
+      <p class="sr-only">An illustrated broadcast newsroom seen from above: a studio on air, a video wall, rows of desks and people walking between them. Each reporter wears a name tag with a section of this portfolio; the tags jump to that section below.</p>
+      <div class="nr-hud">
+        <h2>I'm Luiz Fernando Toledo,</h2>
+        <p><b>Brazilian journalist, researcher and instructor</b> based in <b>London</b>, with a proven track record of producing and managing <b>impactful projects related to Brazil</b>.</p>
+        <p>My reporting has been translated into <a href="#epstein-investigation">several languages</a>, and my video reports have drawn <a href="https://datafixers.org/monitor-videos/" target="_blank" rel="noopener">over 10 million views</a> across social media.</p>
+      </div>
+      <div class="nr-stage">
+        <canvas aria-hidden="true"></canvas>
+        <div class="nr-hotspots"></div>
+      </div>
+      <div class="nr-chips" role="navigation" aria-label="Portfolio sections"></div>
+      <aside class="nr-panel" role="dialog" aria-labelledby="nr-panel-title" hidden>
+        <button type="button" class="nr-close" aria-label="Close">×</button>
+        <div class="nr-panel-body"></div>
+      </aside>
+      <div class="nr-foot">
+        <span class="nr-hint">Click a name tag to jump to that section</span>
+        <span><button type="button" data-nr-pause aria-pressed="false">Pause</button>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#impact-grid">See the work ↓</a></span>
+      </div>
+    </section>
+
+    <section id="impact-grid" class="section" data-reveal>
+      <div class="container">
+        <div class="impact-grid">
+          <div class="impact-card" data-reveal>
+            <h3><i class="fas fa-newspaper"></i> Reporting Impact</h3>
+            <p>Stories I wrote <a href="#investigative" class="highlight">sparked a federal investigation</a> into
+              Jeffrey Epstein's sexual enticement network in Brazil, <a
+                href="https://news.fiquemsabendo.com.br/p/exclusivo-acessamos-as-notas-fiscais" target="_blank"
+                rel="noopener noreferrer" class="highlight">exposed</a> a former president's misuse of
+              public funds, <a
+                href="http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/"
+                target="_blank" rel="noopener noreferrer" class="highlight">uncovered</a> a bid fraud that saved R$
+              15&nbsp;million from a city's
+              budget and <a
+                href="https://www.cnnbrasil.com.br/nacional/apos-reportagem-da-cnn-empresa-de-taxi-aereo-e-primeira-a-ser-cassada-no-pais/"
+                target="_blank" rel="noopener noreferrer" class="highlight">enabled</a> the shutdown of companies
+              involved
+              in illegal activities.
+            </p>
+          </div>
+
+          <div class="impact-card" data-reveal>
+            <h3><i class="fas fa-chalkboard-teacher"></i> Training</h3>
+            <p>Attended world-class conferences as instructor in <a
+                href="https://congresso.abraji.org.br/palestrante/luiz-fernando-toledo" target="_blank"
+                rel="noopener noreferrer" class="highlight">Brazil</a>, <a
+                href="https://www.instagram.com/p/CyoQztQvNdE/?img_index=1" target="_blank" rel="noopener noreferrer"
+                class="highlight">USA</a>, <a
+                href="https://reutersinstitute.politics.ox.ac.uk/people/luiz-fernando-toledo-antunes#research"
+                target="_blank" rel="noopener noreferrer" class="highlight">UK</a>, <a
+                href="https://www.youtube.com/watch?v=dw5q9ZXMaWE" target="_blank" rel="noopener noreferrer"
+                class="highlight">Portugal</a>, <a
+                href="https://www.abraji.org.br/noticias/brasil-marca-presenca-no-maior-encontro-mundial-de-jornalismo-investigativo-na-malasia"
+                target="_blank" rel="noopener noreferrer" class="highlight">Malaysia</a>, <a
+                href="https://www.youtube.com/watch?v=urDaCInPdvY" target="_blank" rel="noopener noreferrer"
+                class="highlight">Sweden</a> and others.
+              Trained over 2,000 journalists through online and in-person workshops.</p>
+          </div>
+
+          <div class="impact-card" data-reveal>
+            <h3><i class="fas fa-graduation-cap"></i> Research</h3>
+            <p>Masters degrees in <a href="https://brown.columbia.edu/portfolio/luiz-fernando-toledo/" target="_blank"
+                rel="noopener noreferrer" class="highlight">Data Journalism (Columbia)</a> and <a
+                href="https://repositorio.fgv.br/items/e0088610-e3e2-4c40-afad-4461cf6e2df6" target="_blank"
+                rel="noopener noreferrer" class="highlight">Public Administration (FGV‑EAESP)</a>. Research-assistant at
+              <a href="https://talks.ox.ac.uk/talks/id/cca01872-4114-45f5-a90f-64d5af4cea88/?format=txt" target="_blank"
+                rel="noopener noreferrer" class="highlight">POLIS‑Cambridge</a> (2024–2026). Former research fellow at
+              <a href="https://reutersinstitute.politics.ox.ac.uk/how-unlock-potential-freedom-information-requests-your-newsroom"
+                target="_blank" rel="noopener noreferrer" class="highlight">Oxford</a> (2021), <a
+                href="https://brown.columbia.edu/portfolio/luiz-fernando-toledo/" target="_blank"
+                rel="noopener noreferrer" class="highlight">Columbia</a> (2022–2023) and <a
+                href="https://www.cima.ned.org/blog/how-artificial-intelligence-can-facilitate-investigative-journalism/"
+                target="_blank" rel="noopener noreferrer" class="highlight">NED</a>
+              (2023–2024). <a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/abstract/?lang=en"
+                target="_blank" rel="noopener noreferrer" class="highlight">My research was used by the government</a>
+              to
+              improve transparency policies.
+            </p>
+          </div>
+
+          <div class="impact-card" data-reveal>
+            <h3><i class="fas fa-code"></i> Civil Tech</h3>
+            <p>I enjoy testing different technologies to improve my investigative reporting process and to help other
+              journalists. I founded
+              <a href="https://datafixers.org/" target="_blank" rel="noopener noreferrer" class="highlight">Datafixers</a>,
+              a data innovation lab that received a
+              <a href="https://brown.columbia.edu/22-23-magic/" target="_blank" rel="noopener noreferrer" class="highlight">US$ 100,000 grant from Columbia and Stanford universities</a>
+              and won the
+              <a href="https://premio.jornalismodedados.org.br/edicoes/2023/" target="_blank" rel="noopener noreferrer" class="highlight">prize for best data journalism project in Brazil</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="investigating-ai" class="investigative ai-reporting section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Investigating AI</h2>
+        <p class="ai-reporting-intro"><strong>In 2026, investigating the impact of artificial intelligence on society has become a central focus of my reporting.</strong> These stories look at how synthetic media, automation and AI-generated authority are changing what people watch, how they work, whom they trust and how political influence spreads.</p>
+
+        <div class="featured-article ai-video-feature" data-reveal>
+          <div class="ai-video-copy">
+            <div class="tags"><span class="tag">BBC News Brasil</span><span class="tag">Featured investigation</span></div>
+            <h3>AI-generated videos that eroticise Brazil’s brutal history are reaching millions on YouTube</h3>
+            <p>I investigated how synthetic videos turn the history of slavery and racial violence in Brazil into a high-engagement spectacle — and the platforms, incentives and audiences that allow this material to spread at scale.</p>
+            <div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c3r0194grx2o" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the text version</span></a></div>
+          </div>
+          <div class="featured-media ai-instagram-media">
+            <iframe src="https://www.instagram.com/p/DcosT9TE5T3/embed/captioned" title="BBC News Brasil short video about AI-generated videos sexualising the history of slavery" loading="lazy" scrolling="no" allowtransparency="true"></iframe>
+            <a class="ai-instagram-link" href="https://www.instagram.com/p/DcosT9TE5T3/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Watch on Instagram</a>
+          </div>
+        </div>
+
+        <div class="ai-doctors-sequence" data-reveal>
+          <div class="ai-doctors-image"><img src="images/ai_fake_doctors_illustration.png" alt="AI-generated doctor illustration showing a doctor beside a computer keyboard" loading="lazy"></div>
+          <article class="ai-sequence-item">
+            <div class="tags"><span class="tag">BBC News Brasil · Part 1</span></div>
+            <h3>The global underground industry of fake AI doctors</h3>
+            <p>This investigation mapped a global network of AI-generated doctors using fear to go viral among older people in Brazil.</p>
+            <div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/cz0j8lp5xmvo" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the investigation</span></a></div>
+          </article>
+          <article class="ai-sequence-item">
+            <div class="tags"><span class="tag">BBC News Brasil · Follow-up</span></div>
+            <h3>‘Fatal harm’: a doctor finds his face cloned by AI</h3>
+            <p>After the first report, a doctor recognised that his face was being used in one of the channels mentioned by the BBC and decided to file a police report. Police then opened an investigation and cited the BBC report as a source.</p>
+            <div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/cn4ddgl7vkno" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the follow-up</span></a></div>
+          </article>
+          <div class="ai-translation-note">
+            <p>Following the widespread attention to our findings, YouTube removed most of the channels and videos. Versions of the report were published in several languages: <span class="ai-languages"><a href="https://www.bbc.com/pashto/articles/c1wxnn89d33o" target="_blank" rel="noopener noreferrer">Pashto (Afghanistan)</a>, <a href="https://www.bbc.com/hindi/articles/cp93521mr5po" target="_blank" rel="noopener noreferrer">Hindi (India)</a>, <a href="https://www.bbc.com/thai/articles/cevwy09zr7ro" target="_blank" rel="noopener noreferrer">Thai (Thailand)</a>, <a href="https://www.bbc.com/russian/articles/cg596z4zr83o" target="_blank" rel="noopener noreferrer">Russian (Russia)</a>, <a href="https://www.bbc.com/sinhala/articles/c770xzn54p0o" target="_blank" rel="noopener noreferrer">Sinhala (Sri Lanka)</a>, <a href="https://www.bbc.com/urdu/articles/cdx0rewvqqro" target="_blank" rel="noopener noreferrer">Urdu (Pakistan)</a>, <a href="https://www.bbc.com/tamil/articles/cy8z98k5grro" target="_blank" rel="noopener noreferrer">Tamil (India and Sri Lanka)</a> and <a href="https://www.bbc.com/ukrainian/articles/cvgyx17dk89o" target="_blank" rel="noopener noreferrer">Ukrainian (Ukraine)</a>.</span></p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Work &amp; platforms</span></div><h3>Workers saying goodbye to formal employment to chase the dream of making AI videos</h3><p>How the promise of an AI-powered creator economy is changing work, risk and expectations of financial independence.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c5yzyy730nro" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Children &amp; attention</span></div><h3>The flood of AI videos designed to ‘hypnotise’ children on YouTube</h3><p>An investigation into repetitive synthetic content built for attention — and experts’ concerns about effects that may last a lifetime.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/cx2xx1gp6jgo" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Elections</span></div><h3>The clandestine market for AI-made ‘candidate supporters’</h3><p>Behind the election: synthetic political fandom, automated WhatsApp bots and the infrastructure of influence.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c1k2zj3gdg7o" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Political influence</span></div><h3>We asked AI who to vote for — here’s what it said</h3><p>What happened when chatbots were asked to take a political position, despite rules against doing so.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c5y0kv55j11o" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Synthetic personas</span></div><h3>The AI character going viral with attacks on Lula’s government and Brazil’s Supreme Court</h3><p>Following a synthetic persona at the intersection of politics, virality and persuasion.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c7vq10lvv15o" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Mental health</span></div><h3>Your therapist is human — but may be using AI in therapy</h3><p>The hidden use of artificial intelligence in mental-health care and the risks for patients.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c1j9gnxnk4zo" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Public understanding</span></div><h3>The Brazilian creator translating the chaos of AI</h3><p>‘People are lost’: a story about making an emerging technology legible to a confused public.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/c9v1292nrzro" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+          <div class="card-article" data-reveal><div class="card-content"><div class="tags"><span class="tag">Workplaces</span></div><h3>What it’s like to interview for a job with artificial intelligence</h3><p>Efficiency may improve — but what happens to the human experience of being assessed?</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/cewyng440vro" target="_blank" rel="noopener noreferrer" class="story-link"><span class="story-link-icon">&rsaquo;</span><span>Read the original</span></a></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="investigative" class="investigative section">
+      <div class="container">
+        <h2 class="section-title">Investigative Reporting</h2>
+        <div id="epstein-investigation" class="featured-article featured-video-story" data-reveal style="scroll-margin-top:80px">
+          <div class="featured-media">
+            <iframe src="https://www.youtube.com/embed/Nl5eRXVkW9Y?rel=0"
+              title="The Epstein-Brazil connection – video" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="featured-content">
+            <div class="featured-video-story-layout">
+              <div class="featured-video-story-copy">
+                <div class="tags">
+                  <span class="tag">BBC News Brasil</span>
+                  <span class="tag"
+                    style="background: rgba(255,180,0,0.15); color: #ffb400; border-color: rgba(255,180,0,0.3);">Investigative
+                    Series</span>
+                </div>
+                <h3>The Epstein-Brazil connection</h3>
+                <p>I analyzed all the millions of Epstein files released by the US government and built scrapers that
+                  searched
+                  for keywords related to Brazilian figures. This way, we were able to reveal the financial dependency of
+                  Brazilian models on the billionaire, connections used to lure young women, and the victims who were taken
+                  to
+                  the US. The BBC series led to a <a href="https://www.bbc.com/portuguese/articles/cp817772k2go"
+                    target="_blank" rel="noopener noreferrer" class="highlight">Federal Prosecution investigation in
+                    Brazil</a> seeking a network that lured women. Combined, the reporting reached over 10 million views in text and video and resonated across all major Brazilian media outlets.</p>
+                <p>The English version of the investigation — <a href="https://www.bbc.com/news/articles/cr4576v66kno" target="_blank" rel="noopener noreferrer" class="highlight"><em>Epstein used modelling agent to recruit girls, Brazilian women tell BBC</em></a> — was published internationally and translated into several languages, including
+                  <a href="https://www.bbc.com/afrique/articles/c1d61vv5zp5o" target="_blank" rel="noopener noreferrer" class="highlight">French</a> (<em>Epstein utilisait un agent de mannequins pour recruter des jeunes filles, témoignent des Brésiliennes auprès de la BBC</em>),
+                  <a href="https://www.bbc.com/polska/articles/cx2d5x51ed2o" target="_blank" rel="noopener noreferrer" class="highlight">Polish</a> (<em>Brazylijskie modelki twierdzą, że Epstein rekrutował młode dziewczyny przez agenta modelek</em>),
+                  <a href="https://www.bbc.com/serbian/articles/c86yx735qqdo/lat" target="_blank" rel="noopener noreferrer" class="highlight">Serbian</a> (<em>Brazilke za BBC: Epstin koristio modnog agenta za regrutaciju devojaka</em>),
+                  <a href="https://www.bbc.com/zhongwen/articles/crrxv49x1z9o/simp" target="_blank" rel="noopener noreferrer" class="highlight">Chinese</a> (<em>巴西女性向BBC透露，爱泼斯坦曾利用模特儿经纪人招募女孩</em>), and
+                  <a href="https://www.bbc.com/ukrainian/articles/c15x1e1j947o" target="_blank" rel="noopener noreferrer" class="highlight">Ukrainian</a> (<em>Як модельні агенції вербували неповнолітніх дівчат для Епштейна</em>).</p>
+              </div>
+              <div class="related-stories featured-video-story-series">
+                <p class="featured-video-story-series-label">
+                  <i class="fas fa-layer-group"></i>Series: 9 parts
+                </p>
+                <div class="story-link-container featured-video-story-links">
+                <a href="https://www.bbc.com/portuguese/articles/cvg83wprk37o" target="_blank" rel="noopener noreferrer"
+                  class="story-link" style="display: flex; align-items: baseline; gap: 10px;">
+                  <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">1.</span>
+                  <span>Jeffrey Epstein funded Brazilian models and warned days before his arrest</span>
+                </a>
+                <a href="https://www.bbc.com/portuguese/articles/cm24mr6el23o" target="_blank" rel="noopener noreferrer"
+                  class="story-link" style="display: flex; align-items: baseline; gap: 10px;">
+                  <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">2.</span>
+                  <span>Inside Epstein's Brazilian network: scouts, magazines, and fashion contests</span>
+                </a>
+                <a href="https://www.bbc.com/portuguese/articles/cnv2937j42ro" target="_blank" rel="noopener noreferrer"
+                  class="story-link" style="display: flex; align-items: baseline; gap: 10px;">
+                  <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">3.</span>
+                  <span>New documents reveal Epstein's ties to a 'major Brazilian group'</span>
+                </a>
+                <a href="https://www.bbc.com/portuguese/articles/c1w91pvnqwxo" target="_blank" rel="noopener noreferrer"
+                  class="story-link" style="display: flex; align-items: baseline; gap: 10px;">
+                  <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">4.</span>
+                  <span>'Around 50 Brazilian women': a survivor's testimony on Epstein's mansion</span>
+                </a>
+                <a href="https://www.bbc.com/portuguese/articles/cp817772k2go" target="_blank" rel="noopener noreferrer"
+                  class="story-link" style="display: flex; align-items: baseline; gap: 10px;">
+                  <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">5.</span>
+                  <span>BBC investigation prompts Federal Prosecution probe into Epstein's Brazilian network</span>
+                </a>
+                <a href="https://www.bbc.com/portuguese/articles/c2047g008dgo" target="_blank" rel="noopener noreferrer"
+                  class="story-link" style="display: flex; align-items: baseline; gap: 10px;">
+                  <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">6.</span>
+                  <span>Epstein sought bridge to Brazilian businessmen for deals, BBC-obtained documents reveal</span>
+                </a>
+                <a href="https://www.bbc.com/portuguese/articles/c5y6g6yzev5o" target="_blank" rel="noopener noreferrer"
+                  class="story-link" style="display: flex; align-items: baseline; gap: 10px;">
+                  <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">7.</span>
+                  <span>The modelling contest used by Epstein's network to recruit Latin American teenagers</span>
+                </a>
+                <a href="https://www.bbc.com/portuguese/articles/cm21e7gnx0ro" target="_blank" rel="noopener noreferrer"
+                  class="story-link" style="display: flex; align-items: baseline; gap: 10px;">
+                  <span style="color: var(--accent); font-weight: 700; font-size: 0.85rem; min-width: 18px;">8.</span>
+                  <span>Epstein bought apartment in upscale Sao Paulo neighborhood, deed shows</span>
+                </a>
+                <a href="https://www.bbc.com/portuguese/articles/c39wz7r0nxmo" target="_blank" rel="noopener noreferrer"
+                  class="story-link"
+                  style="display: flex; align-items: center; gap: 10px; background: rgba(0, 212, 160, 0.07); border: 1px solid rgba(0, 212, 160, 0.25); border-radius: 6px; padding: 8px 10px; margin-top: 2px;">
+                  <span style="color: #00d4a0; font-weight: 700; font-size: 0.85rem; min-width: 18px;">9.</span>
+                  <span style="flex: 1;">'He used to do some tests on me': Brazilian woman tells how she was lured to Epstein in Sao Paulo</span>
+                  <span
+                    style="background: rgba(0, 212, 160, 0.18); color: #00d4a0; border: 1px solid rgba(0, 212, 160, 0.4); border-radius: 4px; padding: 2px 7px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px; white-space: nowrap; flex-shrink: 0;">NEW</span>
+                </a>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="cards">
+          <div class="card-article" data-reveal>
+            <img src="images/ai_fake_doctors_youtube.png"
+              alt="The global industry of AI-generated fake doctors that uses fear to go viral among elderly Brazilians"
+              loading="lazy">
+            <div class="card-content">
+              <div class="tags">
+                <span class="tag">BBC News Brasil</span>
+              </div>
+              <h3>The global industry of AI-generated fake doctors targeting elderly Brazilians</h3>
+              <p>This investigation mapped a network that generates fake AI doctors to engage elderly audiences. The
+                work led to a police investigation and the takedown of several YouTube channels involved in this kind
+                of wrongdoing.</p>
+              <div class="story-link-container">
+                <a href="https://www.bbc.com/portuguese/articles/cz0j8lp5xmvo" target="_blank"
+                  rel="noopener noreferrer" class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the original</span>
+                </a>
+                <a href="https://www.bbc.com/portuguese/articles/cn4ddgl7vkno" target="_blank"
+                  rel="noopener noreferrer" class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the follow-up</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-article" data-reveal>
+            <img src="images/military_schools_abuse_1770375222284.png" alt="Sexual abuse in Brazil's military schools"
+              loading="lazy">
+            <div class="card-content">
+              <div class="tags">
+                <span class="tag">BBC News Brasil</span>
+              </div>
+              <h3>Sexual abuse in Brazil's military schools</h3>
+              <p>Our investigation reveals that at least nine girls aged 11 to 13 reported inappropriate touching by a
+                military monitor in a public school, raising broader questions about oversight and the civic-military
+                model.
+              </p>
+              <div class="story-link-container">
+                <a href="https://www.bbc.com/portuguese/articles/c5ydlv11pe1o" target="_blank" rel="noopener noreferrer"
+                  class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the original</span>
+                </a>
+                <a href="portfolio-investigativo/escolas-militares/index.html" class="story-link story-link-en">
+                  <span class="story-link-icon">↗</span>
+                  <span>Read in English — interactive</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-article" data-reveal>
+            <img src="images/metanol.jpg" alt="How fake bottle caps and seals fuel Brazil's counterfeit alcohol market"
+              loading="lazy">
+            <div class="card-content">
+              <div class="tags">
+                <span class="tag">BBC News Brasil</span>
+              </div>
+              <h3>How fake bottle caps and seals fuel Brazil's counterfeit alcohol market</h3>
+              <p>This investigation dismantled a network of over 10,000 people selling bottle parts for beverage
+                counterfeiting and triggered a police investigation.</p>
+              <div class="story-link-container">
+                <a href="https://www.bbc.com/portuguese/articles/ce84kg923ero" target="_blank" rel="noopener noreferrer"
+                  class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the original</span>
+                </a>
+                <a href="portfolio-investigativo/metanol/index.html" class="story-link story-link-en">
+                  <span class="story-link-icon">↗</span>
+                  <span>Read in English — interactive</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-article" data-reveal>
+            <img src="images/amazon_fish_pirarucu.png"
+              alt="Giant Amazon fish turned into luxury handbags – but who profits?" loading="lazy">
+            <div class="card-content">
+              <div class="tags">
+                <span class="tag">BBC News Brasil</span>
+              </div>
+              <h3>Giant Amazon fish turned into luxury handbags – but who profits?</h3>
+              <p>The thick, patterned skin of the once-at-risk pirarucu fish is in demand for high-end fashion, but the
+                fishermen want more money.</p>
+              <div class="story-link-container">
+                <a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o.amp" target="_blank"
+                  rel="noopener noreferrer" class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the original</span>
+                </a>
+                <a href="portfolio-investigativo/pirarucu/index.html" class="story-link story-link-en">
+                  <span class="story-link-icon">↗</span>
+                  <span>Read in English — interactive</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-article" data-reveal>
+            <img src="images/slave_labor_stone.png" alt="Secret Budget Amendment Linked to Slave Labor" loading="lazy">
+            <div class="card-content">
+              <div class="tags">
+                <span class="tag">BBC News Brasil</span>
+              </div>
+              <h3>Secret Budget Amendment Linked to Slave Labor</h3>
+              <p>Investigation reveals how a budget amendment supported by Chamber President&nbsp;Hugo&nbsp;Motta funded
+                construction using stones produced by workers in slave‑like conditions.</p>
+              <div class="story-link-container">
+                <a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank" rel="noopener noreferrer"
+                  class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the original</span>
+                </a>
+                <a href="portfolio-investigativo/orcamento-secreto/index.html" class="story-link story-link-en">
+                  <span class="story-link-icon">↗</span>
+                  <span>Read in English — interactive</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-article" data-reveal>
+            <img src="images/irish_meat_industry.png" alt="Brazilians Face Abuse in Irish Meat Industry" loading="lazy">
+            <div class="card-content">
+              <div class="tags">
+                <span class="tag">BBC News Brasil</span>
+              </div>
+              <h3>Brazilians Face Abuse in Irish Meat Industry</h3>
+              <p>Exclusive investigation exposes precarious working conditions and abuse faced by Brazilian workers in
+                Ireland’s meat processing industry.</p>
+              <div class="story-link-container">
+                <a href="https://www.bbc.com/portuguese/articles/cdd900l6dnmo" target="_blank" rel="noopener noreferrer"
+                  class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the original</span>
+                </a>
+                <a href="portfolio-investigativo/irlanda/index.html" class="story-link story-link-en">
+                  <span class="story-link-icon">↗</span>
+                  <span>Read in English — interactive</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-article" data-reveal>
+            <img src="images/indigenous_artifacts_smuggling.png"
+              alt="Indigenous objects containing animal parts are freely sold online" loading="lazy">
+            <div class="card-content">
+              <div class="tags">
+                <span class="tag">UOL</span>
+              </div>
+              <h3>Failed enforcement: indigenous objects containing animal parts are freely sold online</h3>
+              <p>A 2‑month investigation into animal feather smuggling and how companies benefit from exploiting
+                indigenous communities in Brazil.</p>
+              <div class="story-link-container">
+                <a href="https://tab.uol.com.br/noticias/redacao/2024/07/31/venda-ilegal-de-artefatos-indigenas-cresce-com-baixa-fiscalizacao-nas-redes.htm"
+                  target="_blank" rel="noopener noreferrer" class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the original</span>
+                </a>
+                <a href="portfolio-investigativo/artefatos-indigenas/index.html" class="story-link story-link-en">
+                  <span class="story-link-icon">↗</span>
+                  <span>Read in English — interactive</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-article" data-reveal>
+            <img src="images/land_grabbing_df.png"
+              alt="Political Backing Fuels Land Grabbing in Brazil's Distrito Federal" loading="lazy">
+            <div class="card-content">
+              <div class="tags">
+                <span class="tag">Revista Piauí</span>
+              </div>
+              <h3>Political Backing Fuels Land Grabbing in Brazil's Distrito&nbsp;Federal</h3>
+              <p>In the Distrito Federal, Brazil, a significant issue of land grabbing in conservation areas is
+                emerging,
+                intensified by political support. These activities are particularly rampant in the Colônia
+                Agrícola&nbsp;26&nbsp;de&nbsp;Setembro, a settlement approximately 26&nbsp;km from the Palácio do
+                Planalto, housing around 35,000 residents.</p>
+              <div class="story-link-container">
+                <a href="https://piaui.folha.uol.com.br/distrito-federal-grileiros-car-brasilia/" target="_blank"
+                  rel="noopener noreferrer" class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the original</span>
+                </a>
+                <a href="portfolio-investigativo/grileiros-df/index.html" class="story-link story-link-en">
+                  <span class="story-link-icon">↗</span>
+                  <span>Read in English — interactive</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-article" data-reveal>
+            <img src="images/violin.jpg" alt="A world heritage site under attack in Brazil" loading="lazy">
+            <div class="card-content">
+              <div class="tags">
+                <span class="tag">Revista Piauí</span>
+                <span class="tag">OCCRP</span>
+              </div>
+              <h3>A world heritage site under attack in Brazil</h3>
+              <p>Brazilwood is being driven to extinction by an industry not often associated with organized crime:
+                classical music. Tests on a sample of the confiscated wood show it was logged in a protected forest.</p>
+              <div class="story-link-container">
+                <a href="https://piaui.folha.uol.com.br/um-parque-no-coracao-do-contrabando-de-pau-brasil/"
+                  target="_blank" rel="noopener noreferrer" class="story-link">
+                  <span class="story-link-icon">&rsaquo;</span>
+                  <span>Read the original</span>
+                </a>
+                <a href="portfolio-investigativo/pau-brasil/index.html" class="story-link story-link-en">
+                  <span class="story-link-icon">↗</span>
+                  <span>Read in English — interactive</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accordion: other reporting examples (Estadão, Globo SP, CNN) -->
+        <div class="outlets-wrap" data-reveal>
+          <h3 class="subsection-title">Other reporting examples</h3>
+          <p class="outlets-sub">From earlier newsrooms — select one to see additional stories not featured above.</p>
+          <div class="outlets-row" id="outletsRow"></div>
+          <div class="outlet-panel" id="outletPanel"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="osint-investigations" class="section osint-section">
+      <div class="container" id="osint-content">
+        <h2 class="section-title">OSINT Investigations</h2>
+        <p class="osint-intro">Reporting on Brazil from another country is a challenge. I have increasingly turned to open-source tools and public records to investigate public officials, companies and policy decisions. These stories show what careful verification of digital and documentary evidence can reveal.</p>
+
+        <div class="osint-grid">
+          <article class="osint-card">
+            <span class="osint-number">01 / SOURCE CODE</span>
+            <h3>Jaques Wagner: what a takedown request got wrong</h3>
+            <p>I rebuilt a website taken offline by a Brazilian court using code its developers had left on GitHub. Checking the page against the case file showed that the election petition had misidentified the conversation displayed: it was not an exchange between Senator Jaques Wagner and banker Daniel Vorcaro.</p>
+            <a href="https://www.bbc.com/portuguese/articles/cr3wj2jljej0o" target="_blank" rel="noopener noreferrer">Read the investigation <span aria-hidden="true">↗</span></a>
+          </article>
+
+          <article class="osint-card">
+            <span class="osint-number">02 / DIGITAL TRACES</span>
+            <h3>Tracing a phone number linked to a Supreme Court justice</h3>
+            <p>We checked a number listed in records from banker Daniel Vorcaro’s phone against a parliamentary inquiry and accounts on TikTok and other apps. The independent matches added evidence linking the number to Justice Alexandre de Moraes, while the police report stopped short of confirming who used the line.</p>
+            <div class="osint-links">
+              <a href="https://www.bbc.com/portuguese/articles/c4gqm6vqd33o" target="_blank" rel="noopener noreferrer">Digital accounts <span aria-hidden="true">↗</span></a>
+              <a href="https://www.bbc.com/portuguese/articles/c4gk300l15eo" target="_blank" rel="noopener noreferrer">Further evidence <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+
+          <article class="osint-card">
+            <span class="osint-number">03 / WEBSITE FORENSICS</span>
+            <h3>Who was behind false health advice online?</h3>
+            <p>By examining the source code of e-commerce pages, including Hotmart and Kiwify storefronts, I traced people behind channels spreading misleading health advice through AI-generated doctors. The reporting followed how attention was turned into sales of digital products.</p>
+            <a href="https://www.bbc.com/portuguese/articles/cz0j8lp5xmvo" target="_blank" rel="noopener noreferrer">Read the investigation <span aria-hidden="true">↗</span></a>
+          </article>
+
+          <article class="osint-card">
+            <span class="osint-number">04 / PUBLIC RECORDS</span>
+            <h3>Jeffrey Epstein’s property in São Paulo</h3>
+            <p>Brazilian property records established that Jeffrey Epstein had bought an apartment in São Paulo in 2003 and sold it two years later. The deed provided documentary evidence of a previously little-known connection to the country.</p>
+            <a href="https://www.bbc.com/portuguese/articles/cm21e7gnx0ro" target="_blank" rel="noopener noreferrer">Read the investigation <span aria-hidden="true">↗</span></a>
+          </article>
+
+          <article class="osint-card">
+            <span class="osint-number">05 / ACCOUNTABILITY</span>
+            <h3>Allegations at a civic-military school</h3>
+            <p>Open-source research helped uncover a case that had not previously been reported: at least nine girls, aged 11 to 13, alleged that a military monitor had touched them inappropriately at a school in Paraná. The court case remained under seal; the monitor had not been convicted when the story was published.</p>
+            <a href="https://www.bbc.com/portuguese/articles/c5ydlv11pe1o" target="_blank" rel="noopener noreferrer">Read the investigation <span aria-hidden="true">↗</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Initiatives I've led -->
+    <section id="initiatives-led" class="section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Initiatives I've led</h2>
+        <div class="init-cards">
+          <article class="init-card" data-reveal>
+            <span class="when">2022 – present</span>
+            <h3>Datafixers</h3>
+            <span class="role">Founder</span>
+            <ul>
+              <li><b>US$100,000</b> grant from the Brown Institute for Media Innovation (Columbia University)</li>
+              <li><b>Gabo Prize 2024</b> — environmental coverage with InfoAmazonia</li>
+              <li><b>Best data project in Brazil 2023</b> — Open Knowledge Foundation</li>
+              <li>Published with <b>ICIJ, OCCRP, BBC</b>; supported <b>Washington Post</b> (Pulitzer finalist) and <b>Al Jazeera</b></li>
+              <li><a href="https://datafixers.org/" target="_blank" rel="noopener">datafixers.org ↗</a></li>
+            </ul>
+          </article>
+          <article class="init-card" data-reveal>
+            <span class="when">2019 – 2024</span>
+            <h3>Abraji</h3>
+            <span class="role">Director for FOIA projects · Advisory board</span>
+            <ul>
+              <li>National research on Brazil's <b>Lei de Acesso à Informação</b></li>
+              <li>Contributed to training <b>2,000+ journalists</b> in workshops</li>
+              <li>This FOIA work earned the <b>Oxford RISJ fellowship</b></li>
+            </ul>
+          </article>
+          <article class="init-card" data-reveal>
+            <span class="when">2019 – 2023</span>
+            <h3>Fiquem Sabendo</h3>
+            <span class="role">Cofounder · content director</span>
+            <ul>
+              <li>Nonprofit specialised in <b>public records requests</b></li>
+              <li>Year-long project on presidential corporate-card spending triggered investigations against current and former presidents</li>
+              <li><b>Câmara dos Deputados Transparency Prize 2022</b></li>
+              <li>Cited in <b>1,000+ stories</b> by other newsrooms</li>
+            </ul>
+          </article>
+          <article class="init-card" data-reveal>
+            <span class="when">present</span>
+            <h3>Jeduca</h3>
+            <span class="role">Director · course co-creator</span>
+            <ul>
+              <li>Co-created a course taken by <b>1,000+ journalists and students</b></li>
+              <li>Travelled to <b>several Brazilian states</b> giving in-person workshops to students on education journalism</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="short-videos" class="short-videos section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Video reporting</h2>
+        <p class="video-monitor-link">Explore the <a href="https://datafixers.org/monitor-videos/" target="_blank" rel="noopener">video monitor ↗</a>.</p>
+        <div class="featured-video">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/QlunKw_CKPY?rel=0&amp;start=169" title="AI, Deepfakes and the Fight for Brazil's Vote - Global Eye, BBC World Service" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+
+        </div>
+        <div class="embed-grid youtube-grid">
+          <iframe loading="lazy" src="https://www.youtube.com/embed/M46TWtihWMs" title="Os deepfakes que tentam te enganar - e gerar dinheiro | Eleições 2026" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/r5Ihpa2DQIg" title="The fake alcohol killing people in Brazil - What in the World podcast, BBC World Service" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/65AnDszCevA" title="Por que cada vez mais analistas falam em 'bolha' da inteligência artificial prestes a estourar" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/Nl5eRXVkW9Y" title="Brasileira conta à BBC como foi aliciada para Epstein em São Paulo" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/HEwY0WKeKjc" title="ChatGPT: o que você não vê" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/RhHz-bizvs0" title="Como redes sociais estão influenciando ida de jovens para o tráfico" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/SkX6MKU9gAQ" title="A curiosa linha do tempo da evolução da Inteligência Artificial" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/CzK178HYEB8" title="Brasil poderia imitar política de detenção em massa de Bukele?" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/ZPbhHhE22uY" title="Os médicos falsos feitos por IA que viralizam entre idosos no Brasil" allow="autoplay; encrypted-media"
+            allowfullscreen></iframe>
+        </div>
+
+        <div class="bbc-search-more">
+          <h3>More video reporting for BBC News Brasil</h3>
+          <div class="bbc-search-grid">
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=4NTyfMsgtY4" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/4NTyfMsgtY4/hqdefault.jpg" alt="" loading="lazy">
+            <span>⚠️🥃 Como funciona a venda de lacres falsos, tampas e garrafas de bebidas alcoólicas no Facebook</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=HNGaWGIAnso" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/HNGaWGIAnso/hqdefault.jpg" alt="" loading="lazy">
+            <span>⚠️🤖⁠ Como não deixar o ChatGPT atrapalhar seus estudos</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=rTybgh71xFU" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/rTybgh71xFU/hqdefault.jpg" alt="" loading="lazy">
+            <span>🦫 🤳🏻 Os influencers que ganham fama exibindo animais selvagens como pets</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=3KnxcFxVcF0" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/3KnxcFxVcF0/hqdefault.jpg" alt="" loading="lazy">
+            <span>Tarifaço prejudica Estados &#x27;bolsonaristas&#x27; 📈</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=PZBbBkKNAxk" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/PZBbBkKNAxk/hqdefault.jpg" alt="" loading="lazy">
+            <span>Quem é Dona Maria, a personagem de IA que viraliza falando mal de Lula e do STF</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=0KVyLHjj1Fs" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/0KVyLHjj1Fs/hqdefault.jpg" alt="" loading="lazy">
+            <span>Ibama X influenciadora: a briga na Justiça pela guarda da jaguatirica Pituca 🐯⚠️</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=QcZqdD7_gLA" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/QcZqdD7_gLA/hqdefault.jpg" alt="" loading="lazy">
+            <span>Entrevista de emprego feita por IA? 💼📲</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=gGn1hGMyKt0" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/gGn1hGMyKt0/hqdefault.jpg" alt="" loading="lazy">
+            <span>Os bilionários que aparecem nos novos arquivos do caso Epstein — e qual era a atuação dele no Brasil</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=M-Z_CBMsC9k" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/M-Z_CBMsC9k/hqdefault.jpg" alt="" loading="lazy">
+            <span>Dá para identificar texto gerado por inteligência artificial?</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=EbfqG95jozQ" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/EbfqG95jozQ/hqdefault.jpg" alt="" loading="lazy">
+            <span>Peixe gigante da Amazônia vira bolsa de luxo de $ 8 mil. Quanto ganham os pescadores? 🎣💰</span>
+          </a>
+          <a class="bbc-search-card" href="https://www.youtube.com/watch?v=tzmMq7WpeUc" target="_blank" rel="noopener noreferrer">
+            <img src="https://i.ytimg.com/vi/tzmMq7WpeUc/hqdefault.jpg" alt="" loading="lazy">
+            <span>Demitido do Itaú por produtividade baixa no home office: &#x27;Trabalhei sete dias seguidos&#x27; 💻🔍</span>
+          </a>
+          </div>
+        </div>
+
+        <h3 class="subsection-title" style="margin: 40px 0 24px; font-size: 1.5rem; color: var(--accent);">Short-form
+          video reporting for social media</h3>
+
+        <div class="reels-carousel-container">
+          <button class="reels-btn reels-btn-left" aria-label="Scroll left"><i class="fas fa-chevron-left"></i></button>
+          <div class="reels-carousel">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DdSBLKPmshO/"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DcosT9TE5T3/"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVwcNVPAQ0_/?igsh=MXR4a216aW9jenkzbA%3D%3D"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVOzOrYjtxj/"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DUi12gSEaFV/"
+              data-instgrm-version="14"></blockquote>
+
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPfEs-4lTI3/"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DOgpYz4lKwY/"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DPKauEVD71z/"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DMq7vPfC4Os/"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DJUu11hILPM/"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DKuiChEMt8W/"
+              data-instgrm-version="14"></blockquote>
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DNCAw5SIF1J/"
+              data-instgrm-version="14"></blockquote>
+          </div>
+          <button class="reels-btn reels-btn-right" aria-label="Scroll right"><i
+              class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="interviews" class="interviews section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Interviews</h2>
+        <div class="interview-list">
+          <div class="interview-card">
+            <h3>Bellingcat's Stage Talks</h3>
+            <p>I was interviewed by Bellingcat to discuss how to use public records and data to investigate
+              environmental
+              crimes in Brazil. Held in English.</p>
+            <iframe loading="lazy" src="https://open.spotify.com/embed/episode/4qtV3XWFUwFtan4jThFKX1"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+          <div class="interview-card">
+            <h3>Global Investigative Journalism Conference (GIJC)</h3>
+            <p>Panel discussion on investigating environmental crimes at GIJC 2023 in Gothenburg, Sweden.</p>
+            <iframe loading="lazy" src="https://www.youtube.com/embed/urDaCInPdvY?start=19" allowfullscreen></iframe>
+          </div>
+          <div class="interview-card">
+            <h3>SBT News</h3>
+            <p>Discussion about transparency and investigative journalism in Brazil.</p>
+            <iframe loading="lazy" src="https://www.youtube.com/embed/rqvT39YIsP0?start=149" allowfullscreen></iframe>
+          </div>
+          <div class="interview-card">
+            <h3>TV Globo/G1 Podcast (O Assunto)</h3>
+            <p>Podcast discussion about corporate expenses investigation.</p>
+            <iframe loading="lazy" src="https://open.spotify.com/embed/episode/1UsnrR0DjRKHyd1fPlVtmn"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+          <div class="interview-card">
+            <h3>FIL Lisbon Conference</h3>
+            <p>Presentation about DataFixers.org at the Lisbon International Fair.</p>
+            <iframe loading="lazy" src="https://www.youtube.com/embed/dw5q9ZXMaWE?start=26" allowfullscreen></iframe>
+          </div>
+          <div class="interview-card">
+            <h3>CNN Brasil</h3>
+            <p>Interview about air charter investigation and transparency in government spending.</p>
+            <iframe loading="lazy" src="https://www.youtube.com/embed/PP8bv7osKMo?start=35" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards" class="awards section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Awards and Honorable Mentions</h2>
+        <ul class="award-list collapsed">
+          <li><span class="award-year">2024</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Prêmio Gabo 2024 – coverage with InfoAmazonia and Datafixers.org</span><span
+              class="award-source">Fundación Gabo</span></li>
+          <li class="shortlist"><span class="award-year">2024</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards</span><span
+              class="award-source">Sigma Awards</span></li>
+          <li><span class="award-year">2023</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Prêmio Claudio Weber Abramo – Categoria Dados Abertos</span><span
+              class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
+          <li><span class="award-year">2023</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Prêmio Claudio Weber Abramo – Categoria Investigação</span><span
+              class="award-source">Escola de Dados/Open Knowledge Brasil</span></li>
+          <li class="shortlist"><span class="award-year">2023</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Premio Roche 2023</span><span
+              class="award-source">Premio Roche</span></li>
+          <li><span class="award-year">2022</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Prêmio Transparência e Fiscalização Pública – Câmara dos Deputados (with Fiquem
+              Sabendo)</span><span class="award-source">Câmara dos Deputados</span></li>
+          <li class="shortlist"><span class="award-year">2022</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2022
+              –
+              Má alimentação à Brasileira</span><span class="award-source">Escola de Dados/Open Knowledge Brasil</span>
+          </li>
+          <li class="shortlist"><span class="award-year">2022</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Open
+              Lux</span><span class="award-source">Sigma Awards</span></li>
+          <li class="shortlist"><span class="award-year">2022</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Personal
+              portfolio</span><span class="award-source">Sigma Awards</span></li>
+          <li class="shortlist"><span class="award-year">2022</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2022 – Revealing the
+              Brazilian military pension</span><span class="award-source">Sigma Awards</span></li>
+          <li class="shortlist"><span class="award-year">2021</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">IREE 2021</span><span
+              class="award-source">IREE</span></li>
+          <li class="shortlist"><span class="award-year">2021</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Shedding
+              light
+              on government pension</span><span class="award-source">Sigma Awards</span></li>
+          <li class="shortlist"><span class="award-year">2021</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2021 – Chloroquine
+              and
+              the Brazilian Army</span><span class="award-source">Sigma Awards</span></li>
+          <li><span class="award-year">2021</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Jornalismo Mosca 2021 – Solteiragate</span><span class="award-source">Jornalismo
+              Mosca</span></li>
+          <li class="shortlist"><span class="award-year">2021</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Prêmio Claudio Weber Abramo 2021
+              –
+              Solteiragate</span><span class="award-source">Transparência Brasil</span></li>
+          <li class="shortlist"><span class="award-year">2019</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Sigma Awards 2019 – Personal
+              portfolio</span><span class="award-source">Sigma Awards</span></li>
+          <li><span class="award-year">2019</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Prêmio Claudio Weber Abramo 2019 – Newsletter Don’t “LAI” to me</span><span
+              class="award-source">Transparência Brasil</span></li>
+          <li><span class="award-year">2018</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Reportagem, 2nd place) – A rede
+              bolsonarista
+              de desinformação</span><span class="award-source">Estado de São Paulo</span></li>
+          <li class="shortlist"><span class="award-year">2018</span><span
+              class="award-status shortlist">Shortlist</span><span class="award-title">Premio ANPR 2018 – Fraude em
+              cotas
+              raciais</span><span class="award-source">ANPR</span></li>
+          <li><span class="award-year">2018</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Prêmio Estado de Jornalismo 2018 (Categoria Serviço) – Estadão Verifica</span><span
+              class="award-source">Estado de São Paulo</span></li>
+          <li><span class="award-year">2017</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 2nd place) – Fraude em
+              transparência em SP</span><span class="award-source">Estado de São Paulo</span></li>
+          <li><span class="award-year">2017</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Prêmio Estado de Jornalismo 2017 (Categoria Reportagem, 3rd place) – Internações
+              psiquiátricas (série)</span><span class="award-source">Estado de São Paulo</span></li>
+          <li><span class="award-year">2017</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Premio ANPR 2017 – Denunciando uma rede de pornografia infantil</span><span
+              class="award-source">ANPR</span></li>
+          <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span>
+            <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="Hidden secret"
+              role="button" tabindex="0"
+              style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px; cursor: pointer; border-radius: 50%; z-index: 10;"
+              title="???">
+            <span class="award-source">Instituto Ayrton Senna</span>
+          </li>
+          <li id="secretAwardLi" style="cursor: pointer; transition: all 0.2s;"><span
+              class="award-year">2011</span><span class="award-status winner">🏆 Winner</span><span
+              class="award-title">Premio ASU/Schaeffer 2011 – A história
+              da mulher que adotou seis crianças</span><span class="award-source">ASU/Schaeffer</span></li>
+        </ul>
+        <button id="showMoreAwardsBtn" class="show-more-btn">Show More</button>
+      </div>
+    </section>
+
+    <script>
+      // Awards Show More Logic
+      const showMoreBtn = document.getElementById('showMoreAwardsBtn');
+      const awardsList = document.querySelector('.award-list');
+
+      if (showMoreBtn && awardsList) {
+        showMoreBtn.addEventListener('click', () => {
+          awardsList.classList.toggle('collapsed');
+          const isCollapsed = awardsList.classList.contains('collapsed');
+          showMoreBtn.textContent = isCollapsed ? 'Show More' : 'Show Less';
+        });
+      }
+
+      // Add hover effect via JS since we can't easily add CSS to style tag
+      const secretLi = document.getElementById('secretAwardLi');
+      if (secretLi) {
+        secretLi.addEventListener('mouseenter', () => {
+          secretLi.style.transform = 'scale(1.02)';
+          secretLi.style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
+        });
+        secretLi.addEventListener('mouseleave', () => {
+          secretLi.style.transform = 'scale(1)';
+          secretLi.style.boxShadow = 'none';
+        });
+      }
+
+      // Pokemon Heart Gold Secret Trigger (Konami Code)
+      const konamiCode = [
+        "ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown",
+        "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight",
+        "b", "a"
+      ];
+      let konamiIndex = 0;
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === konamiCode[konamiIndex] || e.key === konamiCode[konamiIndex].toLowerCase()) {
+          konamiIndex++;
+          if (konamiIndex === konamiCode.length) {
+            konamiIndex = 0;
+            if (typeof triggerPokemonSecret === 'function') {
+              triggerPokemonSecret();
+            } else {
+              window.location.href = 'pokemon.html';
+            }
+          }
+        } else {
+          konamiIndex = 0; // Reset
+        }
+      });
+    </script>
+
+    <!-- Research & fellowships (visual trail) -->
+    <section id="research-fellowships" class="section academic-research" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Research &amp; fellowships</h2>
+        <div id="academic-research" class="ar-block">
+        <p class="ar-intro">Research on transparency, state secrecy and prison expansion in Brazil, including work with Cambridge’s Prison Consensus Project.</p>
+        <h3 class="ar-group">Published articles</h3>
+        <ol class="ar-list">
+          <li>
+            <span class="ar-venue">Annals of the American Association of Geographers · 2026</span>
+            <h3><a href="https://doi.org/10.1080/24694452.2026.2688357" target="_blank" rel="noopener noreferrer">Growing in and from Crisis: Environment, Labor, and Capital in Brazil’s Exponential Prison Expansion</a></h3>
+            <p class="ar-authors">Denyer Willis, G., Mendes Loureiro, P., Angotti, B. and Toledo, L. F.</p>
+            <p>Examines how claims about jobs, climate action and investment help justify and sustain Brazil’s prison expansion.</p>
+            <a class="ar-link" href="https://doi.org/10.1080/24694452.2026.2688357" target="_blank" rel="noopener noreferrer">Read the article ↗</a>
+          </li>
+          <li>
+            <span class="ar-venue">Cadernos EBAPE.BR (FGV) · 2021</span>
+            <h3><a href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/?format=pdf&amp;lang=en" target="_blank" rel="noopener noreferrer">The legal regime of classified information in Brazil: theoretical and empirical problems and adequacy with a democratic constitutional order</a></h3>
+            <p class="ar-authors">Cunha Filho, M. C. and Toledo Antunes, L. F.</p>
+            <p>Shows how weak oversight of classified information allows excessive secrecy and limits democratic accountability in Brazil.</p>
+            <a class="ar-link" href="https://www.scielo.br/j/cebape/a/JbgP4kK8GsbkPK8gL7c6MqK/?format=pdf&amp;lang=en" target="_blank" rel="noopener noreferrer">Read the article ↗</a>
+          </li>
+        </ol>
+        <h3 class="ar-group">Forthcoming</h3>
+        <ol class="ar-list">
+          <li>
+            <span class="ar-venue">Comparative Studies in Society and History · forthcoming</span>
+            <h3>Failing to Grow: How Walls Become Doorways in the Making of Brazilian Mass Incarceration</h3>
+            <p class="ar-authors">Denyer Willis, G., Angotti, B., Mendes Loureiro, P. and Toledo, L. F.</p>
+            <p>Explores how failures in Brazil’s prison system create openings for further expansion and mass incarceration.</p>
+          </li>
+          <li>
+            <span class="ar-venue">Routledge Companion to Urban Planning · forthcoming</span>
+            <h3>Policy and its Underside: Planning for the Prison</h3>
+            <p class="ar-authors">Angotti, B., Denyer Willis, G., Loureiro, P. and Toledo, L.</p>
+            <p>Examines prison planning and the consequences of the policies that shape it.</p>
+          </li>
+        </ol>
+        <h3 class="ar-group">Master's thesis</h3>
+        <ol class="ar-list">
+          <li>
+            <span class="ar-venue">FGV EAESP · MS Public Administration · 2021</span>
+            <h3><a href="https://repositorio.fgv.br/items/e0088610-e3e2-4c40-afad-4461cf6e2df6" target="_blank" rel="noopener noreferrer">Desclassificação tarjada: o sigilo de documentos das forças armadas brasileiras no contexto da Lei de Acesso à Informação</a></h3>
+            <p class="ar-authors">Toledo Antunes, L. F. Supervisor: Maria Alexandra Cunha.</p>
+            <p>Shows how access barriers and heavy redactions keep Brazilian military documents effectively secret even after declassification.</p>
+            <a class="ar-link" href="https://repositorio.fgv.br/items/e0088610-e3e2-4c40-afad-4461cf6e2df6" target="_blank" rel="noopener noreferrer">Read the thesis (in Portuguese) ↗</a>
+          </li>
+        </ol>
+        </div>
+        <h3 class="ar-group">Fellowships and degrees</h3>
+        <ol class="research-trail">
+          <li class="research-step">
+            <span class="yr">2019–2021</span>
+            <div class="rnode"></div>
+            <div class="inst">FGV-EAESP</div>
+            <div class="degree">MS Public Administration (full scholarship)</div>
+            <span class="output">FOI research adopted by gov.</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2021</span>
+            <div class="rnode"></div>
+            <div class="inst">Oxford · RISJ</div>
+            <div class="degree">Trust in News fellow (6 months)</div>
+            <span class="output">Course for 300+ journalists</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2021–2022</span>
+            <div class="rnode"></div>
+            <div class="inst">Columbia University</div>
+            <div class="degree">MS Data Journalism (full scholarship)</div>
+            <span class="output">Datafixers founded here</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2022–2023</span>
+            <div class="rnode"></div>
+            <div class="inst">Brown Institute</div>
+            <div class="degree">Media Innovation fellowship (Columbia)</div>
+            <span class="output">US$100k grant → Datafixers</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2023–2024</span>
+            <div class="rnode"></div>
+            <div class="inst">NED</div>
+            <div class="degree">Reagan-Fascell fellow — AI in investigative journalism</div>
+            <span class="output">AI chatbot &amp; reaction simulator</span>
+          </li>
+          <li class="research-step">
+            <span class="yr">2024–present</span>
+            <div class="rnode"></div>
+            <div class="inst">Cambridge · POLIS</div>
+            <div class="degree">Research-assistant — Prison Consensus Project</div>
+            <span class="output">Ongoing</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="grants" class="grants section" data-reveal>
+      <div class="container">
+        <h2 class="section-title">Scholarships and Grants</h2>
+        <ul class="grant-list">
+          <li><span class="grant-year">2024</span><span class="grant-title">Together for Conservation (EJN,
+              2024)</span><span class="grant-source">Earth Journalism Network</span></li>
+          <li><span class="grant-year">2022</span><span class="grant-title">Person of the Year 2022 – Brazilian American
+              Chamber of Commerce</span><span class="grant-source">Brazilian American Chamber of Commerce</span></li>
+          <li><span class="grant-year">2021–2022</span><span class="grant-title">Columbia Journalism School (US$ 91,500
+              in tuition) 2021/2022</span><span class="grant-source">Columbia University</span></li>
+          <li><span class="grant-year">2020</span><span class="grant-title">ICFJ Latin America Grantee 2020 – FOIA –
+              Brazil and US project</span><span class="grant-source">ICFJ</span></li>
+          <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$
+              60,000 scholarship (2019) – Jornalista de Visão</span>
+            <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="Hidden secret"
+              role="button" tabindex="0"
+              style="width: 16px; height: 16px; margin-left: 5px; cursor: pointer; opacity: 0.1; transition: opacity 0.3s; vertical-align: middle;">
+            <span class="grant-source">Instituto Ling</span>
+          </li>
+          <li><span class="grant-year">2018</span><span class="grant-title">ICFJ Emerging Leaders Program / fellow
+              2018</span><span class="grant-source">ICFJ</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="projects" class="section" data-reveal>
+      <div class="container">
+
+        <!-- ── Courses & Workshops ──────────────────────────────────────── -->
+        <h2 id="courses-workshops" class="section-title" style="scroll-margin-top:80px">Courses &amp; workshops</h2>
+
+        <h3 style="font-size:1.05rem;font-weight:700;color:var(--text);margin:1rem 0 .75rem;max-width:860px">Como usar IA no jornalismo? (Em português)</h3>
+        <div style="position:relative;width:100%;max-width:860px;aspect-ratio:16/9;overflow:hidden;border-radius:10px;border:1px solid var(--border);margin-bottom:1.25rem">
+          <iframe src="https://www.youtube.com/embed/-hXN1-wq8Kk" title="Como usar IA no jornalismo?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%"></iframe>
+        </div>
+
+        <div style="display:grid;gap:.75rem;max-width:860px">
+
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem">
+            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">
+              <span class="tag">Udemy</span>
+              <span class="tag" style="background:rgba(255,180,0,.15);color:#ffb400;border-color:rgba(255,180,0,.3)">Portuguese 🇧🇷</span>
+            </div>
+            <div style="font-weight:700;margin-bottom:.2rem">Investigate public spending with the Brazilian Freedom of Information Act</div>
+            <div style="font-size:.83rem;color:var(--muted);margin-bottom:.6rem"><i class="fas fa-star" style="color:#ffb400"></i> 4.6/5 · 428 students · 1.5 hours</div>
+            <a href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank" rel="noopener noreferrer" class="story-link">
+              <span class="story-link-icon">&rsaquo;</span><span>View on Udemy</span>
+            </a>
+          </div>
+
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem">
+            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">
+              <span class="tag">Abraji</span>
+              <span class="tag" style="background:rgba(255,180,0,.15);color:#ffb400;border-color:rgba(255,180,0,.3)">Portuguese 🇧🇷</span>
+            </div>
+            <div style="font-weight:700;margin-bottom:.2rem">Kit de Ferramentas Gemini para Jornalistas</div>
+            <div style="font-size:.83rem;color:var(--muted);margin-bottom:.6rem">Free initiative by Abraji with Google support — video tutorials, prompts, AI agents and workflows for investigative journalists.</div>
+            <a href="https://www.abraji.org.br/noticias/abraji-lanca-iniciativa-para-auxiliar-investigacoes-com-o-uso-da-ia" target="_blank" rel="noopener noreferrer" class="story-link">
+              <span class="story-link-icon">&rsaquo;</span><span>Read more</span>
+            </a>
+          </div>
+
+          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem">
+            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">
+              <span class="tag">Jeduca · Abraji</span>
+              <span class="tag" style="background:rgba(255,180,0,.15);color:#ffb400;border-color:rgba(255,180,0,.3)">Portuguese 🇧🇷</span>
+            </div>
+            <div style="font-weight:700;margin-bottom:.2rem">Jornalismo de Educação: Bases para a Cobertura</div>
+            <div style="font-size:.83rem;color:var(--muted);margin-bottom:.6rem">Free online course covering evaluation systems, data analysis, AI tools and source development for education reporters. 11 sessions.</div>
+            <a href="https://jeduca.org.br/noticia/inscricoes-abertas-para-o-curso-especial-de-jornalismo-de-educacao-de-10-anos-da-jeduca" target="_blank" rel="noopener noreferrer" class="story-link">
+              <span class="story-link-icon">&rsaquo;</span><span>Read more</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+  </main>
+  <footer id="contact" class="footer section">
+    <div class="container">
+      <h2>Get in touch</h2>
+      <p>Interested in collaboration, have a story tip, or want to discuss investigative journalism? I'd love to hear
+        from you.</p>
+      <div class="socials">
+        <a href="mailto:lft29@cam.ac.uk"><i class="fas fa-envelope"></i></a>
+        <a href="https://twitter.com/toledoluizf" target="_blank" rel="noopener noreferrer"><i
+            class="fab fa-twitter"></i></a>
+        <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i
+            class="fab fa-linkedin-in"></i></a>
+        <a href="stardew.html" aria-label="Open Journalism Valley" title="Journalism Valley">
+          <img src="images/stardew/chicken.png" alt="Journalism Valley"
+            style="width: 28px; height: 28px; opacity: 1; image-rendering: pixelated;">
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+  <script src="scripts/newsroom.js?v=15" defer></script>
+
+  <!-- Interactive Background -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="scripts/background.js"></script>
+
+  <!-- Easter Egg Modal -->
+  <div id="secretModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; justify-content: center; align-items: center;">
+    <div
+      style="background: #fff; padding: 2rem; border-radius: 8px; max-width: 400px; text-align: center; font-family: 'Inter', sans-serif;">
+      <h3 style="color: #333; margin-bottom: 1.5rem;">Where is this chicken from?</h3>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <button class="quiz-option" data-answer="wrong"
+          style="padding: 10px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">1)
+          Final Fantasy</button>
+        <button class="quiz-option" data-answer="wrong"
+          style="padding: 10px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">2)
+          Children of Mana</button>
+        <button class="quiz-option" data-answer="correct"
+          style="padding: 10px; cursor: pointer; border: 1px solid #ccc; border-radius: 4px; background: #f9f9f9;">3)
+          Stardew Valley</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal (Stardew Style) -->
+  <div id="successModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10001; justify-content: center; align-items: center;">
+    <div
+      style="background: #ffe6a8; border: 4px solid #6d3910; padding: 20px; max-width: 500px; font-family: 'Courier New', monospace; box-shadow: 0 0 0 4px #ffae68, 0 0 20px rgba(0,0,0,0.5); position: relative;">
+      <!-- Pixel corners would be nice, but simple border is safer for inline -->
+      <h2 style="color: #5c3510; text-transform: uppercase; text-align: center; margin-bottom: 10px; font-size: 24px;">
+        Secret Unlocked!</h2>
+      <p style="color: #5c3510; font-size: 18px; line-height: 1.5;">You've discovered my secret farm...</p>
+      <p style="color: #5c3510; font-size: 18px; text-align: right; margin-top: 10px;">- Luiz</p>
+      <div id="stardewLoading"
+        style="display: none; margin-top: 20px; border-top: 2px dashed #6d3910; padding-top: 10px;">
+        <i class="fas fa-hourglass-half fa-spin" style="color: #5c3910;"></i>
+        <span style="color: #5c3510; font-size: 16px;"> Saving progress... Please wait.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Persona 5 Secret Modal -->
+  <div id="personaSecretModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 20000; justify-content: center; align-items: center; font-family: 'Anton', sans-serif;">
+    <div
+      style="background: #000; color: #f5f5f5; border: 4px solid #f5f5f5; padding: 30px; max-width: 600px; transform: skew(-3deg); box-shadow: 10px 10px 0 #d9232e; position: relative;">
+      <h2
+        style="font-size: 2.5rem; color: #d9232e; margin-bottom: 20px; text-transform: uppercase; background: #000; display: inline-block; border: 2px solid #f5f5f5; padding: 5px 15px; transform: skew(-2deg);">
+        Phantom Thieves
+      </h2>
+      <p style="font-size: 1.5rem; margin-bottom: 30px; font-family: 'Roboto Condensed', sans-serif;">
+        You have successfully infiltrated the palace. A secret version of this site has been unlocked. Proceed?
+      </p>
+      <div style="display: flex; gap: 20px; justify-content: flex-end;">
+        <button id="personaConfirmBtn"
+          style="background: #d9232e; color: #fff; border: none; padding: 10px 30px; font-size: 1.2rem; font-family: 'Anton', sans-serif; text-transform: uppercase; cursor: pointer; transform: skew(-5deg); box-shadow: 3px 3px 0 #fff; transition: all 0.2s;">
+          Take Your Heart
+        </button>
+        <button id="personaCancelBtn"
+          style="background: #2d2d2d; color: #fff; border: none; padding: 10px 20px; font-size: 1.2rem; font-family: 'Anton', sans-serif; text-transform: uppercase; cursor: pointer; transform: skew(-5deg); transition: all 0.2s;">
+          Retreat
+        </button>
+      </div>
+      <div id="personaLoading"
+        style="display: none; margin-top: 20px; text-align: center; color: #d9232e; font-family: 'Anton', sans-serif;">
+        <i class="fas fa-spinner fa-spin"></i> GATHERING EQUIPMENT... PLEASE WAIT
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Pokemon Secret Modal -->
+  <div id="pokemonSecretModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 30000; justify-content: center; align-items: flex-end; padding-bottom: 50px; font-family: 'Press Start 2P', cursive;">
+    <div class="pokemon-textbox"
+      style="background: #fff; border: 4px solid #333; border-radius: 4px; padding: 20px; width: 90%; max-width: 800px; min-height: 150px; position: relative; box-shadow: 6px 6px 0 rgba(0,0,0,0.5);">
+      <!-- Decorative border corners if possible, simpler for now -->
+      <p id="pokemonMessage"
+        style="font-family: sans-serif; font-size: 14px; line-height: 1.8; color: #333; margin: 0; text-transform: uppercase; letter-spacing: 2px;">
+      </p>
+      <div id="pokemonLoading"
+        style="display: none; margin-top: 15px; font-size: 12px; color: #666; text-align: center; font-family: 'Press Start 2P', cursive; text-transform: uppercase; letter-spacing: 1px;">
+        <i class="fas fa-spinner fa-spin"></i> LOADING BATTLE...
+      </div>
+      <div id="pokemonArrow"
+        style="display: none; position: absolute; bottom: 15px; right: 15px; width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 12px solid #d32f2f; animation: bounce 1s infinite;">
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(5px);
+      }
+    }
+
+    .pokemon-message-cursor::after {
+      content: "|";
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+  </style>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Existing Easter Egg Logic (Stardew)
+      const trigger = document.getElementById('easterEggTrigger');
+      const modal = document.getElementById('secretModal');
+      const successModal = document.getElementById('successModal');
+      const options = document.querySelectorAll('.quiz-option');
+
+      if (trigger && modal) {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          modal.style.display = 'flex';
+        });
+
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.style.display = 'none';
+        });
+
+        options.forEach(opt => {
+          opt.addEventListener('click', () => {
+            const isCorrect = opt.getAttribute('data-answer') === 'correct';
+            if (isCorrect) {
+              modal.style.display = 'none';
+              successModal.style.display = 'flex';
+
+              // Show loading after a short delay or immediately? User sees success message first.
+              // Let's show loading 
+              setTimeout(() => {
+                const sl = document.getElementById('stardewLoading');
+                if (sl) sl.style.display = 'block';
+              }, 1000);
+
+              setTimeout(() => {
+                window.location.href = 'stardew.html';
+              }, 3000); // Increased time slightly to let user see loading
+            } else {
+              modal.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      // New Persona 5 Secret Logic
+      const personaTrigger = document.getElementById('secretAwardLi');
+      const personaModal = document.getElementById('personaSecretModal');
+      const personaConfirm = document.getElementById('personaConfirmBtn');
+      const personaCancel = document.getElementById('personaCancelBtn');
+
+      if (personaTrigger && personaModal) {
+        personaTrigger.addEventListener('click', (e) => {
+          // Play a sound or just show logic? For now just visual
+          personaModal.style.display = 'flex';
+        });
+
+        personaConfirm.addEventListener('click', () => {
+          // Show loading
+          const pl = document.getElementById('personaLoading');
+          if (pl) pl.style.display = 'block';
+
+          // Disable buttons to prevent double click
+          personaConfirm.disabled = true;
+          personaCancel.disabled = true;
+          personaConfirm.style.opacity = 0.5;
+
+          // Redirect to persona.html with the secret flag
+          setTimeout(() => {
+            window.location.href = 'persona.html?secret=true';
+          }, 1500); // Small delay to show message
+        });
+
+        personaCancel.addEventListener('click', () => {
+          personaModal.style.display = 'none';
+        });
+
+        // Close on outside click for Persona modal too
+        personaModal.addEventListener('click', (e) => {
+          if (e.target === personaModal) personaModal.style.display = 'none';
+        });
+      }
+
+      // POKEMON HEART GOLD SECRET LOGIC
+      const pokeModal = document.getElementById('pokemonSecretModal');
+      const pokeMsgElement = document.getElementById('pokemonMessage');
+      const pokeArrow = document.getElementById('pokemonArrow');
+
+      // Define globally available trigger function
+      window.triggerPokemonSecret = function () {
+        if (!pokeModal || !pokeMsgElement) return;
+
+        const message = "A wild SECRET appeared! ...Wait, this isn't a normal website. The truth is hidden in the tall grass. Getting ready for battle...";
+        let charIndex = 0;
+
+        pokeModal.style.display = 'flex';
+        pokeMsgElement.innerHTML = "";
+        pokeArrow.style.display = 'none';
+
+        function typeWriter() {
+          if (charIndex < message.length) {
+            pokeMsgElement.innerHTML += message.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, 40);
+          } else {
+            pokeArrow.style.display = 'block';
+            // Auto redirect after reading time
+            setTimeout(() => {
+              // Flash screen effect
+              document.body.style.transition = "filter 0.5s";
+              document.body.style.filter = "brightness(0)";
+
+              const pkl = document.getElementById('pokemonLoading');
+              if (pkl) pkl.style.display = 'block';
+
+              setTimeout(() => {
+                window.location.href = 'pokemon.html';
+              }, 2000);
+            }, 2500);
+          }
+        }
+        typeWriter();
+      };
+
+      // Click & Keyboard Trigger for Pokemon Secret
+      const pokeTriggers = document.querySelectorAll('[data-poke-trigger]');
+      if (pokeTriggers.length > 0) {
+        pokeTriggers.forEach((pokeTrigger) => {
+          pokeTrigger.addEventListener('click', () => {
+            window.triggerPokemonSecret();
+          });
+          pokeTrigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              window.triggerPokemonSecret();
+            }
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Other reporting examples — outlets accordion -->
+  <script>
+  (function(){
+    const OUTLETS = [
+      {
+        id:'estadao', name:'Estadão', years:'2013–2018',
+        role:'Public policy reporter',
+        award:'10+ awards · Estado Jornalismo 2017/2018',
+        stories:[
+          {
+            title:"Doria's office moved to obstruct the FOI Act",
+            lede:"Audio obtained by Estado showed the administration's Nº 2 of Communications saying they'd \"make it harder\" to answer records requests — and kept a mental ranking of the requesters.",
+            proof:"Audio obtained · public records law breach documented",
+            url:"https://www.estadao.com.br/sao-paulo/gestao-doria-dificulta-acesso-a-dados-e-viola-lei-de-acesso-a-informacao/"
+          },
+          {
+            title:"R$15 million bid fraud at São Paulo's City Hall",
+            lede:"Investigation led Prefeitura de São Paulo to suspend the bidding process before contracts were signed.",
+            proof:"R$15M saved from the city budget",
+            url:"http://estadao.com.br/sao-paulo/prefeitura-de-sao-paulo-suspende-pregao-apos-denuncia-do-estado/"
+          }
+        ]
+      },
+      {
+        id:'globo', name:'TV Globo SP', years:'2019',
+        role:'TV news producer · data journalist',
+        stories:[
+          {
+            title:"Children and teenagers sleeping on the floor, waiting for shelter placements",
+            lede:"SP2 reporting revealed minors were being held in temporary spaces without beds while the Prefeitura delayed allocating shelter slots.",
+            proof:"Court ordered the city to allocate a shelter slot within 1 hour",
+            url:"https://g1.globo.com/sp/sao-paulo/noticia/2019/04/17/justica-determina-que-prefeitura-de-sp-arrume-vaga-em-abrigo-para-criancas-e-adolescentes-em-ate-uma-hora.ghtml"
+          }
+        ]
+      },
+      {
+        id:'cnn', name:'CNN Brasil', years:'2020',
+        role:'Investigative producer · data journalist',
+        stories:[
+          {
+            title:"Illegal air-taxi operations across Brazil",
+            lede:"Two-month investigation tied fatal crashes of Ricardo Boechat (2019), singer Gabriel Diniz (2019) and a 2016 accident to unauthorised air-taxi flights. The series identified irregularities and prompted enforcement action.",
+            proof:"Interdictions grew 5× · fines and investigations opened · 2+ cases referred to the Federal Prosecution · first air-taxi company ever shut down in Brazil",
+            url:"https://www.cnnbrasil.com.br/nacional/interdicao-de-aeronaves-clandestinas-cresce-mais-de-cinco-vezes-desde-2017/"
+          }
+        ]
+      }
+    ];
+    const row = document.getElementById('outletsRow');
+    const panel = document.getElementById('outletPanel');
+    if(!row || !panel) return;
+
+    OUTLETS.forEach(o=>{
+      const btn = document.createElement('button');
+      btn.className = 'outlet-chip';
+      btn.dataset.id = o.id;
+      btn.type = 'button';
+      btn.innerHTML = '<i class="fas fa-chevron-down caret"></i>'
+        + '<span class="outlet-name">'+o.name+'</span>'
+        + '<span class="outlet-years">'+o.years+'</span>';
+      row.appendChild(btn);
+    });
+
+    function renderPanel(id){
+      const o = OUTLETS.find(x=>x.id===id);
+      if(!o) return;
+      const awardHtml = o.award ? '<span class="award"><i class="fas fa-award"></i> '+o.award+'</span>' : '';
+      const storiesHtml = o.stories.map(function(s){
+        return '<article class="story">'
+          + '<h4>'+s.title+'</h4>'
+          + '<p class="lede">'+s.lede+'</p>'
+          + '<div class="proof"><i class="fas fa-check"></i>'+s.proof+'</div>'
+          + '<div class="story-meta">'
+          + (s.tool ? '<span class="chip-tool">'+s.tool+'</span>' : '')
+          + (s.url ? '<a class="story-link-external" href="'+s.url+'" target="_blank" rel="noopener">Read original<i class="fas fa-arrow-up-right-from-square"></i></a>' : '')
+          + '</div>'
+          + '</article>';
+      }).join('');
+      panel.innerHTML = '<div class="panel-meta">'
+        + '<span class="panel-role"><b>Role:</b> '+o.role+'</span>'
+        + awardHtml
+        + '</div>'
+        + '<div class="stories">'+storiesHtml+'</div>';
+    }
+
+    let active = null;
+    row.addEventListener('click', function(e){
+      const btn = e.target.closest('.outlet-chip');
+      if(!btn) return;
+      const id = btn.dataset.id;
+      if(active===id){
+        active=null;
+        panel.classList.remove('open');
+        row.querySelectorAll('.outlet-chip').forEach(function(x){x.classList.remove('active')});
+        return;
+      }
+      active=id;
+      row.querySelectorAll('.outlet-chip').forEach(function(x){x.classList.toggle('active', x.dataset.id===id)});
+      renderPanel(id);
+      panel.classList.add('open');
+    });
+  })();
+  </script>
+</body>
+
+</html>
