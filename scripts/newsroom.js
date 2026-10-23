@@ -55,6 +55,9 @@
 
   var BBCPT = 'https://www.bbc.com/portuguese/articles/';
   var SECTIONS = {
+    archive: {
+      label: 'Reporting archive', title: 'Reporting archive', href: 'reportagens/'
+    },
     videos: {
       label: 'Video reporting', kicker: 'On air', title: 'Video reporting', anchor: '#short-videos',
       intro: 'Reporting, scripting and presenting for BBC News Brasil and the BBC World Service. Pick a video:',
@@ -862,9 +865,10 @@
   var hots = [];
   var hoverKey = null, touchUsed = false;
   function hotspotAt(key, posFn) { hots.push({ key: key, pos: posFn }); }
-  var ORDER = ['investigative', 'ai', 'osint', 'videos', 'interviews', 'initiatives', 'awards', 'research', 'courses'];
+  var ORDER = ['investigative', 'ai', 'osint', 'videos', 'interviews', 'initiatives', 'awards', 'research', 'courses', 'archive'];
   function goTo(key, b, e) {
     var d = SECTIONS[key];
+    if (d.href) { blip(); return; }
     if (LINK === null) { blip(); openPanel(key, b); return; }
     if (e && (e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0)) { blip(); return; }
     if (e) e.preventDefault(); blip();
@@ -879,7 +883,7 @@
     chipsNav.innerHTML = '';
     hots.forEach(function (h) {
       var d = SECTIONS[h.key], a = document.createElement('a');
-      a.className = 'nr-chip'; a.href = (LINK || '') + d.anchor;
+      a.className = 'nr-chip'; a.href = d.href || (LINK || '') + d.anchor;
       a.innerHTML = '<b></b><span></span>'; a.firstChild.textContent = h.n; a.lastChild.textContent = d.label;
       a.addEventListener('click', function (e) { goTo(h.key, a, e); });
       a.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { hoverKey = h.key; if (h.el) h.el.classList.add('is-hot'); root.classList.add('has-hover'); } });
@@ -893,14 +897,15 @@
     hots.sort(function (a, b) { return ORDER.indexOf(a.key) - ORDER.indexOf(b.key); });
     hots.forEach(function (h, i) { h.n = i + 1; });
     hots.forEach(function (h, i) {
-      var d = SECTIONS[h.key], b = document.createElement(LINK !== null ? 'a' : 'button');
-      if (LINK !== null) b.href = LINK + d.anchor; else b.type = 'button';
+      var d = SECTIONS[h.key], b = document.createElement(d.href || LINK !== null ? 'a' : 'button');
+      if (d.href || LINK !== null) b.href = d.href || LINK + d.anchor; else b.type = 'button';
       b.className = 'nr-hot is-hidden'; b.style.setProperty('--d', (i * 110) + 'ms');
       b.setAttribute('aria-label', d.label + ': ' + d.title);
       b.setAttribute('aria-label', 'Open ' + d.title);
       b.innerHTML = '<i aria-hidden="true"></i><em aria-hidden="true"></em><span></span>';
       b.querySelector('em').textContent = h.n; b.querySelector('span').textContent = d.label;
       b.addEventListener('click', function (e) {
+        if (d.href) { blip(); return; }
         if (LINK !== null) {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0 || b.target === '_blank') { blip(); return; }
           e.preventDefault(); blip();
@@ -1209,7 +1214,7 @@
     { x: 20.95, y: 12.95, z: 13, sit: true, sx: 1, away: true, look: look() },
     { x: 21.75, y: 13.1, z: 13, sit: true, sx: 1, away: true, look: look() },
     { x: 22.55, y: 12.9, z: 13, sit: true, sx: 1, away: true, look: look() },
-    { x: 8.6, y: 15.25, sx: -1, hold: 'journal', look: { skin: '#e8b995', hair: '#3b2a20', shirt: '#7a5c8e', style: 'short', glasses: true } },
+    { key: 'archive', x: 8.6, y: 15.25, sx: -1, hold: 'journal', look: { skin: '#e8b995', hair: '#3b2a20', shirt: '#7a5c8e', style: 'short', glasses: true } },
     { key: 'awards', x: 13.3, y: 14.8, sx: -1, gesture: true, hold: 'trophy', look: { skin: '#e8b995', hair: '#c9a064', shirt: '#23262e', style: 'long' } }
   ];
   seated = seated.filter(function (s) { return !(Math.abs(s.x - 11.3) < .01 && Math.abs(s.y - 4.45) < .01); });
