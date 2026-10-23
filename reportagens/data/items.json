@@ -5857,6 +5857,48 @@
     "evidence": "Título, data e URL no arquivo público da publicação; autoria também confirmada pelo próprio autor."
   },
   {
+    "title": "Anda SP — Em dez anos, número de pessoas que trabalham sem endereço fixo aumenta mais de 200%",
+    "url": "https://globoplay.globo.com/v/7739832/",
+    "outlet": "G1 / TV Globo",
+    "date": "2019-07-04",
+    "date_precision": "day",
+    "date_year": "2019",
+    "authors": [
+      "Carolina Giancola",
+      "Gianvitor Dias",
+      "Luiz Fernando Toledo",
+      "Murilo Braga e Silva",
+      "Willian Okada",
+      "Paulo Vieira",
+      "Rubens Steiner",
+      "Douglas Campos Neto Lima",
+      "Thiago Guerreiro",
+      "Rafael Macedo",
+      "Rodney Oliveira",
+      "José Alberto dos Santos",
+      "Filipe Gonçalves",
+      "Filippo Mancuco",
+      "Philipe Guedes",
+      "Flavia Cintra",
+      "Luiza Vaz",
+      "Pedro Favali",
+      "Leandro Oliveira",
+      "Rodolfo Viana",
+      "Rodrigo Esteves",
+      "Adriano Graciose",
+      "Fabio Levy",
+      "Mariana Gibara",
+      "Ana Escalada"
+    ],
+    "status": "verified_author",
+    "role": "project_team",
+    "format": "TV / projeto coletivo",
+    "evidence_url": "https://premio.jornalismodedados.org.br/edicoes/2019/",
+    "evidence": "Página oficial do Prêmio Claudio Weber Abramo2019 lista Luiz entre os autores de AndaSP; o link do projeto aponta ao vídeo7739832, cujo título público é Em dez anos... Data confirmada pelo VideoObject correspondente ao ID do vídeo.",
+    "date_note": "Data de publicação do vídeo nos metadados VideoObject do Globoplay.",
+    "published_at": "2019-07-04T15:12:40.000Z"
+  },
+  {
     "title": "BBB do serviço público: o que os servidores estão discutindo por e-mail? - Don't LAI to me # 12",
     "url": "https://news.fiquemsabendo.com.br/p/bbb-do-servio-pblico-o-que-os-servidores",
     "outlet": "Fiquem Sabendo",
@@ -5923,6 +5965,24 @@
     "edition_number": 9,
     "archive_id": 61441,
     "evidence": "Título, data e URL no arquivo público da publicação; autoria também confirmada pelo próprio autor."
+  },
+  {
+    "title": "Escola de Santa Adélia reformula ensino e se torna a mais bem avaliada de SP",
+    "url": "https://globoplay.globo.com/v/7613316/",
+    "outlet": "G1 / TV Globo",
+    "date": "2019-05-14",
+    "date_precision": "day",
+    "date_month": "2019-05",
+    "authors": [
+      "Luiz Fernando Toledo (produção e análise de dados)"
+    ],
+    "status": "verified_author",
+    "role": "production_data_journalism",
+    "format": "TV / vídeo",
+    "evidence_url": "https://jeduca.org.br/noticia/leia-o-conteprajeduca-de-maio",
+    "evidence": "Jeduca em03/06/2019 atribui a Luiz o cruzamento do Idesp que identificou escola de Santa Adélia; link do artigo leva ao vídeo7613316. Título confirmado nos metadados públicos do Globoplay. Data confirmada pelo VideoObject correspondente ao ID do vídeo.",
+    "date_note": "Data de publicação do vídeo nos metadados VideoObject do Globoplay.",
+    "published_at": "2019-05-14T10:19:26.000Z"
   },
   {
     "title": "O contraditório sigilo da reforma da previdência - Don't LAI to me #8",
@@ -6106,6 +6166,24 @@
     "evidence_url": "https://g1.globo.com/educacao/noticia/2019/02/05/maioria-diz-que-genero-e-sexualidade-devem-entrar-no-curriculo-escolar-diz-pesquisa-encomendada-pelo-mec.ghtml",
     "status": "verified_author",
     "evidence": "Assinatura na página original: Por Luiz Fernando Toledo, TV Globo"
+  },
+  {
+    "title": "Pesquisa do MEC revela problemas nas escolas",
+    "url": "https://globoplay.globo.com/v/7354248/",
+    "outlet": "G1 / TV Globo",
+    "date": "2019-02-04",
+    "date_precision": "day",
+    "date_month": "2019-02",
+    "authors": [
+      "Luiz Fernando Toledo (produção)"
+    ],
+    "status": "verified_author",
+    "role": "production",
+    "format": "TV / vídeo",
+    "evidence_url": "https://jeduca.org.br/noticia/confira-o-conteprajeduca",
+    "evidence": "Jeduca em26/02/2019 atribui a Luiz a produção de duas reportagens sobre pesquisa do MEC obtida porLAI; primeira aborda problemas escolares e desvalorização docente, correspondente ao vídeo7354248. Título conferido por metadados públicos do Globoplay. Data confirmada pelo VideoObject correspondente ao ID do vídeo.",
+    "date_note": "Data de publicação do vídeo nos metadados VideoObject do Globoplay.",
+    "published_at": "2019-02-04T21:15:41.000Z"
   },
   {
     "title": "Bolsonaro alertou Anatel sobre falsas contas de celular em seu nome - Don't LAI to me #1",
