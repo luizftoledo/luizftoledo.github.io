@@ -1,9 +1,9 @@
-export const BASE='https://resultados.tse.jus.br/oficial/ele2026/6257';
-export const RESULT=BASE+'/dados/br/br-c0001-e006257-u.json';
-export const INDEX=BASE+'/dados/br/br-e006257-ab.json';
+export const BASE='https://resultados.tse.jus.br/oficial/ele2026/6258';
+export const RESULT=BASE+'/dados/br/br-c0001-e006258-u.json';
+export const INDEX=BASE+'/dados/br/br-e006258-ab.json';
 export type Candidate={number:string;name:string;party:string;votes:number|null;pct:number|null};
 export type StateResult={data:any;source:string;stale:boolean;error?:string};
-export async function refreshStateResults(previous:Record<string,StateResult>,ufs:string[]){const results={...previous};await pool(ufs,async uf=>{const source=BASE+'/dados/'+uf.toLowerCase()+'/'+uf.toLowerCase()+'-c0001-e006257-u.json';try{const data=await get(source);if(data.tpabr!=='uf'||data.cdabr!==uf.toLowerCase())throw new Error('Abrangência da UF inválida');results[uf]={data,source,stale:false};}catch(e){results[uf]={data:previous[uf]?.data??null,source,stale:true,error:(e as Error).message};}});return results;}
+export async function refreshStateResults(previous:Record<string,StateResult>,ufs:string[]){const results={...previous};await pool(ufs,async uf=>{const source=BASE+'/dados/'+uf.toLowerCase()+'/'+uf.toLowerCase()+'-c0001-e006258-u.json';try{const data=await get(source);if(data.tpabr!=='uf'||data.cdabr!==uf.toLowerCase())throw new Error('Abrangência da UF inválida');results[uf]={data,source,stale:false};}catch(e){results[uf]={data:previous[uf]?.data??null,source,stale:true,error:(e as Error).message};}});return results;}
 export type Municipality={code:string;ibge:string;name:string;uf:string;source:string;indexSource:string;generated:string;status:string;sections:number|null;processed:number|null;electorate:number|null;turnout:number|null;valid:number|null;blank:number|null;nullVotes:number|null;votes:Candidate[];religionAvailable:boolean;stale?:boolean};
 export type State={uf:string;name:string;sections:number|null;processed:number|null;electorate:number|null;turnout:number|null;generated:string;status:string};
 export type Snapshot={checkedAt:string;national:any;municipal:Municipality[];states:State[];errors:string[];sheetUrl:string;religionSummary:any};
@@ -13,11 +13,11 @@ export function integer(value:unknown):number|null{return typeof value==='string
 export function currentElectionDate(value:unknown):boolean{
  if(typeof value!=='string'||!/^\d{2}\/\d{2}\/\d{4}$/.test(value))return false;
  const [day,month,year]=value.split('/').map(Number),date=new Date(Date.UTC(year,month-1,day));
- return date.getUTCFullYear()===year&&date.getUTCMonth()===month-1&&date.getUTCDate()===day&&date.getTime()>=Date.UTC(2026,9,4);
+ return date.getUTCFullYear()===year&&date.getUTCMonth()===month-1&&date.getUTCDate()===day&&date.getTime()>=Date.UTC(2026,9,25);
 }
-export function published(d:any){return !!d&&d.f==='o'&&d.ele==='6257'&&d.t==='1'&&currentElectionDate(d.dt)&&currentElectionDate(d.dg)&&d.dv!=='n'&&(integer(d.s?.st)??0)>0;}
+export function published(d:any){return !!d&&d.f==='o'&&d.ele==='6258'&&d.t==='2'&&currentElectionDate(d.dt)&&currentElectionDate(d.dg)&&d.dv!=='n'&&(integer(d.s?.st)??0)>0;}
 export function candidates(d:any):Candidate[]{return (d.carg??[]).filter((c:any)=>c.cd==='1').flatMap((c:any)=>c.agr.flatMap((a:any)=>a.par.flatMap((p:any)=>p.cand.map((v:any)=>({number:v.n,name:v.nmu??v.nm,party:p.sg,votes:published(d)?integer(v.vap):null,pct:published(d)&&v.pvapn!==undefined?Number(v.pvapn.replace(',','.'))/100:null})))));}
-function valid(d:any){if(d.f!=='o'||d.ele!=='6257'||d.t!=='1')throw new Error('Arquivo de fase, eleição ou turno diferente');return d;}
+function valid(d:any){if(d.f!=='o'||d.ele!=='6258'||d.t!=='2')throw new Error('Arquivo de fase, eleição ou turno diferente');return d;}
 async function get(url:string){const delay=Math.max(0,next-Date.now());next=Math.max(next,Date.now())+80;if(delay)await new Promise(r=>setTimeout(r,delay));const r=await fetch(url,{cache:'no-store',credentials:'omit',signal:AbortSignal.timeout(16000)});if(!r.ok)throw new Error('HTTP '+r.status);return valid(await r.json());}
 async function pool<T>(rows:T[],fn:(row:T)=>Promise<void>){let i=0;await Promise.all(Array.from({length:Math.min(4,rows.length)},async()=>{while(i<rows.length)await fn(rows[i++]);}));}
 function stateFrom(row:any,index:any):State{return {uf:row.cdabr.toUpperCase(),name:row.cdabr.toUpperCase()==='ZZ'?'Exterior':row.cdabr.toUpperCase(),sections:integer(row.s?.ts),processed:currentElectionDate(index.dg)&&currentElectionDate(row.dt)?integer(row.s?.st):null,electorate:integer(row.e?.te),turnout:currentElectionDate(row.dt)&&(integer(row.s?.st)??0)>0?integer(row.e?.c):null,generated:index.dg+' '+index.hg,status:currentElectionDate(index.dg)&&currentElectionDate(row.dt)&&(integer(row.s?.st)??0)>0?(row.and==='f'?'Concluído':'Parcial'):'Sem divulgação atual'};}
@@ -28,7 +28,7 @@ export async function refreshNational(previous:Snapshot):Promise<Snapshot>{
  if(index){
  const ready=index.abr.filter((a:any)=>a.tpabr==='uf'&&a.cdabr!=='zz'&&currentElectionDate(a.dt)&&currentElectionDate(index.dg)&&(integer(a.s?.st)??0)>0);
  await pool(ready,async(uf:any)=>{
-  const url=BASE+'/dados/'+uf.cdabr+'/'+uf.cdabr+'-e006257-ab.json';const signature=[uf.dt,uf.ht,uf.s?.st,uf.and].join('|');let d:any;
+  const url=BASE+'/dados/'+uf.cdabr+'/'+uf.cdabr+'-e006258-ab.json';const signature=[uf.dt,uf.ht,uf.s?.st,uf.and].join('|');let d:any;
   try{const old=cache.get(url);d=old?.signature===signature?old.value:await get(url);if(!currentElectionDate(d.dg))throw new Error('Índice municipal ainda anterior à votação');cache.set(url,{signature,value:d});}catch(e){data.errors.push(uf.cdabr.toUpperCase()+': '+(e as Error).message);data.municipal.filter(m=>m.uf===uf.cdabr.toUpperCase()).forEach(m=>m.stale=true);return;}
   const progress=new Map<string,any>(d.abr.filter((a:any)=>a.tpabr==='mun').map((a:any)=>[a.cdabr,a]));
   const municipalities=data.municipal.filter(m=>m.uf===uf.cdabr.toUpperCase());
