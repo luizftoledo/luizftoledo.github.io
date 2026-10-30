@@ -153,3 +153,16 @@ html[data-site-theme="dark"] #newsroom .nr-coach{background:#f4f1ea;color:#17191
   #newsroom .nr-hud h2{font-size:clamp(2.3rem,2.9vw,3rem);margin:0 0 14px}
   #newsroom .nr-hud p{font-size:17px;line-height:1.5;margin:0 0 12px}
 }
+
+/* On phones, short section names remain visible inside the newsroom. */
+#newsroom .nr-mobile-label{display:none}
+@media(max-width:760px){
+ #newsroom .nr-stage{height:clamp(340px,94vw,410px)}
+ #newsroom .nr-hot{width:82px;height:auto;min-height:34px;padding:8px 5px;gap:0;border-radius:5px;--tag:rgba(255,253,248,.96);color:#17191e;border:1px solid rgba(23,25,30,.28);box-shadow:0 2px 5px rgba(0,0,0,.08)}
+ #newsroom .nr-hot em,#newsroom .nr-hot::after{display:none}
+ #newsroom .nr-hot .nr-mobile-label{display:block;font:600 11.5px/1.2 'DM Sans',system-ui,sans-serif;white-space:normal;text-align:center}
+ #newsroom .nr-hot:active{background:#c8283a;color:white}
+ #newsroom .nr-chips{display:none}
+ #newsroom .nr-coach{font-size:11px;bottom:0}
+ html[data-site-theme="dark"] #newsroom .nr-hot{--tag:rgba(27,29,35,.96);color:#eceef2;border-color:rgba(255,255,255,.35)}
+}

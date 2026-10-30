@@ -865,6 +865,7 @@
   var hots = [];
   var hoverKey = null, touchUsed = false;
   function hotspotAt(key, posFn) { hots.push({ key: key, pos: posFn }); }
+  var MOBILE_LABELS = {investigative:'Reporting',ai:'AI',osint:'OSINT',videos:'Videos',interviews:'Interviews',initiatives:'Projects',awards:'Awards',research:'Research',courses:'Courses',archive:'Archive'};
   var ORDER = ['investigative', 'ai', 'osint', 'videos', 'interviews', 'initiatives', 'awards', 'research', 'courses', 'archive'];
   function goTo(key, b, e) {
     var d = SECTIONS[key];
@@ -904,6 +905,7 @@
       b.setAttribute('aria-label', 'Open ' + d.title);
       b.innerHTML = '<i aria-hidden="true"></i><em aria-hidden="true"></em><span></span>';
       b.querySelector('em').textContent = h.n; b.querySelector('span').textContent = d.label;
+      var shortLabel = document.createElement('strong'); shortLabel.className = 'nr-mobile-label'; shortLabel.textContent = MOBILE_LABELS[h.key] || d.label; b.appendChild(shortLabel);
       b.addEventListener('click', function (e) {
         if (d.href) { blip(); return; }
         if (LINK !== null) {
@@ -928,14 +930,24 @@
   }
   function placeHots() {
     var shown = appear(40) >= 1;
+    var mobile = W <= 760;
+    if (mobile && root.dataset.mobileSlots !== String(W)) {
+      var ordered = hots.slice().sort(function(a,b){var ap=a.pos(),bp=b.pos();return iso(ap[0],ap[1],ap[2])[0]-iso(bp[0],bp[1],bp[2])[0];});
+      [ordered.slice(0,5),ordered.slice(5)].forEach(function(group,side){group.sort(function(a,b){var ap=a.pos(),bp=b.pos();return iso(ap[0],ap[1],ap[2])[1]-iso(bp[0],bp[1],bp[2])[1];}).forEach(function(h,row){h.mobileSide=side;h.mobileRow=row;h.mobileRows=group.length;});});
+      root.dataset.mobileSlots=String(W);
+    }
     hots.forEach(function (h) {
       if (!h.el) return;
       var w = h.pos(), p = iso(w[0], w[1], w[2]);
       var sx = p[0] * scale + ox + panX, sy = p[1] * scale + oy;
       var vis = shown && sx > 6 && sx < W - 6 && sy > 6 && sy < H - 6;
       // keep the whole tag inside the stage (the tail still points at the character)
-      var hw = (h.w || (h.w = h.el.offsetWidth || 120)) / 2 + 8;
+      var hw = (h.el.offsetWidth || 120) / 2 + 8;
       if (vis) sx = Math.max(hw, Math.min(W - hw, sx));
+      if (mobile) {
+        sx = h.mobileSide ? W - hw : hw;
+        sy = 38 + h.mobileRow * (H - 64) / Math.max(1,h.mobileRows - 1);
+      }
       // position through the `translate` property so the hover `scale` grows the tag in place
       // write to the DOM only when the tag really moved (fewer style changes = taps land reliably)
       if (h.lx === undefined || Math.abs(h.lx - sx) > .4 || Math.abs(h.ly - sy) > .4) {
@@ -957,7 +969,7 @@
     var fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
     var el = document.createElement('div');
     el.className = 'nr-coach ' + (fine ? 'is-mouse' : 'is-touch'); el.setAttribute('role', 'status');
-    el.innerHTML = '<span class="nr-coach-ico">' + (fine ? ICON_MOUSE : ICON_TOUCH) + '</span><span><b>' + (fine ? 'Hover' : 'Tap') + '</b> ' + (fine ? 'a name tag · click to open that section' : (window.innerWidth < 760 ? 'a number or a section below' : 'a name tag to open that section')) + '</span>';
+    el.innerHTML = '<span class="nr-coach-ico">' + (fine ? ICON_MOUSE : ICON_TOUCH) + '</span><span><b>' + (fine ? 'Hover' : 'Tap') + '</b> ' + (fine ? 'a name tag · click to open that section' : (window.innerWidth < 760 ? 'a section label in the newsroom' : 'a name tag to open that section')) + '</span>';
     stage.appendChild(el);
     root.classList.add('is-coaching');
     requestAnimationFrame(function () { el.classList.add('show'); });
@@ -1054,7 +1066,7 @@
     if (sceneW <= W) { var left = hudR + (W - hudR - sceneW) / 2; ox = left - SC.minX * scale; panMin = panMax = 0; panX = 0; }
     else { ox = -SC.minX * scale; panMin = W - sceneW; panMax = 0; panX = Math.max(panMin, Math.min(panMax, panX || panMin * .5)); }
     root.classList.toggle('can-pan', panMin < 0);
-    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? '↔ Drag' : (window.innerWidth < 760 ? 'Tap a number or a section below' : 'Click a name tag to jump to that section');
+    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? '↔ Drag' : (window.innerWidth < 760 ? 'Tap a section label in the newsroom' : 'Click a name tag to jump to that section');
     if (!running) frame(performance.now());
   }
 
