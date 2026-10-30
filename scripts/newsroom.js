@@ -930,44 +930,25 @@
   }
   function placeHots() {
     var shown = appear(40) >= 1;
+    var mobile = W <= 760;
     hots.forEach(function (h) {
-      if (!h.el || !h.signBounds) return;
-      var b = h.signBounds;
-      var vis = shown && b.left > 0 && b.left + b.width < W && b.top > 0 && b.top + b.height < H;
-      var layoutKey = [b.left,b.top,b.width,b.height].map(function(n){return n.toFixed(1);}).join(',');
-      if (layoutKey !== h.signLayoutKey) {
-        h.signLayoutKey = layoutKey;
-        h.el.style.translate = b.left.toFixed(1) + 'px ' + b.top.toFixed(1) + 'px';
-        h.el.style.width = b.width.toFixed(1) + 'px';
-        h.el.style.height = b.height.toFixed(1) + 'px';
+      if (!h.el) return;
+      var w = h.pos(), p = iso(w[0], w[1], w[2]);
+      var sx = p[0] * scale + ox + panX, sy = p[1] * scale + oy;
+      var vis = shown && sx > 6 && sx < W - 6 && sy > 6 && sy < H - 6;
+      // keep the whole tag inside the stage (the tail still points at the character)
+      var hw = (h.el.offsetWidth || 120) / 2 + 8;
+      if (mobile) vis = vis && sx > hw && sx < W - hw;
+      else if (vis) sx = Math.max(hw, Math.min(W - hw, sx));
+      // position through the `translate` property so the hover `scale` grows the tag in place
+      // write to the DOM only when the tag really moved (fewer style changes = taps land reliably)
+      if (h.lx === undefined || Math.abs(h.lx - sx) > .4 || Math.abs(h.ly - sy) > .4) {
+        h.lx = sx; h.ly = sy;
+        h.el.style.translate = 'calc(' + sx.toFixed(1) + 'px - 50%) calc(' + sy.toFixed(1) + 'px - 100%)';
       }
-      h.el.classList.toggle('is-hidden', !vis);
-      h.el.tabIndex = vis ? 0 : -1;
+      if (vis === h.el.classList.contains('is-hidden')) { h.el.classList.toggle('is-hidden', !vis); if (vis) h.el.removeAttribute('tabindex'); else h.el.tabIndex = -1; }
     });
-    if (shown && !root.classList.contains('hots-ready')) { root.classList.add('hots-ready'); }
-  }
-  function drawSectionSigns() {
-    if (appear(40) < 1) return;
-    hots.forEach(function(h) {
-      var at = h.pos(), p = iso(at[0], at[1], at[2]);
-      var label = (MOBILE_LABELS[h.key] || SECTIONS[h.key].label).toUpperCase();
-      var active = hoverKey === h.key;
-      ctx.save();
-      ctx.font = '700 ' + Math.max(13,10.5/scale) + 'px "DM Sans",system-ui,sans-serif';
-      var width = ctx.measureText(label).width + 24, height = Math.max(25,20/scale);
-      // A small post and a bevel make each section name an object in the room.
-      line([p[0],p[1]-3],[p[0],p[1]+20], '#66635c', 3);
-      ctx.translate(p[0],p[1]);ctx.transform(1,.5,0,1,0,0);
-      ctx.fillStyle = '#55534d';ctx.fillRect(-width/2+3,-height+3,width,height);
-      ctx.fillStyle = active ? '#b52a3c' : '#fff7e5';
-      ctx.strokeStyle = active ? '#811b2a' : '#5d5950';ctx.lineWidth = 1.5;
-      ctx.fillRect(-width/2,-height,width,height);ctx.strokeRect(-width/2,-height,width,height);
-      ctx.fillStyle = active ? '#fff' : '#25282a';ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText(label,0,-height/2);
-      if (active) {ctx.fillStyle='#fff';ctx.fillRect(-width/2+10,-5,width-20,1.5);}
-      ctx.restore();
-      h.signBounds = {left:(p[0]-width/2)*scale+ox+panX-3,top:(p[1]-height-width/4)*scale+oy-3,width:width*scale+6,height:(height+width/2)*scale+6};
-    });
+    if (shown && !root.classList.contains('hots-ready')) { root.classList.add('hots-ready'); showCoach(); }
   }
 
   /* ================= coach mark: a one-line tutorial, touch or mouse ================= */
@@ -1079,7 +1060,7 @@
     if (sceneW <= W) { var left = hudR + (W - hudR - sceneW) / 2; ox = left - SC.minX * scale; panMin = panMax = 0; panX = 0; }
     else { ox = -SC.minX * scale; panMin = W - sceneW - (narrow ? 64 : 0); panMax = narrow ? 64 : 0; panX = Math.max(panMin, Math.min(panMax, panX || (panMin + panMax) * .5)); }
     root.classList.toggle('can-pan', panMin < 0);
-    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? 'Drag to explore · tap a sign' : (window.innerWidth < 760 ? 'Tap a section label in the newsroom' : 'Hover a sign · click to open that section');
+    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? 'Drag to explore · tap a name' : (window.innerWidth < 760 ? 'Tap a section label in the newsroom' : 'Click a name tag to jump to that section');
     if (!running) frame(performance.now());
   }
 
@@ -1161,7 +1142,6 @@
     list.forEach(function (it) { if (it.d < 0) it.f(); else drop(it.d, it.f); });
     drop(4, drawTruss);
     drop(5, drawOnAirSign);
-    drawSectionSigns();
   }
 
   var printOut = 0, printing = 0, last = 0, running = false, visible = true, paused = false, rafId = 0, clockTick = 0;
