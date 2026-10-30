@@ -1,0 +1,200 @@
+[
+  {
+    "name": "stardew",
+    "shots": [
+      {
+        "size": {
+          "width": 2048,
+          "height": 913
+        },
+        "bounds": {
+          "x": 475.328125,
+          "y": 58,
+          "width": 1097.328125,
+          "height": 823,
+          "ratio": 1.3333270048602672,
+          "viewport": 913
+        }
+      },
+      {
+        "size": {
+          "width": 1440,
+          "height": 900
+        },
+        "bounds": {
+          "x": 180,
+          "y": 58,
+          "width": 1080,
+          "height": 810,
+          "ratio": 1.3333333333333333,
+          "viewport": 900
+        }
+      },
+      {
+        "size": {
+          "width": 1024,
+          "height": 768
+        },
+        "bounds": {
+          "x": 60,
+          "y": 58,
+          "width": 904,
+          "height": 678,
+          "ratio": 1.3333333333333333,
+          "viewport": 768
+        }
+      }
+    ],
+    "fullscreen": true,
+    "exited": true,
+    "errors": [],
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "canvas": {
+        "x": 16,
+        "y": 247.75,
+        "width": 358,
+        "height": 268.5
+      },
+      "pad": {
+        "x": 10,
+        "y": 528.25,
+        "width": 370,
+        "height": 116
+      }
+    }
+  },
+  {
+    "name": "pokemon",
+    "shots": [
+      {
+        "size": {
+          "width": 2048,
+          "height": 913
+        },
+        "bounds": {
+          "x": 480.671875,
+          "y": 66,
+          "width": 1086.65625,
+          "height": 815,
+          "ratio": 1.3333205521472393,
+          "viewport": 913
+        }
+      },
+      {
+        "size": {
+          "width": 1440,
+          "height": 900
+        },
+        "bounds": {
+          "x": 185.328125,
+          "y": 66,
+          "width": 1069.328125,
+          "height": 802,
+          "ratio": 1.3333268391521198,
+          "viewport": 900
+        }
+      },
+      {
+        "size": {
+          "width": 1024,
+          "height": 768
+        },
+        "bounds": {
+          "x": 65.328125,
+          "y": 66,
+          "width": 893.328125,
+          "height": 670,
+          "ratio": 1.3333255597014926,
+          "viewport": 768
+        }
+      }
+    ],
+    "fullscreen": true,
+    "exited": true,
+    "errors": [],
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "canvas": {
+        "x": 16,
+        "y": 249.75,
+        "width": 358,
+        "height": 268.5
+      },
+      "pad": {
+        "x": 10,
+        "y": 530.25,
+        "width": 370,
+        "height": 116
+      }
+    }
+  },
+  {
+    "name": "persona",
+    "shots": [
+      {
+        "size": {
+          "width": 2048,
+          "height": 913
+        },
+        "bounds": {
+          "x": 475.328125,
+          "y": 58,
+          "width": 1097.328125,
+          "height": 823,
+          "ratio": 1.3333270048602672,
+          "viewport": 913
+        }
+      },
+      {
+        "size": {
+          "width": 1440,
+          "height": 900
+        },
+        "bounds": {
+          "x": 180,
+          "y": 58,
+          "width": 1080,
+          "height": 810,
+          "ratio": 1.3333333333333333,
+          "viewport": 900
+        }
+      },
+      {
+        "size": {
+          "width": 1024,
+          "height": 768
+        },
+        "bounds": {
+          "x": 60,
+          "y": 58,
+          "width": 904,
+          "height": 678,
+          "ratio": 1.3333333333333333,
+          "viewport": 768
+        }
+      }
+    ],
+    "fullscreen": true,
+    "exited": true,
+    "errors": [],
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "canvas": {
+        "x": 16,
+        "y": 247.75,
+        "width": 358,
+        "height": 268.5
+      },
+      "pad": {
+        "x": 10,
+        "y": 528.25,
+        "width": 370,
+        "height": 116
+      }
+    }
+  }
+]
