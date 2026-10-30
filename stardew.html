@@ -274,7 +274,7 @@
 
   <div class="kbd-bar">M: MAPA &nbsp;·&nbsp; ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER use &nbsp;·&nbsp; C or 1-5 tools &nbsp;·&nbsp; I bag &nbsp;·&nbsp; X/ESC cancel</div>
 
-  <audio id="bgm" loop preload="none"></audio>
+  <audio id="bgm" src="stardew_theme.m4a" loop preload="auto"></audio>
 
   <script>
     'use strict';
@@ -1108,13 +1108,9 @@
     bgm.volume = .45;
 
     function playTheme(name) {
-      stopMusic();
-      ensureAC();
+      // Preserve the original recording across farm/cave transitions.
       musTheme = name;
-      if (AC) {
-        AC.resume().catch(() => { });
-        scheduleLoop(AC.currentTime + .05);
-      }
+      bgm.play().catch(() => { });
     }
 
     function scheduleLoop(t0) {

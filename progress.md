@@ -31,3 +31,6 @@ Validação: todas as pistas, chaves, rochas/documentos e saída da caverna alca
 Persona v6: pedido para distinguir obstáculos e piso. Em implementação: piso claro cinza-azulado, paredes escuras com contornos nas bordas de colisão, bases delimitadas para colunas/cofres/pedestal. Props transparentes para retirar quadrados de mármore escuro sob os objetos, especialmente vasos que são atravessáveis/abrigo. Porta aberta com limiar verde; minimapa com a mesma distinção claro/escuro. Mesmas colisões e mapa.
 
 Persona v6 concluído: inspeção visual de entrada, corredores, anexo e mapa; cliente Playwright sem erros. Contraste de luminância piso/parede 7,09:1. Movimento, colisão, portas, entrada/saída dos vasos e acesso às três chaves passaram (1.012 células alcançáveis). Música preservada. Evidências em test-results/persona-contrast-2026-10-30/.
+
+Stardew áudio: usuário identificou música incorreta. Histórico confirma que cb5a9f1 removeu stardew_theme.m4a e ativou sintetizador. Restaurado arquivo original e reprodução contínua entre fazenda/caverna, conforme cf7e7a5. Efeitos e controles de volume mantidos.
+Validação áudio: Playwright confirmou stardew_theme.m4a carregado (147,89 s), reprodução avançando e contínua após mudança de tema para caverna; sintetizador inativo; mudo e volume funcionam; sem erros. Cliente web-game executado e screenshot inspecionado.
