@@ -42,16 +42,38 @@ window.EXPANSION=(()=>{
   return rows(g);
  }
  function palace(base){
-  const g=grid(46,30,'.');copy(g,base.map(r=>r.replace(/[MP]/g,'.')));
-  line(g,24,5,44,5,'r');line(g,24,15,44,15,'r');line(g,35,5,35,27,'r');
-  line(g,27,12,44,12,'#');g[12][35]='r';line(g,27,26,44,26,'#');g[26][35]='r';
-  line(g,34,1,34,11,'#');[5,6,10].forEach(y=>g[y][34]='r');
-  line(g,39,14,39,25,'#');[18,22].forEach(y=>g[y][39]='r');
-  line(g,27,20,33,20,'#');g[20][31]='.';
-  for(const [x,y]of [[29,3],[41,3],[29,22],[42,23],[31,17]])g[y][x]='v';
+  // Expansion starts solid: every walkable space must be deliberately carved.
+  const g=grid(46,30,'#');copy(g,base.map(r=>r.replace(/[MP]/g,'.')));
+  const carve=(x,y,w,h,c='.')=>box(g,x,y,w,h,c);
+  // Upper annex: two rooms, narrow galleries and the preserved rectangular patrol.
+  carve(27,1,7,3);carve(36,1,8,3);
+  line(g,30,3,30,6,'.');line(g,40,3,40,6,'.');
+  line(g,25,5,44,5,'r');line(g,26,6,44,6,'.');
+  line(g,28,6,28,15,'.');line(g,42,6,42,15,'.');
+  line(g,28,10,42,10,'.');line(g,35,5,35,27,'r');
+  carve(30,8,4,2);line(g,31,6,31,10,'.');
+  carve(37,8,4,2);line(g,38,6,38,10,'.');
+  line(g,25,15,44,15,'r');line(g,27,14,43,14,'.');
+  // Lower archive: separated stacks and cross-corridors instead of an empty field.
+  carve(11,17,3,3);line(g,2,19,23,19,'r');
+  line(g,2,19,2,27,'.');line(g,23,19,23,27,'.');
+  line(g,2,23,23,23,'r');line(g,2,27,43,27,'r');
+  for(const x of [4,14])for(const y of [21,25])carve(x,y,x===4?6:7,2);
+  line(g,6,19,6,27,'.');line(g,17,19,17,27,'.');
+  line(g,23,19,28,19,'.');line(g,28,15,28,27,'.');
+  carve(29,20,4,2);line(g,28,21,35,21,'.');
+  line(g,28,22,31,22,'.');carve(30,24,4,2);line(g,28,25,35,25,'.');
+  // Right archive patrol remains unobstructed around the inner partitions.
+  line(g,35,18,42,18,'.');line(g,35,22,42,22,'r');
+  line(g,42,18,42,27,'.');carve(37,19,2,2);
+  carve(38,24,6,2);line(g,40,22,40,27,'.');
+  for(const [x,y]of [[29,3],[41,3],[29,22],[42,23],[31,17]]){
+   if(g[y][x]==='#'){g[y][x]='.';line(g,x,y,x,y<18?15:22,'.');}
+   g[y][x]='v';
+  }
   for(const [x,y]of [[31,3],[39,9],[29,20]])g[y][x]='s';
   for(const [x,y]of [[33,3],[39,3],[31,24],[40,24]])g[y][x]='c';
-  g[5][40]='P';g[22][38]='M';g[5][25]='r';g[15][25]='r';
+  g[5][40]='P';g[22][38]='M';
   return rows(g);
  }
  function drawMap(ctx,map,player,points=[],title='MAPA',theme={}){
