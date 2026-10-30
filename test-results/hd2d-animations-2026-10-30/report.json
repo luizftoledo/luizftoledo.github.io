@@ -1,0 +1,151 @@
+[
+  {
+    "name": "stardew",
+    "actors": [
+      {
+        "id": "player",
+        "directions": {
+          "down": {
+            "walk": 4,
+            "idle": 4
+          },
+          "left": {
+            "walk": 4,
+            "idle": 4
+          },
+          "right": {
+            "walk": 4,
+            "idle": 4
+          },
+          "up": {
+            "walk": 4,
+            "idle": 4
+          }
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "persona",
+    "actors": [
+      {
+        "id": "player",
+        "directions": {
+          "down": {
+            "walk": 4,
+            "idle": 4
+          },
+          "left": {
+            "walk": 4,
+            "idle": 4
+          },
+          "right": {
+            "walk": 4,
+            "idle": 4
+          },
+          "up": {
+            "walk": 4,
+            "idle": 4
+          }
+        }
+      },
+      {
+        "id": "guard",
+        "directions": {
+          "down": {
+            "walk": 4,
+            "idle": 4
+          },
+          "left": {
+            "walk": 4,
+            "idle": 4
+          },
+          "right": {
+            "walk": 4,
+            "idle": 4
+          },
+          "up": {
+            "walk": 4,
+            "idle": 4
+          }
+        }
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "pokemon",
+    "actors": [
+      {
+        "id": "player",
+        "directions": {
+          "down": {
+            "walk": 4,
+            "idle": 4
+          },
+          "left": {
+            "walk": 4,
+            "idle": 4
+          },
+          "right": {
+            "walk": 4,
+            "idle": 4
+          },
+          "up": {
+            "walk": 4,
+            "idle": 4
+          }
+        }
+      }
+    ],
+    "creatures": [
+      {
+        "id": "BADSCAN",
+        "frames": 8,
+        "unique": 8
+      },
+      {
+        "id": "REDACTOR",
+        "frames": 8,
+        "unique": 8
+      },
+      {
+        "id": "PAYWALL",
+        "frames": 8,
+        "unique": 8
+      },
+      {
+        "id": "BOTFARM",
+        "frames": 8,
+        "unique": 8
+      },
+      {
+        "id": "LOBBYIST",
+        "frames": 8,
+        "unique": 8
+      },
+      {
+        "id": "PRESSSEC",
+        "frames": 8,
+        "unique": 8
+      },
+      {
+        "id": "SHREDDER",
+        "frames": 8,
+        "unique": 8
+      },
+      {
+        "id": "DEEPFAKE",
+        "frames": 8,
+        "unique": 8
+      },
+      {
+        "id": "LAIDENY",
+        "frames": 8,
+        "unique": 8
+      }
+    ],
+    "errors": []
+  }
+]

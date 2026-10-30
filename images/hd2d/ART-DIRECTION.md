@@ -31,3 +31,12 @@ Fonte Press Start 2P hospedada localmente para não bloquear a abertura dos jogo
 - pathSeamless: areia bege compactada uniforme, sem grama nem contorno de caminho.
 - stardewHouse: casa rural inteira transparente, telhado vermelho contínuo, madeira e reboco creme, porta na frente, câmera RPG de cima.
 - worldProps: atlas transparente 4×2 de árvore arredondada, flores, placa, cerca de madeira, caixa de correio, banca com toldo, grama alta e cerca branca; sem quadrados de chão sob os objetos.
+
+## Animações adicionais de rosto e corpo
+
+14 novas folhas geradas com ImageGen integrado, preservando os personagens por imagens de referência. Prompts integrais em `animation-prompts-v2.json`; originais PNG e versões WebP com sufixo `-v2` nesta pasta.
+
+- 9 inimigos, incluindo LAIDENY: 8 poses por inimigo (4 de repouso com respiração/piscada, preparação de ataque, ataque, dano e recuperação).
+- Protagonistas dos três jogos e guardas de Persona: 4 poses de repouso por direção, com pés fixos e movimento de olhos, cabeça, ombros e roupa. As quatro direções de caminhada continuam disponíveis.
+- Treinador de batalha: 8 poses de repouso, olhar lateral, preparação, lançamento, dano e recuperação.
+- 144 quadros novos. Seleção dos inimigos por ID, corrigindo a correspondência entre nomes e imagens. Escala e linha dos pés uniformizadas dentro de cada folha; ataques e danos usam os temporizadores reais da batalha. Inimigos também se animam no caderno e no final do jogo.

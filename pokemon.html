@@ -276,7 +276,7 @@
     }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js"></script>
+  <script src="scripts/hd2d-art.js?v=animations-2"></script>
 </head>
 
 <body>
@@ -1284,7 +1284,7 @@
       const dirFrames = SPR.player[game.dir];
       const seq = [0, 1, 2, 3];
       const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
-      const frame = game.moving ? dirFrames[seq[phase]] : dirFrames[0];
+      const frame = hd.actorFrame(SPR.player,game.dir,game.moving,game.animClock,seq[phase]);
       g.fillStyle = 'rgba(35,63,40,.32)';
       g.beginPath(); g.ellipse(Math.round(wx - camX + 8), Math.round(wy - camY + 15), 6, 2, 0, 0, 7); g.fill();
       g.drawImage(frame, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
@@ -1806,7 +1806,7 @@
       if (!hideEnemy) {
         const flash = b.eFlashT > 0 && Math.floor(b.t * 24) % 2;
         if (!flash) {
-          if (b.sp.sprite) g.drawImage(b.sp.sprite, eX + eLunge, 26 + bob, 72, 72);
+          if (b.sp.sprite) g.drawImage(hd.creatureFrame(b.sp,b.t,b.eLungeT,b.eFlashT), eX + eLunge, 26 + bob, 72, 72);
           else g.drawImage(imgGovRecord, eX + eLunge - 2, 22 + bob, 78, 78);
         }
       }
@@ -1814,7 +1814,7 @@
       /* jornalista */
       const pX = 16 - (1 - intro) * 110;
       const lunge = b.lungeT > 0 ? Math.round(Math.sin(b.lungeT * Math.PI) * 10) : 0;
-      g.drawImage(imgTrainerBack, pX + lunge + shakeX, 92, 86, 86);
+      g.drawImage(battleTrainerFrames?.[hd.poseIndex(b.t,b.lungeT,b.efxT)] || imgTrainerBack, pX + lunge + shakeX, 92, 86, 86);
 
       /* golpe inimigo: rasgos vermelhos sobre o jogador */
       if (b.efxT > .3) {
@@ -1991,7 +1991,7 @@
         const sel = game.dexSel === i;
         frame9(x, y, 78, 38, { bg: got ? '#e4f0d8' : '#dcdcd4', dark: sel ? '#c84838' : '#384878', edge: sel ? '#f0a890' : '#7890b8' });
         if (got) {
-          if (d.sprite) g.drawImage(d.sprite, x + 4, y + 6, 26, 26);
+          if (d.sprite) g.drawImage(hd.creatureFrame(d,game.animClock+i*.31), x + 4, y + 6, 26, 26);
           else g.drawImage(imgGovRecord, x + 5, y + 7, 24, 24);
           text(d.name.slice(0, 8), x + 32, y + 9, '#283038', 6);
           text('FILED', x + 32, y + 22, '#388048', 6);
@@ -2065,7 +2065,7 @@
       const got = DEX.filter(d => game.caught[d.id]);
       got.forEach((d, i) => {
         const x = 128 - got.length * 16 + i * 32;
-        if (d.sprite) g.drawImage(d.sprite, x, 116, 28, 28);
+        if (d.sprite) g.drawImage(hd.creatureFrame(d,game.winT+i*.31), x, 116, 28, 28);
         else g.drawImage(imgGovRecord, x, 116, 28, 28);
       });
       if (Math.floor(game.winT * 2) % 2) textC('CASE CLOSED!', 128, 150, '#c83828', 8);
@@ -2265,16 +2265,29 @@
 
     const hd = HD2D(g);
     hd.actor('pokemonActor', SPR.player);
+    hd.idle('pokemonIdle-v2',SPR.player);
     const terrainReady = hd.atlas('pokemonTerrain',4,3,TILES,["grass", "grass2", "tall", "path", "tree", "water", "water2", "flower", "flower2", "sign", "fence"]);
     hd.load('grassSeamless',async img=>{await terrainReady; TILES.grass=hd.cell(img,1,1,0,16,16);TILES.grass2=TILES.grass;});
     hd.load('pathSeamless',async img=>{await terrainReady;TILES.path=hd.cell(img,1,1,0,16,16);});
     terrainReady.then(()=>{TILES.water=TILES.water2;});
     hd.load('worldProps',async img=>{await terrainReady;[['tree',0],['flower',1],['flower2',1],['sign',2],['fence',7],['tall',6]].forEach(([k,i])=>TILES[k]=hd.cell(img,4,2,i,16,16,true));});
     hd.titleLoad('pokemonTitle');
-    hd.load('pokemonCreatures',img=>{ DEX.forEach((d,i)=>d.sprite=hd.cell(img,3,3,i,24,24,true)); const ball=hd.cell(img,3,3,8,10,9,true); BALL_SPR.width=ball.width;BALL_SPR.height=ball.height;BALL_SPR.getContext('2d').drawImage(ball,0,0); });
+    hd.load('pokemonCreatures',img=>{ const ball=hd.cell(img,3,3,8,10,9,true); BALL_SPR.width=ball.width;BALL_SPR.height=ball.height;BALL_SPR.getContext('2d').drawImage(ball,0,0); });
     hd.load('pokemonBuilding',()=>{});
     hd.load('pokemonBattleBackground',()=>{});
     hd.load('pokemonBattleTrainer',img=>{imgTrainerBack.src=img.src;});
+    let battleTrainerFrames;
+    hd.load('trainerBattleAnimation-v2',img=>{battleTrainerFrames=hd.frames(img,4,2,86,86);});
+    hd.creature('badscanAnimation-v2',DEX.find(d=>d.id==='BADSCAN'));
+    hd.creature('redactorAnimation-v2',DEX.find(d=>d.id==='REDACTOR'));
+    hd.creature('paywallAnimation-v2',DEX.find(d=>d.id==='PAYWALL'));
+    hd.creature('botfarmAnimation-v2',DEX.find(d=>d.id==='BOTFARM'));
+    hd.creature('lobbyistAnimation-v2',DEX.find(d=>d.id==='LOBBYIST'));
+    hd.creature('presssecAnimation-v2',DEX.find(d=>d.id==='PRESSSEC'));
+    hd.creature('shredderAnimation-v2',DEX.find(d=>d.id==='SHREDDER'));
+    hd.creature('deepfakeAnimation-v2',DEX.find(d=>d.id==='DEEPFAKE'));
+    hd.creature('laidenyAnimation-v2',DEX.find(d=>d.id==='LAIDENY'));
+
     window.__hdReady=false;
     window.__hdAssetsReady=hd.ready().then(()=>{window.__hdReady=true;}).catch(e=>{console.error(e);throw e;});
   </script>
