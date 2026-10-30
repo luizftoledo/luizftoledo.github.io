@@ -9,8 +9,8 @@ html[data-site-theme="dark"] #newsroom{background:#0a0b0f;border-bottom-color:rg
 #newsroom .nr-hud{position:absolute;left:36px;top:24px;z-index:2;max-width:290px;color:var(--nr-ink);pointer-events:none}
 #newsroom .nr-live{display:inline-flex;align-items:center;gap:7px;font:500 11px/1.4 'DM Mono',ui-monospace,monospace;text-transform:uppercase;letter-spacing:.12em}
 #newsroom .nr-live i{width:7px;height:7px;border-radius:50%;background:var(--nr-red);animation:nrPulse 1.6s ease-in-out infinite}
-#newsroom .nr-hud :is(h1,h2){font:500 clamp(1.6rem,2.4vw,2.3rem)/1 'Newsreader',Georgia,serif;letter-spacing:-.04em;margin:10px 0 8px;text-transform:none;color:inherit}
-#newsroom .nr-hud :is(h1,h2)::before{display:none !important}
+#newsroom .nr-hud h2{font:500 clamp(1.6rem,2.4vw,2.3rem)/1 'Newsreader',Georgia,serif;letter-spacing:-.04em;margin:10px 0 8px;text-transform:none;color:inherit}
+#newsroom .nr-hud h2::before{display:none !important}
 #newsroom .nr-hud p{margin:0 0 8px;font:400 14px/1.45 'DM Sans',system-ui,sans-serif;color:var(--nr-muted)}
 #newsroom .nr-hud p b{color:var(--nr-ink);font-weight:600}
 #newsroom .nr-stats{position:absolute;left:36px;bottom:44px;z-index:2;display:grid;grid-template-columns:auto auto;gap:4px 14px;align-items:baseline;color:var(--nr-ink);pointer-events:none;margin:0}
@@ -123,7 +123,7 @@ html[data-site-theme="dark"] #newsroom .nr-coach{background:#f4f1ea;color:#17191
 @media (max-width:1180px){
   #newsroom{height:auto;display:flex;flex-direction:column}
   #newsroom .nr-hud{display:block;position:static;max-width:640px;padding:22px 20px 6px;pointer-events:auto}
-  #newsroom .nr-hud :is(h1,h2){font-size:clamp(1.9rem,6vw,2.4rem)}
+  #newsroom .nr-hud h2{font-size:clamp(1.9rem,6vw,2.4rem)}
   #newsroom .nr-stage{position:relative;inset:auto;width:100%;aspect-ratio:3/2;max-height:70vh}
   #newsroom .nr-foot{position:static;padding:4px 20px 14px}
   #newsroom .nr-chips{display:flex;flex-wrap:wrap;gap:8px;padding:6px 20px 12px}
@@ -150,6 +150,6 @@ html[data-site-theme="dark"] #newsroom .nr-coach{background:#f4f1ea;color:#17191
 @media (min-width:1181px){
   /* desktop: larger intro text beside the room */
   #newsroom .nr-hud{max-width:360px;top:34px;left:40px}
-  #newsroom .nr-hud :is(h1,h2){font-size:clamp(2.3rem,2.9vw,3rem);margin:0 0 14px}
+  #newsroom .nr-hud h2{font-size:clamp(2.3rem,2.9vw,3rem);margin:0 0 14px}
   #newsroom .nr-hud p{font-size:17px;line-height:1.5;margin:0 0 12px}
 }

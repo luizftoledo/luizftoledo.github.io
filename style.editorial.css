@@ -262,7 +262,7 @@ html[data-site-theme="dark"] .outlet-panel { background: #1b2b25 !important; }
   .investigative .cards { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
   .osint-card, .osint-card:nth-child(-n+2) { grid-column: span 3; }
 }
-@media (max-width: 1400px) {
+@media (max-width: 1100px) {
   nav .nav-links {
     position: fixed;
     top: 76px;
