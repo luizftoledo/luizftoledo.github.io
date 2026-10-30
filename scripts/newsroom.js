@@ -931,11 +931,6 @@
   function placeHots() {
     var shown = appear(40) >= 1;
     var mobile = W <= 760;
-    if (mobile && root.dataset.mobileSlots !== String(W)) {
-      var ordered = hots.slice().sort(function(a,b){var ap=a.pos(),bp=b.pos();return iso(ap[0],ap[1],ap[2])[0]-iso(bp[0],bp[1],bp[2])[0];});
-      [ordered.slice(0,5),ordered.slice(5)].forEach(function(group,side){group.sort(function(a,b){var ap=a.pos(),bp=b.pos();return iso(ap[0],ap[1],ap[2])[1]-iso(bp[0],bp[1],bp[2])[1];}).forEach(function(h,row){h.mobileSide=side;h.mobileRow=row;h.mobileRows=group.length;});});
-      root.dataset.mobileSlots=String(W);
-    }
     hots.forEach(function (h) {
       if (!h.el) return;
       var w = h.pos(), p = iso(w[0], w[1], w[2]);
@@ -943,11 +938,8 @@
       var vis = shown && sx > 6 && sx < W - 6 && sy > 6 && sy < H - 6;
       // keep the whole tag inside the stage (the tail still points at the character)
       var hw = (h.el.offsetWidth || 120) / 2 + 8;
-      if (vis) sx = Math.max(hw, Math.min(W - hw, sx));
-      if (mobile) {
-        sx = h.mobileSide ? W - hw : hw;
-        sy = 38 + h.mobileRow * (H - 64) / Math.max(1,h.mobileRows - 1);
-      }
+      if (mobile) vis = vis && sx > hw && sx < W - hw;
+      else if (vis) sx = Math.max(hw, Math.min(W - hw, sx));
       // position through the `translate` property so the hover `scale` grows the tag in place
       // write to the DOM only when the tag really moved (fewer style changes = taps land reliably)
       if (h.lx === undefined || Math.abs(h.lx - sx) > .4 || Math.abs(h.ly - sy) > .4) {
@@ -964,6 +956,7 @@
   var ICON_MOUSE = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 3l12 7.2-5.3 1.3 3 5.8-2.3 1.2-3-5.9L6 16.8z" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>';
   var coachDone = false;
   function showCoach() {
+    if (W <= 760) return;
     if (coachDone) return; coachDone = true;
     try { if (sessionStorage.getItem('nr-coach')) return; sessionStorage.setItem('nr-coach', '1'); } catch (e) { /* storage optional */ }
     var fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -1059,14 +1052,15 @@
       var hud = root.querySelector('.nr-hud'), sr = stage.getBoundingClientRect();
       if (hud && hud.offsetParent) hudR = hud.getBoundingClientRect().right - sr.left + 24;
     }
-    var fit = Math.min((W - hudR - 20) / bw, (H - padT - padB) / bh);
-    scale = Math.min(fit, 1.3); // the whole room always fits: no sideways dragging
+    var fit = Math.min((narrow ? 720 : W - hudR - 20) / bw, (H - padT - padB) / bh);
+    if (narrow) autoPan = false;
+    scale = Math.min(fit, 1.3); // phones use a closer view that can be dragged horizontally
     var sceneW = bw * scale;
     oy = padT + ((H - padT - padB) - bh * scale) / 2 - SC.minY * scale;
     if (sceneW <= W) { var left = hudR + (W - hudR - sceneW) / 2; ox = left - SC.minX * scale; panMin = panMax = 0; panX = 0; }
-    else { ox = -SC.minX * scale; panMin = W - sceneW; panMax = 0; panX = Math.max(panMin, Math.min(panMax, panX || panMin * .5)); }
+    else { ox = -SC.minX * scale; panMin = W - sceneW - (narrow ? 64 : 0); panMax = narrow ? 64 : 0; panX = Math.max(panMin, Math.min(panMax, panX || (panMin + panMax) * .5)); }
     root.classList.toggle('can-pan', panMin < 0);
-    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? '↔ Drag' : (window.innerWidth < 760 ? 'Tap a section label in the newsroom' : 'Click a name tag to jump to that section');
+    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? 'Drag to explore · tap a name' : (window.innerWidth < 760 ? 'Tap a section label in the newsroom' : 'Click a name tag to jump to that section');
     if (!running) frame(performance.now());
   }
 

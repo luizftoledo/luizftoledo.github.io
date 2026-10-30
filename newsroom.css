@@ -154,15 +154,16 @@ html[data-site-theme="dark"] #newsroom .nr-coach{background:#f4f1ea;color:#17191
   #newsroom .nr-hud p{font-size:17px;line-height:1.5;margin:0 0 12px}
 }
 
-/* On phones, short section names remain visible inside the newsroom. */
+/* Mobile keeps name tags attached to the people, with a closer draggable view. */
 #newsroom .nr-mobile-label{display:none}
 @media(max-width:760px){
- #newsroom .nr-stage{height:clamp(340px,94vw,410px)}
- #newsroom .nr-hot{width:82px;height:auto;min-height:34px;padding:8px 5px;gap:0;border-radius:5px;--tag:rgba(255,253,248,.96);color:#17191e;border:1px solid rgba(23,25,30,.28);box-shadow:0 2px 5px rgba(0,0,0,.08)}
- #newsroom .nr-hot em,#newsroom .nr-hot::after{display:none}
- #newsroom .nr-hot .nr-mobile-label{display:block;font:600 11.5px/1.2 'DM Sans',system-ui,sans-serif;white-space:normal;text-align:center}
- #newsroom .nr-hot:active{background:#c8283a;color:white}
- #newsroom .nr-chips{display:none}
- #newsroom .nr-coach{font-size:11px;bottom:0}
- html[data-site-theme="dark"] #newsroom .nr-hot{--tag:rgba(27,29,35,.96);color:#eceef2;border-color:rgba(255,255,255,.35)}
+ #newsroom .nr-stage{height:390px}
+ #newsroom .nr-hot{width:auto;height:auto;min-height:26px;padding:6px 8px;gap:0;border-radius:12px;--tag:rgba(23,25,30,.78);color:white;border:1px solid rgba(255,255,255,.4);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+ #newsroom .nr-hot em{display:none}
+ #newsroom .nr-hot::after{display:block;border-top-color:var(--tag)}
+ #newsroom .nr-hot .nr-mobile-label{display:block;font:600 11px/1.15 'DM Sans',system-ui,sans-serif;white-space:nowrap}
+ #newsroom .nr-chips,#newsroom .nr-coach{display:none}
+ #newsroom .nr-foot{flex-wrap:wrap;justify-content:center;gap:10px;padding-top:12px}
+ #newsroom .nr-foot .nr-hint{display:block;flex-basis:100%;text-align:center;font-size:10px}
+ html[data-site-theme="dark"] #newsroom .nr-hot{--tag:rgba(244,241,234,.9);color:#17191e}
 }
