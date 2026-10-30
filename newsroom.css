@@ -167,3 +167,10 @@ html[data-site-theme="dark"] #newsroom .nr-coach{background:#f4f1ea;color:#17191
  #newsroom .nr-foot .nr-hint{display:block;flex-basis:100%;text-align:center;font-size:10px}
  html[data-site-theme="dark"] #newsroom .nr-hot{--tag:rgba(244,241,234,.9);color:#17191e}
 }
+
+/* Keep the desktop introduction and room together on wide screens. */
+@media(min-width:1181px){
+ #newsroom{max-width:1600px;margin-left:auto;margin-right:auto;height:clamp(520px,66vh,640px)}
+ #newsroom .nr-hud{max-width:420px;left:36px;top:calc(50% - 12px);transform:translateY(-50%)}
+ #newsroom .nr-foot{left:36px;right:36px}
+}
