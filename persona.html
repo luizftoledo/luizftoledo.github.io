@@ -236,7 +236,7 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=environment-3"></script>
+  <script src="scripts/hd2d-art.js?v=ground-contact-4"></script>
   <link rel="stylesheet" href="game-layout.css?v=1">
   <script src="scripts/game-layout.js?v=1" defer></script>
 </head>
@@ -1232,9 +1232,7 @@
       for (const gd of guards) {
         const dirKey = gd.fx === 1 ? 'right' : gd.fx === -1 ? 'left' : gd.fy === -1 ? 'up' : 'down';
         const fr = actorFrame(SPR.guard, dirKey, gd.animT, gd.wait <= 0);
-        g.fillStyle = 'rgba(0,0,0,.34)';
-        g.beginPath(); g.ellipse(Math.round(gd.px * T - camX + 8), Math.round(gd.py * T - camY + 14), 6, 2, 0, 0, 7); g.fill();
-        g.drawImage(fr, Math.round(gd.px * T - camX + 1), Math.round(gd.py * T - camY - 4));
+        hd.drawGroundedActor(fr,gd.px*T-camX+8,gd.py*T-camY+14);
       }
 
       /* player (blinks while in grace) */
@@ -1243,9 +1241,7 @@
         const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
         const seq = [0, 1, 2, 3];
         const fr = hd.actorFrame(SPR.player,game.dir,game.moving,game.animClock,seq[phase]);
-        g.fillStyle = 'rgba(0,0,0,.38)';
-        g.beginPath(); g.ellipse(Math.round(wx - camX + 8), Math.round(wy - camY + 14), 6, 2, 0, 0, 7); g.fill();
-        g.drawImage(fr, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
+        hd.drawGroundedActor(fr,wx-camX+8,wy-camY+14);
       }
       /* hidden: vase covers the player */
       if (game.hidden) {

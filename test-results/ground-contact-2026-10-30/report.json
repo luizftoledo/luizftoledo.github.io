@@ -1,0 +1,1053 @@
+[
+  {
+    "name": "stardew",
+    "frames": 32,
+    "minFoot": 31.75,
+    "maxFoot": 31.75,
+    "errors": [],
+    "details": [
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 15
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 15
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15.25
+      }
+    ]
+  },
+  {
+    "name": "pokemon",
+    "frames": 32,
+    "minFoot": 31.75,
+    "maxFoot": 31.75,
+    "errors": [],
+    "details": [
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 15
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15
+      }
+    ]
+  },
+  {
+    "name": "persona",
+    "frames": 64,
+    "minFoot": 31.75,
+    "maxFoot": 31.75,
+    "errors": [],
+    "details": [
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 14.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 15.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 15
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 14.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 14.75
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "player",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 14.75
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15.5
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "down",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "left",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15.25
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "right",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "guard",
+        "kind": "walk",
+        "dir": "up",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "down",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "left",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.75
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 16.5
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "right",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16.25
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 0,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 1,
+        "foot": 31.75,
+        "height": 15.75
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 2,
+        "foot": 31.75,
+        "height": 16
+      },
+      {
+        "id": "guard",
+        "kind": "idle",
+        "dir": "up",
+        "frame": 3,
+        "foot": 31.75,
+        "height": 16
+      }
+    ]
+  }
+]

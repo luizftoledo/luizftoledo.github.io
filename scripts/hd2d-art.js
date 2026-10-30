@@ -48,12 +48,12 @@ window.HD2D = function (ctx) {
     }));
   }
   function actor(name,target) {
-    return load(name,img=>{const f=frames(img,4,4,14,18);['down','left','right','up'].forEach((d,row)=>{
+    return load(name,img=>{const f=frames(img,4,4,14,18,true);['down','left','right','up'].forEach((d,row)=>{
       target[d]=f.slice(row*4,row*4+4);
     });});
   }
   // Animation sheets share one scale and baseline across all poses.
-  function frames(img, cols, rows, width, height) {
+  function frames(img, cols, rows, width, height, grounded=false) {
     const regions = [];
     for(let i=0;i<cols*rows;i++) {
       const sw=img.width/cols,sh=img.height/rows;
@@ -61,18 +61,36 @@ window.HD2D = function (ctx) {
       const t=tile.getContext('2d');t.drawImage(img,(i%cols)*sw,Math.floor(i/cols)*sh,sw,sh,0,0,tile.width,tile.height);
       const p=t.getImageData(0,0,tile.width,tile.height).data;
       let l=tile.width,r=-1,top=tile.height,bottom=-1;
-      for(let y=0;y<tile.height;y++)for(let x=0;x<tile.width;x++)if(p[(y*tile.width+x)*4+3]>32){l=Math.min(l,x);r=Math.max(r,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}
+      if(grounded) {
+        // Keep the connected character, excluding adjacent-cell scraps and baked soft shadows.
+        const count=tile.width*tile.height,seen=new Uint8Array(count),queue=new Int32Array(count);
+        let best=new Int32Array(0);
+        for(let start=0;start<count;start++) {
+          if(seen[start]||p[start*4+3]<160)continue;
+          let head=0,tail=1;queue[0]=start;seen[start]=1;
+          while(head<tail){const at=queue[head++],x=at%tile.width,y=Math.floor(at/tile.width);
+            for(const next of [x>0?at-1:-1,x<tile.width-1?at+1:-1,y>0?at-tile.width:-1,y<tile.height-1?at+tile.width:-1])
+              if(next>=0&&!seen[next]&&p[next*4+3]>=160){seen[next]=1;queue[tail++]=next;}
+          }
+          if(tail>best.length)best=queue.slice(0,tail);
+        }
+        let sole=-1;
+        for(const at of best){const x=at%tile.width,y=Math.floor(at/tile.width);l=Math.min(l,x);r=Math.max(r,x);top=Math.min(top,y);bottom=Math.max(bottom,y);if(p[at*4+3]>=220)sole=Math.max(sole,y);}
+        if(sole>=top)bottom=sole;
+      } else {
+        for(let y=0;y<tile.height;y++)for(let x=0;x<tile.width;x++)if(p[(y*tile.width+x)*4+3]>32){l=Math.min(l,x);r=Math.max(r,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}
+      }
       regions.push({tile,l,top,w:Math.max(1,r-l+1),h:Math.max(1,bottom-top+1)});
     }
     const scale=Math.min(width*8*.94/Math.max(...regions.map(r=>r.w)),height*8*.94/Math.max(...regions.map(r=>r.h)));
     return regions.map(r=>{
       const out=document.createElement('canvas');out.width=width*8;out.height=height*8;
-      out.getContext('2d').drawImage(r.tile,r.l,r.top,r.w,r.h,(out.width-r.w*scale)/2,out.height*.97-r.h*scale,r.w*scale,r.h*scale);
+      out.getContext('2d').drawImage(r.tile,r.l,r.top,r.w,r.h,(out.width-r.w*scale)/2,(grounded?out.height-1:out.height*.97)-r.h*scale,r.w*scale,r.h*scale);
       sizes.set(out,[width,height]);return out;
     });
   }
   function idle(name,target) {
-    return load(name,img=>{const f=frames(img,4,4,14,18);target.idle={};['down','left','right','up'].forEach((d,i)=>target.idle[d]=f.slice(i*4,i*4+4));});
+    return load(name,img=>{const f=frames(img,4,4,14,18,true);target.idle={};['down','left','right','up'].forEach((d,i)=>target.idle[d]=f.slice(i*4,i*4+4));});
   }
   function idleIndex(time,offset=0) {
     const p=((time+offset)%4.6+4.6)%4.6;
@@ -88,6 +106,11 @@ window.HD2D = function (ctx) {
   }
   function actorFrame(target,dir,moving,time,phase=0,offset=0) {
     return moving?target[dir][phase%target[dir].length]:target.idle?.[dir]?.[idleIndex(time,offset)]||target[dir][0];
+  }
+  function drawGroundedActor(frame,footX,footY) {
+    ctx.save();ctx.fillStyle='rgba(25,39,27,.24)';ctx.beginPath();ctx.ellipse(footX,footY,4.2,.8,0,0,Math.PI*2);ctx.fill();
+    // Grounded frames end one native pixel above their 18 logical-pixel baseline.
+    ctx.drawImage(frame,footX-7,footY-18+1/8,14,18);ctx.restore();
   }
   function creatureFrame(creature,time,attack=0,hurt=0) {
     return creature.animation?.[poseIndex(time,attack,hurt)]||creature.sprite;
@@ -172,5 +195,5 @@ window.HD2D = function (ctx) {
     shade.addColorStop(0,'rgba(5,8,16,.65)');shade.addColorStop(.6,'rgba(5,8,16,.22)');shade.addColorStop(1,'rgba(5,8,16,.65)');
     ctx.fillStyle=shade;ctx.fillRect(0,0,256,192);
   }
-  return {worldObject,worldSizes,water,waterRegion,worldTile,natureLayer,atlas,actor,load,cell,frames,idle,idleIndex,poseIndex,actorFrame,creature,creatureFrame,titleLoad,titleDraw,loaded,ready:()=>Promise.all(pending)};
+  return {worldObject,worldSizes,water,waterRegion,worldTile,natureLayer,atlas,actor,load,cell,frames,idle,idleIndex,poseIndex,actorFrame,drawGroundedActor,creature,creatureFrame,titleLoad,titleDraw,loaded,ready:()=>Promise.all(pending)};
 };

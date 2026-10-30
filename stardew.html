@@ -236,7 +236,7 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=environment-3"></script>
+  <script src="scripts/hd2d-art.js?v=ground-contact-4"></script>
   <link rel="stylesheet" href="game-layout.css?v=1">
   <script src="scripts/game-layout.js?v=1" defer></script>
 </head>
@@ -1691,9 +1691,7 @@
       const seq = [0, 1, 2, 3];
       const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
       const frame = hd.actorFrame(SPR.player,game.dir,game.moving,game.animClock,seq[phase]);
-      g.fillStyle = 'rgba(39,55,29,.32)';
-      g.beginPath(); g.ellipse(Math.round(wx - camX + 8), Math.round(wy - camY + 15), 6, 2, 0, 0, 7); g.fill();
-      g.drawImage(frame, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
+      hd.drawGroundedActor(frame,wx-camX+8,wy-camY+14);
       hd.natureLayer(nature,game.animClock,wy-camY+16,true);
 
       if (!game.msg && !game.shop && !game.bag) {
