@@ -6,8 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Palace of Secrets — A Phantom Press Heist | Luiz Fernando Toledo</title>
   <link rel="icon" type="image/png" href="images/persona/calling_card.png">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
   <style>
+    @font-face {font-family:"Press Start 2P";src:url("images/hd2d/fonts/press-start-2p.ttf") format("truetype");font-display:swap;}
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
@@ -47,8 +48,8 @@
       width: 100%;
       height: 100%;
       display: block;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
+      image-rendering: auto;
+
       border-radius: 4px;
     }
 
@@ -235,6 +236,7 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
+  <script src="scripts/hd2d-art.js"></script>
 </head>
 
 <body>
@@ -1159,11 +1161,12 @@
     function actorFrame(set, dirKey, animT, moving) {
       const frames = set[dirKey];
       if (!moving) return frames[0];
-      const seq = [1, 0, 3, 0];
+      const seq = [0, 1, 2, 3];
       return frames[seq[Math.floor(animT * 4) % 4]];
     }
 
     function drawPalaceTileDetail(tile, i, j, x, y) {
+      if (window.__hdReady) return;
       const h = ((i * 73856093) ^ (j * 19349663)) >>> 0;
       if (tile === 'floor') {
         if (mapChar(i, j - 1) === '#') px(x, y, 16, 3, 'rgba(0,0,0,.32)');
@@ -1236,7 +1239,7 @@
       const blink = game.grace > 0 && Math.floor(game.animClock * 8) % 2 === 0;
       if (!blink) {
         const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
-        const seq = [1, 0, 3, 0];
+        const seq = [0, 1, 2, 3];
         const fr = game.moving ? SPR.player[game.dir][seq[phase]] : SPR.player[game.dir][0];
         g.fillStyle = 'rgba(0,0,0,.38)';
         g.beginPath(); g.ellipse(Math.round(wx - camX + 8), Math.round(wy - camY + 14), 6, 2, 0, 0, 7); g.fill();
@@ -1327,41 +1330,18 @@
 
     let titleT = 0;
     function drawTitle(dt) {
-      zones = [];
-      titleT += dt;
-      px(0, 0, 256, 192, '#0a080c');
-      /* sliding diagonal stripes */
-      g.save();
-      for (let i = 0; i < 7; i++) {
-        const off = ((titleT * 14 + i * 52) % 360) - 60;
-        poly([[off, 192], [off + 70, 0], [off + 86, 0], [off + 16, 192]], 'rgba(160,12,28,.10)');
-      }
-      g.restore();
-      /* big jagged splash behind the logo */
-      splash(118, 78, 86, 46, 9, '#6e0c18', titleT * .05 + .4);
-      splash(118, 76, 76, 40, 9, '#c01428', -titleT * .03);
-      textCShadow('PALACE', 118, 44, '#f4f2ec', 16, '#000');
-      textCShadow('OF SECRETS', 118, 68, '#f4f2ec', 14, '#000');
-      textCShadow('A PHANTOM PRESS HEIST', 118, 94, '#ffd2d8', 6, '#000');
-
-      /* the phantom, big */
-      const wf = Math.floor(titleT * 3) % 4;
-      const fr = SPR.player.right[[1, 0, 3, 0][wf]];
-      g.drawImage(fr, 0, 0, 14, 18, 206, 108, 42, 54);
-      /* calling card peeking */
-      g.save();
-      g.translate(24, 136); g.rotate(-.18 + Math.sin(titleT * 1.4) * .05);
-      g.drawImage(CARD_MINI, -24, -28);
-      g.restore();
-
-      if (Math.floor(titleT * 2) % 2) textCShadow('- PRESS A TO START -', 128, 130, '#f4f2ec', 7);
-      textC('sneak past the shadows', 128, 158, '#9a7c84', 6);
-      textC('steal the dossier. publish.', 128, 170, '#9a7c84', 6);
-      textC('stealth only - no combat', 128, 182, '#5c4850', 5);
-      zone(0, 0, 256, 192, 'A');
+      zones=[]; titleT += dt;
+      hd.titleDraw();
+      textCShadow('PALACE',128,35,'#ffffff',16,'#000');
+      textCShadow('OF SECRETS',128,59,'#ffffff',14,'#000');
+      textC('Find 3 seals. Retrieve the dossier.',128,84,'#ffffff',5);
+      textC('Avoid the guards. Return to the exit.',128,98,'#ffffff',5);
+      if (Math.floor(titleT*2)%2) textC('- PRESS A TO START -',128,151,'#ffffff',7);
+      zone(0,0,256,192,'A');
     }
 
     let introShown = false;
+
     function updateTitle() {
       const p = popPress();
       if (isA(p)) {
@@ -1547,9 +1527,7 @@
        LOOP
        ===================================================================== */
     let last = 0;
-    function loop(ts) {
-      const dt = Math.min(.05, (ts - last) / 1000 || 0);
-      last = ts;
+    function stepGame(dt) {
       game.animClock += dt;
       g.clearRect(0, 0, 256, 192);
 
@@ -1560,13 +1538,20 @@
       else if (game.state === 'status') { updateStatus(); if (game.state === 'status') drawStatus(); else drawWorld(); }
       else if (game.state === 'win') { updateWin(); drawWin(dt); }
 
+    }
+
+    function loop(ts) {
+      const dt = Math.min(.05, (ts - last) / 1000 || 0);
+      last = ts;
+      stepGame(dt);
+
       requestAnimationFrame(loop);
     }
 
     Promise.race([
       document.fonts.load('8px "Press Start 2P"'),
       new Promise(r => setTimeout(r, 1200))
-    ]).then(() => requestAnimationFrame(loop));
+    ]).then(() => window.__hdAssetsReady).then(() => requestAnimationFrame(loop));
 
     /* =====================================================================
        TEST HOOKS
@@ -1594,6 +1579,7 @@
       setInterval(window.__applyVol, 1500); // reaplica (áudio criado depois do load)
     })();
 
+    window.advanceTime = ms => {for(let i=0,n=Math.max(1,Math.round(ms/(1000/60)));i<n;i++)stepGame(1/60);};
     window.__game = game;
     window.__guards = () => guards;
     window.__giveKeys = () => { game.keysHave = { badge: true, map: true, pass: true }; };
@@ -1610,6 +1596,16 @@
       seals: keyCount(), alert: game.alert, doorOpen: game.doorOpen, dossier: game.dossier,
       targets: KEY_DEFS.filter(k => !game.keysHave[k.id]).map(k => ({ id: k.id, x: k.x, y: k.y }))
     });
+
+    const hd = HD2D(g);
+    hd.actor('personaActor', SPR.player);
+    hd.atlas('personaTerrain',4,3,TILES,["floor", "carpet", "wall", "column", "safe", "vase", "door", "dooropen", "pedestal", "exit"]);
+    hd.titleLoad('personaTitle');
+    hd.actor('personaGuard',SPR.guard);
+    hd.atlas('personaObjects',3,2,ITEMS,['badge','map','pass','dossier'],true);
+    hd.load('personaObjects',img=>{ const chest=hd.cell(img,3,2,4,36,36,true);imgChest.src=chest.toDataURL(); const card=hd.cell(img,3,2,5,48,56,true); imgCard.src=card.toDataURL(); });
+    window.__hdReady=false;
+    window.__hdAssetsReady=hd.ready().then(()=>{window.__hdReady=true;}).catch(e=>{console.error(e);throw e;});
   </script>
 </body>
 

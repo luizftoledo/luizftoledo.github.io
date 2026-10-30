@@ -6,8 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Journalism Valley — Investigative Farming | Luiz Fernando Toledo</title>
   <link rel="icon" type="image/png" href="favicon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
   <style>
+    @font-face {font-family:"Press Start 2P";src:url("images/hd2d/fonts/press-start-2p.ttf") format("truetype");font-display:swap;}
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     html, body {
@@ -47,8 +48,8 @@
       width: 100%;
       height: 100%;
       display: block;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
+      image-rendering: auto;
+
       border-radius: 4px;
     }
 
@@ -235,6 +236,7 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
+  <script src="scripts/hd2d-art.js"></script>
 </head>
 
 <body>
@@ -1598,6 +1600,7 @@
        WORLD DRAW
        ===================================================================== */
     function drawFarmTileDetail(tile, i, j, x, y) {
+      if (window.__hdReady) return;
       const h = ((i * 73856093) ^ (j * 19349663)) >>> 0;
       if (tile === 'grass' || tile === 'grass2') {
         for (let k = 0; k < 2; k++) {
@@ -1651,7 +1654,8 @@
           if (t === 'soil' && game.farm[key] && game.farm[key].tilled)
             t = game.farm[key].wet ? 'tilledwet' : 'tilled';
           const sx = i * T - camX, sy = j * T - camY;
-          g.drawImage(TILES[t], sx, sy);
+          if(hd.loaded.worldProps && ['tree','flower','flower2','sign','fence','mailbox','shop'].includes(t))g.drawImage(TILES.grass,sx,sy);
+          g.drawImage(TILES[hd.loaded.stardewHouse && ['roof','wall','window','door'].includes(t) ? 'grass' : t], sx, sy);
           drawFarmTileDetail(t, i, j, sx, sy);
 
           const cell = game.farm[key];
@@ -1674,6 +1678,7 @@
         }
 
       if (game.map === 'farm') {
+        if(hd.loaded.stardewHouse)g.drawImage(hd.loaded.stardewHouse,4*T-camX,2*T-camY,6*T,3*T);
         for (const it of game.items) {
           const bob = Math.sin(game.animClock * 3 + it.x) * 1.5;
           g.drawImage(OBJS[it.type], it.x * T - camX, it.y * T - camY + bob - 2);
@@ -1682,7 +1687,7 @@
 
       /* player: stepA -> stand -> stepB -> stand (same cycle as pokemon.html) */
       const dirFrames = SPR.player[game.dir];
-      const seq = [1, 0, 3, 0];
+      const seq = [0, 1, 2, 3];
       const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
       const frame = game.moving ? dirFrames[seq[phase]] : dirFrames[0];
       g.fillStyle = 'rgba(39,55,29,.32)';
@@ -1878,45 +1883,13 @@
        TITLE & WIN
        ===================================================================== */
     function drawTitle(dt) {
-      zones = [];
-      game.titleT += dt;
-      const grad = g.createLinearGradient(0, 0, 0, 192);
-      grad.addColorStop(0, '#2c4a6e'); grad.addColorStop(.5, '#7a5a36');
-      grad.addColorStop(.78, '#5d9448'); grad.addColorStop(1, '#3f6d3b');
-      g.fillStyle = grad; g.fillRect(0, 0, 256, 192);
-
-      /* setting sun, low on the horizon */
-      g.fillStyle = '#f0b264'; g.beginPath(); g.arc(226, 146, 15, 0, 7); g.fill();
-      g.fillStyle = '#f6e294'; g.beginPath(); g.arc(226, 146, 10, 0, 7); g.fill();
-
-      for (let i = 0; i < 16; i++) g.drawImage(TILES.grass, i * 16, 176);
-      g.drawImage(TILES.soil, 32, 176);
-      g.drawImage(TILES.tilled, 48, 176);
-      g.drawImage(TILES.tilled, 64, 176); g.drawImage(CROPS[3], 64, 160);
-      g.drawImage(TILES.tilled, 80, 176); g.drawImage(CROPS[1], 80, 172);
-      g.drawImage(TILES.flower, 176, 176);
-      g.drawImage(TILES.fence, 208, 176); g.drawImage(TILES.fence, 224, 176); g.drawImage(TILES.fence, 240, 176);
-
-      const wf = Math.floor(game.titleT * 3) % 4;
-      g.drawImage(SPR.player.right[[1, 0, 3, 0][wf]], 116, 156);
-
-      /* big-art portrait, title screen only */
-      if (imgAvatar.complete && imgAvatar.naturalWidth) {
-        frame9(6, 118, 56, 56, { bg: '#2b1d12', edge: '#c89858', dark: '#43301f' });
-        g.imageSmoothingEnabled = true;
-        g.drawImage(imgAvatar, 10, 122, 48, 48);
-        g.imageSmoothingEnabled = false;
-      }
-
-      textC('JOURNALISM VALLEY', 129, 25, '#2b1d12', 14);
-      textC('JOURNALISM VALLEY', 128, 24, '#f6e294', 14);
-      textC('the farm where stories grow', 128, 48, '#f8f4e4', 6);
-      px(48, 62, 160, 1, '#c89858');
-      textC('till leads - water with facts', 128, 70, '#e0cb9a', 6);
-      textC('harvest 4 front pages + dig', 128, 81, '#e0cb9a', 6);
-      textC('3 rare docs from the archive', 128, 92, '#e0cb9a', 6);
-      if (Math.floor(game.titleT * 2) % 2) textC('- PRESS A TO START -', 128, 112, '#ffffff', 7);
-      zone(0, 0, 256, 192, 'A');
+      zones=[]; game.titleT += dt;
+      hd.titleDraw();
+      textC('JOURNALISM VALLEY',128,27,'#f6e294',12);
+      textC('FARM / ARCHIVE / NEWSROOM',128,48,'#ffffff',6);
+      textC('Publish 4 stories. Find 3 docs.',128,74,'#ffffff',6);
+      if (Math.floor(game.titleT*2)%2) textC('- PRESS A TO START -',128,151,'#ffffff',7);
+      zone(0,0,256,192,'A');
     }
 
     function updateTitle() {
@@ -2003,9 +1976,7 @@
     syncToolBtn();
 
     let last = 0;
-    function loop(ts) {
-      const dt = Math.min(.05, (ts - last) / 1000 || 0);
-      last = ts;
+    function stepGame(dt) {
       game.animClock += dt;
       g.clearRect(0, 0, 256, 192);
 
@@ -2013,13 +1984,20 @@
       else if (game.state === 'world') { updateWorld(dt); if (game.state === 'world') drawWorld(); else drawWin(dt); }
       else if (game.state === 'win') { updateWin(); if (game.state === 'win') drawWin(dt); else drawWorld(); }
 
+    }
+
+    function loop(ts) {
+      const dt = Math.min(.05, (ts - last) / 1000 || 0);
+      last = ts;
+      stepGame(dt);
+
       requestAnimationFrame(loop);
     }
 
     Promise.race([
       document.fonts.load('8px "Press Start 2P"'),
       new Promise(r => setTimeout(r, 1200))
-    ]).then(() => requestAnimationFrame(loop));
+    ]).then(() => window.__hdAssetsReady).then(() => requestAnimationFrame(loop));
 
     /* =====================================================================
        TEST HOOKS
@@ -2047,6 +2025,7 @@
       setInterval(window.__applyVol, 1500); // reaplica (áudio criado depois do load)
     })();
 
+    window.advanceTime = ms => {for(let i=0,n=Math.max(1,Math.round(ms/(1000/60)));i<n;i++)stepGame(1/60);};
     window.__game = game;
     window.__give = (pub, docs) => { game.published = pub; game.rareDocs = docs; };
     window.__act = {
@@ -2069,6 +2048,23 @@
       day: game.day, energy: game.energy, stories: game.published, rareDocs: game.rareDocs,
       tool: TOOLS[game.tool], bag: game.bag, shop: !!game.shop, message: !!game.msg
     });
+
+    const hd = HD2D(g);
+    hd.actor('stardewActor', SPR.player);
+    const terrainReady = hd.atlas('stardewTerrain',6,4,TILES,["grass", "grass2", "tree", "water", "water2", "flower", "flower2", "sign", "fence", "soil", "tilled", "tilledwet", "roof", "wall", "window", "door", "mailbox", "rockface", "cavemouth", "cwall", "cfloor", "shop", "ladder"]);
+    hd.load('grassSeamless',async img=>{await terrainReady; TILES.grass=hd.cell(img,1,1,0,16,16);TILES.grass2=TILES.grass;});
+    hd.load('soilSeamless',async img=>{await terrainReady;TILES.soil=hd.cell(img,1,1,0,16,16);});
+    hd.load('stardewHouse',()=>{});
+    terrainReady.then(()=>{TILES.water=TILES.water2;});
+    hd.load('worldProps',async img=>{await terrainReady;[['tree',0],['flower',1],['flower2',1],['sign',2],['fence',3],['mailbox',4],['shop',5]].forEach(([k,i])=>TILES[k]=hd.cell(img,4,2,i,16,16,true));});
+    hd.titleLoad('stardewTitle');
+    hd.load('stardewObjects',img=>{
+      ["stone", "branch", "rock", "doc", "coffee", "lead", "photo", "scoop", "ore", "seedbag", "energybar", "luckypen", "fertilizer"].forEach((k,i)=>OBJS[k]=hd.cell(img,5,5,i,16,16,true));
+      for(let i=0;i<4;i++)CROPS[i]=hd.cell(img,5,5,13+i,16,16,true);
+      for(let i=0;i<5;i++)TOOL_ICONS[i]=hd.cell(img,5,5,[17,21,18,24,19][i],16,16,true);
+    });
+    window.__hdReady=false;
+    window.__hdAssetsReady=hd.ready().then(()=>{window.__hdReady=true;}).catch(e=>{console.error(e);throw e;});
   </script>
 </body>
 

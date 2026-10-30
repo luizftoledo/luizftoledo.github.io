@@ -1,0 +1,223 @@
+[
+  {
+    "name": "stardew",
+    "assets": {
+      "state": {
+        "coordinates": "tile grid, origin top-left, x right, y down",
+        "state": "world",
+        "map": "farm",
+        "player": {
+          "x": 7,
+          "y": 6,
+          "dir": "down"
+        },
+        "day": 1,
+        "energy": 100,
+        "stories": 0,
+        "rareDocs": 0,
+        "tool": "HOE",
+        "bag": false,
+        "shop": false,
+        "message": false
+      },
+      "frames": {
+        "down": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        },
+        "up": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        },
+        "left": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        },
+        "right": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        }
+      },
+      "terrain": 23
+    },
+    "final": {
+      "coordinates": "tile grid, origin top-left, x right, y down",
+      "state": "world",
+      "map": "cave",
+      "player": {
+        "x": 12,
+        "y": 12,
+        "dir": "up"
+      },
+      "day": 1,
+      "energy": 95,
+      "stories": 0,
+      "rareDocs": 0,
+      "tool": "CAN",
+      "bag": false,
+      "shop": false,
+      "message": false
+    },
+    "errors": []
+  },
+  {
+    "name": "pokemon",
+    "assets": {
+      "state": {
+        "state": "world",
+        "coords": "origin top-left, x right, y down, logical canvas 256x192",
+        "player": {
+          "x": 2,
+          "y": 6,
+          "dir": "right",
+          "level": 10,
+          "xp": 0,
+          "nextXp": 90,
+          "hp": 58,
+          "maxhp": 58,
+          "money": 120,
+          "status": null
+        },
+        "battle": null,
+        "items": {
+          "coffee": 0,
+          "espresso": 0
+        },
+        "filed": 0
+      },
+      "frames": {
+        "down": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        },
+        "up": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        },
+        "left": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        },
+        "right": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        }
+      },
+      "terrain": 11
+    },
+    "final": {
+      "state": "battle",
+      "coords": "origin top-left, x right, y down, logical canvas 256x192",
+      "player": {
+        "x": 2,
+        "y": 6,
+        "dir": "right",
+        "level": 10,
+        "xp": 0,
+        "nextXp": 90,
+        "hp": 58,
+        "maxhp": 58,
+        "money": 120,
+        "status": null
+      },
+      "battle": {
+        "enemy": "BADSCAN",
+        "type": "DOCUMENT",
+        "level": 8,
+        "hp": 26,
+        "maxhp": 26,
+        "status": null,
+        "phase": "moves"
+      },
+      "items": {
+        "coffee": 0,
+        "espresso": 0
+      },
+      "filed": 0
+    },
+    "errors": []
+  },
+  {
+    "name": "persona",
+    "assets": {
+      "state": {
+        "coordinates": "tile grid, origin top-left, x right, y down",
+        "state": "world",
+        "player": {
+          "x": 12,
+          "y": 15,
+          "dir": "up",
+          "hidden": false
+        },
+        "seals": 0,
+        "alert": 0,
+        "doorOpen": false,
+        "dossier": false,
+        "targets": [
+          {
+            "id": "pass",
+            "x": 23,
+            "y": 2
+          },
+          {
+            "id": "badge",
+            "x": 5,
+            "y": 10
+          },
+          {
+            "id": "map",
+            "x": 19,
+            "y": 10
+          }
+        ]
+      },
+      "frames": {
+        "down": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        },
+        "up": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        },
+        "left": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        },
+        "right": {
+          "width": 112,
+          "height": 144,
+          "unique": 4
+        }
+      },
+      "terrain": 10
+    },
+    "final": {
+      "coordinates": "tile grid, origin top-left, x right, y down",
+      "state": "status",
+      "player": {
+        "x": 12,
+        "y": 15,
+        "dir": "right",
+        "hidden": false
+      },
+      "seals": 3,
+      "alert": 0,
+      "doorOpen": true,
+      "dossier": false,
+      "targets": []
+    },
+    "errors": []
+  }
+]
