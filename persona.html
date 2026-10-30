@@ -236,10 +236,10 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=field-rpg-5"></script>
+  <script src="scripts/hd2d-art.js?v=persona-contrast-6"></script>
   <link rel="stylesheet" href="game-layout.css?v=1">
   <script src="scripts/game-layout.js?v=1" defer></script>
-  <script src="scripts/game-expansion.js?v=5"></script>
+  <script src="scripts/game-expansion.js?v=persona-contrast-6"></script>
 </head>
 
 <body>
@@ -1205,6 +1205,33 @@
       }
     }
 
+    // Walkable surfaces stay light; actual collision cells get a dark footprint.
+    function drawPalaceSurface(tile,x,y){
+      const props={column:[10,17],safe:[12,11],vase:[7,13],pedestal:[12,10]};
+      if(props[tile]){
+        g.drawImage(TILES.floor,x,y);
+        if(SOLID_TILES[tile]){g.fillStyle='#34323b';g.fillRect(x+1,y+9,14,6);g.strokeStyle='#a49068';g.lineWidth=.6;g.strokeRect(x+.75,y+.75,14.5,14.5);}
+        else{g.fillStyle='rgba(30,28,34,.24)';g.beginPath();g.ellipse(x+8,y+15,4,.8,0,0,Math.PI*2);g.fill();}
+        const [w,h]=props[tile];g.drawImage(TILES[tile],x+8-w/2,y+16-h,w,h);return;
+      }
+      g.drawImage(TILES[tile],x,y);
+      if(tile==='wall'){g.fillStyle='rgba(8,9,17,.32)';g.fillRect(x,y,16,16);}
+      if(tile==='dooropen'){g.fillStyle='#72c8a1';g.fillRect(x+2,y+15,12,.8);}
+    }
+    function drawPalaceBoundaries(camX,camY,x0,y0){
+      g.save();g.lineWidth=.8;
+      for(let y=y0;y<=y0+13&&y<MAPH;y++)for(let x=x0;x<=x0+17&&x<MAPW;x++){
+        const tile=tileAt(x,y);if(tile!=='wall'&&tile!=='door')continue;
+        const sx=x*T-camX,sy=y*T-camY;
+        g.strokeStyle='#c2b08a';
+        const edge=(ax,ay,bx,by)=>{g.beginPath();g.moveTo(ax,ay);g.lineTo(bx,by);g.stroke();};
+        if(!isSolid(x-1,y))edge(sx+.5,sy,sx+.5,sy+16);
+        if(!isSolid(x+1,y))edge(sx+15.5,sy,sx+15.5,sy+16);
+        if(!isSolid(x,y-1))edge(sx,sy+.5,sx+16,sy+.5);
+        if(!isSolid(x,y+1)){edge(sx,sy+15.5,sx+16,sy+15.5);g.fillStyle='rgba(15,18,27,.25)';g.fillRect(sx,sy+16,16,1.5);}
+      }
+      g.restore();
+    }
     function drawWorld() {
       zones = [];
       const [pcx, pcy, wx, wy] = playerPixelCenter();
@@ -1216,9 +1243,11 @@
       for (let j = y0; j <= y0 + 13 && j < MAPH; j++)
         for (let i = x0; i <= x0 + 17 && i < MAPW; i++) {
           const tile = tileAt(i, j), sx = i * T - camX, sy = j * T - camY;
-          g.drawImage(TILES[tile], sx, sy);
+          drawPalaceSurface(tile,sx,sy);
           drawPalaceTileDetail(tile, i, j, sx, sy);
         }
+
+      drawPalaceBoundaries(camX,camY,x0,y0);
 
       /* keys on the floor */
       const bob = Math.sin(game.animClock * 4) * 1.5;
@@ -1250,7 +1279,7 @@
 
       /* player (blinks while in grace) */
       const blink = game.grace > 0 && Math.floor(game.animClock * 8) % 2 === 0;
-      if (!blink) {
+      if (!blink&&!game.hidden) {
         const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
         const seq = [0, 1, 2, 3];
         const fr = hd.actorFrame(SPR.player,game.dir,game.moving,game.animClock,seq[phase]);
@@ -1258,8 +1287,7 @@
       }
       /* hidden: vase covers the player */
       if (game.hidden) {
-        g.drawImage(TILES.vase, game.px * T - camX, game.py * T - camY);
-        textCShadow('HIDDEN', wx - camX + 8, wy - camY - 14, '#f4f2ec', 6);
+        textCShadow('OCULTO', wx - camX + 8, wy - camY - 14, '#f4f2ec', 6);
       }
 
       /* "!" over the guard that spotted you */
@@ -1348,6 +1376,7 @@
       textC('Find 3 seals. Retrieve the dossier.',128,84,'#ffffff',5);
       textC('Avoid the guards. Return to the exit.',128,98,'#ffffff',5);
       if (Math.floor(titleT*2)%2) textC('- PRESS A TO START -',128,151,'#ffffff',7);
+      textC('CHAO CLARO E TAPETE: PASSAGEM',128,174,'#dce7ef',4);
       zone(0,0,256,192,'A');
     }
 
@@ -1538,7 +1567,7 @@
        LOOP
        ===================================================================== */
     let last = 0;
-    function drawAtlasMap(){EXPANSION.drawMap(g,MAP_STR,{x:game.px,y:game.py},[...KEY_DEFS.filter(k=>!game.keysHave[k.id]).map(k=>({x:k.x,y:k.y,label:{badge:'CRACHA',map:'PLANTA',pass:'SENHA'}[k.id]})),{x:12,y:4,label:'COFRE'},{x:12,y:16,label:'SAIDA'}], 'PALACIO / ARQUIVO / ANEXO');}
+    function drawAtlasMap(){EXPANSION.drawMap(g,MAP_STR,{x:game.px,y:game.py},[...KEY_DEFS.filter(k=>!game.keysHave[k.id]).map(k=>({x:k.x,y:k.y,label:{badge:'CRACHA',map:'PLANTA',pass:'SENHA'}[k.id]})),{x:12,y:4,label:'COFRE'},{x:12,y:16,label:'SAIDA'}], 'PALACIO / ARQUIVO / ANEXO',{wall:'#151820',floor:'#a1aab4'});}
     function stepGame(dt) {
       if(game.showMap&&game.state==='world'){drawWorld();drawAtlasMap();return;}
       game.animClock += dt;
@@ -1614,7 +1643,9 @@
     const hd = HD2D(g);
     hd.actor('personaActor', SPR.player);
     hd.idle('personaIdle-v2',SPR.player);
-    hd.atlas('personaTerrain',4,3,TILES,["floor", "carpet", "wall", "column", "safe", "vase", "door", "dooropen", "pedestal", "exit"]);
+    const palaceTerrainReady=hd.atlas('personaTerrain',4,3,TILES,["floor", "carpet", "wall", "column", "safe", "vase", "door", "dooropen", "pedestal", "exit"]);
+    hd.load('personaFloor-v6',async img=>{await palaceTerrainReady;TILES.floor=hd.cell(img,1,1,0,16,16);});
+    hd.load('personaProps-v6',async img=>{await palaceTerrainReady;['column','safe','vase','pedestal'].forEach((k,i)=>{const [w,h]={column:[10,17],safe:[12,11],vase:[7,13],pedestal:[12,10]}[k];TILES[k]=hd.cell(img,4,1,i,w,h,true);});});
     hd.titleLoad('personaTitle');
     hd.actor('personaGuard',SPR.guard);
     hd.idle('guardIdle-v2',SPR.guard);

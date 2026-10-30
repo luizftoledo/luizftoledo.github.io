@@ -1,0 +1,10 @@
+[
+  {
+    "file": "personaFloor-v6",
+    "prompt": "Use case: stylized-concept. Production seamless walkable palace FLOOR texture for a Persona-inspired HD2D top-down stealth RPG. One square texture, direct orthographic overhead view. Pale cool blue-grey satin limestone, average mid-light tone around #a1aab4, very subtle broad stone variation, tiny quiet veins, low contrast detail. Even neutral illumination, non-reflective, no dark patches, no black marble, no gold, no objects, no walls, no columns, no perspective, no vignette or borders. All four edges seamlessly repeat. Purpose: clearly bright walkable surface distinct from almost-black walls, while retaining elegant palace materials. Painted pixel-inspired HD2D detail. No text."
+  },
+  {
+    "file": "personaProps-v6",
+    "prompt": "Use case: stylized-concept. Supporting reference is palace terrain atlas; preserve its object identities, red black ivory gold palette and overhead 35-degree HD2D RPG camera. Create a NEW prop atlas, actual transparent RGBA background, exactly 4 columns x1 row equal cells: column1 ivory marble column with dark gold base; column2 compact dark steel safe with gold dial; column3 slender crimson vase with gold handles; column4 low black and gold treasure pedestal with red jewel. One complete isolated object per cell, fits central65% width and75% height, consistent compact RPG game scale, no overlap. CRITICAL no black marble floor square, no room, walls, backdrop or ground under any prop. Real transparent background all around each object, subtle contact shading only within object silhouette. Soft painted pixel-inspired detailed materials matching reference, clean readable silhouettes, no letters no text no labels no grid."
+  }
+]
