@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Route 26 — Investigative Edition | Luiz Fernando Toledo</title>
+  <title>Route 26 — Caderno de Campo | Luiz Fernando Toledo</title>
   <link rel="icon" type="image/png" href="images/pokemon/foia_paper.png">
 
   <style>
@@ -276,9 +276,10 @@
     }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=ground-contact-4"></script>
+  <script src="scripts/hd2d-art.js?v=field-rpg-5"></script>
   <link rel="stylesheet" href="game-layout.css?v=1">
   <script src="scripts/game-layout.js?v=1" defer></script>
+  <script src="scripts/game-expansion.js?v=5"></script>
 </head>
 
 <body>
@@ -313,7 +314,7 @@
     </div>
   </div>
 
-  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER = A &nbsp;·&nbsp; X/ESC = B (notebook) &nbsp;·&nbsp; F fullscreen</div>
+  <div class="kbd-bar">M: MAPA &nbsp;·&nbsp; ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER = A &nbsp;·&nbsp; X/ESC = CADERNO · V = PISTAS &nbsp;·&nbsp; F fullscreen</div>
 
   <audio id="mGrass" src="grass_route.m4a" loop preload="auto"></audio>
   <audio id="mBattle" src="pkost_music.mp3" loop preload="auto"></audio>
@@ -325,7 +326,7 @@
     /* =====================================================================
        ROUTE 26 — INVESTIGATIVE EDITION (v3)
        Demake em resolução de DS (256x192, buffer 4x). Tema: jornalismo.
-       Capture 3 documentos selvagens no matinho via pedidos FOIA.
+       Explore a vila, registre especies e cruze tres pistas para publicar o caso.
        ===================================================================== */
 
     const cv = document.getElementById('screen'), g = cv.getContext('2d');
@@ -783,15 +784,15 @@
 
     /* rate = facilidade base de captura (tipo catch rate do Pokémon) */
     const DEX = [
-      { id: 'BADSCAN', name: 'BADSCAN', kind: 'Unreadable PDF', type: 'DOCUMENT', lv: [6, 8], hp: 22, atk: 5, enc: .24, rate: .80, blurb: 'A crooked scan with no OCR. It blurs every fact.' },
-      { id: 'REDACTOR', name: 'REDACTOR', kind: 'Black Bar', type: 'LEGAL', lv: [7, 9], hp: 27, atk: 6, enc: .18, rate: .70, blurb: 'Covers names, dates and totals with official ink.' },
-      { id: 'PAYWALL', name: 'PAYWALL', kind: 'Subscriber Gate', type: 'TECH', lv: [8, 10], hp: 29, atk: 6, enc: .14, rate: .60, blurb: 'Blocks key records unless someone pays the toll.' },
-      { id: 'BOTFARM', name: 'BOTFARM', kind: 'Disinfo Bot', type: 'TECH', lv: [8, 10], hp: 30, atk: 7, enc: .14, rate: .60, blurb: 'Spams false leads until the thread becomes noise.' },
-      { id: 'LOBBYIST', name: 'LOBBYIST', kind: 'Quiet Fixer', type: 'LEGAL', lv: [9, 11], hp: 34, atk: 7, enc: .12, rate: .50, blurb: 'Whispers carve-outs into bills before daylight.' },
-      { id: 'PRESSSEC', name: 'PRESSSEC', kind: 'Evasive Briefing', type: 'DOCUMENT', lv: [10, 12], hp: 36, atk: 8, enc: .08, rate: .45, blurb: 'Answers a different question with a polished smile.' },
-      { id: 'SHREDDER', name: 'SHREDDER', kind: 'Record Destroyer', type: 'DOCUMENT', lv: [11, 13], hp: 40, atk: 8, enc: .06, rate: .40, blurb: 'Turns receipts into confetti before audit day.' },
-      { id: 'DEEPFAKE', name: 'DEEPFAKE', kind: 'Synthetic Source', type: 'DATA', lv: [12, 14], hp: 42, atk: 9, enc: .04, rate: .35, blurb: 'Looks credible until the metadata starts screaming.' },
-      { id: 'LAIDENY', name: 'LAI DENY', kind: 'FOI Bureaucrat', type: 'LEGAL', lv: [14, 14], hp: 64, atk: 10, enc: 0, rate: .30, blurb: 'The final denial letter. Only persistence opens it.' }
+      { id: 'BADSCAN', name: 'BORRAO', kind: 'Coelho de papel', type: 'DOCUMENT', lv: [6, 8], hp: 22, atk: 5, enc: .24, rate: .80, blurb: 'Coelho feito de copias borradas. Fotografe para distinguir suas marcas.' },
+      { id: 'REDACTOR', name: 'TARJA', kind: 'Salamandra de tinta', type: 'LEGAL', lv: [7, 9], hp: 27, atk: 6, enc: .18, rate: .70, blurb: 'Salamandra que cobre pistas com tinta. Consulte o documento original.' },
+      { id: 'PAYWALL', name: 'TRANCAR', kind: 'Tartaruga-cadeado', type: 'LEGAL', lv: [8, 10], hp: 29, atk: 6, enc: .14, rate: .60, blurb: 'Sua carapaca fecha como cadeado. Um registro bem documentado a abre.' },
+      { id: 'BOTFARM', name: 'ECO', kind: 'Morcego de eco', type: 'TECH', lv: [8, 10], hp: 30, atk: 7, enc: .14, rate: .60, blurb: 'Repete o que escuta. Compare relatos para separar eco de evidencia.' },
+      { id: 'LOBBYIST', name: 'DESVIO', kind: 'Raposa de trilha', type: 'DATA', lv: [9, 11], hp: 34, atk: 7, enc: .12, rate: .50, blurb: 'A cauda indica caminhos falsos. Conferir datas revela o desvio.' },
+      { id: 'PRESSSEC', name: 'RUMOR', kind: 'Papagaio imitador', type: 'DATA', lv: [10, 12], hp: 36, atk: 8, enc: .08, rate: .45, blurb: 'Repete falas sem contexto. Verifique a origem antes de registrar.' },
+      { id: 'SHREDDER', name: 'TESOURA', kind: 'Besouro de papel', type: 'DOCUMENT', lv: [11, 13], hp: 40, atk: 8, enc: .06, rate: .40, blurb: 'Recorta paginas com as mandibulas. Fotografe as partes que restaram.' },
+      { id: 'DEEPFAKE', name: 'MIRAGEM', kind: 'Coruja de reflexo', type: 'TECH', lv: [12, 14], hp: 42, atk: 9, enc: .04, rate: .35, blurb: 'Suas penas criam imagens duplicadas. Dados permitem testar a aparencia.' },
+      { id: 'LAIDENY', name: 'SIGILO', kind: 'Tatu do arquivo', type: 'LEGAL', lv: [14, 14], hp: 64, atk: 10, enc: 0, rate: .30, blurb: 'Guarda a estacao na armadura. Cruze as tres pistas e confronte o registro.' }
     ];
     for (const d of DEX) if (DEX_SRC[d.id]) d.sprite = makeSprite(DEX_SRC[d.id]);
     const N_ALL = DEX.length;
@@ -876,7 +877,7 @@
     for (const k in TILE_SRC) TILES[k] = makeSprite(TILE_SRC[k]);
 
     /* # árvore  , grama  ; matinho  = caminho  ~ água  * flor  ! placa  F cerca */
-    const MAP_STR = [
+    const MAP_STR = EXPANSION.pokemon([
       '############################',
       '#,,,,,,;;;;;,,,,,,,,,,,,,,,#',
       '#,*,,,,;;;;;,,,##,,;;;;;,*,#',
@@ -897,18 +898,18 @@
       '#,,,,,,,,;;;;;;,,,,,,,;;;;,#',
       '#,,*,,,,,;;;;;;,*,,,,,;;;;,#',
       '############################'
-    ];
+    ]);
     const MAPW = MAP_STR[0].length, MAPH = MAP_STR.length;
-    const CHAR2TILE = { '#': 'tree', ',': 'grass', ';': 'tall', '=': 'path', '~': 'water', '*': 'flower', '!': 'sign', 'F': 'fence' };
+    const CHAR2TILE = { '#': 'tree', 'J':'bridge', ',': 'grass', ';': 'tall', '=': 'path', '~': 'water', '*': 'flower', '!': 'sign', 'F': 'fence' };
     const SOLID = { tree: 1, water: 1, sign: 1, fence: 1 };
     const SIGN_TEXT = {
       '3,4': [
-        ['ROUTE 26 - FOIA FIELDS', 'Wild documents live in the', 'tall grass. File 3 of them', 'to close your notebook!']
+        ['VILA: ponto de partida.','Registre especies na grama.','M mostra os locais de apuracao.','Volte a redacao para publicar.']
       ],
       '21,11': [
-        ['TIP: weaken a document to', 'raise your FOIA catch odds.', 'Low HP means better access.'],
-        ['TIP: typed attacks matter.', 'DATA, DOCUMENT, LEGAL and', 'TECH expose different foes.'],
-        ['Pick up the red balls lying', 'around: coffee restores HP,', 'espresso restores move PP.']
+        ['Observe antes de ANOTAR.','Reduza a resistencia para','melhorar a chance de registro.'],
+        ['Cada especie tem um recurso','mais adequado. A apresentacao','do encontro indica qual usar.'],
+        ['Cafe recupera o folego.','Espresso recupera seus recursos.','A redacao permite descansar.']
       ]
     };
 
@@ -941,7 +942,7 @@
       px: 2, py: 6, dir: 'right',
       moving: false, moveT: 0, fromX: 2, fromY: 6,
       step: 0,
-      caught: {},
+      fieldNotes:{},caseBossSolved:false,casePublished:false, caught: {},
       level: START_LEVEL, xp: 0, nextXp: 90,
       hp: START_MAX_HP, maxhp: START_MAX_HP,
       money: 120,
@@ -954,7 +955,7 @@
       gameOver: null,
       msg: null,                            // { pages: [[linhas]], idx }
       rustle: null,
-      dexSel: 0,
+      dexSel: 0, dexPage:'notes',
       winT: 0, winSel: 0, animClock: 0
     };
     const caughtCount = () => Object.keys(game.caught).length;
@@ -984,7 +985,7 @@
     const KEYMAP = {
       ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
       w: 'up', s: 'down', a: 'left', d: 'right',
-      z: 'A', Enter: 'A', ' ': 'A', x: 'B', Escape: 'B', Backspace: 'B'
+      v:'journal',V:'journal', z: 'A', Enter: 'A', ' ': 'A', x: 'B', Escape: 'B', Backspace: 'B'
     };
     let pressQueue = [];
     window.addEventListener('keydown', e => {
@@ -1100,6 +1101,7 @@
     }
 
     function enterRedacao() {
+      if(caseComplete()&&!game.casePublished){game.casePublished=true;game.state='win';game.winT=0;game.winSel=0;saveCase();playMusic(mWin);return;}
       game.moving = false;
       game.moveT = 0;
       game.redacao = { sel: 0 };
@@ -1108,7 +1110,7 @@
       playMusic(mGrass);
       playSfx('heal');
       showMsg(
-        ['Welcome to REDACAO!', 'HP and PP restored.', 'The newsroom shop is', 'open for supplies.']
+        ['REDACAO: seu ponto de apoio.','Folego e recursos recuperados.','Traga 3 pistas, 3 registros e','a copia conferida da estacao.']
       );
     }
 
@@ -1122,10 +1124,32 @@
       playMusic(mGrass);
     }
 
+    const noteCount=()=>Object.keys(game.fieldNotes).length;
+    const caseComplete=()=>noteCount()===3&&caughtCount()>=3&&(game.caseBossSolved||game.caught.LAIDENY);
+    const siteAt=(x,y)=>EXPANSION.sites.find(s=>x===s.doorX&&y===s.doorY);
+    const siteSolid=(x,y)=>EXPANSION.sites.some(s=>x>=s.x&&x<s.x+s.w&&y>=s.y&&y<s.y+s.h);
+    function saveCase(){try{const keys=['px','py','dir','caught','level','xp','nextXp','hp','maxhp','money','items','balls','fieldNotes','caseBossSolved','casePublished','pp'];const data={version:5};keys.forEach(k=>data[k]=game[k]);localStorage.setItem('route26-field-case-v5',JSON.stringify(data));}catch(e){}}
+    function loadCase(){try{const d=JSON.parse(localStorage.getItem('route26-field-case-v5'));if(!d||d.version!==5||!Number.isFinite(d.px)||!Number.isFinite(d.py)||!d.caught||!d.fieldNotes)return;
+      for(const k of ['caught','level','xp','nextXp','maxhp','money','items','balls','fieldNotes','caseBossSolved','casePublished','pp'])if(d[k]!==undefined)game[k]=d[k];
+      game.hp=Math.max(1,Math.min(game.maxhp,d.hp||game.maxhp));game.px=game.fromX=d.px;game.py=game.fromY=d.py;game.dir=d.dir||'down';if(SOLID[tileAt(game.px,game.py)]||siteSolid(game.px,game.py)){game.px=game.fromX=2;game.py=game.fromY=6;}game.tutorialDone=true;
+    }catch(e){}}
+    function inspectSite(site){
+      if(site.id==='station'){
+        if(noteCount()<3)return showMsg(['ESTACAO: portao fechado.','Cruze tres pistas: ARQUIVO,','SALA DE LEITURA e marco do BOSQUE.','M abre o mapa.']);
+        if(!game.caseBossSolved&&!game.caught.LAIDENY){showMsg(['As tres pistas ligam a antena','aos registros alterados.','SIGILO guarda a ultima copia.','Entre pelo portao para conferir.']);game.pendingStation=true;return;}
+        return showMsg(['A ultima copia foi conferida.','Registre pelo menos 3 especies','e volte a REDACAO para publicar.']);
+      }
+      if(!game.fieldNotes[site.note]){game.fieldNotes[site.note]=true;game.money+=30;game.hp=Math.min(game.maxhp,game.hp+12);saveCase();}
+      showMsg([site.name,...site.lines],['Pista '+noteCount()+'/3 no caderno.','M abre o mapa. A estacao fica','no sudeste; a redacao, no oeste.']);
+    }
+    function inspectTrail(){if(!game.fieldNotes.sinal){game.fieldNotes.sinal=true;game.money+=30;saveCase();}showMsg(['MARCO DO BOSQUE','Uma placa registra a frequencia.','Ela coincide com a antena antiga.','Terceira pista: o sinal e local.']);}
+    function regionName(){return game.py>=20?'RIO E ESTACAO':game.px>=28?'BOSQUE':'VILA';}
     function tryMove(dx, dy, dir) {
       game.dir = dir;
       const nx = game.px + dx, ny = game.py + dy;
       if (isRedacaoEntrance(nx, ny)) { enterRedacao(); return; }
+      const site=siteAt(nx,ny);if(site){if(site.id==='station'&&game.pendingStation){game.pendingStation=false;return startBattle(DEX[N_ALL-1]);}inspectSite(site);return;}
+      if(siteSolid(nx,ny))return;
       if (isRedacaoSolid(nx, ny)) return;
       if (SOLID[tileAt(nx, ny)]) return;
       game.fromX = game.px; game.fromY = game.py;
@@ -1134,7 +1158,7 @@
     }
 
     function finishStep() {
-      game.step++;
+      game.step++;saveCase();
       /* pokébola no chão? */
       const ball = BALLS.find(b => b.x === game.px && b.y === game.py && !game.balls[b.x + ',' + b.y]);
       if (ball) {
@@ -1149,11 +1173,10 @@
       if (tileAt(game.px, game.py) === 'tall') {
         game.rustle = { x: game.px, y: game.py, t: 0 };
         game.grassSteps++;
-        if (game.grassSteps >= 6 || Math.random() < .22) {
+        if (game.grassSteps >= 10 || Math.random() < .12) {
           game.grassSteps = 0;
-          if (!game.caught.LAIDENY && caughtCount() >= WIN_N - 1)
-            return startBattle(DEX[N_ALL - 1]);
-          const pool = DEX.slice(0, N_ALL - 1).filter(d => !game.caught[d.id]);
+          const habitat=game.py>=20?['PAYWALL','SHREDDER','LOBBYIST']:game.px>=28?['PRESSSEC','DEEPFAKE','LOBBYIST']:['BADSCAN','REDACTOR','BOTFARM'];
+          const pool=DEX.slice(0,N_ALL-1).filter(d=>habitat.includes(d.id)&&!game.caught[d.id]);
           if (!pool.length) return;
           let r = Math.random() * pool.reduce((s, d) => s + d.enc, 0);
           for (const d of pool) { r -= d.enc; if (r <= 0) return startBattle(d); }
@@ -1179,9 +1202,12 @@
       const p = popPress();
       if (isA(p)) {
         const f = facingTile(), key = f.x + ',' + f.y, t = tileAt(f.x, f.y);
-        if (t === 'sign' && SIGN_TEXT[key]) showMsg(...SIGN_TEXT[key]);
-        else if (t === 'water') showMsg(['The pond is calm.', 'A shredded document', 'floats by...']);
+        const site=siteAt(f.x,f.y);
+        if(site)inspectSite(site);else if(key==='57,12')inspectTrail();
+        else if (t === 'sign' && SIGN_TEXT[key]) showMsg(...SIGN_TEXT[key]);
+        else if (t === 'water') showMsg(['A agua corre para o rio.','A sala de leitura fica na margem.','M abre o mapa da regiao.']);
       }
+      if(p==='journal'){game.state='dex';game.dexPage='notes';return;}
       if (p === 'note' || isB(p)) { game.state = 'dex'; game.dexSel = 0; return; }
 
       if (game.moving) {
@@ -1275,6 +1301,7 @@
         }
 
       drawRedacaoBuilding(camX, camY);
+      for(const site of EXPANSION.sites){if(landmarkSprites)g.drawImage(landmarkSprites[site.art],site.x*T-camX,site.y*T-camY,site.w*T,site.h*T);textC(site.name,site.x*T-camX+site.w*T/2,site.y*T-camY-5,'#fff1c9',4);}
 
       /* pokébolas no chão */
       for (const b of BALLS) {
@@ -1306,7 +1333,7 @@
 
       /* HUD compacto */
       frame9(2, 2, 152, 36, { bg: 'rgba(248,248,240,.95)' });
-      text('NOTEBOOK ' + Math.min(caughtCount(), WIN_N) + '/' + WIN_N, 8, 7, '#384878', 6);
+      text('REGISTROS ' + Math.min(caughtCount(), WIN_N) + '/' + WIN_N, 8, 7, '#384878', 6);
       text('Lv' + game.level, 102, 7, '#303030', 6);
       text('HP', 8, 17, '#e07820', 6);
       hpBar(24, 18, 44, game.hp / game.maxhp);
@@ -1316,8 +1343,8 @@
       text('XP ' + game.xp + '/' + game.nextXp, 66, 28, '#4868a0', 5);
       zone(2, 2, 152, 36, 'note');
       frame9(160, 2, 94, 24, { bg: 'rgba(248,248,240,.95)' });
-      text('MISSION', 168, 7, '#c84838', 5);
-      text('FILE 3 DOCS', 168, 17, '#384878', 5);
+      text(regionName(),168,7,'#c84838',5);
+      text('PISTAS '+noteCount()+'/3',168,17,'#384878',5);
 
       if (game.msg) {
         frame9(4, 138, 248, 50);
@@ -1331,10 +1358,10 @@
        BATALHA
        ===================================================================== */
     const MOVES = [
-      { name: 'FACT CHECK', type: 'DATA', dmg: [8, 12], pp: 25, fx: 'question', desc: 'may poison', status: 'poison', statusChance: .22 },
-      { name: 'RECORD PULL', type: 'DOCUMENT', dmg: [7, 11], pp: 20, fx: 'stamp', desc: 'may sleep', status: 'sleep', statusChance: .18 },
-      { name: 'DATA SCRAPE', type: 'TECH', dmg: [9, 13], pp: 15, fx: 'rain', desc: 'may paralyze', status: 'paralysis', statusChance: .24 },
-      { name: 'LEGAL APPEAL', type: 'LEGAL', dmg: [10, 14], pp: 10, fx: 'flash', desc: 'may freeze', status: 'freeze', statusChance: .16 }
+      { name: 'CONFERIR', type: 'DATA', dmg: [8, 12], pp: 25, fx: 'question', desc:'compara registros', status: 'poison', statusChance: .22 },
+      { name: 'DOCUMENTAR', type: 'DOCUMENT', dmg: [7, 11], pp: 20, fx: 'stamp', desc:'preserva prova', status: 'sleep', statusChance: .18 },
+      { name: 'FOTOGRAFAR', type: 'TECH', dmg: [9, 13], pp: 15, fx: 'rain', desc:'revela detalhes', status: 'paralysis', statusChance: .24 },
+      { name: 'CONTESTAR', type: 'LEGAL', dmg: [10, 14], pp: 10, fx: 'flash', desc:'rompe bloqueios', status: 'freeze', statusChance: .16 }
     ];
     game.pp = MOVES.map(m => m.pp);
     const ENEMY_MOVES = [
@@ -1344,17 +1371,17 @@
       { name: 'BROKEN LINK', type: 'TECH', dmg: [6, 9], status: 'poison', statusChance: .15 }
     ];
     const TYPE_EFFECTS = {
-      DATA: { TECH: 2, LEGAL: .5 },
-      DOCUMENT: { LEGAL: 2, TECH: .5 },
-      LEGAL: { DOCUMENT: 2, DATA: .5 },
-      TECH: { DATA: 2, DOCUMENT: .5 }
+      DATA:{DATA:1.8,TECH:1.8,LEGAL:.7},
+      DOCUMENT:{LEGAL:1.8,DOCUMENT:1.2},
+      TECH:{DOCUMENT:1.8,DATA:1.2,LEGAL:.7},
+      LEGAL:{LEGAL:1.8,DATA:.7,TECH:.8}
     };
     const STATUS_LABEL = {
-      paralysis: 'paralyzed',
-      sleep: 'asleep',
-      burn: 'burned',
-      poison: 'poisoned',
-      freeze: 'frozen'
+      paralysis: 'desorientado',
+      sleep: 'distraido',
+      burn: 'cansado',
+      poison: 'confuso',
+      freeze: 'hesitante'
     };
     const STATUS_SHORT = { paralysis: 'PARA', sleep: 'SLP', burn: 'BRN', poison: 'PSN', freeze: 'FRZ' };
 
@@ -1363,8 +1390,8 @@
     }
 
     function effectivenessLine(mult) {
-      if (mult > 1) return 'Super effective!';
-      if (mult < 1) return 'Not very effective...';
+      if (mult > 1) return 'Recurso adequado!';
+      if (mult < 1) return 'Tente outro recurso.';
       return '';
     }
 
@@ -1377,7 +1404,7 @@
       const key = target === 'enemy' ? 'enemyStatus' : 'playerStatus';
       if (!id || b[key] || Math.random() >= chance) return;
       b[key] = makeStatus(id);
-      lines.push((target === 'enemy' ? b.sp.name : 'JOURNALIST') + ' is ' + STATUS_LABEL[id] + '!');
+      lines.push((target === 'enemy' ? b.sp.name : 'REPORTER') + ' ficou ' + STATUS_LABEL[id] + '!');
     }
 
     function residualStatus(target, lines) {
@@ -1388,7 +1415,7 @@
       const dmg = Math.max(1, Math.floor(max * (st.id === 'burn' ? .08 : .10)));
       if (target === 'enemy') b.ehp = Math.max(0, b.ehp - dmg);
       else game.hp = Math.max(0, game.hp - dmg);
-      lines.push((target === 'enemy' ? b.sp.name : 'JOURNALIST') + ' took ' + dmg + ' ' + st.id + ' dmg.');
+      lines.push((target === 'enemy' ? b.sp.name : 'REPORTER') + ' perdeu '+dmg+' de energia.');
       return target === 'enemy' ? b.ehp <= 0 : game.hp <= 0;
     }
 
@@ -1397,27 +1424,27 @@
       const key = target === 'enemy' ? 'enemyStatus' : 'playerStatus';
       const st = b[key];
       if (!st) return false;
-      const who = target === 'enemy' ? b.sp.name : 'JOURNALIST';
+      const who = target === 'enemy' ? b.sp.name : 'REPORTER';
       if (st.id === 'paralysis' && Math.random() < .28) {
-        bmsg([who + ' is paralyzed!', 'It cannot act this turn.'], next);
+        bmsg([who + ' perdeu a orientacao.', 'Precisa de uma rodada.'], next);
         return true;
       }
       if (st.id === 'sleep') {
         st.turns--;
         if (st.turns <= 0) {
           b[key] = null;
-          bmsg([who + ' woke up!'], next);
+          bmsg([who + ' retomou o foco.'], next);
         } else {
-          bmsg([who + ' is asleep.', 'No action this turn.'], next);
+          bmsg([who + ' esta distraido.', 'Sem acao nesta rodada.'], next);
         }
         return true;
       }
       if (st.id === 'freeze') {
         if (Math.random() < .25) {
           b[key] = null;
-          bmsg([who + ' thawed out!'], next);
+          bmsg([who + ' voltou a agir.'], next);
         } else {
-          bmsg([who + ' is frozen solid!', 'No action this turn.'], next);
+          bmsg([who + ' hesitou diante do registro.', 'Sem acao nesta rodada.'], next);
         }
         return true;
       }
@@ -1451,7 +1478,7 @@
 
     function endBattle() {
       game.battle = null;
-      if (caughtCount() >= WIN_N) { game.state = 'win'; game.winT = 0; game.winSel = 0; playMusic(mWin); return; }
+      saveCase();
       game.state = 'world'; playMusic(mGrass);
     }
 
@@ -1489,15 +1516,19 @@
     }
 
     function grantBattleRewards(b) {
+      if(b.sp.id==='LAIDENY'&&b.ehp<=0)game.caseBossSolved=true;
       const money = battleReward(b);
       game.money += money;
       return ['Earned R$' + money + '.'].concat(gainXp(battleXp(b)));
     }
 
+    const SPECIES_ACTIONS={"BADSCAN": {"name": "ORELHADA", "weak": "FOTOGRAFAR"}, "REDACTOR": {"name": "MANCHA DE TINTA", "weak": "DOCUMENTAR"}, "PAYWALL": {"name": "CASCO FECHADO", "weak": "DOCUMENTAR"}, "BOTFARM": {"name": "ECO AGUDO", "weak": "CONFERIR"}, "LOBBYIST": {"name": "FINTA DE CAUDA", "weak": "CONFERIR"}, "PRESSSEC": {"name": "GRITO REPETIDO", "weak": "CONFERIR"}, "SHREDDER": {"name": "CORTE DE PAPEL", "weak": "FOTOGRAFAR"}, "DEEPFAKE": {"name": "REFLEXO DUPLO", "weak": "CONFERIR"}, "LAIDENY": {"name": "ROLAGEM DE ARMADURA", "weak": "CONTESTAR"}};
+    const CREATURE_HINTS={BADSCAN:'Borra partes das copias.',REDACTOR:'Cobre trechos com tinta.',PAYWALL:'Tranca pistas na carapaca.',BOTFARM:'Repete o ultimo som ouvido.',LOBBYIST:'A cauda aponta trilhas falsas.',PRESSSEC:'Repete falas sem contexto.',SHREDDER:'Recorta paginas em tiras.',DEEPFAKE:'Cria copias visuais falsas.',LAIDENY:'A armadura guarda a copia.'};
     function enemyTurn() {
       const b = game.battle;
       if (statusBlocks('enemy', 'menu')) return;
-      const mv = ENEMY_MOVES[Math.floor(Math.random() * ENEMY_MOVES.length)];
+      const template=ENEMY_MOVES[DEX.indexOf(b.sp)%ENEMY_MOVES.length];
+      const mv={...template,name:SPECIES_ACTIONS[b.sp.id].name};
       const base = mv.dmg[0] + Math.floor(Math.random() * (mv.dmg[1] - mv.dmg[0] + 1));
       const mult = typeMult(mv.type, PLAYER_TYPE);
       const levelBump = Math.max(0, Math.floor((b.lv - 8) * .5));
@@ -1505,7 +1536,7 @@
       game.hp = Math.max(0, game.hp - dmg);
       b.eLungeT = 1; b.shake = 1; b.efxT = 1;
       playSfx(mult > 1 ? 'hitPlayerSuper' : 'hitPlayer');
-      const lines = [b.sp.name + ' used ' + mv.name + '!', 'Your credibility took ' + dmg + ' damage.'];
+      const lines = [b.sp.name+' usou '+mv.name+'!', 'Voce perdeu '+dmg+' de folego.'];
       const eff = effectivenessLine(mult);
       if (eff) lines.push(eff);
       applyStatus('player', mv.status, mv.statusChance, lines);
@@ -1532,12 +1563,12 @@
       b.ehp = Math.max(0, b.ehp - dmg);
       b.eFlashT = 1;
       playSfx('hitEnemy');
-      const lines = ['You used ' + m.name + '!', 'It dealt ' + dmg + ' damage.'];
+      const lines = ['Recurso: '+m.name+'!', 'Resistencia reduzida em '+dmg+'.'];
       const eff = effectivenessLine(mult);
       if (eff) lines.push(eff);
       if (b.ehp <= 0) {
         const rewards = grantBattleRewards(b);
-        bmsg(['You used ' + m.name + '!', b.sp.name + ' was debunked!', 'The story advanced.'].concat(rewards), 'flee');
+        bmsg(['You used ' + m.name + '!', b.sp.name+' foi compreendido.', 'A apuracao avancou.'].concat(rewards), 'flee');
       } else {
         applyStatus('enemy', m.status, m.statusChance, lines);
         const fainted = residualStatus('enemy', lines);
@@ -1562,14 +1593,14 @@
     }
 
     const CATCH_LINES = [
-      ['Gotcha! NAME was FILED', 'in your notebook!'],
-      ['Access GRANTED! NAME is', 'now on the public record!'],
-      ['The archive opens. NAME', 'is officially yours!']
+      ['NAME foi registrado','no seu caderno de campo.'],
+      ['Observacao confirmada!','NAME entrou no caderno.'],
+      ['Registro concluido. NAME','pode ser consultado no caderno.']
     ];
     const FAIL_LINES = [
-      ['It BROKE OUT of the file!', 'NAME refuses to comply.'],
-      ['Request DENIED! "Article 23",', 'says NAME, smugly.'],
-      ['So close! NAME slipped', 'out of the paperwork.']
+      ['NAME escapou da anotacao.','Observe mais e tente outra vez.'],
+      ['O registro ficou incompleto.','NAME mudou de posicao.'],
+      ['Faltou um detalhe de NAME.','Reduza a resistencia e tente.']
     ];
 
     function resolveFoia() {
@@ -1579,7 +1610,7 @@
         game.lastInfo = b.sp;
         const l = CATCH_LINES[Math.floor(Math.random() * CATCH_LINES.length)]
           .map(s => s.replace('NAME', b.sp.name));
-        bmsg([...l, '(' + Math.min(caughtCount(), WIN_N) + '/' + WIN_N + ' sources secured)', ...grantBattleRewards(b)], 'end');
+        bmsg([...l, '(' + Math.min(caughtCount(), WIN_N) + '/' + WIN_N + ' especies registradas)', ...grantBattleRewards(b)], 'end');
       } else {
         const l = FAIL_LINES[Math.floor(Math.random() * FAIL_LINES.length)]
           .map(s => s.replace('NAME', b.sp.name));
@@ -1618,7 +1649,7 @@
         b.introT += dt * 1.4;
         if (b.introT >= 1) {
           b.introT = 1;
-          bmsg(['A wild ' + b.sp.name + ' appeared!', '(' + b.sp.kind + ' - Lv' + b.lv + ')'], 'menu');
+          bmsg([b.sp.name+' apareceu na trilha!', '(' + b.sp.kind + ' - Lv' + b.lv + ')', CREATURE_HINTS[b.sp.id], 'Melhor recurso: '+SPECIES_ACTIONS[b.sp.id].weak], 'menu');
         }
         return;
       }
@@ -1689,7 +1720,7 @@
       else if (a === 'foia') doFoia();
       else if (a === 'bag') { b.phase = 'bag'; b.bagSel = 0; }
       else if (a === 'run') {
-        if (b.sp.id === 'LAIDENY') bmsg(['You cannot run from', 'public records!'], 'menu');
+        if (b.sp.id === 'LAIDENY') bmsg(['SIGILO protege o portao.','Conclua o confronto.'], 'menu');
         else {
           playSfx('flee');
           bmsg(['You got away safely.', '(The story can wait.)'], 'flee');
@@ -1885,10 +1916,10 @@
       text('Lv' + b.lv, 100, 14, '#303030', 7);
       text('HP', 12, 27, '#e07820', 7);
       hpBar(30, 28, 88, b.ehpShow / b.emax);
-      text(b.enemyStatus ? STATUS_SHORT[b.enemyStatus.id] : b.sp.type, 12, 37, b.enemyStatus ? '#b03828' : '#4868a0', 5);
+      text(b.enemyStatus ? STATUS_SHORT[b.enemyStatus.id] : ({DATA:'DADOS',DOCUMENT:'DOCUMENTO',LEGAL:'ACESSO',TECH:'SINAL'}[b.sp.type]), 12, 37, b.enemyStatus ? '#b03828' : '#4868a0', 5);
 
       frame9(128, 96, 122, 42, { bg: '#f8f8e8' });
-      text('JOURNALIST', 136, 102, '#303030', 7);
+      text('REPORTER', 136, 102, '#303030', 7);
       text('Lv' + game.level, 216, 102, '#303030', 7);
       text('HP', 136, 115, '#e07820', 7);
       hpBar(154, 116, 86, b.phpShow / game.maxhp);
@@ -1906,10 +1937,10 @@
         zone(0, 0, 256, 192, 'A');
       } else if (b.phase === 'menu') {
         frame9(2, 142, 122, 48, { bg: '#283038', edge: '#687888', dark: '#101820' });
-        text('What will', 10, 152, '#f8f8f8', 7);
-        text('JOURNALIST do?', 10, 164, '#f8f8f8', 7);
+        text('O que o', 10, 152, '#f8f8f8', 7);
+        text('REPORTER faz?', 10, 164, '#f8f8f8', 7);
         frame9(126, 142, 128, 48, { bg: '#f8f8f0' });
-        const items = [['FIGHT', '#c84838'], ['FOIA', '#3878c8'], ['BAG', '#b08820'], ['RUN', '#588048']];
+        const items = [['ACAO', '#c84838'], ['ANOTAR', '#3878c8'], ['BOLSA', '#b08820'], ['VOLTAR', '#588048']];
         items.forEach(([label, col], i) => {
           const x = 134 + (i % 2) * 62, y = 148 + Math.floor(i / 2) * 20;
           if (b.menuSel === i) { px(x - 4, y + 1, 4, 7, '#303030'); }
@@ -1929,7 +1960,7 @@
         });
         const m = MOVES[b.moveSel];
         px(4, 180, 248, 1, '#c8c8c0');
-        text(m.type + ' PWR ' + m.dmg[0] + '-' + m.dmg[1] + ' PP ' + game.pp[b.moveSel] + '/' + m.pp + ' ' + m.desc, 10, 182, '#385888', 5);
+        text(m.desc+' | PP '+game.pp[b.moveSel]+'/'+m.pp,10,182,'#385888',5);
         text('B:BACK', 218, 182, '#888', 5);
         zone(194, 182, 60, 10, 'back');
       } else if (b.phase === 'bag') {
@@ -1949,14 +1980,14 @@
         zone(206, 178, 48, 14, 'back');
       } else if (b.phase === 'anim' || b.phase === 'atkfx') {
         frame9(2, 142, 252, 48, { bg: '#283038', edge: '#687888', dark: '#101820' });
-        if (b.phase === 'anim') text(b.foia && b.foia.t < 1 ? 'You filed a FOIA request!' : '...processing...', 10, 158, '#f8f8f8', 7);
+        if (b.phase === 'anim') text(b.foia && b.foia.t < 1 ? 'Voce registra os detalhes.' : '...conferindo...', 10, 158, '#f8f8f8', 7);
       } else if (b.phase === 'intro') {
         frame9(2, 142, 252, 48, { bg: '#283038', edge: '#687888', dark: '#101820' });
       }
 
       if (b.phase === 'menu') {
         const pc = Math.round(catchChance(b) * 100);
-        text('FOIA odds: ' + pc + '%', 8, 130, '#fff', 6);
+        text('REGISTRO: ' + pc + '%', 8, 130, '#fff', 6);
       }
     }
 
@@ -1966,6 +1997,7 @@
     function updateDex() {
       const p = popPress();
       if (!p) return;
+      if(p==='journal'||p?.act==='notes'){game.dexPage=game.dexPage==='notes'?'species':'notes';return;}
       if (typeof p === 'string' && !['A', 'B'].includes(p)) {
         const cols = 3;
         if (p === 'left') game.dexSel = Math.max(0, game.dexSel - 1);
@@ -1979,14 +2011,21 @@
       if (isB(p) || isA(p)) game.state = 'world';
     }
 
+    function drawCaseNotes(){
+      const notes=[['registro','ARQUIVO MUNICIPAL','O original tem data anterior.','A copia alterada cita a estacao.'],['relato','SALA DE LEITURA','O recorte preserva o simbolo.','A antena ainda estava em uso.'],['sinal','MARCO DO BOSQUE','A frequencia coincide com a antena.','O sinal tem origem na estacao.']];
+      notes.forEach(([id,title,a,b],i)=>{const y=28+i*38,got=!!game.fieldNotes[id];frame9(6,y,244,34,{bg:got?'#e8efdc':'#d5d9d3'});text((got?'[X] ':'[ ] ')+title,12,y+5,got?'#335d3b':'#66746b',5);text(got?a:'Ainda nao conferida. M abre o mapa.',12,y+15,'#43534b',5);if(got)text(b,12,y+24,'#43534b',5);});
+      frame9(6,144,244,44,{bg:'#f1ead6'});text('Especies: '+caughtCount()+'/3 para a materia',12,150,'#394d58',5);text((game.caseBossSolved||game.caught.LAIDENY)?'Estacao: copia conferida.':'Estacao: investigue apos as 3 pistas.',12,160,'#394d58',5);text(game.casePublished?'Materia publicada. Continue explorando.':'Retorne a redacao para publicar.',12,170,'#394d58',5);text('V: alternar | B: fechar',12,180,'#6b746c',4);
+    }
     function drawDex() {
       zones = [];
       px(0, 0, 256, 192, '#203048');
       for (let j = 0; j < 12; j++) for (let i = 0; i < 16; i++)
         if ((i + j) % 2) px(i * 16, j * 16, 16, 16, '#243652');
       frame9(4, 3, 248, 20, { bg: '#f0f0e0' });
-      text('SOURCE NOTEBOOK', 70, 9, '#384878', 8);
-      text(Math.min(caughtCount(), WIN_N) + '/' + WIN_N, 220, 9, '#303030', 8);
+      text('CADERNO DE CAMPO',65,9,'#384878',7);
+      text(caughtCount()+'/'+N_ALL,220,9,'#303030',8);
+      frame9(6,4,48,18,{bg:'#d5e2d1'});text(game.dexPage==='notes'?'ESPECIES':'PISTAS',10,10,'#384878',4);zone(6,4,48,18,'notes');
+      if(game.dexPage==='notes'){drawCaseNotes();return;}
 
       DEX.forEach((d, i) => {
         const x = 8 + (i % 3) * 82, y = 27 + Math.floor(i / 3) * 42;
@@ -1997,7 +2036,7 @@
           if (d.sprite) g.drawImage(hd.creatureFrame(d,game.animClock+i*.31), x + 4, y + 6, 26, 26);
           else g.drawImage(imgGovRecord, x + 5, y + 7, 24, 24);
           text(d.name.slice(0, 8), x + 32, y + 9, '#283038', 6);
-          text('FILED', x + 32, y + 22, '#388048', 6);
+          text('ANOTADO',x+32,y+22,'#388048',5);
         } else {
           text('?????', x + 22, y + 16, '#909088', 7);
         }
@@ -2029,8 +2068,8 @@
       zones=[]; titleT += dt;
       hd.titleDraw();
       textC('ROUTE 26',128,35,'#f8d048',14);
-      textC('INVESTIGATIVE EDITION',128,57,'#ffffff',7);
-      textC('Catch and file 3 documents',128,82,'#ffffff',6);
+      textC('CADERNO DE CAMPO',128,57,'#ffffff',7);
+      textC('3 pistas, 3 especies, uma materia',128,82,'#ffffff',5);
       if (Math.floor(titleT*2)%2) textC('- PRESS A TO START -',128,151,'#ffffff',7);
       zone(0,0,256,192,'A');
     }
@@ -2043,10 +2082,9 @@
         if (!game.tutorialDone) {
           game.tutorialDone = true;
           showMsg(
-            ['Welcome to ROUTE 26!', 'Wild documents hide in the', 'tall grass. Walk into it and', 'they will jump you.'],
-            ['In battle: weaken a document,', 'then FILE FOIA to catch it.', 'The lower its HP, the better', 'your odds (shown on screen).'],
-            ['DATA, DOCUMENT, LEGAL and', 'TECH moves can hit harder', 'or weaker by type matchups.'],
-            ['Moves can paralyze, sleep,', 'burn, poison or freeze.', 'Pick up map items for HP', 'and PP. File 3 to win!']
+            ['Voce e reporter da vila.','Criaturas nasceram das falhas','nos arquivos: tinta, ecos e','registros trancados.'],
+            ['Registre 3 especies no caderno.','Na batalha, reduza a resistencia','e escolha ANOTAR. Cada especie','tem habito e fraqueza proprios.'],
+            ['Encontre pistas no ARQUIVO,','SALA DE LEITURA e BOSQUE.','Depois investigue a ESTACAO','e volte a REDACAO. M: mapa.']
           );
         }
       }
@@ -2059,36 +2097,35 @@
       px(0, 0, 256, 36, '#202020');
       textC('THE DAILY RECORD', 128, 8, '#f8f4e8', 9);
       textC('special edition', 128, 23, '#c8c0a8', 6);
-      textC('SCOOP! 3 SOURCES', 128, 48, '#202020', 9);
-      textC('SECURED VIA FOIA', 128, 63, '#202020', 9);
+      textC('APURACAO CONCLUIDA',128,48,'#202020',8);
+      textC('TRES PISTAS CONFERIDAS',128,63,'#202020',7);
       px(24, 80, 208, 1, '#888');
-      textC('Journalist L. TOLEDO closes the', 128, 88, '#404040', 5);
-      textC('notebook: the documents are', 128, 97, '#404040', 5);
-      textC('now on the public record.', 128, 106, '#404040', 5);
+      textC('O reporter cruza as tres pistas',128,88,'#404040',5);
+      textC('e confirma o registro da estacao.',128,97,'#404040',5);
+      textC('A materia volta para a redacao.',128,106,'#404040',5);
       const got = DEX.filter(d => game.caught[d.id]);
-      got.forEach((d, i) => {
-        const x = 128 - got.length * 16 + i * 32;
-        if (d.sprite) g.drawImage(hd.creatureFrame(d,game.winT+i*.31), x, 116, 28, 28);
-        else g.drawImage(imgGovRecord, x, 116, 28, 28);
+      got.forEach((d,i)=>{
+        const row=Math.floor(i/5),col=i%5,n=Math.min(5,got.length-row*5),x=128-n*14+col*28;
+        g.drawImage(hd.creatureFrame(d,game.winT+i*.31),x,112+row*19,18,18);
       });
-      if (Math.floor(game.winT * 2) % 2) textC('CASE CLOSED!', 128, 150, '#c83828', 8);
+      if (Math.floor(game.winT * 2) % 2) textC('MATERIA PUBLICADA', 128, 150, '#c83828', 8);
       const s0 = game.winSel === 0, s1 = game.winSel === 1;
       frame9(28, 162, 116, 24, { bg: s0 ? '#e05848' : '#c84838', edge: '#f0a890', dark: s0 ? '#f8d048' : '#802818' });
-      textC((s0 ? '> ' : '') + 'EXIT TO SITE', 86, 170, '#fff', 6);
+      textC((s0 ? '> ' : '') + 'PORTFOLIO', 86, 170, '#fff', 6);
       zone(28, 162, 116, 24, 'win', 'exit');
       frame9(150, 162, 80, 24, { bg: s1 ? '#4870a8' : '#385888', edge: '#88a8d8', dark: s1 ? '#f8d048' : '#182848' });
-      textC((s1 ? '> ' : '') + 'PLAY ON', 190, 170, '#fff', 6);
+      textC((s1 ? '> ' : '') + 'CONTINUAR', 190, 170, '#fff', 6);
       zone(150, 162, 80, 24, 'win', 'stay');
     }
 
     function updateWin() {
       const p = popPress();
       const stay = () => {
-        game.caught = {}; game.balls = {}; game.items = { coffee: 0, espresso: 0 };
+        game.msg=null;game.moving=false;game.px=game.fromX=REDACAO.exitX;game.py=game.fromY=REDACAO.exitY;
         game.grassSteps = 0;
         game.hp = game.maxhp;
         MOVES.forEach((m, i) => game.pp[i] = m.pp);
-        game.state = 'world'; playMusic(mGrass);
+        game.state = 'world';saveCase();playMusic(mGrass);
       };
       if (p === 'left' || p === 'right') { game.winSel ^= 1; return; }
       if (p && p.act === 'win') {
@@ -2203,7 +2240,7 @@
       px(0, 0, 256, 192, '#e8e8d8');
       for (let y = 0; y < 192; y += 8) if ((y / 8) % 2) px(0, y, 256, 1, '#d0d0c0');
       frame9(18, 32, 220, 112, { bg: '#f8f8f0', edge: '#7890b8', dark: '#384878' });
-      textC('JOURNALIST', 128, 52, '#303030', 9);
+      textC('REPORTER', 128, 52, '#303030', 9);
       textC('WHITED OUT!', 128, 69, '#c84838', 10);
       textC('Deadlines, denials and', 128, 93, '#505050', 6);
       textC('missing records won this round.', 128, 104, '#505050', 6);
@@ -2216,7 +2253,9 @@
        LOOP
        ===================================================================== */
     let last = 0;
+    function drawAtlasMap(){EXPANSION.drawMap(g,MAP_STR,{x:game.px,y:game.py},[{x:11,y:6,label:'REDACAO'},...EXPANSION.sites.map(s=>({x:s.doorX,y:s.doorY,label:{registry:'ARQUIVO',reading:'LEITURA',station:'ESTACAO'}[s.id]})),{x:57,y:12,label:'MARCO'}], 'VILA / BOSQUE / RIO / ESTACAO');}
     function stepGame(dt) {
+      if(game.showMap&&game.state==='world'){drawWorld();drawAtlasMap();return;}
       game.animClock += dt;
       g.clearRect(0, 0, 256, 192);
 
@@ -2266,31 +2305,37 @@
     window.__game = game;
     window.__startBattle = i => startBattle(DEX[i]);
 
+    EXPANSION.attachMap(game,cv,drawAtlasMap);
     const hd = HD2D(g);
-    hd.actor('pokemonActor', SPR.player);
-    hd.idle('pokemonIdle-v2',SPR.player);
+    hd.actor('reporterWalk-v5', SPR.player);
+    hd.idle('reporterIdle-v5',SPR.player);
     const terrainReady = hd.atlas('pokemonTerrain',4,3,TILES,["grass", "grass2", "tall", "path", "tree", "water", "water2", "flower", "flower2", "sign", "fence"]);
     hd.load('environmentGrass-v3',async img=>{await terrainReady; TILES.grass=hd.cell(img,1,1,0,16,16);TILES.grass2=TILES.grass;});
     hd.load('pathSeamless',async img=>{await terrainReady;TILES.path=hd.cell(img,1,1,0,16,16);});
     hd.water('environmentWater-v3');
     hd.load('worldProps',async img=>{await terrainReady;[['tree',0],['flower',1],['flower2',1],['sign',2],['fence',7],['tall',6]].forEach(([k,i])=>TILES[k]=hd.cell(img,4,2,i,16,16,true));});
-    hd.titleLoad('pokemonTitle');
+    hd.load('bridge-v5',img=>{TILES.bridge=hd.cell(img,1,1,0,16,16);});
+    hd.titleLoad('reporterTitle-v5');
     hd.load('pokemonCreatures',img=>{ const ball=hd.cell(img,3,3,8,10,9,true); BALL_SPR.width=ball.width;BALL_SPR.height=ball.height;BALL_SPR.getContext('2d').drawImage(ball,0,0); });
     hd.load('pokemonBuilding',()=>{});
     hd.load('pokemonBattleBackground',()=>{});
     hd.load('pokemonBattleTrainer',img=>{imgTrainerBack.src=img.src;});
+    let landmarkSprites;
+    hd.load('landmarks-v5',img=>{landmarkSprites=Array.from({length:3},(_,i)=>hd.cell(img,3,1,i,80,64,true));});
     let battleTrainerFrames;
-    hd.load('trainerBattleAnimation-v2',img=>{battleTrainerFrames=hd.frames(img,4,2,86,86);});
-    hd.creature('badscanAnimation-v2',DEX.find(d=>d.id==='BADSCAN'));
-    hd.creature('redactorAnimation-v2',DEX.find(d=>d.id==='REDACTOR'));
-    hd.creature('paywallAnimation-v2',DEX.find(d=>d.id==='PAYWALL'));
-    hd.creature('botfarmAnimation-v2',DEX.find(d=>d.id==='BOTFARM'));
-    hd.creature('lobbyistAnimation-v2',DEX.find(d=>d.id==='LOBBYIST'));
-    hd.creature('presssecAnimation-v2',DEX.find(d=>d.id==='PRESSSEC'));
-    hd.creature('shredderAnimation-v2',DEX.find(d=>d.id==='SHREDDER'));
-    hd.creature('deepfakeAnimation-v2',DEX.find(d=>d.id==='DEEPFAKE'));
-    hd.creature('laidenyAnimation-v2',DEX.find(d=>d.id==='LAIDENY'));
+    hd.load('reporterBattle-v5',img=>{battleTrainerFrames=hd.frames(img,4,2,86,86,false,[{columns:4,indices:[0,1,2,3]},{columns:5,indices:[0,2,3,4]}]);});
+    hd.creature('badscanCreature-v5',DEX.find(d=>d.id==='BADSCAN'));
+    hd.creature('redactorCreature-v5',DEX.find(d=>d.id==='REDACTOR'));
+    hd.creature('paywallCreature-v5',DEX.find(d=>d.id==='PAYWALL'));
+    hd.creature('botfarmCreature-v5',DEX.find(d=>d.id==='BOTFARM'));
+    hd.creature('lobbyistCreature-v5',DEX.find(d=>d.id==='LOBBYIST'));
+    hd.creature('presssecCreature-v5',DEX.find(d=>d.id==='PRESSSEC'));
+    hd.creature('shredderCreature-v5',DEX.find(d=>d.id==='SHREDDER'));
+    hd.creature('deepfakeCreature-v5',DEX.find(d=>d.id==='DEEPFAKE'));
+    hd.creature('laidenyCreature-v5',DEX.find(d=>d.id==='LAIDENY'));
 
+    loadCase();
+    window.__case={inspectSite,inspectTrail,noteCount,caseComplete,sites:EXPANSION.sites};
     window.__hdReady=false;
     window.__hdAssetsReady=hd.ready().then(()=>{window.__hdReady=true;}).catch(e=>{console.error(e);throw e;});
   </script>

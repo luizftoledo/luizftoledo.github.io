@@ -1,0 +1,224 @@
+[
+  {
+    "name": "pokemon",
+    "audit": {
+      "width": 64,
+      "height": 40,
+      "reachable": 1902,
+      "targets": [
+        {
+          "x": 38,
+          "y": 7,
+          "reachable": true
+        },
+        {
+          "x": 32,
+          "y": 26,
+          "reachable": true
+        },
+        {
+          "x": 54,
+          "y": 29,
+          "reachable": true
+        },
+        {
+          "x": 57,
+          "y": 11,
+          "reachable": true
+        }
+      ],
+      "roster": [
+        {
+          "id": "BADSCAN",
+          "name": "BORRAO",
+          "kind": "Coelho de papel",
+          "frames": 8,
+          "unique": 8,
+          "weak": "FOTOGRAFAR"
+        },
+        {
+          "id": "REDACTOR",
+          "name": "TARJA",
+          "kind": "Salamandra de tinta",
+          "frames": 8,
+          "unique": 8,
+          "weak": "DOCUMENTAR"
+        },
+        {
+          "id": "PAYWALL",
+          "name": "TRANCAR",
+          "kind": "Tartaruga-cadeado",
+          "frames": 8,
+          "unique": 8,
+          "weak": "DOCUMENTAR"
+        },
+        {
+          "id": "BOTFARM",
+          "name": "ECO",
+          "kind": "Morcego de eco",
+          "frames": 8,
+          "unique": 8,
+          "weak": "CONFERIR"
+        },
+        {
+          "id": "LOBBYIST",
+          "name": "DESVIO",
+          "kind": "Raposa de trilha",
+          "frames": 8,
+          "unique": 8,
+          "weak": "CONFERIR"
+        },
+        {
+          "id": "PRESSSEC",
+          "name": "RUMOR",
+          "kind": "Papagaio imitador",
+          "frames": 8,
+          "unique": 8,
+          "weak": "CONFERIR"
+        },
+        {
+          "id": "SHREDDER",
+          "name": "TESOURA",
+          "kind": "Besouro de papel",
+          "frames": 8,
+          "unique": 8,
+          "weak": "FOTOGRAFAR"
+        },
+        {
+          "id": "DEEPFAKE",
+          "name": "MIRAGEM",
+          "kind": "Coruja de reflexo",
+          "frames": 8,
+          "unique": 8,
+          "weak": "CONFERIR"
+        },
+        {
+          "id": "LAIDENY",
+          "name": "SIGILO",
+          "kind": "Tatu do arquivo",
+          "frames": 8,
+          "unique": 8,
+          "weak": "CONTESTAR"
+        }
+      ]
+    },
+    "mechanics": {
+      "n1": 1,
+      "dedup": true,
+      "notes": 3,
+      "pending": true,
+      "boss": "LAIDENY",
+      "attacks": true,
+      "damaged": true,
+      "victory": true,
+      "resumed": {
+        "notes": 3,
+        "count": 3,
+        "boss": true
+      }
+    },
+    "errors": []
+  },
+  {
+    "name": "stardew",
+    "audit": {
+      "width": 44,
+      "height": 30,
+      "reachable": 1051,
+      "targets": [
+        {
+          "x": 30,
+          "y": 5,
+          "reachable": true
+        },
+        {
+          "x": 33,
+          "y": 20,
+          "reachable": true
+        },
+        {
+          "x": 18,
+          "y": 25,
+          "reachable": true
+        }
+      ],
+      "caveTargets": [
+        {
+          "pos": "6,3",
+          "reachable": true
+        },
+        {
+          "pos": "20,9",
+          "reachable": true
+        },
+        {
+          "pos": "34,22",
+          "reachable": true
+        },
+        {
+          "pos": "12,13",
+          "reachable": true
+        }
+      ],
+      "exit": "ladder"
+    },
+    "mechanics": {
+      "notes": 3,
+      "dedup": true,
+      "paid": 105,
+      "crop": true
+    },
+    "errors": []
+  },
+  {
+    "name": "persona",
+    "audit": {
+      "width": 46,
+      "height": 30,
+      "reachable": 1012,
+      "targets": [
+        {
+          "x": 40,
+          "y": 5,
+          "reachable": true
+        },
+        {
+          "x": 5,
+          "y": 10,
+          "reachable": true
+        },
+        {
+          "x": 38,
+          "y": 22,
+          "reachable": true
+        }
+      ],
+      "keys": [
+        {
+          "id": "pass",
+          "x": 40,
+          "y": 5,
+          "label": "PASSWORD"
+        },
+        {
+          "id": "badge",
+          "x": 5,
+          "y": 10,
+          "label": "VISITOR BADGE"
+        },
+        {
+          "id": "map",
+          "x": 38,
+          "y": 22,
+          "label": "VAULT MAP"
+        }
+      ]
+    },
+    "mechanics": {
+      "first": 1,
+      "dedup": true,
+      "keys": 3
+    },
+    "errors": []
+  }
+]

@@ -53,12 +53,14 @@ window.HD2D = function (ctx) {
     });});
   }
   // Animation sheets share one scale and baseline across all poses.
-  function frames(img, cols, rows, width, height, grounded=false) {
+  function frames(img, cols, rows, width, height, grounded=false, rowLayout=null) {
     const regions = [];
     for(let i=0;i<cols*rows;i++) {
-      const sw=img.width/cols,sh=img.height/rows;
+      const row=Math.floor(i/cols),layout=rowLayout?.[row],sourceCols=layout?.columns||cols;
+      const sourceColumn=layout?.indices?.[i%cols]??i%cols;
+      const sw=img.width/sourceCols,sh=img.height/rows;
       const tile=document.createElement('canvas');tile.width=Math.round(sw);tile.height=Math.round(sh);
-      const t=tile.getContext('2d');t.drawImage(img,(i%cols)*sw,Math.floor(i/cols)*sh,sw,sh,0,0,tile.width,tile.height);
+      const t=tile.getContext('2d');t.drawImage(img,sourceColumn*sw,row*sh,sw,sh,0,0,tile.width,tile.height);
       const p=t.getImageData(0,0,tile.width,tile.height).data;
       let l=tile.width,r=-1,top=tile.height,bottom=-1;
       if(grounded) {
@@ -147,9 +149,12 @@ window.HD2D = function (ctx) {
       if(waterFrames) {
         const clock=time*3, frame=Math.floor(clock)%8, blend=clock-Math.floor(clock);
         const r=bank.region||{minX:0,minY:0,width:4,height:4};
-        const sw=64/r.width,sh=64/r.height,sx=(wx-r.minX)*sw,sy=(wy-r.minY)*sh;
-        ctx.drawImage(waterFrames[frame],sx,sy,sw,sh,x,y,16,16);
-        ctx.save();ctx.globalAlpha=blend;ctx.drawImage(waterFrames[(frame+1)%8],sx,sy,sw,sh,x,y,16,16);ctx.restore();
+        const ax=wx-r.minX,ay=wy-r.minY,flipX=r.width>6&&Math.floor(ax/4)%2===1,flipY=r.height>6&&Math.floor(ay/4)%2===1;
+        const sw=r.width>6?16:64/r.width,sh=r.height>6?16:64/r.height;
+        const sx=r.width>6?(flipX?3-ax%4:ax%4)*16:ax*sw,sy=r.height>6?(flipY?3-ay%4:ay%4)*16:ay*sh;
+        ctx.save();ctx.translate(x+(flipX?16:0),y+(flipY?16:0));ctx.scale(flipX?-1:1,flipY?-1:1);
+        ctx.drawImage(waterFrames[frame],sx,sy,sw,sh,0,0,16,16);
+        ctx.globalAlpha=blend;ctx.drawImage(waterFrames[(frame+1)%8],sx,sy,sw,sh,0,0,16,16);ctx.restore();
       } else ctx.drawImage(tiles[key],x,y);
       ctx.save();ctx.fillStyle='rgba(24,70,73,.35)';
       if(bank.left)ctx.fillRect(x,y,1.2,16);if(bank.right)ctx.fillRect(x+14.8,y,1.2,16);

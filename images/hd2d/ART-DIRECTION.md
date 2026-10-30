@@ -46,3 +46,11 @@ Fonte Press Start 2P hospedada localmente para não bloquear a abertura dos jogo
 Objetos no mundo têm medidas próprias em relação ao personagem de 14×18: café 4×4, pedra pequena 6×4,5, rocha mineral 9×6,5 e galho 8×3,5. Os ícones de inventário mantêm a área de leitura da interface. Árvores 23×30, com raiz fixa, deformação suave da copa em faixas e ordenação à frente/atrás do personagem. Cercas, placas, caixa de correio, flores e grama alta usam proporções específicas.
 
 Dois novos arquivos ImageGen: environmentGrass-v3 (grama com menos contraste) e environmentWater-v3 (oito quadros de água). Prompts exatos em environment-prompts-v3.json. Água com interpolação entre quadros e textura contínua por lago; margens discretas junto à terra. Sulcos de terra arada contínuos. Chaves e baú do mapa de Persona reduzidos; música preservada.
+
+## Expansão de jogo v5 — repórter e criaturas
+
+15 novos arquivos gerados com ImageGen integrado: nove folhas de criaturas (oito poses por espécie), caminhada/repouso/batalha do repórter, abertura, atlas de três edifícios e ponte. Originais PNG e WebP com sufixo -v5; prompts integrais em expansion-prompts-v5.json. Câmera de cima e ancoragem dos pés preservadas.
+
+Espécies apresentadas ao jogador: BORRAO (coelho de papel), TARJA (salamandra de tinta), TRANCAR (tartaruga-cadeado), ECO (morcego), DESVIO (raposa), RUMOR (papagaio imitador), TESOURA (besouro), MIRAGEM (coruja) e SIGILO (tatu). IDs antigos ficam apenas no código para compatibilidade; nomes, aparências, descrições e ações foram substituídos. A apresentação de cada encontro explica o comportamento e o recurso mais adequado. O repórter usa câmera, caderno, óculos, crachá, colete e bolsa.
+
+Pokémon: 64×40, com vila, bosque, rio, pontes, arquivo, sala de leitura e estação; habitats distintos. Caso com três pistas, três registros, confronto final e entrega na redação. Caderno com abas de pistas/espécies; progresso salvo; continuar após publicar preserva a coleção. Stardew: fazenda/caverna 44×30, pomar, várzea, galerias e notas com recompensa única; compatibilidade com save v1. Persona: 46×30, anexo com divisórias, novos trajetos de patrulha, senha/planta deslocadas e memórias de cofre com pista e redução de alerta uma vez. Mapa M/botão com pontos numerados e legenda nos três jogos. Músicas preservadas.

@@ -236,9 +236,10 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=ground-contact-4"></script>
+  <script src="scripts/hd2d-art.js?v=field-rpg-5"></script>
   <link rel="stylesheet" href="game-layout.css?v=1">
   <script src="scripts/game-layout.js?v=1" defer></script>
+  <script src="scripts/game-expansion.js?v=5"></script>
 </head>
 
 <body>
@@ -270,7 +271,7 @@
     </div>
   </div>
 
-  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER act/hide &nbsp;·&nbsp; X/ESC status</div>
+  <div class="kbd-bar">M: MAPA &nbsp;·&nbsp; ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER act/hide &nbsp;·&nbsp; X/ESC status</div>
 
   <audio id="bgm" src="persona_5_life_will_change.mp3" loop preload="auto"></audio>
 
@@ -546,7 +547,7 @@
        D vault door  T treasure pedestal  E palace entrance
        B badge key  M vault-map key  P password key (spawn markers)
        ===================================================================== */
-    const MAP_STR = [
+    const MAP_STR = EXPANSION.palace([
       '##########################',
       '#...v....########....v...#',
       '#.c..s...#..TT..#..s...P.#',
@@ -565,7 +566,7 @@
       '#rrrrrrrrrrrrrrrrrrrrrrrr#',
       '#....c....v.E.v....c.....#',
       '##########################'
-    ];
+    ]);
     const MAPW = MAP_STR[0].length, MAPH = MAP_STR.length;
     const CHAR2TILE = {
       '#': 'wall', '.': 'floor', 'r': 'carpet', 'c': 'column', 's': 'safe',
@@ -610,7 +611,9 @@
       { path: [[21, 8], [16, 8], [16, 12], [21, 12]], name: 'SHADOW GUARD' },
       { path: [[17, 3], [23, 3]], name: 'SHADOW LAWYER' },
       { path: [[2, 5], [23, 5]], name: 'SHADOW BUTLER' },
-      { path: [[23, 15], [2, 15]], name: 'SHADOW INTERN' }
+      { path: [[23, 15], [2, 15]], name: 'SHADOW INTERN' },
+      {path:[[28,6],[42,6],[42,10],[28,10]],name:'ARCHIVE PATROL'},
+      {path:[[35,18],[42,18],[42,22],[35,22]],name:'RECORDS PATROL'}
     ];
     const CONE_LEN = 58, CONE_HALF = 0.5;
     let guards = [];
@@ -636,7 +639,7 @@
       px: SPAWN.x, py: SPAWN.y, dir: 'up',
       moving: false, moveT: 0, fromX: SPAWN.x, fromY: SPAWN.y,
       step: 0,
-      keysHave: {},                 /* badge / map / pass */
+      archiveNotes:{}, keysHave: {},                 /* badge / map / pass */
       doorOpen: false,
       dossier: false,
       escape: false,
@@ -654,7 +657,7 @@
     const allKeys = () => keyCount() === 3;
 
     function resetRun() {
-      game.keysHave = {};
+      game.keysHave = {};game.archiveNotes={};game.showMap=false;
       game.doorOpen = false; game.dossier = false; game.escape = false;
       game.alert = 0; game.hidden = false; game.spot = null; game.msg = null;
       game.px = game.fromX = SPAWN.x; game.py = game.fromY = SPAWN.y;
@@ -1068,6 +1071,16 @@
     }
 
     /* ---------- world update ---------- */
+    const ARCHIVE_MEMOS={
+      '5,2':['MEMORIA DE ACESSO','A credencial fica na ala oeste.','A senha foi levada para leste.'],
+      '31,3':['LIVRO DE TURNO','A senha fica no corredor norte.','Consulte o mapa para localizar.'],
+      '39,9':['REGISTRO DE ENTREGA','A planta foi levada ao anexo sul.','Vasos oferecem cobertura no caminho.'],
+      '29,20':['COPIA DE SEGURANCA','O cofre original fica no noroeste.','Volte a entrada com o dossie.']
+    };
+    function readArchive(f){const key=f.x+','+f.y,lines=ARCHIVE_MEMOS[key]||['COFRE AUXILIAR','Uma copia confirma a cronologia.','A leitura reduz um nivel de alerta.'];
+      if(!game.archiveNotes[key]){game.archiveNotes[key]=true;game.alert=Math.max(0,game.alert-1);}
+      showMsg(lines);
+    }
     function updateWorld(dt) {
       if (doorCooldown > 0) doorCooldown -= dt;
       if (treasureCooldown > 0) treasureCooldown -= dt;
@@ -1109,7 +1122,7 @@
             if (game.doorOpen && !game.dossier) takeDossier();
             else if (!game.doorOpen) showMsg(['A marble pedestal, waiting', 'for a Treasure that only a', 'calling card can summon.']);
           }
-          else if (ch === 's') showMsg(['A decorative safe. Empty,', "like the palace's promises."]);
+          else if(ch==='s')readArchive(f);
           else if (ch === 'c') showMsg(['A column of pure ego.', 'Load-bearing, apparently.']);
         }
       }
@@ -1482,9 +1495,9 @@
       frameP5(6, 33, 244, 70, { acc: false });
       text('THE THREE SEALS', 16, 39, '#e83040', 6);
       const rows = [
-        ['badge', 'VISITOR BADGE', 'west wing loop'],
-        ['map', 'VAULT MAP', 'east wing loop'],
-        ['pass', 'PASSWORD', 'top floor desk']
+        ['badge','CRACHA','ala oeste'],
+        ['map','PLANTA DO COFRE','anexo sul'],
+        ['pass','SENHA','arquivo leste']
       ];
       rows.forEach((r, i) => {
         const y = 50 + i * 17;
@@ -1525,7 +1538,9 @@
        LOOP
        ===================================================================== */
     let last = 0;
+    function drawAtlasMap(){EXPANSION.drawMap(g,MAP_STR,{x:game.px,y:game.py},[...KEY_DEFS.filter(k=>!game.keysHave[k.id]).map(k=>({x:k.x,y:k.y,label:{badge:'CRACHA',map:'PLANTA',pass:'SENHA'}[k.id]})),{x:12,y:4,label:'COFRE'},{x:12,y:16,label:'SAIDA'}], 'PALACIO / ARQUIVO / ANEXO');}
     function stepGame(dt) {
+      if(game.showMap&&game.state==='world'){drawWorld();drawAtlasMap();return;}
       game.animClock += dt;
       g.clearRect(0, 0, 256, 192);
 
@@ -1595,6 +1610,7 @@
       targets: KEY_DEFS.filter(k => !game.keysHave[k.id]).map(k => ({ id: k.id, x: k.x, y: k.y }))
     });
 
+    EXPANSION.attachMap(game,cv,drawAtlasMap);
     const hd = HD2D(g);
     hd.actor('personaActor', SPR.player);
     hd.idle('personaIdle-v2',SPR.player);

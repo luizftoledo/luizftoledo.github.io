@@ -236,9 +236,10 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=ground-contact-4"></script>
+  <script src="scripts/hd2d-art.js?v=field-rpg-5"></script>
   <link rel="stylesheet" href="game-layout.css?v=1">
   <script src="scripts/game-layout.js?v=1" defer></script>
+  <script src="scripts/game-expansion.js?v=5"></script>
 </head>
 
 <body>
@@ -271,7 +272,7 @@
     </div>
   </div>
 
-  <div class="kbd-bar">ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER use &nbsp;·&nbsp; C or 1-5 tools &nbsp;·&nbsp; I bag &nbsp;·&nbsp; X/ESC cancel</div>
+  <div class="kbd-bar">M: MAPA &nbsp;·&nbsp; ARROWS/WASD move &nbsp;·&nbsp; Z/ENTER use &nbsp;·&nbsp; C or 1-5 tools &nbsp;·&nbsp; I bag &nbsp;·&nbsp; X/ESC cancel</div>
 
   <audio id="bgm" loop preload="none"></audio>
 
@@ -684,7 +685,7 @@
     /* =====================================================================
        MAPS — farm 24x16 + dead archive 24x16
        ===================================================================== */
-    const FARM_STR = [
+    const FARM_STR = EXPANSION.farm([
       '########################',
       '#,,,,,,,,,,%C%,,,,,,,,*#',
       '#,*,RRRRRR,,,,,,,~~~~,,#',
@@ -701,8 +702,8 @@
       '#,FFFFFFFFFF,,,,,,,,,,,#',
       '#,,*,,,,,,L,,,,,O,,,*,,#',
       '########################'
-    ];
-    const CAVE_STR = [
+    ]);
+    const CAVE_STR = EXPANSION.farm([
       '########################',
       '######............######',
       '###.....O....O.......###',
@@ -719,11 +720,11 @@
       '#####.......X......#####',
       '########........########',
       '########################'
-    ];
-    const MAPW = 24, MAPH = 16;
+    ],true);
+    const MAPW = FARM_STR[0].length, MAPH = FARM_STR.length;
 
     const FARM_T = {
-      '#': 'tree', ',': 'grass', '*': 'flower', '%': 'rockface', 'C': 'cavemouth',
+      '#': 'tree', '=': 'path', ',': 'grass', '*': 'flower', '%': 'rockface', 'C': 'cavemouth',
       '~': 'water', 'R': 'roof', 'V': 'wall', 'v': 'window', 'D': 'door',
       'M': 'mailbox', '!': 'sign', 'F': 'fence', 't': 'soil', 'O': 'grass', 'L': 'grass',
       'B': 'shop'
@@ -819,7 +820,7 @@
       energy: ENERGY_MAX,
       published: 0,
       rareDocs: 0,
-      leads: 0,
+      leads: 0, fieldNotes:{},
       gold: 50,
       inv: { seed: 3 },              // item id -> count (seeds are finite!)
       luckyPen: false,               // next published story pays double
@@ -854,7 +855,7 @@
         const j = Math.floor(Math.random() * (i + 1));
         [keys[i], keys[j]] = [keys[j], keys[i]];
       }
-      keys.slice(0, 3).forEach(k => game.rareRocks[k] = true);
+      ['6,3','20,9','34,22'].forEach(k=>{game.objs.cave[k]='rock';game.rareRocks[k]=true;});
     })();
 
     const SAVE_KEY = 'journalismValleySave';
@@ -863,7 +864,7 @@
     function saveGame() {
       try {
         localStorage.setItem(SAVE_KEY, JSON.stringify({
-          version: 1,
+          version: 2, fieldNotes:game.fieldNotes,
           map: game.map, px: game.px, py: game.py, dir: game.dir, tool: game.tool,
           day: game.day, energy: game.energy, published: game.published,
           rareDocs: game.rareDocs, leads: game.leads, gold: game.gold,
@@ -883,7 +884,7 @@
         const raw = localStorage.getItem(SAVE_KEY);
         if (!raw) return false;
         data = JSON.parse(raw);
-        if (!data || data.version !== 1 || (data.map !== 'farm' && data.map !== 'cave') ||
+        if (!data || ![1,2].includes(data.version) || (data.map !== 'farm' && data.map !== 'cave') ||
           !Number.isFinite(data.px) || !Number.isFinite(data.py) ||
           !data.inv || !data.farm || !data.objs || !data.objs.farm || !data.objs.cave ||
           !data.rareRocks || !Array.isArray(data.items)) throw new Error('bad save');
@@ -900,7 +901,8 @@
       game.day = data.day || 1; game.energy = data.energy == null ? ENERGY_MAX : data.energy;
       game.published = data.published || 0; game.rareDocs = data.rareDocs || 0;
       game.leads = data.leads || 0; game.gold = data.gold == null ? 50 : data.gold;
-      game.inv = data.inv; game.farm = data.farm; game.objs = data.objs;
+      game.inv = data.inv; game.farm = data.farm; game.objs = data.objs;game.fieldNotes=data.fieldNotes||{};
+      if(data.version<2)for(let y=0;y<MAPH;y++)for(let x=0;x<MAPW;x++)if((x>=24||y>=16)&&CAVE_STR[y][x]==='O')game.objs.cave[x+','+y]='rock';
       game.rareRocks = data.rareRocks; game.items = data.items;
       game.luckyPen = !!data.luckyPen; game.caveVisited = !!data.caveVisited;
       game.shop = null; game.bag = false; game.manualTool = false; game.msg = null; game.confirm = null;
@@ -1336,13 +1338,22 @@
       }
     }
 
+    const FIELD_NOTES={
+      '30,6':{id:'pomar',pages:['POMAR: a fonte guardou recibos.','As datas permitem comparar safras.','Anotacao obtida. +2 sementes.']},
+      '33,21':{id:'varzea',pages:['VARZEA: ha marcas de enchente.','A medida no muro confirma o relato.','Anotacao obtida. +2 sementes.']},
+      '18,24':{id:'trilha',pages:['TRILHA: um mapa aponta tres salas.','Rochas em (6,3), (20,9), (34,22)','guardam documentos no arquivo.']}
+    };
+    function fieldNote(key){const n=FIELD_NOTES[key];if(!n)return false;
+      if(!game.fieldNotes[n.id]){game.fieldNotes[n.id]=true;game.leads++;game.gold+=35;game.inv.seed=(game.inv.seed||0)+2;game.energy=Math.min(ENERGY_MAX,game.energy+12);saveGame();}
+      if(n.id==='trilha'){say(['ARQUIVO: documentos restantes.','Procure perto destas posicoes:',Object.keys(game.rareRocks).join(' / ')||'Todos os documentos ja achados.']);}else say(n.pages);return true;
+    }
     function interact() {
       /* A button: collect > talk to things > use tool */
       const it = itemAt(game.px, game.py) || (() => { const f = facingTile(); return itemAt(f.x, f.y); })();
       if (it) return collectItem(it);
 
       const f = facingTile(), t = tileAt(f.x, f.y);
-      if (t === 'sign') return say(...SIGN_PAGES);
+      if(t==='sign'){if(fieldNote(f.x+','+f.y))return;return say(...SIGN_PAGES);}
       if (t === 'mailbox') return say(MAIL[(game.day - 1) % MAIL.length]);
       if (t === 'door') {
         game.confirm = { lines: ['Crawl into bed and sleep', 'until tomorrow?'], yes: startSleep };
@@ -1976,7 +1987,9 @@
     syncToolBtn();
 
     let last = 0;
+    function drawAtlasMap(){EXPANSION.drawMap(g,game.map==='farm'?FARM_STR:CAVE_STR,{x:game.px,y:game.py},game.map==='farm'?[{x:30,y:6,label:'POMAR'},{x:33,y:21,label:'VARZEA'},{x:18,y:24,label:'TRILHA'}]:[...Object.keys(game.rareRocks).map((k,i)=>{const [x,y]=k.split(',').map(Number);return{x,y,label:'DOC '+(i+1)};}),{x:12,y:13,label:'SAIDA'}],game.map==='farm'?'FAZENDA / POMAR / VARZEA':'ARQUIVO / GALERIAS');}
     function stepGame(dt) {
+      if(game.showMap&&game.state==='world'){drawWorld();drawAtlasMap();return;}
       game.animClock += dt;
       g.clearRect(0, 0, 256, 192);
 
@@ -2049,6 +2062,7 @@
       tool: TOOLS[game.tool], bag: game.bag, shop: !!game.shop, message: !!game.msg
     });
 
+    EXPANSION.attachMap(game,cv,drawAtlasMap);
     const hd = HD2D(g);
     hd.actor('stardewActor', SPR.player);
     hd.idle('stardewIdle-v2',SPR.player);
@@ -2058,6 +2072,7 @@
     hd.load('stardewHouse',()=>{});
     hd.water('environmentWater-v3');
     hd.load('worldProps',async img=>{await terrainReady;[['tree',0],['flower',1],['flower2',1],['sign',2],['fence',3],['mailbox',4],['shop',5]].forEach(([k,i])=>TILES[k]=hd.cell(img,4,2,i,16,16,true));});
+    hd.load('pathSeamless',img=>{TILES.path=hd.cell(img,1,1,0,16,16);});
     hd.titleLoad('stardewTitle');
     hd.load('stardewObjects',img=>{
       ["stone", "branch", "rock", "doc", "coffee", "lead", "photo", "scoop", "ore", "seedbag", "energybar", "luckypen", "fertilizer"].forEach((k,i)=>OBJS[k]=hd.cell(img,5,5,i,16,16,true));

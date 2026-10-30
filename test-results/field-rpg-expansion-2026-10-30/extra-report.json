@@ -1,0 +1,54 @@
+[
+  {
+    "name": "pokemon",
+    "extra": {
+      "firstWin": true,
+      "kept": true,
+      "canRest": true,
+      "weaknesses": true
+    },
+    "ui": {
+      "controlsRight": 193,
+      "quitLeft": 291,
+      "mapButtons": [
+        "MUTE",
+        "FULL",
+        "MAPA"
+      ]
+    }
+  },
+  {
+    "name": "stardew",
+    "extra": {
+      "legacyPublished": 1,
+      "legacyDocs": 2,
+      "legacyEnergy": 74,
+      "newRock": "rock",
+      "notes": 0
+    },
+    "ui": {
+      "controlsRight": 199,
+      "quitLeft": 291,
+      "mapButtons": [
+        "♪",
+        "MAPA",
+        "TELA CHEIA"
+      ]
+    }
+  },
+  {
+    "name": "persona",
+    "extra": {
+      "patrolWalls": []
+    },
+    "ui": {
+      "controlsRight": 199,
+      "quitLeft": 291,
+      "mapButtons": [
+        "♪",
+        "MAPA",
+        "TELA CHEIA"
+      ]
+    }
+  }
+]
