@@ -276,7 +276,7 @@
     }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=animations-2"></script>
+  <script src="scripts/hd2d-art.js?v=environment-3"></script>
 </head>
 
 <body>
@@ -1258,6 +1258,7 @@
       camX = Math.max(0, Math.min(MAPW * T - 256, camX));
       camY = Math.max(0, Math.min(MAPH * T - 192, camY));
 
+      const nature=[];
       const animFrame = Math.floor(game.animClock * 1.6) % 2;
       const x0 = Math.floor(camX / T), y0 = Math.floor(camY / T);
       for (let j = y0; j <= y0 + 13 && j < MAPH; j++)
@@ -1267,8 +1268,7 @@
           else if (t === 'flower' && animFrame) t = 'flower2';
           else if (t === 'grass' && ((i * 7 + j * 13) % 5 === 0)) t = 'grass2';
           const sx = i * T - camX, sy = j * T - camY;
-          if(hd.loaded.worldProps && ['tree','flower','flower2','sign','fence','tall'].includes(t))g.drawImage(TILES.grass,sx,sy);
-          g.drawImage(TILES[t], sx, sy);
+          hd.worldTile(t,TILES,sx,sy,game.animClock,i,j,nature,{region:hd.waterRegion(tileAt,i,j,game.map||'route'),left:tileAt(i-1,j)!=='water',right:tileAt(i+1,j)!=='water',top:tileAt(i,j-1)!=='water',bottom:tileAt(i,j+1)!=='water'});
           drawGroundDetail(t, i, j, sx, sy);
         }
 
@@ -1277,8 +1277,10 @@
       /* pokébolas no chão */
       for (const b of BALLS) {
         if (game.balls[b.x + ',' + b.y]) continue;
-        g.drawImage(BALL_SPR, b.x * T - camX + 3, b.y * T - camY + 4,10,9);
+        g.drawImage(BALL_SPR, b.x * T - camX + 5.5, b.y * T - camY + 8,5,4.5);
       }
+
+      hd.natureLayer(nature,game.animClock,wy-camY+16);
 
       /* personagem: ciclo passoA → parado → passoB → parado */
       const dirFrames = SPR.player[game.dir];
@@ -1288,9 +1290,10 @@
       g.fillStyle = 'rgba(35,63,40,.32)';
       g.beginPath(); g.ellipse(Math.round(wx - camX + 8), Math.round(wy - camY + 15), 6, 2, 0, 0, 7); g.fill();
       g.drawImage(frame, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
+      hd.natureLayer(nature,game.animClock,wy-camY+16,true);
 
       if (tileAt(game.px, game.py) === 'tall' && !game.moving)
-        g.drawImage(TILES.tall,0,11,16,5,game.px*T-camX,game.py*T-camY+11,16,5);
+        g.drawImage(TILES.tall,0,11,16,5,game.px*T-camX+.5,game.py*T-camY+12.875,15,3.125);
 
       if (game.rustle) {
         const r = game.rustle;
@@ -2267,9 +2270,9 @@
     hd.actor('pokemonActor', SPR.player);
     hd.idle('pokemonIdle-v2',SPR.player);
     const terrainReady = hd.atlas('pokemonTerrain',4,3,TILES,["grass", "grass2", "tall", "path", "tree", "water", "water2", "flower", "flower2", "sign", "fence"]);
-    hd.load('grassSeamless',async img=>{await terrainReady; TILES.grass=hd.cell(img,1,1,0,16,16);TILES.grass2=TILES.grass;});
+    hd.load('environmentGrass-v3',async img=>{await terrainReady; TILES.grass=hd.cell(img,1,1,0,16,16);TILES.grass2=TILES.grass;});
     hd.load('pathSeamless',async img=>{await terrainReady;TILES.path=hd.cell(img,1,1,0,16,16);});
-    terrainReady.then(()=>{TILES.water=TILES.water2;});
+    hd.water('environmentWater-v3');
     hd.load('worldProps',async img=>{await terrainReady;[['tree',0],['flower',1],['flower2',1],['sign',2],['fence',7],['tall',6]].forEach(([k,i])=>TILES[k]=hd.cell(img,4,2,i,16,16,true));});
     hd.titleLoad('pokemonTitle');
     hd.load('pokemonCreatures',img=>{ const ball=hd.cell(img,3,3,8,10,9,true); BALL_SPR.width=ball.width;BALL_SPR.height=ball.height;BALL_SPR.getContext('2d').drawImage(ball,0,0); });

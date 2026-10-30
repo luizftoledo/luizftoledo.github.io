@@ -1,0 +1,123 @@
+[
+  {
+    "name": "stardew",
+    "metrics": {
+      "waterChangedPixels": 4094,
+      "canopyChangedPixels": 4124,
+      "trunkChangedPixels": 0,
+      "objects": {
+        "coffee": {
+          "width": 3.5,
+          "height": 4.5,
+          "planned": [
+            4,
+            4
+          ]
+        },
+        "stone": {
+          "width": 5.5,
+          "height": 4.75,
+          "planned": [
+            6,
+            4.5
+          ]
+        },
+        "rock": {
+          "width": 7.5,
+          "height": 7,
+          "planned": [
+            9,
+            6.5
+          ]
+        },
+        "branch": {
+          "width": 7.5,
+          "height": 3.5,
+          "planned": [
+            8,
+            3.5
+          ]
+        },
+        "doc": {
+          "width": 4.5,
+          "height": 5.5,
+          "planned": [
+            5,
+            5
+          ]
+        }
+      }
+    },
+    "errors": [],
+    "state": {
+      "coordinates": "tile grid, origin top-left, x right, y down",
+      "state": "world",
+      "map": "farm",
+      "player": {
+        "x": 3,
+        "y": 7,
+        "dir": "down"
+      },
+      "day": 1,
+      "energy": 95,
+      "stories": 0,
+      "rareDocs": 0,
+      "tool": "CAN",
+      "bag": false,
+      "shop": false,
+      "message": false
+    }
+  },
+  {
+    "name": "pokemon",
+    "metrics": {
+      "waterChangedPixels": 4094,
+      "canopyChangedPixels": 4124,
+      "trunkChangedPixels": 0,
+      "objects": {}
+    },
+    "errors": [],
+    "state": {
+      "state": "world",
+      "coords": "origin top-left, x right, y down, logical canvas 256x192",
+      "player": {
+        "x": 20,
+        "y": 9,
+        "dir": "right",
+        "level": 10,
+        "xp": 0,
+        "nextXp": 90,
+        "hp": 58,
+        "maxhp": 58,
+        "money": 120,
+        "status": null
+      },
+      "battle": null,
+      "items": {
+        "coffee": 0,
+        "espresso": 0
+      },
+      "filed": 0
+    }
+  },
+  {
+    "name": "persona",
+    "metrics": {},
+    "errors": [],
+    "state": {
+      "coordinates": "tile grid, origin top-left, x right, y down",
+      "state": "world",
+      "player": {
+        "x": 12,
+        "y": 15,
+        "dir": "right",
+        "hidden": false
+      },
+      "seals": 3,
+      "alert": 0,
+      "doorOpen": true,
+      "dossier": false,
+      "targets": []
+    }
+  }
+]

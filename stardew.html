@@ -236,7 +236,7 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=animations-2"></script>
+  <script src="scripts/hd2d-art.js?v=environment-3"></script>
 </head>
 
 <body>
@@ -1642,6 +1642,7 @@
       camX = Math.max(0, Math.min(MAPW * T - 256, camX));
       camY = Math.max(0, Math.min(MAPH * T - 192, camY));
 
+      const nature=[];
       const animFrame = Math.floor(game.animClock * 1.6) % 2;
       const x0 = Math.floor(camX / T), y0 = Math.floor(camY / T);
       for (let j = y0; j <= y0 + 13 && j < MAPH; j++)
@@ -1654,8 +1655,7 @@
           if (t === 'soil' && game.farm[key] && game.farm[key].tilled)
             t = game.farm[key].wet ? 'tilledwet' : 'tilled';
           const sx = i * T - camX, sy = j * T - camY;
-          if(hd.loaded.worldProps && ['tree','flower','flower2','sign','fence','mailbox','shop'].includes(t))g.drawImage(TILES.grass,sx,sy);
-          g.drawImage(TILES[hd.loaded.stardewHouse && ['roof','wall','window','door'].includes(t) ? 'grass' : t], sx, sy);
+          hd.worldTile(hd.loaded.stardewHouse && ['roof','wall','window','door'].includes(t)?'grass':t,TILES,sx,sy,game.animClock,i,j,nature,{region:hd.waterRegion(tileAt,i,j,game.map||'route'),left:tileAt(i-1,j)!=='water',right:tileAt(i+1,j)!=='water',top:tileAt(i,j-1)!=='water',bottom:tileAt(i,j+1)!=='water'});
           drawFarmTileDetail(t, i, j, sx, sy);
 
           const cell = game.farm[key];
@@ -1667,9 +1667,7 @@
 
           const obj = game.objs[game.map][key];
           if (obj) {
-            g.fillStyle = 'rgba(35,26,16,.24)';
-            g.beginPath(); g.ellipse(sx + 8, sy + 13, 5, 2, 0, 0, 7); g.fill();
-            g.drawImage(OBJS[obj], sx, sy);
+            hd.worldObject(OBJS[obj],obj,sx,sy);
             if (obj === 'rock' && game.rareRocks[key] && (game.animClock * 2 + i) % 3 < .4) {
               px(i * T - camX + 4 + (i % 5), j * T - camY + 4 + (j % 4), 1, 1, '#f6e294');
               px(i * T - camX + 10 - (j % 3), j * T - camY + 8, 1, 1, '#ffffff');
@@ -1680,10 +1678,11 @@
       if (game.map === 'farm') {
         if(hd.loaded.stardewHouse)g.drawImage(hd.loaded.stardewHouse,4*T-camX,2*T-camY,6*T,3*T);
         for (const it of game.items) {
-          const bob = Math.sin(game.animClock * 3 + it.x) * 1.5;
-          g.drawImage(OBJS[it.type], it.x * T - camX, it.y * T - camY + bob - 2);
+          hd.worldObject(OBJS[it.type],it.type,it.x*T-camX,it.y*T-camY,game.animClock,true);
         }
       }
+
+      hd.natureLayer(nature,game.animClock,wy-camY+16);
 
       /* player: stepA -> stand -> stepB -> stand (same cycle as pokemon.html) */
       const dirFrames = SPR.player[game.dir];
@@ -1693,6 +1692,7 @@
       g.fillStyle = 'rgba(39,55,29,.32)';
       g.beginPath(); g.ellipse(Math.round(wx - camX + 8), Math.round(wy - camY + 15), 6, 2, 0, 0, 7); g.fill();
       g.drawImage(frame, Math.round(wx - camX + 1), Math.round(wy - camY - 4));
+      hd.natureLayer(nature,game.animClock,wy-camY+16,true);
 
       if (!game.msg && !game.shop && !game.bag) {
         const f = facingTile(), suggested = smartTool(f.x, f.y);
@@ -2053,10 +2053,10 @@
     hd.actor('stardewActor', SPR.player);
     hd.idle('stardewIdle-v2',SPR.player);
     const terrainReady = hd.atlas('stardewTerrain',6,4,TILES,["grass", "grass2", "tree", "water", "water2", "flower", "flower2", "sign", "fence", "soil", "tilled", "tilledwet", "roof", "wall", "window", "door", "mailbox", "rockface", "cavemouth", "cwall", "cfloor", "shop", "ladder"]);
-    hd.load('grassSeamless',async img=>{await terrainReady; TILES.grass=hd.cell(img,1,1,0,16,16);TILES.grass2=TILES.grass;});
+    hd.load('environmentGrass-v3',async img=>{await terrainReady; TILES.grass=hd.cell(img,1,1,0,16,16);TILES.grass2=TILES.grass;});
     hd.load('soilSeamless',async img=>{await terrainReady;TILES.soil=hd.cell(img,1,1,0,16,16);});
     hd.load('stardewHouse',()=>{});
-    terrainReady.then(()=>{TILES.water=TILES.water2;});
+    hd.water('environmentWater-v3');
     hd.load('worldProps',async img=>{await terrainReady;[['tree',0],['flower',1],['flower2',1],['sign',2],['fence',3],['mailbox',4],['shop',5]].forEach(([k,i])=>TILES[k]=hd.cell(img,4,2,i,16,16,true));});
     hd.titleLoad('stardewTitle');
     hd.load('stardewObjects',img=>{

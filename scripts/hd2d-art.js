@@ -95,6 +95,74 @@ window.HD2D = function (ctx) {
   function creature(name,target) {
     return load(name,img=>{target.animation=frames(img,4,2,24,24);target.sprite=target.animation[0];});
   }
+  let waterFrames;
+  const worldSizes = {
+    coffee:[4,4],stone:[6,4.5],rock:[9,6.5],branch:[8,3.5],doc:[5,5],lead:[5,4],photo:[5,5],
+    scoop:[4.5,5],ore:[5,4],seedbag:[5,6],energybar:[5,3],luckypen:[4,4],fertilizer:[5,6]
+  };
+  function worldObject(sprite,key,x,y,time=0,floating=false) {
+    const [w,h]=worldSizes[key]||[7,7], bob=floating?Math.sin(time*2.2+x*.05)*.3:0;
+    ctx.save();ctx.fillStyle='rgba(26,39,24,.18)';ctx.beginPath();ctx.ellipse(x+8,y+13,w*.42,Math.max(.6,h*.14),0,0,Math.PI*2);ctx.fill();
+    ctx.drawImage(sprite,x+8-w/2,y+13-h+bob,w,h);ctx.restore();
+  }
+  function water(name) {return load(name,img=>{waterFrames=Array.from({length:8},(_,i)=>cell(img,4,2,i,64,64));});}
+  const waterRegions = new Map();
+  function waterRegion(tileAt,x,y,map='world') {
+    if(tileAt(x,y)!=='water')return null;
+    const key=(x,y)=>map+':'+x+','+y;
+    if(waterRegions.has(key(x,y)))return waterRegions.get(key(x,y));
+    const cells=[],seen=new Set(),queue=[[x,y]];
+    let minX=x,maxX=x,minY=y,maxY=y;
+    while(queue.length){const [a,b]=queue.pop(),k=key(a,b);if(seen.has(k)||tileAt(a,b)!=='water')continue;seen.add(k);cells.push([a,b]);minX=Math.min(minX,a);maxX=Math.max(maxX,a);minY=Math.min(minY,b);maxY=Math.max(maxY,b);queue.push([a-1,b],[a+1,b],[a,b-1],[a,b+1]);}
+    const region={minX,minY,width:maxX-minX+1,height:maxY-minY+1};
+    cells.forEach(([a,b])=>waterRegions.set(key(a,b),region));return region;
+  }
+  function worldTile(key,tiles,x,y,time,wx,wy,nature,bank={}) {
+    const props={flower:[6,5],flower2:[6,5],sign:[10,11],fence:[16,7],mailbox:[7,11],shop:[16,17],tall:[15,10]};
+    if(key==='tree') {ctx.drawImage(tiles.grass,x,y);nature.push({x,y,wx,wy,sprite:tiles.tree});return;}
+    if(key==='water'||key==='water2') {
+      if(waterFrames) {
+        const clock=time*3, frame=Math.floor(clock)%8, blend=clock-Math.floor(clock);
+        const r=bank.region||{minX:0,minY:0,width:4,height:4};
+        const sw=64/r.width,sh=64/r.height,sx=(wx-r.minX)*sw,sy=(wy-r.minY)*sh;
+        ctx.drawImage(waterFrames[frame],sx,sy,sw,sh,x,y,16,16);
+        ctx.save();ctx.globalAlpha=blend;ctx.drawImage(waterFrames[(frame+1)%8],sx,sy,sw,sh,x,y,16,16);ctx.restore();
+      } else ctx.drawImage(tiles[key],x,y);
+      ctx.save();ctx.fillStyle='rgba(24,70,73,.35)';
+      if(bank.left)ctx.fillRect(x,y,1.2,16);if(bank.right)ctx.fillRect(x+14.8,y,1.2,16);
+      if(bank.top)ctx.fillRect(x,y,16,1.2);if(bank.bottom)ctx.fillRect(x,y+14.8,16,1.2);
+      ctx.fillStyle='rgba(163,186,105,.85)';
+      if(bank.left)ctx.fillRect(x,y,.55,16);if(bank.right)ctx.fillRect(x+15.45,y,.55,16);
+      if(bank.top)ctx.fillRect(x,y,16,.55);if(bank.bottom)ctx.fillRect(x,y+15.45,16,.55);
+      ctx.restore();return;
+    }
+    if(key==='tilled'||key==='tilledwet') {
+      ctx.drawImage(tiles.soil,x,y);ctx.save();
+      if(key==='tilledwet'){ctx.fillStyle='rgba(29,21,13,.3)';ctx.fillRect(x,y,16,16);}
+      ctx.strokeStyle='rgba(63,38,20,.22)';ctx.lineWidth=.8;
+      for(let row=3;row<16;row+=4){ctx.beginPath();ctx.moveTo(x,y+row);ctx.lineTo(x+16,y+row);ctx.stroke();}
+      ctx.restore();return;
+    }
+    if(props[key]) {
+      ctx.drawImage(tiles.grass,x,y);const [w,h]=props[key];
+      const moving=['flower','flower2','tall'].includes(key), sway=moving?Math.sin(time*1.4+wx*.3+wy*.2)*.35:0;
+      ctx.drawImage(tiles[key],x+8-w/2+sway,y+16-h,w,h);return;
+    }
+    ctx.drawImage(tiles[key],x,y);
+  }
+  function natureLayer(nature,time,playerBase,front=false) {
+    for(const n of nature) {
+      if((n.y+16>playerBase)!==front)continue;
+      const w=23,h=30,x=n.x+8-w/2,y=n.y+16-h;
+      ctx.save();ctx.fillStyle='rgba(19,48,29,.22)';ctx.beginPath();ctx.ellipse(n.x+9,n.y+15,9,2.5,0,0,Math.PI*2);ctx.fill();
+      for(let band=0;band<12;band++) {
+        const v=band/11, leaf=Math.max(0,1-v*1.5);
+        const shift=(Math.sin(time*1.25+n.wx*.24+n.wy*.17)*.65+Math.sin(time*.45)*.3)*leaf*leaf;
+        ctx.drawImage(n.sprite,0,band*16/12,16,16/12,x+shift,y+band*h/12,w,h/12+.04);
+      }
+      ctx.restore();
+    }
+  }
   let title;
   function titleLoad(name){load(name,img=>{title=img;});}
   function titleDraw(){
@@ -104,5 +172,5 @@ window.HD2D = function (ctx) {
     shade.addColorStop(0,'rgba(5,8,16,.65)');shade.addColorStop(.6,'rgba(5,8,16,.22)');shade.addColorStop(1,'rgba(5,8,16,.65)');
     ctx.fillStyle=shade;ctx.fillRect(0,0,256,192);
   }
-  return {atlas,actor,load,cell,frames,idle,idleIndex,poseIndex,actorFrame,creature,creatureFrame,titleLoad,titleDraw,loaded,ready:()=>Promise.all(pending)};
+  return {worldObject,worldSizes,water,waterRegion,worldTile,natureLayer,atlas,actor,load,cell,frames,idle,idleIndex,poseIndex,actorFrame,creature,creatureFrame,titleLoad,titleDraw,loaded,ready:()=>Promise.all(pending)};
 };

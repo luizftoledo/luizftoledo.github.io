@@ -236,7 +236,7 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=animations-2"></script>
+  <script src="scripts/hd2d-art.js?v=environment-3"></script>
 </head>
 
 <body>
@@ -1210,17 +1210,17 @@
       for (const k of KEY_DEFS) {
         if (game.keysHave[k.id]) continue;
         g.fillStyle = 'rgba(246,208,106,.20)';
-        g.beginPath(); g.arc(k.x * T - camX + 8, k.y * T - camY + 8, 9, 0, 7); g.fill();
-        g.drawImage(ITEMS[k.id], k.x * T - camX + 3, k.y * T - camY + 4 + bob);
+        g.beginPath(); g.arc(k.x * T - camX + 8, k.y * T - camY + 8, 5, 0, 7); g.fill();
+        g.drawImage(ITEMS[k.id], k.x * T - camX + 5, k.y * T - camY + 6 + bob*.3,6,5);
       }
 
       /* the Treasure (after calling card) */
       if (game.doorOpen && !game.dossier) {
-        const ty = TREASURE_POS.y * T - camY - 12 + Math.sin(game.animClock * 3) * 1.5;
-        const tx = TREASURE_POS.x * T - camX - 2;
+        const ty = TREASURE_POS.y * T - camY + 1 + Math.sin(game.animClock * 3) * .3;
+        const tx = TREASURE_POS.x * T - camX - 1;
         g.fillStyle = 'rgba(232,48,64,' + (.22 + .1 * Math.sin(game.animClock * 5)) + ')';
-        g.beginPath(); g.arc(tx + 18, ty + 18, 22, 0, 7); g.fill();
-        drawSmooth(imgChest, tx, ty, 36, 36);
+        g.beginPath(); g.arc(tx + 9, ty + 8, 12, 0, 7); g.fill();
+        drawSmooth(imgChest, tx, ty, 18, 15);
       }
 
       /* vision cones under actors */
