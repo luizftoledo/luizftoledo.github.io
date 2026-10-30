@@ -167,3 +167,9 @@ html[data-site-theme="dark"] #newsroom .nr-coach{background:#f4f1ea;color:#17191
  #newsroom .nr-foot .nr-hint{display:block;flex-basis:100%;text-align:center;font-size:10px}
  html[data-site-theme="dark"] #newsroom .nr-hot{--tag:rgba(244,241,234,.9);color:#17191e}
 }
+
+/* Section titles are painted on physical signs in the canvas; links remain accessible. */
+#newsroom .nr-hot,#newsroom .nr-hot:hover,#newsroom .nr-hot.is-hot,#newsroom .nr-hot:active{display:block;padding:0;min-height:0;background:transparent!important;border:0!important;border-radius:0;box-shadow:none!important;scale:1;transform:none;transition:none}
+#newsroom .nr-hot>* ,#newsroom .nr-hot::after{display:none!important}
+#newsroom .nr-hot:focus-visible{outline:2px dashed var(--nr-red);outline-offset:2px}
+#newsroom .nr-chips,#newsroom .nr-coach{display:none!important}
