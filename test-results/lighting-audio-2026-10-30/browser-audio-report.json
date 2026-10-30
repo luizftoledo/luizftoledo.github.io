@@ -1,0 +1,599 @@
+[
+  {
+    "name": "stardew",
+    "type": "desktop",
+    "audio": {
+      "track": "farm",
+      "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+      "paused": false,
+      "time": 1.310661,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "sfx": {
+      "before": 0,
+      "after": 1
+    },
+    "musicTransitions": {
+      "time": 2.153651,
+      "after": {
+        "track": "farm",
+        "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+        "paused": false,
+        "time": 2.484535,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 1
+      }
+    },
+    "muted": true,
+    "unmuted": false,
+    "errors": [],
+    "bad": [],
+    "layout": {
+      "width": 1440,
+      "scroll": 1440,
+      "canvas": {
+        "x": 113.328125,
+        "y": 58,
+        "width": 1213.328125,
+        "height": 910,
+        "top": 58,
+        "right": 1326.65625,
+        "bottom": 968,
+        "left": 113.328125
+      },
+      "audio": {
+        "x": 12,
+        "y": 10,
+        "width": 299,
+        "height": 32,
+        "top": 10,
+        "right": 311,
+        "bottom": 42,
+        "left": 12
+      }
+    }
+  },
+  {
+    "name": "pokemon",
+    "type": "desktop",
+    "audio": {
+      "track": "field",
+      "src": "http://127.0.0.1:8766/grass_route.m4a",
+      "paused": false,
+      "time": 1.428027,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "sfx": {
+      "before": 0,
+      "after": 1
+    },
+    "musicTransitions": {
+      "battle": {
+        "track": "battle",
+        "src": "http://127.0.0.1:8766/pkost_music.mp3",
+        "paused": false,
+        "time": 0.551474,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 1
+      },
+      "field": {
+        "track": "field",
+        "src": "http://127.0.0.1:8766/grass_route.m4a",
+        "paused": false,
+        "time": 0,
+        "ready": 0,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 1
+      }
+    },
+    "muted": true,
+    "unmuted": false,
+    "errors": [],
+    "bad": [],
+    "layout": {
+      "width": 1440,
+      "scroll": 1440,
+      "canvas": {
+        "x": 118.671875,
+        "y": 66,
+        "width": 1202.65625,
+        "height": 902,
+        "top": 66,
+        "right": 1321.328125,
+        "bottom": 968,
+        "left": 118.671875
+      },
+      "audio": {
+        "x": 12,
+        "y": 10,
+        "width": 297,
+        "height": 40,
+        "top": 10,
+        "right": 309,
+        "bottom": 50,
+        "left": 12
+      }
+    }
+  },
+  {
+    "name": "persona",
+    "type": "desktop",
+    "audio": {
+      "track": "palace",
+      "src": "http://127.0.0.1:8766/persona_5_life_will_change.mp3",
+      "paused": false,
+      "time": 1.419481,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "sfx": {
+      "before": 0,
+      "after": 1
+    },
+    "musicTransitions": null,
+    "muted": true,
+    "unmuted": false,
+    "errors": [],
+    "bad": [],
+    "layout": {
+      "width": 1440,
+      "scroll": 1440,
+      "canvas": {
+        "x": 113.328125,
+        "y": 58,
+        "width": 1213.328125,
+        "height": 910,
+        "top": 58,
+        "right": 1326.65625,
+        "bottom": 968,
+        "left": 113.328125
+      },
+      "audio": {
+        "x": 12,
+        "y": 10,
+        "width": 299,
+        "height": 32,
+        "top": 10,
+        "right": 311,
+        "bottom": 42,
+        "left": 12
+      }
+    }
+  },
+  {
+    "name": "stardew",
+    "type": "android",
+    "audio": {
+      "track": "farm",
+      "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+      "paused": false,
+      "time": 1.393197,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "sfx": {
+      "before": 0,
+      "after": 1
+    },
+    "musicTransitions": {
+      "time": 2.914104,
+      "after": {
+        "track": "farm",
+        "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+        "paused": false,
+        "time": 3.260583,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 1
+      }
+    },
+    "muted": true,
+    "unmuted": false,
+    "errors": [],
+    "bad": [],
+    "layout": {
+      "width": 412,
+      "scroll": 412,
+      "canvas": {
+        "x": 16,
+        "y": 237,
+        "width": 380,
+        "height": 285,
+        "top": 237,
+        "right": 396,
+        "bottom": 522,
+        "left": 16
+      },
+      "audio": {
+        "x": 6,
+        "y": 8,
+        "width": 229,
+        "height": 32,
+        "top": 8,
+        "right": 235,
+        "bottom": 40,
+        "left": 6
+      }
+    }
+  },
+  {
+    "name": "pokemon",
+    "type": "android",
+    "audio": {
+      "track": "field",
+      "src": "http://127.0.0.1:8766/grass_route.m4a",
+      "paused": false,
+      "time": 1.399002,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "sfx": {
+      "before": 0,
+      "after": 1
+    },
+    "musicTransitions": {
+      "battle": {
+        "track": "battle",
+        "src": "http://127.0.0.1:8766/pkost_music.mp3",
+        "paused": false,
+        "time": 0.55656,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 1
+      },
+      "field": {
+        "track": "field",
+        "src": "http://127.0.0.1:8766/grass_route.m4a",
+        "paused": false,
+        "time": 0,
+        "ready": 0,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 1
+      }
+    },
+    "muted": true,
+    "unmuted": false,
+    "errors": [],
+    "bad": [],
+    "layout": {
+      "width": 412,
+      "scroll": 412,
+      "canvas": {
+        "x": 16,
+        "y": 239,
+        "width": 380,
+        "height": 285,
+        "top": 239,
+        "right": 396,
+        "bottom": 524,
+        "left": 16
+      },
+      "audio": {
+        "x": 6,
+        "y": 8,
+        "width": 187,
+        "height": 36,
+        "top": 8,
+        "right": 193,
+        "bottom": 44,
+        "left": 6
+      }
+    }
+  },
+  {
+    "name": "persona",
+    "type": "android",
+    "audio": {
+      "track": "palace",
+      "src": "http://127.0.0.1:8766/persona_5_life_will_change.mp3",
+      "paused": false,
+      "time": 1.351042,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "sfx": {
+      "before": 0,
+      "after": 1
+    },
+    "musicTransitions": null,
+    "muted": true,
+    "unmuted": false,
+    "errors": [],
+    "bad": [],
+    "layout": {
+      "width": 412,
+      "scroll": 412,
+      "canvas": {
+        "x": 16,
+        "y": 237,
+        "width": 380,
+        "height": 285,
+        "top": 237,
+        "right": 396,
+        "bottom": 522,
+        "left": 16
+      },
+      "audio": {
+        "x": 6,
+        "y": 8,
+        "width": 229,
+        "height": 32,
+        "top": 8,
+        "right": 235,
+        "bottom": 40,
+        "left": 6
+      }
+    }
+  },
+  {
+    "name": "stardew",
+    "type": "iphone",
+    "audio": {
+      "track": "farm",
+      "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+      "paused": false,
+      "time": 0.7910265986701361,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "sfx": {
+      "before": 0,
+      "after": 1
+    },
+    "musicTransitions": {
+      "time": 1.6216874320387207,
+      "after": {
+        "track": "farm",
+        "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+        "paused": false,
+        "time": 1.922316265695431,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 1
+      }
+    },
+    "muted": true,
+    "unmuted": false,
+    "errors": [],
+    "bad": [],
+    "layout": {
+      "width": 390,
+      "scroll": 390,
+      "canvas": {
+        "x": 16,
+        "y": 158.25,
+        "width": 358,
+        "height": 268.5,
+        "top": 158.25,
+        "right": 374,
+        "bottom": 426.75,
+        "left": 16
+      },
+      "audio": {
+        "x": 6,
+        "y": 8,
+        "width": 229,
+        "height": 33,
+        "top": 8,
+        "right": 235,
+        "bottom": 41,
+        "left": 6
+      }
+    },
+    "input": "real touch events through Playwright touchscreen/tap (mouse click is not a touch on WebKit iPhone emulation)"
+  },
+  {
+    "name": "pokemon",
+    "type": "iphone",
+    "audio": {
+      "track": "field",
+      "src": "http://127.0.0.1:8766/grass_route.m4a",
+      "paused": false,
+      "time": 0.6897912716698158,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "sfx": {
+      "before": 0,
+      "after": 1
+    },
+    "musicTransitions": {
+      "battle": {
+        "track": "battle",
+        "src": "http://127.0.0.1:8766/pkost_music.mp3",
+        "paused": false,
+        "time": 0.5401816250523552,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 1
+      },
+      "field": {
+        "track": "field",
+        "src": "http://127.0.0.1:8766/grass_route.m4a",
+        "paused": false,
+        "time": 0.5461604583542794,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 1
+      }
+    },
+    "muted": true,
+    "unmuted": false,
+    "errors": [],
+    "bad": [],
+    "layout": {
+      "width": 390,
+      "scroll": 390,
+      "canvas": {
+        "x": 16,
+        "y": 159.75,
+        "width": 358,
+        "height": 268.5,
+        "top": 159.75,
+        "right": 374,
+        "bottom": 428.25,
+        "left": 16
+      },
+      "audio": {
+        "x": 6,
+        "y": 8,
+        "width": 187,
+        "height": 36,
+        "top": 8,
+        "right": 193,
+        "bottom": 44,
+        "left": 6
+      }
+    },
+    "input": "real touch events through Playwright touchscreen/tap (mouse click is not a touch on WebKit iPhone emulation)"
+  },
+  {
+    "name": "persona",
+    "type": "iphone",
+    "audio": {
+      "track": "palace",
+      "src": "http://127.0.0.1:8766/persona_5_life_will_change.mp3",
+      "paused": false,
+      "time": 0.6609851100276044,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "sfx": {
+      "before": 0,
+      "after": 1
+    },
+    "musicTransitions": null,
+    "muted": true,
+    "unmuted": false,
+    "errors": [],
+    "bad": [],
+    "layout": {
+      "width": 390,
+      "scroll": 390,
+      "canvas": {
+        "x": 16,
+        "y": 158.25,
+        "width": 358,
+        "height": 268.5,
+        "top": 158.25,
+        "right": 374,
+        "bottom": 426.75,
+        "left": 16
+      },
+      "audio": {
+        "x": 6,
+        "y": 8,
+        "width": 229,
+        "height": 33,
+        "top": 8,
+        "right": 235,
+        "bottom": 41,
+        "left": 6
+      }
+    },
+    "input": "real touch events through Playwright touchscreen/tap (mouse click is not a touch on WebKit iPhone emulation)"
+  }
+]

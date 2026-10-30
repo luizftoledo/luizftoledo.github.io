@@ -236,8 +236,9 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=field-rpg-5"></script>
-  <link rel="stylesheet" href="game-layout.css?v=1">
+  <script src="scripts/game-audio.js?v=7"></script>
+  <script src="scripts/hd2d-art.js?v=lighting-audio-7"></script>
+  <link rel="stylesheet" href="game-layout.css?v=7">
   <script src="scripts/game-layout.js?v=1" defer></script>
   <script src="scripts/game-expansion.js?v=5"></script>
 </head>
@@ -1012,138 +1013,13 @@
     /* =====================================================================
        CHIPTUNE — original 8-bar loops, pure WebAudio, no samples
        ===================================================================== */
-    let AC = null, musGain = null, musTimer = null, musTheme = null, musNodes = [];
-    const midi = n => 440 * Math.pow(2, (n - 69) / 12);
-
-    const THEMES = {
-      farm: {
-        bpm: 116, vol: .045,
-        voices: [
-          {
-            wave: 'square', vol: .55, notes: [
-              [67, .5], [69, .5], [72, 1], [67, 1], [64, 1],
-              [65, .5], [67, .5], [69, 1], [65, 1], [62, 1],
-              [64, .5], [65, .5], [67, 1], [64, 1], [60, 1],
-              [62, 1], [64, 1], [55, 2],
-              [67, .5], [69, .5], [72, 1], [74, 1], [76, 1],
-              [74, .5], [72, .5], [69, 1], [67, 2],
-              [65, 1], [67, 1], [69, 1], [72, 1],
-              [67, 1], [64, 1], [60, 2]
-            ]
-          },
-          {
-            wave: 'triangle', vol: 1, notes: [
-              [36, 1], [43, 1], [36, 1], [43, 1],
-              [41, 1], [48, 1], [41, 1], [48, 1],
-              [36, 1], [43, 1], [36, 1], [43, 1],
-              [43, 1], [50, 1], [43, 1], [50, 1],
-              [36, 1], [43, 1], [36, 1], [43, 1],
-              [41, 1], [48, 1], [41, 1], [48, 1],
-              [43, 1], [50, 1], [43, 1], [50, 1],
-              [36, 1], [43, 1], [36, 2]
-            ]
-          }
-        ]
-      },
-      cave: {
-        bpm: 84, vol: .05,
-        voices: [
-          {
-            wave: 'triangle', vol: .9, notes: [
-              [57, 2], [60, 1], [59, 1],
-              [57, 2], [55, 2],
-              [53, 2], [57, 1], [60, 1],
-              [55, 4],
-              [57, 2], [60, 1], [64, 1],
-              [62, 2], [60, 2],
-              [59, 2], [55, 2],
-              [57, 4]
-            ]
-          },
-          {
-            wave: 'triangle', vol: .8, notes: [
-              [33, 2], [40, 2], [33, 2], [40, 2],
-              [29, 2], [36, 2], [31, 2], [38, 2],
-              [33, 2], [40, 2], [33, 2], [40, 2],
-              [31, 2], [38, 2], [33, 4]
-            ]
-          }
-        ]
-      }
-    };
-
-    function ensureAC() {
-      if (AC) return;
-      try {
-        AC = new (window.AudioContext || window.webkitAudioContext)();
-        musGain = AC.createGain();
-        musGain.gain.value = 1;
-        musGain.connect(AC.destination);
-      } catch (e) { AC = null; }
-    }
-
-    function noteAt(t, m, dur, wave, vol, dest) {
-      const o = AC.createOscillator();
-      o.type = wave; o.frequency.setValueAtTime(midi(m), t);
-      const e = AC.createGain();
-      e.gain.setValueAtTime(0.0001, t);
-      e.gain.linearRampToValueAtTime(vol, t + .015);
-      e.gain.setValueAtTime(vol, Math.max(t + .02, t + dur - .05));
-      e.gain.linearRampToValueAtTime(0.0001, t + dur);
-      o.connect(e); e.connect(dest);
-      o.start(t); o.stop(t + dur + .03);
-    }
-
-    function stopMusic() {
-      const el = document.getElementById('bgm');
-      if (el) { el.pause(); el.currentTime = 0; }
-      musTheme = null;
-      if (musTimer) clearTimeout(musTimer);
-      musTimer = null; musTheme = null;
-      musNodes.forEach(n => { try { n.disconnect(); } catch (e) { } });
-      musNodes = [];
-    }
-
-    const bgm = document.getElementById('bgm');
-    bgm.volume = .45;
-
-    function playTheme(name) {
-      // Preserve the original recording across farm/cave transitions.
-      musTheme = name;
-      bgm.play().catch(() => { });
-    }
-
-    function scheduleLoop(t0) {
-      if (!musTheme) return;
-      const th = THEMES[musTheme], spb = 60 / th.bpm;
-      const gn = AC.createGain();
-      gn.gain.value = th.vol;
-      gn.connect(musGain);
-      musNodes.push(gn);
-      let dur = 0;
-      for (const v of th.voices) {
-        let t = t0;
-        for (const [m, b] of v.notes) {
-          if (m > 0) noteAt(t, m, b * spb * .92, v.wave, v.vol, gn);
-          t += b * spb;
-        }
-        dur = Math.max(dur, t - t0);
-      }
-      musTimer = setTimeout(() => scheduleLoop(t0 + dur), Math.max(50, (t0 + dur - AC.currentTime) * 1000 - 250));
-    }
-
-    function playJingle() {
-      if (!AC) return;
-      const gn = AC.createGain(); gn.gain.value = .06; gn.connect(musGain);
-      const t = AC.currentTime + .05;
-      [[72, 0, .18], [76, .18, .18], [79, .36, .18], [84, .54, .5]].forEach(([m, off, d]) =>
-        noteAt(t + off, m, d, 'square', .6, gn));
-    }
-
-    function sfx(m, d = .08, wave = 'square') {
-      if (!AC) return;
-      const gn = AC.createGain(); gn.gain.value = .04; gn.connect(musGain);
-      noteAt(AC.currentTime + .01, m, d, wave, .6, gn);
+    function ensureAC() { GameAudio.unlock(); }
+    function stopMusic() { GameAudio.music(null); }
+    function playTheme(name) { GameAudio.music('farm'); }
+    function playJingle() { GameAudio.sound('success',{gain:.75}); }
+    function sfx(m) {
+      const sounds={50:'till',64:'plant',60:'water',45:'stone',52:'wood',43:'stone',40:'fail',79:'pickup',83:'pickup',88:'pickup'};
+      GameAudio.sound(sounds[m]||'ui',{gain:.65});
     }
 
     /* =====================================================================
@@ -1471,7 +1347,7 @@
       if (!p) return;
       const s = game.shop;
       const list = s.tab === 0 ? shopStock() : sellList();
-      if (isB(p) || p === 'bag') { game.shop = null; sfx(60, .05); return; }
+      if (isB(p) || p === 'bag') { game.shop = null; GameAudio.sound('ui',{gain:.5}); return; }
       if (p === 'left' || p === 'right') { s.tab ^= 1; s.sel = 0; sfx(72, .04); return; }
       if (p && p.act === 'shoptab') { s.tab = p.data; s.sel = 0; sfx(72, .04); return; }
       if (p === 'up') { s.sel = Math.max(0, s.sel - 1); return; }
@@ -1495,7 +1371,7 @@
     function updateBag() {
       const p = popPress();
       if (!p) return;
-      if (isB(p) || isA(p) || p === 'bag') { game.bag = false; sfx(60, .05); }
+      if (isB(p) || isA(p) || p === 'bag') { game.bag = false; GameAudio.sound('ui',{gain:.5}); }
     }
 
     function enterCave() {
@@ -1533,6 +1409,7 @@
     }
 
     function finishStep() {
+      GameAudio.sound(game.map==='cave'?'step-stone':'step-grass',{gain:.22,rate:game.step%2?1.04:.96});
       game.step++;
       const found = itemAt(game.px, game.py);
       if (found) collectItem(found);
@@ -1651,7 +1528,8 @@
       camX = Math.max(0, Math.min(MAPW * T - 256, camX));
       camY = Math.max(0, Math.min(MAPH * T - 192, camY));
 
-      const nature=[];
+      hd.setLighting(game.map==='cave'?'cave':'farm');
+      const nature=[],groundObjects=[],groundCrops=[];
       const animFrame = Math.floor(game.animClock * 1.6) % 2;
       const x0 = Math.floor(camX / T), y0 = Math.floor(camY / T);
       for (let j = y0; j <= y0 + 13 && j < MAPH; j++)
@@ -1668,24 +1546,17 @@
           drawFarmTileDetail(t, i, j, sx, sy);
 
           const cell = game.farm[key];
-          if (game.map === 'farm' && cell && cell.crop) {
-            g.fillStyle = 'rgba(35,26,16,.28)';
-            g.beginPath(); g.ellipse(sx + 8, sy + 14, 5, 2, 0, 0, 7); g.fill();
-            g.drawImage(CROPS[cell.crop.stage], sx, sy);
-          }
-
-          const obj = game.objs[game.map][key];
-          if (obj) {
-            hd.worldObject(OBJS[obj],obj,sx,sy);
-            if (obj === 'rock' && game.rareRocks[key] && (game.animClock * 2 + i) % 3 < .4) {
-              px(i * T - camX + 4 + (i % 5), j * T - camY + 4 + (j % 4), 1, 1, '#f6e294');
-              px(i * T - camX + 10 - (j % 3), j * T - camY + 8, 1, 1, '#ffffff');
-            }
-          }
+          if(game.map==='farm'&&cell?.crop)groundCrops.push({sx,sy,stage:cell.crop.stage});
+          const obj=game.objs[game.map][key];if(obj)groundObjects.push({obj,sx,sy,i,j,key});
         }
+      hd.depthPass(tileAt,camX,camY,game.map==='cave'?'cave':'farm');
+      hd.groundLighting(camX,camY,game.animClock,game.map==='cave'?'cave':'farm');
+      hd.natureShadows(nature,game.animClock);
+      for(const c of groundCrops){hd.contactShadow(c.sx+8,c.sy+14,5,1.4,.32);g.drawImage(CROPS[c.stage],c.sx,c.sy);}
+      for(const o of groundObjects){hd.worldObject(OBJS[o.obj],o.obj,o.sx,o.sy);if(o.obj==='rock'&&game.rareRocks[o.key]&&(game.animClock*2+o.i)%3<.4){hd.glow(o.sx+8,o.sy+8,7,'#c6e5ff',.18);}}
 
       if (game.map === 'farm') {
-        if(hd.loaded.stardewHouse)g.drawImage(hd.loaded.stardewHouse,4*T-camX,2*T-camY,6*T,3*T);
+        if(hd.loaded.stardewHouse)hd.building(hd.loaded.stardewHouse,4*T-camX,2*T-camY,6*T,3*T);
         for (const it of game.items) {
           hd.worldObject(OBJS[it.type],it.type,it.x*T-camX,it.y*T-camY,game.animClock,true);
         }
@@ -1721,6 +1592,8 @@
       } else {
         px(0, 0, 256, 192, 'rgba(12,6,22,.22)');
       }
+
+      hd.atmosphere(game.animClock,game.map==='cave'?'cave':'farm',camX,camY,game.map==='cave'?[{x:wx-camX+8,y:wy-camY+7,r:48,color:'#f9da9d',alpha:.23}]:[{x:4*T-camX+41,y:2*T-camY+31,r:18,color:'#ffda98',alpha:.1+(1-game.energy/ENERGY_MAX)*.15}]);
 
       /* HUD */
       frame9(2, 2, 170, 30, { bg: 'rgba(248,244,228,.95)' });
@@ -2012,27 +1885,7 @@
        TEST HOOKS
        ===================================================================== */
 
-    /* ---------- volume master (persistido entre os jogos) ---------- */
-    (function () {
-      const volRange = document.getElementById('volRange');
-      const muteBtn = document.getElementById('muteBtn');
-      let masterVol = parseFloat(localStorage.getItem('lft_game_vol') || '.6');
-      let muted = localStorage.getItem('lft_game_mute') === '1';
-      window.__applyVol = function () {
-        const v = muted ? 0 : masterVol;
-        const el = document.getElementById('bgm');
-        if (el) el.volume = .75 * v;
-        if (typeof musGain !== 'undefined' && musGain) musGain.gain.value = v * 1.4;
-        volRange.value = Math.round(masterVol * 100);
-        muteBtn.textContent = muted ? '✕' : '♪';
-        localStorage.setItem('lft_game_vol', masterVol);
-        localStorage.setItem('lft_game_mute', muted ? '1' : '0');
-      };
-      volRange.addEventListener('input', () => { masterVol = volRange.value / 100; muted = false; window.__applyVol(); });
-      muteBtn.addEventListener('click', () => { muted = !muted; window.__applyVol(); });
-      window.__applyVol();
-      setInterval(window.__applyVol, 1500); // reaplica (áudio criado depois do load)
-    })();
+    GameAudio.install({tracks:[{id:'farm',element:'bgm',src:'stardew_theme.m4a',gain:.68}],initial:'farm'});
 
     window.advanceTime = ms => {for(let i=0,n=Math.max(1,Math.round(ms/(1000/60)));i<n;i++)stepGame(1/60);};
     window.__game = game;

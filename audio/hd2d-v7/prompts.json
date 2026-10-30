@@ -1,0 +1,100 @@
+{
+  "provider": "ElevenLabs",
+  "model_id": "eleven_text_to_sound_v2",
+  "output_format": "mp3_44100_128",
+  "effects": [
+    {
+      "id": "ui",
+      "duration_seconds": 0.5,
+      "text": "One soft tactile menu confirmation, a small wooden key click with a delicate muted glass ping. Elegant modern fantasy RPG interface, restrained, clean transient, no retro beep."
+    },
+    {
+      "id": "step-grass",
+      "duration_seconds": 0.5,
+      "text": "One single soft boot footstep on short damp grass and soil. Close dry natural foley, gentle weight, no sequence, no voice."
+    },
+    {
+      "id": "step-stone",
+      "duration_seconds": 0.5,
+      "text": "One single soft leather boot footstep on polished stone in a palace, tiny room reflection, low volume natural foley, no sequence."
+    },
+    {
+      "id": "till",
+      "duration_seconds": 0.7,
+      "text": "One hand hoe striking soft earth, short earthy thud and granular dirt scatter, detailed close natural foley for a farming RPG."
+    },
+    {
+      "id": "plant",
+      "duration_seconds": 0.6,
+      "text": "One small scatter of seeds onto loose soil, delicate papery grains and a gentle tap, detailed quiet close foley."
+    },
+    {
+      "id": "water",
+      "duration_seconds": 1.1,
+      "text": "One short pour from a metal watering can onto soil, fine sparkling droplets and a gentle liquid splash, intimate realistic farming foley."
+    },
+    {
+      "id": "stone",
+      "duration_seconds": 0.8,
+      "text": "One metal pickaxe strike against a small rock, crisp stone crack, small gravel fragments falling, controlled natural foley, no explosion."
+    },
+    {
+      "id": "wood",
+      "duration_seconds": 0.7,
+      "text": "One small dry branch breaking with a crisp woody snap and soft leaf rustle, close natural foley, no music."
+    },
+    {
+      "id": "pickup",
+      "duration_seconds": 0.9,
+      "text": "One refined fantasy RPG item discovery sound: soft paper pickup, delicate ascending celesta and glass sparkle with warm rounded tail. No chiptune, no melody from any existing game."
+    },
+    {
+      "id": "heal",
+      "duration_seconds": 1.5,
+      "text": "One gentle restorative fantasy game sound, flowing liquid shimmer and warm harp harmonics rising then resolving, elegant soft spacious tail, no voice, no chiptune."
+    },
+    {
+      "id": "impact",
+      "duration_seconds": 0.7,
+      "text": "One stylized fantasy RPG impact, quick air swish into a rounded leather and wooden thump, crisp controlled low end, tiny sparkling accent, no gore, no explosion."
+    },
+    {
+      "id": "camera",
+      "duration_seconds": 0.5,
+      "text": "One professional compact camera mechanical shutter click, crisp double curtain tick and subtle handling, close detailed foley, no voice."
+    },
+    {
+      "id": "spell",
+      "duration_seconds": 1.1,
+      "text": "One refined fantasy RPG magic action, short airy rising whoosh into shimmering glass and resonant bell impact, elegant detailed stereo, no music bed, no retro tones."
+    },
+    {
+      "id": "alert",
+      "duration_seconds": 1.0,
+      "text": "One tense stealth game detection cue, sharp brushed metallic shimmer and low restrained orchestral sting, clear attack then quick decay, no siren, no voice."
+    },
+    {
+      "id": "hide",
+      "duration_seconds": 0.6,
+      "text": "One quick soft cloak swish and leather fabric movement into cover, delicate stealth foley, intimate and dry, no voice."
+    },
+    {
+      "id": "door",
+      "duration_seconds": 0.9,
+      "text": "One small ornate palace latch opening, subtle brass click and short wooden door creak, high detail close foley, no long ambience."
+    },
+    {
+      "id": "success",
+      "duration_seconds": 1.8,
+      "text": "One concise original fantasy RPG success cue, warm harp glissando and three resolving celesta notes over a soft orchestral shimmer, polished restrained, no chiptune, no voice, no existing melody."
+    },
+    {
+      "id": "fail",
+      "duration_seconds": 1.0,
+      "text": "One restrained fantasy RPG failed action cue, soft low bowed metal descent and wooden tap, quick resolved tail, no harsh buzzer, no voice, no retro beep."
+    }
+  ],
+  "common_suffix": " Isolated single game sound effect, begins immediately, clean ending, no background noise or speech.",
+  "prompt_influence": 0.45,
+  "postprocess": "Lead-in silence removal at -48dB; loudness -19 LUFS, true peak -2dB; 44.1kHz stereo MP3 128kbps; final 40ms fade on footsteps/menu."
+}

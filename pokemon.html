@@ -276,8 +276,9 @@
     }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=field-rpg-5"></script>
-  <link rel="stylesheet" href="game-layout.css?v=1">
+  <script src="scripts/game-audio.js?v=7"></script>
+  <script src="scripts/hd2d-art.js?v=lighting-audio-7"></script>
+  <link rel="stylesheet" href="game-layout.css?v=7">
   <script src="scripts/game-layout.js?v=1" defer></script>
   <script src="scripts/game-expansion.js?v=5"></script>
 </head>
@@ -340,108 +341,13 @@
     const mGrass = document.getElementById('mGrass');
     const mBattle = document.getElementById('mBattle');
     const mWin = document.getElementById('mWin');
-    const BASE_VOL = [[mGrass, .9], [mBattle, .82], [mWin, 1]];
-
-    let masterVol = parseFloat(localStorage.getItem('lft_game_vol') || '.6');
-    let muted = localStorage.getItem('lft_game_mute') === '1';
-    const volRange = document.getElementById('volRange');
-    const muteBtn = document.getElementById('muteBtn');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
-    let audioCtx = null, sfxGain = null;
-
-    function ensureAudio() {
-      if (!audioCtx) {
-        const AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return null;
-        audioCtx = new AC();
-        sfxGain = audioCtx.createGain();
-        sfxGain.connect(audioCtx.destination);
-      }
-      if (audioCtx.state === 'suspended') {
-        const p = audioCtx.resume();
-        if (p && p.catch) p.catch(() => { });
-      }
-      return audioCtx;
-    }
-
-    function setSfxGain() {
-      if (sfxGain) sfxGain.gain.value = muted ? 0 : masterVol;
-    }
-
-    function applyVol() {
-      BASE_VOL.forEach(([el, b]) => el.volume = muted ? 0 : b * masterVol);
-      setSfxGain();
-      volRange.value = Math.round(masterVol * 100);
-      muteBtn.textContent = muted ? 'SOUND' : 'MUTE';
-      localStorage.setItem('lft_game_vol', masterVol);
-      localStorage.setItem('lft_game_mute', muted ? '1' : '0');
-    }
-    volRange.addEventListener('input', () => { masterVol = volRange.value / 100; muted = false; applyVol(); });
-    muteBtn.addEventListener('click', () => { muted = !muted; applyVol(); });
-    applyVol();
-
-    function playMusic(which) {
-      [mGrass, mBattle, mWin].forEach(a => { if (a !== which) { a.pause(); a.currentTime = 0; } });
-      if (which) which.play().catch(() => { });
-    }
-
-    function tone(freq, start, dur, type, gain = .18, bend = 0) {
-      const ctx = ensureAudio();
-      if (!ctx || muted) return;
-      const osc = ctx.createOscillator(), amp = ctx.createGain();
-      osc.type = type || 'square';
-      osc.frequency.setValueAtTime(freq, start);
-      if (bend) osc.frequency.exponentialRampToValueAtTime(Math.max(40, freq + bend), start + dur);
-      amp.gain.setValueAtTime(0.0001, start);
-      amp.gain.exponentialRampToValueAtTime(gain, start + .012);
-      amp.gain.exponentialRampToValueAtTime(0.0001, start + dur);
-      osc.connect(amp); amp.connect(sfxGain);
-      osc.start(start); osc.stop(start + dur + .025);
-    }
-
-    function noiseHit(start, dur, gain, filterFreq) {
-      const ctx = ensureAudio();
-      if (!ctx || muted) return;
-      const frames = Math.max(1, Math.floor(ctx.sampleRate * dur));
-      const buf = ctx.createBuffer(1, frames, ctx.sampleRate);
-      const data = buf.getChannelData(0);
-      for (let i = 0; i < frames; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / frames);
-      const src = ctx.createBufferSource(), filt = ctx.createBiquadFilter(), amp = ctx.createGain();
-      src.buffer = buf;
-      filt.type = 'bandpass'; filt.frequency.value = filterFreq; filt.Q.value = 4;
-      amp.gain.setValueAtTime(gain, start);
-      amp.gain.exponentialRampToValueAtTime(0.0001, start + dur);
-      src.connect(filt); filt.connect(amp); amp.connect(sfxGain);
-      src.start(start); src.stop(start + dur);
-    }
-
+    function playMusic(which) { GameAudio.music(which); }
     function playSfx(kind) {
-      const ctx = ensureAudio();
-      if (!ctx || muted) return;
-      setSfxGain();
-      const t = ctx.currentTime + .01;
-      if (kind === 'hitPlayer') {
-        noiseHit(t, .11, .22, 720);
-        tone(120, t, .12, 'sawtooth', .12, -55);
-      } else if (kind === 'hitPlayerSuper') {
-        noiseHit(t, .16, .28, 380);
-        tone(180, t, .09, 'square', .16, -90);
-        tone(82, t + .06, .16, 'sawtooth', .13, -35);
-      } else if (kind === 'hitEnemy') {
-        tone(620, t, .05, 'square', .15, 120);
-        tone(390, t + .045, .07, 'square', .12, -70);
-      } else if (kind === 'flee') {
-        tone(520, t, .06, 'triangle', .12, -120);
-        tone(390, t + .07, .06, 'triangle', .11, -100);
-        tone(270, t + .14, .12, 'triangle', .10, -80);
-      } else if (kind === 'item') {
-        [523, 659, 784, 1046].forEach((f, i) => tone(f, t + i * .09, .08, 'square', .12));
-        tone(1318, t + .35, .16, 'triangle', .10);
-      } else if (kind === 'heal') {
-        [659, 784, 880, 1046, 880, 1046, 1318, 1568].forEach((f, i) => tone(f, t + i * .12, .10, i % 2 ? 'triangle' : 'square', .11));
-        tone(523, t + .94, .22, 'triangle', .09);
-      }
+      const sounds={hitPlayer:'impact',hitPlayerSuper:'spell',hitEnemy:'camera',flee:'hide',item:'pickup',heal:'heal'};
+      GameAudio.sound(sounds[kind]||'ui',{gain:.8});
     }
+    GameAudio.install({tracks:[{id:'field',element:'mGrass',src:'grass_route.m4a',gain:.68},{id:'battle',element:'mBattle',src:'pkost_music.mp3',gain:.65},{id:'win',element:'mWin',src:'vitoria.mp3',gain:.7,loop:false}],initial:'field'});
 
     function currentFullscreenElement() {
       return document.fullscreenElement || document.webkitFullscreenElement || null;
@@ -1158,6 +1064,7 @@
     }
 
     function finishStep() {
+      GameAudio.sound(['path','bridge'].includes(tileAt(game.px,game.py))?'step-stone':'step-grass',{gain:.22,rate:game.step%2?1.04:.96});
       game.step++;saveCase();
       /* pokébola no chão? */
       const ball = BALLS.find(b => b.x === game.px && b.y === game.py && !game.balls[b.x + ',' + b.y]);
@@ -1223,7 +1130,7 @@
     }
 
     function drawRedacaoBuilding(camX, camY) {
-      if(hd.loaded.pokemonBuilding){g.drawImage(hd.loaded.pokemonBuilding,REDACAO.x*T-camX,REDACAO.y*T-camY,REDACAO.w*T,REDACAO.h*T);return;}
+      if(hd.loaded.pokemonBuilding){hd.building(hd.loaded.pokemonBuilding,REDACAO.x*T-camX,REDACAO.y*T-camY,REDACAO.w*T,REDACAO.h*T);return;}
       const x = REDACAO.x * T - camX, y = REDACAO.y * T - camY;
       px(x + 2, y + 10, REDACAO.w * T - 4, REDACAO.h * T - 12, '#d8d0b0');
       px(x, y + 22, REDACAO.w * T, REDACAO.h * T - 22, '#f0e8c8');
@@ -1286,6 +1193,7 @@
       camX = Math.max(0, Math.min(MAPW * T - 256, camX));
       camY = Math.max(0, Math.min(MAPH * T - 192, camY));
 
+      hd.setLighting('route');
       const nature=[];
       const animFrame = Math.floor(game.animClock * 1.6) % 2;
       const x0 = Math.floor(camX / T), y0 = Math.floor(camY / T);
@@ -1296,12 +1204,15 @@
           else if (t === 'flower' && animFrame) t = 'flower2';
           else if (t === 'grass' && ((i * 7 + j * 13) % 5 === 0)) t = 'grass2';
           const sx = i * T - camX, sy = j * T - camY;
-          hd.worldTile(t,TILES,sx,sy,game.animClock,i,j,nature,{region:hd.waterRegion(tileAt,i,j,game.map||'route'),left:tileAt(i-1,j)!=='water',right:tileAt(i+1,j)!=='water',top:tileAt(i,j-1)!=='water',bottom:tileAt(i,j+1)!=='water'});
+          hd.worldTile((isRedacaoSolid(i,j)||isRedacaoEntrance(i,j)||siteSolid(i,j)||siteAt(i,j))?'grass':t,TILES,sx,sy,game.animClock,i,j,nature,{region:hd.waterRegion(tileAt,i,j,game.map||'route'),left:tileAt(i-1,j)!=='water',right:tileAt(i+1,j)!=='water',top:tileAt(i,j-1)!=='water',bottom:tileAt(i,j+1)!=='water'});
           drawGroundDetail(t, i, j, sx, sy);
         }
 
+      hd.depthPass(tileAt,camX,camY);
+      hd.groundLighting(camX,camY,game.animClock);
+      hd.natureShadows(nature,game.animClock);
       drawRedacaoBuilding(camX, camY);
-      for(const site of EXPANSION.sites){if(landmarkSprites)g.drawImage(landmarkSprites[site.art],site.x*T-camX,site.y*T-camY,site.w*T,site.h*T);textC(site.name,site.x*T-camX+site.w*T/2,site.y*T-camY-5,'#fff1c9',4);}
+      for(const site of EXPANSION.sites){if(landmarkSprites)hd.building(landmarkSprites[site.art],site.x*T-camX,site.y*T-camY,site.w*T,site.h*T);textC(site.name,site.x*T-camX+site.w*T/2,site.y*T-camY-5,'#fff1c9',4);}
 
       /* pokébolas no chão */
       for (const b of BALLS) {
@@ -1330,6 +1241,8 @@
           g.fillRect(r.x * T - camX + 3 + i * 3, r.y * T - camY + 5 - Math.sin(a + i) * 7, 2, 2);
         }
       }
+
+      hd.atmosphere(game.animClock,'route',camX,camY);
 
       /* HUD compacto */
       frame9(2, 2, 152, 36, { bg: 'rgba(248,248,240,.95)' });
@@ -1562,7 +1475,7 @@
       const dmg = Math.max(1, Math.round((base + Math.max(0, game.level - 8)) * mult));
       b.ehp = Math.max(0, b.ehp - dmg);
       b.eFlashT = 1;
-      playSfx('hitEnemy');
+      GameAudio.sound(m.fx==='rain'?'camera':m.fx==='flash'?'spell':m.fx==='stamp'?'impact':'pickup',{gain:.8});
       const lines = ['Recurso: '+m.name+'!', 'Resistencia reduzida em '+dmg+'.'];
       const eff = effectivenessLine(mult);
       if (eff) lines.push(eff);
@@ -1830,13 +1743,14 @@
       /* inimigo */
       const eX = 150 + (1 - intro) * 130;
       const eLunge = b.eLungeT > 0 ? Math.round(Math.sin(b.eLungeT * Math.PI) * -8) : 0;
-      const bob = Math.sin(b.t * 2.5) * 2;
+      const bob = ['BOTFARM','PRESSSEC','DEEPFAKE'].includes(b.sp.id)?Math.sin(b.t*2.5)*1.2:0;
       let hideEnemy = false;
       if (b.foia) {
         const f = b.foia;
         const breakT = 1.5 + f.shakes * .55;        // quando o resultado aparece
         hideEnemy = f.t > 1.0 && !(f.t > breakT && !f.success);
       }
+      hd.contactShadow(eX+36+eLunge,97,24,4,.42);
       if (!hideEnemy) {
         const flash = b.eFlashT > 0 && Math.floor(b.t * 24) % 2;
         if (!flash) {
@@ -1848,6 +1762,7 @@
       /* jornalista */
       const pX = 16 - (1 - intro) * 110;
       const lunge = b.lungeT > 0 ? Math.round(Math.sin(b.lungeT * Math.PI) * 10) : 0;
+      hd.contactShadow(pX+lunge+shakeX+43,174,26,4,.4);
       g.drawImage(battleTrainerFrames?.[hd.poseIndex(b.t,b.lungeT,b.efxT)] || imgTrainerBack, pX + lunge + shakeX, 92, 86, 86);
 
       /* golpe inimigo: rasgos vermelhos sobre o jogador */

@@ -58,3 +58,7 @@ Pokémon: 64×40, com vila, bosque, rio, pontes, arquivo, sala de leitura e esta
 ## Contraste de navegação Persona v6
 
 Piso cinza-azulado claro e atlas transparente de coluna, cofre, vaso e pedestal gerados com ImageGen. Originais personaFloor-v6.png e personaProps-v6.png; versões WebP e prompts exatos em persona-contrast-prompts-v6.json. Paredes escuras com borda clara nas faces expostas, base delimitada nos objetos sólidos e limiar verde na porta aberta. Vasos atravessáveis não recebem marca de bloqueio. Minimapa repete a distinção entre chão claro e parede escura.
+
+## Luz e sombras v7
+
+As imagens geradas existentes são preservadas. O renderizador agora projeta sombras suavizadas usando o alfa real dos sprites e prende a sombra de contato à base dos pés/objetos. Vegetação e objetos do palácio têm ordem por profundidade; paredes projetam oclusão no chão. Gradação quente/fria, luz local, reflexos de piso/água e partículas ficam abaixo da interface. Pesquisa e limites da adaptação Canvas 2D documentados em docs/hd2d-lighting-audio-v7.md. Efeitos sonoros gerados no ElevenLabs em audio/hd2d-v7/, mantendo músicas originais.

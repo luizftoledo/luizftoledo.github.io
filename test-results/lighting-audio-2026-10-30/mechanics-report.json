@@ -1,0 +1,256 @@
+[
+  {
+    "name": "stardew",
+    "actions": {
+      "seen": [
+        "till",
+        "plant",
+        "water"
+      ],
+      "mechanics": {
+        "tilled": true,
+        "crop": true,
+        "wet": true
+      },
+      "renderMs": 19.440000001589457
+    },
+    "visibility": {
+      "paused": {
+        "track": "farm",
+        "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+        "paused": true,
+        "time": 3.610703,
+        "ready": 4,
+        "context": "suspended",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 3
+      },
+      "resumed": {
+        "track": "farm",
+        "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+        "paused": false,
+        "time": 3.941587,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 3
+      }
+    },
+    "errors": []
+  },
+  {
+    "name": "pokemon",
+    "actions": {
+      "seen": [],
+      "mechanics": {
+        "battle": {
+          "track": "battle",
+          "src": "http://127.0.0.1:8766/pkost_music.mp3",
+          "paused": false,
+          "time": 0.435374,
+          "ready": 4,
+          "context": "running",
+          "muted": false,
+          "volume": 0.6,
+          "blocked": false,
+          "lastError": "",
+          "effectsLoaded": 18,
+          "effectsPlayed": 0
+        },
+        "field": {
+          "track": "field",
+          "src": "http://127.0.0.1:8766/grass_route.m4a",
+          "paused": false,
+          "time": 0.817341,
+          "ready": 4,
+          "context": "running",
+          "muted": false,
+          "volume": 0.6,
+          "blocked": false,
+          "lastError": "",
+          "effectsLoaded": 18,
+          "effectsPlayed": 0
+        }
+      },
+      "renderMs": 38.82333333094915
+    },
+    "visibility": {
+      "paused": {
+        "track": "battle",
+        "src": "http://127.0.0.1:8766/pkost_music.mp3",
+        "paused": true,
+        "time": 1.601775,
+        "ready": 4,
+        "context": "suspended",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 0
+      },
+      "resumed": {
+        "track": "battle",
+        "src": "http://127.0.0.1:8766/pkost_music.mp3",
+        "paused": false,
+        "time": 2.049161,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 0
+      }
+    },
+    "errors": []
+  },
+  {
+    "name": "persona",
+    "actions": {
+      "seen": [],
+      "mechanics": {
+        "wall": true,
+        "keysReachable": true,
+        "reachable": 1012
+      },
+      "renderMs": 23.103333334128063
+    },
+    "visibility": {
+      "paused": {
+        "track": "palace",
+        "src": "http://127.0.0.1:8766/persona_5_life_will_change.mp3",
+        "paused": true,
+        "time": 2.925714,
+        "ready": 4,
+        "context": "suspended",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 0
+      },
+      "resumed": {
+        "track": "palace",
+        "src": "http://127.0.0.1:8766/persona_5_life_will_change.mp3",
+        "paused": false,
+        "time": 3.384308,
+        "ready": 4,
+        "context": "running",
+        "muted": false,
+        "volume": 0.6,
+        "blocked": false,
+        "lastError": "",
+        "effectsLoaded": 18,
+        "effectsPlayed": 0
+      }
+    },
+    "errors": []
+  },
+  {
+    "mode": "blocked",
+    "before": {
+      "track": "farm",
+      "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+      "paused": true,
+      "time": 0,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": true,
+      "lastError": "NotAllowedError",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "visible": true,
+    "after": {
+      "track": "farm",
+      "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+      "paused": false,
+      "time": 1.32813,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    }
+  },
+  {
+    "mode": "muted",
+    "before": {
+      "track": "farm",
+      "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+      "paused": false,
+      "time": 0.434271,
+      "ready": 4,
+      "context": "running",
+      "muted": true,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "visible": true,
+    "after": {
+      "track": "farm",
+      "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+      "paused": false,
+      "time": 2.325488,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    }
+  },
+  {
+    "mode": "zero",
+    "before": {
+      "track": "farm",
+      "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+      "paused": false,
+      "time": 0.254363,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    },
+    "visible": true,
+    "after": {
+      "track": "farm",
+      "src": "http://127.0.0.1:8766/stardew_theme.m4a",
+      "paused": false,
+      "time": 2.083217,
+      "ready": 4,
+      "context": "running",
+      "muted": false,
+      "volume": 0.6,
+      "blocked": false,
+      "lastError": "",
+      "effectsLoaded": 18,
+      "effectsPlayed": 0
+    }
+  }
+]

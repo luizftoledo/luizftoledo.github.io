@@ -236,8 +236,9 @@
     @media (max-width: 560px) { .audio-ctl input[type=range] { width: 52px; } }
   </style>
   <script src="theme-toggle.js"></script>
-  <script src="scripts/hd2d-art.js?v=persona-contrast-6"></script>
-  <link rel="stylesheet" href="game-layout.css?v=1">
+  <script src="scripts/game-audio.js?v=7"></script>
+  <script src="scripts/hd2d-art.js?v=lighting-audio-7"></script>
+  <link rel="stylesheet" href="game-layout.css?v=7">
   <script src="scripts/game-layout.js?v=1" defer></script>
   <script src="scripts/game-expansion.js?v=persona-contrast-6"></script>
 </head>
@@ -786,112 +787,16 @@
     }
 
     /* =====================================================================
-       AUDIO — original chiptune (acid-jazz-ish), WebAudio only
+       AUDIO — original recording and generated game foley
        ===================================================================== */
-    const audio = { ctx: null, master: null, music: null, noise: null, next: 0, step: 0 };
-    const m2f = m => 440 * Math.pow(2, (m - 69) / 12);
-
-    function initAudio() {
-      if (audio.ctx) { if (audio.ctx.state === 'suspended') audio.ctx.resume(); return; }
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      const ctx = audio.ctx = new AC();
-      audio.master = ctx.createGain(); audio.master.gain.value = .5;
-      audio.master.connect(ctx.destination);
-      audio.music = ctx.createGain(); audio.music.gain.value = .42;
-      audio.music.connect(audio.master);
-      const buf = ctx.createBuffer(1, ctx.sampleRate * .4, ctx.sampleRate);
-      const d = buf.getChannelData(0);
-      for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-      audio.noise = buf;
-      audio.next = ctx.currentTime + .08;
-      audio.step = 0;
-      setInterval(musicTick, 30);
-      const bgm = document.getElementById('bgm');
-      bgm.volume = .5;
-      bgm.play().catch(() => { });
-    }
-
-    function osc(type, freq, t0, dur, gain, dest, slideTo) {
-      const ctx = audio.ctx;
-      const o = ctx.createOscillator(), gn = ctx.createGain();
-      o.type = type; o.frequency.setValueAtTime(freq, t0);
-      if (slideTo) o.frequency.exponentialRampToValueAtTime(slideTo, t0 + dur);
-      gn.gain.setValueAtTime(gain, t0);
-      gn.gain.exponentialRampToValueAtTime(.0008, t0 + dur);
-      o.connect(gn); gn.connect(dest || audio.music);
-      o.start(t0); o.stop(t0 + dur + .02);
-    }
-
-    function hat(t0, gain, dur, fc) {
-      const ctx = audio.ctx;
-      const src = ctx.createBufferSource(); src.buffer = audio.noise;
-      const f = ctx.createBiquadFilter(); f.type = 'highpass'; f.frequency.value = fc || 6500;
-      const gn = ctx.createGain();
-      gn.gain.setValueAtTime(gain, t0);
-      gn.gain.exponentialRampToValueAtTime(.0008, t0 + dur);
-      src.connect(f); f.connect(gn); gn.connect(audio.music);
-      src.start(t0); src.stop(t0 + dur + .02);
-    }
-
-    function kick(t0, gain) {
-      osc('sine', 110, t0, .14, gain || .16, audio.music, 42);
-    }
-
-    /* calm theme: lazy walking bass + swung hats. escape: driving pulse */
-    const BASS_CALM = [38, 41, 45, 48, 50, 48, 46, 45, 43, 46, 50, 53, 50, 48, 45, 41];
-    const BASS_ESC = [38, 38, 50, 38, 41, 38, 53, 38, 36, 36, 48, 36, 43, 43, 46, 47];
-    const STAB_DM7 = [62, 65, 69, 72], STAB_G7 = [55, 59, 62, 65], STAB_DIM = [62, 65, 68, 71];
-
-    function scheduleStep(s, t) {
-      return; // música agora é o MP3 original do site (Life Will Change); sfx seguem WebAudio
-      const st = game.state;
-      if (st === 'title' || st === 'win' || st === 'busted') return;
-      const esc = game.escape;
-      if (!esc) {
-        if (s % 2 === 0) {
-          const n = BASS_CALM[(s >> 1) % 16];
-          osc('triangle', m2f(n), t, .30, .15);
-        }
-        hat(t, s % 2 ? .045 : .022, .035);
-        if (s % 16 === 4 || s % 16 === 12) hat(t, .035, .09, 2200);
-        if (s % 32 === 6) STAB_DM7.forEach(n => osc('square', m2f(n), t, .16, .018));
-        if (s % 32 === 22) STAB_G7.forEach(n => osc('square', m2f(n), t, .16, .018));
-      } else {
-        const n = BASS_ESC[s % 16];
-        osc('sawtooth', m2f(n), t, .11, .09);
-        if (s % 4 === 0) kick(t, .15);
-        hat(t, s % 2 ? .05 : .028, s % 16 === 14 ? .12 : .03);
-        if (s % 16 === 8) STAB_DIM.forEach(n => osc('square', m2f(n), t, .12, .02));
-        if (s % 32 === 30) osc('square', m2f(74), t, .2, .03, audio.music, m2f(80));
-      }
-    }
-
-    function musicTick() {
-      const ctx = audio.ctx;
-      while (audio.next < ctx.currentTime + .12) {
-        scheduleStep(audio.step, audio.next);
-        const esc = game.escape;
-        const bpm = esc ? 164 : 102;
-        let dur = 60 / bpm / 2;
-        if (!esc) dur *= (audio.step % 2 === 0) ? 1.18 : 0.82;  /* swing */
-        audio.next += dur;
-        audio.step++;
-      }
-    }
-
-    /* ---------- sfx ---------- */
-    function sfx(fn) { if (audio.ctx) fn(audio.ctx.currentTime + .01); }
-    const sfxKey = () => sfx(t => { osc('square', m2f(76), t, .09, .06, audio.master); osc('square', m2f(83), t + .09, .14, .06, audio.master); });
-    const sfxSpot = () => sfx(t => { osc('sawtooth', 660, t, .09, .1, audio.master); osc('sawtooth', 470, t + .1, .22, .1, audio.master, 180); });
-    const sfxHide = () => sfx(t => osc('triangle', 220, t, .08, .06, audio.master, 150));
-    const sfxCard = () => sfx(t => {
-      hat(t, .12, .4, 1200);
-      [62, 65, 69, 74].forEach((n, i) => osc('square', m2f(n), t + .12 + i * .07, .18, .05, audio.master));
-    });
-    const sfxDossier = () => sfx(t => [62, 65, 69, 74, 77].forEach((n, i) => osc('triangle', m2f(n), t + i * .08, .2, .07, audio.master)));
-    const sfxBusted = () => sfx(t => [50, 46, 43, 38].forEach((n, i) => osc('sawtooth', m2f(n), t + i * .14, .22, .08, audio.master)));
-    const sfxWin = () => sfx(t => [62, 66, 69, 74, 78, 81].forEach((n, i) => osc('square', m2f(n), t + i * .11, .26, .06, audio.master)));
+    function initAudio() { GameAudio.unlock(); }
+    const sfxKey = () => GameAudio.sound('pickup');
+    const sfxSpot = () => GameAudio.sound('alert',{gain:.85});
+    const sfxHide = () => GameAudio.sound('hide');
+    const sfxCard = () => GameAudio.sound('door');
+    const sfxDossier = () => GameAudio.sound('success');
+    const sfxBusted = () => GameAudio.sound('fail');
+    const sfxWin = () => GameAudio.sound('success');
 
     /* =====================================================================
        WORLD LOGIC
@@ -978,6 +883,7 @@
     }
 
     function finishStep() {
+      GameAudio.sound('step-stone',{gain:.18,rate:game.step%2?1.04:.96});
       game.step++;
       /* key pickup */
       for (const k of KEY_DEFS) {
@@ -1206,17 +1112,21 @@
     }
 
     // Walkable surfaces stay light; actual collision cells get a dark footprint.
-    function drawPalaceSurface(tile,x,y){
+    function drawPalaceSurface(tile,x,y,queue){
       const props={column:[10,17],safe:[12,11],vase:[7,13],pedestal:[12,10]};
       if(props[tile]){
         g.drawImage(TILES.floor,x,y);
-        if(SOLID_TILES[tile]){g.fillStyle='#34323b';g.fillRect(x+1,y+9,14,6);g.strokeStyle='#a49068';g.lineWidth=.6;g.strokeRect(x+.75,y+.75,14.5,14.5);}
-        else{g.fillStyle='rgba(30,28,34,.24)';g.beginPath();g.ellipse(x+8,y+15,4,.8,0,0,Math.PI*2);g.fill();}
-        const [w,h]=props[tile];g.drawImage(TILES[tile],x+8-w/2,y+16-h,w,h);return;
+        if(queue){queue.push({tile,x,y,base:y+16});return;}
+        drawPalaceProp({tile,x,y});return;
       }
       g.drawImage(TILES[tile],x,y);
       if(tile==='wall'){g.fillStyle='rgba(8,9,17,.32)';g.fillRect(x,y,16,16);}
       if(tile==='dooropen'){g.fillStyle='#72c8a1';g.fillRect(x+2,y+15,12,.8);}
+    }
+    function drawPalaceProp({tile,x,y}){
+      const [w,h]={column:[10,17],safe:[12,11],vase:[7,13],pedestal:[12,10]}[tile];
+      if(SOLID_TILES[tile]){g.fillStyle='rgba(29,28,36,.55)';g.fillRect(x+1,y+11,14,4);g.strokeStyle='#a49068';g.lineWidth=.6;g.strokeRect(x+.75,y+.75,14.5,14.5);}
+      hd.contactShadow(x+8,y+15,w*.55,1.4,.4);g.drawImage(TILES[tile],x+8-w/2,y+16-h,w,h);
     }
     function drawPalaceBoundaries(camX,camY,x0,y0){
       g.save();g.lineWidth=.8;
@@ -1234,19 +1144,23 @@
     }
     function drawWorld() {
       zones = [];
+      hd.setLighting('palace');
       const [pcx, pcy, wx, wy] = playerPixelCenter();
       let camX = Math.round(wx - 128 + 8), camY = Math.round(wy - 96 + 9);
       camX = Math.max(0, Math.min(MAPW * T - 256, camX));
       camY = Math.max(0, Math.min(MAPH * T - 192, camY));
 
+      const sceneProps=[];
       const x0 = Math.floor(camX / T), y0 = Math.floor(camY / T);
       for (let j = y0; j <= y0 + 13 && j < MAPH; j++)
         for (let i = x0; i <= x0 + 17 && i < MAPW; i++) {
           const tile = tileAt(i, j), sx = i * T - camX, sy = j * T - camY;
-          drawPalaceSurface(tile,sx,sy);
+          drawPalaceSurface(tile,sx,sy,sceneProps);
           drawPalaceTileDetail(tile, i, j, sx, sy);
         }
 
+      hd.depthPass(tileAt,camX,camY,'palace');
+      for(const p of sceneProps){const [w,h]={column:[10,17],safe:[12,11],vase:[7,13],pedestal:[12,10]}[p.tile];hd.castShadow(TILES[p.tile],p.x+8,p.y+16,w,h,.24,.34);}
       drawPalaceBoundaries(camX,camY,x0,y0);
 
       /* keys on the floor */
@@ -1270,21 +1184,19 @@
       /* vision cones under actors */
       for (const gd of guards) drawCone(gd, camX, camY);
 
-      /* guards */
-      for (const gd of guards) {
-        const dirKey = gd.fx === 1 ? 'right' : gd.fx === -1 ? 'left' : gd.fy === -1 ? 'up' : 'down';
-        const fr = actorFrame(SPR.guard, dirKey, gd.animT, gd.wait <= 0);
-        hd.drawGroundedActor(fr,gd.px*T-camX+8,gd.py*T-camY+14);
+      const entities=sceneProps.map(p=>({base:p.base,draw:()=>drawPalaceProp(p)}));
+      for(const gd of guards){
+        const dirKey=gd.fx===1?'right':gd.fx===-1?'left':gd.fy===-1?'up':'down';
+        const fr=actorFrame(SPR.guard,dirKey,gd.animT,gd.wait<=0);
+        entities.push({base:gd.py*T-camY+14,draw:()=>hd.drawGroundedActor(fr,gd.px*T-camX+8,gd.py*T-camY+14,tileAt(Math.round(gd.px),Math.round(gd.py))==='floor')});
       }
-
-      /* player (blinks while in grace) */
-      const blink = game.grace > 0 && Math.floor(game.animClock * 8) % 2 === 0;
-      if (!blink&&!game.hidden) {
-        const phase = Math.floor((game.step + (game.moving ? game.moveT : 0)) * 2) % 4;
-        const seq = [0, 1, 2, 3];
-        const fr = hd.actorFrame(SPR.player,game.dir,game.moving,game.animClock,seq[phase]);
-        hd.drawGroundedActor(fr,wx-camX+8,wy-camY+14);
+      const blink=game.grace>0&&Math.floor(game.animClock*8)%2===0;
+      if(!blink&&!game.hidden){
+        const phase=Math.floor((game.step+(game.moving?game.moveT:0))*2)%4;
+        const fr=hd.actorFrame(SPR.player,game.dir,game.moving,game.animClock,phase);
+        entities.push({base:wy-camY+14,draw:()=>hd.drawGroundedActor(fr,wx-camX+8,wy-camY+14,tileAt(game.px,game.py)==='floor')});
       }
+      entities.sort((a,b)=>a.base-b.base).forEach(e=>e.draw());
       /* hidden: vase covers the player */
       if (game.hidden) {
         textCShadow('OCULTO', wx - camX + 8, wy - camY - 14, '#f4f2ec', 6);
@@ -1307,6 +1219,9 @@
         if (Math.floor(game.animClock * 2) % 2) textCShadow('ESCAPE!', 128, 4, '#ff5060', 8);
       }
 
+      const sceneLights=[];
+      for(let j=y0;j<=y0+13&&j<MAPH;j++)for(let i=x0;i<=x0+17&&i<MAPW;i++){const t=tileAt(i,j);if(t==='column')sceneLights.push({x:i*T-camX+8,y:j*T-camY+8,r:24,color:'#ffe4b6',alpha:.14});if(t==='dooropen')sceneLights.push({x:i*T-camX+8,y:j*T-camY+15,r:20,color:'#97e8be',alpha:.19});}
+      hd.atmosphere(game.animClock,'palace',camX,camY,sceneLights);
       drawHUD();
 
       if (game.msg) {
@@ -1599,27 +1514,7 @@
        TEST HOOKS
        ===================================================================== */
 
-    /* ---------- volume master (persistido entre os jogos) ---------- */
-    (function () {
-      const volRange = document.getElementById('volRange');
-      const muteBtn = document.getElementById('muteBtn');
-      let masterVol = parseFloat(localStorage.getItem('lft_game_vol') || '.6');
-      let muted = localStorage.getItem('lft_game_mute') === '1';
-      window.__applyVol = function () {
-        const v = muted ? 0 : masterVol;
-        const el = document.getElementById('bgm');
-        if (el) el.volume = .8 * v;
-        if (audio && audio.master) audio.master.gain.value = v * .85;
-        volRange.value = Math.round(masterVol * 100);
-        muteBtn.textContent = muted ? '✕' : '♪';
-        localStorage.setItem('lft_game_vol', masterVol);
-        localStorage.setItem('lft_game_mute', muted ? '1' : '0');
-      };
-      volRange.addEventListener('input', () => { masterVol = volRange.value / 100; muted = false; window.__applyVol(); });
-      muteBtn.addEventListener('click', () => { muted = !muted; window.__applyVol(); });
-      window.__applyVol();
-      setInterval(window.__applyVol, 1500); // reaplica (áudio criado depois do load)
-    })();
+    GameAudio.install({tracks:[{id:'palace',element:'bgm',src:'persona_5_life_will_change.mp3',gain:.58}],initial:'palace'});
 
     window.advanceTime = ms => {for(let i=0,n=Math.max(1,Math.round(ms/(1000/60)));i<n;i++)stepGame(1/60);};
     window.__game = game;

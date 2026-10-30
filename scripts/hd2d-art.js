@@ -109,8 +109,97 @@ window.HD2D = function (ctx) {
   function actorFrame(target,dir,moving,time,phase=0,offset=0) {
     return moving?target[dir][phase%target[dir].length]:target.idle?.[dir]?.[idleIndex(time,offset)]||target[dir][0];
   }
-  function drawGroundedActor(frame,footX,footY) {
-    ctx.save();ctx.fillStyle='rgba(25,39,27,.24)';ctx.beginPath();ctx.ellipse(footX,footY,4.2,.8,0,0,Math.PI*2);ctx.fill();
+  // Ground-space lighting: cached alpha silhouettes, contact occlusion and bounded scene grading.
+  const shadowMasks=new WeakMap();
+  let lighting='route';
+  function setLighting(profile){lighting=profile;}
+  function maskFor(sprite){
+    if(shadowMasks.has(sprite))return shadowMasks.get(sprite);
+    const out=document.createElement('canvas'),w=sprite.naturalWidth||sprite.width,h=sprite.naturalHeight||sprite.height;
+    const scale=Math.min(1,256/Math.max(w,h));out.width=Math.max(1,Math.round(w*scale));out.height=Math.max(1,Math.round(h*scale));
+    const c=out.getContext('2d');c.drawImage(sprite,0,0,out.width,out.height);const pixels=c.getImageData(0,0,out.width,out.height);for(let i=3;i<pixels.data.length;i+=4){const a=pixels.data[i];pixels.data[i]=a<70?0:Math.min(255,(a-70)*1.5);}c.putImageData(pixels,0,0);c.globalCompositeOperation='source-in';c.fillStyle='#152031';c.fillRect(0,0,out.width,out.height);const soft=document.createElement('canvas');soft.width=out.width;soft.height=out.height;const sc=soft.getContext('2d');sc.filter='blur(2px)';sc.drawImage(out,0,0);shadowMasks.set(sprite,soft);return soft;
+  }
+  function contactShadow(x,y,rx,ry,alpha=.35){
+    ctx.save();ctx.translate(x,y);ctx.scale(rx,ry);
+    const grad=ctx.createRadialGradient(0,0,0,0,0,1);grad.addColorStop(0,`rgba(11,20,29,${alpha})`);grad.addColorStop(.45,`rgba(15,24,31,${alpha*.65})`);grad.addColorStop(1,'rgba(15,24,31,0)');
+    ctx.fillStyle=grad;ctx.fillRect(-1,-1,2,2);ctx.restore();
+  }
+  function castShadow(sprite,footX,footY,w,h,alpha=.24,stretch=.33){
+    if(!sprite||footX+w+h<0||footY+h<0||footX-w-h>256||footY>205)return;
+    ctx.save();ctx.globalAlpha=alpha;ctx.translate(footX,footY);ctx.transform(1,0,-.52,-stretch,0,0);
+    ctx.drawImage(maskFor(sprite),-w/2,-h,w,h);ctx.restore();
+  }
+  function building(sprite,x,y,w,h){
+    castShadow(sprite,x+w/2,y+h-1,w,h,.22,.22);
+    contactShadow(x+w/2,y+h-1,w*.53,3,.48);
+    ctx.drawImage(sprite,x,y,w,h);
+  }
+  function depthPass(tileAt,camX,camY,kind='route'){
+    const x0=Math.floor(camX/16),y0=Math.floor(camY/16);
+    const raised=key=>(kind==='farm'?['cwall','rockface']:['wall','cwall','rockface','door']).includes(key);
+    ctx.save();
+    for(let j=y0;j<=y0+13;j++)for(let i=x0;i<=x0+17;i++){
+      const t=tileAt(i,j),x=i*16-camX,y=j*16-camY;if(raised(t)||t==='tree'||t==='water')continue;
+      if(raised(tileAt(i,j-1))){
+        const grad=ctx.createLinearGradient(0,y,0,y+6);grad.addColorStop(0,'rgba(12,16,31,.44)');grad.addColorStop(.28,'rgba(19,25,39,.23)');grad.addColorStop(1,'rgba(19,25,39,0)');ctx.fillStyle=grad;ctx.fillRect(x,y,16,6);
+      }
+      if(raised(tileAt(i-1,j))){
+        const grad=ctx.createLinearGradient(x,0,x+4,0);grad.addColorStop(0,'rgba(12,16,31,.25)');grad.addColorStop(1,'rgba(19,25,39,0)');ctx.fillStyle=grad;ctx.fillRect(x,y,4,16);
+      }
+      if(kind!=='palace'&&t==='soil'&&tileAt(i,j-1)!=='soil'){
+        const grad=ctx.createLinearGradient(0,y,0,y+2.5);grad.addColorStop(0,'rgba(40,30,20,.24)');grad.addColorStop(1,'rgba(40,30,20,0)');ctx.fillStyle=grad;ctx.fillRect(x,y,16,2.5);
+      }
+    }
+    ctx.restore();
+  }
+  function natureShadows(nature,time){
+    for(const n of nature){
+      const w=n.w||23,h=n.h||30,base=n.y+16;
+      castShadow(n.sprite,n.x+8,base,w,h,n.kind==='tree'?.24:.18,n.kind==='tree'?.43:.29);
+      contactShadow(n.x+8,base,w*.38,n.kind==='tree'?2:1,.36);
+    }
+  }
+  function glow(x,y,r,color,alpha=.2){
+    ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=alpha;
+    const gradient=ctx.createRadialGradient(x,y,0,x,y,r);gradient.addColorStop(0,color);gradient.addColorStop(.25,color+'a0');gradient.addColorStop(1,color+'00');ctx.fillStyle=gradient;ctx.fillRect(x-r,y-r,r*2,r*2);ctx.restore();
+  }
+  function groundLighting(camX,camY,time,kind='route'){
+    if(kind==='cave'||kind==='palace')return;
+    // Slow cloud shadows remain in world space as the camera moves.
+    ctx.save();
+    for(let i=0;i<4;i++){
+      const x=((i*173+time*1.5-camX*.25)%430+430)%430-80,y=((i*79-camY*.22)%280+280)%280-40;
+      ctx.save();ctx.translate(x,y);ctx.scale(70,24);const gr=ctx.createRadialGradient(0,0,0,0,0,1);gr.addColorStop(0,'rgba(19,38,49,.09)');gr.addColorStop(.45,'rgba(19,38,49,.05)');gr.addColorStop(1,'rgba(19,38,49,0)');ctx.fillStyle=gr;ctx.fillRect(-1,-1,2,2);ctx.restore();
+    }ctx.restore();
+  }
+  function atmosphere(time,kind='route',camX=0,camY=0,lights=[]){
+    ctx.save();
+    const grade=ctx.createLinearGradient(15,0,235,192);
+    if(kind==='palace'){grade.addColorStop(0,'rgba(255,213,148,.06)');grade.addColorStop(.45,'rgba(64,77,128,.045)');grade.addColorStop(1,'rgba(31,34,64,.12)');}
+    else if(kind==='cave'){grade.addColorStop(0,'rgba(41,65,96,.14)');grade.addColorStop(1,'rgba(13,17,34,.27)');}
+    else{grade.addColorStop(0,'rgba(255,221,153,.10)');grade.addColorStop(.45,'rgba(255,231,183,.025)');grade.addColorStop(1,'rgba(21,43,71,.15)');}
+    ctx.fillStyle=grade;ctx.fillRect(0,0,256,192);
+    const vignette=ctx.createRadialGradient(128,92,65,128,92,160);vignette.addColorStop(0,'rgba(10,17,31,0)');vignette.addColorStop(1,kind==='cave'?'rgba(5,8,20,.4)':'rgba(8,16,29,.19)');ctx.fillStyle=vignette;ctx.fillRect(0,0,256,192);
+    if(kind!=='cave'&&kind!=='palace'){
+      ctx.save();ctx.globalCompositeOperation='screen';
+      const sun=ctx.createLinearGradient(0,0,170,150);sun.addColorStop(0,'rgba(255,229,170,.13)');sun.addColorStop(1,'rgba(255,229,170,0)');ctx.fillStyle=sun;
+      const drift=Math.sin(time*.13)*5-camX*.04;ctx.beginPath();ctx.moveTo(12+drift,0);ctx.lineTo(28+drift,0);ctx.lineTo(190+drift,192);ctx.lineTo(151+drift,192);ctx.fill();ctx.restore();
+    }
+    for(const l of lights)if(l.x>-40&&l.y>-40&&l.x<296&&l.y<232)glow(l.x,l.y,l.r||22,l.color||'#ffe1a2',l.alpha||.19);
+    // Sparse dust/pollen: sub-pixel flecks only, never over the HUD.
+    for(let i=0;i<12;i++){
+      const x=((i*61.7+Math.sin(time*.35+i)*2-camX*.3)%270+270)%270-7;
+      const y=((i*41.3-time*(kind==='palace'?.5:1.2)-camY*.35)%210+210)%210-9;
+      const a=(.5+.5*Math.sin(time*.8+i*1.7))*(kind==='cave'?.13:.25);
+      ctx.fillStyle=`rgba(255,235,184,${a})`;ctx.fillRect(x,y,.35+(i%3)*.12,.35+(i%3)*.12);
+    }
+    ctx.restore();
+  }
+  function drawGroundedActor(frame,footX,footY,reflect=false) {
+    castShadow(frame,footX,footY,14,18,lighting==='palace'?.2:.27,lighting==='palace'?.23:.35);
+    if(reflect){ctx.save();ctx.globalAlpha=.065;ctx.translate(footX,footY);ctx.scale(1,-.23);ctx.drawImage(frame,-7,-18,14,18);ctx.restore();}
+
+    ctx.save();contactShadow(footX,footY,4.3,1.05,.48);
     // Grounded frames end one native pixel above their 18 logical-pixel baseline.
     ctx.drawImage(frame,footX-7,footY-18+1/8,14,18);ctx.restore();
   }
@@ -127,7 +216,7 @@ window.HD2D = function (ctx) {
   };
   function worldObject(sprite,key,x,y,time=0,floating=false) {
     const [w,h]=worldSizes[key]||[7,7], bob=floating?Math.sin(time*2.2+x*.05)*.3:0;
-    ctx.save();ctx.fillStyle='rgba(26,39,24,.18)';ctx.beginPath();ctx.ellipse(x+8,y+13,w*.42,Math.max(.6,h*.14),0,0,Math.PI*2);ctx.fill();
+    ctx.save();castShadow(sprite,x+8,y+13,w,h,.23,.36);contactShadow(x+8,y+13,w*.5,Math.max(.6,h*.15),.38);
     ctx.drawImage(sprite,x+8-w/2,y+13-h+bob,w,h);ctx.restore();
   }
   function water(name) {return load(name,img=>{waterFrames=Array.from({length:8},(_,i)=>cell(img,4,2,i,64,64));});}
@@ -144,7 +233,7 @@ window.HD2D = function (ctx) {
   }
   function worldTile(key,tiles,x,y,time,wx,wy,nature,bank={}) {
     const props={flower:[6,5],flower2:[6,5],sign:[10,11],fence:[16,7],mailbox:[7,11],shop:[16,17],tall:[15,10]};
-    if(key==='tree') {ctx.drawImage(tiles.grass,x,y);nature.push({x,y,wx,wy,sprite:tiles.tree});return;}
+    if(key==='tree') {ctx.drawImage(tiles.grass,x,y);nature.push({x,y,wx,wy,sprite:tiles.tree,kind:'tree'});return;}
     if(key==='water'||key==='water2') {
       if(waterFrames) {
         const clock=time*3, frame=Math.floor(clock)%8, blend=clock-Math.floor(clock);
@@ -156,6 +245,11 @@ window.HD2D = function (ctx) {
         ctx.drawImage(waterFrames[frame],sx,sy,sw,sh,0,0,16,16);
         ctx.globalAlpha=blend;ctx.drawImage(waterFrames[(frame+1)%8],sx,sy,sw,sh,0,0,16,16);ctx.restore();
       } else ctx.drawImage(tiles[key],x,y);
+      ctx.save();
+      const waterShade=ctx.createLinearGradient(x,y,x,y+16);waterShade.addColorStop(0,'rgba(12,42,62,.20)');waterShade.addColorStop(1,'rgba(8,47,65,.05)');ctx.fillStyle=waterShade;ctx.fillRect(x,y,16,16);
+      ctx.globalCompositeOperation='screen';ctx.strokeStyle='rgba(229,246,216,.25)';ctx.lineWidth=.35;
+      for(let r=0;r<2;r++){const phase=time*.6+wx*.72+wy*.39+r*2.1;const cx=x+4+r*7+Math.sin(phase)*1.5,cy=y+4+r*7+Math.cos(phase*.8);ctx.beginPath();ctx.moveTo(cx-1.2,cy);ctx.lineTo(cx+1.2,cy);ctx.stroke();}
+      ctx.restore();
       ctx.save();ctx.fillStyle='rgba(24,70,73,.35)';
       if(bank.left)ctx.fillRect(x,y,1.2,16);if(bank.right)ctx.fillRect(x+14.8,y,1.2,16);
       if(bank.top)ctx.fillRect(x,y,16,1.2);if(bank.bottom)ctx.fillRect(x,y+14.8,16,1.2);
@@ -174,17 +268,18 @@ window.HD2D = function (ctx) {
     if(props[key]) {
       ctx.drawImage(tiles.grass,x,y);const [w,h]=props[key];
       const moving=['flower','flower2','tall'].includes(key), sway=moving?Math.sin(time*1.4+wx*.3+wy*.2)*.35:0;
-      ctx.drawImage(tiles[key],x+8-w/2+sway,y+16-h,w,h);return;
+      nature.push({x,y,wx,wy,sprite:tiles[key],kind:key,w,h,sway});return;
     }
     ctx.drawImage(tiles[key],x,y);
   }
   function natureLayer(nature,time,playerBase,front=false) {
-    for(const n of nature) {
+    for(const n of [...nature].sort((a,b)=>(a.y-b.y)||(a.x-b.x))) {
       if((n.y+16>playerBase)!==front)continue;
-      const w=23,h=30,x=n.x+8-w/2,y=n.y+16-h;
-      ctx.save();ctx.fillStyle='rgba(19,48,29,.22)';ctx.beginPath();ctx.ellipse(n.x+9,n.y+15,9,2.5,0,0,Math.PI*2);ctx.fill();
-      for(let band=0;band<12;band++) {
-        const v=band/11, leaf=Math.max(0,1-v*1.5);
+      const w=n.w||23,h=n.h||30,x=n.x+8-w/2,y=n.y+16-h;
+      ctx.save();
+      if(n.kind!=='tree')ctx.drawImage(n.sprite,x+(n.sway||0),y,w,h);
+      else for(let band=0;band<12;band++) {
+        const v=band/11,leaf=Math.max(0,1-v*1.5);
         const shift=(Math.sin(time*1.25+n.wx*.24+n.wy*.17)*.65+Math.sin(time*.45)*.3)*leaf*leaf;
         ctx.drawImage(n.sprite,0,band*16/12,16,16/12,x+shift,y+band*h/12,w,h/12+.04);
       }
@@ -200,5 +295,5 @@ window.HD2D = function (ctx) {
     shade.addColorStop(0,'rgba(5,8,16,.65)');shade.addColorStop(.6,'rgba(5,8,16,.22)');shade.addColorStop(1,'rgba(5,8,16,.65)');
     ctx.fillStyle=shade;ctx.fillRect(0,0,256,192);
   }
-  return {worldObject,worldSizes,water,waterRegion,worldTile,natureLayer,atlas,actor,load,cell,frames,idle,idleIndex,poseIndex,actorFrame,drawGroundedActor,creature,creatureFrame,titleLoad,titleDraw,loaded,ready:()=>Promise.all(pending)};
+  return {setLighting,contactShadow,castShadow,building,depthPass,natureShadows,groundLighting,glow,atmosphere,worldObject,worldSizes,water,waterRegion,worldTile,natureLayer,atlas,actor,load,cell,frames,idle,idleIndex,poseIndex,actorFrame,drawGroundedActor,creature,creatureFrame,titleLoad,titleDraw,loaded,ready:()=>Promise.all(pending)};
 };
