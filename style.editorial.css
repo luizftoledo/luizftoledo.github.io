@@ -4,8 +4,8 @@
 :root {
   --ink: #17191e;
   --forest: #23262e;
-  --moss: #a12a43;
-  --lime: #c4cad3;
+  --moss: #746348;
+  --lime: #d9cfba;
   --paper: #f4f1ea;
   --paper-deep: #e7e2da;
   --line: rgba(23, 25, 30, .18);
@@ -21,20 +21,20 @@
 }
 
 html[data-site-theme="dark"] {
-  --ink: #eceef2;
-  --forest: #e3e6ec;
-  --moss: #d76a80;
-  --lime: #c4cad3;
-  --paper: #181a20;
-  --paper-deep: #252832;
-  --line: rgba(236, 238, 242, .18);
+  --ink: #e9e6df;
+  --forest: #e9e6df;
+  --moss: #c5b695;
+  --lime: #c5b695;
+  --paper: #181817;
+  --paper-deep: #232321;
+  --line: rgba(233, 230, 223, .18);
   --bg: var(--paper);
-  --surface: #1b2b25;
-  --card: #1b2b25;
+  --surface: #232321;
+  --card: #232321;
   --text: var(--ink);
-  --muted: #afbeb5;
-  --accent: var(--forest);
-  --accent-2: var(--moss);
+  --muted: #b8b4aa;
+  --accent: #c5b695;
+  --accent-2: #c5b695;
   --border: var(--line);
 }
 
@@ -305,3 +305,36 @@ html[data-site-theme="dark"] .outlet-panel { background: #1b2b25 !important; }
 
 /* Additional BBC video reporting */
 .bbc-search-more{margin:42px 0 24px}.bbc-search-more h3{font-size:1.5rem;margin:0 0 8px}.bbc-search-more>p{opacity:.72;margin:0 0 20px}.bbc-search-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}.bbc-search-card{display:block;text-decoration:none;color:inherit;border:1px solid rgba(127,127,127,.22);border-radius:12px;overflow:hidden;background:var(--card-bg,#fff);transition:transform .2s,box-shadow .2s}.bbc-search-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.13)}.bbc-search-card img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}.bbc-search-card span{display:block;padding:13px 15px;font-size:.92rem;line-height:1.4;font-weight:600}
+
+/* Warm neutral surfaces; article media keeps its original colours. */
+.investigative .card-article::after,
+.investigative .featured-article::after { content: none !important; }
+.investigative .card-article img,
+.investigative .featured-article img { filter: none !important; mix-blend-mode: normal; }
+.ai-reporting .ai-video-feature,
+.ai-reporting .ai-doctors-sequence,
+.ai-reporting .ai-instagram-media { background: var(--surface) !important; }
+html[data-site-theme="dark"] nav { background: rgba(24,24,23,.95) !important; }
+html[data-site-theme="dark"] .hero-text p,
+html[data-site-theme="dark"] .featured-content p,
+html[data-site-theme="dark"] .story-card p,
+html[data-site-theme="dark"] .interview-card p,
+html[data-site-theme="dark"] .investigative .card-article p { color: var(--muted) !important; }
+html[data-site-theme="dark"] .outlet-chip,
+html[data-site-theme="dark"] .outlet-panel,
+html[data-site-theme="dark"] .bbc-search-card { background: var(--surface) !important; }
+html[data-site-theme="dark"] .outlet-chip:hover,
+html[data-site-theme="dark"] .outlet-chip.active { background: #34332f !important; color: var(--ink) !important; }
+html[data-site-theme="dark"] .tags .tag,
+html[data-site-theme="dark"] .tag { background: #302e28 !important; border-color: #625c4d !important; color: var(--accent) !important; }
+html[data-site-theme="dark"] #impact-grid,
+html[data-site-theme="dark"] .footer { background: var(--surface) !important; }
+html[data-site-theme="dark"] .btn-secondary,
+html[data-site-theme="dark"] .reels-btn,
+html[data-site-theme="dark"] .show-more-btn { background: var(--accent) !important; color: var(--paper) !important; border-color: var(--accent) !important; }
+html[data-site-theme="dark"] .hero-text h1 .highlight { background: none; }
+html[data-site-theme="dark"] .award-list li:hover,
+html[data-site-theme="dark"] .grant-list li:hover { background: var(--surface) !important; }
+html[data-site-theme="dark"] #newsroom { background: var(--paper); --nr-ink: #e9e6df; --nr-paper: #232321; --nr-muted: #b8b4aa; }
+html[data-site-theme] body .site-theme-toggle { color: var(--ink); background: var(--surface); border-color: var(--line); box-shadow: 0 4px 16px rgba(0,0,0,.16); }
+html[data-site-theme] body .site-theme-toggle:hover { color: var(--paper); background: var(--accent); }
