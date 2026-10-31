@@ -338,3 +338,24 @@ html[data-site-theme="dark"] .grant-list li:hover { background: var(--surface) !
 html[data-site-theme="dark"] #newsroom { background: var(--paper); --nr-ink: #e9e6df; --nr-paper: #232321; --nr-muted: #b8b4aa; }
 html[data-site-theme] body .site-theme-toggle { color: var(--ink); background: var(--surface); border-color: var(--line); box-shadow: 0 4px 16px rgba(0,0,0,.16); }
 html[data-site-theme] body .site-theme-toggle:hover { color: var(--paper); background: var(--accent); }
+/* Recent reporting and video versions. */
+.recent-feature-image { display: block; width: 100%; max-height: 280px; object-fit: cover; }
+.recent-story-links { display: flex; flex-wrap: wrap; gap: 10px 20px; margin: 8px 0; }
+.recent-story-links a, .recent-translations a { color: var(--accent); text-underline-offset: 4px; }
+.recent-translations { font-size: 14px; line-height: 1.7; color: var(--muted); }
+.recent-video-heading { font: 500 26px 'Newsreader', Georgia, serif; margin: 0 0 22px; color: var(--ink); }
+.recent-video-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-bottom: 44px; }
+.recent-video-card { display: flex; flex-direction: column; gap: 12px; border: 1px solid var(--line); color: var(--ink); text-decoration: none; padding-bottom: 20px; background: var(--surface); min-width: 0; }
+.recent-video-card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.recent-video-card h4 { font: 500 24px/1.15 'Newsreader', Georgia, serif; margin: 0 20px; }
+.recent-video-card > span { margin: 0 20px; color: var(--accent); font-size: 13px; }
+.recent-video-card .recent-video-date { color: var(--muted); font-size: 11px; }
+.recent-video-card > span:last-child { margin-top: auto; padding-top: 8px; }
+.recent-video-card:hover { border-color: var(--accent); }
+@media (max-width: 700px) { .recent-video-grid { grid-template-columns: 1fr; } }
+.ai-reporting #ai-election-women .ai-instagram-media { flex-direction: column; align-items: center; }
+
+
+.recent-video-preview { display: flex; flex-direction: column; gap: 15px; width: 100%; color: var(--accent); text-decoration: none; }
+.recent-video-preview img { width: 100%; max-height: 600px; object-fit: contain; object-position: top; }
+.recent-video-preview span { font-size: 13px; text-align: center; padding: 4px 0 12px; }
