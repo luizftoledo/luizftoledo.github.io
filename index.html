@@ -16,9 +16,8 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Spectral:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.future.css?v=6">
-  <link id="editorial-theme" data-palette="warm" rel="stylesheet" href="style.editorial.css?v=20261031-recent">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
+  <link id="editorial-theme" data-palette="warm" rel="stylesheet" href="style.site.css?v=20261110">
 
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="newsroom.css?v=20261030-desktop-centered">
@@ -38,146 +37,6 @@
     document.documentElement.setAttribute('data-theme', 'dark');
   </script>
   <script async src="https://www.instagram.com/embed.js"></script>
-  <style>
-    /* Expand/Collapse logic for Awards */
-    .award-list.collapsed li:nth-child(n+6) {
-      display: none;
-    }
-
-    .award-list {
-      transition: all 0.3s ease;
-    }
-
-    /* Pokeball hover effect (replaces inline onmouseover/onmouseout) */
-    .poke-secret-trigger:hover,
-    .poke-secret-trigger:focus {
-      opacity: 1 !important;
-    }
-
-    /* ============ Add-ons: outlets accordion, initiatives, research trail ============ */
-    /* Barra gradiente universal nos títulos de seção (e no subsection-title) */
-    h2.section-title::before,
-    h3.subsection-title::before{
-      content:'';display:inline-block;width:48px;height:4px;
-      background:linear-gradient(90deg,var(--accent),var(--accent-2));
-      border-radius:4px;margin-right:14px;vertical-align:middle;
-      transform-origin:left;
-      animation:barIn .8s .2s backwards cubic-bezier(.2,.8,.2,1);
-    }
-    @keyframes barIn{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-
-    .outlets-wrap{margin-top:60px;padding-top:40px;border-top:1px dashed rgba(255,255,255,.08)}
-    .outlets-wrap .subsection-title{font-size:1.5rem;font-weight:700;margin:0 0 8px;color:var(--text);letter-spacing:-.01em}
-    .outlets-wrap .outlets-sub{color:var(--muted);margin-bottom:24px;font-size:15px;max-width:720px}
-    .outlets-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
-    .outlet-chip{position:relative;text-align:left;cursor:pointer;background:rgba(14,17,23,.65);border:1px solid var(--border);border-radius:12px;padding:18px 18px;color:var(--text);font-family:inherit;transition:border-color .25s,transform .25s,background .25s;display:flex;flex-direction:column;gap:6px;min-height:96px;overflow:hidden}
-    .outlet-chip::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-    .outlet-chip:hover{border-color:rgba(124,255,240,.35);transform:translateY(-2px);background:rgba(20,24,32,.8)}
-    .outlet-chip:hover::after{transform:scaleX(1)}
-    .outlet-chip.active{border-color:rgba(124,255,240,.55);background:rgba(20,24,32,.9)}
-    .outlet-chip.active::after{transform:scaleX(1)}
-    .outlet-chip .outlet-name{font-size:18px;font-weight:900;letter-spacing:-.01em}
-    .outlet-chip .outlet-years{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em}
-    .outlet-chip .outlet-count{font-size:11.5px;color:var(--accent);font-weight:600;margin-top:auto}
-    .outlet-chip .caret{position:absolute;top:14px;right:14px;color:var(--muted);transition:transform .3s,color .25s;font-size:12px}
-    .outlet-chip.active .caret{transform:rotate(180deg);color:var(--accent)}
-
-    .outlet-panel{border:1px solid var(--border);border-radius:14px;background:linear-gradient(135deg,rgba(14,17,23,.75),rgba(14,17,23,.45));padding:0;overflow:hidden;max-height:0;opacity:0;transition:max-height .5s cubic-bezier(.2,.8,.2,1),opacity .3s,padding .3s}
-    .outlet-panel.open{max-height:3000px;opacity:1;padding:28px 32px}
-    .outlet-panel .panel-meta{display:flex;flex-wrap:wrap;gap:14px;align-items:baseline;margin-bottom:22px;padding-bottom:18px;border-bottom:1px dashed rgba(255,255,255,.08)}
-    .outlet-panel .panel-role{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-    .outlet-panel .panel-role b{color:var(--text);font-weight:700;margin-right:4px}
-    .outlet-panel .award{color:var(--accent);font-size:12.5px;font-weight:600}
-    .outlet-panel .stories{display:flex;flex-direction:column;gap:26px}
-    .outlet-panel .story{position:relative;padding-left:22px}
-    .outlet-panel .story::before{content:'';position:absolute;left:0;top:10px;width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(124,255,240,.1)}
-    .outlet-panel .story h4{font-family:'Spectral',Georgia,serif;font-weight:700;font-size:22px;line-height:1.25;color:var(--text);margin-bottom:6px;letter-spacing:-.01em}
-    .outlet-panel .story .lede{color:var(--muted);font-size:15px;line-height:1.6;font-family:'Spectral',serif;font-weight:500;margin-bottom:10px}
-    .outlet-panel .story .proof{display:inline-block;padding:6px 12px;margin:4px 0 10px;background:rgba(124,255,240,.08);border:1px solid rgba(124,255,240,.25);border-radius:6px;color:var(--accent);font-size:13px;font-weight:600}
-    .outlet-panel .story .proof i{margin-right:6px;opacity:.85}
-    .outlet-panel .story-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px}
-    .outlet-panel .chip-tool{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:4px 9px;border-radius:4px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:var(--text)}
-    .outlet-panel .chip-tool::before{content:'/';color:var(--accent);margin-right:-2px}
-    .outlet-panel .story-link-external{font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(124,255,240,.4);padding-bottom:1px;transition:color .2s,border-color .2s;margin-left:auto}
-    .outlet-panel .story-link-external:hover{color:var(--accent-2);border-bottom-color:rgba(159,124,255,.5)}
-    .outlet-panel .story-link-external i{margin-left:5px;font-size:11px}
-
-    /* Initiatives */
-    .init-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-    .init-card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px 26px 24px;backdrop-filter:blur(8px);transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s;display:flex;flex-direction:column;gap:12px}
-    .init-card:hover{transform:translateY(-3px);border-color:rgba(124,255,240,.35)}
-    .init-card .when{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
-    .init-card h3{font-size:22px;font-weight:900;letter-spacing:-.01em;line-height:1.2;margin:0}
-    .init-card .role{font-size:13.5px;color:var(--accent);font-weight:600;margin-top:-4px}
-    .init-card ul{list-style:none;padding:0;margin-top:4px;display:flex;flex-direction:column;gap:8px}
-    .init-card li{font-size:13.5px;color:var(--muted);line-height:1.5;padding-left:18px;position:relative}
-    .init-card li::before{content:'→';position:absolute;left:0;color:var(--accent);font-weight:700}
-    .init-card li b{color:var(--text);font-weight:600}
-    .init-card a{color:var(--accent);text-decoration:none;border-bottom:1px dashed rgba(124,255,240,.4)}
-
-    /* Research trail */
-    .research-trail{list-style:none;padding:0;display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;margin:0}
-    .research-trail::before{content:'';position:absolute;left:4%;right:4%;top:32px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent)}
-    .research-step{position:relative;padding:0 10px;text-align:center}
-    .research-step .rnode{width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--accent);margin:24px auto 16px;position:relative;z-index:1;transition:transform .25s,box-shadow .25s}
-    .research-step:hover .rnode{transform:scale(1.2);box-shadow:0 0 20px rgba(124,255,240,.4)}
-    .research-step .yr{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
-    .research-step .inst{font-size:15px;font-weight:900;letter-spacing:-.01em;margin-bottom:4px;line-height:1.25}
-    .research-step .degree{font-size:12.5px;color:var(--muted);line-height:1.45;font-family:'Spectral',serif;font-style:italic}
-    .research-step .output{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--accent);margin-top:8px;display:block}
-
-    @media (max-width:1100px){
-      .init-cards{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width:1000px){
-      .outlets-row{grid-template-columns:repeat(3,1fr)}
-      .research-trail{grid-template-columns:repeat(2,1fr);row-gap:20px}
-      .research-trail::before{display:none}
-    }
-    @media (max-width:600px){
-      .outlets-row{grid-template-columns:1fr}
-      .init-cards{grid-template-columns:1fr}
-    }
-
-    /* Scoped addition: Investigating AI. Existing site styles remain unchanged. */
-    .ai-reporting-intro { max-width: 760px; color: var(--muted); font-size: 17px; line-height: 1.65; margin: -14px 0 28px; }
-    .ai-reporting-intro strong { color: var(--text); }
-    .ai-reporting .featured-article { margin-bottom: 28px; }
-    .ai-reporting .ai-video-feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 390px); gap: 0; align-items: start; }
-    .ai-reporting .ai-video-copy { padding: 28px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
-    .ai-reporting .ai-video-copy h3 { margin: 0; }
-    .ai-reporting .ai-instagram-media { background: var(--surface); border-left: 1px solid var(--border); padding: 18px; min-width: 0; min-height: 0; height: auto; aspect-ratio: auto; overflow: visible; display: flex; align-items: flex-start; justify-content: center; }
-    .ai-reporting .ai-instagram-media iframe { display: block; width: min(100%, 390px); height: 720px; border: 0; }
-    .ai-reporting .ai-instagram-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px; padding: 10px 14px; border: 1px solid var(--border); border-radius: 6px; color: var(--accent); font: 600 12px 'JetBrains Mono', monospace; text-decoration: none; }
-    .ai-reporting .ai-instagram-link:hover { color: var(--text); border-color: var(--accent); }
-    .ai-reporting .featured-content h3 { max-width: 680px; }
-    .ai-reporting .ai-doctors-sequence { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 28px 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--card); }
-    .ai-reporting .ai-doctors-image { grid-column: 1 / -1; border-bottom: 1px solid var(--border); background: var(--surface); }
-    .ai-reporting .ai-doctors-image img { width: 100%; max-height: 300px; object-fit: cover; object-position: center; }
-    .ai-reporting .ai-sequence-item { padding: 25px; }
-    .ai-reporting .ai-sequence-item + .ai-sequence-item { border-left: 1px solid var(--border); }
-    .ai-reporting .ai-sequence-item h3 { font-family: 'Spectral', Georgia, serif; font-size: 25px; line-height: 1.2; margin: 8px 0 9px; }
-    .ai-reporting .ai-sequence-item p { color: var(--muted); }
-    .ai-reporting .ai-translation-note { grid-column: 1 / -1; margin: 0; padding: 22px 24px; border-top: 1px solid var(--border); border-left: 3px solid var(--accent); background: rgba(255,255,255,.02); }
-    .ai-reporting .ai-translation-note h3 { font-family: 'Spectral', Georgia, serif; font-size: 25px; margin-bottom: 7px; }
-    .ai-reporting .ai-translation-note p { color: var(--muted); margin-bottom: 14px; }
-    .ai-reporting .ai-languages { display: inline; }
-    .ai-reporting .ai-languages a { color: var(--accent); text-decoration: none; border-bottom: 1px dashed rgba(124,255,240,.45); font-size: 13px; }
-    @media (max-width: 768px) { .ai-reporting-intro { font-size: 16px; } .ai-reporting .ai-video-feature, .ai-reporting .ai-doctors-sequence { grid-template-columns: 1fr; } .ai-reporting .ai-instagram-media { border-left: 0; border-top: 1px solid var(--border); height: auto; } .ai-reporting .ai-sequence-item + .ai-sequence-item { border-left: 0; border-top: 1px solid var(--border); } .ai-reporting .ai-translation-note { grid-column: auto; } }
-    /* Academic research */
-    .academic-research .ar-intro{max-width:720px;color:var(--muted);margin:0 0 28px;font-size:17px;line-height:1.55}
-    .academic-research .ar-list{list-style:none;margin:0;padding:0;display:grid;gap:0}
-    .academic-research .ar-list li{padding:24px 0;border-top:1px solid var(--border)}
-    .academic-research .ar-list li:last-child{border-bottom:1px solid var(--border)}
-    .academic-research .ar-venue{display:block;font:500 11px/1.4 'DM Mono','JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-2);margin-bottom:8px}
-    .academic-research h3{font-size:1.35rem;line-height:1.25;margin:0 0 8px;max-width:860px}
-    .academic-research h3 a{color:inherit;text-decoration:none}
-    .academic-research h3 a:hover{text-decoration:underline;text-underline-offset:4px}
-    .academic-research .ar-authors{font-size:14px;color:var(--muted);margin:0 0 8px}
-    .academic-research p{max-width:720px;margin:0 0 8px}
-    .academic-research .ar-group{font:600 12px/1.4 'DM Mono','JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:32px 0 4px}
-    .academic-research .ar-link{font-weight:600;font-size:14px;color:var(--accent-2)}
-  </style>
   <script src="theme-toggle.js?v=20261031-warm"></script>
 
 <meta name="description" content="Luiz Fernando Toledo, Brazilian investigative journalist at BBC News Brasil. Reporting on public records, freedom of information, transparency and data. Founder of Data Fixers.">
@@ -1261,46 +1120,46 @@
       <div class="container">
 
         <!-- ── Courses & Workshops ──────────────────────────────────────── -->
-        <h2 id="courses-workshops" class="section-title" style="scroll-margin-top:80px">Courses &amp; workshops</h2>
+        <h2 id="courses-workshops" class="section-title">Courses &amp; workshops</h2>
 
-        <h3 style="font-size:1.05rem;font-weight:700;color:var(--text);margin:1rem 0 .75rem;max-width:860px">Como usar IA no jornalismo? (Em português)</h3>
-        <div style="position:relative;width:100%;max-width:860px;aspect-ratio:16/9;overflow:hidden;border-radius:10px;border:1px solid var(--border);margin-bottom:1.25rem">
-          <iframe src="https://www.youtube.com/embed/-hXN1-wq8Kk" title="Como usar IA no jornalismo?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%"></iframe>
+        <h3 class="course-lead">Como usar IA no jornalismo? (Em português)</h3>
+        <div class="course-video">
+          <iframe src="https://www.youtube.com/embed/-hXN1-wq8Kk" title="Como usar IA no jornalismo?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
 
-        <div style="display:grid;gap:.75rem;max-width:860px">
+        <div class="course-list">
 
-          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem">
-            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">
+          <div class="course">
+            <div class="tags">
               <span class="tag">Udemy</span>
-              <span class="tag" style="background:rgba(255,180,0,.15);color:#ffb400;border-color:rgba(255,180,0,.3)">Portuguese 🇧🇷</span>
+              <span class="tag">Portuguese 🇧🇷</span>
             </div>
-            <div style="font-weight:700;margin-bottom:.2rem">Investigate public spending with the Brazilian Freedom of Information Act</div>
-            <div style="font-size:.83rem;color:var(--muted);margin-bottom:.6rem"><i class="fas fa-star" style="color:#ffb400"></i> 4.6/5 · 428 students · 1.5 hours</div>
+            <div class="course-title">Investigate public spending with the Brazilian Freedom of Information Act</div>
+            <div class="course-desc">Rated 4.6/5 · 428 students · 1.5 hours</div>
             <a href="https://www.udemy.com/course/investigue-gastos-publicos-com-a-lei-de-acesso-a-informacao/" target="_blank" rel="noopener noreferrer" class="story-link">
               <span class="story-link-icon">&rsaquo;</span><span>View on Udemy</span>
             </a>
           </div>
 
-          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem">
-            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">
+          <div class="course">
+            <div class="tags">
               <span class="tag">Abraji</span>
-              <span class="tag" style="background:rgba(255,180,0,.15);color:#ffb400;border-color:rgba(255,180,0,.3)">Portuguese 🇧🇷</span>
+              <span class="tag">Portuguese 🇧🇷</span>
             </div>
-            <div style="font-weight:700;margin-bottom:.2rem">Kit de Ferramentas Gemini para Jornalistas</div>
-            <div style="font-size:.83rem;color:var(--muted);margin-bottom:.6rem">Free initiative by Abraji with Google support — video tutorials, prompts, AI agents and workflows for investigative journalists.</div>
+            <div class="course-title">Kit de Ferramentas Gemini para Jornalistas</div>
+            <div class="course-desc">Free initiative by Abraji with Google support — video tutorials, prompts, AI agents and workflows for investigative journalists.</div>
             <a href="https://www.abraji.org.br/noticias/abraji-lanca-iniciativa-para-auxiliar-investigacoes-com-o-uso-da-ia" target="_blank" rel="noopener noreferrer" class="story-link">
               <span class="story-link-icon">&rsaquo;</span><span>Read more</span>
             </a>
           </div>
 
-          <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem">
-            <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">
+          <div class="course">
+            <div class="tags">
               <span class="tag">Jeduca · Abraji</span>
-              <span class="tag" style="background:rgba(255,180,0,.15);color:#ffb400;border-color:rgba(255,180,0,.3)">Portuguese 🇧🇷</span>
+              <span class="tag">Portuguese 🇧🇷</span>
             </div>
-            <div style="font-weight:700;margin-bottom:.2rem">Jornalismo de Educação: Bases para a Cobertura</div>
-            <div style="font-size:.83rem;color:var(--muted);margin-bottom:.6rem">Free online course covering evaluation systems, data analysis, AI tools and source development for education reporters. 11 sessions.</div>
+            <div class="course-title">Jornalismo de Educação: Bases para a Cobertura</div>
+            <div class="course-desc">Free online course covering evaluation systems, data analysis, AI tools and source development for education reporters. 11 sessions.</div>
             <a href="https://jeduca.org.br/noticia/inscricoes-abertas-para-o-curso-especial-de-jornalismo-de-educacao-de-10-anos-da-jeduca" target="_blank" rel="noopener noreferrer" class="story-link">
               <span class="story-link-icon">&rsaquo;</span><span>Read more</span>
             </a>
@@ -1335,9 +1194,6 @@
   <script src="scripts/main.js"></script>
   <script src="scripts/newsroom.js?v=20261030-mobile-scene2" defer></script>
 
-  <!-- Interactive Background -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
-  <script src="scripts/background.js"></script>
 
   <!-- Easter Egg Modal -->
   <div id="secretModal"
