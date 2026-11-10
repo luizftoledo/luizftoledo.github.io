@@ -130,6 +130,10 @@
     color: #b91c1c;
   }
   a { color: #2563eb; }
+  /* Wide tables scroll inside themselves on phones */
+  @media (max-width: 700px) {
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  }
 </style>
   <script src="theme-toggle.js"></script>
 </head>

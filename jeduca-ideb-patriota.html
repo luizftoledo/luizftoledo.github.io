@@ -229,6 +229,10 @@
     text-shadow: 1px 1px 0 #000;
     margin: 18px 0;
   }
+  /* Wide tables scroll inside themselves on phones */
+  @media (max-width: 700px) {
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  }
 </style>
   <script src="theme-toggle.js"></script>
 </head>
