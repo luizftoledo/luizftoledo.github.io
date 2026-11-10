@@ -24,3 +24,6 @@ lai-dashboard/data/cache/yearly/
 lai-dashboard/data/request_samples_publica.jsonl.gz
 .vercel
 ibama-dashboard/
+
+# Playwright test artifacts
+test-results/
