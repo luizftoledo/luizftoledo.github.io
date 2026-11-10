@@ -243,9 +243,6 @@
             background-color: var(--accent-color);
         }
 
-        [data-lang="en"].hidden,
-        [data-lang="pt"]
-
         @media (max-width: 768px) {
             .hero {
                 height: 350px;
@@ -499,7 +496,7 @@
                 </div>
 
                 <div class="back-link">
-                    <a href="../../../index.html" data-lang="en">← Back to portfolio</a>
+                    <a href="../../index.html" data-lang="en">← Back to portfolio</a>
                 </div>
             </div>
         </div>
@@ -671,7 +668,7 @@
                 </div>
 
                 <div class="back-link">
-                    <a href="../../../index.html" data-lang="pt">← Voltar ao portfólio</a>
+                    <a href="../../index.html" data-lang="pt">← Voltar ao portfólio</a>
                 </div>
             </div>
         </div>
@@ -686,8 +683,11 @@
         let currentLang = 'en';
 
         function setLanguage(lang) {
+            lang = lang === 'pt' ? 'pt' : 'en';
             currentLang = lang;
-            localStorage.setItem('preferredLanguage', lang);
+            localStorage.setItem('portfolio-lang', lang);
+            document.body.classList.toggle('lang-pt', lang === 'pt');
+            document.body.classList.toggle('lang-en', lang !== 'pt');
 
             langElements.forEach(el => {
                 if (el.dataset.lang === lang) {
@@ -698,7 +698,7 @@
             });
 
             langButtons.forEach(btn => {
-                if (btn.dataset.lang === lang) {
+                if (btn.id === (lang === 'pt' ? 'btnPt' : 'btnEn')) {
                     btn.classList.add('active');
                 } else {
                     btn.classList.remove('active');
@@ -709,13 +709,13 @@
         }
 
         // Initialize language from localStorage or default to English
-        const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+        const savedLang = localStorage.getItem('portfolio-lang') || 'en';
         setLanguage(savedLang);
 
         // Event listeners for language buttons
         langButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                setLanguage(e.target.dataset.lang);
+                setLanguage(btn.id === 'btnPt' ? 'pt' : 'en');
             });
         });
 

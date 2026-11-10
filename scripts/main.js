@@ -76,11 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Anchor links copy for section titles
   document.querySelectorAll('.section h2').forEach(h => {
-    const id = h.parentElement?.id || h.textContent?.toLowerCase().replace(/\s+/g, '-');
-    if (!h.parentElement?.id && id) h.parentElement?.setAttribute('id', id);
+    const host = h.closest('section[id]') || h.parentElement;
+    const id = host?.id || h.textContent?.toLowerCase().replace(/\s+/g, '-');
+    if (!host?.id && id) host?.setAttribute('id', id);
     h.style.cursor = 'pointer';
     h.addEventListener('click', () => {
-      const url = location.origin + location.pathname + '#' + (h.parentElement?.id || id || '');
+      const url = location.origin + location.pathname + '#' + (host?.id || id || '');
       navigator.clipboard.writeText(url).then(() => {
         const originalTitle = h.title;
         h.title = 'Link copied';

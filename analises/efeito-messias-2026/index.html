@@ -578,8 +578,8 @@
 
     // Build dense daily series (fill missing days with 0) for the chart
     function isoNext(iso) {
-      const d = new Date(iso + 'T00:00:00');
-      d.setDate(d.getDate() + 1);
+      const d = new Date(iso + 'T00:00:00Z');
+      d.setUTCDate(d.getUTCDate() + 1);
       return d.toISOString().slice(0, 10);
     }
     const map = new Map(SERIE.map((r) => [r.date, r.empenhado]));

@@ -124,7 +124,7 @@
     .lang-btn.active { background-color: var(--earth-brown); color: white; border-color: var(--earth-brown); }
     .lang-btn:hover { border-color: var(--earth-brown); }
 
-    [data-lang="en"] { display: none; }
+    body [data-lang="en"] { display: none; }
     body.lang-en [data-lang="en"] { display: inline; }
     body.lang-en [data-lang="pt"] { display: none; }
 
@@ -155,8 +155,8 @@
 </div>
 
 <div id="langBar">
-  <button id="btnEn" class="lang-btn active" data-lang="en">English</button>
-  <button id="btnPt" class="lang-btn" data-lang="pt">Português</button>
+  <button id="btnEn" class="lang-btn active">English</button>
+  <button id="btnPt" class="lang-btn">Português</button>
 </div>
 
 <section id="hero">
@@ -316,32 +316,6 @@
 </footer>
 
 <script src="../shared/base.js"></script>
-<script>
-  document.getElementById('btnEn').addEventListener('click', () => {
-    document.body.classList.remove('lang-en');
-    localStorage.setItem('language', 'pt');
-    updateLangButtons();
-  });
-  document.getElementById('btnPt').addEventListener('click', () => {
-    document.body.classList.add('lang-en');
-    localStorage.setItem('language', 'en');
-    updateLangButtons();
-  });
-
-  function updateLangButtons() {
-    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-    if (document.body.classList.contains('lang-en')) {
-      document.getElementById('btnPt').classList.add('active');
-    } else {
-      document.getElementById('btnEn').classList.add('active');
-    }
-  }
-
-  if (localStorage.getItem('language') === 'en') {
-    document.body.classList.add('lang-en');
-  }
-  updateLangButtons();
-</script>
 
 </body>
 </html>
