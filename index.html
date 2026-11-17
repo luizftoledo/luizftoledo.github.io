@@ -67,12 +67,13 @@
       position: sticky;
       top: 0;
       height: 100vh;
+      height: 100dvh;
       width: 100%;
       overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(24px, 5vw, 64px);
+      padding: clamp(72px, 10vh, 96px) clamp(20px, 5vw, 64px) clamp(64px, 9vh, 88px);
     }
     .si-top {
       position: absolute;
@@ -104,6 +105,7 @@
       position: relative;
       width: 100%;
       max-width: 920px;
+      height: 100%;
       min-height: 320px;
     }
     .si-beat {
@@ -162,7 +164,7 @@
       color: var(--muted, #a3a7af);
     }
     .si-bar {
-      width: 160px;
+      width: clamp(72px, 24vw, 160px);
       height: 2px;
       background: var(--line, rgba(236, 235, 230, .15));
       overflow: hidden;
@@ -172,6 +174,11 @@
       height: 100%;
       width: 0%;
       background: var(--red, #f26470);
+    }
+    @media (max-width: 600px) {
+      .si-h { font-size: clamp(1.65rem, 6.8vw, 2.15rem); line-height: 1.12; }
+      .si-u { text-decoration-thickness: 3px; text-underline-offset: 4px; }
+      .si-p { font-size: 0.96rem; line-height: 1.55; }
     }
   </style>
 </head>
