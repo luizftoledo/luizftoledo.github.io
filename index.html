@@ -55,11 +55,175 @@
 <meta name="twitter:image" content="https://luizftoledo.github.io/images/luiz-fernando-toledo.jpg">
 <link rel="canonical" href="https://luizftoledo.github.io/">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://luizftoledo.github.io/#person","name":"Luiz Fernando Toledo","alternateName":"Luiz Fernando Toledo Antunes","url":"https://luizftoledo.github.io/","image":"https://luizftoledo.github.io/images/luiz-fernando-toledo.jpg","jobTitle":"Investigative journalist","description":"Brazilian investigative journalist working on public records, freedom of information, data journalism and transparency. Founder of Data Fixers and cofounder of Fiquem Sabendo.","worksFor":{"@type":"NewsMediaOrganization","name":"BBC News Brasil","url":"https://www.bbc.com/portuguese"},"sameAs":["https://datafixers.org/transparencia/","https://datafixers.org/transparency/","https://www.polis.cam.ac.uk/people/luiz-fernando-toledo","https://brown.columbia.edu/portfolio/luiz-fernando-toledo/","https://reutersinstitute.politics.ox.ac.uk/people/luiz-fernando-toledo-antunes","https://www.instagram.com/luizftoledo/"],"knowsAbout":["Jornalismo investigativo","Lei de Acesso à Informação","Transparência pública","Data journalism","Freedom of information"]},{"@type":"WebSite","@id":"https://luizftoledo.github.io/#website","name":"Luiz Fernando Toledo","url":"https://luizftoledo.github.io/","inLanguage":"en","publisher":{"@id":"https://luizftoledo.github.io/#person"}},{"@type":"ProfilePage","@id":"https://luizftoledo.github.io/#profile","url":"https://luizftoledo.github.io/","name":"Luiz Fernando Toledo | Investigative journalist, data and FOI","mainEntity":{"@id":"https://luizftoledo.github.io/#person"},"inLanguage":"en","isPartOf":{"@id":"https://luizftoledo.github.io/#website"}}]}</script>
+  <style id="story-intro-css">
+    #story-intro {
+      position: relative;
+      height: 440vh;
+      background: var(--paper, #0f1013);
+      color: var(--ink, #ecebe6);
+      border-bottom: 1px solid var(--line, rgba(236, 235, 230, .15));
+    }
+    .si-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(24px, 5vw, 64px);
+    }
+    .si-top {
+      position: absolute;
+      top: clamp(18px, 3vw, 32px);
+      left: clamp(20px, 4vw, 48px);
+      right: clamp(20px, 4vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 5;
+    }
+    .si-brand {
+      font: 600 1.35rem/1 var(--serif, Georgia, serif);
+      color: var(--ink, #ecebe6);
+      letter-spacing: -.02em;
+    }
+    .si-brand span { color: var(--red, #f26470); }
+    .si-skip {
+      background: none;
+      border: 1px solid var(--line, rgba(236, 235, 230, .15));
+      color: var(--ink, #ecebe6);
+      padding: 8px 14px;
+      font: 500 13px/1 var(--sans, sans-serif);
+      text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .si-skip:hover { border-color: var(--red, #f26470); color: var(--red, #f26470); }
+    .si-stage {
+      position: relative;
+      width: 100%;
+      max-width: 920px;
+      min-height: 320px;
+    }
+    .si-beat {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      will-change: opacity, transform;
+    }
+    .si-beat.is-active { pointer-events: auto; }
+    .si-kicker {
+      font: 500 12.5px/1.2 var(--sans, sans-serif);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--red, #f26470);
+      margin-bottom: 14px;
+    }
+    .si-h {
+      font: 500 clamp(2.1rem, 4.8vw, 3.9rem)/1.08 var(--serif, Georgia, serif);
+      letter-spacing: -.025em;
+      color: var(--ink, #ecebe6);
+      margin: 0 0 18px;
+      max-width: 22ch;
+    }
+    .si-u {
+      text-decoration: underline;
+      text-decoration-color: var(--red, #f26470);
+      text-decoration-thickness: 4px;
+      text-underline-offset: 6px;
+    }
+        .si-p {
+      font: 400 clamp(1rem, 1.35vw, 1.15rem)/1.65 var(--sans, sans-serif);
+      color: var(--muted, #a3a7af);
+      max-width: 60ch;
+      margin: 0;
+    }
+    .si-p a {
+      color: var(--ink, #ecebe6);
+      text-decoration: underline;
+      text-decoration-color: var(--red, #f26470);
+      text-underline-offset: 3px;
+    }
+    .si-p a:hover { color: var(--red, #f26470); }
+    .si-foot {
+      position: absolute;
+      bottom: clamp(18px, 3vw, 32px);
+      left: clamp(20px, 4vw, 48px);
+      right: clamp(20px, 4vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font: 500 12.5px/1 var(--sans, sans-serif);
+      color: var(--muted, #a3a7af);
+    }
+    .si-bar {
+      width: 160px;
+      height: 2px;
+      background: var(--line, rgba(236, 235, 230, .15));
+      overflow: hidden;
+    }
+    .si-bar > i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--red, #f26470);
+    }
+  </style>
 </head>
 
 <body>
+  <section id="story-intro" aria-label="Selected investigations">
+    <div class="si-sticky">
+      <div class="si-top">
+        <span class="si-brand">LFT<span>.</span></span>
+        <a href="#site-nav" class="si-skip">Skip to portfolio ↓</a>
+      </div>
+
+      <div class="si-stage">
+        <div class="si-beat is-active" data-si="0">
+          <div class="si-kicker">Piauí · OCCRP</div>
+          <h1 class="si-h">A <span class="si-u">classical violin bow</span> in London can be made from a tree cut inside a <span class="si-u">protected park</span> in Bahia.</h1>
+          <p class="si-p">Forensic tests on confiscated brazilwood showed it came from Pau Brasil National Park. I traced how endangered timber crosses borders into <a href="https://www.occrp.org/en/investigations/a-world-heritage-site-under-attack-in-brazil" target="_blank" rel="noopener">classical music</a> (<a href="https://piaui.folha.uol.com.br/um-parque-no-coracao-do-contrabando-de-pau-brasil/" target="_blank" rel="noopener">Piauí</a>).</p>
+        </div>
+
+        <div class="si-beat" data-si="1">
+          <div class="si-kicker">BBC News Brasil · International</div>
+          <h2 class="si-h"><span class="si-u">Epstein’s international network</span> had a <span class="si-u">Brazilian pipeline</span>.</h2>
+          <p class="si-p">I wrote scrapers to search millions of US files and uncovered how Jeffrey Epstein’s international operation recruited young women in Brazil—through scouts, fashion contests, and financial dependency. The <a href="https://www.bbc.com/news/articles/cr4576v66kno" target="_blank" rel="noopener">nine-part BBC series</a> triggered a federal investigation and was cited twice by the U.S. House Oversight Committee.</p>
+        </div>
+
+        <div class="si-beat" data-si="2">
+          <div class="si-kicker">BBC News Brasil · Text Forensics</div>
+          <h2 class="si-h">São Paulo’s most-voted state deputy filed bills with the name of the <span class="si-u">wrong city</span>.</h2>
+          <p class="si-p">Comparing Eduarda Campopiano’s 20 original city-council proposals against other legislatures turned up <a href="https://www.bbc.com/portuguese/articles/crwyd10307kjo" target="_blank" rel="noopener">matching passages in at least 14</a>—including another municipality’s name and a stray ChatGPT link.</p>
+        </div>
+
+        <div class="si-beat" data-si="3">
+          <div class="si-kicker">BBC News Brasil · Public Funds</div>
+          <h2 class="si-h">A budget amendment funded construction with stones from <span class="si-u">slave-like labor</span>.</h2>
+          <p class="si-p">I traced how a <a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" target="_blank" rel="noopener">secret budget amendment</a> supported by Chamber President Hugo Motta paid for public works using stones extracted by workers subjected to slave-like conditions in quarries.</p>
+        </div>
+
+        <div class="si-beat" data-si="4">
+          <div class="si-kicker">BBC News Brasil · Artificial Intelligence</div>
+          <h2 class="si-h">An elderly Brazilian sees a doctor warn of a fake cure. His face was <span class="si-u">cloned by AI</span>.</h2>
+          <p class="si-p">I mapped the <a href="https://www.bbc.com/portuguese/articles/cz0j8lp5xmvo" target="_blank" rel="noopener">global underground industry</a> of AI-generated fake doctors. After the first BBC report, a real physician recognized his own face and <a href="https://www.bbc.com/portuguese/articles/cn4ddgl7vkno" target="_blank" rel="noopener">went to the police</a>. Channels were taken down and the story ran in more than eight languages.</p>
+        </div>
+      </div>
+
+      <div class="si-foot">
+        <div class="si-bar"><i id="siBarFill"></i></div>
+        <span>scroll to enter portfolio ↓</span>
+      </div>
+    </div>
+  </section>
   <div class="progress-bar" id="progressBar"></div>
-  <nav>
+  <nav id="site-nav">
     <div class="container nav-inner">
       <div class="brand">
         <a href="#" class="logo">
@@ -1551,6 +1715,37 @@
       panel.classList.add('open');
     });
   })();
+  </script>
+  <script id="story-intro-js">
+    (function () {
+      const intro = document.getElementById('story-intro');
+      if (!intro) return;
+      const beats = Array.from(intro.querySelectorAll('.si-beat'));
+      const bar = document.getElementById('siBarFill');
+      const total = beats.length;
+
+      function update() {
+        const rect = intro.getBoundingClientRect();
+        const scrollable = Math.max(1, intro.offsetHeight - window.innerHeight);
+        const p = Math.min(1, Math.max(0, -rect.top / scrollable));
+        const pos = p * (total - 1);
+
+        if (bar) bar.style.width = (p * 100).toFixed(1) + '%';
+
+        beats.forEach((b, i) => {
+          const dist = pos - i;
+          const abs = Math.abs(dist);
+          const op = Math.max(0, 1 - abs * 1.45);
+          b.style.opacity = op.toFixed(3);
+          b.style.transform = 'translate3d(0,' + (-dist * 28).toFixed(1) + 'px,0)';
+          b.classList.toggle('is-active', abs < 0.45);
+        });
+      }
+
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
   </script>
 </body>
 
