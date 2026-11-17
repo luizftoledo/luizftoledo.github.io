@@ -59,9 +59,9 @@
     #story-intro {
       position: relative;
       height: 440vh;
-      background: var(--paper, #0f1013);
-      color: var(--ink, #ecebe6);
-      border-bottom: 1px solid var(--line, rgba(236, 235, 230, .15));
+      background: #0f1013;
+      color: #f4f3ee;
+      border-bottom: 1px solid rgba(236, 235, 230, .15);
     }
     .si-sticky {
       position: sticky;
@@ -114,20 +114,20 @@
     }
     .si-brand {
       font: 600 1.35rem/1 var(--serif, Georgia, serif);
-      color: var(--ink, #ecebe6);
+      color: #f4f3ee;
       letter-spacing: -.02em;
     }
-    .si-brand span { color: var(--red, #f26470); }
+    .si-brand span { color: #f26470; }
     .si-skip {
       background: none;
-      border: 1px solid var(--line, rgba(236, 235, 230, .15));
-      color: var(--ink, #ecebe6);
+      border: 1px solid rgba(244, 243, 238, .28);
+      color: #f4f3ee;
       padding: 8px 14px;
       font: 500 13px/1 var(--sans, sans-serif);
       text-decoration: none;
       transition: border-color .2s, color .2s;
     }
-    .si-skip:hover { border-color: var(--red, #f26470); color: var(--red, #f26470); }
+    .si-skip:hover { border-color: #f26470; color: #f26470; }
     .si-stage {
       position: relative;
       width: 100%;
@@ -150,35 +150,35 @@
       font: 500 12.5px/1.2 var(--sans, sans-serif);
       letter-spacing: .08em;
       text-transform: uppercase;
-      color: var(--red, #f26470);
+      color: #f26470;
       margin-bottom: 14px;
     }
     .si-h {
       font: 500 clamp(2.1rem, 4.8vw, 3.9rem)/1.08 var(--serif, Georgia, serif);
       letter-spacing: -.025em;
-      color: var(--ink, #ecebe6);
+      color: #f4f3ee;
       margin: 0 0 18px;
       max-width: 22ch;
     }
     .si-u {
       text-decoration: underline;
-      text-decoration-color: var(--red, #f26470);
+      text-decoration-color: #f26470;
       text-decoration-thickness: 4px;
       text-underline-offset: 6px;
     }
         .si-p {
       font: 400 clamp(1rem, 1.35vw, 1.15rem)/1.65 var(--sans, sans-serif);
-      color: var(--muted, #a3a7af);
+      color: #c9cdd4;
       max-width: 60ch;
       margin: 0;
     }
     .si-p a {
-      color: var(--ink, #ecebe6);
+      color: #f4f3ee;
       text-decoration: underline;
-      text-decoration-color: var(--red, #f26470);
+      text-decoration-color: #f26470;
       text-underline-offset: 3px;
     }
-    .si-p a:hover { color: var(--red, #f26470); }
+    .si-p a:hover { color: #f26470; }
     .si-foot {
       position: absolute;
       bottom: clamp(18px, 3vw, 32px);
@@ -188,19 +188,19 @@
       align-items: center;
       justify-content: space-between;
       font: 500 12.5px/1 var(--sans, sans-serif);
-      color: var(--muted, #a3a7af);
+      color: #c9cdd4;
     }
     .si-bar {
       width: clamp(72px, 24vw, 160px);
       height: 2px;
-      background: var(--line, rgba(236, 235, 230, .15));
+      background: rgba(244, 243, 238, .2);
       overflow: hidden;
     }
     .si-bar > i {
       display: block;
       height: 100%;
       width: 0%;
-      background: var(--red, #f26470);
+      background: #f26470;
     }
     @media (max-width: 600px) {
       .si-h { font-size: clamp(1.65rem, 6.8vw, 2.15rem); line-height: 1.12; }
