@@ -202,6 +202,52 @@
       width: 0%;
       background: #f26470;
     }
+    .si-scroll-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #f4f3ee;
+    }
+    .si-mouse {
+      width: 22px;
+      height: 34px;
+      border: 1.8px solid rgba(244, 243, 238, .85);
+      border-radius: 12px;
+      position: relative;
+      display: inline-block;
+      flex: none;
+    }
+    .si-mouse i {
+      position: absolute;
+      left: 50%;
+      top: 6px;
+      width: 3px;
+      height: 7px;
+      margin-left: -1.5px;
+      border-radius: 2px;
+      background: #f26470;
+      animation: siWheel 1.5s ease-in-out infinite;
+    }
+    .si-finger {
+      display: none;
+      width: 24px;
+      height: 28px;
+      flex: none;
+      animation: siSwipe 1.5s ease-in-out infinite;
+    }
+    @keyframes siWheel {
+      0% { transform: translateY(0); opacity: 1; }
+      70% { transform: translateY(10px); opacity: 0.2; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes siSwipe {
+      0%, 100% { transform: translateY(4px); opacity: 0.75; }
+      50% { transform: translateY(-5px); opacity: 1; }
+    }
+    @media (max-width: 600px), (hover: none) {
+      .si-mouse { display: none; }
+      .si-finger { display: inline-block; }
+    }
     @media (max-width: 600px) {
       .si-h { font-size: clamp(1.65rem, 6.8vw, 2.15rem); line-height: 1.12; }
       .si-u { text-decoration-thickness: 3px; text-underline-offset: 4px; }
@@ -259,7 +305,14 @@
 
       <div class="si-foot">
         <div class="si-bar"><i id="siBarFill"></i></div>
-        <span>scroll to enter portfolio ↓</span>
+        <span class="si-scroll-cue">
+          <span class="si-mouse" aria-hidden="true"><i></i></span>
+          <svg class="si-finger" viewBox="0 0 24 28" fill="none" aria-hidden="true">
+            <path d="M12 3v11m0-11c-1.1 0-2 .9-2 2v9H8.5c-1.1 0-2 .9-2 2v3.5C6.5 23 9 26 12.8 26h1.7c2.8 0 5-2.2 5-5v-5.5c0-1.1-.9-2-2-2h-1.2c-.8 0-1.3.4-1.3.4V5c0-1.1-.9-2-2-2Z" stroke="#f4f3ee" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 1v2" stroke="#f26470" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>scroll</span>
+        </span>
       </div>
     </div>
   </section>
