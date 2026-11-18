@@ -60,7 +60,7 @@
   <style id="story-intro-css">
     #story-intro {
       position: relative;
-      height: 440vh;
+      height: 340vh;
       background: #0f1013;
       color: #f4f3ee;
       border-bottom: 1px solid rgba(236, 235, 230, .15);
@@ -278,6 +278,21 @@
       .si-u { text-decoration-thickness: 3px; text-underline-offset: 4px; }
       .si-p { font-size: 0.96rem; line-height: 1.55; }
     }
+    .is-collapsed-card { display: none !important; }
+    .show-more-wrap { margin-top: 24px; }
+    .show-more-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--surface, #17191e);
+      color: var(--ink, #ecebe6);
+      border: 1px solid var(--line-strong, rgba(236, 235, 230, .42));
+      font: 500 14px/1.2 var(--sans, sans-serif);
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+    .show-more-btn:hover { border-color: var(--red, #f26470); color: var(--red, #f26470); }
   </style>
 </head>
 
@@ -1870,6 +1885,47 @@
       window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update);
       update();
+    })();
+  </script>
+  <script id="show-more-js">
+    (function () {
+      const configs = [
+        { sel: '#investigative .cards', limit: 6, noun: 'investigations' },
+        { sel: '#investigating-ai .cards', limit: 4, noun: 'AI stories' },
+        { sel: '#osint-investigations .osint-grid', limit: 4, noun: 'OSINT investigations' }
+      ];
+      configs.forEach(function (cfg) {
+        const container = document.querySelector(cfg.sel);
+        if (!container) return;
+        const items = Array.from(container.children);
+        if (items.length <= cfg.limit) return;
+
+        const hiddenCount = items.length - cfg.limit;
+        let expanded = false;
+
+        function apply() {
+          items.forEach(function (el, idx) {
+            el.classList.toggle('is-collapsed-card', !expanded && idx >= cfg.limit);
+          });
+          btn.textContent = expanded
+            ? 'Show fewer ↑'
+            : 'Show ' + hiddenCount + ' more ' + cfg.noun + ' ↓';
+          btn.setAttribute('aria-expanded', String(expanded));
+        }
+
+        const wrap = document.createElement('div');
+        wrap.className = 'show-more-wrap';
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'show-more-btn';
+        btn.addEventListener('click', function () {
+          expanded = !expanded;
+          apply();
+        });
+        wrap.appendChild(btn);
+        container.insertAdjacentElement('afterend', wrap);
+        apply();
+      });
     })();
   </script>
 </body>
