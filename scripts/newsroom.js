@@ -8,6 +8,18 @@
   'use strict';
   var root = document.getElementById('newsroom');
   if (!root) return;
+  var locale = document.getElementById('newsroom-translations');
+  var translations = locale ? JSON.parse(locale.textContent) : {};
+  function translate(text) {
+    return Object.prototype.hasOwnProperty.call(translations, text) ? translations[text] : text;
+  }
+  function localize(value) {
+    if (typeof value === 'string') return translate(value);
+    if (value && typeof value === 'object') {
+      Object.keys(value).forEach(function (key) { value[key] = localize(value[key]); });
+    }
+    return value;
+  }
   var stage = root.querySelector('.nr-stage') || root; // the drawing area (the text sits beside it on desktop, above it on phones)
   var canvas = stage.querySelector('canvas');
   var chipsNav = root.querySelector('.nr-chips');
@@ -162,6 +174,12 @@
       ]
     }
   };
+
+  if (locale) {
+    localize(SECTIONS);
+    localize(YT);
+    TICKER = translate(TICKER);
+  }
 
   /* ================= world ================= */
   var GW = 24, GD = 16, WALL = 130;
@@ -855,7 +873,7 @@
   (function soundToggle() {
     var foot = root.querySelector('.nr-foot > span:last-child'); if (!foot) return;
     var sb = document.createElement('button'); sb.type = 'button'; sb.setAttribute('aria-pressed', String(soundOn));
-    function label() { sb.textContent = soundOn ? 'Sound on' : 'Sound off'; sb.setAttribute('aria-pressed', String(soundOn)); }
+    function label() { sb.textContent = translate(soundOn ? 'Sound on' : 'Sound off'); sb.setAttribute('aria-pressed', String(soundOn)); }
     label();
     sb.addEventListener('click', function () { soundOn = !soundOn; try { localStorage.setItem('nr-sound', soundOn ? 'on' : 'off'); } catch (e) { } label(); blip(); });
     foot.insertBefore(document.createTextNode('\u00a0\u00a0·\u00a0\u00a0'), foot.firstChild); foot.insertBefore(sb, foot.firstChild);
@@ -902,10 +920,10 @@
       if (d.href || LINK !== null) b.href = d.href || LINK + d.anchor; else b.type = 'button';
       b.className = 'nr-hot is-hidden'; b.style.setProperty('--d', (i * 110) + 'ms');
       b.setAttribute('aria-label', d.label + ': ' + d.title);
-      b.setAttribute('aria-label', 'Open ' + d.title);
+      b.setAttribute('aria-label', translate('Open ') + d.title);
       b.innerHTML = '<i aria-hidden="true"></i><em aria-hidden="true"></em><span></span>';
       b.querySelector('em').textContent = h.n; b.querySelector('span').textContent = d.label;
-      var shortLabel = document.createElement('strong'); shortLabel.className = 'nr-mobile-label'; shortLabel.textContent = MOBILE_LABELS[h.key] || d.label; b.appendChild(shortLabel);
+      var shortLabel = document.createElement('strong'); shortLabel.className = 'nr-mobile-label'; shortLabel.textContent = MOBILE_LABELS[h.key] ? translate(MOBILE_LABELS[h.key]) : d.label; b.appendChild(shortLabel);
       b.addEventListener('click', function (e) {
         if (d.href) { blip(); return; }
         if (LINK !== null) {
@@ -962,7 +980,7 @@
     var fine = window.matchMedia && matchMedia('(hover: hover) and (pointer: fine)').matches;
     var el = document.createElement('div');
     el.className = 'nr-coach ' + (fine ? 'is-mouse' : 'is-touch'); el.setAttribute('role', 'status');
-    el.innerHTML = '<span class="nr-coach-ico">' + (fine ? ICON_MOUSE : ICON_TOUCH) + '</span><span><b>' + (fine ? 'Hover' : 'Tap') + '</b> ' + (fine ? 'a name tag · click to open that section' : (window.innerWidth < 760 ? 'a section label in the newsroom' : 'a name tag to open that section')) + '</span>';
+    el.innerHTML = '<span class="nr-coach-ico">' + (fine ? ICON_MOUSE : ICON_TOUCH) + '</span><span><b>' + translate(fine ? 'Hover' : 'Tap') + '</b> ' + translate(fine ? 'a name tag · click to open that section' : (window.innerWidth < 760 ? 'a section label in the newsroom' : 'a name tag to open that section')) + '</span>';
     stage.appendChild(el);
     root.classList.add('is-coaching');
     requestAnimationFrame(function () { el.classList.add('show'); });
@@ -1007,7 +1025,7 @@
           (it.links ? '<span class="nr-il">' + it.links.map(linkHtml).join('') + '</span>' : '') + '</div></li>';
       }).join('') + '</ol>';
     }
-    html += '<p class="nr-links">' + linkHtml([d.anchor, (d.more || 'Go to ' + d.title) + ' ↓']) + '</p>';
+    html += '<p class="nr-links">' + linkHtml([d.anchor, (d.more || translate('Go to ') + d.title) + ' ↓']) + '</p>';
     panelBody.innerHTML = html;
     panelBody.querySelectorAll('.nr-items img').forEach(function (im) { im.addEventListener('error', function () { im.remove(); }); });
     panelBody.querySelectorAll('[data-v]').forEach(function (b) {
@@ -1060,7 +1078,7 @@
     if (sceneW <= W) { var left = hudR + (W - hudR - sceneW) / 2; ox = left - SC.minX * scale; panMin = panMax = 0; panX = 0; }
     else { ox = -SC.minX * scale; panMin = W - sceneW - (narrow ? 64 : 0); panMax = narrow ? 64 : 0; panX = Math.max(panMin, Math.min(panMax, panX || (panMin + panMax) * .5)); }
     root.classList.toggle('can-pan', panMin < 0);
-    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = panMin < 0 ? 'Drag to explore · tap a name' : (window.innerWidth < 760 ? 'Tap a section label in the newsroom' : 'Click a name tag to jump to that section');
+    var hint = root.querySelector('.nr-hint'); if (hint) hint.textContent = translate(panMin < 0 ? 'Drag to explore · tap a name' : (window.innerWidth < 760 ? 'Tap a section label in the newsroom' : 'Click a name tag to jump to that section'));
     if (!running) frame(performance.now());
   }
 
@@ -1184,7 +1202,7 @@
   window.addEventListener('pointercancel', function () { dragging = false; });
 
   if (pauseBtn) pauseBtn.addEventListener('click', function () {
-    paused = !paused; pauseBtn.setAttribute('aria-pressed', String(paused)); pauseBtn.textContent = paused ? 'Play' : 'Pause'; sync();
+    paused = !paused; pauseBtn.setAttribute('aria-pressed', String(paused)); pauseBtn.textContent = translate(paused ? 'Play' : 'Pause'); sync();
   });
   if ('IntersectionObserver' in window) new IntersectionObserver(function (e) { visible = e[0].isIntersecting; sync(); }, { threshold: .02 }).observe(root);
   document.addEventListener('visibilitychange', sync);

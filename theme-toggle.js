@@ -1,5 +1,10 @@
 /* Shared appearance control for the portfolio and its project pages. */
 (function () {
+  var portuguese = document.documentElement.lang.toLowerCase().split('-')[0] === 'pt';
+  var lightLabel = portuguese ? 'Modo claro' : 'Light mode';
+  var darkLabel = portuguese ? 'Modo escuro' : 'Dark mode';
+  var switchToLight = portuguese ? 'Ativar modo claro' : 'Switch to light mode';
+  var switchToDark = portuguese ? 'Ativar modo escuro' : 'Switch to dark mode';
   var storageKey = 'luizftoledo-theme';
   var currentScript = document.currentScript;
   if (currentScript && currentScript.src) {
@@ -22,9 +27,7 @@
     button.type = 'button';
     button.className = 'site-theme-toggle';
     button.setAttribute('data-theme-toggle', '');
-    button.setAttribute('aria-label', 'Switch to dark mode');
-    button.setAttribute('title', 'Switch to dark mode');
-    button.innerHTML = '<span aria-hidden="true">◐</span><span class="site-theme-toggle-label">Dark mode</span>';
+    button.innerHTML = '<span aria-hidden="true">◐</span><span class="site-theme-toggle-label"></span>';
     document.body.appendChild(button);
 
     function render(nextTheme) {
@@ -33,9 +36,9 @@
       document.querySelectorAll('#editorial-theme').forEach(function (stylesheet) {
         stylesheet.disabled = !warmPalette && isDark;
       });
-      button.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-      button.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-      button.querySelector('.site-theme-toggle-label').textContent = isDark ? 'Light mode' : 'Dark mode';
+      button.setAttribute('aria-label', isDark ? switchToLight : switchToDark);
+      button.setAttribute('title', isDark ? switchToLight : switchToDark);
+      button.querySelector('.site-theme-toggle-label').textContent = isDark ? lightLabel : darkLabel;
     }
 
     render(theme);
