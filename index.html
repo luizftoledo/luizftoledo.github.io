@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=Schibsted+Grotesk:wght@400..700&display=swap" rel="stylesheet">
   <link id="editorial-theme" data-palette="warm" rel="stylesheet" href="style.site.css?v=20261110">
 
-  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="images/portfolio-icon-64.png">
   <link rel="stylesheet" href="newsroom.css?v=20261030-desktop-centered">
 
   <!-- SEO: Canonical & Twitter Cards -->
@@ -36,7 +36,6 @@
     // Force dark mode sitewide
     document.documentElement.setAttribute('data-theme', 'dark');
   </script>
-  <script async src="https://www.instagram.com/embed.js"></script>
   <script src="theme-toggle.js?v=20261031-warm"></script>
 
 <meta name="description" content="Luiz Fernando Toledo, Brazilian investigative journalist at BBC News Brasil. Reporting on public records, freedom of information, transparency and data. Founder of Data Fixers.">
@@ -281,11 +280,11 @@
 <body>
   <section id="story-intro" aria-label="Selected investigations">
     <div class="si-sticky">
-      <div class="si-bg-layer" data-bg="0" style="opacity:1;"><img src="portfolio-investigativo/pau-brasil/imgs/photo-02.jpg" alt="" /></div>
-      <div class="si-bg-layer" data-bg="1"><img src="images/intro-epstein-doj.jpg" alt="" /></div>
-      <div class="si-bg-layer" data-bg="2"><img src="images/intro-copied-bill.jpg" alt="" /></div>
-      <div class="si-bg-layer" data-bg="3"><img src="images/intro-quarry-labor.jpg" alt="" /></div>
-      <div class="si-bg-layer" data-bg="4"><img src="images/ai_fake_doctors_youtube.png" alt="" /></div>
+      <div class="si-bg-layer" data-bg="0" style="opacity:1;"><picture><source media="(max-width: 600px)" srcset="images/intro-pau-brasil-mobile.webp"><img src="images/intro-pau-brasil.webp" alt="" fetchpriority="high"></picture></div>
+      <div class="si-bg-layer" data-bg="1"><img src="images/intro-epstein-doj.webp" alt="" fetchpriority="low" decoding="async"></div>
+      <div class="si-bg-layer" data-bg="2"><img src="images/intro-copied-bill.webp" alt="" fetchpriority="low" decoding="async"></div>
+      <div class="si-bg-layer" data-bg="3"><img src="images/intro-quarry-labor.jpg" alt="" fetchpriority="low" decoding="async"></div>
+      <div class="si-bg-layer" data-bg="4"><img src="images/ai_fake_doctors_youtube.webp" alt="" fetchpriority="low" decoding="async"></div>
       <div class="si-bg-scrim" aria-hidden="true"></div>
       <div class="si-top">
         <span class="si-brand">LFT<span>.</span></span>
@@ -335,7 +334,7 @@
     </div>
   </section>
   <div class="progress-bar" id="progressBar"></div>
-  <nav id="site-nav">
+  <nav id="site-nav" tabindex="-1">
     <div class="container nav-inner">
       <div class="brand">
         <a href="#" class="logo">
@@ -560,7 +559,7 @@
 
 <article class="card-article" data-reveal><img src="images/recent-vorcaro-web.jpg" alt="" loading="lazy"><div class="card-content"><div class="tags"><span class="tag">BBC News Brasil · 23 October 2026</span></div><h3>How Vorcaro sought to control his image online</h3><p>With Leandro Prazeres, I examined messages extracted by police that described efforts to remove reporting about Daniel Vorcaro and his allies. The messages included a proposal to access a newspaper’s systems; they did not establish that access occurred.</p><div class="story-link-container"><a href="https://www.bbc.com/portuguese/articles/cjy56grn51zzo" target="_blank" rel="noopener noreferrer" class="story-link">Read the investigation</a></div></div></article>
           <div class="card-article" data-reveal>
-            <img src="images/ai_fake_doctors_youtube.png"
+            <img src="images/ai_fake_doctors_youtube.webp"
               alt="The global industry of AI-generated fake doctors that uses fear to go viral among elderly Brazilians"
               loading="lazy">
             <div class="card-content">
@@ -1206,7 +1205,7 @@
               class="award-source">ANPR</span></li>
           <li><span class="award-year">2016</span><span class="award-status winner">🏆 Winner</span><span
               class="award-title">Premio Allianz Ayrton Senna 2016 – O fechamento de escolas em SP</span>
-            <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="Hidden secret"
+            <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" loading="lazy" alt="Hidden secret"
               role="button" tabindex="0"
               style="width: 20px; height: 20px; display: inline-block; vertical-align: middle; margin-left: 8px; cursor: pointer; border-radius: 50%; z-index: 10;"
               title="???">
@@ -1383,7 +1382,7 @@
               Brazil and US project</span><span class="grant-source">ICFJ</span></li>
           <li><span class="grant-year">2019</span><span class="grant-title">Instituto Ling’s Visionary Journalist US$
               60,000 scholarship (2019) – Jornalista de Visão</span>
-            <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" alt="Hidden secret"
+            <img class="poke-secret-trigger" data-poke-trigger="true" src="pokeball_secret.png" loading="lazy" alt="Hidden secret"
               role="button" tabindex="0"
               style="width: 16px; height: 16px; margin-left: 5px; cursor: pointer; opacity: 0.1; transition: opacity 0.3s; vertical-align: middle;">
             <span class="grant-source">Instituto Ling</span>
@@ -1402,7 +1401,7 @@
 
         <h3 class="course-lead">Como usar IA no jornalismo? (Em português)</h3>
         <div class="course-video">
-          <iframe src="https://www.youtube.com/embed/-hXN1-wq8Kk" title="Como usar IA no jornalismo?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe loading="lazy" src="https://www.youtube.com/embed/-hXN1-wq8Kk" title="Como usar IA no jornalismo?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
 
         <div class="course-list">
@@ -1456,13 +1455,13 @@
       <p>Interested in collaboration, have a story tip, or want to discuss investigative journalism? I'd love to hear
         from you.</p>
       <div class="socials">
-        <a href="mailto:lft29@cam.ac.uk"><i class="fas fa-envelope"></i></a>
-        <a href="https://twitter.com/toledoluizf" target="_blank" rel="noopener noreferrer"><i
+        <a aria-label="Email" href="mailto:lft29@cam.ac.uk"><i class="fas fa-envelope"></i></a>
+        <a aria-label="Twitter" href="https://twitter.com/toledoluizf" target="_blank" rel="noopener noreferrer"><i
             class="fab fa-twitter"></i></a>
-        <a href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i
+        <a aria-label="LinkedIn" href="https://linkedin.com/in/luizftoledo1" target="_blank" rel="noopener noreferrer"><i
             class="fab fa-linkedin-in"></i></a>
         <a href="stardew.html" aria-label="Open Journalism Valley" title="Journalism Valley">
-          <img src="images/stardew/chicken.png" alt="Journalism Valley"
+          <img src="images/stardew/chicken.png" loading="lazy" alt="Journalism Valley"
             style="width: 28px; height: 28px; opacity: 1; image-rendering: pixelated;">
         </a>
       </div>
@@ -1828,6 +1827,31 @@
     });
   })();
   </script>
+  <script>
+    (function () {
+      const reels = document.querySelector('.reels-carousel');
+      if (!reels) return;
+
+      function loadInstagram() {
+        const script = document.createElement('script');
+        script.src = 'https://www.instagram.com/embed.js';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+
+      if (!('IntersectionObserver' in window)) {
+        loadInstagram();
+        return;
+      }
+
+      const observer = new IntersectionObserver(entries => {
+        if (!entries.some(entry => entry.isIntersecting)) return;
+        observer.disconnect();
+        loadInstagram();
+      }, { rootMargin: '900px 0px' });
+      observer.observe(reels);
+    })();
+  </script>
   <script id="story-intro-js">
     (function () {
       const intro = document.getElementById('story-intro');
@@ -1836,12 +1860,17 @@
       const bgs = Array.from(intro.querySelectorAll('.si-bg-layer'));
       const bar = document.getElementById('siBarFill');
       const total = beats.length;
+      let previousProgress;
+      let framePending = false;
 
       function update() {
+        framePending = false;
         const rect = intro.getBoundingClientRect();
         document.body.classList.toggle('in-story-intro', rect.bottom > 80);
         const scrollable = Math.max(1, intro.offsetHeight - window.innerHeight);
         const p = Math.min(1, Math.max(0, -rect.top / scrollable));
+        if (p === previousProgress) return;
+        previousProgress = p;
         const pos = p * (total - 1);
 
         if (bar) bar.style.width = (p * 100).toFixed(1) + '%';
@@ -1852,7 +1881,9 @@
           const op = Math.max(0, 1 - abs * 1.45);
           b.style.opacity = op.toFixed(3);
           b.style.transform = 'translate3d(0,' + (-dist * 28).toFixed(1) + 'px,0)';
-          b.classList.toggle('is-active', abs < 0.45);
+          const active = abs < 0.45;
+          b.classList.toggle('is-active', active);
+          b.inert = !active;
           if (bgs[i]) {
             bgs[i].style.opacity = Math.max(0, 1 - abs * 1.15).toFixed(3);
             bgs[i].style.transform = 'scale(' + (1.03 + abs * 0.04).toFixed(3) + ')';
@@ -1860,8 +1891,14 @@
         });
       }
 
-      window.addEventListener('scroll', update, { passive: true });
-      window.addEventListener('resize', update);
+      function scheduleUpdate() {
+        if (framePending) return;
+        framePending = true;
+        window.requestAnimationFrame(update);
+      }
+
+      window.addEventListener('scroll', scheduleUpdate, { passive: true });
+      window.addEventListener('resize', scheduleUpdate);
       update();
     })();
   </script>
