@@ -56,287 +56,90 @@
 <link rel="alternate" hreflang="en" href="https://luizftoledo.github.io/">
 <link rel="alternate" hreflang="pt-BR" href="https://luizftoledo.github.io/pt.html">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://luizftoledo.github.io/#person","name":"Luiz Fernando Toledo","alternateName":"Luiz Fernando Toledo Antunes","url":"https://luizftoledo.github.io/","image":"https://luizftoledo.github.io/images/luiz-fernando-toledo.jpg","jobTitle":"Investigative journalist","description":"Brazilian investigative journalist working on public records, freedom of information, data journalism and transparency. Founder of Data Fixers and cofounder of Fiquem Sabendo.","worksFor":{"@type":"NewsMediaOrganization","name":"BBC News Brasil","url":"https://www.bbc.com/portuguese"},"sameAs":["https://datafixers.org/transparencia/","https://datafixers.org/transparency/","https://www.polis.cam.ac.uk/people/luiz-fernando-toledo","https://brown.columbia.edu/portfolio/luiz-fernando-toledo/","https://reutersinstitute.politics.ox.ac.uk/people/luiz-fernando-toledo-antunes","https://www.instagram.com/luizftoledo/"],"knowsAbout":["Jornalismo investigativo","Lei de Acesso à Informação","Transparência pública","Data journalism","Freedom of information"]},{"@type":"WebSite","@id":"https://luizftoledo.github.io/#website","name":"Luiz Fernando Toledo","url":"https://luizftoledo.github.io/","inLanguage":"pt-BR","publisher":{"@id":"https://luizftoledo.github.io/#person"}},{"@type":"ProfilePage","@id":"https://luizftoledo.github.io/#profile","url":"https://luizftoledo.github.io/","name":"Luiz Fernando Toledo | Investigative journalist, data and FOI","mainEntity":{"@id":"https://luizftoledo.github.io/#person"},"inLanguage":"pt-BR","isPartOf":{"@id":"https://luizftoledo.github.io/#website"}}]}</script>
-  <style id="story-intro-css">
-    #story-intro {
-      position: relative;
-      height: 440vh;
-      background: #0f1013;
-      color: #f4f3ee;
-      border-bottom: 1px solid rgba(236, 235, 230, .15);
-    }
-    .si-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      height: 100dvh;
-      width: 100%;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(72px, 10vh, 96px) clamp(20px, 5vw, 64px) clamp(64px, 9vh, 88px);
-    }
-    .si-bg-layer {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      opacity: 0;
-      pointer-events: none;
-      will-change: opacity, transform;
-    }
-    .si-bg-layer img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 40%;
-      display: block;
-      filter: saturate(0.85) contrast(1.04);
-    }
-    .si-bg-scrim {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background:
-        linear-gradient(90deg, rgba(15, 16, 19, .86) 0%, rgba(15, 16, 19, .58) 56%, rgba(15, 16, 19, .26) 100%),
-        linear-gradient(180deg, rgba(15, 16, 19, .22) 0%, rgba(15, 16, 19, .74) 100%);
-    }
-    .si-stage { z-index: 2; }
-    .si-foot { z-index: 5; }
-    .si-top {
-      position: absolute;
-      top: clamp(18px, 3vw, 32px);
-      left: clamp(20px, 4vw, 48px);
-      right: clamp(20px, 4vw, 48px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      z-index: 5;
-    }
-    .si-brand {
-      font: 600 1.35rem/1 var(--serif, Georgia, serif);
-      color: #f4f3ee;
-      letter-spacing: -.02em;
-    }
-    .si-brand span { color: #f26470; }
-    .si-skip {
-      background: none;
-      border: 1px solid rgba(244, 243, 238, .28);
-      color: #f4f3ee;
-      padding: 8px 14px;
-      font: 500 13px/1 var(--sans, sans-serif);
-      text-decoration: none;
-      transition: border-color .2s, color .2s;
-    }
-    .si-skip:hover { border-color: #f26470; color: #f26470; }
-    .si-actions { display: flex; align-items: center; gap: 8px; }
-    .language-switch { white-space: nowrap; }
-    .si-stage {
-      position: relative;
-      width: 100%;
-      max-width: 920px;
-      height: 100%;
-      min-height: 320px;
-    }
-    .si-beat {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      will-change: opacity, transform;
-    }
-    .si-beat.is-active { pointer-events: auto; }
-    .si-kicker {
-      font: 500 12.5px/1.2 var(--sans, sans-serif);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: #f26470;
-      margin-bottom: 14px;
-    }
-    .si-h {
-      font: 500 clamp(2.1rem, 4.8vw, 3.9rem)/1.08 var(--serif, Georgia, serif);
-      letter-spacing: -.025em;
-      color: #f4f3ee;
-      margin: 0 0 18px;
-      max-width: 22ch;
-    }
-    .si-u {
-      text-decoration: underline;
-      text-decoration-color: #f26470;
-      text-decoration-thickness: 4px;
-      text-underline-offset: 6px;
-    }
-        .si-p {
-      font: 400 clamp(1rem, 1.35vw, 1.15rem)/1.65 var(--sans, sans-serif);
-      color: #c9cdd4;
-      max-width: 60ch;
-      margin: 0;
-    }
-    .si-p a {
-      color: #f4f3ee;
-      text-decoration: underline;
-      text-decoration-color: #f26470;
-      text-underline-offset: 3px;
-    }
-    .si-p a:hover { color: #f26470; }
-    .si-foot {
-      position: absolute;
-      bottom: clamp(18px, 3vw, 32px);
-      left: clamp(20px, 4vw, 48px);
-      right: clamp(20px, 4vw, 48px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font: 500 12.5px/1 var(--sans, sans-serif);
-      color: #c9cdd4;
-    }
-    .si-bar {
-      width: clamp(72px, 24vw, 160px);
-      height: 2px;
-      background: rgba(244, 243, 238, .2);
-      overflow: hidden;
-    }
-    .si-bar > i {
-      display: block;
-      height: 100%;
-      width: 0%;
-      background: #f26470;
-    }
-    .si-scroll-cue {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: #f4f3ee;
-    }
-    .si-mouse {
-      width: 22px;
-      height: 34px;
-      border: 1.8px solid rgba(244, 243, 238, .85);
-      border-radius: 12px;
-      position: relative;
-      display: inline-block;
-      flex: none;
-    }
-    .si-mouse i {
-      position: absolute;
-      left: 50%;
-      top: 6px;
-      width: 3px;
-      height: 7px;
-      margin-left: -1.5px;
-      border-radius: 2px;
-      background: #f26470;
-      animation: siWheel 1.5s ease-in-out infinite;
-    }
-    .si-finger {
-      display: none;
-      width: 14px;
-      height: 28px;
-      border: 1.5px solid rgba(244, 243, 238, .65);
-      border-radius: 999px;
-      position: relative;
-      flex: none;
-    }
-    .si-finger i {
-      position: absolute;
-      left: 50%;
-      top: 5px;
-      width: 6px;
-      height: 6px;
-      margin-left: -3px;
-      border-radius: 50%;
-      background: #f26470;
-      animation: siSwipe 1.4s ease-in-out infinite;
-    }
-    @keyframes siWheel {
-      0% { transform: translateY(0); opacity: 1; }
-      70% { transform: translateY(10px); opacity: 0.2; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes siSwipe {
-      0% { transform: translateY(11px); opacity: 0.35; }
-      55% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(11px); opacity: 0.35; }
-    }
-    @media (max-width: 600px), (hover: none) {
-      .si-mouse { display: none; }
-      .si-finger { display: inline-block; }
-    }
-    .site-theme-toggle {
-      transition: opacity .25s ease, transform .25s ease;
-    }
-    body.in-story-intro .site-theme-toggle {
-      opacity: 0 !important;
-      pointer-events: none !important;
-      transform: translateY(10px);
-    }
-    @media (max-width: 600px) {
-      .si-h { font-size: clamp(1.65rem, 6.8vw, 2.15rem); line-height: 1.12; }
-      .si-u { text-decoration-thickness: 3px; text-underline-offset: 4px; }
-      .si-p { font-size: 0.96rem; line-height: 1.55; }
-    }
-  </style>
+  <link rel="stylesheet" href="portfolio-opening.css">
 </head>
 
 <body>
-  <section id="story-intro" aria-label="Investigações selecionadas">
-    <div class="si-sticky">
-      <div class="si-bg-layer" data-bg="0" style="opacity:1;"><picture><source media="(max-width: 600px)" srcset="images/intro-pau-brasil-mobile.webp"><img src="images/intro-pau-brasil.webp" alt="" fetchpriority="high"></picture></div>
-      <div class="si-bg-layer" data-bg="1"><img src="images/intro-epstein-doj.webp" alt="" fetchpriority="low" decoding="async"></div>
-      <div class="si-bg-layer" data-bg="2"><img src="images/intro-copied-bill.webp" alt="" fetchpriority="low" decoding="async"></div>
-      <div class="si-bg-layer" data-bg="3"><img src="images/intro-quarry-labor.jpg" alt="" fetchpriority="low" decoding="async"></div>
-      <div class="si-bg-layer" data-bg="4"><img src="images/ai_fake_doctors_youtube.webp" alt="" fetchpriority="low" decoding="async"></div>
-      <div class="si-bg-scrim" aria-hidden="true"></div>
-      <div class="si-top">
-        <span class="si-brand">LFT<span>.</span></span>
-        <div class="si-actions">
-          <a href="#site-nav" class="si-skip">Ir ao portfólio ↓</a>
-          <a href="/" hreflang="en" lang="en" class="si-skip language-switch" aria-label="Read in English">EN</a>
+  <section id="story-intro" class="portfolio-opening" aria-labelledby="opening-title">
+    <div class="container">
+      <div class="opening-bar">
+        <span class="opening-brand" aria-hidden="true">LFT<span>.</span></span>
+        <div class="opening-actions">
+          <a href="#site-nav">Ir ao portfólio ↓</a>
+          <a href="/" hreflang="en" lang="en" class="language-switch" aria-label="Read in English">EN</a>
         </div>
       </div>
-
-      <div class="si-stage">
-        <div class="si-beat is-active" data-si="0">
-          <div class="si-kicker">Piauí · OCCRP</div>
-          <h1 class="si-h">Um <span class="si-u">arco de violino clássico</span> em Londres pode ser feito a partir de uma árvore cortada dentro de um <span class="si-u">parque protegido</span> na Bahia, no nordeste do Brasil.</h1>
-          <p class="si-p">Testes periciais mostraram que amostras de pau-brasil apreendido vieram do Parque Nacional do Pau Brasil. <a href="https://piaui.uol.com.br/web/um-parque-no-coracao-do-contrabando-de-pau-brasil/" hreflang="pt-BR" aria-label="Esta reportagem, publicada pela piauí em português" target="_blank" rel="noopener">Esta reportagem</a> mostra como a madeira ameaçada cruza fronteiras para abastecer a indústria da música clássica (<a href="https://www.occrp.org/en/feature/criminal-gangs-are-logging-the-worlds-last-brazilwood-trees-to-make-violin-bows" hreflang="en" target="_blank" rel="noopener">OCCRP, em inglês</a>).</p>
-        </div>
-
-        <div class="si-beat" data-si="1">
-          <div class="si-kicker">BBC News Brasil</div>
-          <h2 class="si-h"><span class="si-u">A rede internacional de Epstein</span> recrutava jovens <span class="si-u">no Brasil</span>.</h2>
-          <p class="si-p"><a href="portfolio-investigativo/epstein/" hreflang="pt-BR" aria-label="Esta investigação, série da BBC News Brasil">Esta investigação</a> usou programas de busca para vasculhar milhões de arquivos dos EUA e mostrar como a rede de Jeffrey Epstein recrutava jovens no Brasil por meio de olheiros, concursos de moda e dependência financeira. A série levou à <a href="https://www.bbc.com/portuguese/articles/cp817772k2go" hreflang="pt-BR" target="_blank" rel="noopener">abertura de uma investigação pelo MPF</a>. A <a href="https://www.bbc.com/news/articles/cr4576v66kno" hreflang="en" target="_blank" rel="noopener">reportagem em inglês</a> foi citada duas vezes no <a href="https://oversight.house.gov/wp-content/uploads/2026/11/A-Review-of-the-Federal-Governments-Mishandling-of-the-Jeffrey-Epstein-and-Ghislaine-Maxwell-Criminal-Investigations_OGR-Maj-Report.pdf#page=102" hreflang="en" target="_blank" rel="noopener">relatório final do comitê da Câmara dos EUA</a>.</p>
-        </div>
-
-        <div class="si-beat" data-si="2">
-          <div class="si-kicker">BBC News Brasil</div>
-          <h2 class="si-h">A deputada estadual mais votada de São Paulo <span class="si-u">copiou projetos de outros parlamentares</span> e deixou até o <span class="si-u">nome de outra cidade</span>.</h2>
-          <p class="si-p">Ao comparar 20 propostas originais de Eduarda Campopiano na Câmara Municipal com projetos de outros legislativos, a BBC encontrou <a href="https://www.bbc.com/portuguese/articles/crwyd10307kjo" hreflang="pt-BR" target="_blank" rel="noopener">trechos idênticos ou semelhantes em pelo menos 14 propostas</a>, incluindo o nome de outro município e um link do ChatGPT (<a href="https://www.bbc.com/portuguese/articles/cmpqg93exw53o" hreflang="pt-BR" target="_blank" rel="noopener">vídeo da BBC</a>).</p>
-        </div>
-
-        <div class="si-beat" data-si="3">
-          <div class="si-kicker">BBC News Brasil</div>
-          <h2 class="si-h">Calçadas construídas com <span class="si-u">dinheiro público</span> em diferentes Estados brasileiros usaram pedras provenientes do <span class="si-u">trabalho análogo à escravidão</span>.</h2>
-          <p class="si-p"><a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" hreflang="pt-BR" aria-label="Esta reportagem, publicada pela BBC News Brasil" target="_blank" rel="noopener">Esta reportagem</a> mostrou como uma emenda do orçamento secreto apoiada pelo presidente da Câmara, Hugo Motta, financiou pavimentação com pedras extraídas por trabalhadores em condições análogas à escravidão (<a href="portfolio-investigativo/orcamento-secreto/" hreflang="en">versão interativa em inglês</a>).</p>
-        </div>
-
-        <div class="si-beat" data-si="4">
-          <div class="si-kicker">BBC News Brasil</div>
-          <h2 class="si-h">Milhares de idosos brasileiros seguem um <span class="si-u">médico popular do YouTube</span>. Ele foi <span class="si-u">criado por IA</span>.</h2>
-          <p class="si-p"><a href="https://www.bbc.com/portuguese/articles/cz0j8lp5xmvo" hreflang="pt-BR" aria-label="Esta investigação, publicada pela BBC News Brasil" target="_blank" rel="noopener">Esta investigação</a> mapeou a indústria global de falsos médicos criados por IA que dão conselhos de saúde na internet. Após a primeira reportagem da BBC, um médico reconheceu seu rosto clonado e <a href="https://www.bbc.com/portuguese/articles/cn4ddgl7vkno" hreflang="pt-BR" target="_blank" rel="noopener">registrou um boletim de ocorrência</a>. O <a href="https://www.bbc.com/portuguese/articles/ckd686n19dx2o" hreflang="pt-BR" target="_blank" rel="noopener">Google removeu mais de 40 canais</a>, e a reportagem saiu em mais de oito idiomas.</p>
-        </div>
-      </div>
-
-      <div class="si-foot">
-        <div class="si-bar"><i id="siBarFill"></i></div>
-        <span class="si-scroll-cue">
-          <span class="si-mouse" aria-hidden="true"><i></i></span>
-          <span class="si-finger" aria-hidden="true"><i></i></span>
-          <span>role ↓</span>
-        </span>
+      <header class="opening-heading">
+        <p>Luiz Fernando Toledo</p>
+        <h1 id="opening-title">Reportagens selecionadas</h1>
+      </header>
+      <div class="opening-grid">
+        <article class="opening-card">
+          <figure class="opening-photo">
+            <img src="images/portfolio-opening/epstein.webp" width="800" height="450" alt="Jeffrey Epstein e Jean-Luc Brunel ao ar livre." fetchpriority="high">
+            <figcaption>Departamento de Justiça dos EUA</figcaption>
+          </figure>
+          <div class="opening-card-body">
+            <p class="opening-publisher">BBC News Brasil</p>
+            <h2><a href="portfolio-investigativo/epstein/" hreflang="pt-BR">A rede de aliciamento de Epstein no Brasil</a></h2>
+            <p class="opening-note">A série mostrou como jovens eram recrutadas e levou à <a href="https://www.bbc.com/portuguese/articles/cp817772k2go" hreflang="pt-BR" target="_blank" rel="noopener">abertura de uma investigação pelo MPF</a>. A <a href="https://www.bbc.com/news/articles/cr4576v66kno" hreflang="en" target="_blank" rel="noopener">reportagem em inglês</a> foi citada duas vezes no <a href="https://oversight.house.gov/wp-content/uploads/2026/11/A-Review-of-the-Federal-Governments-Mishandling-of-the-Jeffrey-Epstein-and-Ghislaine-Maxwell-Criminal-Investigations_OGR-Maj-Report.pdf#page=102" hreflang="en" target="_blank" rel="noopener">relatório final do comitê da Câmara dos EUA</a>.</p>
+          </div>
+        </article>
+        <article class="opening-card">
+          <figure class="opening-photo">
+            <img src="images/portfolio-opening/brazilwood.webp" width="800" height="430" alt="Toras de madeira cortadas no Parque Nacional do Pau Brasil." loading="lazy" decoding="async">
+            <figcaption>Joana Moncau</figcaption>
+          </figure>
+          <div class="opening-card-body">
+            <p class="opening-publisher">piauí · OCCRP</p>
+            <h2><a href="https://piaui.uol.com.br/web/um-parque-no-coracao-do-contrabando-de-pau-brasil/" hreflang="pt-BR" target="_blank" rel="noopener">Como o pau-brasil extraído ilegalmente vira arco de violino</a></h2>
+            <p class="opening-note"><a href="https://piaui.uol.com.br/web/um-parque-no-coracao-do-contrabando-de-pau-brasil/" hreflang="pt-BR" target="_blank" rel="noopener">Esta reportagem</a> acompanha a madeira extraída de um parque na Bahia até o mercado de música clássica. <a href="https://www.occrp.org/en/feature/criminal-gangs-are-logging-the-worlds-last-brazilwood-trees-to-make-violin-bows" hreflang="en" target="_blank" rel="noopener">Versão da OCCRP em inglês</a>.</p>
+          </div>
+        </article>
+        <article class="opening-card">
+          <figure class="opening-photo">
+            <img src="images/portfolio-opening/campopiano.webp" width="800" height="449" alt="Eduarda Campopiano ao lado de uma cabine de votação." loading="lazy" decoding="async">
+            <figcaption>Reprodução via BBC News Brasil</figcaption>
+          </figure>
+          <div class="opening-card-body">
+            <p class="opening-publisher">BBC News Brasil</p>
+            <h2><a href="https://www.bbc.com/portuguese/articles/crwyd10307kjo" hreflang="pt-BR" target="_blank" rel="noopener">Deputada mais votada de SP apresentou projetos copiados</a></h2>
+            <p class="opening-note">A BBC encontrou trechos coincidentes em pelo menos 14 propostas, incluindo o nome de outra cidade e um link do ChatGPT. <a href="https://www.bbc.com/portuguese/articles/cmpqg93exw53o" hreflang="pt-BR" target="_blank" rel="noopener">Assista ao vídeo da BBC</a>.</p>
+          </div>
+        </article>
+        <article class="opening-card">
+          <figure class="opening-photo">
+            <img src="images/portfolio-opening/quarry.webp" width="800" height="450" alt="Abrigo improvisado em uma pedreira em Taperoá, na Paraíba." loading="lazy" decoding="async">
+            <figcaption>Vitor Serrano / BBC</figcaption>
+          </figure>
+          <div class="opening-card-body">
+            <p class="opening-publisher">BBC News Brasil</p>
+            <h2><a href="https://www.bbc.com/portuguese/articles/c1drv0wkr9ro" hreflang="pt-BR" target="_blank" rel="noopener">Trabalho escravo em obras pagas com dinheiro público</a></h2>
+            <p class="opening-note">Uma emenda do orçamento secreto apoiada por Hugo Motta financiou obras com pedras extraídas em condições análogas à escravidão. <a href="portfolio-investigativo/orcamento-secreto/" hreflang="en">Versão interativa em inglês</a>.</p>
+          </div>
+        </article>
+        <article class="opening-card">
+          <figure class="opening-photo">
+            <img src="images/portfolio-opening/doctor.webp" width="800" height="577" alt="O médico Hélio Brasileiro fala em vídeo sobre o uso de sua imagem." loading="lazy" decoding="async">
+            <figcaption>Hélio Brasileiro / via BBC News Brasil</figcaption>
+          </figure>
+          <div class="opening-card-body">
+            <p class="opening-publisher">BBC News Brasil</p>
+            <h2><a href="https://www.bbc.com/portuguese/articles/cz0j8lp5xmvo" hreflang="pt-BR" target="_blank" rel="noopener">A indústria de falsos médicos criados por IA</a></h2>
+            <p class="opening-note">Um médico <a href="https://www.bbc.com/portuguese/articles/cn4ddgl7vkno" hreflang="pt-BR" target="_blank" rel="noopener">registrou boletim de ocorrência ao ver seu rosto clonado</a>. O Google depois <a href="https://www.bbc.com/portuguese/articles/ckd686n19dx2o" hreflang="pt-BR" target="_blank" rel="noopener">removeu mais de 40 canais</a>.</p>
+          </div>
+        </article>
+        <article class="opening-card">
+          <figure class="opening-photo">
+            <img src="images/portfolio-opening/pirarucu.webp" width="800" height="450" alt="Pescador carrega um pirarucu na Reserva Mamirauá, no Amazonas." loading="lazy" decoding="async">
+            <figcaption>AFP via Getty Images</figcaption>
+          </figure>
+          <div class="opening-card-body">
+            <p class="opening-publisher">BBC News Brasil</p>
+            <h2><a href="https://www.bbc.com/portuguese/articles/cy40vwy4v13o" hreflang="pt-BR" target="_blank" rel="noopener">Como um peixe amazônico vira bolsa de luxo</a></h2>
+            <p class="opening-note">O couro do pirarucu chega a marcas de luxo no exterior. Pescadores reivindicam uma parcela maior da receita. <a href="portfolio-investigativo/pirarucu/" hreflang="en">Versão interativa em inglês</a>.</p>
+          </div>
+        </article>
       </div>
     </div>
   </section>
@@ -2021,56 +1824,6 @@
         loadInstagram();
       }, { rootMargin: '900px 0px' });
       observer.observe(reels);
-    })();
-  </script>
-  <script id="story-intro-js">
-    (function () {
-      const intro = document.getElementById('story-intro');
-      if (!intro) return;
-      const beats = Array.from(intro.querySelectorAll('.si-beat'));
-      const bgs = Array.from(intro.querySelectorAll('.si-bg-layer'));
-      const bar = document.getElementById('siBarFill');
-      const total = beats.length;
-      let previousProgress;
-      let framePending = false;
-
-      function update() {
-        framePending = false;
-        const rect = intro.getBoundingClientRect();
-        document.body.classList.toggle('in-story-intro', rect.bottom > 80);
-        const scrollable = Math.max(1, intro.offsetHeight - window.innerHeight);
-        const p = Math.min(1, Math.max(0, -rect.top / scrollable));
-        if (p === previousProgress) return;
-        previousProgress = p;
-        const pos = p * (total - 1);
-
-        if (bar) bar.style.width = (p * 100).toFixed(1) + '%';
-
-        beats.forEach((b, i) => {
-          const dist = pos - i;
-          const abs = Math.abs(dist);
-          const op = Math.max(0, 1 - abs * 1.45);
-          b.style.opacity = op.toFixed(3);
-          b.style.transform = 'translate3d(0,' + (-dist * 28).toFixed(1) + 'px,0)';
-          const active = abs < 0.45;
-          b.classList.toggle('is-active', active);
-          b.inert = !active;
-          if (bgs[i]) {
-            bgs[i].style.opacity = Math.max(0, 1 - abs * 1.15).toFixed(3);
-            bgs[i].style.transform = 'scale(' + (1.03 + abs * 0.04).toFixed(3) + ')';
-          }
-        });
-      }
-
-      function scheduleUpdate() {
-        if (framePending) return;
-        framePending = true;
-        window.requestAnimationFrame(update);
-      }
-
-      window.addEventListener('scroll', scheduleUpdate, { passive: true });
-      window.addEventListener('resize', scheduleUpdate);
-      update();
     })();
   </script>
 </body>
