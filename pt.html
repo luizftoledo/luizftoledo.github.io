@@ -74,15 +74,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(72px, 10vh, 96px) clamp(20px, 5vw, 64px) clamp(64px, 9vh, 88px);
+      padding: clamp(64px, 8vh, 88px) clamp(20px, 5vw, 64px) clamp(56px, 8vh, 76px);
     }
     .si-bg-layer {
       position: absolute;
       inset: 0;
       z-index: 0;
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
       will-change: opacity, transform;
+      transition: opacity 0.14s ease-out, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .si-bg-layer img {
       width: 100%;
@@ -157,11 +159,11 @@
       margin-bottom: 14px;
     }
     .si-h {
-      font: 500 clamp(2.1rem, 4.8vw, 3.9rem)/1.08 var(--serif, Georgia, serif);
+      font: 500 clamp(1.65rem, min(4.2vw, 6vh), 3.35rem)/1.1 var(--serif, Georgia, serif);
       letter-spacing: -.025em;
       color: #f4f3ee;
       margin: 0 0 18px;
-      max-width: 22ch;
+      max-width: 24ch;
     }
     .si-u {
       text-decoration: underline;
@@ -170,7 +172,7 @@
       text-underline-offset: 6px;
     }
         .si-p {
-      font: 400 clamp(1rem, 1.35vw, 1.15rem)/1.65 var(--sans, sans-serif);
+      font: 400 clamp(0.95rem, min(1.3vw, 2.2vh), 1.1rem)/1.58 var(--sans, sans-serif);
       color: #c9cdd4;
       max-width: 60ch;
       margin: 0;
@@ -2031,17 +2033,19 @@
       const bgs = Array.from(intro.querySelectorAll('.si-bg-layer'));
       const bar = document.getElementById('siBarFill');
       const total = beats.length;
-      let previousProgress;
-      let framePending = false;
+      let rafId = 0;
 
-      function update() {
-        framePending = false;
+      function smoothstep(edge0, edge1, x) {
+        const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
+        return t * t * (3 - 2 * t);
+      }
+
+      function render() {
+        rafId = 0;
         const rect = intro.getBoundingClientRect();
         document.body.classList.toggle('in-story-intro', rect.bottom > 80);
         const scrollable = Math.max(1, intro.offsetHeight - window.innerHeight);
         const p = Math.min(1, Math.max(0, -rect.top / scrollable));
-        if (p === previousProgress) return;
-        previousProgress = p;
         const pos = p * (total - 1);
 
         if (bar) bar.style.width = (p * 100).toFixed(1) + '%';
@@ -2049,28 +2053,28 @@
         beats.forEach((b, i) => {
           const dist = pos - i;
           const abs = Math.abs(dist);
-          const op = Math.max(0, 1 - abs * 1.45);
+          // Hold solid opacity=1 for abs <= 0.28, smoothly fade to 0 by abs = 0.47 (zero overlap between adjacent texts)
+          const op = abs <= 0.28 ? 1 : (abs >= 0.47 ? 0 : 1 - smoothstep(0.28, 0.47, abs));
+          const shift = abs <= 0.28 ? 0 : -Math.sign(dist) * smoothstep(0.28, 0.47, abs) * 20;
           b.style.opacity = op.toFixed(3);
-          b.style.transform = 'translate3d(0,' + (-dist * 28).toFixed(1) + 'px,0)';
-          const active = abs < 0.45;
-          b.classList.toggle('is-active', active);
-          b.inert = !active;
+          b.style.visibility = op > 0.01 ? 'visible' : 'hidden';
+          b.style.transform = 'translate3d(0,' + shift.toFixed(1) + 'px,0)';
+          b.classList.toggle('is-active', abs < 0.45);
           if (bgs[i]) {
-            bgs[i].style.opacity = Math.max(0, 1 - abs * 1.15).toFixed(3);
-            bgs[i].style.transform = 'scale(' + (1.03 + abs * 0.04).toFixed(3) + ')';
+            const bgOp = 1 - smoothstep(0.15, 0.85, abs);
+            bgs[i].style.opacity = bgOp.toFixed(3);
+            bgs[i].style.transform = 'scale(' + (1.02 + Math.min(abs, 1) * 0.03).toFixed(3) + ')';
           }
         });
       }
 
-      function scheduleUpdate() {
-        if (framePending) return;
-        framePending = true;
-        window.requestAnimationFrame(update);
+      function onScroll() {
+        if (!rafId) rafId = requestAnimationFrame(render);
       }
 
-      window.addEventListener('scroll', scheduleUpdate, { passive: true });
-      window.addEventListener('resize', scheduleUpdate);
-      update();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      render();
     })();
   </script>
 </body>
